@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { jsonDateDeserializer } from '../lib/utils';
 import type { CallWithChatCompositeOptions, _FakeChatAdapterArgs } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 
@@ -35,6 +36,8 @@ export interface HermeticQueryArgs {
  */
 export interface CommonQueryArgs {
   customCompositeOptions?: CallWithChatCompositeOptions;
+  injectCustomButtons?: boolean;
+  rtl?: boolean;
 }
 
 /**
@@ -56,8 +59,12 @@ export function parseQueryArgs(): QueryArgs {
     userId: params.userId ?? '',
 
     fakeChatAdapterArgs: params.fakeChatAdapterArgs ? JSON.parse(params.fakeChatAdapterArgs) : undefined,
-    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState
+      ? JSON.parse(params.mockCallAdapterState, jsonDateDeserializer) // json date deserializer is needed because Date objects are serialized as strings by JSON.stringify
+      : undefined,
 
-    customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined
+    customCompositeOptions: params.customCompositeOptions ? JSON.parse(params.customCompositeOptions) : undefined,
+    injectCustomButtons: params.injectCustomButtons === 'true',
+    rtl: Boolean(params.rtl)
   };
 }

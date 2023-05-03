@@ -20,6 +20,8 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectsFeature } from '@azure/communication-calling';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { AccessToken } from '@azure/core-auth';
 
@@ -196,6 +198,10 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     id: mockCallId,
     /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call',
+    /* @conditional-compile-remove(close-captions) */
+    info: {
+      groupId: 'testGroupId'
+    },
     remoteParticipants: [] as RemoteParticipant[],
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
     feature: createMockApiFeatures(new Map()),
@@ -263,6 +269,29 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
   const mockIncomingCall = { id: mockCallId } as MockIncomingCall;
   return addMockEmitter(mockIncomingCall);
 }
+
+/* @conditional-compile-remove(video-background-effects) */
+const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
+  addMockEmitter({
+    name: 'MockVideoEffect',
+    startEffects: () => Promise.resolve(),
+    stopEffects: () => Promise.resolve(),
+    dispose: () => Promise.resolve()
+  });
+
+/** @private */
+export const createMockLocalVideoStream = (): LocalVideoStream =>
+  ({
+    source: {
+      id: 'mockVideoDeviceSourceId',
+      name: 'mockVideoDeviceSourceName',
+      deviceType: 'Unknown'
+    },
+    mediaStreamType: 'Video',
+    switchSource: Promise.resolve,
+    /* @conditional-compile-remove(video-background-effects) */
+    feature: () => createMockVideoEffectsAPI()
+  } as unknown as LocalVideoStream);
 
 /**
  * @private

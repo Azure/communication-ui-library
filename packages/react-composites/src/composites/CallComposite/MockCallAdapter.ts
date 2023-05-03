@@ -136,6 +136,47 @@ export class MockCallAdapter implements CallAdapter {
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  startCaptions(): Promise<void> {
+    throw Error('start captions not implemented');
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  setCaptionLanguage(): Promise<void> {
+    throw Error('setCaptionLanguage not implemented');
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  setSpokenLanguage(): Promise<void> {
+    throw Error('setSpokenLanguage not implemented');
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  stopCaptions(): Promise<void> {
+    throw Error('stopCaptions not implemented');
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  blurVideoBackground(): Promise<void> {
+    throw new Error('blurVideoBackground not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  replaceVideoBackground(): Promise<void> {
+    throw new Error('replaceVideoBackground not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  stopVideoBackgroundEffect(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffect not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  updateBackgroundPickerImages(): void {
+    throw new Error('updateBackgroundPickerImages not implemented.');
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  public updateSelectedVideoBackgroundEffect(): void {
+    throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
+  }
 }
 
 /**
@@ -161,7 +202,16 @@ const defaultCallAdapterState: CallAdapterState = {
     isMuted: false,
     isScreenSharingOn: false,
     remoteParticipants: {},
-    remoteParticipantsEnded: {}
+    remoteParticipantsEnded: {},
+    /* @conditional-compile-remove(close-captions) */
+    captionsFeature: {
+      captions: [],
+      supportedSpokenLanguages: [],
+      supportedCaptionLanguages: [],
+      currentCaptionLanguage: '',
+      currentSpokenLanguage: '',
+      isCaptionsFeatureActive: false
+    }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },
   devices: {

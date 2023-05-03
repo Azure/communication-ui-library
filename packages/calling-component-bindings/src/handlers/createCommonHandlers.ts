@@ -22,6 +22,15 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(video-background-effects) */
+import {
+  BackgroundBlurConfig,
+  BackgroundBlurEffect,
+  BackgroundReplacementConfig,
+  BackgroundReplacementEffect
+} from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -66,7 +75,30 @@ export interface CommonCallingHandlers {
     participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
     options?: StartCallOptions
   ) => void;
+  /* @conditional-compile-remove(video-background-effects) */
+  onRemoveVideoBackgroundEffects: () => Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
+  /* @conditional-compile-remove(video-background-effects) */
+  onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onStopCaptions: () => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onSetSpokenLanguage: (language: string) => Promise<void>;
+  /* @conditional-compile-remove(close-captions) */
+  onSetCaptionLanguage: (language: string) => Promise<void>;
 }
+
+/**
+ * options bag to start captions
+ *
+ * @beta
+ */
+export type CaptionsOptions = {
+  spokenLanguage: string;
+};
 
 /**
  * @private
@@ -278,10 +310,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
-      const screenShareStream = Object.values(participant.videoStreams).find(
-        (i) => i.mediaStreamType === 'ScreenSharing'
-      );
+      // Find the first available stream, if there is none, then get the first stream
+      const remoteVideoStream =
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+
+      const screenShareStream =
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+        Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'ScreenSharing');
 
       let createViewResult: CreateViewResult | undefined = undefined;
       if (remoteVideoStream && remoteVideoStream.isAvailable && !remoteVideoStream.view) {
@@ -359,6 +395,56 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    /* @conditional-compile-remove(video-background-effects) */
+    const onRemoveVideoBackgroundEffects = async (): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).stopEffects();
+      }
+    };
+
+    /* @conditional-compile-remove(video-background-effects) */
+    const onBlurVideoBackground = async (backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(backgroundBlurConfig));
+      }
+    };
+
+    /* @conditional-compile-remove(video-background-effects) */
+    const onReplaceVideoBackground = async (
+      backgroundReplacementConfig: BackgroundReplacementConfig
+    ): Promise<void> => {
+      const stream =
+        call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
+        deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
+      if (stream) {
+        return stream
+          .feature(Features.VideoEffects)
+          .startEffects(new BackgroundReplacementEffect(backgroundReplacementConfig));
+      }
+    };
+    /* @conditional-compile-remove(close-captions) */
+    const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).startCaptions(options);
+    };
+    /* @conditional-compile-remove(close-captions) */
+    const onStopCaptions = async (): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).stopCaptions();
+    };
+    /* @conditional-compile-remove(close-captions) */
+    const onSetSpokenLanguage = async (language: string): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
+    };
+    /* @conditional-compile-remove(close-captions) */
+    const onSetCaptionLanguage = async (language: string): Promise<void> => {
+      await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
+    };
+
     return {
       onHangUp,
       /* @conditional-compile-remove(PSTN-calls) */
@@ -382,7 +468,21 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartCall: notImplemented,
       /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ onSendDtmfTone,
       /* @conditional-compile-remove(call-readiness) */
-      askDevicePermission
+      askDevicePermission,
+      /* @conditional-compile-remove(video-background-effects) */
+      onRemoveVideoBackgroundEffects,
+      /* @conditional-compile-remove(video-background-effects) */
+      onBlurVideoBackground,
+      /* @conditional-compile-remove(video-background-effects) */
+      onReplaceVideoBackground,
+      /* @conditional-compile-remove(close-captions) */
+      onStartCaptions,
+      /* @conditional-compile-remove(close-captions) */
+      onStopCaptions,
+      /* @conditional-compile-remove(close-captions) */
+      onSetCaptionLanguage,
+      /* @conditional-compile-remove(close-captions) */
+      onSetSpokenLanguage
     };
   }
 );

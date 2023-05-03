@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStackStyles } from '@fluentui/react';
+import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
 
 /**
  * @private
@@ -16,13 +17,15 @@ export const compositeOuterContainerStyles: IStackStyles = {
 };
 
 /** @private */
-export const callCompositeContainerStyles: IStackStyles = {
+export const callCompositeContainerStyles = (isMobile: boolean): IStackStyles => ({
   root: {
     // Start a new stacking context so that any `position:absolute` elements
     // inside the call composite do not compete with its siblings.
-    position: 'relative'
+    position: 'relative',
+    width: '100%',
+    minWidth: isMobile ? 'unset' : `${compositeMinWidthRem}rem`
   }
-};
+});
 
 /** @private */
 export const controlBarContainerStyles: IStackStyles = {

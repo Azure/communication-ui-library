@@ -15,13 +15,13 @@ import {
   Dismiss16Regular,
   Edit20Regular,
   ErrorCircle16Regular,
-  EyeShow16Regular,
+  Eye16Regular,
   MicOff16Filled,
   MicOff16Regular,
   MicOff20Filled,
-  MicOn16Filled,
-  MicOn20Filled,
-  MicOn20Regular,
+  Mic16Filled,
+  Mic20Filled,
+  Mic20Regular,
   MoreHorizontal20Filled,
   MoreHorizontal20Regular,
   People20Filled,
@@ -42,9 +42,17 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(close-captions) */
+import {
+  ClosedCaption20Regular,
+  ClosedCaptionOff20Regular,
+  Settings20Regular,
+  PersonVoice20Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
-
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(pinned-participants) */
 import {
   Pin16Filled,
@@ -64,6 +72,9 @@ import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from 
 import { ArrowDownload16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallPause20Regular, CallPause20Filled, Play20Regular, People20Regular } from '@fluentui/react-icons';
+
+/* @conditional-compile-remove(data-loss-prevention) */
+import { Prohibited16Regular } from '@fluentui/react-icons';
 
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
@@ -106,7 +117,7 @@ const SitePermissionMic20Filled = (): JSX.Element => {
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
       <div className={mergeStyles(scaledIconStyles(theme))}>
-        <MicOn20Filled />
+        <Mic20Filled />
       </div>
     </Stack>
   );
@@ -190,6 +201,11 @@ const BrowserPermissionDenied20Filled = (): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(data-loss-prevention) */
+const DataLossPreventionProhibited16Regular = (): JSX.Element => {
+  return <Prohibited16Regular />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -203,7 +219,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonCameraOn: <Video20Filled />,
   ControlButtonEndCall: <CallEnd20Filled />,
   ControlButtonMicOff: <MicOff20Filled />,
-  ControlButtonMicOn: <MicOn20Filled />,
+  ControlButtonMicOn: <Mic20Filled />,
   ControlButtonOptions: <Settings20Filled />,
   ControlButtonParticipants: <People20Filled />,
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -214,6 +230,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
   DownloadFile: <ArrowDownload16Regular />,
+  /* @conditional-compile-remove(data-loss-prevention) */
+  DataLossPreventionProhibited: <DataLossPreventionProhibited16Regular />,
   EditBoxCancel: <Dismiss20Regular />,
   EditBoxSubmit: <Checkmark20Regular />,
   ErrorBarCallCameraAccessDenied: <VideoProhibited16Filled />,
@@ -223,7 +241,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallMacOsMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneAccessDenied: <MicProhibited16Filled />,
   ErrorBarCallMicrophoneMutedBySystem: <MicOff16Filled />,
-  ErrorBarCallMicrophoneUnmutedBySystem: <MicOn16Filled />,
+  ErrorBarCallMicrophoneUnmutedBySystem: <Mic16Filled />,
   ErrorBarCallNetworkQualityLow: <WifiWarning16Filled />,
   ErrorBarCallNoMicrophoneFound: <MicProhibited16Filled />,
   ErrorBarCallNoSpeakerFound: <SpeakerMute16Filled />,
@@ -237,10 +255,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   MessageFailed: <ErrorCircle16Regular />,
   MessageRemove: <Delete20Regular />,
   MessageResend: <ArrowClockwise16Regular />,
-  MessageSeen: <EyeShow16Regular />,
+  MessageSeen: <Eye16Regular />,
   MessageSending: <Circle16Regular />,
   OptionsCamera: <Video20Regular />,
-  OptionsMic: <MicOn20Regular />,
+  OptionsMic: <Mic20Regular />,
   OptionsSpeaker: <Speaker220Regular />,
   ParticipantItemMicOff: <MicOff16Regular />,
   ParticipantItemOptions: <></>,
@@ -282,5 +300,23 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(pinned-participants) */
   PinParticipant: <Pin16Regular />,
   /* @conditional-compile-remove(pinned-participants) */
-  UnpinParticipant: <PinOff16Regular />
+  UnpinParticipant: <PinOff16Regular />,
+  SplitButtonPrimaryActionCameraOn: <Video20Filled />,
+  SplitButtonPrimaryActionCameraOff: <VideoOff20Filled />,
+  SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
+  SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryLeftButton: <ChevronLeft20Regular />,
+  /* @conditional-compile-remove(vertical-gallery) */
+  VerticalGalleryRightButton: <ChevronRight20Regular />,
+  /* @conditional-compile-remove(video-background-effects) */
+  OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsIcon: <ClosedCaption20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsOffIcon: <ClosedCaptionOff20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsSettingsIcon: <Settings20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  ChangeSpokenLanguageIcon: <PersonVoice20Regular />
 };

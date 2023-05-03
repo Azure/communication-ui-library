@@ -1,0 +1,326 @@
+{
+  "participantItem": {
+    "isMeText": "(deg)",
+    "menuTitle": "Flere alternativer",
+    "removeButtonLabel": "Fjern",
+    "sharingIconLabel": "Deling",
+    "mutedIconLabel": "Dempet",
+    "displayNamePlaceholder": "Deltaker uten navn",
+    "participantStateRinging": "Ringer ...",
+    "participantStateHold": "På vent"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} skriver ...",
+    "multipleUsers": "{users} skriver ...",
+    "multipleUsersAbbreviateOne": "{users} og 1 annen skriver ...",
+    "multipleUsersAbbreviateMany": "{users} og {numOthers} andre skriver ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Skriv en melding",
+    "textTooLong": "Meldingslengden er over maksimumsgrensen.",
+    "sendButtonAriaLabel": "Send melding",
+    "fileUploadsPendingError": "Laster opp. Vent litt ...",
+    "removeFile": "Fjern fil",
+    "uploading": "Laster opp",
+    "uploadCompleted": "Opplasting fullført"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "Melding sendt",
+    "deliveredTooltipText": "Sendt",
+    "seenAriaLabel": "Melding sett av andre",
+    "seenTooltipText": "Sett",
+    "readByTooltipText": "Lest av {messageThreadReadCount} av {remoteParticipantsCount}",
+    "sendingAriaLabel": "Sending av melding",
+    "sendingTooltipText": "Sender",
+    "failedToSendAriaLabel": "Melding ikke sendt",
+    "failedToSendTooltipText": "Kan ikke sende"
+  },
+  "endCallButton": {
+    "label": "Forlat",
+    "tooltipContent": "Forlat samtale"
+  },
+  "cameraButton": {
+    "onLabel": "Deaktiver",
+    "offLabel": "Aktiver",
+    "tooltipDisabledContent": "Kameraet er deaktivert",
+    "tooltipOnContent": "Slå av kamera",
+    "tooltipOffContent": "Slå på kamera",
+    "tooltipVideoLoadingContent": "Videoen lastes inn",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Velg kamera",
+    "cameraButtonSplitRoleDescription": "Rullegardinknapp",
+    "onSplitButtonAriaLabel": "Slå av kamera og kameraalternativer",
+    "offSplitButtonAriaLabel": "Slå på kamera og kameraalternativer",
+    "cameraActionTurnedOnAnnouncement": "Kameraet er slått på",
+    "cameraActionTurnedOffAnnouncement": "Kameraet er slått av.",
+    "onSplitButtonPrimaryActionCamera": "Slå av kamera",
+    "offSplitButtonPrimaryActionCamera": "Slå på kamera",
+    "cameraPrimaryActionSplitButtonTitle": "Bruk kamera"
+  },
+  "microphoneButton": {
+    "onLabel": "Deaktiver varsler",
+    "offLabel": "Opphev demping",
+    "tooltipDisabledContent": "Mikrofonen er deaktivert",
+    "tooltipOnContent": "Demp mikrofon",
+    "tooltipOffContent": "Opphev demping av mikrofon",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Velg mikrofon",
+    "speakerMenuTitle": "Høyttaler",
+    "speakerMenuTooltip": "Velg høyttaler",
+    "microphoneButtonSplitRoleDescription": "Rullegardinknapp",
+    "onSplitButtonAriaLabel": "Demp mikrofon og lydalternativer",
+    "offSplitButtonAriaLabel": "Opphev demping av mikrofon og lydalternativer",
+    "microphoneActionTurnedOnAnnouncement": "Mikrofonen er slått på",
+    "microphoneActionTurnedOffAnnouncement": "Mikrofonen er slått av",
+    "offSplitButtonMicrophonePrimaryAction": "Opphev demping av mikrofon",
+    "onSplitButtonMicrophonePrimaryAction": "Demp mikrofon",
+    "micPrimaryActionSplitButtonTitle": "Bruk mikrofon"
+  },
+  "devicesButton": {
+    "label": "Enheter",
+    "tooltipContent": "Administrer enheter",
+    "cameraMenuTitle": "Kamera",
+    "cameraMenuTooltip": "Velg kamera",
+    "audioDeviceMenuTitle": "Lydenhet",
+    "audioDeviceMenuTooltip": "Velg lydenhet",
+    "microphoneMenuTitle": "Mikrofon",
+    "microphoneMenuTooltip": "Velg mikrofon",
+    "speakerMenuTitle": "Høyttaler",
+    "speakerMenuTooltip": "Velg høyttaler"
+  },
+  "participantsButton": {
+    "label": "Personer",
+    "tooltipContent": "Vis deltakere",
+    "menuHeader": "I denne samtalen",
+    "participantsListButtonLabel": "{numParticipants} personer",
+    "muteAllButtonLabel": "Demp alle",
+    "copyInviteLinkButtonLabel": "Kopier invitasjonskobling",
+    "copyInviteLinkActionedAriaLabel": "Invitasjonskobling er kopiert"
+  },
+  "screenShareButton": {
+    "onLabel": "Stopp presentasjon",
+    "offLabel": "Presenter",
+    "tooltipDisabledContent": "Presentasjon er deaktivert",
+    "tooltipOnContent": "Presenterer skjermen din",
+    "tooltipOffContent": "Presenter skjermen din"
+  },
+  "messageThread": {
+    "yesterday": "I går",
+    "sunday": "Søndag",
+    "monday": "Mandag",
+    "tuesday": "Tirsdag",
+    "wednesday": "Onsdag",
+    "thursday": "Torsdag",
+    "friday": "Fredag",
+    "saturday": "Lørdag",
+    "participantJoined": "ble med i chatten.",
+    "participantLeft": "forlot chatten.",
+    "editMessage": "Rediger",
+    "removeMessage": "Slett",
+    "resendMessage": "Prøv å sende på nytt",
+    "failToSendTag": "Kan ikke sende",
+    "editedTag": "Redigert",
+    "liveAuthorIntro": "{author} sier",
+    "messageContentAriaText": "{author} sa {message}",
+    "messageContentMineAriaText": "Du sa {message}",
+    "editBoxTextLimit": "Meldingen er over grensen på {limitNumber} tegn",
+    "editBoxPlaceholderText": "Rediger meldingen",
+    "newMessagesIndicator": "Nye meldinger",
+    "noDisplayNameSub": "Uten navn",
+    "editBoxCancelButton": "Avbryt",
+    "editBoxSubmitButton": "Send inn",
+    "messageReadCount": "Lest av {messageReadByCount} av {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Flere alternativer",
+    "downloadFile": "Last ned fil",
+    "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
+    "blockedWarningLinkText": "Detaljer"
+  },
+  "errorBar": {
+    "unableToReachChatService": "Du er frakoblet",
+    "accessDenied": "Får ikke tilgang til chattjenester. Kontroller brukerlegitimasjonen som er angitt",
+    "userNotInChatThread": "Du er ikke lenger i denne chattetråden",
+    "sendMessageNotInChatThread": "Kan ikke sende meldingen fordi du ikke lenger er i denne chattetråden",
+    "sendMessageGeneric": "Kan ikke sende meldingen",
+    "callingNetworkFailure": "Problemer med å koble til samtalen – du ser ut til å være frakoblet",
+    "startVideoGeneric": "Kan ikke starte video",
+    "stopVideoGeneric": "Kan ikke stoppe video",
+    "muteGeneric": "Kan ikke dempe mikrofonen",
+    "unmuteGeneric": "Kan ikke oppheve demping av mikrofon",
+    "speakingWhileMuted": "Mikrofonen er dempet",
+    "startScreenShareGeneric": "Kan ikke starte skjermdeling",
+    "stopScreenShareGeneric": "Kan ikke stoppe skjermdeling",
+    "callNetworkQualityLow": "Nettverkskvaliteten er lav.",
+    "callNoSpeakerFound": "Finner ingen høyttalere eller hodetelefoner. Koble til en lydenhet for å høre samtalen.",
+    "callNoMicrophoneFound": "Finner ingen mikrofoner. Koble til en lydinndataenhet.",
+    "callMicrophoneAccessDenied": "Får ikke tilgang til mikrofonen. Klikk låsen i adresselinjen for å gi tillatelse til denne nettsiden.",
+    "callMicrophoneAccessDeniedSafari": "Får ikke tilgang til mikrofonen. Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren og kontroller at tillatelser er aktivert for dette nettstedet.",
+    "callMicrophoneMutedBySystem": "Du er dempet av systemet.",
+    "callMicrophoneUnmutedBySystem": "Mikrofonen ble gjenopprettet, og dempingen ble opphevet av systemet.",
+    "callMacOsMicrophoneAccessDenied": "Får ikke tilgang til mikrofonen. Gi mikrofontillatelse i personverninnstillingene for macOS.",
+    "callLocalVideoFreeze": "Nettverksbåndbredden er dårlig. Videoen kan være midlertidig stanset for andre i samtalen.",
+    "callCameraAccessDenied": "Får ikke tilgang til kameraet. Klikk låsen i adresselinjen for å gi tillatelse til denne nettsiden.",
+    "callCameraAccessDeniedSafari": "Får ikke tilgang til kameraet. Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren og kontroller at tillatelser er aktivert for dette nettstedet.",
+    "callCameraAlreadyInUse": "Får ikke tilgang til kameraet. Det kan allerede være i bruk av et annet program.",
+    "callVideoStoppedBySystem": "Videoen er stoppet av systemet.",
+    "callVideoRecoveredBySystem": "Videoen er gjenopptatt.",
+    "callMacOsCameraAccessDenied": "MacOS blokkerer tilgang til kameraet. Oppdater personverninnstillingene for å gi denne nettleseren tilgang til kameraet.",
+    "callMacOsScreenShareAccessDenied": "MacOS blokkerer skjermdeling. Oppdater personverninnstillingene for å tillate at denne nettleseren registrerer skjermen.",
+    "dismissButtonAriaLabel": "Lukk",
+    "failedToJoinCallGeneric": "Kan ikke bli med i samtalen.",
+    "failedToJoinCallInvalidMeetingLink": "Kan ikke bli med i møtet. Ugyldig kobling.",
+    "startScreenSharingGeneric": "Det oppstod et problem under start av skjermdeling.",
+    "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Du deler skjermen",
+    "screenShareLoadingMessage": "Laster inn skjermen til {participant}",
+    "localVideoLabel": "Du",
+    "localVideoCameraSwitcherLabel": "Bytt kamera",
+    "localVideoMovementLabel": "Flyttbar lokal videoflis",
+    "localVideoSelectedDescription": "{cameraName} valgt",
+    "displayNamePlaceholder": "Deltaker uten navn",
+    "fitRemoteParticipantToFrame": "Tilpass til ramme",
+    "fillRemoteParticipantFrame": "Fyll ramme",
+    "pinParticipantForMe": "Fest for meg",
+    "pinParticipantForMeLimitReached": "Pin-kode (grense nådd)",
+    "unpinParticipantForMe": "Løsne",
+    "pinParticipantMenuItemAriaLabel": "Fest {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Løsne {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Festet {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Løsnet {participantName}"
+  },
+  "dialpad": {
+    "placeholderText": "Skriv inn telefonnummeret",
+    "deleteButtonAriaLabel": "Slett"
+  },
+  "holdButton": {
+    "onLabel": "Fortsett",
+    "offLabel": "Vent",
+    "tooltipOnContent": "Fortsett samtale",
+    "tooltipOffContent": "Sett samtalen på vent"
+  },
+  "videoTile": {
+    "participantStateRinging": "Ringer ...",
+    "participantStateHold": "På vent"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "Tillat {appName} å bruke kameraet og mikrofonen",
+    "secondaryText": "Dette er for at deltakerne skal kunne se og høre deg.",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "primaryButtonText": "Fortsett uten kamera og mikrofon",
+    "ariaLabel": "Gi tilgang til kamera og mikrofon"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Tillat at {appName} bruker kameraet",
+    "secondaryText": "Dette er for at deltakerne skal kunne se deg.",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "primaryButtonText": "Fortsett uten kamera",
+    "ariaLabel": "Gi kameratilgang"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Tillat at {appName} bruker mikrofonen",
+    "secondaryText": "Dette er for at deltakerne skal kunne høre deg.",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "primaryButtonText": "Fortsett uten mikrofon",
+    "ariaLabel": "Tillat mikrofontilgang"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Ser etter tilgang til kamera og mikrofon",
+    "secondaryText": "Gi tilgang hvis du blir bedt om det. Dette er slik at deltakerne kan se og høre deg.",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "primaryButtonText": "Fortsett uten kamera og mikrofon",
+    "ariaLabel": "Ser etter tilgang til kamera og mikrofon. Gi tilgang hvis du blir bedt om det."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Ser etter kameratilgang",
+    "secondaryText": "Gi tilgang hvis du blir bedt om det. Dette er slik at deltakerne kan se deg.",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "primaryButtonText": "Fortsett uten kamera",
+    "ariaLabel": "Ser etter kameratilgang. Gi tilgang hvis du blir bedt om det."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Ser etter mikrofontilgang",
+    "secondaryText": "Gi tilgang hvis du blir bedt om det. Dette er slik at deltakerne kan høre deg.",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "primaryButtonText": "Fortsett uten mikrofon",
+    "ariaLabel": "Ser etter mikrofontilgang. Gi tilgang hvis du blir bedt om det."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Får ikke tilgang til kamera og mikrofon",
+    "secondaryText": "Klikk på låseikonet i adresselinjen for å gi mikrofontillatelser til denne nettsiden. En sideoppdatering kan være nødvendig.",
+    "primaryButtonText": "Fortsett uten kamera og mikrofon",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Får ikke tilgang til kamera og mikrofon",
+    "secondaryText": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren og kontroller at tillatelser er aktivert for dette nettstedet.",
+    "primaryButtonText": "Fortsett uten kamera og mikrofon",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Får ikke tilgang til kamera",
+    "secondaryText": "Klikk på låseikonet på adresselinjen for å gi kameratillatelser til denne nettsiden. En sideoppdatering kan være nødvendig.",
+    "primaryButtonText": "Fortsett uten kamera",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Får ikke tilgang til mikrofonen",
+    "secondaryText": "Klikk på låseikonet i adresselinjen for å gi mikrofontillatelser til denne nettsiden. En sideoppdatering kan være nødvendig.",
+    "primaryButtonText": "Fortsett uten mikrofon",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Får ikke tilgang til kamera",
+    "secondaryText": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren og kontroller at tillatelser er aktivert for dette nettstedet.",
+    "primaryButtonText": "Fortsett uten kamera",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Får ikke tilgang til mikrofonen",
+    "secondaryText": "Oppdater siden for å tillate tillatelser, eller kontroller innstillingene for denne nettleseren og kontroller at tillatelser er aktivert for dette nettstedet.",
+    "primaryButtonText": "Fortsett uten mikrofon",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Nettleseren støttes ikke",
+    "secondaryText": "Bli med i denne samtalen ved hjelp av en kompatibel nettleser.",
+    "moreHelpLinkText": "Se kompatibilitetskrav"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Nettleseroppdatering kreves",
+    "secondaryText": "Hvis du vil sikre best mulig samtale, må du oppdatere nettleseren og deretter prøve å bli med i samtalen på nytt.",
+    "moreHelpLinkText": "Se kompatibilitetskrav",
+    "continueAnywayButtonText": "Start anrop uten å oppdatere"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Operativsystem støttes ikke",
+    "secondaryText": "Bli med i denne samtalen ved hjelp av en enhet med et kompatibelt operativsystem.",
+    "moreHelpLinkText": "Se kompatibilitetskrav"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Kan ikke bruke kameraet eller mikrofonen",
+    "secondaryText": "Nettleseren har kanskje ikke tilgang til kameraet eller mikrofonen. Åpne Systemvalg for å løse dette problemet.",
+    "primaryButtonText": "Prøv på nytt",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Gi mikrofontilgang for å fortsette",
+    "secondaryText": "Slik at andre deltakere kan høre deg.",
+    "primaryButtonText": "Prøv på nytt",
+    "imageAltText": "Plassering av mikrofon- og kameraenhetstillatelse for iOS",
+    "linkText": "Trenger du hjelp? Få hjelp til feilsøking",
+    "step1Text": "Gå til Innstillinger-appen",
+    "step2Text": "Rull ned til innstillinger for denne nettleseren",
+    "step3Text": "Slå på mikrofon (kamera valgfritt)",
+    "step4Text": "Prøv å bli med i samtalen på nytt",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "forrige side",
+    "rightNavButtonAriaLabel": "neste side"
+  }
+}

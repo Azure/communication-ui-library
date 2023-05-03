@@ -13,8 +13,14 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { SelectedVideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(video-background-effects) */
+import { AdapterErrors } from '../../common/adapters';
 
 /**
  * @private
@@ -112,3 +118,58 @@ export const getRemoteParticipants = (
  * @private
  */
 export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | undefined => state.environmentInfo;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * @private
+ */
+export const getSelectedVideoEffect = (state: CallAdapterState): SelectedVideoBackgroundEffect | undefined =>
+  state.selectedVideoBackgroundEffect;
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined => {
+  return state.call?.captionsFeature.captions;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCurrentCaptionLanguage = (state: CallAdapterState): string | undefined => {
+  return state.call?.captionsFeature.currentCaptionLanguage;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCurrentSpokenLanguage = (state: CallAdapterState): string | undefined => {
+  return state.call?.captionsFeature.currentSpokenLanguage;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getSupportedCaptionLanguages = (state: CallAdapterState): string[] | undefined => {
+  return state.call?.captionsFeature.supportedCaptionLanguages;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] | undefined => {
+  return state.call?.captionsFeature.supportedSpokenLanguages;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @private
+ */
+export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeamsCall;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * @private
+ */
+export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Move cursor to the end of input when clicking on dialpad text field",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

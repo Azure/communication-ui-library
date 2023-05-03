@@ -48,7 +48,7 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         args.localParticipantPosition
       );
       const chatClient = new FakeChatClient(chatClientModel, args.localParticipant.id);
-      const thread = await chatClient.createChatThread({ topic: 'Cowabunga' }, { participants });
+      const thread = await chatClient.createChatThread({ topic: args.topic ?? 'Cowabunga' }, { participants });
       const threadId = thread?.chatThread?.id ?? '';
       const chatThreadClient = chatClient.getChatThreadClient(threadId);
       const adapter = await initializeAdapter(
@@ -119,7 +119,12 @@ const initializeAdapter = async (
     adapterInfo.chatThreadClient.threadId
   );
   registerChatThreadClientMethodErrors(chatThreadClient, chatThreadClientMethodErrors);
-  return await createAzureCommunicationChatAdapterFromClient(statefulChatClient, chatThreadClient);
+  return await createAzureCommunicationChatAdapterFromClient(
+    statefulChatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(teams-inline-images) */
+    { credential: fakeToken }
+  );
 };
 
 interface AdapterInfo {
@@ -129,9 +134,18 @@ interface AdapterInfo {
   chatThreadClient: ChatThreadClient;
 }
 
+type MockAccessToken = {
+  token: string;
+  expiresOnTimestamp: number;
+};
+
 const fakeToken: CommunicationTokenCredential = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
-  getToken(): any {},
+  getToken: (): Promise<MockAccessToken> => {
+    return new Promise<MockAccessToken>((resolve) => {
+      resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });
+    });
+  },
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   dispose(): any {}
 };

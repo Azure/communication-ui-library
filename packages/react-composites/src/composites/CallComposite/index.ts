@@ -7,11 +7,9 @@ export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 export type { DeviceCheckOptions } from './CallComposite';
 /* @conditional-compile-remove(pinned-participants) */
 export type { RemoteVideoTileMenuOptions } from './CallComposite';
-export type { CallControlDisplayType, CallControlOptions } from './types/CallControlOptions';
+export type { CallControlOptions } from './types/CallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
-  CustomCallControlButtonPlacement,
-  CustomCallControlButtonCallback,
   CustomCallControlButtonCallbackArgs,
   CustomCallControlButtonProps,
   CustomControlButtonProps
@@ -50,6 +48,15 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';
 
+/* @conditional-compile-remove(video-background-effects) */
+export type {
+  VideoBackgroundImage,
+  SelectedVideoBackgroundEffect,
+  VideoBackgroundNoneEffect,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundReplacementEffect
+} from './adapter/CallAdapter';
+
 export type {
   CallAdapter,
   CallAdapterCallEndedEvent,
@@ -72,3 +79,6 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener
 } from './adapter';
+
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './adapter';

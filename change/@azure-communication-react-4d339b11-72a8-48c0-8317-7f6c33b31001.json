@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix styling to show more of mobile portrait stream.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

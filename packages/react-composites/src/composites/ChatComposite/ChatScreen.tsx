@@ -47,6 +47,8 @@ import { useSelector } from './hooks/useSelector';
 import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -127,7 +129,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   useEffect(() => {
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
-    adapter.fetchInitialData();
+    const fetchData: () => Promise<void> = async () => {
+      // Fetch initial data for adapter
+      await adapter.fetchInitialData();
+      // Fetch initial set of messages. Without fetching messages here, if the Composite's adapter is changed the message thread does not load new messages.
+      await adapter.loadPreviousChatMessages(defaultNumberOfChatMessagesToReload);
+    };
+    fetchData();
   }, [adapter]);
 
   const messageThreadProps = usePropsFor(MessageThread);
@@ -188,6 +196,18 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [fileSharing?.downloadHandler]
   );
 
+  /* @conditional-compile-remove(teams-inline-images) */
+  const onRenderInlineAttachment = useCallback(
+    async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+      if (attachment.previewUrl) {
+        const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.previewUrl] });
+        return blob;
+      }
+      return [{ blobUrl: '' }];
+    },
+    [adapter]
+  );
+
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
       return null;
@@ -221,6 +241,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloads}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onRenderInlineAttachment}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />

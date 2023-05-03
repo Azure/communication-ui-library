@@ -119,7 +119,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
       activeErrorMessages.push({ type: 'callCameraAccessDenied' });
     } else {
       if (diagnostics?.media.latest.cameraFreeze?.value === true) {
-        activeErrorMessages.push({ type: 'callCameraAlreadyInUse' });
+        activeErrorMessages.push({ type: 'cameraFrozenForRemoteParticipants' });
       }
     }
 
@@ -157,6 +157,13 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
+    /* @conditional-compile-remove(video-background-effects) */
+    appendActiveErrorIfDefined(
+      activeErrorMessages,
+      latestErrors,
+      'VideoEffectsFeature.startEffects',
+      'unableToStartVideoEffect'
+    );
 
     if (latestErrors['CallAgent.join']?.message === 'CallAgent.join: Invalid meeting link') {
       appendActiveErrorIfDefined(

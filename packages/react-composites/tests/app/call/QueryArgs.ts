@@ -4,6 +4,7 @@
 import { Role } from '@internal/react-components';
 import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
+import { jsonDateDeserializer } from '../lib/utils';
 
 export interface QueryArgs {
   // Defined only for hermetic tests.
@@ -12,12 +13,14 @@ export interface QueryArgs {
   showCallDescription: boolean;
   injectParticipantMenuItems: boolean;
   injectCustomButtons: boolean;
+  newControlBarExperience?: boolean;
   role?: Role;
   callInvitationUrl?: string;
   showParticipantItemIcon: boolean;
   customCallCompositeOptions?: CallCompositeOptions;
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
+  rtl?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -32,11 +35,14 @@ export function parseQueryArgs(): QueryArgs {
   const params = Object.fromEntries(urlSearchParams.entries());
 
   return {
-    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState
+      ? JSON.parse(params.mockCallAdapterState, jsonDateDeserializer) // json date deserializer is needed because Date objects are serialized as strings by JSON.stringify
+      : undefined,
     useFrLocale: Boolean(params.useFrLocale),
     showCallDescription: Boolean(params.showCallDescription),
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),
     injectCustomButtons: Boolean(params.injectCustomButtons),
+    newControlBarExperience: Boolean(params.newControlBarExperience),
     showParticipantItemIcon: Boolean(params.showParticipantItemIcon),
     useEnvironmentInfoTroubleshootingOptions: Boolean(params.useEnvironmentInfoTroubleshootingOptions),
     usePermissionTroubleshootingActions: Boolean(params.usePermissionTroubleshootingActions),
@@ -45,6 +51,7 @@ export function parseQueryArgs(): QueryArgs {
     token: params.token ?? '',
     displayName: params.displayName ?? '',
     role: (params.role as Role) ?? undefined,
+    rtl: Boolean(params.rtl),
     callInvitationUrl: params.callInvitationUrl,
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)

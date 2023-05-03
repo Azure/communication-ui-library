@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix unreachable bug when use stable sdk with beta",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

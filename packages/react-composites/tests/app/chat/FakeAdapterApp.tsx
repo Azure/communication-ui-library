@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatParticipant } from '@azure/communication-chat';
+import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
+import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect } from 'react';
@@ -20,7 +21,7 @@ import {
   customOnRenderMessage,
   customOnRenderTypingIndicator
 } from './CustomDataModel';
-import { FakeChatClient, Model } from '@internal/fake-backends';
+import { FakeChatClient, Model, Thread } from '@internal/fake-backends';
 import { HiddenChatComposites } from '../lib/HiddenChatComposites';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -52,6 +53,15 @@ export const FakeAdapterApp = (): JSX.Element => {
       if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
         sendRemoteFileSharingMessage(
           fakeAdapters.service.model,
+          fakeChatAdapterArgs.remoteParticipants[0],
+          fakeAdapters.service.threadId
+        );
+      }
+
+      if (fakeChatAdapterArgs.sendRemoteInlineImageMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
+        sendRemoteInlineImageMessage(
+          fakeAdapters.service.model,
+          fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
           fakeAdapters.service.threadId
         );
@@ -114,7 +124,9 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
       fileUploads[0].notifyUploadCompleted({
         name: file.name,
         extension: file.extension,
-        url: file.url
+        url: file.url,
+        attachmentType: 'fileSharing',
+        id: ''
       });
     } else if (file.error) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
@@ -140,8 +152,62 @@ const sendRemoteFileSharingMessage = (
       senderDisplayName: remoteParticipant.displayName,
       type: 'text',
       metadata: {
-        fileSharingMetadata: JSON.stringify([{ name: 'SampleFile1.pdf', extension: 'pdf' }])
+        fileSharingMetadata: JSON.stringify([
+          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing' }
+        ])
       }
     }
   );
+};
+
+const sendRemoteInlineImageMessage = (
+  chatClientModel: Model,
+  localParticipant: ChatParticipant,
+  remoteParticipant: ChatParticipant,
+  threadId: string
+): void => {
+  const thread: Thread = chatClientModel.checkedGetThread(localParticipant.id, threadId);
+  const messageWithInlineImage: ChatMessage = {
+    id: `${thread.messages.length}`,
+    type: 'html',
+    sequenceId: `${thread.messages.length}`,
+    version: '0',
+    content: {
+      message:
+        '<p>Test</p><p><img alt="image" src="" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>',
+      attachments: [
+        {
+          id: 'SomeImageId1',
+          attachmentType: 'teamsInlineImage',
+          contentType: 'png',
+          name: '',
+          url: 'images/inlineImageExample1.png',
+          previewUrl: 'images/inlineImageExample1.png'
+        }
+      ]
+    },
+    senderDisplayName: remoteParticipant.displayName,
+    createdOn: new Date(Date.now()),
+    sender: getIdentifierKind(remoteParticipant.id)
+  };
+
+  chatClientModel.modifyThreadForUser(localParticipant.id, threadId, (thread) => {
+    thread.messages = [...thread.messages, messageWithInlineImage];
+  });
+
+  chatClientModel
+    .checkedGetThreadEventEmitter(localParticipant.id, threadId)
+    .chatMessageReceived([localParticipant.id], {
+      id: messageWithInlineImage.id,
+      createdOn: messageWithInlineImage.createdOn,
+      version: messageWithInlineImage.version,
+      type: messageWithInlineImage.type,
+      message: messageWithInlineImage.content?.message ?? '',
+      attachments: messageWithInlineImage.content?.attachments,
+      threadId: threadId,
+      sender: getIdentifierKind(remoteParticipant.id),
+      senderDisplayName: remoteParticipant.displayName ?? '',
+      recipient: getIdentifierKind(localParticipant.id),
+      metadata: {}
+    });
 };

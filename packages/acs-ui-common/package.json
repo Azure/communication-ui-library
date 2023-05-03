@@ -1,6 +1,6 @@
 {
   "name": "@internal/acs-ui-common",
-  "version": "1.5.1-beta.0",
+  "version": "1.5.1-beta.3",
   "description": "Common types and utilities for all Azure Communication Serves UI libraries",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",

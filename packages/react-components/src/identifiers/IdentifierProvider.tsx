@@ -39,10 +39,24 @@ export interface _Identifiers {
   videoGallery: string;
   /** `data-ui-id` value for `VideoTile` Component */
   videoTile: string;
-  /** `data-ui-id` value for `HorizontalGallery` Component's left navigation button */
-  horizontalGalleryLeftNavButton: string;
-  /** `data-ui-id` value for `HorizontalGallery` Component's right navigation button */
-  horizontalGalleryRightNavButton: string;
+  /** `data-ui-id` value for overflow gallery component's left navigation button */
+  overflowGalleryLeftNavButton: string;
+  /** `data-ui-id` value for overflow gallery component's right navigation button */
+  overflowGalleryRightNavButton: string;
+  /** `data-ui-id` value for the video tiles in the horizontal gallery */
+  horizontalGalleryVideoTile: string;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /** `data-ui-id` value for `VerticalGallery` Component's children video tiles */
+  verticalGalleryVideoTile: string;
+  /* @conditional-compile-remove(vertical-gallery) */
+  /** `data-ui-id` value for `VerticalGallery` Component's page counter */
+  verticalGalleryPageCounter: string;
+  /* @conditional-compile-remove(at-mention) */
+  /** `data-ui-id` value for `AtMentionFlyout` Component's suggestion list */
+  atMentionSuggestionList: string;
+  /* @conditional-compile-remove(at-mention) */
+  /** `data-ui-id` value for `AtMentionFlyout` Component's suggestion list item */
+  atMentionSuggestionItem: string;
 }
 
 const defaultIdentifiers: _Identifiers = {
@@ -57,8 +71,17 @@ const defaultIdentifiers: _Identifiers = {
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',
   videoTile: 'video-tile',
-  horizontalGalleryLeftNavButton: 'horizontal-gallery-left-nav-button',
-  horizontalGalleryRightNavButton: 'horizontal-gallery-right-nav-button'
+  overflowGalleryLeftNavButton: 'overflow-gallery-left-nav-button',
+  overflowGalleryRightNavButton: 'overflow-gallery-right-nav-button',
+  /* @conditional-compile-remove(vertical-gallery) */
+  verticalGalleryVideoTile: 'vertical-gallery-video-tile',
+  horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
+  /* @conditional-compile-remove(vertical-gallery) */
+  verticalGalleryPageCounter: 'vertical-gallery-page-counter',
+  /* @conditional-compile-remove(at-mention) */
+  atMentionSuggestionList: 'at-mention-suggestion-list',
+  /* @conditional-compile-remove(at-mention) */
+  atMentionSuggestionItem: 'at-mention-suggestion-item'
 };
 
 /**

@@ -3,7 +3,7 @@
 
 import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '../components/FileDownloadCards';
 
 /**
@@ -29,7 +29,11 @@ export type MessageContentType = 'text' | 'html' | 'richtext/html' | 'unknown';
  *
  * @public
  */
-export type Message = ChatMessage | SystemMessage | CustomMessage;
+export type Message =
+  | ChatMessage
+  | SystemMessage
+  | CustomMessage
+  | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
 /**
  * Discriminated union of all system messages.
@@ -51,13 +55,13 @@ export type SystemMessage =
  */
 export interface ChatMessage extends MessageCommon {
   messageType: 'chat';
-
   content?: string;
   editedOn?: Date;
   deletedOn?: Date;
   senderId?: string;
   senderDisplayName?: string;
   status?: MessageStatus;
+  failureReason?: string;
   attached?: MessageAttachedStatus;
   mine?: boolean;
   clientMessageId?: string;
@@ -67,7 +71,7 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
   /**
    * @beta
    * A list of files attached to the message.
@@ -75,6 +79,7 @@ export interface ChatMessage extends MessageCommon {
    */
   attachedFilesMetadata?: FileMetadata[];
 }
+
 /**
  * A system message notifying that a participant was added to the chat thread.
  *
@@ -117,6 +122,27 @@ export interface ContentSystemMessage extends SystemMessageCommon {
   systemMessageType: 'content';
 
   content: string;
+}
+
+/* @conditional-compile-remove(data-loss-prevention) */
+/**
+ * Content blocked message type.
+ *
+ * Content blocked messages will rendered default value, but applications can provide custom strings and icon to renderers.
+ *
+ * @beta
+ */
+export interface BlockedMessage extends MessageCommon {
+  messageType: 'blocked';
+  warningText?: string;
+  linkText?: string;
+  link?: string;
+  deletedOn?: Date;
+  senderId?: string;
+  senderDisplayName?: string;
+  status?: MessageStatus;
+  attached?: MessageAttachedStatus;
+  mine?: boolean;
 }
 
 /**

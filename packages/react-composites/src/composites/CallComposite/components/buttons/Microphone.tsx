@@ -4,11 +4,11 @@
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { useLocale } from '../../../localization';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
-import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
 /**

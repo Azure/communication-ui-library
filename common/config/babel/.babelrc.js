@@ -14,6 +14,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'calling-beta-sdk',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
+        // Close captions feature
+        'close-captions',
         // API for injecting custom buttons in he control bar for
         // `CallComposite` and `CallWithChatComposite`.
         'control-bar-button-injection',
@@ -24,8 +26,14 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'demo',
         // dialpad
         'dialpad',
+        // Data loss prevention feature
+        'data-loss-prevention',
         // Ability to upload/download files in message thread.
         'file-sharing',
+        // At mention feature
+        'at-mention',
+        // feature for enabling new call control bar in CallComposite
+        'new-call-control-bar',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 
@@ -36,6 +44,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
+        // Chat teams interop to display images in chat messages
+        'teams-inline-images',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
@@ -46,7 +56,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
         // feature for blurred background and replace background effects
-        'video-background-effects'
+        'video-background-effects',
+        // feature for vertical gallery layouts in VideoGallery
+        'vertical-gallery'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without

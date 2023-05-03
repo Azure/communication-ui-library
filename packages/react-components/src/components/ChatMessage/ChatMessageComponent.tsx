@@ -1,17 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentProps = {
-  message: ChatMessage;
+  message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   userId: string;
   messageContainerStyle?: ComponentSlotStyle;
   showDate?: boolean;
@@ -24,13 +28,23 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
+  onCancelMessageEdit?: (messageId: string) => void;
+  /**
+   * Callback to delete a message. Also called before resending a message that failed to send.
+   * @param messageId ID of the message to delete
+   */
   onDeleteMessage?: (messageId: string) => Promise<void>;
   /**
-   * Optional callback called when message is sent
+   * Callback to send a message
+   * @param content The message content to send
    */
   onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
+  /**
+   * Optional text to display when the message status is 'failed'.
+   */
+  failureReason?: string;
   /**
    * Whether the status indicator for each message is displayed or not.
    */
@@ -65,6 +79,23 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to display suggestions in the at mention scenario.
+   * @beta
+   */
+  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional function to fetch attachments.
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional map of attachment ids to blob urls.
+   */
+  attachmentsMap?: Record<string, string>;
 };
 
 /**
@@ -76,23 +107,23 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
   const { onDeleteMessage, onSendMessage, message } = props;
+  const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
+  const content = 'content' in message ? message.content : undefined;
   const onRemoveClick = useCallback(() => {
     if (onDeleteMessage && message.messageId) {
       onDeleteMessage(message.messageId);
     }
-    // when fail to send, message does not have message id, delete message using clientmessageid
-    else if (onDeleteMessage && message.clientMessageId) {
-      onDeleteMessage(message.clientMessageId);
+    // when fail to send, message does not have message id, delete message using clientMessageId
+    else if (onDeleteMessage && message.messageType === 'chat' && clientMessageId) {
+      onDeleteMessage(clientMessageId);
     }
-  }, [message.messageId, message.clientMessageId, onDeleteMessage]);
+  }, [onDeleteMessage, message.messageId, message.messageType, clientMessageId]);
   const onResendClick = useCallback(() => {
-    onDeleteMessage && message.clientMessageId && onDeleteMessage(message.clientMessageId);
-    onSendMessage && onSendMessage(message.content ?? '');
-  }, [message.clientMessageId, message.content, onSendMessage, onDeleteMessage]);
+    onDeleteMessage && clientMessageId && onDeleteMessage(clientMessageId);
+    onSendMessage && onSendMessage(content !== undefined ? content : '');
+  }, [clientMessageId, content, onSendMessage, onDeleteMessage]);
 
-  if (props.message.messageType !== 'chat') {
-    return <></>;
-  } else if (isEditing) {
+  if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBox
         message={message}
@@ -100,11 +131,12 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
-            props.message.messageId &&
-            (await props.onUpdateMessage(props.message.messageId, text, metadata, options));
+            message.messageId &&
+            (await props.onUpdateMessage(message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
-        onCancel={() => {
+        onCancel={(messageId) => {
+          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId);
           setIsEditing(false);
         }}
       />
@@ -120,6 +152,10 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
+        /* @conditional-compile-remove(teams-inline-images) */
+        onFetchAttachments={props.onFetchAttachments}
+        /* @conditional-compile-remove(teams-inline-images) */
+        attachmentsMap={props.attachmentsMap}
       />
     );
   }

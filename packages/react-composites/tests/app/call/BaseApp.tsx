@@ -11,7 +11,8 @@ import {
   COMPOSITE_LOCALE_EN_US,
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
-  CustomCallControlButtonCallbackArgs
+  CustomCallControlButtonCallbackArgs,
+  CallCompositeOptions
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -27,6 +28,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
   console.log(`Loaded test app with args ${JSON.stringify(queryArgs)}`);
 
   const locale = queryArgs.useFrLocale ? COMPOSITE_LOCALE_FR_FR : COMPOSITE_LOCALE_EN_US;
+  const rtl = !!queryArgs.rtl;
   if (queryArgs.showCallDescription) {
     locale.strings.call.configurationPageCallDetails =
       'Some details about the call that span more than one line - many, many lines in fact. Who would want fewer lines than many, many lines? Could you even imagine?! 😲';
@@ -42,11 +44,39 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       onEnvironmentInfoTroubleshootingClick: onEnvironmentInfoTroubleshootingClick
     };
   }
-
   if (queryArgs.usePermissionTroubleshootingActions) {
     customCallCompositeOptions = {
       ...customCallCompositeOptions,
       onPermissionsTroubleshootingClick: onPermissionsTroubleshootingClick
+    };
+  }
+
+  let options: CallCompositeOptions =
+    customCallCompositeOptions !== undefined
+      ? customCallCompositeOptions
+      : queryArgs.injectCustomButtons
+      ? {
+          callControls: {
+            legacyControlBarExperience: true,
+            onFetchCustomButtonProps,
+            // Hide some buttons to keep the mobile-view control bar narrow
+            devicesButton: false,
+            endCallButton: false
+          }
+        }
+      : {
+          callControls: {
+            legacyControlBarExperience: true
+          }
+        };
+
+  if (queryArgs.newControlBarExperience) {
+    options = {
+      ...options,
+      callControls: {
+        ...(options?.callControls instanceof Object ? options?.callControls : {}),
+        legacyControlBarExperience: false
+      }
     };
   }
 
@@ -64,20 +94,8 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
               onFetchParticipantMenuItems={
                 queryArgs.injectParticipantMenuItems ? onFetchParticipantMenuItems : undefined
               }
-              options={
-                customCallCompositeOptions !== undefined
-                  ? customCallCompositeOptions
-                  : queryArgs.injectCustomButtons
-                  ? {
-                      callControls: {
-                        onFetchCustomButtonProps,
-                        // Hide some buttons to keep the mobile-view control bar narrow
-                        devicesButton: false,
-                        endCallButton: false
-                      }
-                    }
-                  : undefined
-              }
+              rtl={rtl}
+              options={options}
               callInvitationUrl={queryArgs.callInvitationUrl}
             />
           </_IdentifierProvider>

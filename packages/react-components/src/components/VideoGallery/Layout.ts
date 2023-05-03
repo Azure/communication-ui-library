@@ -3,6 +3,8 @@
 
 import { VideoGalleryRemoteParticipant } from '../../types';
 import { VideoGalleryStyles } from '../VideoGallery';
+/* @conditional-compile-remove(vertical-gallery) */
+import { OverflowGalleryPosition } from '../VideoGallery';
 
 /**
  * Props for a layout component
@@ -28,14 +30,23 @@ export interface LayoutProps {
    * Maximum number of participant remote video streams that is rendered.
    * @defaultValue 4
    */
-  maxRemoteVideoStreams?: number;
+  maxRemoteVideoStreams: number;
   /**
    * Width of parent element
    */
   parentWidth?: number;
-  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Height of parent element
+   */
+  parentHeight?: number;
   /**
    * List of pinned participant userIds
    */
   pinnedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(vertical-gallery) */
+  /**
+   * Determines the layout of the overflowGallery.
+   * @defaultValue 'HorizontalBottom'
+   */
+  overflowGalleryPosition?: OverflowGalleryPosition;
 }

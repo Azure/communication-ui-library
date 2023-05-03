@@ -24,6 +24,10 @@ export type _FakeChatAdapterArgs = {
    */
   remoteParticipants: ChatParticipant[];
   /**
+   * Topic of the chat thread.
+   */
+  topic?: string;
+  /**
    * The position of the local participant among all participants in chat thread. Defaults to 0 i.e. the
    * first participant in chat thread. If `localParticipantPosition` given is below 0 or greater than the
    * number of all participants the local participants will be defaulted to the first position.
@@ -48,6 +52,10 @@ export type _FakeChatAdapterArgs = {
    * `fileSharingEnabled` needs to be enabled.
    */
   sendRemoteFileSharingMessage?: boolean;
+  /**
+   * Determines if the first remote participant will send a fixed message with a inline image.
+   */
+  sendRemoteInlineImageMessage?: boolean;
   /**
    * Determines if chat composite will be localized in French (France).
    */

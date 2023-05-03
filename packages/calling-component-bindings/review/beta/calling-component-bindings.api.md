@@ -10,12 +10,15 @@ import { ActiveErrorMessage } from '@internal/react-components';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
+import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
+import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -105,6 +108,30 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
+// @internal
+export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    captions: _CaptionsInfo[];
+    isCaptionsOn: boolean;
+};
+
+// @internal
+export const _captionsBannerSelector: _CaptionsBannerSelector;
+
+// @beta
+export type CaptionsOptions = {
+    spokenLanguage: string;
+};
+
+// @internal
+export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedSpokenLanguages: string[];
+    currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
+};
+
+// @internal
+export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector;
+
 // @public
 export interface CommonCallingHandlers {
     // (undocumented)
@@ -113,6 +140,8 @@ export interface CommonCallingHandlers {
     onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
+    // (undocumented)
+    onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
     // (undocumented)
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
@@ -128,6 +157,10 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
     // (undocumented)
+    onRemoveVideoBackgroundEffects: () => Promise<void>;
+    // (undocumented)
+    onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
+    // (undocumented)
     onSelectCamera: (device: VideoDeviceInfo, options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
     onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
@@ -136,11 +169,19 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
     // (undocumented)
+    onSetCaptionLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
@@ -242,6 +283,16 @@ export type ScreenShareButtonSelector = (state: CallClientState, props: CallingB
 
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
+
+// @internal
+export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked: boolean;
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+};
+
+// @internal
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector;
 
 // @beta
 export interface TeamsCallingHandlers extends CommonCallingHandlers {

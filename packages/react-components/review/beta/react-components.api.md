@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -21,10 +20,12 @@ import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
+import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
+import { ITooltipHostProps } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -63,9 +64,74 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta
+export interface AtMentionDisplayOptions {
+    onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
+}
+
+// @internal
+export const _AtMentionFlyout: (props: _AtMentionFlyoutProps) => JSX.Element;
+
+// @internal
+export interface _AtMentionFlyoutProps {
+    onDismiss?: () => void;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void;
+    suggestions: AtMentionSuggestion[];
+    target?: React_2.RefObject<Element>;
+    title?: string;
+}
+
+// @beta
+export interface AtMentionLookupOptions {
+    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
+    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
+    trigger?: string;
+}
+
+// @beta
+export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
+
+// @beta
+export interface AtMentionSuggestion {
+    displayName: string;
+    suggestionType: string;
+    userId: string;
+}
+
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export interface BlockedMessage extends MessageCommon {
+    // (undocumented)
+    attached?: MessageAttachedStatus;
+    // (undocumented)
+    deletedOn?: Date;
+    // (undocumented)
+    link?: string;
+    // (undocumented)
+    linkText?: string;
+    // (undocumented)
+    messageType: 'blocked';
+    // (undocumented)
+    mine?: boolean;
+    // (undocumented)
+    senderDisplayName?: string;
+    // (undocumented)
+    senderId?: string;
+    // (undocumented)
+    status?: MessageStatus;
+    // (undocumented)
+    warningText?: string;
 }
 
 // @beta
@@ -165,6 +231,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
@@ -178,10 +245,13 @@ export interface CameraButtonStrings {
     cameraButtonSplitRoleDescription?: string;
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
+    cameraPrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonPrimaryActionCamera?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonPrimaryActionCamera?: string;
     tooltipDisabledContent?: string;
     tooltipOffContent?: string;
     tooltipOnContent?: string;
@@ -206,6 +276,171 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
+export type CancelEditCallback = (messageId: string) => void;
+
+// @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @internal
+export interface _CaptionProps extends _CaptionsInfo {
+    onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @beta
+export interface CaptionsAvailableLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
+}
+
+// @internal
+export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsBannerProps {
+    // (undocumented)
+    captions: _CaptionsInfo[];
+    // (undocumented)
+    isCaptionsOn?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @internal
+export type _CaptionsInfo = {
+    id: string;
+    displayName: string;
+    captionText: string;
+    userId?: string;
+};
+
+// @internal
+export type _captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @internal
+export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsSettingsModalProps {
+    // (undocumented)
+    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+    // (undocumented)
+    currentSpokenLanguage: string;
+    // (undocumented)
+    isCaptionsFeatureActive?: boolean;
+    // (undocumented)
+    onDismissCaptionsSettings?: () => void;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    // (undocumented)
+    showModal?: boolean;
+    // (undocumented)
+    strings?: _CaptionsSettingsModalStrings;
+    // (undocumented)
+    supportedSpokenLanguages: string[];
+}
+
+// @internal
+export interface _CaptionsSettingsModalStrings {
+    // (undocumented)
+    captionsSettingsCancelButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsConfirmButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsDropdownInfoText?: string;
+    // (undocumented)
+    captionsSettingsDropdownLabel?: string;
+    // (undocumented)
+    captionsSettingsModalAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsModalTitle?: string;
+}
+
+// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -221,6 +456,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -347,6 +584,9 @@ export interface ComponentLocale {
 }
 
 // @public
+export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
+
+// @public
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
@@ -379,6 +619,7 @@ export interface ComponentStrings {
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
+    VerticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -484,6 +725,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
+    DataLossPreventionProhibited: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -536,6 +778,17 @@ export const DEFAULT_COMPONENT_ICONS: {
     VideoTileScaleFill: JSX.Element;
     PinParticipant: JSX.Element;
     UnpinParticipant: JSX.Element;
+    SplitButtonPrimaryActionCameraOn: JSX.Element;
+    SplitButtonPrimaryActionCameraOff: JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
+    SplitButtonPrimaryActionMicMuted: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
+    OptionsVideoBackgroundEffect: JSX.Element;
+    CaptionsIcon: JSX.Element;
+    CaptionsOffIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
 };
 
 // @internal
@@ -652,6 +905,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
     // (undocumented)
@@ -741,6 +995,7 @@ export interface ErrorBarStrings {
     callNoSpeakerFound: string;
     callVideoRecoveredBySystem: string;
     callVideoStoppedBySystem: string;
+    cameraFrozenForRemoteParticipants?: string;
     dismissButtonAriaLabel?: string;
     failedToJoinCallGeneric?: string;
     failedToJoinCallInvalidMeetingLink?: string;
@@ -753,6 +1008,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
@@ -817,10 +1073,19 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 
 // @beta
 export interface FileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
     extension: string;
+    // (undocumented)
+    id: string;
     name: string;
+    // (undocumented)
+    previewUrl?: string;
     url: string;
 }
+
+// @beta (undocumented)
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -909,10 +1174,13 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    horizontalGalleryLeftNavButton: string;
-    horizontalGalleryRightNavButton: string;
+    atMentionSuggestionItem: string;
+    atMentionSuggestionList: string;
+    horizontalGalleryVideoTile: string;
     messageContent: string;
     messageTimestamp: string;
+    overflowGalleryLeftNavButton: string;
+    overflowGalleryRightNavButton: string;
     participantButtonPeopleMenuItem: string;
     participantItemMenuButton: string;
     participantList: string;
@@ -920,6 +1188,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -982,7 +1252,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @public
-export type Message = ChatMessage | SystemMessage | CustomMessage;
+export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
@@ -1006,6 +1276,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1047,7 +1318,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 // @public
 export type MessageThreadProps = {
     userId: string;
-    messages: (ChatMessage | SystemMessage | CustomMessage)[];
+    messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage)[];
     participantCount?: number;
     readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
@@ -1062,18 +1333,23 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
-    onSendMessage?: (messageId: string) => Promise<void>;
+    onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
+    atMentionOptions?: AtMentionOptions;
 };
 
 // @public
 export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
+    blockedWarningLinkText: string;
+    blockedWarningText: string;
     downloadFile: string;
     editBoxCancelButton: string;
     editBoxPlaceholderText: string;
@@ -1104,6 +1380,7 @@ export interface MessageThreadStrings {
 
 // @public
 export interface MessageThreadStyles extends BaseCustomStyles {
+    blockedMessageContainer?: ComponentSlotStyle;
     chatContainer?: ComponentSlotStyle;
     chatItemMessageContainer?: ComponentSlotStyle;
     chatMessageContainer?: ComponentSlotStyle;
@@ -1140,6 +1417,7 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
+    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
@@ -1147,8 +1425,10 @@ export interface MicrophoneButtonStrings {
     microphoneMenuTooltip?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
+    offSplitButtonMicrophonePrimaryAction?: string;
     onLabel: string;
     onSplitButtonAriaLabel?: string;
+    onSplitButtonMicrophonePrimaryAction?: string;
     speakerMenuTitle?: string;
     speakerMenuTooltip?: string;
     tooltipDisabledContent?: string;
@@ -1186,6 +1466,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @beta
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -1410,7 +1693,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1443,6 +1726,8 @@ export interface SendBoxErrorBarError {
 export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
+    // @beta
+    atMentionLookupOptions?: AtMentionLookupOptions;
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
     // @beta
@@ -1492,6 +1777,26 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
+}
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public
@@ -1647,6 +1952,84 @@ export const _usePermissions: () => _Permissions;
 // @public
 export const useTheme: () => Theme;
 
+// @beta
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @beta
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @beta
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
+// @internal
+export type _VideoBackgroundEffectChoiceOption = _VideoEffectsItemProps;
+
+// @internal
+export const _VideoBackgroundEffectsPicker: (props: _VideoBackgroundEffectsPickerProps) => JSX.Element;
+
+// @internal
+export interface _VideoBackgroundEffectsPickerProps {
+    defaultSelectedEffectKey?: string;
+    itemsPerRow?: 'wrap' | number;
+    label?: string;
+    onChange?: (effectKey: string) => void;
+    options: _VideoBackgroundEffectChoiceOption[];
+    selectedEffectKey?: string;
+    styles?: _VideoBackgroundEffectsPickerStyles;
+}
+
+// @internal
+export interface _VideoBackgroundEffectsPickerStyles {
+    label?: IStyle;
+    root?: IStyle;
+    rowRoot?: IStyle;
+}
+
+// @internal
+export const _VideoEffectsItem: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemAddImage: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemBlur: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export const _VideoEffectsItemNoBackground: (props: _VideoEffectsItemProps) => JSX.Element;
+
+// @internal
+export interface _VideoEffectsItemProps {
+    ariaLabel?: string;
+    backgroundProps?: {
+        url: string;
+    };
+    disabled?: boolean;
+    iconProps?: IIconProps;
+    isSelected?: boolean;
+    key: string;
+    onSelect?: (key: string) => void;
+    styles?: _VideoEffectsItemStyles;
+    title?: string;
+    tooltipProps?: ITooltipHostProps;
+}
+
+// @internal
+export interface _VideoEffectsItemStyles {
+    iconContainer: IStyle;
+    root: IStyle;
+    textContainer: IStyle;
+}
+
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
@@ -1682,6 +2065,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -1734,6 +2118,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public

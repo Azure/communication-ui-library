@@ -93,6 +93,27 @@ This [example PR](https://github.com/Azure/communication-ui-library/pull/1547) f
 
 This [example PR](https://github.com/Azure/communication-ui-library/pull/1846) cleans up previously stabilized feature flag.
 
+# Developing conditional compilation feature
+One of the challenge to develop conditional compilation feature is you will have to imagine what code would be generated after adding your comments, and run preprocess comment, compile them and compare two files side by side.
+To solve this problem, we introduce a vscode extension named Before After Diff Checker, which is a small tool to do all the preprocess automation and compare files side by side for you.
+
+To install the extension: 
+
+1. Press Ctrl + Shift + P when you have your VSCode open, type `Extensions: Show Recommended Extensions`, press Enter, or you can directly search for `Before After Diff Checker` in Extension search bar
+2. You will see `Before After Diff Checker` on the left side panel, install it
+3. Restart your VSCode to activate the extension
+
+To use the extension:
+1. Switch stable flavor using `rush switch-flavor:stable`
+2. Press Ctrl + Shift + P when you have your VSCode open, type `Before-after Diff: Enable On Save Feature`, press Enter
+3. Start editing your code, once you save the file, the extension will run the preprocess command and beautify the generated file
+4. Once finished, a side by side diff window will be opened, left side will be generated code, and right side will be original code
+5. You can start edit original file from right side, and you will see left side file changes within seconds after you save it.
+6. Don't forget to disable it by Ctrl + Shift + P -> `Before-after Diff: Disable On Save Feature` when you finish developing conditional compilation code.
+
+The extension is just a small tool to run a specific command to generate code and compare them based on relative path, you can easily check and edit settings for the extension:
+`.vscode/settings.json`
+
 # Releases
 
 Conditional compilation necessitates a few extra steps when we release a package:

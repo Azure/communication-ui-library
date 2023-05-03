@@ -50,12 +50,16 @@ export const dismissError = (dismissedErrors: DismissedError[], toDismiss: Activ
     }
   }
 
+  const toDismissTimestamp = toDismiss.timestamp ?? now;
+
   // Record that this error was dismissed for the first time right now.
   return [
     ...dismissedErrors,
     {
       type: toDismiss.type,
-      dismissedAt: now,
+      // the error time could be sometimes later than the button click time, which cause the dismiss not working
+      // so we set the dismiss time to the later one
+      dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
       activeSince: toDismiss.timestamp
     }
   ];
@@ -152,6 +156,7 @@ export const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callMacOsCameraAccessDenied':
     case 'callMacOsScreenShareAccessDenied':
     case 'startScreenSharingGeneric':
+    case 'cameraFrozenForRemoteParticipants':
       return MessageBarType.warning;
     default:
       return MessageBarType.error;
@@ -195,3 +200,28 @@ export const customIconName: Partial<{ [key in ErrorType]: string }> = {
 export const isValidString = (string: string | undefined): string is string => {
   return !!string && string.length > 0;
 };
+
+/**
+ * Chunk an array into rows of a given size.
+ * @private
+ */
+export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
+  const rows: T[][] = [];
+  let currentRow: T[] = [];
+  for (const option of options) {
+    currentRow.push(option);
+    if (currentRow.length === itemsPerRow) {
+      rows.push(currentRow);
+      currentRow = [];
+    }
+  }
+  if (currentRow.length > 0) {
+    rows.push(currentRow);
+  }
+  return rows;
+}
+
+/**
+ * @private
+ */
+export const defaultSpokenLanguage = 'en-us';

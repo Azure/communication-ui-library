@@ -4,9 +4,14 @@
 import { PlaywrightTestConfig, devices, ReporterDescription } from '@playwright/test';
 import path from 'path';
 
-const DESKTOP_VIEWPORT = {
+const DESKTOP_4_TO_3_VIEWPORT = {
   width: 1024,
   height: 768
+};
+
+const DESKTOP_16_TO_9_VIEWPORT = {
+  width: 1024,
+  height: 576
 };
 
 const testDir = process.env.TEST_DIR;
@@ -47,6 +52,10 @@ const LOCAL_REPORTERS: ReporterDescription[] = [['list']];
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
+// Using chromium useragent with a very high version to avoid breaking the unsupportedBrowser page
+const DESKTOP_USER_AGENT = 'Windows Chrome/999.0.0.0';
+const ANDROID_USER_AGENT = 'Android 99 Chrome/999.0.0.0 Mobile';
+
 const config: PlaywrightTestConfig = {
   outputDir: outputDir,
   // Extend per-test timeout for local debugging so that developers can single-step through
@@ -66,28 +75,36 @@ const config: PlaywrightTestConfig = {
     {
       name: 'Desktop Chrome',
       use: {
-        viewport: DESKTOP_VIEWPORT,
+        viewport: DESKTOP_4_TO_3_VIEWPORT,
         launchOptions: { ...chromeLaunchOptions },
         contextOptions: {
-          userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/107.0.0.0'
+          userAgent: DESKTOP_USER_AGENT
         }
       }
+    },
+    {
+      name: 'Desktop Chrome 16:9',
+      use: {
+        viewport: DESKTOP_16_TO_9_VIEWPORT,
+        launchOptions: { ...chromeLaunchOptions },
+        contextOptions: {
+          userAgent: DESKTOP_USER_AGENT
+        }
+      },
+      testMatch: ['OverflowGallery.test.ts']
     },
     {
       name: 'Mobile Android Portrait',
       use: {
         ...devices['Nexus 5'],
         launchOptions: { ...chromeLaunchOptions },
-        userAgent:
-          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Mobile Safari/537.36'
+        userAgent: ANDROID_USER_AGENT
       }
     },
     {
       name: 'Mobile Android Landscape',
       use: {
-        // Nexus 5 user agent string, taken from node_modules/.../playwright-core/.../deviceDescriptorsSource.json
-        userAgent:
-          'Mozilla/5.0 (Linux; Android 12; SM-S901B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.5359.125 Mobile Safari/537.36',
+        userAgent: ANDROID_USER_AGENT,
         // Support smallest supported mobile viewport (iPhone 5/SE) ({ width: 568, height: 320 })
         viewport: { width: 568, height: 320 },
         deviceScaleFactor: 2,

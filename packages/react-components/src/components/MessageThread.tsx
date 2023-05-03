@@ -26,6 +26,8 @@ import {
   gutterWithHiddenAvatar,
   FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
 import {
   Icon,
   IStyle,
@@ -37,7 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
@@ -52,16 +53,25 @@ import {
   Message,
   ReadReceiptsBySenderId
 } from '../types';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
 import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
 import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
-import { getParticipantsWhoHaveReadMessage } from './utils/getParticipantsWhoHaveReadMessage';
+import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, FileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler } from './FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
+/* @conditional-compile-remove(at-mention) */
+import { AtMentionOptions } from './AtMentionFlyout';
+import { ComponentSlotStyle } from '../types/ComponentSlotStyle';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -80,7 +90,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
  *
  * @param messages
  */
-const getLatestChatMessage = (messages: (ChatMessage | SystemMessage | CustomMessage)[]): ChatMessage | undefined => {
+const getLatestChatMessage = (messages: Message[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
     if (message.messageType === 'chat' && !!message.createdOn) {
@@ -158,6 +168,9 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   chatMessageContainer?: ComponentSlotStyle;
   /** Styles for system message container. */
   systemMessageContainer?: ComponentSlotStyle;
+  /** Styles for blocked message container. */
+  /* @conditional-compile-remove(data-loss-prevention) */
+  blockedMessageContainer?: ComponentSlotStyle;
   /** Styles for message status indicator container. */
   messageStatusContainer?: (mine: boolean) => IStyle;
 }
@@ -223,6 +236,12 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing) */
   /** String for download file button in file card */
   downloadFile: string;
+  /* @conditional-compile-remove(data-loss-prevention) */
+  /** String for policy violation message removal */
+  blockedWarningText: string;
+  /* @conditional-compile-remove(data-loss-prevention) */
+  /** String for policy violation message removal details link */
+  blockedWarningLinkText: string;
 }
 
 /**
@@ -333,19 +352,21 @@ const memoizeAllMessages = memoizeFnAll(
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
       | undefined,
     defaultStatusRenderer: (
-      message: ChatMessage,
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       status: MessageStatus,
       participantCount: number,
       readCount: number
     ) => JSX.Element,
     defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
     strings: MessageThreadStrings,
+    theme: Theme,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     participantCount?: number,
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
+    onCancelMessageEdit?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
@@ -355,10 +376,87 @@ const memoizeAllMessages = memoizeFnAll(
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
+      onCancelMessageEdit,
       onDeleteMessage,
       onSendMessage,
       disableEditing
     };
+
+    const chatMessageItemProps = (
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+      messageProps: MessageProps
+    ): ShorthandValue<ChatItemProps> => {
+      const chatMessageComponent =
+        onRenderMessage === undefined
+          ? defaultChatMessageRenderer(messageProps)
+          : onRenderMessage(messageProps, defaultChatMessageRenderer);
+
+      const personaOptions: IPersona = {
+        hidePersonaDetails: true,
+        size: PersonaSize.size32,
+        text: message.senderDisplayName,
+        showOverflowTooltip: false
+      };
+
+      const chatItemMessageStyle =
+        (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
+        defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
+
+      const chatGutterStyles =
+        message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
+
+      return {
+        gutter: {
+          styles: chatGutterStyles,
+          content: message.mine ? (
+            ''
+          ) : onRenderAvatar ? (
+            onRenderAvatar(message.senderId ?? '', personaOptions)
+          ) : (
+            <Persona {...personaOptions} />
+          )
+        },
+        contentPosition: message.mine ? 'end' : 'start',
+        message: {
+          styles: chatItemMessageStyle,
+          content: (
+            <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
+              {chatMessageComponent}
+              <div
+                className={mergeStyles(
+                  messageStatusContainerStyle(message.mine ?? false),
+                  styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
+                )}
+              >
+                {showMessageStatus && statusToRender ? (
+                  onRenderMessageStatus ? (
+                    onRenderMessageStatus({ status: statusToRender })
+                  ) : (
+                    defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
+                  )
+                ) : (
+                  <div className={mergeStyles(noMessageStatusStyle)} />
+                )}
+              </div>
+            </Flex>
+          )
+        },
+        attached: message.attached,
+        key: _messageKey
+      };
+    };
+
+    /* @conditional-compile-remove(data-loss-prevention) */
+    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stablize)
+    if (message.messageType === 'blocked') {
+      const myChatMessageStyle =
+        message.status === 'failed'
+          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+          : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
+      const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
+      messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
+      return chatMessageItemProps(message, messageProps);
+    }
 
     switch (message.messageType) {
       case 'chat': {
@@ -366,67 +464,10 @@ const memoizeAllMessages = memoizeFnAll(
           message.status === 'failed'
             ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
             : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
-        const chatMessageComponent =
-          onRenderMessage === undefined
-            ? defaultChatMessageRenderer(messageProps)
-            : onRenderMessage(messageProps, defaultChatMessageRenderer);
-
-        const personaOptions: IPersona = {
-          hidePersonaDetails: true,
-          size: PersonaSize.size32,
-          text: message.senderDisplayName,
-          showOverflowTooltip: false
-        };
-
-        const chatItemMessageStyle =
-          (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
-          defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
-
-        const chatGutterStyles =
-          message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
-        return {
-          gutter: {
-            styles: chatGutterStyles,
-            content: message.mine ? (
-              ''
-            ) : onRenderAvatar ? (
-              onRenderAvatar(message.senderId ?? '', personaOptions)
-            ) : (
-              <Persona {...personaOptions} />
-            )
-          },
-          contentPosition: message.mine ? 'end' : 'start',
-          message: {
-            styles: chatItemMessageStyle,
-            content: (
-              <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
-                {chatMessageComponent}
-                <div
-                  className={mergeStyles(
-                    messageStatusContainerStyle(message.mine ?? false),
-                    styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-                  )}
-                >
-                  {showMessageStatus && statusToRender ? (
-                    onRenderMessageStatus ? (
-                      onRenderMessageStatus({ status: statusToRender })
-                    ) : (
-                      defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
-                    )
-                  ) : (
-                    <div className={mergeStyles(noMessageStatusStyle)} />
-                  )}
-                </div>
-              </Flex>
-            )
-          },
-          attached: message.attached,
-          key: _messageKey
-        };
+        return chatMessageItemProps(message, messageProps);
       }
 
       case 'system': {
@@ -479,6 +520,11 @@ export type UpdateMessageCallback = (
     attachedFilesMetadata?: FileMetadata[];
   }
 ) => Promise<void>;
+/**
+ * @public
+ * Callback function run when a message edit is cancelled.
+ */
+export type CancelEditCallback = (messageId: string) => void;
 
 /**
  * Props for {@link MessageThread}.
@@ -491,9 +537,14 @@ export type MessageThreadProps = {
    */
   userId: string;
   /**
-   * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage` or `CustomMessage`.
+   * Messages to render in message thread. A message can be of type `ChatMessage`, `SystemMessage`, `BlockedMessage` or `CustomMessage`.
    */
-  messages: (ChatMessage | SystemMessage | CustomMessage)[];
+  messages: (
+    | ChatMessage
+    | SystemMessage
+    | CustomMessage
+    | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage
+  )[];
   /**
    * number of participants in the thread
    */
@@ -581,6 +632,13 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(teams-inline-images) */
+  /**
+   * Optional callback to retrieve the inline image in a message.
+   * @param attachment - FileMetadata object we want to render
+   * @beta
+   */
+  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -590,6 +648,12 @@ export type MessageThreadProps = {
    */
   onUpdateMessage?: UpdateMessageCallback;
 
+  /**
+   * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
+   */
+  onCancelMessageEdit?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -601,10 +665,10 @@ export type MessageThreadProps = {
   /**
    * Optional callback to send a message.
    *
-   * @param messageId - message id from chatClient
+   * @param content - message body to send
    *
    */
-  onSendMessage?: (messageId: string) => Promise<void>;
+  onSendMessage?: (content: string) => Promise<void>;
 
   /**
   /**
@@ -636,6 +700,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
+  /* @conditional-compile-remove(at-mention) */
+  /**
+   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
+   * @beta
+   */
+  atMentionOptions?: AtMentionOptions;
 };
 
 /**
@@ -647,7 +717,7 @@ export type MessageThreadProps = {
  */
 export type MessageProps = {
   /**
-   * Message to render. It can type `ChatMessage` or `SystemMessage` or `CustomMessage`.
+   * Message to render. It can type `ChatMessage` or `SystemMessage`, `BlockedMessage` or `CustomMessage`.
    */
   message: Message;
   /**
@@ -680,6 +750,12 @@ export type MessageProps = {
    */
   onUpdateMessage?: UpdateMessageCallback;
 
+  /**
+   * Optional callback for when a message edit is cancelled.
+   *
+   * @param messageId - message id from chatClient
+   */
+  onCancelMessageEdit?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -726,14 +802,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
+    onCancelMessageEdit,
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString
+    onDisplayDateTimeString,
+    /* @conditional-compile-remove(teams-inline-images) */
+    onFetchAttachments
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
-  const [messages, setMessages] = useState<(ChatMessage | SystemMessage | CustomMessage)[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
@@ -752,7 +831,31 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
+  /* @conditional-compile-remove(teams-inline-images) */
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  /* @conditional-compile-remove(teams-inline-images) */
+  const onFetchInlineAttachment = useCallback(
+    async (attachment: FileMetadata): Promise<void> => {
+      if (!onFetchAttachments || attachment.id in inlineAttachments) {
+        return;
+      }
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
+      const attachmentDownloadResult = await onFetchAttachments(attachment);
+      if (attachmentDownloadResult[0]) {
+        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
+      }
+    },
+    [inlineAttachments, onFetchAttachments]
+  );
+
   const isAllChatMessagesLoadedRef = useRef(false);
+  // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
+  // onLoadPreviousChatMessages is updated when a new adapter is set
+  useEffect(() => {
+    if (onLoadPreviousChatMessages) {
+      isAllChatMessagesLoadedRef.current = false;
+    }
+  }, [onLoadPreviousChatMessages]);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
@@ -770,7 +873,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
-  const setMessagesRef = (messagesWithAttachedValue: (ChatMessage | SystemMessage | CustomMessage)[]): void => {
+  const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
     messagesRef.current = messagesWithAttachedValue;
     setMessages(messagesWithAttachedValue);
   };
@@ -851,16 +954,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     if (!isLoadingChatMessagesRef.current) {
       if (onLoadPreviousChatMessages) {
         isLoadingChatMessagesRef.current = true;
-        // Fetch message until scrollTop reach the threshold for fetching new message
-        while (
-          !isAllChatMessagesLoadedRef.current &&
-          chatScrollDivRef.current &&
-          chatScrollDivRef.current.scrollTop <= 500
-        ) {
-          isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
-          await delay(200);
+        try {
+          // Fetch message until scrollTop reach the threshold for fetching new message
+          while (
+            !isAllChatMessagesLoadedRef.current &&
+            chatScrollDivRef.current &&
+            chatScrollDivRef.current.scrollTop <= 500
+          ) {
+            isAllChatMessagesLoadedRef.current = await onLoadPreviousChatMessages(numberOfChatMessagesToReload);
+            await delay(200);
+          }
+        } finally {
+          // Set isLoadingChatMessagesRef to false after messages are fetched
+          isLoadingChatMessagesRef.current = false;
         }
-        isLoadingChatMessagesRef.current = false;
       }
     }
   }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
@@ -944,7 +1051,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [newMessages]);
 
   /**
-   * This needs to run after messages are rendererd so we can manipulate the scroll bar.
+   * This needs to run after messages are rendered so we can manipulate the scroll bar.
    */
   useEffect(() => {
     // If user just sent the latest message then we assume we can move user to bottom of scroll.
@@ -982,7 +1089,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      if (messageProps.message.messageType === 'chat') {
+      if (
+        messageProps.message.messageType === 'chat' ||
+        /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
+      ) {
         return (
           <ChatMessageComponent
             {...messageProps}
@@ -999,6 +1109,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
+            /* @conditional-compile-remove(teams-inline-images) */
+            onFetchAttachments={onFetchInlineAttachment}
+            /* @conditional-compile-remove(teams-inline-images) */
+            attachmentsMap={inlineAttachments}
           />
         );
       }
@@ -1015,12 +1129,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       showMessageStatus,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
-      onDisplayDateTimeString
+      onDisplayDateTimeString,
+      /* @conditional-compile-remove(teams-inline-images) */
+      onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images) */
+      inlineAttachments
     ]
   );
 
   const defaultStatusRenderer = useCallback(
-    (message: ChatMessage, status: MessageStatus, participantCount: number, readCount: number) => {
+    (
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+      status: MessageStatus,
+      participantCount: number,
+      readCount: number
+    ) => {
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
           setReadCountForHoveredIndicator(
@@ -1043,6 +1166,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     []
   );
 
+  const theme = useTheme();
+
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -1050,8 +1175,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           let key: string | undefined = message.messageId;
           let statusToRender: MessageStatus | undefined = undefined;
 
-          if (message.messageType === 'chat') {
-            if (!message.messageId || message.messageId === '') {
+          if (
+            message.messageType === 'chat' ||
+            /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+          ) {
+            if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
               key = message.clientMessageId;
             }
             if (showMessageStatus && message.mine) {
@@ -1087,14 +1215,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             defaultStatusRenderer,
             defaultChatMessageRenderer,
             strings,
+            theme,
             // Temporary solution to make sure we re-render if attach attribute is changed.
             // The proper fix should be in selector.
-            message.messageType === 'chat' ? message.attached : undefined,
+            message.messageType === 'chat' ||
+              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+              ? message.attached
+              : undefined,
             statusToRender,
             participantCount,
             readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
+            onCancelMessageEdit,
             onDeleteMessage,
             onSendMessage,
             props.disableEditing
@@ -1112,10 +1245,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       defaultStatusRenderer,
       defaultChatMessageRenderer,
       strings,
+      theme,
       participantCount,
       readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
+      onCancelMessageEdit,
       onDeleteMessage,
       onSendMessage,
       lastSeenChatMessage,
@@ -1124,8 +1259,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       props.disableEditing
     ]
   );
-
-  const theme = useTheme();
 
   const chatBody = useMemo(() => {
     return (

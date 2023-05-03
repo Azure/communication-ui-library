@@ -15,7 +15,6 @@ import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
@@ -38,6 +37,7 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
+import { callControlsContainerStyles } from '../styles/CallPage.styles';
 
 /**
  * @private
@@ -105,7 +105,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(new-call-control-bar) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -127,6 +127,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
+    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     if (!isRoomsCallTrampoline()) {
       items.push({
         key: 'holdButtonKey',
@@ -167,7 +168,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const theme = useTheme();
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
@@ -199,7 +199,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
-    <Stack horizontalAlign="center">
+    <Stack horizontalAlign="center" className={callControlsContainerStyles}>
       {
         /* @conditional-compile-remove(PSTN-calls) */
         <SendDtmfDialpad
@@ -247,6 +247,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
               <People
                 checked={props.peopleButtonChecked}
+                ariaLabel={peopleButtonStrings?.label}
                 showLabel={options?.displayType !== 'compact'}
                 onClick={props.onPeopleButtonClicked}
                 data-ui-id="call-composite-people-button"
@@ -265,6 +266,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
             isEnabled(options?.moreButton) && moreButtonContextualMenuItems().length > 0 && (
               <MoreButton
+                data-ui-id="common-call-composite-more-button"
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
                 menuProps={{ items: moreButtonContextualMenuItems() }}
@@ -272,7 +274,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               />
             )
           }
-          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
+          {customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

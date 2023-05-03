@@ -15,6 +15,13 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Stack } from '@fluentui/react';
+/* @conditional-compile-remove(video-background-effects) */
+import { DefaultButton } from '@fluentui/react';
+import { fillWidth } from '../styles/CallConfiguration.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { useTheme } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -42,6 +49,10 @@ import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorB
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
+/* @conditional-compile-remove(video-background-effects) */
+import { useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
+import { SidePane } from '../components/SidePane/SidePane';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
@@ -49,6 +60,7 @@ import { CallReadinessModal, CallReadinessModalFallBack } from '../components/Ca
 export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   /* @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
@@ -88,6 +100,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
+  /* @conditional-compile-remove(video-background-effects) */
+  const theme = useTheme();
   const deviceState = adapter.getState().devices;
   /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = adapter.getState().environmentInfo;
@@ -128,7 +142,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   const locale = useLocale();
   const title = (
-    <Stack.Item className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}>
+    <Stack.Item
+      className={mobileView ? titleContainerStyleMobile : titleContainerStyleDesktop}
+      role="heading"
+      aria-level={1}
+    >
       {locale.strings.call.configurationPageTitle}
     </Stack.Item>
   );
@@ -187,6 +205,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const { toggleVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, mobileView);
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -242,58 +263,71 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         )
       }
 
-      <Stack
-        grow
-        horizontal={!mobileWithPreview}
-        horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
-        verticalAlign="center"
-        tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
-      >
-        {mobileWithPreview && (
-          <Stack.Item>
-            {title}
-            {callDescription}
-          </Stack.Item>
-        )}
-        {localPreviewTrampoline(
-          mobileWithPreview,
-          /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
-        )}
-        <Stack className={mobileView ? undefined : selectionContainerStyle}>
-          {!mobileWithPreview && (
-            <>
-              <Stack.Item styles={callDetailsContainerStylesDesktop}>
-                {title}
-                {callDescription}
-              </Stack.Item>
-              <LocalDeviceSettings
-                {...options}
-                {...localDeviceSettingsHandlers}
-                cameraPermissionGranted={cameraPermissionGrantedTrampoline(
-                  cameraPermissionGranted,
-                  /* @conditional-compile-remove(call-readiness) */ videoState
-                )}
-                microphonePermissionGranted={micPermissionGrantedTrampoline(
-                  microphonePermissionGranted,
-                  /* @conditional-compile-remove(call-readiness) */ audioState
-                )}
-                /* @conditional-compile-remove(call-readiness) */
-                onClickEnableDevicePermission={() => {
-                  setIsPermissionsModalDismissed(true);
-                }}
-              />
-            </>
+      <Stack verticalFill grow horizontal className={fillWidth}>
+        <Stack
+          className={fillWidth}
+          horizontal={!mobileWithPreview}
+          horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+          verticalAlign="center"
+          tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
+        >
+          {mobileWithPreview && (
+            <Stack.Item>
+              {title}
+              {callDescription}
+            </Stack.Item>
           )}
-          <Stack
-            styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
-          >
-            <StartCallButton
-              className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
-              onClick={startCallHandler}
-              disabled={disableStartCallButton}
-            />
+          {localPreviewTrampoline(
+            mobileWithPreview,
+            /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
+          )}
+          <Stack className={mobileView ? undefined : selectionContainerStyle}>
+            {!mobileWithPreview && (
+              <>
+                <Stack.Item styles={callDetailsContainerStylesDesktop}>
+                  {title}
+                  {callDescription}
+                </Stack.Item>
+                {
+                  /* @conditional-compile-remove(video-background-effects) */
+                  <DefaultButton
+                    iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
+                    styles={effectsButtonStyles(theme)}
+                    onClick={toggleVideoEffectsPane}
+                  >
+                    {locale.strings.call.effects}
+                  </DefaultButton>
+                }
+                <LocalDeviceSettings
+                  {...options}
+                  {...localDeviceSettingsHandlers}
+                  cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                    cameraPermissionGranted,
+                    /* @conditional-compile-remove(call-readiness) */ videoState
+                  )}
+                  microphonePermissionGranted={micPermissionGrantedTrampoline(
+                    microphonePermissionGranted,
+                    /* @conditional-compile-remove(call-readiness) */ audioState
+                  )}
+                  /* @conditional-compile-remove(call-readiness) */
+                  onClickEnableDevicePermission={() => {
+                    setIsPermissionsModalDismissed(true);
+                  }}
+                />
+              </>
+            )}
+            <Stack
+              styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+            >
+              <StartCallButton
+                className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
+                onClick={startCallHandler}
+                disabled={disableStartCallButton}
+              />
+            </Stack>
           </Stack>
         </Stack>
+        <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
       </Stack>
     </Stack>
   );

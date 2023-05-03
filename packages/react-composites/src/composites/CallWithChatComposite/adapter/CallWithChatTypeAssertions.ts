@@ -52,6 +52,8 @@ type CallWithChatControlOptionsInternal = Omit<
   | 'devicesButton'
   | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
   | 'participantsButton'
+  /* @conditional-compile-remove(new-call-control-bar) */
+  | 'legacyControlBarExperience'
 >;
 
 const CallWithChatControlOptionsTypeAssertion = (
@@ -91,6 +93,8 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(PSTN-calls) */ 'alternateCallerId'
   | /* @conditional-compile-remove(unsupported-browser) */ 'features'
   | /* @conditional-compile-remove(rooms) */ 'roleHint'
+  | /* @conditional-compile-remove(video-background-effects) */ 'videoBackgroundImages'
+  | /* @conditional-compile-remove(video-background-effects) */ 'selectedVideoBackgroundEffect'
   | 'cameraStatus'
 >;
 

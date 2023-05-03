@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update @fluentui/react-icons to 2.0.194",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -11,7 +11,18 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
+/* @conditional-compile-remove(at-mention) */
+export { _AtMentionFlyout } from './AtMentionFlyout';
+
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+/* @conditional-compile-remove(at-mention) */
+export type {
+  _AtMentionFlyoutProps,
+  AtMentionLookupOptions,
+  AtMentionDisplayOptions,
+  AtMentionOptions,
+  AtMentionSuggestion
+} from './AtMentionFlyout';
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
 
@@ -26,7 +37,8 @@ export type {
   MessageThreadStyles,
   JumpToNewMessageButtonProps,
   MessageRenderer,
-  UpdateMessageCallback
+  UpdateMessageCallback,
+  CancelEditCallback
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';
@@ -51,6 +63,8 @@ export { VideoGallery } from './VideoGallery';
 export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoGalleryLayout } from './VideoGallery';
 /* @conditional-compile-remove(pinned-participants) */
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
+/* @conditional-compile-remove(vertical-gallery) */
+export type { OverflowGalleryPosition } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -195,3 +209,28 @@ export type {
   _DevicePermissionDropdownProps,
   _PermissionConstraints
 } from './DevicePermissions/DevicePermissionDropdown';
+
+export { _VideoEffectsItem } from './VideoEffects/VideoEffectsItem';
+export type { _VideoEffectsItemProps, _VideoEffectsItemStyles } from './VideoEffects/VideoEffectsItem';
+export {
+  _VideoEffectsItemNoBackground,
+  _VideoEffectsItemBlur,
+  _VideoEffectsItemAddImage
+} from './VideoEffects/PresetVideoEffectsItems';
+
+export { _VideoBackgroundEffectsPicker } from './VideoEffects/VideoBackgroundEffectsPicker';
+export type {
+  _VideoBackgroundEffectsPickerProps,
+  _VideoBackgroundEffectChoiceOption,
+  _VideoBackgroundEffectsPickerStyles
+} from './VideoEffects/VideoBackgroundEffectsPicker';
+
+export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
+/* @conditional-compile-remove(close-captions) */
+export * from './CaptionsBanner';
+/* @conditional-compile-remove(close-captions) */
+export * from './Caption';
+/* @conditional-compile-remove(close-captions) */
+export * from './StartCaptionsButton';
+/* @conditional-compile-remove(close-captions) */
+export * from './CaptionsSettingsModal';

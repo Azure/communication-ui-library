@@ -3,7 +3,7 @@
 
 import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
-import { stableScreenshot } from '../../common/utils';
+import { dataUiId, pageClick, stableScreenshot } from '../../common/utils';
 import type { CallWithChatCompositeOptions } from '../../../../src';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
@@ -30,5 +30,26 @@ test.describe('Custom call control options tests', () => {
     });
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
+  });
+
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
+    const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    await loadCallPage(page, serverUrl, callState, {
+      injectCustomButtons: 'true',
+      customCompositeOptions: JSON.stringify({
+        callControls: {
+          cameraButton: false,
+          microphoneButton: false,
+          screenShareButton: false,
+          peopleButton: false,
+          chatButton: false
+        }
+      })
+    });
+
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-custom-buttons.png`);
   });
 });

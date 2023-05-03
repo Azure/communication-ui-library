@@ -3,8 +3,8 @@
 
 import { ControlBarButtonStyles, ParticipantMenuItemsCallback, ParticipantsButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
+import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
-import { CallControlDisplayType } from '../../types/CallControlOptions';
 import { concatButtonBaseStyles, participantButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
 
 /** @private */

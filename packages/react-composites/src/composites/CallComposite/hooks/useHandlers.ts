@@ -10,6 +10,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /**
  * @private
@@ -92,6 +94,34 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(call-readiness) */
     askDevicePermission: async (constrain) => {
       return adapter.askDevicePermission(constrain);
+    },
+    /* @conditional-compile-remove(video-background-effects) */
+    onRemoveVideoBackgroundEffects: async () => {
+      return await adapter.stopVideoBackgroundEffect();
+    },
+    /* @conditional-compile-remove(video-background-effects) */
+    onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
+      return await adapter.blurVideoBackground(backgroundBlurConfig);
+    },
+    /* @conditional-compile-remove(video-background-effects) */
+    onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
+      return await adapter.replaceVideoBackground(backgroundReplacementConfig);
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onStartCaptions: async (options) => {
+      await adapter.startCaptions(options);
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onStopCaptions: async () => {
+      await adapter.stopCaptions();
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onSetSpokenLanguage: async (language) => {
+      await adapter.setSpokenLanguage(language);
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onSetCaptionLanguage: async (language) => {
+      await adapter.setCaptionLanguage(language);
     }
   })
 );

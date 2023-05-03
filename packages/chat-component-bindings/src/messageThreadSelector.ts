@@ -21,12 +21,18 @@ import {
   MessageContentType,
   ReadReceiptsBySenderId
 } from '@internal/react-components';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images) */
+import { ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -37,6 +43,10 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
+    /* @conditional-compile-remove(data-loss-prevention) */
+    if (chatMessage.policyViolation) {
+      return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
+    }
     if (
       messageType === ACSKnownMessageType.text ||
       messageType === ACSKnownMessageType.richtextHtml ||
@@ -63,6 +73,57 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
+/* @conditional-compile-remove(teams-inline-images) */
+const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  return attachments.map((attachment) => ({
+    attachmentType: attachment.attachmentType,
+    id: attachment.id,
+    name: attachment.name ?? '',
+    extension: attachment.contentType ?? '',
+    url: attachment.url,
+    previewUrl: attachment.previewUrl
+  }));
+};
+
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
+  let fileMetadata: FileMetadata[] = [];
+
+  /* @conditional-compile-remove(file-sharing) */
+  if (message.metadata) {
+    fileMetadata = fileMetadata.concat(extractAttachedFilesMetadata(message.metadata));
+  }
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  if (message.content?.attachments) {
+    fileMetadata = fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
+  }
+
+  return fileMetadata;
+};
+
+/* @conditional-compile-remove(data-loss-prevention) */
+const convertToUiBlockedMessage = (
+  message: ChatMessageWithStatus,
+  userId: string,
+  isSeen: boolean,
+  isLargeGroup: boolean
+): BlockedMessage => {
+  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+  return {
+    messageType: 'blocked',
+    createdOn: message.createdOn,
+    warningText: undefined,
+    status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
+    senderDisplayName: message.senderDisplayName,
+    senderId: messageSenderId,
+    messageId: message.id,
+    deletedOn: message.deletedOn,
+    mine: messageSenderId === userId,
+    link: DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL
+  };
+};
+
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -84,8 +145,8 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     metadata: message.metadata,
-    /* @conditional-compile-remove(file-sharing) */
-    attachedFilesMetadata: extractAttachedFilesMetadata(message.metadata || {})
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+    attachedFilesMetadata: extractFilesMetadata(message)
   };
 };
 
@@ -188,7 +249,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
             // message.type === ACSKnownMessageType.topicUpdated ||
             message.clientMessageId !== undefined
         )
-        .filter(messagesWithContentOrFileSharingMetadata)
+        .filter(isMessageValidToRender)
         .map((message) => {
           return memoizedFn(
             message.id ?? message.clientMessageId,
@@ -203,7 +264,7 @@ export const messageThreadSelector: MessageThreadSelector = createSelector(
     updateMessagesWithAttached(convertedMessages);
     return {
       userId,
-      showMessageStatus: !isLargeGroup,
+      showMessageStatus: true,
       messages: convertedMessages,
       participantCount,
       readReceiptsBySenderId
@@ -218,11 +279,15 @@ const sanitizedMessageContentType = (type: string): MessageContentType => {
     : 'unknown';
 };
 
-const messagesWithContentOrFileSharingMetadata = (message: ChatMessageWithStatus): boolean => {
+const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
   if (message.metadata?.['fileSharingMetadata']) {
+    return true;
+  }
+  /* @conditional-compile-remove(data-loss-prevention) */
+  if (message.policyViolation) {
     return true;
   }
   return !!(message.content && message.content?.message !== '');

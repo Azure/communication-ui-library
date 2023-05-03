@@ -20,7 +20,7 @@ const ButtonWithDevicesMenuExampleText = require('!!raw-loader!./snippets/WithDe
 const ButtonWithLabelExampleText = require('!!raw-loader!./snippets/WithLabel.snippet.tsx').default;
 
 const importStatement = `
-import { CameraButton } from '@azure/communication-ui';
+import { CameraButton } from '@azure/communication-react';
 `;
 
 const getDocs: () => JSX.Element = () => {

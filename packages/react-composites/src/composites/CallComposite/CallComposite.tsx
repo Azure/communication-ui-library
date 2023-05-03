@@ -3,7 +3,7 @@
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -27,13 +27,14 @@ import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-com
 import { LayerHost, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
+import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
+import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 
 /**
  * Props for {@link CallComposite}.
@@ -101,7 +102,6 @@ export interface RemoteVideoTileMenuOptions {
    */
   isHidden?: boolean;
 }
-
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -183,7 +183,6 @@ export type CallCompositeOptions = {
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -192,11 +191,37 @@ type MainScreenProps = {
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
   roleHint?: Role;
+  overrideSidePane?: InjectedSidePaneProps;
+  onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+};
+
+const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
+  return !!overrideSidePane?.isActive;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+
+  const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
+  const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
+
+  const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
+  useEffect(() => {
+    setInjectedSidePaneProps(props.overrideSidePane);
+    // When the injected side pane is opened, clear the previous side pane active state.
+    // this ensures when the injected side pane is "closed", the previous side pane is not "re-opened".
+    if (!isShowing(overridePropsRef.current) && isShowing(props.overrideSidePane)) {
+      setSidePaneRenderer(undefined);
+    }
+    overridePropsRef.current = props.overrideSidePane;
+  }, [props.overrideSidePane]);
+
+  const onSidePaneIdChange = props.onSidePaneIdChange;
+  useEffect(() => {
+    onSidePaneIdChange?.(sidePaneRenderer?.id);
+  }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
   const adapter = useAdapter();
   const locale = useLocale();
@@ -236,6 +261,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
+          updateSidePaneRenderer={setSidePaneRenderer}
           /* @conditional-compile-remove(call-readiness) */
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
@@ -291,9 +317,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       pageElement = (
         <LobbyPage
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
         />
       );
       break;
@@ -305,21 +332,24 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
         />
       );
       break;
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    case holdPageTrampoline():
+    case 'hold':
       pageElement = (
         <>
           {
-            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ <HoldPage
+            <HoldPage
               mobileView={props.mobileView}
               modalLayerHostId={props.modalLayerHostId}
               options={props.options}
+              updateSidePaneRenderer={setSidePaneRenderer}
+              mobileChatTabHeader={props.mobileChatTabHeader}
             />
           }
         </>
@@ -356,7 +386,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
 
-  return retElement;
+  return (
+    <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
+      {retElement}
+    </SidePaneProvider>
+  );
 };
 
 /**
@@ -368,7 +402,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  *
  * @public
  */
-export const CallComposite = (props: CallCompositeProps): JSX.Element => {
+export const CallComposite = (props: CallCompositeProps): JSX.Element => <CallCompositeInner {...props} />;
+
+/**
+ * @private
+ */
+export interface InternalCallCompositeProps {
+  overrideSidePane?: InjectedSidePaneProps;
+  onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
+
+  // legacy property to avoid breaking change
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+}
+
+/** @private */
+export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompositeProps): JSX.Element => {
   const {
     adapter,
     callInvitationUrl,
@@ -395,7 +443,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
 
   const mobileView = formFactor === 'mobile';
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
 
   const mainScreenContainerClassName = useMemo(() => {
@@ -411,15 +458,17 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
             roleHint={roleHint}
+            onSidePaneIdChange={props.onSidePaneIdChange}
+            overrideSidePane={props.overrideSidePane}
+            mobileChatTabHeader={props.mobileChatTabHeader}
           />
           {
-            // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
-            // because when the CallPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+            // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
+            // because when the SidePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
             // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
             // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
             // common/utils useRef is called.
@@ -433,13 +482,6 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
       </BaseProvider>
     </div>
   );
-};
-
-const holdPageTrampoline = (): string => {
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
-  return 'hold';
-  return 'call';
 };
 
 const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {

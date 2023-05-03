@@ -25,6 +25,7 @@ export type {
   CallParticipantListParticipant,
   ChatMessage,
   CommunicationParticipant,
+  ComponentSlotStyle,
   ContentSystemMessage,
   CreateVideoStreamViewResult,
   CustomAvatarOptions,
@@ -49,3 +50,9 @@ export type {
   VideoStreamOptions,
   ViewScalingMode
 } from './types';
+
+/* @conditional-compile-remove(close-captions) */
+export type { CaptionsAvailableLanguageStrings } from './types';
+
+/* @conditional-compile-remove(data-loss-prevention) */
+export type { BlockedMessage } from './types';
