@@ -113,7 +113,7 @@ const convertToUiBlockedMessage = (
   return {
     messageType: 'blocked',
     createdOn: message.createdOn,
-    warningText: message.content?.message,
+    warningText: undefined,
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,
     senderId: messageSenderId,

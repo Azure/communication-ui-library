@@ -110,7 +110,7 @@ packages:
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/logger': 1.0.3
       events: 3.3.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     engines:
       node: '>=12.0.0'
@@ -164,7 +164,7 @@ packages:
   /@azure/core-auth/1.3.2:
     dependencies:
       '@azure/abort-controller': 1.1.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     engines:
       node: '>=12.0.0'
@@ -186,7 +186,7 @@ packages:
       '@azure/core-auth': 1.4.0
       '@azure/core-rest-pipeline': 1.10.1
       '@azure/core-tracing': 1.0.0-preview.13
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     engines:
       node: '>=12.0.0'
@@ -219,7 +219,7 @@ packages:
       node-fetch: 2.6.7
       process: 0.11.10
       tough-cookie: 4.1.2
-      tslib: 2.4.1
+      tslib: 2.5.0
       tunnel: 0.0.6
       uuid: 8.3.2
       xml2js: 0.4.23
@@ -232,7 +232,7 @@ packages:
     dependencies:
       '@azure/abort-controller': 1.1.0
       '@azure/logger': 1.0.3
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     engines:
       node: '>=12.0.0'
@@ -281,7 +281,7 @@ packages:
       form-data: 4.0.0
       http-proxy-agent: 5.0.0
       https-proxy-agent: 5.0.1
-      tslib: 2.4.1
+      tslib: 2.5.0
       uuid: 8.3.2
     dev: false
     engines:
@@ -308,7 +308,7 @@ packages:
   /@azure/core-util/1.1.1:
     dependencies:
       '@azure/abort-controller': 1.1.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     engines:
       node: '>=12.0.0'
@@ -1884,7 +1884,7 @@ packages:
   /@fluentui/date-time-utilities/8.5.4:
     dependencies:
       '@fluentui/set-version': 8.2.6
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-PHLrbKs/s80xVkvFLQkaYb78a9nRUlohj8FCDBFQ8F1qPJj3iVH1RuSLyTiCIRJy/v1hW6KMEIXqLu/EoMefXw==
@@ -1898,7 +1898,7 @@ packages:
   /@fluentui/dom-utilities/2.2.6:
     dependencies:
       '@fluentui/set-version': 8.2.6
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-yJOEiFj/TfR307hzZn15kNocC0P3j2BltrAJznhgXywMKJhIczATFTfj2len7YMHxLttnR5yDz/oYpyBLSk4rw==
@@ -1907,7 +1907,7 @@ packages:
       '@fluentui/set-version': 8.2.6
       '@fluentui/style-utilities': 8.9.6_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '*'
@@ -1922,7 +1922,7 @@ packages:
       '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -1931,14 +1931,14 @@ packages:
       integrity: sha512-7XKz23HB7IeIIXORS1os2fIakYTLTTGFcs+mnK5f/b4xFJAOxxdte6i10f2WsPPFiTjW1kLOzICsRsfwuHAVRw==
   /@fluentui/keyboard-key/0.4.4:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-nx0bQ9B5QtUym9a21ig5eHPt2T6EWaqrleFb37d6ImikP6xVXUHrWQJFuVS1CSg0n63KOPsmh1QvAUfxfmyLhw==
   /@fluentui/merge-styles/8.5.7:
     dependencies:
       '@fluentui/set-version': 8.2.6
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-t/mOQTigj51n7z6VPZ1nlb9getkzoLVhN0aUbOJUSD5qvu0gZqSBh7Y9xIP6QeYWF4q6wcZhEggo8HOgYqaWQw==
@@ -2010,7 +2010,7 @@ packages:
       '@fluentui/style-utilities': 8.9.6_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2026,7 +2026,7 @@ packages:
       '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2040,7 +2040,7 @@ packages:
       '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2069,7 +2069,7 @@ packages:
     dependencies:
       '@griffel/react': 1.5.4_react@16.14.0
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       react: '>=16.8.0 <19.0.0'
@@ -2148,7 +2148,7 @@ packages:
     dependencies:
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2168,7 +2168,7 @@ packages:
       '@fluentui/set-version': 8.2.6
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2194,7 +2194,7 @@ packages:
       '@types/react-dom': 16.9.17
       react: 16.14.0
       react-dom: 16.13.1_react@16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2207,7 +2207,7 @@ packages:
     dependencies:
       '@fluentui/set-version': 8.2.6
       '@fluentui/theme': 2.6.25_20d09e348401b0c6dd91fc14ba93384f
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '*'
@@ -2216,7 +2216,7 @@ packages:
       integrity: sha512-7ua5xD9N6gEq47FZWREeeVzKaYbsthVHC2PiKwsae65GMmyBS35AA7Fxx2AGJmI2j9z7JkMd+qMEjQ2I+poe7w==
   /@fluentui/set-version/8.2.6:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-zXIfscQ1ZAiEpHc5taMrDEtTP2NtPBGlz2HbOpZiQ3aj/xcnUT7nT73ctb+Q2bHIqlDCHEaFRQxy/HG6koGYAA==
@@ -2233,7 +2233,7 @@ packages:
       '@fluentui/theme': 2.6.25_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@microsoft/load-themed-styles': 1.10.295
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '*'
@@ -2253,7 +2253,7 @@ packages:
       '@fluentui/react': 8.98.8_be457b8870bd20e1d840272f6132c06f
       '@fluentui/scheme-utilities': 8.3.22_20d09e348401b0c6dd91fc14ba93384f
       '@fluentui/set-version': 8.2.6
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '*'
@@ -2269,7 +2269,7 @@ packages:
       '@fluentui/utilities': 8.13.9_20d09e348401b0c6dd91fc14ba93384f
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2283,7 +2283,7 @@ packages:
       '@fluentui/set-version': 8.2.6
       '@types/react': 16.14.34
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       '@types/react': '>=16.8.0 <19.0.0'
@@ -2300,7 +2300,7 @@ packages:
       csstype: 3.1.1
       rtl-css-js: 1.16.1
       stylis: 4.1.3
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-bGYgCIjyAh/TtTPowiGcS8E7u8Kt0pjL55ZwMOcqmvkKIv1CHyAgK+DUgGiCuM4YGuN0QLV0X/mLddStcVyPsg==
@@ -2308,7 +2308,7 @@ packages:
     dependencies:
       '@griffel/core': 1.9.2
       react: 16.14.0
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       react: '>=16.8.0 <19.0.0'
@@ -2731,12 +2731,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-nwJ0UO5WZbbdU6mgiN1oZ/NLTbT/oeMVmZJtlbuQ+xCz57LODi/mPAndd4+BA3xU+4u7MhLl6GyQqX5hcyUsow==
-  /@microsoft/applicationinsights-common/2.8.9_tslib@2.3.1:
+  /@microsoft/applicationinsights-common/2.8.9_tslib@2.5.0:
     dependencies:
-      '@microsoft/applicationinsights-core-js': 2.8.9_tslib@2.3.1
+      '@microsoft/applicationinsights-core-js': 2.8.9_tslib@2.5.0
       '@microsoft/applicationinsights-shims': 2.0.2
       '@microsoft/dynamicproto-js': 1.1.7
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       tslib: '*'
@@ -2749,11 +2749,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-+Vg8Cy06Z+Mwh4W7P5hqx03ThO+l5t7TfcP+ynuS1SGFIuYKaBOwxgt/uIIon8X12sk0dGkrPsTGZMiUtXJ5Zw==
-  /@microsoft/applicationinsights-core-js/2.8.9_tslib@2.3.1:
+  /@microsoft/applicationinsights-core-js/2.8.9_tslib@2.5.0:
     dependencies:
       '@microsoft/applicationinsights-shims': 2.0.2
       '@microsoft/dynamicproto-js': 1.1.7
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       tslib: '*'
@@ -2777,10 +2777,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-0etD5TkBFi4cnleGivxc02uLJIaP/sGHpyzOXfYSuLzRchKGWwX+fVhirt/acIigh+Mi8tiDuXqZ92H7DE5mbA==
-  /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0+tslib@2.3.1:
+  /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0+tslib@2.5.0:
     dependencies:
-      '@microsoft/applicationinsights-common': 2.8.9_tslib@2.3.1
-      '@microsoft/applicationinsights-core-js': 2.8.9_tslib@2.3.1
+      '@microsoft/applicationinsights-common': 2.8.9_tslib@2.5.0
+      '@microsoft/applicationinsights-core-js': 2.8.9_tslib@2.5.0
       '@microsoft/applicationinsights-shims': 1.0.3
       history: 4.10.1
       react: 16.14.0
@@ -4602,7 +4602,7 @@ packages:
       flat-cache: 3.0.4
       micromatch: 4.0.5
       react-docgen-typescript: 2.2.2_typescript@4.3.5
-      tslib: 2.4.1
+      tslib: 2.5.0
       typescript: 4.3.5
       webpack: 5.76.0
     dev: false
@@ -6499,7 +6499,7 @@ packages:
       integrity: sha512-eBvWn1lvIApYMhzQMsu9ciLfkBY499mFZlNqG+/9WR7PVlroQw0vG30cOQQbaKz3sCEc44TAOu2ykzqXSNnwag==
   /ast-types/0.14.2:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     engines:
       node: '>=4'
@@ -7292,7 +7292,7 @@ packages:
   /camel-case/4.1.2:
     dependencies:
       pascal-case: 3.1.2
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-gxGWBrTT1JuMx6R+o5PTXMmUnhnVzLQ9SNutD4YqKtI6ap897t3tKECYla6gCWEkplXnlNybEkZg9GEGxKFCgw==
@@ -8755,7 +8755,7 @@ packages:
   /dot-case/3.0.4:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-Kv5nKlh6yRrdrGvxeJ2e5y2eRUpkUosIW4A2AS38zwSz27zu7ufDwQPi5Jhs3XAlGNetl3bmnGhQsMtkKJnj3w==
@@ -9243,7 +9243,7 @@ packages:
       remark-mdx: 1.6.22
       remark-parse: 8.0.3
       remark-stringify: 8.1.1
-      tslib: 2.4.1
+      tslib: 2.5.0
       unified: 9.2.2
     dev: false
     engines:
@@ -9371,7 +9371,7 @@ packages:
       eslint-mdx: 1.17.1_eslint@7.32.0
       eslint-plugin-markdown: 2.2.1_eslint@7.32.0
       synckit: 0.4.1
-      tslib: 2.4.1
+      tslib: 2.5.0
       vfile: 4.2.1
     dev: false
     engines:
@@ -13183,7 +13183,7 @@ packages:
       integrity: sha512-RPNliZOFkqFumDhvYqOaNY4Uz9oJM2K9tC6JWsJJsNdhuONW4LQHRBpb0qf4pJApVffI5N39SwzWZJuEhfd7eQ==
   /lower-case/2.0.2:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-7fm3l3NAF9WfN6W3JOmf5drwpVqX78JtoGJ3A6W0a6ZnldM41w2fV5D490psKFTpMds8TJse/eHLFFsNHHjHgg==
@@ -13831,7 +13831,7 @@ packages:
   /no-case/3.0.4:
     dependencies:
       lower-case: 2.0.2
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-fgAN3jGAh+RoxUGZHTSOLJIqUc2wmoBwGR4tbpNAKmmovFoWq0OdRkb0VkldReO2a2iBT/OEulG9XSUc10r3zg==
@@ -14419,7 +14419,7 @@ packages:
   /param-case/3.0.4:
     dependencies:
       dot-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-RXlj7zCYokReqWpOPH9oYivUzLYZ5vAPIfEmCTNViosC78F8F0H9y7T7gG2M39ymgutxF5gcFEsyZQSph9Bp3A==
@@ -14548,7 +14548,7 @@ packages:
   /pascal-case/3.1.2:
     dependencies:
       no-case: 3.0.4
-      tslib: 2.4.1
+      tslib: 2.5.0
     dev: false
     resolution:
       integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==
@@ -17272,7 +17272,7 @@ packages:
       integrity: sha512-qImOD23aDfnIDNqlG1NOehdB9IYsn1V9oByPjKY1nakv2MQYCEMyX033/q+aEtYCpmYK1cv2+NTmlH+ra6GA5A==
   /synckit/0.4.1:
     dependencies:
-      tslib: 2.4.1
+      tslib: 2.5.0
       uuid: 8.3.2
     dev: false
     engines:
@@ -17768,14 +17768,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-  /tslib/2.3.1:
-    dev: false
-    resolution:
-      integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
   /tslib/2.4.1:
     dev: false
     resolution:
       integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==
+  /tslib/2.5.0:
+    dev: false
+    resolution:
+      integrity: sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg==
   /tsutils/3.21.0_typescript@4.3.5:
     dependencies:
       tslib: 1.14.1
@@ -20316,7 +20316,7 @@ packages:
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
-      '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0+tslib@2.3.1
+      '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0+tslib@2.5.0
       '@microsoft/applicationinsights-web': 2.6.5
       '@storybook/addon-actions': 6.5.15_react-dom@16.13.1+react@16.14.0
       '@storybook/addon-controls': 6.5.15_21967b81d2c78d5d5bef666521618933
@@ -20389,7 +20389,7 @@ packages:
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-node: 9.1.1_typescript@4.3.5
-      tslib: 2.3.1
+      tslib: 2.5.0
       typescript: 4.3.5
       uuid: 8.3.2
       webpack: 5.76.0
@@ -20397,7 +20397,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-1OFl5hoblF7B4dUSByo3b6L9YE9iHYaByosTSaOlJkaCp+dmNQ3ekNbv90RVZLyyJYy2Zo40PTGELzNBKYD5XA==
+      integrity: sha512-tBd0106bPAj4te88mTtoSyO5XTsGiK/KCPqaOW5jF2rWEkz929CehE7NRGWcqoLMZcrs2/6xGK1JvnNlTQBSQg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

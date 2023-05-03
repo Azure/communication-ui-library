@@ -2733,12 +2733,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-nwJ0UO5WZbbdU6mgiN1oZ/NLTbT/oeMVmZJtlbuQ+xCz57LODi/mPAndd4+BA3xU+4u7MhLl6GyQqX5hcyUsow==
-  /@microsoft/applicationinsights-common/2.8.11_tslib@2.3.1:
+  /@microsoft/applicationinsights-common/2.8.11_tslib@2.5.0:
     dependencies:
-      '@microsoft/applicationinsights-core-js': 2.8.11_tslib@2.3.1
+      '@microsoft/applicationinsights-core-js': 2.8.11_tslib@2.5.0
       '@microsoft/applicationinsights-shims': 2.0.2
       '@microsoft/dynamicproto-js': 1.1.8
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       tslib: '*'
@@ -2751,11 +2751,11 @@ packages:
     dev: false
     resolution:
       integrity: sha512-+Vg8Cy06Z+Mwh4W7P5hqx03ThO+l5t7TfcP+ynuS1SGFIuYKaBOwxgt/uIIon8X12sk0dGkrPsTGZMiUtXJ5Zw==
-  /@microsoft/applicationinsights-core-js/2.8.11_tslib@2.3.1:
+  /@microsoft/applicationinsights-core-js/2.8.11_tslib@2.5.0:
     dependencies:
       '@microsoft/applicationinsights-shims': 2.0.2
       '@microsoft/dynamicproto-js': 1.1.8
-      tslib: 2.3.1
+      tslib: 2.5.0
     dev: false
     peerDependencies:
       tslib: '*'
@@ -2779,10 +2779,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-0etD5TkBFi4cnleGivxc02uLJIaP/sGHpyzOXfYSuLzRchKGWwX+fVhirt/acIigh+Mi8tiDuXqZ92H7DE5mbA==
-  /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0+tslib@2.3.1:
+  /@microsoft/applicationinsights-react-js/3.0.5_react@16.14.0+tslib@2.5.0:
     dependencies:
-      '@microsoft/applicationinsights-common': 2.8.11_tslib@2.3.1
-      '@microsoft/applicationinsights-core-js': 2.8.11_tslib@2.3.1
+      '@microsoft/applicationinsights-common': 2.8.11_tslib@2.5.0
+      '@microsoft/applicationinsights-core-js': 2.8.11_tslib@2.5.0
       '@microsoft/applicationinsights-shims': 1.0.3
       history: 4.10.1
       react: 16.14.0
@@ -17803,10 +17803,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-  /tslib/2.3.1:
-    dev: false
-    resolution:
-      integrity: sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
   /tslib/2.5.0:
     dev: false
     resolution:
@@ -20345,7 +20341,7 @@ packages:
       '@mdx-js/react': 1.6.22_react@16.14.0
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
-      '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0+tslib@2.3.1
+      '@microsoft/applicationinsights-react-js': 3.0.5_react@16.14.0+tslib@2.5.0
       '@microsoft/applicationinsights-web': 2.6.5
       '@storybook/addon-actions': 6.5.16_react-dom@16.13.1+react@16.14.0
       '@storybook/addon-controls': 6.5.16_21967b81d2c78d5d5bef666521618933
@@ -20418,7 +20414,7 @@ packages:
       styled-components: 5.2.3_2c10db6bed9aaf10b28f0c8606f7c0c7
       ts-jest: 26.5.6_jest@26.6.0+typescript@4.3.5
       ts-node: 9.1.1_typescript@4.3.5
-      tslib: 2.3.1
+      tslib: 2.5.0
       typescript: 4.3.5
       uuid: 8.3.2
       webpack: 5.76.0
@@ -20426,7 +20422,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-1OFl5hoblF7B4dUSByo3b6L9YE9iHYaByosTSaOlJkaCp+dmNQ3ekNbv90RVZLyyJYy2Zo40PTGELzNBKYD5XA==
+      integrity: sha512-tBd0106bPAj4te88mTtoSyO5XTsGiK/KCPqaOW5jF2rWEkz929CehE7NRGWcqoLMZcrs2/6xGK1JvnNlTQBSQg==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

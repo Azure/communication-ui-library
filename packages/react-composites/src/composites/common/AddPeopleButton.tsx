@@ -75,7 +75,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     );
   } else {
     return (
-      <Stack tokens={peoplePaneContainerTokens}>
+      <Stack tokens={peoplePaneContainerTokens} data-ui-id="people-pane-content">
         <AddPeopleDropdown
           strings={strings}
           mobileView={mobileView}
@@ -109,7 +109,7 @@ export const AddPeopleButton = (props: AddPeopleButtonProps): JSX.Element => {
     );
   } else {
     return (
-      <Stack tokens={peoplePaneContainerTokens}>
+      <Stack tokens={peoplePaneContainerTokens} data-ui-id="people-pane-content">
         {inviteLink && (
           <Stack styles={copyLinkButtonStackStyles}>
             <Announcer announcementString={copyInviteLinkAnnouncerStrings} ariaLive={'polite'} />
