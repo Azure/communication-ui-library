@@ -32,7 +32,7 @@ export const useVideoEffectsPane = (
       <SidePaneHeader
         onClose={closePane}
         /* @conditional-compile-remove(video-background-effects) */
-        headingText={locale.strings.call.effects ?? 'Effects'}
+        headingText={locale.strings.call.videoEffectsPaneTitle}
         /* @conditional-compile-remove(video-background-effects) */
         dismissSidePaneButtonAriaLabel={
           locale.strings.call.dismissSidePaneButtonLabel ??

@@ -170,7 +170,7 @@ const VideoEffectsPaneTrampoline = (
         </MessageBar>
       )}
       <_VideoBackgroundEffectsPicker
-        label="Background" // TODO [jaburnsi]: localize
+        label={locale.strings.call.videoEffectsPaneTitle}
         styles={backgroundPickerStyles}
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}

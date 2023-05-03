@@ -56,7 +56,8 @@
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
     "onSplitButtonPrimaryActionCamera": "Turn off camera",
     "offSplitButtonPrimaryActionCamera": "Turn on camera",
-    "cameraPrimaryActionSplitButtonTitle": "Use camera"
+    "cameraPrimaryActionSplitButtonTitle": "Use camera",
+    "videoEffectsMenuItemTitle": "Effects"
   },
   "microphoneButton": {
     "onLabel": "Mute",
