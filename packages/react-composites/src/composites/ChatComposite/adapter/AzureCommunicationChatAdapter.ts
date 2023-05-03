@@ -481,7 +481,7 @@ const convertEventType = (type: string): ChatMessageType => {
  * Configuration options to include when creating AzureCommunicationChatAdapter.
  * @beta
  */
-export type ChatAdapterOptions = {
+export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
 };
 

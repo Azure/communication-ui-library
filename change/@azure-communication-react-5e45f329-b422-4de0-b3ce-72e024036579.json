@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix breaking changes of create adapter from client",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}
