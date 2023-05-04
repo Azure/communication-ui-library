@@ -8,6 +8,24 @@ import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../com
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
+  test('Show loading banner when start captions is clicked but captions is not started yet', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState();
+    if (initialState?.call) {
+      initialState.isTeamsCall = true;
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsClicked: true
+      };
+    }
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
+  });
+
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
