@@ -23,7 +23,8 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page.png`);
   });
 
-  test('local device buttons should show tooltips on hover', async ({ page, serverUrl }) => {
+  test('local device buttons should show tooltips on hover', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
     await waitForCallCompositeToLoad(page);
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
