@@ -173,7 +173,8 @@ test.describe('Participant list side pane tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 
-  test('participant list opens and do not overlap with error bar', async ({ page, serverUrl }) => {
+  test('participant list opens and do not overlap with error bar', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
     const initialState = participantListInitialState();
     initialState.latestErrors = {
       'Call.startVideo': {
