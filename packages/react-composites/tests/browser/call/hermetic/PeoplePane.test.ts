@@ -188,9 +188,7 @@ test.describe('Participant list side pane tests', () => {
     };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
     await pageClick(page, dataUiId('call-composite-participants-button'));
-    const buttonCallOut = await waitForSelector(page, '.ms-Callout');
-    // This will ensure no animation is happening for the callout
-    await buttonCallOut.waitForElementState('stable');
+    await waitForSelector(page, dataUiId('people-pane-content'));
     expect(await stableScreenshot(page)).toMatchSnapshot('people-pane-with-error-bar.png');
   });
 });
