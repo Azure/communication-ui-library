@@ -68,7 +68,7 @@ interface B {
  * Conditionally import from a package.
  */
 /* @conditional-compile-remove(demo) */
-import { Dir } from 'fs';
+import { DummyImport } from './utils';
 
 /**
  * Conditionally export from a module.
@@ -80,7 +80,7 @@ export interface C {
 }
 
 /* @conditional-compile-remove(demo) */
-export type MyDir = Dir;
+export type DummyImportUsage = DummyImport;
 
 /**
  * Conditionally add fields to an interface
