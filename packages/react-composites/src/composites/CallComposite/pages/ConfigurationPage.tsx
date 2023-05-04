@@ -53,6 +53,8 @@ import { CallReadinessModal, CallReadinessModalFallBack } from '../components/Ca
 import { useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
 import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
@@ -118,6 +120,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       activeErrorMessages: errorBarProps.activeErrorMessages.filter(
         (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
       )
+    };
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if (useIsParticularSidePaneOpen('videoeffects') && errorBarProps) {
+    errorBarProps = {
+      ...errorBarProps,
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
     };
   }
   /* @conditional-compile-remove(rooms) */
