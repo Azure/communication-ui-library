@@ -37,8 +37,8 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
         ]}
         mentionOptions={{
           displayOptions: {
-            onRenderMention: (mention, defaultOnMentionRender) => {
-              return <button>{defaultOnMentionRender(mention)}</button>;
+            onRenderMention: (mention) => {
+              return <button>{mention.displayText}</button>;
             }
           },
           lookupOptions: {

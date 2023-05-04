@@ -157,7 +157,8 @@ export type {
   MentionDisplayOptions,
   MentionLookupOptions,
   Mention,
-  MentionPopoverStrings
+  MentionPopoverStrings,
+  defaultMentionSuggestionRenderer
 } from '../../react-components/src';
 
 export type {

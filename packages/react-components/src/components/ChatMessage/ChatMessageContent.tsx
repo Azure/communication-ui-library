@@ -99,11 +99,11 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         /* @conditional-compile-remove(mention) */
         if (props.mentionDisplayOptions?.onRenderMention) {
           const { id, displaytext } = node.attribs;
-          const mention: Mention = {
+          const suggestion: Mention = {
             id: id,
             displayText: displaytext
           };
-          return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+          return props.mentionDisplayOptions.onRenderMention(suggestion);
         }
         return processNodeDefinitions.processDefaultNode;
       }
@@ -233,13 +233,4 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
           message: props.message.content
         })
     : undefined;
-};
-
-/* @conditional-compile-remove(mention) */
-const defaultOnMentionRender = (mention: Mention): JSX.Element => {
-  return (
-    <msft-mention id={mention.id} displayText={mention.displayText}>
-      {mention.displayText}
-    </msft-mention>
-  );
 };
