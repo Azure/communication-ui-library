@@ -144,7 +144,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
-  const callCompositeContainerCSS = useMemo(() => {
+  const callCompositeContainerCSS = useMemo((): React.CSSProperties => {
     return {
       display: isMobileWithActivePane ? 'none' : 'flex',
       minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
