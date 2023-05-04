@@ -45,7 +45,8 @@
     "react-aria-live": "^2.0.5",
     "react-linkify": "^1.0.0-alpha",
     "uuid": "^8.1.0",
-    "react-use-draggable-scroll": "~0.4.7"
+    "react-use-draggable-scroll": "~0.4.7",
+    "@azure/communication-calling": "1.13.1-beta.1 || >=1.12.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <18.0.0",
