@@ -37,7 +37,7 @@ import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions, _MentionPopover, Mention } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 /* @conditional-compile-remove(mention) */
 const defaultMentionTrigger = '@';
 /**
