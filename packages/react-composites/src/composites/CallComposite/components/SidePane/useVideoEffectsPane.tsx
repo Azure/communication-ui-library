@@ -9,6 +9,7 @@ import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { AdapterError } from '../../../common/adapters';
 import { DismissedError, dismissVideoEffectsError } from '../../utils';
+/* @conditional-compile-remove(video-background-effects) */
 import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
 import { useSelector } from '../../hooks/useSelector';
 
@@ -52,8 +53,10 @@ export const useVideoEffectsPane = (
   const onDismissVideoEffectError = useCallback((error: AdapterError) => {
     setDismissedVideoEffectsError(dismissVideoEffectsError(error));
   }, []);
+  /* @conditional-compile-remove(video-background-effects) */
   const latestVideoEffectError = useSelector(videoBackgroundErrorsSelector);
   const activeVideoEffectError = useCallback(() => {
+    /* @conditional-compile-remove(video-background-effects) */
     if (
       latestVideoEffectError &&
       (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt)

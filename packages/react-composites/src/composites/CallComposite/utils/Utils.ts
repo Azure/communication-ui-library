@@ -451,7 +451,6 @@ export const createParticipantModifier = (
   };
 };
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */
@@ -460,7 +459,6 @@ export interface DismissedError {
   activeSince?: Date;
 }
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */
