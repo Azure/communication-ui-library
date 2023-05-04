@@ -149,7 +149,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       display: isMobileWithActivePane ? 'none' : 'flex',
       minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
       width: '100%',
-      height: '100%'
+      height: '100%',
+      position: 'relative'
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
