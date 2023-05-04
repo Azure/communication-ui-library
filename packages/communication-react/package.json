@@ -45,6 +45,7 @@
     "react-use-draggable-scroll": "~0.4.7",
     "reselect": "~4.0.0",
     "textarea-caret-ts": "^4.1.1",
+    "use-debounce": "^9.0.4",
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
