@@ -24,5 +24,6 @@ export const buttonStyle = mergeStyles({
  */
 export const iconWrapperStyle = mergeStyles({
   position: 'absolute',
-  pointerEvents: 'none'
+  pointerEvents: 'none',
+  bottom: '2.6rem'
 });

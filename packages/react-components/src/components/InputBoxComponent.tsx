@@ -11,7 +11,8 @@ import {
   concatStyleSets,
   IconButton,
   TooltipHost,
-  ICalloutContentStyles
+  ICalloutContentStyles,
+  DefaultButton
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
@@ -101,7 +102,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
     fieldGroup: styles?.textField,
-    errorMessage: styles?.systemMessage
+    errorMessage: styles?.systemMessage,
+    suffix: {
+      backgroundColor: 'transparent'
+    }
   });
 
   const onTexFieldKeyDown = useCallback(
@@ -142,12 +146,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           errorMessage={errorMessage}
           onRenderSuffix={() => children}
         />
-        <Stack
+        {/* <Stack
           horizontal
           className={mergeStyles(props.inlineChildren ? inlineButtonsContainerStyle : newLineButtonsContainerStyle)}
-        >
-          {/* {children} */}
-        </Stack>
+        > */}
+        {/* {children} */}
+        {/* </Stack> */}
       </div>
     </Stack>
   );
