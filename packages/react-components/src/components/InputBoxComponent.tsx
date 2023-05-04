@@ -37,7 +37,7 @@ import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions, _MentionPopover, Mention } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
-import { debounce } from 'lodash-es';
+import { useDebouncedCallback } from 'use-debounce';
 /* @conditional-compile-remove(mention) */
 const defaultMentionTrigger = '@';
 /**
@@ -280,7 +280,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   /* @conditional-compile-remove(mention) */
   const debouncedQueryUpdate = useRef(
-    debounce(async (query: string) => {
+    useDebouncedCallback(async (query: string) => {
       const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
       if (suggestions.length === 0) {
         setActiveSuggestionIndex(undefined);
