@@ -118,19 +118,19 @@ export const VideoEffectsPaneContent = (props: {
   );
   return VideoEffectsPaneTrampoline(
     props.onDismissError,
+    props.activeVideoEffectError,
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
-    onEffectChange,
-    props.activeVideoEffectError
+    onEffectChange
   );
 };
 
 const VideoEffectsPaneTrampoline = (
   onDismissError: (error: AdapterError) => void,
+  activeVideoEffectError?: () => AdapterError | undefined,
   selectableVideoEffects?: _VideoEffectsItemProps[],
-  onEffectChange?: (effectKey: string) => Promise<void>,
-  activeVideoEffectError?: () => AdapterError | undefined
+  onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const videoEffectError = activeVideoEffectError && activeVideoEffectError();

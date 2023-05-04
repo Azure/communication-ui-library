@@ -11,6 +11,7 @@ import { AdapterError } from '../../../common/adapters';
 import { DismissedError, dismissVideoEffectsError } from '../../utils';
 /* @conditional-compile-remove(video-background-effects) */
 import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
+/* @conditional-compile-remove(video-background-effects) */
 import { useSelector } from '../../hooks/useSelector';
 
 const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
@@ -64,7 +65,11 @@ export const useVideoEffectsPane = (
       return latestVideoEffectError;
     }
     return undefined;
-  }, [dismissedVideoEffectsError, latestVideoEffectError]);
+  }, [
+    dismissedVideoEffectsError,
+    /* @conditional-compile-remove(video-background-effects) */
+    latestVideoEffectError
+  ]);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (

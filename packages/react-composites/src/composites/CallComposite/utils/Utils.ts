@@ -17,7 +17,6 @@ import {
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
 import { AdapterError } from '../../common/adapters';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
