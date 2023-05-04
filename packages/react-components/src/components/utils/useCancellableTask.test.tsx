@@ -132,7 +132,7 @@ describe('cancellable task', () => {
       result = await marker.waitForSet(1000);
     });
 
-    await expect(result).resolves.toBeTruthy();
+    expect(result).toBeTruthy();
   });
 });
 
