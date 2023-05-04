@@ -92,9 +92,9 @@ export interface MentionLookupOptions {
  */
 export interface MentionDisplayOptions {
   /**
-   * Optional callback to override render of a mention in a message thread.
+   * Optional callback for customizing the mention renderer in a message thread.
    */
-  onRenderMention?: (mention: Mention) => JSX.Element;
+  onRenderMention?: (mention: Mention, defaultOnRender: (mention: Mention) => JSX.Element) => JSX.Element;
 }
 
 /**

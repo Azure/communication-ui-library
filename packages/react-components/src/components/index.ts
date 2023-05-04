@@ -25,8 +25,6 @@ export type {
   Mention,
   MentionPopoverStrings
 } from './MentionPopover';
-/* @conditional-compile-remove(mention) */
-export { defaultMentionSuggestionRenderer } from './ChatMessage/MentionSuggestionRenderer';
 
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';

@@ -757,9 +757,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
 };
 
-// @beta
-export const defaultMentionSuggestionRenderer: (suggestion: Mention) => JSX.Element;
-
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
 
@@ -1229,7 +1226,7 @@ export interface Mention {
 
 // @beta
 export interface MentionDisplayOptions {
-    onRenderMention?: (mention: Mention) => JSX.Element;
+    onRenderMention?: (mention: Mention, defaultOnRender: (mention: Mention) => JSX.Element) => JSX.Element;
 }
 
 // @beta

@@ -21,6 +21,8 @@ import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(mention) */
+import { defaultOnMentionRender } from './MentionRenderer';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -99,11 +101,11 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         /* @conditional-compile-remove(mention) */
         if (props.mentionDisplayOptions?.onRenderMention) {
           const { id, displaytext } = node.attribs;
-          const suggestion: Mention = {
+          const mention: Mention = {
             id: id,
             displayText: displaytext
           };
-          return props.mentionDisplayOptions.onRenderMention(suggestion);
+          return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
         }
         return processNodeDefinitions.processDefaultNode;
       }

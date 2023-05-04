@@ -2213,9 +2213,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
 };
 
 // @beta
-export const defaultMentionSuggestionRenderer: (suggestion: Mention) => JSX.Element;
-
-// @beta
 export interface DeviceCheckOptions {
     camera: 'required' | 'optional' | 'doNotPrompt';
     microphone: 'required' | 'optional' | 'doNotPrompt';
@@ -2699,7 +2696,7 @@ export interface Mention {
 
 // @beta
 export interface MentionDisplayOptions {
-    onRenderMention?: (mention: Mention) => JSX.Element;
+    onRenderMention?: (mention: Mention, defaultOnRender: (mention: Mention) => JSX.Element) => JSX.Element;
 }
 
 // @beta
