@@ -71,7 +71,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     if (startCaptionsButtonProps.checked) {
       startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
     }
-  }, [[startCaptionsButtonProps.checked]]);
+  }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(

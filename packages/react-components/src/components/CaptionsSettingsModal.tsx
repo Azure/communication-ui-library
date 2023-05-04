@@ -96,7 +96,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(selectedItem.key.toString());
     }
-  }, [isCaptionsFeatureActive]);
+  }, [isCaptionsFeatureActive, onSetSpokenLanguage, selectedItem.key]);
 
   const onConfirm = useCallback(async (): Promise<void> => {
     const languageCode = selectedItem.key.toString();

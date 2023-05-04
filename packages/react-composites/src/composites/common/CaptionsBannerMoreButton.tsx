@@ -58,7 +58,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
       startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
     }
-  }, [startCaptionsButtonProps.checked]);
+  }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */
   const startCaptions = useCallback(async () => {

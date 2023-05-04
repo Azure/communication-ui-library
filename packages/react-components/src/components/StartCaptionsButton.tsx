@@ -99,7 +99,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
     } else {
       await onStartCaptions(options);
     }
-  }, [props.checked, onStartCaptions, onStopCaptions, onSetSpokenLanguage, options]);
+  }, [props.checked, onStartCaptions, onStopCaptions, options]);
 
   useEffect(() => {
     if (props.checked) {
@@ -107,7 +107,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
       onSetSpokenLanguage(options.spokenLanguage);
     }
-  }, [props.checked]);
+  }, [props.checked, onSetSpokenLanguage, options.spokenLanguage]);
 
   return (
     <ControlBarButton
