@@ -1,0 +1,326 @@
+{
+  "participantItem": {
+    "isMeText": "(أنت)",
+    "menuTitle": "المزيد من الخيارات",
+    "removeButtonLabel": "إزالة",
+    "sharingIconLabel": "جارٍ المشاركة",
+    "mutedIconLabel": "تم كتم الصوت",
+    "displayNamePlaceholder": "مشارك غير مسمى",
+    "participantStateRinging": "يتم الآن الاتصال...",
+    "participantStateHold": "قيد الانتظار"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} يكتب",
+    "multipleUsers": "يكتب {users} الآن...",
+    "multipleUsersAbbreviateOne": "جارٍ الكتابة بواسطة {users} وشخص آخر",
+    "multipleUsersAbbreviateMany": "{users} وآخرون {numOthers} يكتبون ...",
+    "delimiter": "و "
+  },
+  "sendBox": {
+    "placeholderText": "أدخل رسالة",
+    "textTooLong": "تجاوز طول الرسالة الحد الأقصى.",
+    "sendButtonAriaLabel": "إرسال رسالة",
+    "fileUploadsPendingError": "جارِ التحميل... يرجى الانتظار.",
+    "removeFile": "إزالة الملف",
+    "uploading": "جارٍ التحميل",
+    "uploadCompleted": "اكتمل التحميل"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "تم إرسال الرسالة",
+    "deliveredTooltipText": "تم الإرسال",
+    "seenAriaLabel": "تمت مشاهدة الرسالة من قِبل الآخرين.",
+    "seenTooltipText": "تمت المشاهدة",
+    "readByTooltipText": "تمت القراءة بواسطة {messageThreadReadCount} من {remoteParticipantsCount}",
+    "sendingAriaLabel": "إرسال الرسالة",
+    "sendingTooltipText": "جاري الإرسال",
+    "failedToSendAriaLabel": "فشل إرسال الرسالة",
+    "failedToSendTooltipText": "فشل الإرسال"
+  },
+  "endCallButton": {
+    "label": "مغادرة",
+    "tooltipContent": "مغادرة المكالمة"
+  },
+  "cameraButton": {
+    "onLabel": "إيقاف تشغيل",
+    "offLabel": "تمكين",
+    "tooltipDisabledContent": "الكاميرا مُعطلة",
+    "tooltipOnContent": "إيقاف تشغيل الكاميرا",
+    "tooltipOffContent": "تشغيل الكاميرا",
+    "tooltipVideoLoadingContent": "جار تحميل الفيديو",
+    "cameraMenuTitle": "الكاميرا",
+    "cameraMenuTooltip": "اختيار الكاميرا",
+    "cameraButtonSplitRoleDescription": "زر الانقسام",
+    "onSplitButtonAriaLabel": "خيارات إيقاف تشغيل الكاميرا",
+    "offSplitButtonAriaLabel": "خيارات تشغيل الكاميرا",
+    "cameraActionTurnedOnAnnouncement": "تم تشغيل كاميراتك",
+    "cameraActionTurnedOffAnnouncement": "تم إيقاف تشغيل كاميراتك",
+    "onSplitButtonPrimaryActionCamera": "إيقاف تشغيل الكاميرا",
+    "offSplitButtonPrimaryActionCamera": "تشغيل الكاميرا",
+    "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا"
+  },
+  "microphoneButton": {
+    "onLabel": "كتم الصوت",
+    "offLabel": "إلغاء كتم الصوت",
+    "tooltipDisabledContent": "تم تعطيل الميكروفون",
+    "tooltipOnContent": "كتم صوت الميكروفون",
+    "tooltipOffContent": "إلغاء كتم صوت الميكروفون",
+    "microphoneMenuTitle": "الميكروفون",
+    "microphoneMenuTooltip": "اختيار الميكروفون",
+    "speakerMenuTitle": "مكبر الصوت",
+    "speakerMenuTooltip": "اختيار مكبر صوت",
+    "microphoneButtonSplitRoleDescription": "زر الانقسام",
+    "onSplitButtonAriaLabel": "كتم صوت الميكروفون وخيارات الصوت",
+    "offSplitButtonAriaLabel": "إلغاء كتم صوت الميكروفون وخيارات الصوت",
+    "microphoneActionTurnedOnAnnouncement": "تم تشغيل الميكروفون",
+    "microphoneActionTurnedOffAnnouncement": "تم إيقاف الميكروفون",
+    "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم صوت الميكروفون",
+    "onSplitButtonMicrophonePrimaryAction": "كتم صوت الميكروفون",
+    "micPrimaryActionSplitButtonTitle": "استخدام الميكروفون"
+  },
+  "devicesButton": {
+    "label": "الأجهزة",
+    "tooltipContent": "إدارة الأجهزة",
+    "cameraMenuTitle": "الكاميرا",
+    "cameraMenuTooltip": "اختيار الكاميرا",
+    "audioDeviceMenuTitle": "جهاز صوت",
+    "audioDeviceMenuTooltip": "إلغاء كتم صوت الجهاز",
+    "microphoneMenuTitle": "الميكروفون",
+    "microphoneMenuTooltip": "اختيار الميكروفون",
+    "speakerMenuTitle": "مكبر الصوت",
+    "speakerMenuTooltip": "اختيار مكبر صوت"
+  },
+  "participantsButton": {
+    "label": "الأشخاص",
+    "tooltipContent": "إظهار المشاركين",
+    "menuHeader": "في هذه المكالمة",
+    "participantsListButtonLabel": "{numParticipants} من الأشخاص",
+    "muteAllButtonLabel": "كتم صوت الجميع",
+    "copyInviteLinkButtonLabel": "نسخ ارتباط دعوة",
+    "copyInviteLinkActionedAriaLabel": "تم نسخ ارتباط الدعوة"
+  },
+  "screenShareButton": {
+    "onLabel": "إيقاف التقديم",
+    "offLabel": "تقديم",
+    "tooltipDisabledContent": "تم تعطيل التقديم",
+    "tooltipOnContent": "تقديم العرض على شاشتك.",
+    "tooltipOffContent": "عرض الشاشة"
+  },
+  "messageThread": {
+    "yesterday": "أمس",
+    "sunday": "الأحد",
+    "monday": "الاثنين",
+    "tuesday": "الثلاثاء",
+    "wednesday": "الأربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة",
+    "saturday": "السبت",
+    "participantJoined": "انضم إلى المحادثة.",
+    "participantLeft": "قام بمغادرة الدردشة.",
+    "editMessage": "تحرير",
+    "removeMessage": "حذف",
+    "resendMessage": "محاولة الإرسال مرة أخرى",
+    "failToSendTag": "فشل الإرسال",
+    "editedTag": "تم التحرير",
+    "liveAuthorIntro": "قال {author}",
+    "messageContentAriaText": "{author} قال {message}",
+    "messageContentMineAriaText": "لقد قلت {message}",
+    "editBoxTextLimit": "تجاوزت رسالتك الحد الأقصى لعدد الأحرف {limitNumber}",
+    "editBoxPlaceholderText": "تحرير رسالتك",
+    "newMessagesIndicator": "رسائل جديدة",
+    "noDisplayNameSub": "لا يوجد اسم",
+    "editBoxCancelButton": "إلغاء الأمر",
+    "editBoxSubmitButton": "إرسال",
+    "messageReadCount": "تمت القراءة بواسطة {messageReadByCount} من {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "المزيد من الخيارات",
+    "downloadFile": "تنزيل ملف",
+    "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
+    "blockedWarningLinkText": "تفاصيل"
+  },
+  "errorBar": {
+    "unableToReachChatService": "أنت غير متصل",
+    "accessDenied": "يتعذر الوصول إلى خدمات الدردشة - الرجاء التحقق من بيانات اعتماد المستخدم المقدمة",
+    "userNotInChatThread": "لم تعد مضمناً في هذا ترابط الدردشة هذا",
+    "sendMessageNotInChatThread": "فشل إرسال الرسالة لأنك لم تعد في مؤشر ترابط الدردشة هذا",
+    "sendMessageGeneric": "فشل إرسال الرسالة",
+    "callingNetworkFailure": "مكالمة مزعجة - يبدو أنك غير متصل",
+    "startVideoGeneric": "فشل بدء الفيديو",
+    "stopVideoGeneric": "فشل إيقاف الفيديو",
+    "muteGeneric": "فشل كتم صوت الميكروفون",
+    "unmuteGeneric": "فشل إلغاء كتم صوت الميكروفون",
+    "speakingWhileMuted": "تم كتم صوت الميكروفون",
+    "startScreenShareGeneric": "فشل تشغيل مشاركة الشاشة",
+    "stopScreenShareGeneric": "فشل إيقاف مشاركة الشاشة",
+    "callNetworkQualityLow": "جودة الشبكة مقبولة.",
+    "callNoSpeakerFound": "لم يتم العثور على سماعات أو سماعات رأس. قم بتوصيل جهاز صوت لسماع المكالمة.",
+    "callNoMicrophoneFound": "لم يتم العثور على ميكروفونات. قم بتوصيل جهاز إدخال صوت.",
+    "callMicrophoneAccessDenied": "يتعذر الوصول إلى الميكروفون. انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
+    "callMicrophoneAccessDeniedSafari": "يتعذر الوصول إلى الميكروفون. قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+    "callMicrophoneMutedBySystem": "تم كتم صوتك بواسطة النظام.",
+    "callMicrophoneUnmutedBySystem": "تم استرداد الميكروفون وتم إلغاء كتم صوتك من قبل النظام.",
+    "callMacOsMicrophoneAccessDenied": "يتعذر الوصول إلى الميكروفون. امنح الميكروفون إذنا في إعدادات خصوصية macOS.",
+    "callLocalVideoFreeze": "النطاق الترددي للشبكة ضعيف. قد يظهر الفيديو متوقفا مؤقتا للآخرين في المكالمة.",
+    "callCameraAccessDenied": "يتعذر الوصول إلى الكاميرا. انقر فوق التأمين في شريط العناوين لمنح الإذن لصفحة ويب هذه.",
+    "callCameraAccessDeniedSafari": "يتعذر الوصول إلى الكاميرا. قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+    "callCameraAlreadyInUse": "يتعذر الوصول إلى الكاميرا. قد يكون قيد الاستخدام بالفعل بواسطة تطبيق آخر.",
+    "callVideoStoppedBySystem": "تم إيقاف الفيديو الخاص بك من قبل النظام.",
+    "callVideoRecoveredBySystem": "تم استئناف الفيديو الخاص بك.",
+    "callMacOsCameraAccessDenied": "يقوم MacOS بحظر الوصول إلى الكاميرا الخاصة بك. قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بالوصول إلى الكاميرا.",
+    "callMacOsScreenShareAccessDenied": "يقوم MacOS بحظر مشاركة الشاشة. قم بتحديث إعدادات الخصوصية للسماح لهذا المستعرض بتسجيل الشاشة.",
+    "dismissButtonAriaLabel": "إغلاق",
+    "failedToJoinCallGeneric": "فشل في الانضمام إلى المكالمة.",
+    "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
+    "startScreenSharingGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
+    "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
+    "screenShareLoadingMessage": "يتم الآن تحميل شاشة {participant}",
+    "localVideoLabel": "أنت",
+    "localVideoCameraSwitcherLabel": "تبديل الكاميرا",
+    "localVideoMovementLabel": "لوحة فيديو محلية قابلة للنقل",
+    "localVideoSelectedDescription": "تم تحديد {cameraName}",
+    "displayNamePlaceholder": "مشارك غير مسمى",
+    "fitRemoteParticipantToFrame": "الملاءمة داخل إطار",
+    "fillRemoteParticipantFrame": "تعبئة الإطار",
+    "pinParticipantForMe": "تثبيت نيابة عني",
+    "pinParticipantForMeLimitReached": "تثبيت (تم بلوغ الحد الأقصى)",
+    "unpinParticipantForMe": "إلغاء التثبيت",
+    "pinParticipantMenuItemAriaLabel": "تثبيت {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "إزالة تثبيت {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "تم تثبيت {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "تم إلغاء تثبيت {participantName}"
+  },
+  "dialpad": {
+    "placeholderText": "أدخل رقم الهاتف",
+    "deleteButtonAriaLabel": "حذف"
+  },
+  "holdButton": {
+    "onLabel": "استئناف",
+    "offLabel": "انتظار",
+    "tooltipOnContent": "استئناف المكالمة",
+    "tooltipOffContent": "تعليق المكالمة"
+  },
+  "videoTile": {
+    "participantStateRinging": "يتم الآن الاتصال...",
+    "participantStateHold": "قيد الانتظار"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
+    "secondaryText": "هذا حتى يتمكن المشاركون من مشاهدتك والاستماع إليك.",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "primaryButtonText": "المتابعة بدون الكاميرا والميكروفون",
+    "ariaLabel": "السماح بالوصول إلى الكاميرا والميكروفون"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "السماح {appName} باستخدام الكاميرا",
+    "secondaryText": "هذا حتى يتمكن المشاركون من مشاهدتك والاستماع إليك.",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "primaryButtonText": "المتابعة دون كاميرا",
+    "ariaLabel": "السماح بالوصول إلى الكاميرا"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "السماح {appName} باستخدام الميكروفون",
+    "secondaryText": "هذا حتى يتمكن المشاركون من الاستماع إليك.",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "primaryButtonText": "المتابعة دون ميكروفون",
+    "ariaLabel": "السماح بالوصول إلى الميكروفون"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "التحقق من الوصول إلى الكاميرا والميكروفون",
+    "secondaryText": "السماح بالوصول إذا طُلب منك ذلك. هذا حتى يتمكن المشاركون من رؤيتك والاستماع إليك.",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "primaryButtonText": "المتابعة بدون الكاميرا والميكروفون",
+    "ariaLabel": "التحقق من الوصول إلى الكاميرا والميكروفون. السماح بالوصول إذا طُلب منك ذلك."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "التحقق من الوصول إلى الكاميرا",
+    "secondaryText": "السماح بالوصول إذا طُلب منك ذلك. هذا حتى يتمكن المشاركون من رؤيتك.",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "primaryButtonText": "المتابعة بدون كاميرا",
+    "ariaLabel": "التحقق من الوصول إلى الكاميرا. السماح بالوصول إذا طُلب منك ذلك."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "التحقق من الوصول إلى الميكروفون",
+    "secondaryText": "السماح بالوصول إذا طُلب منك ذلك. هذا حتى يتمكن المشاركون من الاستماع إليك.",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "primaryButtonText": "المتابعة بدون ميكروفون",
+    "ariaLabel": "التحقق من الوصول إلى الميكروفون. السماح بالوصول إذا طُلب منك ذلك."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "يتعذر الوصول إلى الكاميرا والميكروفون",
+    "secondaryText": "انقر فوق أيقونة التأمين في شريط العناوين لمنح أذونات الميكروفون لصفحة الويب هذه. قد يكون تحديث الصفحة مطلوبا.",
+    "primaryButtonText": "المتابعة دون الكاميرا والميكروفون",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "يتعذر الوصول إلى الكاميرا والميكروفون",
+    "secondaryText": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+    "primaryButtonText": "المتابعة دون الكاميرا والميكروفون",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "تعذر الوصول إلى الكاميرا",
+    "secondaryText": "انقر فوق أيقونة التأمين في شريط العناوين لمنح أذونات الكاميرا لصفحة ويب هذه. قد يكون تحديث الصفحة مطلوبا.",
+    "primaryButtonText": "المتابعة دون كاميرا",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "يتعذر الوصول إلى الميكروفون",
+    "secondaryText": "انقر فوق أيقونة التأمين في شريط العناوين لمنح أذونات الميكروفون لصفحة الويب هذه. قد يكون تحديث الصفحة مطلوبا.",
+    "primaryButtonText": "المتابعة بدون ميكروفون",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "تعذر الوصول إلى الكاميرا",
+    "secondaryText": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+    "primaryButtonText": "المتابعة دون كاميرا",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "يتعذر الوصول إلى الميكروفون",
+    "secondaryText": "قم بتحديث الصفحة للسماح بالأذونات، أو تحقق من إعدادات هذا المستعرض وتحقق من تمكين الأذونات لموقع الويب هذا.",
+    "primaryButtonText": "المتابعة دون ميكروفون",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "المتصفح غير مدعوم",
+    "secondaryText": "الرجاء الانضمام إلى هذه المكالمة باستخدام مستعرض متوافق.",
+    "moreHelpLinkText": "الاطلاع على متطلبات التوافق"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "يلزم تحديث المستعرض",
+    "secondaryText": "لضمان أفضل مكالمة ممكنة، الرجاء تحديث المستعرض الخاص بك ثم محاولة الانضمام إلى المكالمة مرة أخرى.",
+    "moreHelpLinkText": "الاطلاع على متطلبات التوافق",
+    "continueAnywayButtonText": "بدء المكالمة دون تحديث"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "نظام التشغيل غير معتمد",
+    "secondaryText": "الرجاء الانضمام إلى هذه المكالمة باستخدام جهاز بنظام تشغيل متوافق.",
+    "moreHelpLinkText": "الاطلاع على متطلبات التوافق"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "يتعذر استخدام الكاميرا أو الميكروفون",
+    "secondaryText": "قد لا يكون لدى المستعرض إمكانية الوصول إلى الكاميرا أو الميكروفون لديك. لحل هذه المشكلة، افتح \"تفضيلات النظام\".",
+    "primaryButtonText": "حاول مرة أخرى",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "السماح بالوصول إلى الميكروفون للمتابعة",
+    "secondaryText": "حتى يتمكن المشاركون الآخرون من سماعك.",
+    "primaryButtonText": "حاول مرة أخرى",
+    "imageAltText": "موقع إذن جهاز الكاميرا والميكروفون لـ iOS",
+    "linkText": "هل تحتاج إلى مساعدة؟ الحصول على تعليمات استكشاف الأخطاء وإصلاحها",
+    "step1Text": "انتقل إلى تطبيق الإعدادات",
+    "step2Text": "التمرير لأسفل للوصول إلى إعدادات هذا المستعرض",
+    "step3Text": "تشغيل الميكروفون (الكاميرا اختيارية)",
+    "step4Text": "حاول الانضمام إلى المكالمة مرة أخرى",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "الصفحة السابقة",
+    "rightNavButtonAriaLabel": "الصفحة التالية"
+  }
+}
