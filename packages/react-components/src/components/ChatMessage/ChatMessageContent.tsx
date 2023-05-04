@@ -73,7 +73,6 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const htmlToReactParser = Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
 
   /* @conditional-compile-remove(teams-inline-images) */
@@ -85,74 +84,12 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
     });
   }, [props]);
 
-  const processNodeDefinitions = ProcessNodeDefinitions();
-  const processingInstructions: ProcessingInstructionType[] = [
-    // Mention render override if needed
-    {
-      shouldProcessNode: (node) => {
-        /* @conditional-compile-remove(mention) */
-        if (props.mentionDisplayOptions?.onRenderMention) {
-          // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
-          return node.name === 'msft-mention';
-        }
-        return false;
-      },
-      processNode: (node) => {
-        /* @conditional-compile-remove(mention) */
-        if (props.mentionDisplayOptions?.onRenderMention) {
-          const { id, displaytext } = node.attribs;
-          const mention: Mention = {
-            id: id,
-            displayText: displaytext
-          };
-          return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
-        }
-        return processNodeDefinitions.processDefaultNode;
-      }
-    },
-    // Inline image fetching as needed
-    {
-      shouldProcessNode: (node): boolean => {
-        // Process img node with id in attachments list
-        /* @conditional-compile-remove(teams-inline-images) */
-        return (
-          node.name &&
-          node.name === 'img' &&
-          node.attribs &&
-          node.attribs.id &&
-          props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
-        );
-        return false;
-      },
-      processNode: (node, children, index): HTMLElement => {
-        // logic to check id in map/list
-        /* @conditional-compile-remove(teams-inline-images) */
-        if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
-          node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-        }
-        return processNodeDefinitions.processDefaultNode(node, children, index);
-      }
-    },
-    {
-      // Process everything else in the default way
-      shouldProcessNode: () => {
-        return true;
-      },
-      processNode: processNodeDefinitions.processDefaultNode
-    }
-  ];
-
-  const htmlContent = htmlToReactParser.parseWithInstructions(
-    props.message.content ?? '',
-    IsValidNodeDefinitions.alwaysValid,
-    processingInstructions
-  );
   return (
     <MessageContentWithLiveAria
       message={props.message}
       liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
       ariaLabel={messageContentAriaText(props)}
-      content={htmlContent}
+      content={processHtmlToReact(props)}
     />
   );
 };
@@ -235,4 +172,76 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
           message: props.message.content
         })
     : undefined;
+};
+
+const processNodeDefinitions = ProcessNodeDefinitions();
+const htmlToReactParser = Parser();
+
+const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
+  /* @conditional-compile-remove(teams-inline-images) */
+  const processInlineImage: ProcessingInstructionType = {
+    // Custom <img> processing
+    shouldProcessNode: (node): boolean => {
+      // Process img node with id in attachments list
+      return (
+        node.name &&
+        node.name === 'img' &&
+        node.attribs &&
+        node.attribs.id &&
+        props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+      );
+    },
+    processNode: (node, children, index): HTMLElement => {
+      // logic to check id in map/list
+      if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
+        node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+      }
+      return processNodeDefinitions.processDefaultNode(node, children, index);
+    }
+  };
+
+  /* @conditional-compile-remove(mention) */
+  const processMention: ProcessingInstructionType = {
+    shouldProcessNode: (node) => {
+      if (props.mentionDisplayOptions?.onRenderMention) {
+        // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
+        return node.name === 'msft-mention';
+      }
+      return false;
+    },
+    processNode: (node) => {
+      if (props.mentionDisplayOptions?.onRenderMention) {
+        const { id, displaytext } = node.attribs;
+        const mention: Mention = {
+          id: id,
+          displayText: displaytext
+        };
+        return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+      }
+      return processNodeDefinitions.processDefaultNode;
+    }
+  };
+
+  const addProcessingSteps = (): ProcessingInstructionType[] => {
+    const steps: ProcessingInstructionType[] = [];
+    /* @conditional-compile-remove(teams-inline-images) */
+    steps.push(processInlineImage);
+    /* @conditional-compile-remove(mention) */
+    steps.push(processMention);
+    return steps;
+  };
+
+  const processingInstructions: ProcessingInstructionType = [
+    ...addProcessingSteps(),
+    {
+      // Process everything else in the default way
+      shouldProcessNode: IsValidNodeDefinitions.alwaysValid,
+      processNode: processNodeDefinitions.processDefaultNode
+    }
+  ];
+  return htmlToReactParser.parseWithInstructions(
+    props.message.content ?? '',
+    IsValidNodeDefinitions.alwaysValid,
+    processingInstructions
+  );
 };
