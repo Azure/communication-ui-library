@@ -125,3 +125,43 @@ export const captionsFeatureState = {
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true
 };
+
+export const captionsFeatureStateArabic = {
+  captions: [
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(0),
+      speaker: {
+        displayName: 'Participant 1',
+        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'ar-ae' as const,
+      captionText: '!سعيد بلقائك! مرحبًا'
+    },
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(10000),
+      speaker: {
+        displayName: 'Participant 2',
+        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'ar-ae' as const,
+      captionText: 'انا جيد، كيف حالك؟'
+    },
+    {
+      resultType: 'Final' as const,
+      timestamp: new Date(10001),
+      speaker: {
+        displayName: 'Participant 3',
+        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+      },
+      spokenLanguage: 'ar-ae' as const,
+      captionText: '!سُعدت برؤيتك'
+    }
+  ],
+  supportedSpokenLanguages: captionsAvailableLanguageStrings,
+  supportedCaptionLanguages: captionsAvailableLanguageStrings,
+  currentCaptionLanguage: 'ar-ae',
+  currentSpokenLanguage: 'ar-ae',
+  isCaptionsFeatureActive: true
+};
