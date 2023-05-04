@@ -74,7 +74,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /* @conditional-compile-remove(mention) */
   /**
    * Optional props needed to display suggestions in the mention scenario.
-   * @beta
+   * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images) */
