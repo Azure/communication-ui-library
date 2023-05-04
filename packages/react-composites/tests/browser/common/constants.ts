@@ -123,7 +123,8 @@ export const captionsFeatureState = {
   supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'en-us',
   currentSpokenLanguage: 'en-us',
-  isCaptionsFeatureActive: true
+  isCaptionsFeatureActive: true,
+  startCaptionsClicked: true
 };
 
 export const captionsFeatureStateArabic = {

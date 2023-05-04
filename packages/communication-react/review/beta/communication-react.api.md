@@ -592,6 +592,7 @@ export interface CallCompositeStrings {
     captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
+    captionsBannerSpinnerText?: string;
     captionsSettingsCancelButtonLabel?: string;
     captionsSettingsCloseModalButtonAriaLabel?: string;
     captionsSettingsConfirmButtonLabel?: string;
@@ -1323,6 +1324,7 @@ export interface CaptionsCallFeatureState {
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
+    startCaptionsClicked: boolean;
     supportedCaptionLanguages: string[];
     supportedSpokenLanguages: string[];
 }

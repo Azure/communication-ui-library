@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import {
@@ -291,13 +291,19 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       await startCaptionsButtonHandlers.onStartCaptions({
         spokenLanguage: currentSpokenLanguage
       });
-      // set spoken language when start captions with a spoken language specified.
-      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-      startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage);
     } else {
       startCaptionsButtonHandlers.onStopCaptions();
     }
   }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, currentSpokenLanguage]);
+
+  /* @conditional-compile-remove(close-captions) */
+  useEffect(() => {
+    if (startCaptionsButtonProps.checked) {
+      // set spoken language when start captions with a spoken language specified.
+      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+      startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
+    }
+  }, [startCaptionsButtonProps.checked]);
 
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {

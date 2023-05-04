@@ -102,6 +102,10 @@ export interface CaptionsCallFeatureState {
    */
   isCaptionsFeatureActive: boolean;
   /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsClicked: boolean;
+  /**
    * supported caption languages
    */
   supportedCaptionLanguages: string[];

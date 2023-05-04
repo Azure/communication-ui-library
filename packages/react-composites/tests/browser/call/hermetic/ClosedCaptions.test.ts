@@ -48,7 +48,11 @@ test.describe('Closed Captions Banner tests', async () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
-      initialState.call.captionsFeature = { ...captionsFeatureState, isCaptionsFeatureActive: false };
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsClicked: false
+      };
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));

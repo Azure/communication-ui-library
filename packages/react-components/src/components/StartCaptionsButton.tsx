@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { defaultSpokenLanguage } from './utils';
 
@@ -98,11 +98,16 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
       onStopCaptions();
     } else {
       await onStartCaptions(options);
+    }
+  }, [props.checked, onStartCaptions, onStopCaptions, onSetSpokenLanguage, options]);
+
+  useEffect(() => {
+    if (props.checked) {
       // set spoken language when start captions with a spoken language specified.
       // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
       onSetSpokenLanguage(options.spokenLanguage);
     }
-  }, [props.checked, onStartCaptions, onStopCaptions, onSetSpokenLanguage, options]);
+  }, [props.checked]);
 
   return (
     <ControlBarButton

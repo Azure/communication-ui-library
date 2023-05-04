@@ -382,6 +382,16 @@ export interface _CaptionsBannerProps {
     // (undocumented)
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    startCaptionsClicked?: boolean;
+    // (undocumented)
+    strings?: _CaptionsBannerStrings;
+}
+
+// @internal
+export interface _CaptionsBannerStrings {
+    // (undocumented)
+    captionsBannerSpinnerText?: string;
 }
 
 // @internal

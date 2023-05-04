@@ -3,7 +3,7 @@
 /* @conditional-compile-remove(close-captions) */
 import { CallClientState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
-import { CallingBaseSelectorProps } from './baseSelectors';
+import { CallingBaseSelectorProps, getStartCaptionsClicked } from './baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import {
   getCaptions,
@@ -99,8 +99,8 @@ export type _CaptionsBannerSelector = (
  * @internal
  */
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
-  [getCaptions, getCaptionsStatus],
-  (captions, isCaptionsFeatureActive) => {
+  [getCaptions, getCaptionsStatus, getStartCaptionsClicked],
+  (captions, isCaptionsFeatureActive, startCaptionsClicked) => {
     const captionsInfo = captions?.map((c) => {
       const userId = c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : '';
       return {
@@ -112,7 +112,8 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     });
     return {
       captions: captionsInfo ?? [],
-      isCaptionsOn: isCaptionsFeatureActive ?? false
+      isCaptionsOn: isCaptionsFeatureActive ?? false,
+      startCaptionsClicked: startCaptionsClicked ?? false
     };
   }
 );

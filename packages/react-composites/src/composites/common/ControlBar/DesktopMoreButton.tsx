@@ -9,7 +9,7 @@ import { _StartCaptionsButton } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
-import { useMemo, useCallback } from 'react';
+import { useMemo, useCallback, useEffect } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -62,10 +62,16 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     await startCaptionsButtonHandlers.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
+  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+
+  /* @conditional-compile-remove(close-captions) */
+  useEffect(() => {
     // set spoken language when start captions with a spoken language specified.
     // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-    startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
-  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+    if (startCaptionsButtonProps.checked) {
+      startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
+    }
+  }, [[startCaptionsButtonProps.checked]]);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(

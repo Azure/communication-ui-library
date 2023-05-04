@@ -49,7 +49,11 @@ test.describe('Closed Captions Banner tests', async () => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
       initialState.isTeamsCall = true;
-      initialState.call.captionsFeature = { ...captionsFeatureState, isCaptionsFeatureActive: false };
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsClicked: false
+      };
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));

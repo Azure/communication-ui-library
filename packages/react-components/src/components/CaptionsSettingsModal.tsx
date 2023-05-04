@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useMemo, useState } from 'react';
 import {
   IModalStyles,
@@ -90,15 +90,20 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     }
   }, [onDismissCaptionsSettings]);
 
+  useEffect(() => {
+    // set spoken language when start captions with a spoken language specified.
+    // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+    if (isCaptionsFeatureActive) {
+      onSetSpokenLanguage(selectedItem.key.toString());
+    }
+  }, [isCaptionsFeatureActive]);
+
   const onConfirm = useCallback(async (): Promise<void> => {
     const languageCode = selectedItem.key.toString();
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(languageCode);
     } else {
       await onStartCaptions({ spokenLanguage: languageCode });
-      // set spoken language when start captions with a spoken language specified.
-      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-      onSetSpokenLanguage(languageCode);
     }
     onDismiss();
   }, [onDismiss, isCaptionsFeatureActive, onSetSpokenLanguage, onStartCaptions, selectedItem.key]);

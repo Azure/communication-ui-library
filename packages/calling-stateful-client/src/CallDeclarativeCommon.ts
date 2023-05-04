@@ -109,9 +109,10 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
       case 'startCaptions':
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<TeamsCaptionsCallFeature['startCaptions']>) => {
+            this._context.setStartCaptionsClicked(this._call.id, true);
             const ret = await target.startCaptions(...args);
-            this._context.setIsCaptionActive(this._call.id, true);
             this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+
             return ret;
           },
           'Call.feature'
@@ -122,6 +123,7 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
           async (...args: Parameters<TeamsCaptionsCallFeature['stopCaptions']>) => {
             const ret = await target.stopCaptions(...args);
             this._context.setIsCaptionActive(this._call.id, false);
+            this._context.setStartCaptionsClicked(this._call.id, false);
             return ret;
           },
           'Call.feature'

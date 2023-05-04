@@ -501,4 +501,9 @@ export interface CallCompositeStrings {
    * list of key value pairs that pairs language code to language names
    */
   captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * captions banner loading spinner label
+   */
+  captionsBannerSpinnerText?: string;
 }
