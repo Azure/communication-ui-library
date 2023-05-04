@@ -138,11 +138,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
       textFieldRef?.current?.focus();
-      if (caretIndex) {
-        textFieldRef?.current?.setSelectionEnd(caretIndex);
-      }
     },
-    [textFieldRef, caretIndex]
+    [textFieldRef]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -403,7 +400,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       event.currentTarget.selectionStart !== -1
     ) {
       const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-      if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+      if (
+        mentionTag !== undefined &&
+        mentionTag.plainTextBeginIndex !== undefined &&
+        (event.currentTarget.selectionStart > mentionTag.plainTextBeginIndex ||
+          (mentionTag.plainTextEndIndex !== undefined &&
+            event.currentTarget.selectionStart < mentionTag.plainTextEndIndex - 1)) // - 1 because mentionTag.plainTextEndIndex is the next symbol after the mention
+      ) {
         if (selectionStartValue === null) {
           updatedStartIndex = mentionTag.plainTextBeginIndex;
           updatedEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
@@ -423,6 +426,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
       if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
         // the selection start is changed
+        //TODO: is there another check should be here as in the previous if?
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
           //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
@@ -506,7 +510,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
             if (caretIndex !== null) {
-              e.currentTarget.setSelectionRange(caretIndex, caretIndex);
+              let updatedCaretIndex = caretIndex;
+              if (caretIndex >= inputTextValue.length) {
+                updatedCaretIndex = inputTextValue.length - 1;
+              } else if (caretIndex < 0) {
+                updatedCaretIndex = 0;
+              }
+              if (e.currentTarget.selectionDirection !== null) {
+                e.currentTarget.setSelectionRange(
+                  updatedCaretIndex,
+                  updatedCaretIndex,
+                  e.currentTarget.selectionDirection
+                );
+              } else {
+                e.currentTarget.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
+              }
               setCaretIndex(null);
               return;
             }
@@ -796,7 +814,7 @@ const handleMentionTagUpdate = (
     }
     endChangeDiff = rangeEnd - tag.plainTextBeginIndex - mentionTagLength;
     result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff);
-    // plainTextSelectionEndIndex = rangeStart + processedChange.length;
+    plainTextSelectionEndIndex = rangeStart + processedChange.length;
     lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
     // processed change should not be changed as it should be added after the tag
   }
