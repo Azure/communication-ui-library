@@ -389,7 +389,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
         >
-          <VoiceOverButton
+          <InputBoxButton
             onRenderIcon={onRenderSendIcon}
             onClick={(e) => {
               if (!textValueOverflow) {

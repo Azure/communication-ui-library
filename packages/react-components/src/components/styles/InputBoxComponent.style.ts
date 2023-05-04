@@ -91,14 +91,7 @@ export const inputButtonStyle = mergeStyles({
 /**
  * @private
  */
-export const inlineButtonsContainerStyle: IStyle = {
-  position: 'absolute',
-  right: '0.3rem',
-  top: '0',
-  bottom: '0',
-  gap: '0.25rem',
-  alignItems: 'center'
-};
+export const inlineButtonsContainerStyle: IStyle = {};
 
 /**
  * @private

@@ -11,8 +11,7 @@ import {
   concatStyleSets,
   IconButton,
   TooltipHost,
-  ICalloutContentStyles,
-  DefaultButton
+  ICalloutContentStyles
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
 import {
@@ -21,10 +20,10 @@ import {
   inputButtonStyle,
   textFieldStyle,
   textContainerStyle,
-  inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
-  inputButtonTooltipStyle
+  inputButtonTooltipStyle,
+  iconWrapperStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -123,6 +122,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
+  const onRenderChildren = (): JSX.Element => {
+    return (
+      <Stack horizontal className={mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle)}>
+        {children}
+      </Stack>
+    );
+  };
+
   return (
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
@@ -144,14 +151,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
-          onRenderSuffix={() => children}
+          onRenderSuffix={onRenderChildren}
         />
-        {/* <Stack
-          horizontal
-          className={mergeStyles(props.inlineChildren ? inlineButtonsContainerStyle : newLineButtonsContainerStyle)}
-        > */}
-        {/* {children} */}
-        {/* </Stack> */}
       </div>
     </Stack>
   );
@@ -201,7 +202,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onMouseLeave={() => {
           setIsHover(false);
         }}
-        onRenderIcon={() => onRenderIcon(isHover)}
+        onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
       />
     </TooltipHost>
   );
