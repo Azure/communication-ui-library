@@ -16,5 +16,5 @@ export const videoBackgroundErrorsSelector = reselect.createSelector([getLatestE
   if (errors && errors['VideoEffectsFeature.startEffects']) {
     return errors['VideoEffectsFeature.startEffects'];
   }
-  return null;
+  return undefined;
 });
