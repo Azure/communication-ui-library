@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.5.1-beta.2",
+  "version": "1.5.1-beta.4",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -38,7 +38,8 @@
     "@fluentui/react-northstar": "0.61.0",
     "@fluentui/react-window-provider": "~2.2.3",
     "@fluentui/react": "~8.98.3",
-    "@internal/acs-ui-common": "1.5.1-beta.2",
+    "@internal/acs-ui-common": "1.5.1-beta.4",
+    "@internal/northstar-wrapper": "1.5.1-beta.4",
     "copy-to-clipboard": "~3.3.1",
     "html-to-react": "~1.5.0",
     "react-aria-live": "^2.0.5",

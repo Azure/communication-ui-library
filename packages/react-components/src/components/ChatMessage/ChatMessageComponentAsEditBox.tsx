@@ -29,13 +29,7 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
-  onCancel?: (
-    messageId: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => void;
+  onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
     metadata?: Record<string, string>,
@@ -151,7 +145,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxCancelButton}
           onRenderIcon={onRenderThemedCancelIcon}
           onClick={() => {
-            onCancel && onCancel(message.messageId, message.metadata, { attachedFilesMetadata });
+            onCancel && onCancel(message.messageId);
           }}
           id={'dismissIconWrapper'}
         />
