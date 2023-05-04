@@ -164,5 +164,6 @@ export const captionsFeatureStateArabic = {
   supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'ar-ae',
   currentSpokenLanguage: 'ar-ae',
-  isCaptionsFeatureActive: true
+  isCaptionsFeatureActive: true,
+  startCaptionsClicked: true
 };
