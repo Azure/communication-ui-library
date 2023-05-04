@@ -53,7 +53,7 @@ describe('CallWithChatComposite', () => {
     });
   });
 
-  test('Should pass down BaseCompositeProps to internal CallComposite', async () => {
+  test('Lobby page should show', async () => {
     const mockBaseCompositeProps = {
       fluentTheme: {},
       icons: {},
