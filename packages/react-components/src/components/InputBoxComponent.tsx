@@ -134,12 +134,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const localeStrings = useLocale().strings;
 
   /* @conditional-compile-remove(mention) */
-  const updateMentionSuggestions = useCallback(
-    (suggestions: Mention[]) => {
-      setMentionSuggestions(suggestions);
-    },
-    [textFieldRef]
-  );
+  const updateMentionSuggestions = useCallback((suggestions: Mention[]) => {
+    setMentionSuggestions(suggestions);
+  }, []);
 
   /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
@@ -200,6 +197,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setCaretIndex(currentTriggerStartIndex + displayName.length + triggerText.length);
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
+      textFieldRef?.current?.focus();
       setActiveSuggestionIndex(undefined);
       onChange && onChange(undefined, updatedHTML);
     },
@@ -298,7 +296,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     async (
       event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
       tagsValue: TagData[],
-      textValue: string,
+      htmlTextValue: string,
       inputTextValue: string,
       currentTriggerStartIndex: number,
       currentSelectionEnd?: number | undefined,
@@ -357,10 +355,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       let result = '';
       if (tagsValue.length === 0) {
-        // no tags in the string, textValue is a sting
+        // no tags in the string, htmlTextValue is a sting
         result = newValue;
       } else {
-        // there are tags in the text value, textValue is html string
+        // there are tags in the text value, htmlTextValue is html string
         const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
           inputTextValue,
           newValue,
@@ -369,7 +367,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         // get updated html string
         const change = newValue.substring(changeStart, newChangeEnd);
         const [updatedHTML, updatedChangeNewEndIndex] = updateHTML(
-          textValue,
+          htmlTextValue,
           inputTextValue,
           newValue,
           tagsValue,
@@ -511,7 +509,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             /* @conditional-compile-remove(mention) */
             setInputTextValue(newValue ?? '');
             /* @conditional-compile-remove(mention) */
-            handleOnChange(e, newValue);
+            handleOnChange(
+              e,
+              tagsValue,
+              textValue,
+              inputTextValue,
+              currentTriggerStartIndex,
+              e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
+              newValue
+            );
             /* @conditional-compile-remove(mention) */
             return;
             onChange(e, newValue);
