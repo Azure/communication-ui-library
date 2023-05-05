@@ -242,7 +242,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     }, 300);
   }, [compositeParentDivId]);
 
-  const isOnHold = currentPage === 'hold';
+  const isOnHold = isOnHoldTrampoline(currentPage);
   useEffect(() => {
     if (isOnHold) {
       closeChat();
@@ -503,4 +503,10 @@ const checkShowChatButton = (callControls?: boolean | CallWithChatControlOptions
 
 const checkChatButtonIsDisabled = (callControls?: boolean | CallWithChatControlOptions): boolean => {
   return typeof callControls === 'object' && isDisabled(callControls?.chatButton);
+};
+
+const isOnHoldTrampoline = (page: CallCompositePage | undefined): boolean => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return page === 'hold';
+  return false;
 };
