@@ -276,7 +276,15 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         </div>
       );
     },
-    [handleOnKeyDown, theme, ids, hoveredSuggestion, changedSelection, personaRenderer]
+    [
+      handleOnKeyDown,
+      theme,
+      /* @conditional-compile-remove(mention) */
+      ids,
+      hoveredSuggestion,
+      changedSelection,
+      personaRenderer
+    ]
   );
 
   const getHeaderTitle = useCallback((): string => {
