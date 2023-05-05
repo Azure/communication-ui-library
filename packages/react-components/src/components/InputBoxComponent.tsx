@@ -301,6 +301,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       tagsValue: TagData[],
       textValue: string,
       inputTextValue: string,
+      currentTriggerStartIndex: number,
+      currentSelectionEnd?: number | undefined,
       updatedValue?: string | undefined
     ): Promise<void> => {
       let newValue = updatedValue;
@@ -310,7 +312,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
       const newTextLength = newValue.length;
-      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      let selectionEnd = currentSelectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
       } else if (selectionEnd > newTextLength) {
@@ -390,16 +392,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
       onChange && onChange(event, result);
     },
-    [
-      onChange,
-      mentionLookupOptions,
-      currentTriggerStartIndex,
-      setCaretIndex,
-      setCaretPosition,
-      updateMentionSuggestions,
-      debouncedQueryUpdate,
-      textFieldRef
-    ]
+    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
   );
 
   /* @conditional-compile-remove(mention) */
