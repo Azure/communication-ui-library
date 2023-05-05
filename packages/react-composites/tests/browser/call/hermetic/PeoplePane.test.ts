@@ -172,6 +172,25 @@ test.describe('Participant list side pane tests', () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
+
+  test('participant list opens and do not overlap with error bar', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!participantListShownAsSidePane(testInfo));
+    const initialState = participantListInitialState();
+    initialState.latestErrors = {
+      'Call.startVideo': {
+        // Add 24 hours to current time to ensure the error is not dismissed by default
+        timestamp: new Date(Date.now() + 3600 * 1000 * 24),
+        name: 'Failure to start video',
+        message: 'Could not start video',
+        target: 'Call.startVideo',
+        innerError: new Error('Inner error of failure to start video')
+      }
+    };
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('people-pane-with-error-bar.png');
+  });
 });
 
 test.describe('Participant list full screen pane with drawer tests', () => {
