@@ -16,7 +16,7 @@ import {
 } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -106,15 +106,23 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isInLobby = _isInLobbyOrConnecting(useSelector(callStatusSelector).callStatus);
 
+  const { updateSidePaneRenderer } = props;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = useSelector(getPage) === 'hold';
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  useEffect(() => {
+    if (isInLocalHold) {
+      // close side pane on local hold
+      updateSidePaneRenderer(undefined);
+    }
+  }, [updateSidePaneRenderer, isInLocalHold]);
 
   const adapter = useAdapter();
 
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
   const peoplePaneProps = useMemo(
     () => ({
-      updateSidePaneRenderer: props.updateSidePaneRenderer,
+      updateSidePaneRenderer,
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -123,7 +131,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       mobileView: props.mobileView
     }),
     [
-      props.updateSidePaneRenderer,
+      updateSidePaneRenderer,
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */

@@ -16,6 +16,7 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import {
+  ControlBarButtonProps,
   ParticipantMenuItemsCallback,
   _useContainerHeight,
   _useContainerWidth,
@@ -242,6 +243,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     }, 300);
   }, [compositeParentDivId]);
 
+  const isOnHold = currentPage === 'hold';
+  useEffect(() => {
+    if (isOnHold) {
+      closeChat();
+    }
+  }, [closeChat, isOnHold]);
+
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const toggleChat = useCallback(() => {
     isChatOpen || !hasJoinedCall ? closeChat() : openChat();
@@ -263,7 +271,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const showChatButton = checkShowChatButton(props.callControls);
-  const chatButtonDisabled = showChatButton && (checkChatButtonIsDisabled(props.callControls) || !hasJoinedCall);
+  const chatButtonDisabled =
+    showChatButton && (checkChatButtonIsDisabled(props.callControls) || !hasJoinedCall || isOnHold);
   const chatTabHeaderProps = useMemo(
     () =>
       mobileView && showChatButton
