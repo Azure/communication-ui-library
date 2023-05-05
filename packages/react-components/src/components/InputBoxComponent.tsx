@@ -302,30 +302,25 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       currentSelectionEnd?: number | undefined,
       updatedValue?: string | undefined
     ): Promise<void> => {
-      let newValue = updatedValue;
-      if (newValue === undefined) {
-        newValue = '';
-      }
+      const newValue = updatedValue ?? '';
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
       const newTextLength = newValue.length;
-      let selectionEnd = currentSelectionEnd || -1;
-      if (selectionEnd < 0) {
-        selectionEnd = 0;
-      } else if (selectionEnd > newTextLength) {
-        selectionEnd = newTextLength - 1;
-      }
+      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      selectionEnd = Math.max(0, selectionEnd);
+      selectionEnd = Math.min(selectionEnd, newTextLength - 1);
+
       // If we are enabled for lookups,
       if (mentionLookupOptions !== undefined) {
         // Look at the range of the change for a trigger character
-        const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
+        const triggerPriorIndex = newValue.lastIndexOf(triggerText, selectionEnd - 1);
         // Update the caret position, if not doing a lookup
         setCaretPosition(Caret.getRelativePosition(event.currentTarget));
 
         if (triggerPriorIndex !== undefined) {
           // trigger is found
-          const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
-          const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
+          const isSpaceBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
+          const wordAtSelection = newValue.substring(triggerPriorIndex, selectionEnd);
           let tagIndex = currentTriggerStartIndex;
           if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
             //no space before the trigger <- continuation of the previous word
