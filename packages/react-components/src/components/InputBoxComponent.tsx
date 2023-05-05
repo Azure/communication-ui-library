@@ -63,7 +63,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement> | null, newValue?: string | undefined) => void;
+  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
@@ -129,7 +129,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
   /* @conditional-compile-remove(mention) */
   // Index of where the caret is in the text field
-  const [caretIndex, setCaretIndex] = useState<number | null>(null);
+  const [caretIndex, setCaretIndex] = useState<number | undefined>(undefined);
   /* @conditional-compile-remove(mention) */
   const localeStrings = useLocale().strings;
 
@@ -138,6 +138,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
       textFieldRef?.current?.focus();
+      if (caretIndex !== undefined) {
+        textFieldRef?.current?.setSelectionEnd(caretIndex);
+      }
     },
     [textFieldRef]
   );
@@ -202,7 +205,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
       setActiveSuggestionIndex(undefined);
-      onChange && onChange(null, updatedHTML);
+      onChange && onChange(undefined, updatedHTML);
     },
     [
       textFieldRef,
@@ -535,7 +538,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               'selectionEnd',
               e.currentTarget.selectionEnd
             );
-            if (caretIndex !== null) {
+            if (caretIndex !== undefined) {
               let updatedCaretIndex = caretIndex;
               if (caretIndex >= inputTextValue.length) {
                 //TODO: check if -1 is needed
@@ -554,7 +557,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
                 console.log('onSelect, event.currentTarget.selectionDirection === null');
                 e.currentTarget.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
               }
-              setCaretIndex(null);
+              setCaretIndex(undefined);
               return;
             }
             //TODO: need to check to navigate before/after space correctly in tag + when selecting by mouse

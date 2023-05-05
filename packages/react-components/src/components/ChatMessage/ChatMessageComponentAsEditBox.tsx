@@ -72,7 +72,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     editTextFieldRef.current?.focus();
   }, []);
 
-  const setText = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement> | null, newValue?: string): void => {
+  const setText = (event?: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
     setTextValue(newValue ?? '');
   };
 
