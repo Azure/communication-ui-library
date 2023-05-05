@@ -137,7 +137,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const updateMentionSuggestions = useCallback(
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
-      textFieldRef?.current?.focus();
       if (caretIndex !== undefined) {
         textFieldRef?.current?.setSelectionEnd(caretIndex);
       }
