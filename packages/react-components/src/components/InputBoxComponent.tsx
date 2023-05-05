@@ -306,9 +306,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
       const newTextLength = newValue.length;
-      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      let selectionEnd = currentSelectionEnd ?? -1;
       selectionEnd = Math.max(0, selectionEnd);
-      selectionEnd = Math.min(selectionEnd, newTextLength - 1);
+      selectionEnd = Math.min(selectionEnd, newTextLength);
 
       // If we are enabled for lookups,
       if (mentionLookupOptions !== undefined) {
@@ -526,16 +526,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               'selectionStart',
               e.currentTarget.selectionStart,
               'selectionEnd',
-              e.currentTarget.selectionEnd
+              e.currentTarget.selectionEnd,
+              'inputTextValue.length',
+              inputTextValue.length
             );
             if (caretIndex !== undefined) {
               let updatedCaretIndex = caretIndex;
-              if (caretIndex >= inputTextValue.length) {
-                //TODO: check if -1 is needed
-                updatedCaretIndex = inputTextValue.length;
-              } else if (caretIndex < 0) {
-                updatedCaretIndex = 0;
-              }
+              updatedCaretIndex = Math.min(0, updatedCaretIndex);
+              //TODO: check if -1 is needed
+              updatedCaretIndex = Math.max(inputTextValue.length, updatedCaretIndex);
               if (e.currentTarget.selectionDirection !== null) {
                 console.log('onSelect, event.currentTarget.selectionDirection !== null');
                 e.currentTarget.setSelectionRange(
