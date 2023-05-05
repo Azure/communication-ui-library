@@ -23,7 +23,8 @@ import {
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle,
-  iconWrapperStyle
+  iconWrapperStyle,
+  newLineButtonSuffixStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -103,9 +104,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     fieldGroup: styles?.textField,
     errorMessage: styles?.systemMessage,
     suffix: {
-      backgroundColor: 'transparent'
+      backgroundColor: 'transparent',
+      // Avoid empty space in suffix space for new line buttons
+      display: props.inlineChildren ? 'flex' : 'contents'
     }
   });
+
+  const mergedChildrenStyle = mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle);
 
   const onTexFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -124,7 +129,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onRenderChildren = (): JSX.Element => {
     return (
-      <Stack horizontal className={mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle)}>
+      <Stack horizontal className={mergedChildrenStyle}>
         {children}
       </Stack>
     );

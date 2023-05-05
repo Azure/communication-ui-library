@@ -83,15 +83,11 @@ export const inputButtonStyle = mergeStyles({
   margin: 'auto',
   width: '1.0625rem',
   height: '1.0625rem',
+  backgroundColor: 'transparent',
   '&:hover': {
     backgroundColor: 'transparent'
   }
 });
-
-/**
- * @private
- */
-export const inlineButtonsContainerStyle: IStyle = {};
 
 /**
  * @private
@@ -109,4 +105,12 @@ export const newLineButtonsContainerStyle: IStyle = {
 export const inputButtonTooltipStyle = mergeStyles({
   // The toolTip host container show be a flex box, so that alignItems: 'center' works for inside buttons
   display: 'flex'
+});
+
+/**
+ * @private
+ */
+export const iconWrapperStyle = mergeStyles({
+  // VoiceOver fix: Avoid rerender of DefaultButton above that handles clicking and hovering by keeping rerendering icon separate
+  pointerEvents: 'none'
 });
