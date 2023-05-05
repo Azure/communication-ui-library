@@ -16,7 +16,6 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import {
-  ControlBarButtonProps,
   ParticipantMenuItemsCallback,
   _useContainerHeight,
   _useContainerWidth,
