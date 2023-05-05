@@ -82,7 +82,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
-    /* @conditional-compile-remove(call-readiness) */ modalLayerHostId,
+    modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
@@ -352,6 +352,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           </Stack>
         </Stack>
         <Panel
+          /* @conditional-compile-remove(video-background-effects) */
           isOpen={isVideoEffectsPaneOpen}
           hasCloseButton={false}
           isBlocking={false}
