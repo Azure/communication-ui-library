@@ -279,17 +279,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   /* @conditional-compile-remove(mention) */
-  const debouncedQueryUpdate = useRef(
-    useDebouncedCallback(async (query: string) => {
-      const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
-      if (suggestions.length === 0) {
-        setActiveSuggestionIndex(undefined);
-      } else if (activeSuggestionIndex === undefined) {
-        setActiveSuggestionIndex(0);
-      }
-      updateMentionSuggestions(suggestions);
-    }, 500)
-  ).current;
+  const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
+    const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
+    if (suggestions.length === 0) {
+      setActiveSuggestionIndex(undefined);
+    } else if (activeSuggestionIndex === undefined) {
+      setActiveSuggestionIndex(0);
+    }
+    updateMentionSuggestions(suggestions);
+  }, 500);
 
   /* @conditional-compile-remove(mention) */
   useEffect(() => {
@@ -299,97 +297,112 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, [debouncedQueryUpdate]);
 
   /* @conditional-compile-remove(mention) */
-  const handleOnChange = async (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    updatedValue?: string | undefined
-  ): Promise<void> => {
-    let newValue = updatedValue;
-    if (newValue === undefined) {
-      newValue = '';
-    }
-    const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
+  const handleOnChange = useCallback(
+    async (
+      event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+      updatedValue?: string | undefined
+    ): Promise<void> => {
+      let newValue = updatedValue;
+      if (newValue === undefined) {
+        newValue = '';
+      }
+      const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
-    const newTextLength = newValue.length;
-    let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
-    if (selectionEnd < 0) {
-      selectionEnd = 0;
-    } else if (selectionEnd > newTextLength) {
-      selectionEnd = newTextLength - 1;
-    }
-    // If we are enabled for lookups,
-    if (mentionLookupOptions !== undefined) {
-      // Look at the range of the change for a trigger character
-      const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
-      // Update the caret position, if not doing a lookup
-      setCaretPosition(Caret.getRelativePosition(event.currentTarget));
+      const newTextLength = newValue.length;
+      let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
+      if (selectionEnd < 0) {
+        selectionEnd = 0;
+      } else if (selectionEnd > newTextLength) {
+        selectionEnd = newTextLength - 1;
+      }
+      // If we are enabled for lookups,
+      if (mentionLookupOptions !== undefined) {
+        // Look at the range of the change for a trigger character
+        const triggerPriorIndex = newValue?.lastIndexOf(triggerText, selectionEnd - 1);
+        // Update the caret position, if not doing a lookup
+        setCaretPosition(Caret.getRelativePosition(event.currentTarget));
 
-      if (triggerPriorIndex !== undefined) {
-        // trigger is found
-        const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
-        const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
-        let tagIndex = currentTriggerStartIndex;
-        if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
-          //no space before the trigger <- continuation of the previous word
-          tagIndex = -1;
-          setCurrentTriggerStartIndex(tagIndex);
-        } else if (wordAtSelection === triggerText) {
-          // start of the mention
-          tagIndex = selectionEnd - triggerText.length;
-          if (tagIndex < 0) {
-            tagIndex = 0;
+        if (triggerPriorIndex !== undefined) {
+          // trigger is found
+          const isSpaceBeforeTrigger = newValue?.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
+          const wordAtSelection = newValue?.substring(triggerPriorIndex, selectionEnd);
+          let tagIndex = currentTriggerStartIndex;
+          if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
+            //no space before the trigger <- continuation of the previous word
+            tagIndex = -1;
+            setCurrentTriggerStartIndex(tagIndex);
+          } else if (wordAtSelection === triggerText) {
+            // start of the mention
+            tagIndex = selectionEnd - triggerText.length;
+            if (tagIndex < 0) {
+              tagIndex = 0;
+            }
+            setCurrentTriggerStartIndex(tagIndex);
           }
-          setCurrentTriggerStartIndex(tagIndex);
-        }
 
-        if (tagIndex === -1) {
-          updateMentionSuggestions([]);
-        } else {
-          // In the middle of a @mention lookup
-          if (tagIndex > -1) {
-            const query = wordAtSelection.substring(triggerText.length, wordAtSelection.length);
-            if (query !== undefined) {
-              debouncedQueryUpdate(query);
+          if (tagIndex === -1) {
+            updateMentionSuggestions([]);
+          } else {
+            // In the middle of a @mention lookup
+            if (tagIndex > -1) {
+              const query = wordAtSelection.substring(triggerText.length, wordAtSelection.length);
+              if (query !== undefined) {
+                await debouncedQueryUpdate(query);
+              }
             }
           }
         }
       }
-    }
-    let result = '';
-    if (tagsValue.length === 0) {
-      // no tags in the string, textValue is a sting
-      result = newValue;
-    } else {
-      // there are tags in the text value, textValue is html string
-      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
-        inputTextValue,
-        newValue,
-        selectionEnd
-      );
-      // get updated html string
-      const change = newValue.substring(changeStart, newChangeEnd);
-      const [updatedHTML, updatedChangeNewEndIndex] = updateHTML(
-        textValue,
-        inputTextValue,
-        newValue,
-        tagsValue,
-        changeStart,
-        oldChangeEnd,
-        change,
-        triggerText
-      );
-      result = updatedHTML;
-      if (updatedChangeNewEndIndex !== null) {
-        if (
-          (change.length === 1 && event.currentTarget.selectionStart === event.currentTarget.selectionEnd) || // simple input
-          (change.length === 0 && newChangeEnd === changeStart) //delete
-        ) {
-          setCaretIndex(updatedChangeNewEndIndex);
+      let result = '';
+      if (tagsValue.length === 0) {
+        // no tags in the string, textValue is a sting
+        result = newValue;
+      } else {
+        // there are tags in the text value, textValue is html string
+        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
+          inputTextValue,
+          newValue,
+          selectionEnd
+        );
+        // get updated html string
+        const change = newValue.substring(changeStart, newChangeEnd);
+        const [updatedHTML, updatedChangeNewEndIndex] = updateHTML(
+          textValue,
+          inputTextValue,
+          newValue,
+          tagsValue,
+          changeStart,
+          oldChangeEnd,
+          change,
+          triggerText
+        );
+        result = updatedHTML;
+        if (updatedChangeNewEndIndex !== null) {
+          if (
+            (change.length === 1 && event.currentTarget.selectionStart === event.currentTarget.selectionEnd) || // simple input
+            (change.length === 0 && newChangeEnd === changeStart) //delete
+          ) {
+            setCaretIndex(updatedChangeNewEndIndex);
+          }
         }
       }
-    }
 
-    onChange && onChange(event, result);
-  };
+      onChange && onChange(event, result);
+    },
+    [
+      onChange,
+      mentionLookupOptions,
+      tagsValue,
+      textValue,
+      inputTextValue,
+      currentTriggerStartIndex,
+      setCaretIndex,
+      setCaretPosition,
+      updateMentionSuggestions,
+      debouncedQueryUpdate,
+      textFieldRef
+    ]
+  );
 
   /* @conditional-compile-remove(mention) */
   const updateSelectionIndexesWithMentionIfNeeded = (

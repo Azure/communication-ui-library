@@ -230,61 +230,63 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     [onDismiss]
   );
 
-  const personaRenderer = (displayName?: string): JSX.Element => {
-    const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
-    const avatarOptions = {
-      text: displayName?.trim() || displayNamePlaceholder,
-      size: PersonaSize.size24,
-      initialsColor: theme.palette.neutralLight,
-      initialsTextColor: theme.palette.neutralSecondary,
-      showOverflowTooltip: false,
-      showUnknownPersonaCoin: !displayName?.trim() || displayName === displayNamePlaceholder
-    };
+  const personaRenderer = useCallback(
+    (displayName?: string): JSX.Element => {
+      const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
+      const avatarOptions = {
+        text: displayName?.trim() || displayNamePlaceholder,
+        size: PersonaSize.size24,
+        initialsColor: theme.palette.neutralLight,
+        initialsTextColor: theme.palette.neutralSecondary,
+        showOverflowTooltip: false,
+        showUnknownPersonaCoin: !displayName?.trim() || displayName === displayNamePlaceholder
+      };
 
-    return <Persona {...avatarOptions} />;
-  };
+      return <Persona {...avatarOptions} />;
+    },
+    [localeStrings, theme]
+  );
 
-  const defaultOnRenderSuggestionItem = (
-    suggestion: Mention,
-    onSuggestionSelected: (suggestion: Mention) => void,
-    active: boolean
-  ): JSX.Element => {
-    return (
-      <div
-        data-is-focusable={true}
-        /* @conditional-compile-remove(mention) */
-        data-ui-id={ids.mentionSuggestionItem}
-        key={suggestion.id}
-        onClick={() => onSuggestionSelected(suggestion)}
-        onMouseEnter={() => setHoveredSuggestion(suggestion)}
-        onMouseLeave={() => setHoveredSuggestion(undefined)}
-        onKeyDown={(e) => {
-          handleOnKeyDown(e);
-        }}
-        className={suggestionItemWrapperStyle(theme)}
-      >
-        <Stack
-          horizontal
-          className={suggestionItemStackStyle(
-            theme,
-            hoveredSuggestion?.id === suggestion.id,
-            (changedSelection ?? false) && active
-          )}
+  const defaultOnRenderSuggestionItem = useCallback(
+    (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, active: boolean): JSX.Element => {
+      return (
+        <div
+          data-is-focusable={true}
+          /* @conditional-compile-remove(mention) */
+          data-ui-id={ids.mentionSuggestionItem}
+          key={suggestion.id}
+          onClick={() => onSuggestionSelected(suggestion)}
+          onMouseEnter={() => setHoveredSuggestion(suggestion)}
+          onMouseLeave={() => setHoveredSuggestion(undefined)}
+          onKeyDown={(e) => {
+            handleOnKeyDown(e);
+          }}
+          className={suggestionItemWrapperStyle(theme)}
         >
-          {personaRenderer(suggestion.displayText)}
-        </Stack>
-      </div>
-    );
-  };
+          <Stack
+            horizontal
+            className={suggestionItemStackStyle(
+              theme,
+              hoveredSuggestion?.id === suggestion.id,
+              (changedSelection ?? false) && active
+            )}
+          >
+            {personaRenderer(suggestion.displayText)}
+          </Stack>
+        </div>
+      );
+    },
+    [handleOnKeyDown, theme, ids, hoveredSuggestion, changedSelection, personaRenderer]
+  );
 
-  const getHeaderTitle = (): string => {
+  const getHeaderTitle = useCallback((): string => {
     if (title) {
       return title;
     }
     /* @conditional-compile-remove(mention) */
     return localeStrings.mentionPopover.mentionPopoverHeader;
     return '';
-  };
+  }, [localeStrings, title]);
 
   return (
     <div ref={popoverRef}>
