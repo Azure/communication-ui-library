@@ -111,6 +111,5 @@ export const inputButtonTooltipStyle = mergeStyles({
  * @private
  */
 export const iconWrapperStyle = mergeStyles({
-  // VoiceOver fix: Avoid rerender of DefaultButton above that handles clicking and hovering by keeping rerendering icon separate
   pointerEvents: 'none'
 });

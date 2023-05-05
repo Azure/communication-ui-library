@@ -15,7 +15,6 @@ import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
 import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
-import { VoiceOverButton } from './VoiceOverButton';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from './FileUploadCards';

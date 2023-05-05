@@ -23,8 +23,7 @@ import {
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle,
-  iconWrapperStyle,
-  newLineButtonSuffixStyle
+  iconWrapperStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
@@ -105,7 +104,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     errorMessage: styles?.systemMessage,
     suffix: {
       backgroundColor: 'transparent',
-      // Avoid empty space in suffix space for new line buttons
+      // Remove empty space in the suffix area when adding newline-style buttons
       display: props.inlineChildren ? 'flex' : 'contents'
     }
   });
@@ -207,6 +206,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onMouseLeave={() => {
           setIsHover(false);
         }}
+        // VoiceOver fix: Avoid rerender of DefaultButton above that handles clicking and hovering by keeping rerendering icon separate
         onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
       />
     </TooltipHost>
