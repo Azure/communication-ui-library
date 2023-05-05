@@ -63,7 +63,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
+  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
