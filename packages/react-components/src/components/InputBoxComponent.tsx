@@ -546,6 +546,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
                 console.log('onSelect, event.currentTarget.selectionDirection === null');
                 e.currentTarget.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
               }
+              setSelectionStartValue(updatedCaretIndex);
+              setSelectionEndValue(updatedCaretIndex);
               setCaretIndex(undefined);
               return;
             }
