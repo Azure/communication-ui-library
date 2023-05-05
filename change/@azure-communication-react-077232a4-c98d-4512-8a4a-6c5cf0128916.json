@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "removing accidental calling dependency in react-components",
+  "packageName": "@azure/communication-react",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

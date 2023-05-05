@@ -1,8 +1,16 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 24 Apr 2023 15:39:35 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Apr 2023 23:16:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.5.1-beta.4](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.5.1-beta.4)
+
+Fri, 28 Apr 2023 23:16:11 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.3...@azure/communication-react_v1.5.1-beta.4)
+
+### Bug fixes
+  - Revert a breaking change for createAzureCommunicationCallWithChatAdapterFromClients
 
 ## [1.5.1-beta.3](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.3)
 
