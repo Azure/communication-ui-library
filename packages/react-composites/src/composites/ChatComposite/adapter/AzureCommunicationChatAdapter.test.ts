@@ -28,6 +28,7 @@ const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
 describe('Adapter is created as expected', () => {
   it('when creating a new adapter from stateful client', async () => {
+    /* @conditional-compile-remove(teams-inline-images) */
     const fakeToken: CommunicationTokenCredential = {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
@@ -41,9 +42,14 @@ describe('Adapter is created as expected', () => {
 
     const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
     const threadClient = statefulChatClient.getChatThreadClient('threadId');
+    /* @conditional-compile-remove(teams-inline-images) */
     const options: AzureCommunicationChatAdapterOptions = { credential: fakeToken };
 
-    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient, options);
+    const adapter = await createAzureCommunicationChatAdapterFromClient(
+      statefulChatClient,
+      threadClient,
+      /* @conditional-compile-remove(teams-inline-images) */ options
+    );
     expect(adapter).toBeDefined();
   });
 });
