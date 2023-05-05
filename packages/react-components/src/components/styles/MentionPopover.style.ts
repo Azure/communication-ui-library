@@ -5,26 +5,21 @@ import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
- * z-index to ensure that chat container has lower z-index than at mention flyout
+ * z-index to ensure that chat container has lower z-index than mention popover
  */
 export const CHAT_CONTAINER_ZINDEX = 1;
 
 /**
  * @private
  */
-export const atMentionFlyoutContainer = (theme: Theme, left: number, top: number): string =>
+export const mentionPopoverContainerStyle = (theme: Theme): string =>
   mergeStyles({
-    width: '10rem',
-    height: '13.25rem',
-    position: 'absolute',
-    left: left,
-    top: top,
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
-    // zIndex to set the atMentionFlyout above the chat container
+    overflow: 'visible',
+    // zIndex to set the mentionPopover above the chat container
     zIndex: CHAT_CONTAINER_ZINDEX + 1
   });
-
 /**
  * @private
  */
@@ -43,7 +38,7 @@ export const headerStyleThemed = (theme: Theme): IStackStyles => {
  */
 export const suggestionListContainerStyle = mergeStyles({
   height: '100%',
-  overflowY: 'auto',
+  overflowY: 'visible',
   overflowX: 'hidden'
 });
 
@@ -51,7 +46,8 @@ export const suggestionListContainerStyle = mergeStyles({
  * @private
  */
 export const suggestionListStyle = mergeStyles({
-  padding: '0.25rem 0rem 0'
+  padding: '0.25rem 0rem 0',
+  overflow: 'visible'
 });
 
 /**
@@ -69,12 +65,13 @@ export const suggestionItemWrapperStyle = (theme: Theme): string => {
 /**
  * @private
  */
-export const suggestionItemStackStyle = (theme: Theme, isSuggestionHovered: boolean): string => {
+export const suggestionItemStackStyle = (theme: Theme, isSuggestionHovered: boolean, activeBorder: boolean): string => {
   return mergeStyles({
     width: '10rem',
     alignItems: 'center',
     height: '36px',
     padding: '0 0.75rem',
-    background: isSuggestionHovered ? theme.palette.neutralLight : theme.palette.white
+    background: isSuggestionHovered ? theme.palette.neutralLight : theme.palette.white,
+    border: activeBorder ? `0.0625rem solid ${theme.palette.neutralSecondary}` : 'none'
   });
 };
