@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback } from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
@@ -14,10 +14,10 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Stack } from '@fluentui/react';
+import { Panel, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { DefaultButton } from '@fluentui/react';
-import { fillWidth } from '../styles/CallConfiguration.styles';
+import { fillWidth, panelStyles } from '../styles/CallConfiguration.styles';
 /* @conditional-compile-remove(video-background-effects) */
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 /* @conditional-compile-remove(video-background-effects) */
@@ -216,7 +216,16 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
   /* @conditional-compile-remove(video-background-effects) */
-  const { toggleVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, mobileView);
+  const { toggleVideoEffectsPane, closeVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
+    props.updateSidePaneRenderer,
+    mobileView
+  );
+
+  const startCall = useCallback(async () => {
+    /* @conditional-compile-remove(video-background-effects) */
+    closeVideoEffectsPane();
+    startCallHandler();
+  }, [startCallHandler, /* @conditional-compile-remove(video-background-effects) */ closeVideoEffectsPane]);
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
@@ -331,13 +340,24 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             >
               <StartCallButton
                 className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
-                onClick={startCallHandler}
+                onClick={startCall}
                 disabled={disableStartCallButton}
               />
             </Stack>
           </Stack>
         </Stack>
-        <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+        <Panel
+          isOpen={isVideoEffectsPaneOpen}
+          hasCloseButton={false}
+          isBlocking={false}
+          isHiddenOnDismiss={false}
+          styles={panelStyles}
+          focusTrapZoneProps={{
+            forceFocusInsideTrap: false
+          }}
+        >
+          <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+        </Panel>
       </Stack>
     </Stack>
   );
