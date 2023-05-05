@@ -149,10 +149,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
-    console.log('textValue <- html', textValue);
     const [tags, plainText] = textToTagParser(textValue, trigger);
-    console.log('tags', tags);
-    console.log('plainText', plainText);
     setInputTextValue(plainText);
     setTagsValue(tags);
     updateMentionSuggestions([]);
@@ -558,17 +555,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setShouldHandleOnMouseDownDuringSelect(false);
           }}
           // onMouseMove={(e) => {
-          //   console.log('!!!!not equal onMouseMove');
           // should preventDefault be used?
           // for handling mouse actions
           /* @conditional-compile-remove(mention) */
-          // console.log('updateHTML onMouseMove selectionStart', e.currentTarget.selectionStart);
-          // console.log('updateHTML onMouseMove selectionEnd', e.currentTarget.selectionEnd);
-          // console.log('updateHTML onMouseMove selectionDirection', e.currentTarget.selectionDirection);
           // if (e.currentTarget.selectionStart !== e.currentTarget.selectionEnd) {
-          //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart !== e.currentTarget.selectionEnd');
           // } else {
-          //   console.log('updateHTML onMouseMove e.currentTarget.selectionStart === e.currentTarget.selectionEnd');
           // }
           // updateSelectionIndexesWithMentionIfNeeded(e);
           // e.currentTarget.setSelectionRange(
@@ -875,7 +866,6 @@ const updateHTML = (
       const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
 
       result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx - startChangeDiff) + processedChange;
-      console.log('updateHTML 0 result after update', result);
       if (oldPlainTextEndIndex <= tag.plainTextBeginIndex) {
         //the whole change is before tag start
         // oldPlainTextEndIndex already includes mentionTag length
@@ -910,7 +900,6 @@ const updateHTML = (
     if (startIndex < plainTextEndIndex) {
       // change started before the end tag
       if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
-        console.log('updateHTML 1.1 result', result);
         // the change is a tag or starts before the tag
         // tag should be removed, no matter if there are subtags
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
@@ -920,7 +909,6 @@ const updateHTML = (
         break;
       } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // edge case: the change is between tag
-        console.log('updateHTML 1.2 result', result);
         if (isMentionTag) {
           if (change !== '') {
             // mention tag should be deleted when user tries to edit it
@@ -983,7 +971,6 @@ const updateHTML = (
           break;
         }
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
-        console.log('updateHTML 1.3 result', result);
         //the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
@@ -1034,7 +1021,6 @@ const updateHTML = (
           //proceed with the next calculations
         }
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
-        console.log('updateHTML 1.4 result', result);
         // the change starts before  the tag and finishes after it
 
         // tag should be removed, no matter if there are subtags
@@ -1042,7 +1028,6 @@ const updateHTML = (
         lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
         //proceed with the next calculations
       } else if (startIndex === tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
-        console.log('updateHTML 1.5 result', result);
         // the change starts in the tag and finishes after it
         // tag should be removed, no matter if there are subtags
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx);
@@ -1050,7 +1035,6 @@ const updateHTML = (
         lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
         //proceed with the next calculations
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
-        console.log('updateHTML 1.6 result', result);
         // the change  starts before the tag and ends in a tag
         if (isMentionTag) {
           const [resultValue, , htmlIndex] = handleMentionTagUpdate(
@@ -1100,7 +1084,6 @@ const updateHTML = (
         // the change is handled; exit
         break;
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
-        console.log('updateHTML 1.7 result', result);
         // the change  starts in the tag and ends at the end of a tag
         if (isMentionTag) {
           if (change !== '' && startIndex === plainTextEndIndex) {
@@ -1171,7 +1154,6 @@ const updateHTML = (
       lastProcessedPlainTextTagEndIndex = plainTextEndIndex;
     }
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
-      console.log('updateHTML 2 result', result);
       // the last tag should handle the end of the change if needed
       // oldPlainTextEndIndex already includes mentionTag length
       const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
@@ -1194,7 +1176,6 @@ const updateHTML = (
     result += htmlText.substring(lastProcessedHTMLIndex);
   }
 
-  console.log('updateHTML result "', result, '"');
   return [result, changeNewEndIndex];
 };
 
@@ -1345,7 +1326,6 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
 
   let parseIndex = 0;
   while (parseIndex < text.length) {
-    // console.log('Parsing at index ' + parseIndex + ' of ' + text.length);
     const foundHtmlTag = findNextHtmlTag(text, parseIndex);
 
     if (!foundHtmlTag) {
@@ -1367,7 +1347,6 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
       if (foundHtmlTag.type === 'open') {
         tagParseStack.push(nextTag);
       } else {
-        // console.log('Found self-closing tag: ' + foundHtmlTag.content);
         nextTag.content = '';
         nextTag.plainTextBeginIndex = plainTextRepresentation.length;
         nextTag.plainTextEndIndex = plainTextRepresentation.length;
@@ -1376,13 +1355,10 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
     }
 
     if (foundHtmlTag.type === 'close') {
-      // console.log('Found close tag: ' + foundHtmlTag.content);
       const currentOpenTag = tagParseStack.pop();
       const closeTagType = foundHtmlTag.content.substring(2, foundHtmlTag.content.length - 1).toLowerCase();
 
       if (currentOpenTag && currentOpenTag.tagType === closeTagType) {
-        // console.log('closing tag: ' + currentOpenTag.tagType + '');
-
         // Tag startIdx is absolute to the text. This is updated later to be relative to the parent tag
         currentOpenTag.content = text.substring(
           currentOpenTag.openTagIdx + currentOpenTag.openTagBody.length,
