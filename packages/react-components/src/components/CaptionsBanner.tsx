@@ -39,7 +39,7 @@ export interface _CaptionsBannerStrings {
 export interface _CaptionsBannerProps {
   captions: _CaptionsInfo[];
   isCaptionsOn?: boolean;
-  startCaptionsClicked?: boolean;
+  startCaptionsInProgress?: boolean;
   /**
    * Optional callback to override render of the avatar.
    *
@@ -54,7 +54,7 @@ export interface _CaptionsBannerProps {
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions, isCaptionsOn, startCaptionsClicked, onRenderAvatar, strings } = props;
+  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings } = props;
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
@@ -93,7 +93,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
 
   return (
     <>
-      {startCaptionsClicked && (
+      {startCaptionsInProgress && (
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
             <Ref innerRef={captionsScrollDivRef}>

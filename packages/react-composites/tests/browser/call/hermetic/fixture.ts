@@ -83,7 +83,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
         currentCaptionLanguage: '',
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
-        startCaptionsClicked: false
+        startCaptionsInProgress: false
       }
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },

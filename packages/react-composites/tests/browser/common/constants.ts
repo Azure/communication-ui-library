@@ -124,7 +124,7 @@ export const captionsFeatureState = {
   currentCaptionLanguage: 'en-us',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
-  startCaptionsClicked: true
+  startCaptionsInProgress: true
 };
 
 export const captionsFeatureStateArabic = {
@@ -165,5 +165,5 @@ export const captionsFeatureStateArabic = {
   currentCaptionLanguage: 'ar-ae',
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
-  startCaptionsClicked: true
+  startCaptionsInProgress: true
 };

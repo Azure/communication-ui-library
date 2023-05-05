@@ -383,7 +383,7 @@ export interface _CaptionsBannerProps {
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
     // (undocumented)
-    startCaptionsClicked?: boolean;
+    startCaptionsInProgress?: boolean;
     // (undocumented)
     strings?: _CaptionsBannerStrings;
 }

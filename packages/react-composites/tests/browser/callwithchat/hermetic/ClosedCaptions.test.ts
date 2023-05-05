@@ -19,7 +19,7 @@ test.describe('Closed Captions Banner tests', async () => {
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
-        startCaptionsClicked: true
+        startCaptionsInProgress: true
       };
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -70,7 +70,7 @@ test.describe('Closed Captions Banner tests', async () => {
       initialState.call.captionsFeature = {
         ...captionsFeatureState,
         isCaptionsFeatureActive: false,
-        startCaptionsClicked: false
+        startCaptionsInProgress: false
       };
     }
     await loadCallPage(page, serverUrl, initialState);

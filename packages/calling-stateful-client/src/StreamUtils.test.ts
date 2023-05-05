@@ -99,7 +99,7 @@ function createMockCall(mockCallId: string): CallState {
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
-      startCaptionsClicked: false
+      startCaptionsInProgress: false
     }
   };
   return call;

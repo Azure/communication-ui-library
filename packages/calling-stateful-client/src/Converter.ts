@@ -125,7 +125,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
-      startCaptionsClicked: false
+      startCaptionsInProgress: false
     }
   };
 }
