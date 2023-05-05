@@ -554,23 +554,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             /* @conditional-compile-remove(mention) */
             setShouldHandleOnMouseDownDuringSelect(false);
           }}
-          // onMouseMove={(e) => {
-          // should preventDefault be used?
-          // for handling mouse actions
-          /* @conditional-compile-remove(mention) */
-          // if (e.currentTarget.selectionStart !== e.currentTarget.selectionEnd) {
-          // } else {
-          // }
-          // updateSelectionIndexesWithMentionIfNeeded(e);
-          // e.currentTarget.setSelectionRange(
-          //   e.currentTarget.selectionStart,
-          //   e.currentTarget.selectionEnd,
-          //   e.currentTarget.selectionDirection ?? 'none'
-          // );
-          // }}
-          // onTouchMove={(e) => {
-          //   //should be handled in the same way as mousemove
-          //  }}
           onMouseDown={() => {
             // as events order is onMouseDown -> onSelect -> onClick
             // onClick and onMouseDown can't handle clicking on mention event because
