@@ -9,7 +9,8 @@ import {
   mergeStyles,
   IButtonStyles,
   Theme,
-  IPanelStyles
+  IPanelStyles,
+  IFocusTrapZoneProps
 } from '@fluentui/react';
 
 /**
@@ -172,4 +173,9 @@ export const panelStyles: Partial<IPanelStyles> = {
     flexDirection: 'column',
     height: '100%'
   }
+};
+
+/** @private */
+export const panelFocusProps: IFocusTrapZoneProps = {
+  forceFocusInsideTrap: false
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
@@ -17,7 +17,7 @@ import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Panel, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { DefaultButton } from '@fluentui/react';
-import { fillWidth, panelStyles } from '../styles/CallConfiguration.styles';
+import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
 /* @conditional-compile-remove(video-background-effects) */
 import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 /* @conditional-compile-remove(video-background-effects) */
@@ -63,7 +63,6 @@ export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
-  /* @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -227,6 +226,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     startCallHandler();
   }, [startCallHandler, /* @conditional-compile-remove(video-background-effects) */ closeVideoEffectsPane]);
 
+  const panelLayerProps = useMemo(
+    () => ({
+      hostId: modalLayerHostId
+    }),
+    [modalLayerHostId]
+  );
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -250,7 +256,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
         videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
           <CallReadinessModal
-            /* @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             /* @conditional-compile-remove(unsupported-browser) */
@@ -352,9 +357,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           isBlocking={false}
           isHiddenOnDismiss={false}
           styles={panelStyles}
-          focusTrapZoneProps={{
-            forceFocusInsideTrap: false
-          }}
+          focusTrapZoneProps={panelFocusProps}
+          layerProps={panelLayerProps}
         >
           <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
         </Panel>
