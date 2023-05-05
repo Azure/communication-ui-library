@@ -97,9 +97,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     inputClassName,
     errorMessage,
     disabled,
-    children,
     /* @conditional-compile-remove(mention) */
-    mentionLookupOptions
+    mentionLookupOptions,
+    children
   } = props;
   const inputBoxRef = useRef<HTMLDivElement>(null);
 
