@@ -138,9 +138,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
       textFieldRef?.current?.focus();
-      if (caretIndex !== undefined) {
-        textFieldRef?.current?.setSelectionEnd(caretIndex);
-      }
     },
     [textFieldRef]
   );
@@ -301,6 +298,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const handleOnChange = useCallback(
     async (
       event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+      tagsValue: TagData[],
+      textValue: string,
+      inputTextValue: string,
       updatedValue?: string | undefined
     ): Promise<void> => {
       let newValue = updatedValue;
@@ -393,9 +393,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [
       onChange,
       mentionLookupOptions,
-      tagsValue,
-      textValue,
-      inputTextValue,
       currentTriggerStartIndex,
       setCaretIndex,
       setCaretPosition,
