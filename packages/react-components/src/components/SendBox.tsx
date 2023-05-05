@@ -263,7 +263,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid file upload
     if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(message));
-      console.log(sanitizeText(message));
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
