@@ -275,7 +275,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   /* @conditional-compile-remove(mention) */
-  const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
+  const debouncedQueryUpdate = useDebouncedCallback(async (query?: string) => {
+    if (query === undefined) {
+      updateMentionSuggestions([]);
+      return;
+    }
     const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
@@ -313,7 +317,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         if (triggerPriorIndex !== undefined) {
           // trigger is found
           const isSpaceBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
-          const wordAtSelection = newValue.substring(triggerPriorIndex, selectionEnd);
+          const wordAtSelection = newValue.substring(triggerPriorIndex, selectionEnd + 1);
           let tagIndex = currentTriggerStartIndex;
           if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
             //no space before the trigger <- continuation of the previous word
@@ -329,7 +333,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           }
 
           if (tagIndex === -1) {
-            updateMentionSuggestions([]);
+            await debouncedQueryUpdate(undefined);
           } else {
             // In the middle of a @mention lookup
             if (tagIndex > -1) {
