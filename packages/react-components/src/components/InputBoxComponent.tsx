@@ -864,10 +864,9 @@ const updateHTML = (
     if (startIndex <= tag.plainTextBeginIndex) {
       // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextBeginIndex] range
       const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
-
       result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx - startChangeDiff) + processedChange;
       if (oldPlainTextEndIndex <= tag.plainTextBeginIndex) {
-        //the whole change is before tag start
+        // the whole change is before tag start
         // oldPlainTextEndIndex already includes mentionTag length
         const endChangeDiff = tag.plainTextBeginIndex - oldPlainTextEndIndex;
         lastProcessedHTMLIndex = tag.openTagIdx - endChangeDiff;
@@ -891,7 +890,7 @@ const updateHTML = (
       // tag.tagType.length + </>
       closeTagLength = tag.tagType.length + 3;
     } else {
-      //no close tag
+      // no close tag
       plainTextEndIndex = tag.plainTextBeginIndex;
       closeTagIdx = tag.openTagIdx + tag.openTagBody.length;
       closeTagLength = 0;
@@ -939,11 +938,9 @@ const updateHTML = (
           break;
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content) {
           // with subtags
-
           // before the tag content
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closeTagIdx;
-
           const [content, updatedChangeNewEndIndex] = updateHTML(
             tag.content,
             oldPlainText,
@@ -964,7 +961,6 @@ const updateHTML = (
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
             processedChange;
-
           processedChange = '';
           lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
           // the change is handled; exit
@@ -991,14 +987,12 @@ const updateHTML = (
           lastProcessedHTMLIndex = htmlIndex;
           processedChange = updatedChange;
           // no need to handle plainTextSelectionEndIndex as the change will be added later
-          //proceed with the next calculations
+          // proceed with the next calculations
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
-
           // before the tag content
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closeTagIdx;
-
           const [content] = updateHTML(
             tag.content,
             oldPlainText,
@@ -1010,7 +1004,7 @@ const updateHTML = (
             mentionTrigger
           );
           result += stringBefore + content;
-          //proceed with the next calculations
+          // proceed with the next calculations
         } else {
           // no subtags
           result += htmlText.substring(
@@ -1018,22 +1012,21 @@ const updateHTML = (
             tag.openTagIdx + tag.openTagBody.length + startChangeDiff
           );
           lastProcessedHTMLIndex = closeTagIdx;
-          //proceed with the next calculations
+          // proceed with the next calculations
         }
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         // the change starts before  the tag and finishes after it
-
         // tag should be removed, no matter if there are subtags
         // no need to save anything between lastProcessedHTMLIndex and closeTagIdx + closeTagLength
         lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
-        //proceed with the next calculations
+        // proceed with the next calculations
       } else if (startIndex === tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         // the change starts in the tag and finishes after it
         // tag should be removed, no matter if there are subtags
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx);
         // processedChange shouldn't be updated as it will be added after the tag
         lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
-        //proceed with the next calculations
+        // proceed with the next calculations
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // the change  starts before the tag and ends in a tag
         if (isMentionTag) {
@@ -1055,11 +1048,9 @@ const updateHTML = (
           lastProcessedHTMLIndex = htmlIndex;
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
-
           // before the tag content
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closeTagIdx;
-
           const [content] = updateHTML(
             tag.content,
             oldPlainText,
@@ -1121,11 +1112,9 @@ const updateHTML = (
           break;
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
-
           // before the tag content
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closeTagIdx;
-
           const [content, updatedChangeNewEndIndex] = updateHTML(
             tag.content,
             oldPlainText,
@@ -1153,6 +1142,7 @@ const updateHTML = (
       }
       lastProcessedPlainTextTagEndIndex = plainTextEndIndex;
     }
+
     if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
       // the last tag should handle the end of the change if needed
       // oldPlainTextEndIndex already includes mentionTag length
