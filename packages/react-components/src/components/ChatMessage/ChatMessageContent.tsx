@@ -177,71 +177,66 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 const processNodeDefinitions = ProcessNodeDefinitions();
 const htmlToReactParser = Parser();
 
+/* @conditional-compile-remove(teams-inline-images) */
+const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
+  // Custom <img> processing
+  shouldProcessNode: (node): boolean => {
+    // Process img node with id in attachments list
+    return (
+      node.name &&
+      node.name === 'img' &&
+      node.attribs &&
+      node.attribs.id &&
+      props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+    );
+  },
+  processNode: (node, children, index): HTMLElement => {
+    // logic to check id in map/list
+    if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
+      node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+    }
+    return processNodeDefinitions.processDefaultNode(node, children, index);
+  }
+});
+
+/* @conditional-compile-remove(mention) */
+const processMention = (props: ChatMessageContentProps): ProcessingInstructionType => ({
+  shouldProcessNode: (node) => {
+    if (props.mentionDisplayOptions?.onRenderMention) {
+      // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
+      return node.name === 'msft-mention';
+    }
+    return false;
+  },
+  processNode: (node) => {
+    if (props.mentionDisplayOptions?.onRenderMention) {
+      const { id, displaytext } = node.attribs;
+      const mention: Mention = {
+        id: id,
+        displayText: displaytext
+      };
+      return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+    }
+    return processNodeDefinitions.processDefaultNode;
+  }
+});
+
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
-  /* @conditional-compile-remove(teams-inline-images) */
-  const processInlineImage: ProcessingInstructionType = {
-    // Custom <img> processing
-    shouldProcessNode: (node): boolean => {
-      // Process img node with id in attachments list
-      return (
-        node.name &&
-        node.name === 'img' &&
-        node.attribs &&
-        node.attribs.id &&
-        props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
-      );
-    },
-    processNode: (node, children, index): HTMLElement => {
-      // logic to check id in map/list
-      if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
-        node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
-      }
-      return processNodeDefinitions.processDefaultNode(node, children, index);
-    }
-  };
-
-  /* @conditional-compile-remove(mention) */
-  const processMention: ProcessingInstructionType = {
-    shouldProcessNode: (node) => {
-      if (props.mentionDisplayOptions?.onRenderMention) {
-        // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
-        return node.name === 'msft-mention';
-      }
-      return false;
-    },
-    processNode: (node) => {
-      if (props.mentionDisplayOptions?.onRenderMention) {
-        const { id, displaytext } = node.attribs;
-        const mention: Mention = {
-          id: id,
-          displayText: displaytext
-        };
-        return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
-      }
-      return processNodeDefinitions.processDefaultNode;
-    }
-  };
-
-  const addProcessingSteps = (): ProcessingInstructionType[] => {
-    const steps: ProcessingInstructionType[] = [];
+  const steps: ProcessingInstructionType[] = [
     /* @conditional-compile-remove(teams-inline-images) */
-    steps.push(processInlineImage);
+    processInlineImage(props),
     /* @conditional-compile-remove(mention) */
-    steps.push(processMention);
-    return steps;
-  };
-
-  const processingInstructions: ProcessingInstructionType = [
-    ...addProcessingSteps(),
+    processMention(props),
     {
       // Process everything else in the default way
       shouldProcessNode: IsValidNodeDefinitions.alwaysValid,
       processNode: processNodeDefinitions.processDefaultNode
     }
   ];
+
   return htmlToReactParser.parseWithInstructions(
     props.message.content ?? '',
     IsValidNodeDefinitions.alwaysValid,
-    processingInstructions
+    steps
   );
 };
