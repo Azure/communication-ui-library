@@ -21,8 +21,8 @@ import { _FileUploadCards } from './FileUploadCards';
 /* @conditional-compile-remove(file-sharing) */
 import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions } from './AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionLookupOptions } from './MentionPopover';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -140,12 +140,12 @@ export interface SendBoxProps {
    * Optional callback called when message is sent
    */
   onSendMessage?: (content: string) => Promise<void>;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to lookup suggestions in the at mention scenario.
+   * Optional props needed to lookup suggestions in the mention scenario.
    * @beta
    */
-  atMentionLookupOptions?: AtMentionLookupOptions;
+  mentionLookupOptions?: MentionLookupOptions;
 
   /**
    * Optional callback called when user is typing
@@ -185,15 +185,15 @@ export interface SendBoxProps {
   autoFocus?: 'sendBoxTextField';
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to render uploaded files in the SendBox. The sendbox will expand
-   * veritcally to accomodate the uploaded files. File uploads will
-   * be rendered below the text area in sendbox.
+   * Optional callback to render uploaded files in the SendBox. The sendBox will expand
+   * vertically to accommodate the uploaded files. File uploads will
+   * be rendered below the text area in sendBox.
    * @beta
    */
   onRenderFileUploads?: () => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional array of active file uploads where each object has attibutes
+   * Optional array of active file uploads where each object has attributes
    * of a file upload like name, progress, errorMessage etc.
    * @beta
    */
@@ -225,7 +225,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     onRenderIcon,
     onRenderSystemMessage,
     styles,
-    autoFocus
+    autoFocus,
+    /* @conditional-compile-remove(mention) */
+    mentionLookupOptions
   } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.sendBox;
@@ -255,19 +257,17 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    // we dont want to send empty messages including spaces, newlines, tabs
+    const message = textValue;
+    // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
-    if (!EMPTY_MESSAGE_REGEX.test(textValue) || hasFile(props)) {
-      onSendMessage && onSendMessage(sanitizeText(textValue));
+    if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
+      onSendMessage && onSendMessage(sanitizeText(message));
       setTextValue('');
     }
     sendTextFieldRef.current?.focus();
   };
 
-  const setText = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
-  ): void => {
+  const setText = (newValue?: string | undefined): void => {
     if (newValue === undefined) {
       return;
     }
@@ -315,7 +315,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     [mergedSendIconStyle, onRenderIcon, textValue]
   );
 
-  // Ensure that errors are cleared when there are no files in sendbox
+  // Ensure that errors are cleared when there are no files in sendBox
   React.useEffect(() => {
     if (!activeFileUploads?.filter((upload) => !upload.error).length) {
       setFileUploadsPendingError(undefined);
@@ -352,7 +352,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   }, [activeFileUploads, props, localeStrings]);
 
   return (
-    <Stack className={mergeStyles(sendBoxWrapperStyles)}>
+    <Stack
+      className={mergeStyles(
+        sendBoxWrapperStyles,
+        { overflow: 'visible' } // This is needed for the mention popup to be visible
+      )}
+    >
       <SendBoxErrors {...sendBoxErrorsProps} />
       <Stack
         className={mergeStyles(
@@ -374,7 +379,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           inputClassName={sendBoxStyle}
           placeholderText={strings.placeholderText}
           textValue={textValue}
-          onChange={setText}
+          onChange={(_, newValue) => setText(newValue)}
           onKeyDown={(ev) => {
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
             if (!keyWasSendingMessage) {
@@ -387,6 +392,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           styles={mergedStyles}
           supportNewline={supportNewline}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          /* @conditional-compile-remove(mention) */
+          mentionLookupOptions={mentionLookupOptions}
         >
           <InputBoxButton
             onRenderIcon={onRenderSendIcon}
