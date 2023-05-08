@@ -168,7 +168,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     suffix: {
       backgroundColor: 'transparent',
       // Remove empty space in the suffix area when adding newline-style buttons
-      display: props.inlineChildren ? 'flex' : 'contents'
+      display: props.inlineChildren ? 'flex' : 'contents',
+      padding: '0px 0.25rem'
     }
   });
 
