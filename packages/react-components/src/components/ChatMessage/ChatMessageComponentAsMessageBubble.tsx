@@ -27,8 +27,8 @@ import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions } from '../AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionDisplayOptions } from '../MentionPopover';
 import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentAsMessageBubbleProps = {
@@ -71,12 +71,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to display suggestions in the at mention scenario.
-   * @beta
+   * Optional props needed to display suggestions in the mention scenario.
+   * @internal
    */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  mentionDisplayOptions?: MentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
@@ -238,6 +238,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           onFetchAttachment={props.onFetchAttachments}
           /* @conditional-compile-remove(teams-inline-images) */
           attachmentsMap={props.attachmentsMap}
+          /* @conditional-compile-remove(mention) */
+          mentionDisplayOptions={props.mentionDisplayOptions}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>

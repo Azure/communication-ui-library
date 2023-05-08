@@ -31,7 +31,8 @@ import {
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId,
-  GenerateMockNewChatMessageWithInlineImage
+  GenerateMockNewChatMessageWithInlineImage,
+  GenerateMockNewChatMessageWithMention
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -43,6 +44,7 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
@@ -66,6 +68,8 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const MessageWithCustomMentionRendererText =
+  require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
 const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
@@ -78,6 +82,11 @@ const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
+const mentionTag = `
+<msft-mention id="<id>" displayText="<display text>">
+  Displayable Content
+</msft-mention>
+`;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -223,6 +232,18 @@ const getDocs: () => JSX.Element = () => {
         <MessageWithFile />
       </Canvas>
 
+      <Heading>Display Mentions of Users within Messages</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        When a user is mentioned in a message, a custom HTML tag can be used to represent the element in the
+        MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+        further customization. The HTML Tag is defined:
+      </Description>
+      <Source code={mentionTag} />
+      <Canvas mdxSource={MessageWithCustomMentionRendererText}>
+        <MessageWithCustomMentionRenderer />
+      </Canvas>
+
       <Heading>Props</Heading>
       <Props of={MessageThreadComponent} />
     </>
@@ -252,6 +273,11 @@ const MessageThreadStory = (args): JSX.Element => {
   const onSendNewMessageWithInlineImage = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
   };
+
+  const onSendNewMessageWithMention = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithMention()]);
+  };
+
   const onLoadPreviousMessages = async (): Promise<boolean> => {
     return new Promise((resolve) => {
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
@@ -319,6 +345,7 @@ const MessageThreadStory = (args): JSX.Element => {
         <PrimaryButton text="Send new message with inline image" onClick={onSendNewMessageWithInlineImage} />
         <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
         <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
+        <PrimaryButton text="Send new message with mention" onClick={onSendNewMessageWithMention} />
       </Stack>
     </Stack>
   );
