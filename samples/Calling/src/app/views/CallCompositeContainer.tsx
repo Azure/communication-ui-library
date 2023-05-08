@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommonCallAdapter, CallCompositeOptions, CallComposite } from '@azure/communication-react';
+import { CommonCallAdapter, CallComposite } from '@azure/communication-react';
+/* @conditional-compile-remove(call-readiness) */
+import { CallCompositeOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { useIsMobile } from '../utils/useIsMobile';
-import React, { useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
+/* @conditional-compile-remove(call-readiness) */
+import { useMemo } from 'react';
 import { CallScreenProps } from './CallScreen';
 
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };

@@ -134,28 +134,6 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @beta
-export interface AtMentionDisplayOptions {
-    onRenderAtMentionSuggestion?: (suggestion: AtMentionSuggestion) => JSX.Element;
-}
-
-// @beta
-export interface AtMentionLookupOptions {
-    onQueryUpdated?: (query: string) => Promise<AtMentionSuggestion[]>;
-    onRenderSuggestionItem?: (suggestion: AtMentionSuggestion, onSuggestionSelected?: (suggestion: AtMentionSuggestion) => void) => JSX.Element;
-    trigger?: string;
-}
-
-// @beta
-export type AtMentionOptions = AtMentionLookupOptions & AtMentionDisplayOptions;
-
-// @beta
-export interface AtMentionSuggestion {
-    displayName: string;
-    suggestionType: string;
-    userId: string;
-}
-
 // @beta (undocumented)
 export interface AttachmentDownloadResult {
     // (undocumented)
@@ -209,6 +187,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     callClient: StatefulCallClient;
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
+    options?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -218,6 +197,11 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
+};
+
+// @beta
+export type AzureCommunicationChatAdapterOptions = {
+    credential?: CommunicationTokenCredential;
 };
 
 // @public
@@ -256,7 +240,7 @@ export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
     // (undocumented)
-    warningText?: string | false;
+    warningText?: string;
 }
 
 // @beta
@@ -684,6 +668,7 @@ export interface CallCompositeStrings {
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
+    unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
 }
 
@@ -1222,9 +1207,7 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
-export type CancelEditCallback = (messageId: string, metadata?: Record<string, string>, options?: {
-    attachedFilesMetadata?: FileMetadata[];
-}) => void;
+export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
 export interface CaptionsAvailableLanguageStrings {
@@ -1345,11 +1328,6 @@ export type CaptionsReceivedListener = (event: {
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
-
-// @beta
-export type ChatAdapterOptions = {
-    credential?: CommunicationTokenCredential;
-};
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -1786,6 +1764,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
+    mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -1926,7 +1905,7 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, options }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -2596,9 +2575,9 @@ export interface _IdentifierProviderProps {
 
 // @internal
 export interface _Identifiers {
-    atMentionSuggestionItem: string;
-    atMentionSuggestionList: string;
     horizontalGalleryVideoTile: string;
+    mentionSuggestionItem: string;
+    mentionSuggestionList: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;
@@ -2706,6 +2685,36 @@ export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
 export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
+}
+
+// @beta
+export interface Mention {
+    displayText: string;
+    icon?: JSX.Element;
+    id: string;
+}
+
+// @beta
+export interface MentionDisplayOptions {
+    onRenderMention?: (mention: Mention, defaultOnRender: (mention: Mention) => JSX.Element) => JSX.Element;
+}
+
+// @beta
+export interface MentionLookupOptions {
+    onQueryUpdated: (query: string) => Promise<Mention[]>;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+    trigger?: string;
+}
+
+// @beta
+export type MentionOptions = {
+    lookupOptions?: MentionLookupOptions;
+    displayOptions?: MentionDisplayOptions;
+};
+
+// @beta
+export interface MentionPopoverStrings {
+    mentionPopoverHeader: string;
 }
 
 // @public
@@ -2816,7 +2825,7 @@ export type MessageThreadProps = {
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
-    atMentionOptions?: AtMentionOptions;
+    mentionOptions?: MentionOptions;
 };
 
 // @public
@@ -3234,10 +3243,10 @@ export interface SendBoxErrorBarError {
 export interface SendBoxProps {
     // @beta
     activeFileUploads?: ActiveFileUpload[];
-    // @beta
-    atMentionLookupOptions?: AtMentionLookupOptions;
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    mentionLookupOptions?: MentionLookupOptions;
     // @beta
     onCancelFileUpload?: (fileId: string) => void;
     // @beta

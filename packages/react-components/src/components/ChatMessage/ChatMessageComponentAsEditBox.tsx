@@ -14,6 +14,8 @@ import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
+/* @conditional-compile-remove(mention) */
+import { MentionLookupOptions } from '../MentionPopover';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -29,13 +31,7 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
-  onCancel?: (
-    messageId: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => void;
+  onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
     metadata?: Record<string, string>,
@@ -50,6 +46,8 @@ export type ChatMessageComponentAsEditBoxProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineEditButtons: boolean;
+  /* @conditional-compile-remove(mention) */
+  mentionLookupOptions?: MentionLookupOptions;
 };
 
 type MessageState = 'OK' | 'too short' | 'too long';
@@ -59,6 +57,9 @@ type MessageState = 'OK' | 'too short' | 'too long';
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, strings, message } = props;
+  /* @conditional-compile-remove(mention) */
+  const { mentionLookupOptions } = props;
+
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
   const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
@@ -71,10 +72,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     editTextFieldRef.current?.focus();
   }, []);
 
-  const setText = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
-  ): void => {
+  const setText = (event?: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
     setTextValue(newValue ?? '');
   };
 
@@ -144,6 +142,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
         errorMessage={textTooLongMessage}
         styles={editBoxStyles}
+        /* @conditional-compile-remove(mention) */
+        mentionLookupOptions={mentionLookupOptions}
       >
         <InputBoxButton
           className={editingButtonStyle}
@@ -151,7 +151,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           tooltipContent={strings.editBoxCancelButton}
           onRenderIcon={onRenderThemedCancelIcon}
           onClick={() => {
-            onCancel && onCancel(message.messageId, message.metadata, { attachedFilesMetadata });
+            onCancel && onCancel(message.messageId);
           }}
           id={'dismissIconWrapper'}
         />

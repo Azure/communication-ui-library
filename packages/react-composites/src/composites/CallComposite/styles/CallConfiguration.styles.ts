@@ -8,7 +8,9 @@ import {
   IStyle,
   mergeStyles,
   IButtonStyles,
-  Theme
+  Theme,
+  IPanelStyles,
+  IFocusTrapZoneProps
 } from '@fluentui/react';
 
 /**
@@ -153,4 +155,27 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
       color: theme.palette.blue
     }
   };
+};
+
+/** @private */
+export const fillWidth = mergeStyles({
+  width: '100%'
+});
+
+/** @private */
+export const panelStyles: Partial<IPanelStyles> = {
+  content: {
+    display: 'flex',
+    flexBasis: '100%'
+  },
+  scrollableContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  }
+};
+
+/** @private */
+export const panelFocusProps: IFocusTrapZoneProps = {
+  forceFocusInsideTrap: false
 };

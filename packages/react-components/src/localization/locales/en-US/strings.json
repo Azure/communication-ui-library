@@ -25,6 +25,9 @@
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggestions"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
     "deliveredTooltipText": "Sent",

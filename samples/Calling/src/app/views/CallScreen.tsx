@@ -68,6 +68,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [subscribeAdapterEvents]
   );
 
+  /* @conditional-compile-remove(teams-identity-support) */
   const afterTeamsCallAdapterCreate = useCallback(
     async (adapter: TeamsCallAdapter): Promise<TeamsCallAdapter> => {
       subscribeAdapterEvents(adapter);
@@ -118,7 +119,9 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 };
 
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
-  const { roleHint, afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
+  const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
+  /* @conditional-compile-remove(rooms) */
+  const { roleHint } = props;
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');

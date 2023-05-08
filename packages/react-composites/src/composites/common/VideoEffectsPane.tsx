@@ -4,7 +4,7 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { MessageBar, MessageBarType, Panel, mergeStyles } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
@@ -23,6 +23,7 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+import { AdapterError } from './adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 
@@ -31,11 +32,10 @@ import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamS
  * @private
  */
 /** @beta */
-export const VideoEffectsPane = (props: {
-  showVideoEffectsOptions: boolean;
-  setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void;
+export const VideoEffectsPaneContent = (props: {
+  onDismissError: (error: AdapterError) => void;
+  activeVideoEffectError: () => AdapterError | undefined;
 }): JSX.Element => {
-  const { showVideoEffectsOptions, setshowVideoEffectsOptions } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
@@ -117,8 +117,8 @@ export const VideoEffectsPane = (props: {
     [adapter, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
-    showVideoEffectsOptions,
-    setshowVideoEffectsOptions,
+    props.onDismissError,
+    props.activeVideoEffectError,
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
@@ -127,13 +127,13 @@ export const VideoEffectsPane = (props: {
 };
 
 const VideoEffectsPaneTrampoline = (
-  showVideoEffectsOptions: boolean,
-  setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void,
+  onDismissError: (error: AdapterError) => void,
+  activeVideoEffectError?: () => AdapterError | undefined,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
-  const locale = useLocale();
+  const videoEffectError = activeVideoEffectError && activeVideoEffectError();
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
@@ -141,34 +141,38 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   const showWarning = !isCameraOn && selectedEffect !== 'none';
   /* @conditional-compile-remove(video-background-effects) */
-  const headerStyles = {
-    zIndex: 0
-  };
+  const locale = useLocale();
 
   /* @conditional-compile-remove(video-background-effects) */
   return (
-    <Panel
-      headerText={locale.strings.call.effects}
-      isOpen={showVideoEffectsOptions}
-      onDismiss={() => setshowVideoEffectsOptions(false)}
-      hasCloseButton={true}
-      closeButtonAriaLabel="Close"
-      isLightDismiss={true}
-      className={mergeStyles(headerStyles)}
-    >
+    <Stack horizontalAlign="center">
+      {videoEffectError && (
+        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(videoEffectError)}>
+          {locale.strings.call.unableToStartVideoEffect}
+        </MessageBar>
+      )}
       {showWarning && (
         <MessageBar messageBarType={MessageBarType.warning}>
           {locale.strings.call.cameraOffBackgroundEffectWarningText}
         </MessageBar>
       )}
-      {selectableVideoEffects && (
-        <_VideoBackgroundEffectsPicker
-          options={selectableVideoEffects}
-          onChange={onEffectChange}
-          selectedEffectKey={selectedEffect}
-        ></_VideoBackgroundEffectsPicker>
-      )}
-    </Panel>
+      <_VideoBackgroundEffectsPicker
+        label="Background" // TODO [jaburnsi]: localize
+        styles={backgroundPickerStyles}
+        options={selectableVideoEffects ?? []}
+        onChange={onEffectChange}
+        selectedEffectKey={selectedEffect}
+      />
+    </Stack>
   );
   return <></>;
+};
+
+/* @conditional-compile-remove(video-background-effects) */
+const backgroundPickerStyles = {
+  label: {
+    fontSize: '0.75rem',
+    lineHeight: '0.5rem',
+    fontWeight: '400'
+  }
 };
