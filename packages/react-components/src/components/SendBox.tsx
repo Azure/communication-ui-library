@@ -3,13 +3,7 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import {
-  sendBoxStyle,
-  sendButtonStyle,
-  sendIconStyle,
-  sendBoxWrapperStyles,
-  borderAndBoxShadowStyle
-} from './styles/SendBox.styles';
+import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
@@ -376,7 +370,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
           textFieldRef={sendTextFieldRef}
           id="sendbox"
-          inputClassName={sendBoxStyle}
           placeholderText={strings.placeholderText}
           textValue={textValue}
           onChange={(_, newValue) => setText(newValue)}
