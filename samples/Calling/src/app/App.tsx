@@ -19,13 +19,15 @@ import {
   createGroupId,
   fetchTokenResponse,
   getGroupIdFromUrl,
-  getOutboundParticipants,
   getTeamsLinkFromUrl,
   isLandscape,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
+/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling) */
+import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
