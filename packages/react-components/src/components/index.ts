@@ -11,18 +11,21 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
-/* @conditional-compile-remove(at-mention) */
-export { _AtMentionFlyout } from './AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+export { _MentionPopover } from './MentionPopover';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
-/* @conditional-compile-remove(at-mention) */
+
+/* @conditional-compile-remove(mention) */
 export type {
-  _AtMentionFlyoutProps,
-  AtMentionLookupOptions,
-  AtMentionDisplayOptions,
-  AtMentionOptions,
-  AtMentionSuggestion
-} from './AtMentionFlyout';
+  _MentionPopoverProps,
+  MentionLookupOptions,
+  MentionDisplayOptions,
+  MentionOptions,
+  Mention,
+  MentionPopoverStrings
+} from './MentionPopover';
+
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
 
