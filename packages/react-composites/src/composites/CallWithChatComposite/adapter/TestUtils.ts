@@ -14,12 +14,12 @@ import {
   JoinCallOptions,
   StartCallOptions,
   TeamsMeetingLinkLocator,
-  VideoDeviceInfo,
-  EnvironmentInfo
+  VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(unsupported-browser) */
+import { EnvironmentInfo } from '@azure/communication-calling';
 import {
   CommunicationTokenCredential,
-  // CommunicationIdentifier,
   CommunicationUserIdentifier,
   CommunicationUserKind,
   PhoneNumberIdentifier,
@@ -37,8 +37,6 @@ import {
   createStatefulCallClient,
   CallErrors,
   CreateViewResult
-  // LocalVideoStreamState,
-  // RemoteVideoStreamState
 } from '@internal/calling-stateful-client';
 import EventEmitter from 'events';
 /**
@@ -56,16 +54,16 @@ export class MockCallClient {
   createView(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
     callId: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     participantId: any,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     stream: any,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     options?: any
   ): Promise<CreateViewResult | undefined> {
     return Promise.resolve(undefined);
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   disposeView(callId: string, participantId: any, stream: any): void {
     return;
   }
@@ -268,7 +266,7 @@ export class MockCallAgent implements CallAgent {
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   join(meetingLocator: any, options?: any): Call {
     throw Error('Method not implemented.');
   }
@@ -277,18 +275,18 @@ export class MockCallAgent implements CallAgent {
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {
     this.emitter.off(event, listener);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   emit(event: string, data: any): void {
     this.emitter.emit(event, data);
   }
