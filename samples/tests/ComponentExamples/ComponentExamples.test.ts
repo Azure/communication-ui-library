@@ -48,7 +48,7 @@ test.describe('Component Examples Test', () => {
       );
     });
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('componentExamples-localVideoStarted.png');
+    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('compExamples-localVideoStarted.png');
 
     await page.click('[id="camera-button"]');
 
@@ -58,7 +58,7 @@ test.describe('Component Examples Test', () => {
     // Move the mouse off-screen to avoid tooltips / delayed focus from introducing flake in the snapshots
     await page.mouse.move(0, 0);
 
-    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('componentExamples-localVideoStopped.png');
+    expect(await page.screenshot({ fullPage: true })).toMatchSnapshot('compExamples-localVideoStopped.png');
   });
 });
 
