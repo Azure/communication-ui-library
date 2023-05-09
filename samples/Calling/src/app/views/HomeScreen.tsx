@@ -2,18 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Callout,
-  mergeStyles,
-  Link
-} from '@fluentui/react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { Callout, mergeStyles, Link } from '@fluentui/react';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { IconButton, ITextFieldProps, IStackTokens, IButtonStyles, IStackStyles } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */

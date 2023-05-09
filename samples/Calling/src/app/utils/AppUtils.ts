@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { RoomLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
