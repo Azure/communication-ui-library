@@ -319,9 +319,19 @@ export interface CallCompositeStrings {
   roomNotFoundDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Label for the button to open effects and title of the effects
+   * Video Effects pane title.
    */
-  effects?: string;
+  videoEffectsPaneTitle: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Video Effects pane sub section title for choosing background.
+   */
+  videoEffectsPaneBackgroundSelectionTitle: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Label for the button to open effects
+   */
+  configurationPageVideoEffectsButtonLabel?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Error message for video effect failure
