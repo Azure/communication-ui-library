@@ -123,6 +123,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
+  /* @conditional-compile-remove(mention) */
+  const [shouldHandleOnSelect, setShouldHandleOnSelect] = useState<boolean>(true);
 
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
@@ -143,10 +145,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
     const [tags, plainText] = textToTagParser(textValue, trigger);
-    console.log('textValue <- html', textValue);
     setInputTextValue(plainText);
-    console.log('tags', tags);
-    console.log('plainText', plainText);
     setTagsValue(tags);
     updateMentionSuggestions([]);
   }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
@@ -157,6 +156,35 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     inputClassName,
     props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
   );
+
+  /* @conditional-compile-remove(mention) */
+  useEffect(() => {
+    // effect for caret index update
+    if (caretIndex === undefined || textFieldRef === undefined || textFieldRef?.current === undefined) {
+      return;
+    }
+    let updatedCaretIndex = caretIndex;
+    updatedCaretIndex = Math.max(0, updatedCaretIndex);
+    updatedCaretIndex = Math.min(inputTextValue.length, updatedCaretIndex);
+    if (caretIndex !== textFieldRef?.current?.selectionStart && caretIndex !== textFieldRef?.current?.selectionEnd) {
+      textFieldRef?.current?.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
+      //TODO: why?
+      // this line makes onSelect to be ignored
+      // setCaretIndex(undefined);
+      setShouldHandleOnSelect(false);
+      return;
+    }
+    setSelectionStartValue(updatedCaretIndex);
+    setSelectionEndValue(updatedCaretIndex);
+  }, [
+    caretIndex,
+    inputTextValue.length,
+    textFieldRef,
+    setSelectionStartValue,
+    setSelectionEndValue,
+    setCaretIndex,
+    setShouldHandleOnSelect
+  ]);
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
@@ -292,6 +320,139 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, [debouncedQueryUpdate]);
 
   /* @conditional-compile-remove(mention) */
+  const updateSelectionIndexesWithMentionIfNeeded = useCallback(
+    (
+      event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+      inputTextValue: string,
+      selectionStartValue: number | null,
+      selectionEndValue: number | null,
+      tagsValue: TagData[]
+    ): void => {
+      let updatedStartIndex = event.currentTarget.selectionStart;
+      let updatedEndIndex = event.currentTarget.selectionEnd;
+      if (
+        event.currentTarget.selectionStart === event.currentTarget.selectionEnd &&
+        event.currentTarget.selectionStart !== null &&
+        event.currentTarget.selectionStart !== -1
+      ) {
+        const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
+        if (
+          mentionTag !== undefined &&
+          mentionTag.plainTextBeginIndex !== undefined &&
+          (event.currentTarget.selectionStart > mentionTag.plainTextBeginIndex ||
+            (mentionTag.plainTextEndIndex !== undefined &&
+              event.currentTarget.selectionStart < mentionTag.plainTextEndIndex))
+        ) {
+          if (selectionStartValue === null) {
+            updatedStartIndex = mentionTag.plainTextBeginIndex;
+            updatedEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
+          } else {
+            const newSelectionIndex = findNewSelectionIndexForMention(
+              mentionTag,
+              inputTextValue,
+              event.currentTarget.selectionStart,
+              selectionStartValue
+            );
+
+            updatedStartIndex = newSelectionIndex;
+            updatedEndIndex = newSelectionIndex;
+          }
+        }
+      } else if (event.currentTarget.selectionStart !== event.currentTarget.selectionEnd) {
+        // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
+        if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
+          // the selection start is changed
+          //TODO: is there another check should be here as in the previous if?
+          const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
+          if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+            //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
+            updatedStartIndex = findNewSelectionIndexForMention(
+              mentionTag,
+              inputTextValue,
+              event.currentTarget.selectionStart,
+              selectionStartValue ?? -1
+            );
+          }
+        }
+        if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
+          // the selection end is changed
+          const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
+          if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+            //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
+            updatedEndIndex = findNewSelectionIndexForMention(
+              mentionTag,
+              inputTextValue,
+              event.currentTarget.selectionEnd,
+              selectionEndValue ?? -1
+            );
+          }
+        }
+      }
+      // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
+      if (event.currentTarget.selectionDirection === null) {
+        event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex);
+      } else {
+        event.currentTarget.setSelectionRange(
+          updatedStartIndex,
+          updatedEndIndex,
+          event.currentTarget.selectionDirection
+        );
+      }
+      setSelectionStartValue(updatedStartIndex);
+      setSelectionEndValue(updatedEndIndex);
+      setShouldHandleOnSelect(false);
+    },
+    [setSelectionStartValue, setSelectionEndValue]
+  );
+
+  /* @conditional-compile-remove(mention) */
+  const handleOnSelect = useCallback(
+    (
+      event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+      inputTextValue: string,
+      tags: TagData[],
+      selectionStartValue: number | null,
+      selectionEndValue: number | null,
+      caretIndex?: number
+    ): void => {
+      // //TODO: need to check to navigate before/after space correctly in tag + when selecting by mouse
+      /* @conditional-compile-remove(mention) */
+      if (
+        shouldHandleOnMouseDownDuringSelect &&
+        event.currentTarget.selectionStart !== null &&
+        event.currentTarget.selectionStart === event.currentTarget.selectionEnd
+      ) {
+        // handle mention click
+        const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
+        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          if (event.currentTarget.selectionDirection === null) {
+            event.currentTarget.setSelectionRange(
+              mentionTag.plainTextBeginIndex,
+              mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+            );
+          } else {
+            event.currentTarget.setSelectionRange(
+              mentionTag.plainTextBeginIndex,
+              mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
+              event.currentTarget.selectionDirection
+            );
+          }
+          setSelectionStartValue(mentionTag.plainTextBeginIndex);
+          setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
+        } else {
+          setSelectionStartValue(event.currentTarget.selectionStart);
+          setSelectionEndValue(event.currentTarget.selectionEnd);
+        }
+      } else {
+        updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
+      }
+      /* @conditional-compile-remove(mention) */
+      setShouldHandleOnMouseDownDuringSelect(false);
+    },
+    [shouldHandleOnMouseDownDuringSelect, updateSelectionIndexesWithMentionIfNeeded]
+  );
+
+  /* @conditional-compile-remove(mention) */
   const handleOnChange = useCallback(
     async (
       event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -302,6 +463,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       currentSelectionEnd?: number | undefined,
       updatedValue?: string | undefined
     ): Promise<void> => {
+      if (event.currentTarget === null) {
+        return;
+      }
+      // handle backspace change ( onSelect is not called for backspace and caret position is outdated)
+      setCaretIndex(undefined);
+      setShouldHandleOnSelect(true);
       const newValue = updatedValue ?? '';
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
@@ -334,7 +501,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             }
             setCurrentTriggerStartIndex(tagIndex);
           }
-
           if (tagIndex === -1) {
             updateMentionSuggestions([]);
           } else {
@@ -387,83 +553,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
   );
 
-  /* @conditional-compile-remove(mention) */
-  const updateSelectionIndexesWithMentionIfNeeded = (
-    event: FormEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    let updatedStartIndex = event.currentTarget.selectionStart;
-    let updatedEndIndex = event.currentTarget.selectionEnd;
-    if (
-      event.currentTarget.selectionStart === event.currentTarget.selectionEnd &&
-      event.currentTarget.selectionStart !== null &&
-      event.currentTarget.selectionStart !== -1
-    ) {
-      const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-      if (
-        mentionTag !== undefined &&
-        mentionTag.plainTextBeginIndex !== undefined &&
-        (event.currentTarget.selectionStart > mentionTag.plainTextBeginIndex ||
-          (mentionTag.plainTextEndIndex !== undefined &&
-            //TODO: check if -1 is needed
-            event.currentTarget.selectionStart < mentionTag.plainTextEndIndex)) // - 1 because mentionTag.plainTextEndIndex is the next symbol after the mention
-      ) {
-        if (selectionStartValue === null) {
-          updatedStartIndex = mentionTag.plainTextBeginIndex;
-          updatedEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
-        } else {
-          const newSelectionIndex = findNewSelectionIndexForMention(
-            mentionTag,
-            inputTextValue,
-            event.currentTarget.selectionStart,
-            selectionStartValue
-          );
-
-          updatedStartIndex = newSelectionIndex;
-          updatedEndIndex = newSelectionIndex;
-        }
-      }
-    } else if (event.currentTarget.selectionStart !== event.currentTarget.selectionEnd) {
-      // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
-      if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
-        // the selection start is changed
-        //TODO: is there another check should be here as in the previous if?
-        const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
-          updatedStartIndex = findNewSelectionIndexForMention(
-            mentionTag,
-            inputTextValue,
-            event.currentTarget.selectionStart,
-            selectionStartValue ?? -1
-          );
-        }
-      }
-      if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
-        // the selection end is changed
-        const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
-        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
-          updatedEndIndex = findNewSelectionIndexForMention(
-            mentionTag,
-            inputTextValue,
-            event.currentTarget.selectionEnd,
-            selectionEndValue ?? -1
-          );
-        }
-      }
-    }
-    // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
-    if (event.currentTarget.selectionDirection === null) {
-      console.log('updateSelectionIndexesWithMentionIfNeeded, event.currentTarget.selectionDirection === null');
-      event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex);
-    } else {
-      console.log('updateSelectionIndexesWithMentionIfNeeded, event.currentTarget.selectionDirection !== null');
-      event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex, event.currentTarget.selectionDirection);
-    }
-    setSelectionStartValue(updatedStartIndex);
-    setSelectionEndValue(updatedEndIndex);
-  };
-
   const getInputFieldTextValue = (): string => {
     /* @conditional-compile-remove(mention) */
     return inputTextValue;
@@ -501,6 +590,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           placeholder={placeholderText}
           value={getInputFieldTextValue()}
           onChange={(e, newValue) => {
+            // TODO: add bool and check if onSelect should be handled and update the selection range directly instead of caret update
+            //TODO: remove optional value from event when switching to react 17+, currently needed because of https://legacy.reactjs.org/docs/legacy-event-pooling.html
+            /* @conditional-compile-remove(mention) */
+            // Prevents React from resetting event's properties
+            e.persist();
             /* @conditional-compile-remove(mention) */
             setInputTextValue(newValue ?? '');
             /* @conditional-compile-remove(mention) */
@@ -517,91 +611,30 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             return;
             onChange(e, newValue);
           }}
+          //TODO: something is wrong with deleting Your in your user from left
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
-            console.log(
-              'onSelect',
-              'caretIndex',
-              caretIndex,
-              'selectionStart',
-              e.currentTarget.selectionStart,
-              'selectionEnd',
-              e.currentTarget.selectionEnd,
-              'inputTextValue.length',
-              inputTextValue.length
-            );
-            if (caretIndex !== undefined) {
-              let updatedCaretIndex = caretIndex;
-              updatedCaretIndex = Math.min(0, updatedCaretIndex);
-              //TODO: check if -1 is needed
-              updatedCaretIndex = Math.max(inputTextValue.length, updatedCaretIndex);
-              if (e.currentTarget.selectionDirection !== null) {
-                console.log('onSelect, event.currentTarget.selectionDirection !== null');
-                e.currentTarget.setSelectionRange(
-                  updatedCaretIndex,
-                  updatedCaretIndex,
-                  e.currentTarget.selectionDirection
-                );
-              } else {
-                console.log('onSelect, event.currentTarget.selectionDirection === null');
-                e.currentTarget.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
-              }
-              setSelectionStartValue(updatedCaretIndex);
-              setSelectionEndValue(updatedCaretIndex);
+            if (!shouldHandleOnSelect) {
+              setShouldHandleOnSelect(true);
               setCaretIndex(undefined);
               return;
             }
-            //TODO: need to check to navigate before/after space correctly in tag + when selecting by mouse
-            /* @conditional-compile-remove(mention) */
-            if (
-              shouldHandleOnMouseDownDuringSelect &&
-              e.currentTarget.selectionStart !== null &&
-              e.currentTarget.selectionStart === e.currentTarget.selectionEnd
-            ) {
-              // handle mention click
-              const mentionTag = findMentionTagForSelection(tagsValue, e.currentTarget.selectionStart);
-              if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-                if (e.currentTarget.selectionDirection === null) {
-                  console.log('onSelect, event.currentTarget.selectionDirection === null 2');
-                  e.currentTarget.setSelectionRange(
-                    mentionTag.plainTextBeginIndex,
-                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-                  );
-                } else {
-                  console.log('onSelect, event.currentTarget.selectionDirection !== null 2');
-                  e.currentTarget.setSelectionRange(
-                    mentionTag.plainTextBeginIndex,
-                    mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
-                    e.currentTarget.selectionDirection
-                  );
-                }
-                setSelectionStartValue(mentionTag.plainTextBeginIndex);
-                setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
-              } else {
-                setSelectionStartValue(e.currentTarget.selectionStart);
-                setSelectionEndValue(e.currentTarget.selectionEnd);
-              }
-            } else {
-              console.log('onSelect updateSelectionIndexesWithMentionIfNeeded');
-              updateSelectionIndexesWithMentionIfNeeded(e);
-            }
-            /* @conditional-compile-remove(mention) */
-            setShouldHandleOnMouseDownDuringSelect(false);
+            handleOnSelect(e, inputTextValue, tagsValue, selectionStartValue, selectionEndValue, caretIndex);
           }}
-          onMouseDown={() => {
-            // as events order is onMouseDown -> onSelect -> onClick
-            // onClick and onMouseDown can't handle clicking on mention event because
-            // onClick has wrong range as it's called after onSelect
-            // onMouseDown doesn't have correct selectionRange yet
-            // so we need to handle onMouseDown to prevent onSelect default behavior
-            /* @conditional-compile-remove(mention) */
-            setShouldHandleOnMouseDownDuringSelect(true);
-          }}
-          onTouchStart={() => {
-            // see onMouseDown for more details
-            /* @conditional-compile-remove(mention) */
-            setShouldHandleOnMouseDownDuringSelect(true);
-          }}
+          // onMouseDown={() => {
+          //   // as events order is onMouseDown -> onSelect -> onClick
+          //   // onClick and onMouseDown can't handle clicking on mention event because
+          //   // onClick has wrong range as it's called after onSelect
+          //   // onMouseDown doesn't have correct selectionRange yet
+          //   // so we need to handle onMouseDown to prevent onSelect default behavior
+          //   /* @conditional-compile-remove(mention) */
+          //   setShouldHandleOnMouseDownDuringSelect(true);
+          // }}
+          // onTouchStart={() => {
+          //   // see onMouseDown for more details
+          //   /* @conditional-compile-remove(mention) */
+          //   setShouldHandleOnMouseDownDuringSelect(true);
+          // }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
           styles={mergedTextFieldStyle}
@@ -800,7 +833,6 @@ const handleMentionTagUpdate = (
   if (rangeEnd > plainTextEndIndex) {
     rangeEnd = plainTextEndIndex;
   }
-
   if (rangeStart === tag.plainTextBeginIndex && rangeEnd === plainTextEndIndex) {
     // the whole tag should be removed
     result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
