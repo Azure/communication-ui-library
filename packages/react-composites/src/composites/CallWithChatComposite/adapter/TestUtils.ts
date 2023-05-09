@@ -8,7 +8,6 @@ import {
   CallClientFeature,
   CallClientFeatureFactory,
   CollectionUpdatedEvent,
-  // CreateViewOptions,
   DeviceManager,
   GroupLocator,
   IncomingCallEvent,

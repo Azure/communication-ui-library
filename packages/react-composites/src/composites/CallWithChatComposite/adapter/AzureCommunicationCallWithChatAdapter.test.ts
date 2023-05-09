@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+/* @conditional-compile-remove(teams-inline-images) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { StubChatThreadClient, createStatefulChatClientMock } from '../../ChatComposite/adapter/StubChatClient';
 import { createAzureCommunicationCallWithChatAdapterFromClients } from './AzureCommunicationCallWithChatAdapter';
 import { MockCallClient, MockCallAgent } from './TestUtils';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
-jest.mock('@azure/communication-calling');
 
 describe('Adapter is created as expected', () => {
   it('when creating a new adapter from stateful client', async () => {
-    const mockCallClient = new MockCallClient() as StatefulCallClient;
+    const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
 
     const mockCallAgent = new MockCallAgent();
     const locator = { meetingLink: 'someTeamsMeetingLink' };
@@ -17,6 +17,7 @@ describe('Adapter is created as expected', () => {
     const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
     const threadClient = statefulChatClient.getChatThreadClient('threadId');
 
+    /* @conditional-compile-remove(teams-inline-images) */
     const options = { credential: stubCommunicationTokenCredential() };
     const args = {
       callClient: mockCallClient,
@@ -31,8 +32,9 @@ describe('Adapter is created as expected', () => {
     expect(adapter).toBeDefined();
   });
 });
+/* @conditional-compile-remove(teams-inline-images) */
 /**
- * @returns
+ * Stub implementation of CommunicationTokenCredential
  */
 export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
   return {
