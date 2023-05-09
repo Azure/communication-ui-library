@@ -28,12 +28,12 @@
     "@azure/core-paging": "~1.1.3",
     "@azure/core-rest-pipeline": "~1.9.2",
     "@azure/logger": "1.0.3",
+    "@fluentui/react": "~8.98.3",
     "@fluentui/react-file-type-icons": "8.8.13",
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react-northstar": "0.61.0",
     "@fluentui/react-window-provider": "~2.2.3",
-    "@fluentui/react": "~8.98.3",
     "copy-to-clipboard": "~3.3.1",
     "events": "~3.3.0",
     "html-to-react": "~1.5.0",
@@ -44,10 +44,12 @@
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "~0.4.7",
     "reselect": "~4.0.0",
+    "textarea-caret-ts": "^4.1.1",
+    "use-debounce": "^9.0.4",
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.13.0-beta.4 || >=1.12.1",
+    "@azure/communication-calling": "1.13.1-beta.1 || >=1.12.1",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "@types/react": ">=16.8.0 <18.0.0",
@@ -83,7 +85,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.13.0-beta.4 || >=1.12.1",
+    "@azure/communication-calling": "1.13.1-beta.1 || >=1.12.1",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "@azure/core-auth": "1.3.2",

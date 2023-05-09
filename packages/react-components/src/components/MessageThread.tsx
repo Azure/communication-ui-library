@@ -69,9 +69,9 @@ import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionOptions } from './AtMentionFlyout';
-import { ComponentSlotStyle } from '../types/ComponentSlotStyle';
+/* @conditional-compile-remove(mention) */
+import { MentionOptions } from './MentionPopover';
+import { ComponentSlotStyle } from '../types';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -700,12 +700,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
+   * Optional props needed to lookup a mention query and display mentions
    * @beta
    */
-  atMentionOptions?: AtMentionOptions;
+  mentionOptions?: MentionOptions;
 };
 
 /**
@@ -808,7 +808,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images) */
-    onFetchAttachments
+    onFetchAttachments,
+    /* @conditional-compile-remove(mention) */
+    mentionOptions
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -1113,6 +1115,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onFetchAttachments={onFetchInlineAttachment}
             /* @conditional-compile-remove(teams-inline-images) */
             attachmentsMap={inlineAttachments}
+            /* @conditional-compile-remove(mention) */
+            mentionOptions={mentionOptions}
           />
         );
       }
@@ -1133,7 +1137,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       /* @conditional-compile-remove(teams-inline-images) */
       onFetchInlineAttachment,
       /* @conditional-compile-remove(teams-inline-images) */
-      inlineAttachments
+      inlineAttachments,
+      /* @conditional-compile-remove(mention) */
+      mentionOptions
     ]
   );
 
