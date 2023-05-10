@@ -102,6 +102,19 @@ export interface RemoteVideoTileMenuOptions {
    */
   isHidden?: boolean;
 }
+
+/* @conditional-compile-remove(click-to-call) */
+/**
+ * Options for the local video tile in the Call composite.
+ *
+ * @beta
+ */
+export interface LocalVideoTileOptions {
+  /**
+   * Position of the local video tile. If unset will render the local tile in the floating local position.
+   */
+  position?: 'grid' | 'floating' | 'hidden';
+}
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -179,6 +192,11 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+  /* @conditional-compile-remove(click-to-call) */
+  /**
+   * Options for controlling the local video tile.
+   */
+  localVideoTileOptions?: LocalVideoTileOptions;
 };
 
 type MainScreenProps = {

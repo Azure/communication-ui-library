@@ -26,6 +26,9 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       onNetworkingTroubleShootingClick,
       callControls: {
         legacyControlBarExperience: false
+      },
+      localVideoTileOptions: {
+        positon: 'grid'
       }
     }),
     []
