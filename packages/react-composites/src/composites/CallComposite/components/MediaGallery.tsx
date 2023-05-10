@@ -153,7 +153,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions
+    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions,
+    layoutBasedOnTilePosition
   ]);
 
   return (
