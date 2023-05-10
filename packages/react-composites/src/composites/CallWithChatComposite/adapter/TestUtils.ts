@@ -5,8 +5,8 @@ import {
   CallAgent,
   CallAgentOptions,
   CallAgentKind,
-  CallClientFeature,
-  CallClientFeatureFactory,
+  CallFeature,
+  CallFeatureFactory,
   CollectionUpdatedEvent,
   DeviceManager,
   GroupLocator,
@@ -75,15 +75,16 @@ export class MockCallClient {
     return Promise.resolve(createMockDeviceManagerWithCameras());
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  feature<TFeature extends CallClientFeature>(factory: CallClientFeatureFactory<TFeature>): TFeature {
+  feature<TFeature extends CallFeature>(factory: CallFeatureFactory<TFeature>): TFeature {
     return {
       name: 'mockFeature',
       dispose: {},
+      /* @conditional-compile-remove(unsupported-browser) */
       getEnvironmentInfo: mockEnvInfo
     } as unknown as TFeature;
   }
 }
-
+/* @conditional-compile-remove(unsupported-browser) */
 const mockEnvInfo = (): Promise<EnvironmentInfo> => {
   return Promise.resolve({
     environment: {
