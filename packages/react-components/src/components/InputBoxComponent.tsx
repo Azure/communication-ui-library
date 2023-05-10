@@ -148,6 +148,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     setInputTextValue(plainText);
     setTagsValue(tags);
     updateMentionSuggestions([]);
+    console.log('plainText', plainText, 'tags', tags, 'textValue', textValue);
   }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -174,6 +175,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setShouldHandleOnSelect(false);
       return;
     }
+    console.log('caret update setSelectionStartValue and setSelectionEndValue to updatedCaretIndex', updatedCaretIndex);
     setSelectionStartValue(updatedCaretIndex);
     setSelectionEndValue(updatedCaretIndex);
   }, [
@@ -182,7 +184,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     textFieldRef,
     setSelectionStartValue,
     setSelectionEndValue,
-    setCaretIndex,
+    // setCaretIndex,
     setShouldHandleOnSelect
   ]);
 
@@ -220,9 +222,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         triggerText
       );
       const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
+      const newCaretIndex = currentTriggerStartIndex + displayName.length + triggerText.length;
       // Move the caret in the text field to the end of the mention plain text
-      console.log('onSuggestionSelected', currentTriggerStartIndex, displayName.length, triggerText.length);
-      setCaretIndex(currentTriggerStartIndex + displayName.length + triggerText.length);
+      console.log(
+        'onSuggestionSelected',
+        currentTriggerStartIndex,
+        displayName.length,
+        triggerText.length,
+        'new caret position',
+        newCaretIndex
+      );
+      setCaretIndex(newCaretIndex);
+      setSelectionEndValue(newCaretIndex);
+      setSelectionStartValue(newCaretIndex);
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
       textFieldRef?.current?.focus();
@@ -328,6 +340,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEndValue: number | null,
       tagsValue: TagData[]
     ): void => {
+      console.log('updateSelectionIndexesWithMentionIfNeeded');
       let updatedStartIndex = event.currentTarget.selectionStart;
       let updatedEndIndex = event.currentTarget.selectionEnd;
       if (
@@ -365,12 +378,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           //TODO: is there another check should be here as in the previous if?
           const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-            //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
+            //TODO: update selectionstart and end with mouse move and or touch move
             updatedStartIndex = findNewSelectionIndexForMention(
               mentionTag,
               inputTextValue,
               event.currentTarget.selectionStart,
-              selectionStartValue ?? -1
+              selectionStartValue ?? inputTextValue.length
             );
           }
         }
@@ -378,12 +391,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           // the selection end is changed
           const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-            //TODO: here it takes -1 when it shouldn't, update selectionstart and end with mouse move and or touch move
+            //TODO: update selectionstart and end with mouse move and or touch move
             updatedEndIndex = findNewSelectionIndexForMention(
               mentionTag,
               inputTextValue,
               event.currentTarget.selectionEnd,
-              selectionEndValue ?? -1
+              selectionEndValue ?? inputTextValue.length
             );
           }
         }
@@ -398,6 +411,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           event.currentTarget.selectionDirection
         );
       }
+      console.log(
+        'updateSelectionIndexesWithMentionIfNeeded updatedStartIndex',
+        updatedStartIndex,
+        'updatedEndIndex',
+        updatedEndIndex
+      );
       setSelectionStartValue(updatedStartIndex);
       setSelectionEndValue(updatedEndIndex);
       setShouldHandleOnSelect(false);
@@ -415,6 +434,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEndValue: number | null,
       caretIndex?: number
     ): void => {
+      console.log('handleOnSelect');
       // //TODO: need to check to navigate before/after space correctly in tag + when selecting by mouse
       /* @conditional-compile-remove(mention) */
       if (
@@ -460,8 +480,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       htmlTextValue: string,
       inputTextValue: string,
       currentTriggerStartIndex: number,
-      currentSelectionEnd?: number | undefined,
-      updatedValue?: string | undefined
+      previousSelectionStart?: number,
+      previousSelectionEnd?: number,
+      currentSelectionStart?: number,
+      currentSelectionEnd?: number,
+      updatedValue?: string
     ): Promise<void> => {
       if (event.currentTarget === null) {
         return;
@@ -473,21 +496,22 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
       const newTextLength = newValue.length;
-      let selectionEnd = currentSelectionEnd ?? -1;
-      selectionEnd = Math.max(0, selectionEnd);
-      selectionEnd = Math.min(selectionEnd, newTextLength);
+      const currentSelectionEndValue = getValidatedIndex(currentSelectionEnd, 0, newTextLength);
+      const currentSelectionStartValue = getValidatedIndex(currentSelectionStart, 0, newTextLength);
+      const previousSelectionStartValue = getValidatedIndex(previousSelectionStart, 0, inputTextValue.length);
+      const previousSelectionEndValue = getValidatedIndex(previousSelectionEnd, 0, inputTextValue.length);
 
       // If we are enabled for lookups,
       if (mentionLookupOptions !== undefined) {
         // Look at the range of the change for a trigger character
-        const triggerPriorIndex = newValue.lastIndexOf(triggerText, selectionEnd - 1);
+        const triggerPriorIndex = newValue.lastIndexOf(triggerText, currentSelectionEndValue - 1);
         // Update the caret position, if not doing a lookup
         setCaretPosition(Caret.getRelativePosition(event.currentTarget));
 
         if (triggerPriorIndex !== undefined) {
           // trigger is found
           const isSpaceBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
-          const wordAtSelection = newValue.substring(triggerPriorIndex, selectionEnd);
+          const wordAtSelection = newValue.substring(triggerPriorIndex, currentSelectionEndValue);
           let tagIndex = currentTriggerStartIndex;
           if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
             //no space before the trigger <- continuation of the previous word
@@ -495,7 +519,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCurrentTriggerStartIndex(tagIndex);
           } else if (wordAtSelection === triggerText) {
             // start of the mention
-            tagIndex = selectionEnd - triggerText.length;
+            tagIndex = currentSelectionEndValue - triggerText.length;
             if (tagIndex < 0) {
               tagIndex = 0;
             }
@@ -523,7 +547,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
           inputTextValue,
           newValue,
-          selectionEnd
+          previousSelectionStartValue,
+          previousSelectionEndValue,
+          currentSelectionStartValue,
+          currentSelectionEndValue
         );
         // get updated html string
         const change = newValue.substring(changeStart, newChangeEnd);
@@ -544,6 +571,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             (change.length === 0 && newChangeEnd === changeStart) //delete
           ) {
             setCaretIndex(updatedChangeNewEndIndex);
+            setSelectionEndValue(updatedChangeNewEndIndex);
+            setSelectionStartValue(updatedChangeNewEndIndex);
           }
         }
       }
@@ -604,6 +633,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               textValue,
               inputTextValue,
               currentTriggerStartIndex,
+              selectionStartValue === null ? undefined : selectionStartValue,
+              selectionEndValue === null ? undefined : selectionEndValue,
+              e.currentTarget.selectionStart === null ? undefined : e.currentTarget.selectionStart,
               e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
               newValue
             );
@@ -611,10 +643,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             return;
             onChange(e, newValue);
           }}
-          //TODO: something is wrong with deleting Your in your user from left
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
+            console.log('onSelect shouldHandleOnSelect', shouldHandleOnSelect);
             if (!shouldHandleOnSelect) {
+              setSelectionEndValue(e.currentTarget.selectionEnd);
+              setSelectionStartValue(e.currentTarget.selectionStart);
               setShouldHandleOnSelect(true);
               setCaretIndex(undefined);
               return;
@@ -701,6 +735,19 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
       />
     </TooltipHost>
   );
+};
+
+/* @conditional-compile-remove(mention) */
+/**
+ * Get validated value for index
+ *
+ * @private
+ */
+const getValidatedIndex = (currentValue?: number, min: number, max: number): number => {
+  let updatedValue = currentValue ?? -1;
+  updatedValue = Math.max(min, updatedValue);
+  updatedValue = Math.min(updatedValue, max);
+  return updatedValue;
 };
 
 /* @conditional-compile-remove(mention) */
@@ -872,6 +919,7 @@ const updateHTML = (
   change: string,
   mentionTrigger: string
 ): [string, number | null] => {
+  console.log('updateHTML');
   let result = '';
   if (tags.length === 0) {
     // no tags added yet
@@ -911,6 +959,7 @@ const updateHTML = (
 
     // change start is before the open tag
     if (startIndex <= tag.plainTextBeginIndex) {
+      console.log('updateHTML startIndex <= tag.plainTextBeginIndex');
       // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextBeginIndex] range
       const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
       result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx - startChangeDiff) + processedChange;
@@ -946,6 +995,7 @@ const updateHTML = (
     }
 
     if (startIndex < plainTextEndIndex) {
+      console.log('updateHTML startIndex < plainTextEndIndex');
       // change started before the end tag
       if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
         // the change is a tag or starts before the tag
@@ -959,11 +1009,50 @@ const updateHTML = (
         // edge case: the change is between tag
         if (isMentionTag) {
           if (change !== '') {
-            // mention tag should be deleted when user tries to edit it
-            result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
-            changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
-            processedChange = '';
-            lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+            console.log(
+              'startIndex',
+              startIndex,
+              'tag.plainTextBeginIndex',
+              tag.plainTextBeginIndex,
+              'oldPlainTextEndIndex',
+              oldPlainTextEndIndex,
+              'change',
+              change
+            );
+            if (startIndex === tag.plainTextBeginIndex) {
+              result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+              changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
+              processedChange = '';
+              lastProcessedHTMLIndex = tag.openTagIdx;
+              console.log(
+                'here',
+                'result',
+                result,
+                'changeNewEndIndex',
+                changeNewEndIndex,
+                'processedChange',
+                processedChange,
+                'lastProcessedHTMLIndex',
+                lastProcessedHTMLIndex
+              );
+            } else {
+              // mention tag should be deleted when user tries to edit it in the middle
+              result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
+              changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
+              processedChange = '';
+              lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+              console.log(
+                'shouldnt be here but it is',
+                'result',
+                result,
+                'changeNewEndIndex',
+                changeNewEndIndex,
+                'processedChange',
+                processedChange,
+                'lastProcessedHTMLIndex',
+                lastProcessedHTMLIndex
+              );
+            }
           } else {
             const [resultValue, updatedChange, htmlIndex, plainTextSelectionEndIndex] = handleMentionTagUpdate(
               htmlText,
@@ -1023,6 +1112,7 @@ const updateHTML = (
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
+            //TODO: check if it's still needed
             oldPlainText.substring(startIndex, startIndex + 1) !== ' ' && change === '' ? ' ' : '', // if substring !== ' ' && change is empty -> the change should be " " and not empty string but " " wasn't included in change; otherwise the part of mention should be just deleted without processedChange update
             tag,
             closeTagIdx,
@@ -1227,33 +1317,54 @@ const updateHTML = (
  *
  * @param oldText - the old text
  * @param newText - the new text
- * @param selectionEnd - the end of the selection
+ * @param previousSelectionStart - the start of previous selection
+ * @param previousSelectionEnd - the end of previous selection
+ * @param currentSelectionStart - the start of current selection
+ * @param currentSelectionEnd - the end of current selection
  * @returns change start index, old end index and new end index. The old and new end indexes are exclusive.
  * @private
  */
 const findStringsDiffIndexes = (
   oldText: string,
   newText: string,
-  selectionEnd: number // should be a valid position in the input field
+  previousSelectionStart: number, // should be a valid position in the input field
+  previousSelectionEnd: number, // should be a valid position in the input field
+  currentSelectionStart: number, // should be a valid position in the input field
+  currentSelectionEnd: number // should be a valid position in the input field
 ): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
   const newTextLength = newText.length;
   const oldTextLength = oldText.length;
-  let changeStart = 0;
+  // let changeStart = 0;
   let newChangeEnd = newTextLength;
   let oldChangeEnd = oldTextLength;
-  const length = Math.min(newTextLength, oldTextLength, selectionEnd);
+  const previousSelectionStartValue = previousSelectionStart > -1 ? previousSelectionStart : oldTextLength;
+  const previousSelectionEndValue = previousSelectionEnd > -1 ? previousSelectionEnd : oldTextLength;
+  const currentSelectionStartValue = currentSelectionStart > -1 ? currentSelectionStart : newTextLength;
+  const currentSelectionEndValue = currentSelectionEnd > -1 ? currentSelectionEnd : newTextLength;
+  const changeStart = Math.min(
+    previousSelectionStartValue,
+    previousSelectionEndValue,
+    currentSelectionStartValue,
+    currentSelectionEndValue,
+    newTextLength,
+    oldTextLength
+  );
+  console.log(
+    'previousSelectionStartValue',
+    previousSelectionStartValue,
+    'previousSelectionEndValue',
+    previousSelectionEndValue,
+    'currentSelectionStartValue',
+    currentSelectionStartValue,
+    'currentSelectionEndValue',
+    currentSelectionEndValue,
+    'newTextLength',
+    newTextLength,
+    'oldTextLength',
+    oldTextLength
+  );
+  console.log('changeStart', changeStart);
 
-  for (let i = 0; i < length; i++) {
-    if (newText[i] !== oldText[i]) {
-      // the symbol with changeStart index is updated
-      changeStart = i;
-      break;
-    } else if (i === length - 1 && newText[i] === oldText[i]) {
-      // the symbol is added at the end of inputTextValue
-      changeStart = length;
-      break;
-    }
-  }
   if (oldTextLength < newTextLength) {
     //insert or replacement
     if (oldTextLength === changeStart) {
