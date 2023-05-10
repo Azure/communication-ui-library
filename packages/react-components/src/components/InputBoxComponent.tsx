@@ -123,8 +123,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
-  /* @conditional-compile-remove(mention) */
-  const [shouldHandleOnSelect, setShouldHandleOnSelect] = useState<boolean>(true);
 
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
@@ -160,33 +158,35 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   /* @conditional-compile-remove(mention) */
   useEffect(() => {
+    console.log('caret update', caretIndex);
     // effect for caret index update
     if (caretIndex === undefined || textFieldRef === undefined || textFieldRef?.current === undefined) {
       return;
     }
+    console.log('caret update 2', caretIndex);
     let updatedCaretIndex = caretIndex;
     updatedCaretIndex = Math.max(0, updatedCaretIndex);
     updatedCaretIndex = Math.min(inputTextValue.length, updatedCaretIndex);
-    if (caretIndex !== textFieldRef?.current?.selectionStart && caretIndex !== textFieldRef?.current?.selectionEnd) {
-      textFieldRef?.current?.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
-      //TODO: why?
-      // this line makes onSelect to be ignored
-      // setCaretIndex(undefined);
-      setShouldHandleOnSelect(false);
-      return;
-    }
+    console.log(
+      'caret update 3 updatedCaretIndex',
+      updatedCaretIndex,
+      'textFieldRef.target.selectionStart',
+      textFieldRef?.current?.selectionStart,
+      'textFieldRef.target.selectionEnd',
+      textFieldRef?.current?.selectionEnd
+    );
+    // if (
+    //   updatedCaretIndex !== textFieldRef?.current?.selectionStart &&
+    //   updatedCaretIndex !== textFieldRef?.current?.selectionEnd
+    // ) {
+    textFieldRef?.current?.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
+    // }
+    // console.log('setShouldHandleOnSelect(false)');
+    // setShouldHandleOnSelect(false);
     console.log('caret update setSelectionStartValue and setSelectionEndValue to updatedCaretIndex', updatedCaretIndex);
     setSelectionStartValue(updatedCaretIndex);
     setSelectionEndValue(updatedCaretIndex);
-  }, [
-    caretIndex,
-    inputTextValue.length,
-    textFieldRef,
-    setSelectionStartValue,
-    setSelectionEndValue,
-    // setCaretIndex,
-    setShouldHandleOnSelect
-  ]);
+  }, [caretIndex, inputTextValue.length, textFieldRef, setSelectionStartValue, setSelectionEndValue]);
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
@@ -258,6 +258,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      // caretIndex should be set to undefined when the user is typing
+      setCaretIndex(undefined);
       // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
       if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
         return;
@@ -419,7 +421,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       );
       setSelectionStartValue(updatedStartIndex);
       setSelectionEndValue(updatedEndIndex);
-      setShouldHandleOnSelect(false);
     },
     [setSelectionStartValue, setSelectionEndValue]
   );
@@ -431,8 +432,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       inputTextValue: string,
       tags: TagData[],
       selectionStartValue: number | null,
-      selectionEndValue: number | null,
-      caretIndex?: number
+      selectionEndValue: number | null
     ): void => {
       console.log('handleOnSelect');
       // //TODO: need to check to navigate before/after space correctly in tag + when selecting by mouse
@@ -489,9 +489,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (event.currentTarget === null) {
         return;
       }
-      // handle backspace change ( onSelect is not called for backspace and caret position is outdated)
+      // handle backspace change (onSelect is not called for backspace and caret position is outdated)
       setCaretIndex(undefined);
-      setShouldHandleOnSelect(true);
       const newValue = updatedValue ?? '';
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
@@ -645,15 +644,32 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           }}
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
-            console.log('onSelect shouldHandleOnSelect', shouldHandleOnSelect);
-            if (!shouldHandleOnSelect) {
-              setSelectionEndValue(e.currentTarget.selectionEnd);
-              setSelectionStartValue(e.currentTarget.selectionStart);
-              setShouldHandleOnSelect(true);
+            console.log(
+              'onSelect', // shouldHandleOnSelect',
+              // shouldHandleOnSelect,
+              'selectionStartValue',
+              selectionStartValue,
+              'selectionEndValue',
+              selectionEndValue,
+              'caretIndex',
+              caretIndex,
+              'e.currentTarget.selectionStart',
+              e.currentTarget.selectionStart,
+              'e.currentTarget.selectionEnd',
+              e.currentTarget.selectionEnd
+            );
+            if (caretIndex !== undefined) {
               setCaretIndex(undefined);
+
+              // sometimes setting selectionRage in effect for updating caretIndex doesn't work as expected and onSelect should handle this case
+              if (caretIndex !== e.currentTarget.selectionStart || caretIndex !== e.currentTarget.selectionEnd) {
+                e.currentTarget.setSelectionRange(caretIndex, caretIndex);
+              }
+              // setSelectionEndValue(e.currentTarget.selectionEnd);
+              // setSelectionStartValue(e.currentTarget.selectionStart);
               return;
             }
-            handleOnSelect(e, inputTextValue, tagsValue, selectionStartValue, selectionEndValue, caretIndex);
+            handleOnSelect(e, inputTextValue, tagsValue, selectionStartValue, selectionEndValue);
           }}
           // onMouseDown={() => {
           //   // as events order is onMouseDown -> onSelect -> onClick
@@ -843,6 +859,7 @@ const handleMentionTagUpdate = (
   oldPlainText: string,
   lastProcessedHTMLIndex: number,
   processedChange: string,
+  change: string,
   tag: TagData,
   closeTagIdx: number,
   closeTagLength: number,
@@ -895,8 +912,22 @@ const handleMentionTagUpdate = (
       startChangeDiff = rangeStart - tag.plainTextBeginIndex - mentionTagLength;
     }
     endChangeDiff = rangeEnd - tag.plainTextBeginIndex - mentionTagLength;
+    console.log(
+      'result before',
+      result,
+      'tag.openTagIdx + tag.openTagBody.length + startChangeDiff',
+      tag.openTagIdx + tag.openTagBody.length + startChangeDiff
+    );
     result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff);
-    plainTextSelectionEndIndex = rangeStart + processedChange.length;
+
+    if (startIndex < tag.plainTextBeginIndex) {
+      //TODO: SHould be nulified in this case?
+      // if the change is before the tag, the selection should start from startIndex
+      plainTextSelectionEndIndex = startIndex + change.length;
+    } else {
+      plainTextSelectionEndIndex = rangeStart + processedChange.length;
+    }
+    console.log('result after', result);
     lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
     // processed change should not be changed as it should be added after the tag
   }
@@ -1059,6 +1090,7 @@ const updateHTML = (
               oldPlainText,
               lastProcessedHTMLIndex,
               processedChange,
+              change,
               tag,
               closeTagIdx,
               closeTagLength,
@@ -1108,12 +1140,20 @@ const updateHTML = (
         // the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
+          console.log(
+            "Check if oldPlainText.substring(startIndex, startIndex + 1) !== ' ' && change === '' ? ' ' : '' is needed ",
+            'change',
+            change,
+            'oldPlainText.substring(startIndex, oldPlainTextEndIndex)',
+            oldPlainText.substring(startIndex, oldPlainTextEndIndex)
+          );
           const [resultValue, updatedChange, htmlIndex] = handleMentionTagUpdate(
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
             //TODO: check if it's still needed
             oldPlainText.substring(startIndex, startIndex + 1) !== ' ' && change === '' ? ' ' : '', // if substring !== ' ' && change is empty -> the change should be " " and not empty string but " " wasn't included in change; otherwise the part of mention should be just deleted without processedChange update
+            change,
             tag,
             closeTagIdx,
             closeTagLength,
@@ -1172,11 +1212,12 @@ const updateHTML = (
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
         // the change  starts before the tag and ends in a tag
         if (isMentionTag) {
-          const [resultValue, , htmlIndex] = handleMentionTagUpdate(
+          const [resultValue, , htmlIndex, plainTextSelectionEndIndex] = handleMentionTagUpdate(
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
             '', // the part of mention should be just deleted without processedChange update
+            change,
             tag,
             closeTagIdx,
             closeTagLength,
@@ -1185,7 +1226,8 @@ const updateHTML = (
             oldPlainTextEndIndex,
             mentionTagLength
           );
-          changeNewEndIndex = tag.plainTextBeginIndex;
+          //TODO: should it be in the first if?
+          changeNewEndIndex = plainTextSelectionEndIndex;
           result += resultValue;
           lastProcessedHTMLIndex = htmlIndex;
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
@@ -1237,6 +1279,7 @@ const updateHTML = (
               oldPlainText,
               lastProcessedHTMLIndex,
               processedChange,
+              change,
               tag,
               closeTagIdx,
               closeTagLength,
