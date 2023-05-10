@@ -1377,7 +1377,7 @@ export type IsSpeakingChangedListener = (event: {
 
 // @beta
 export interface LocalVideoTileOptions {
-    positon?: 'grid' | 'floating' | 'hidden';
+    position?: 'grid' | 'floating' | 'hidden';
 }
 
 // @public

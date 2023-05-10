@@ -2682,7 +2682,7 @@ export interface LocalVideoStreamVideoEffectsState {
 
 // @beta
 export interface LocalVideoTileOptions {
-    positon?: 'grid' | 'floating' | 'hidden';
+    position?: 'grid' | 'floating' | 'hidden';
 }
 
 // @beta

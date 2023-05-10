@@ -142,7 +142,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
-          props.localVideoTileOptions?.positon === 'hidden' ? 'hidden' : props.isMobile ? 'matchStream' : '16:9'
+          props.localVideoTileOptions?.position === 'hidden' ? 'hidden' : props.isMobile ? 'matchStream' : '16:9'
         }
       />
     );
@@ -152,7 +152,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onRenderAvatar,
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions
   ]);
 
   return (
