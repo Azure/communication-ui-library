@@ -815,6 +815,7 @@ const findNewSelectionIndexForMention = (
   selection: number,
   previousSelection: number
 ): number => {
+  // check if this is a mention tag and selection should be updated
   if (
     tag.plainTextBeginIndex === undefined ||
     tag.tagType !== 'msft-mention' ||
@@ -839,12 +840,8 @@ const findNewSelectionIndexForMention = (
       spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
     }
   }
-
-  if (spaceIndex < tag.plainTextBeginIndex) {
-    spaceIndex = tag.plainTextBeginIndex;
-  } else if (spaceIndex > tag.plainTextEndIndex) {
-    spaceIndex = tag.plainTextEndIndex;
-  }
+  spaceIndex = Math.max(tag.plainTextBeginIndex, spaceIndex);
+  spaceIndex = Math.min(tag.plainTextEndIndex, spaceIndex);
   return spaceIndex;
 };
 
@@ -1400,7 +1397,7 @@ const findStringsDiffIndexes = (
     //insert or replacement
     if (oldTextLength === changeStart) {
       // when change was at the end of string
-      // Change is found
+      // change is found
       newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
     } else {
@@ -1409,7 +1406,7 @@ const findStringsDiffIndexes = (
         oldChangeEnd = oldTextLength - i - 1;
 
         if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
-          // Change is found
+          // change is found
           break;
         }
       }
@@ -1421,7 +1418,7 @@ const findStringsDiffIndexes = (
     //deletion or replacement
     if (newTextLength === changeStart) {
       // when change was at the end of string
-      // Change is found
+      // change is found
       newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
     } else {
@@ -1429,7 +1426,7 @@ const findStringsDiffIndexes = (
         newChangeEnd = newTextLength - i - 1;
         oldChangeEnd = oldTextLength - i - 1;
         if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
-          // Change is found
+          // change is found
           break;
         }
       }
@@ -1438,13 +1435,13 @@ const findStringsDiffIndexes = (
       oldChangeEnd += 1;
     }
   } else {
-    //replacement
+    // replacement
     for (let i = 1; i < oldTextLength && oldTextLength - i >= changeStart; i++) {
       newChangeEnd = newTextLength - i - 1;
       oldChangeEnd = oldTextLength - i - 1;
 
       if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
-        // Change is found
+        // change is found
         break;
       }
     }
