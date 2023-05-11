@@ -1140,19 +1140,11 @@ const updateHTML = (
         // the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
-          console.log(
-            "Check if oldPlainText.substring(startIndex, startIndex + 1) !== ' ' && change === '' ? ' ' : '' is needed ",
-            'change',
-            change,
-            'oldPlainText.substring(startIndex, oldPlainTextEndIndex)',
-            oldPlainText.substring(startIndex, oldPlainTextEndIndex)
-          );
-          const [resultValue, updatedChange, htmlIndex] = handleMentionTagUpdate(
+          const [resultValue, , htmlIndex, plainTextSelectionEndIndex] = handleMentionTagUpdate(
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
-            //TODO: check if it's still needed
-            oldPlainText.substring(startIndex, startIndex + 1) !== ' ' && change === '' ? ' ' : '', // if substring !== ' ' && change is empty -> the change should be " " and not empty string but " " wasn't included in change; otherwise the part of mention should be just deleted without processedChange update
+            '',
             change,
             tag,
             closeTagIdx,
@@ -1164,9 +1156,7 @@ const updateHTML = (
           );
           result += resultValue;
           lastProcessedHTMLIndex = htmlIndex;
-          processedChange = updatedChange;
           // no need to handle plainTextSelectionEndIndex as the change will be added later
-          // proceed with the next calculations
           // proceed with the next calculations
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
@@ -1185,7 +1175,6 @@ const updateHTML = (
           );
           result += stringBefore + content;
           // proceed with the next calculations
-          // proceed with the next calculations
         } else {
           // no subtags
           result += htmlText.substring(
@@ -1200,7 +1189,6 @@ const updateHTML = (
         // tag should be removed, no matter if there are subtags
         // no need to save anything between lastProcessedHTMLIndex and closeTagIdx + closeTagLength
         lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
-        // proceed with the next calculations
         // proceed with the next calculations
       } else if (startIndex === tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
         // the change starts in the tag and finishes after it
