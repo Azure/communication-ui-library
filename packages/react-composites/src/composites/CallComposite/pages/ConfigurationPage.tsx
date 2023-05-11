@@ -319,7 +319,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     styles={effectsButtonStyles(theme)}
                     onClick={toggleVideoEffectsPane}
                   >
-                    {locale.strings.call.effects}
+                    {locale.strings.call.configurationPageVideoEffectsButtonLabel}
                   </DefaultButton>
                 }
                 <LocalDeviceSettings
