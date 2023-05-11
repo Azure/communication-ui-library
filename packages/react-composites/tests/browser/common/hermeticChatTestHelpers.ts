@@ -5,7 +5,7 @@ import type { ChatParticipant } from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Page } from '@playwright/test';
 import { IDS } from './constants';
-import { dataUiId, perStepLocalTimeout, screenshotOnFailure } from './utils';
+import { dataUiId, perStepLocalTimeout, screenshotOnFailure, waitForSelector } from './utils';
 
 /**
  * <HiddenChatComposites /> are, well, hidden.
@@ -35,6 +35,9 @@ export async function withHiddenChatCompositeInForeground(
     // Temporarily bring chat composite to foreground.
     await handle.evaluate((node) => (node.style.display = 'block'));
     await handle.waitFor({ state: 'visible', timeout: perStepLocalTimeout() });
+
+    // wait for composite to have loaded
+    await waitForSelector(page, dataUiId(IDS.sendboxTextField));
   });
   await action();
   await screenshotOnFailure(page, async () => {
