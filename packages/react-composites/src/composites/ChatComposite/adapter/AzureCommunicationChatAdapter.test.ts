@@ -12,13 +12,8 @@ import {
 /* @conditional-compile-remove(teams-inline-images) */
 import { AzureCommunicationChatAdapterOptions } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
-import {
-  StubChatClient,
-  StubChatThreadClient,
-  createStatefulChatClientMock,
-  failingPagedAsyncIterator,
-  pagedAsyncIterator
-} from './StubChatClient';
+import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
+import { createStatefulChatClientMock } from '../../../mocks';
 import { AdapterError } from '../../common/adapters';
 
 jest.useFakeTimers();

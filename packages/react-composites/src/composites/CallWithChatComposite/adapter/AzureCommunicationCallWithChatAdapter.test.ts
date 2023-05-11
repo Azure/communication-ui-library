@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 /* @conditional-compile-remove(teams-inline-images) */
 import { CommunicationTokenCredential } from '@azure/communication-common';
-import { StubChatThreadClient, createStatefulChatClientMock } from '../../ChatComposite/adapter/StubChatClient';
+import { StubChatThreadClient } from '../../ChatComposite/adapter/StubChatClient';
+import { createStatefulChatClientMock } from '../../../mocks';
 import { createAzureCommunicationCallWithChatAdapterFromClients } from './AzureCommunicationCallWithChatAdapter';
 import { MockCallClient, MockCallAgent } from './TestUtils';
 import { StatefulCallClient } from '@internal/calling-stateful-client';

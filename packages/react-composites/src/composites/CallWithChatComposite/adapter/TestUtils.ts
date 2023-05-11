@@ -40,7 +40,7 @@ import {
 } from '@internal/calling-stateful-client';
 import EventEmitter from 'events';
 /**
- *
+ * @private
  */
 export class MockCallClient {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
