@@ -132,7 +132,8 @@ describe('cancellable task', () => {
       await marker.waitForSet(1000);
     });
 
-    await expect(marker.waitForSet(1000)).resolves.toBeTruthy();
+    // We already waited in the `act` block above, so check quickly.
+    await expect(marker.waitForSet(1)).resolves.toBeTruthy();
   });
 });
 
