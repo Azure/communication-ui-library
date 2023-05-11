@@ -15,7 +15,8 @@ import { dataUiId, perStepLocalTimeout, screenshotOnFailure, waitForSelector } f
  */
 export async function temporarilyShowHiddenChatComposite(page: Page, participant: ChatParticipant): Promise<void> {
   await withHiddenChatCompositeInForeground(page, participant, async () => {
-    return;
+    // wait for messages to have loaded
+    await waitForSelector(page, dataUiId(IDS.messageContent));
   });
 }
 
