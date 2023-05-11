@@ -1333,6 +1333,7 @@ const updateHTML = (
   }
 
   if (lastProcessedHTMLIndex < htmlText.length) {
+    // add the rest of the html string
     result += htmlText.substring(lastProcessedHTMLIndex);
   }
 
