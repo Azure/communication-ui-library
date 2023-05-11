@@ -460,10 +460,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
       const newTextLength = newValue.length;
-      const currentSelectionEndValue = getValidatedIndex(currentSelectionEnd, 0, newTextLength);
-      const currentSelectionStartValue = getValidatedIndex(currentSelectionStart, 0, newTextLength);
-      const previousSelectionStartValue = getValidatedIndex(previousSelectionStart, 0, inputTextValue.length);
-      const previousSelectionEndValue = getValidatedIndex(previousSelectionEnd, 0, inputTextValue.length);
+      const currentSelectionEndValue = getValidatedIndex(0, newTextLength, currentSelectionEnd);
+      const currentSelectionStartValue = getValidatedIndex(0, newTextLength, currentSelectionStart);
+      const previousSelectionStartValue = getValidatedIndex(0, inputTextValue.length, previousSelectionStart);
+      const previousSelectionEndValue = getValidatedIndex(0, inputTextValue.length, previousSelectionEnd);
 
       // If we are enabled for lookups,
       if (mentionLookupOptions !== undefined) {
@@ -722,7 +722,7 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
  *
  * @private
  */
-const getValidatedIndex = (currentValue?: number, min: number, max: number): number => {
+const getValidatedIndex = (min: number, max: number, currentValue?: number): number => {
   let updatedValue = currentValue ?? -1;
   updatedValue = Math.max(min, updatedValue);
   updatedValue = Math.min(updatedValue, max);
