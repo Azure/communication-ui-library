@@ -6,6 +6,7 @@
 
 /// <reference types="react" />
 
+import { AcceptCallOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
@@ -26,6 +27,7 @@ import { ChatMessage as ChatMessage_2 } from '@azure/communication-chat';
 import { ChatMessageReadReceipt } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
+import { CollectionUpdatedEvent } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
@@ -310,6 +312,8 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
 // @public
 export interface CallAdapterCallOperations {
     // @beta
+    acceptCall(incomingCall: IncomingCall, video?: boolean, audio?: boolean): Promise<Call>;
+    // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
@@ -322,6 +326,8 @@ export interface CallAdapterCallOperations {
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
+    // @beta
+    rejectCall(incomingCall: IncomingCall): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -357,6 +363,7 @@ export type CallAdapterClientState = {
     endedCall?: CallState;
     isTeamsCall: boolean;
     latestErrors: AdapterErrors;
+    incomingCalls: IncomingCallState[];
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     roleHint?: Role;
@@ -398,6 +405,8 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    off(event: 'incomingCall', listener: IncomingCallListener): void;
+    off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -412,6 +421,8 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    on(event: 'incomingCall', listener: IncomingCallListener): void;
+    on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 }
 
 // @public
@@ -800,6 +811,8 @@ export interface CallWithChatAdapter extends CallWithChatAdapterManagement, Adap
 // @public
 export interface CallWithChatAdapterManagement {
     // @beta
+    acceptCall(incomingCall: IncomingCall, video?: boolean, audio?: boolean): Promise<Call>;
+    // @beta
     addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
@@ -832,6 +845,8 @@ export interface CallWithChatAdapterManagement {
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
     registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    // @beta
+    rejectCall(incomingCall: IncomingCall): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -907,6 +922,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
+    off(event: 'incomingCall', listener: IncomingCallListener): void;
+    // (undocumented)
+    off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
@@ -945,6 +964,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
+    on(event: 'incomingCall', listener: IncomingCallListener): void;
+    // (undocumented)
+    on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     on(event: 'messageSent', listener: MessageSentListener): void;
@@ -976,6 +999,7 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    incomingCalls: IncomingCallState[];
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -1126,7 +1150,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(incoming-call-composites) */ 'incomingCall' | /* @conditional-compile-remove(incoming-call-composites) */ 'callsUpdated' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -2597,6 +2621,27 @@ export interface _Identifiers {
     videoGallery: string;
     videoTile: string;
 }
+
+// @beta
+export interface IncomingCallAdapter extends IncomingCallAdapterSubscribers, IncomingCallAdapterIncomingCallOperations, Disposable {
+}
+
+// @beta
+export interface IncomingCallAdapterIncomingCallOperations {
+    accept(incomingCall: IncomingCall, options?: AcceptCallOptions): Promise<Call>;
+    reject(incomingCall: IncomingCall): Promise<void>;
+}
+
+// @beta
+export interface IncomingCallAdapterSubscribers {
+    off(event: 'incomingCall', listener: IncomingCallListener): void;
+    on(event: 'incomingCall', listener: IncomingCallListener): void;
+}
+
+// @beta
+export type IncomingCallListener = (event: {
+    incomingCall: IncomingCall;
+}) => void;
 
 // @beta
 export type IncomingCallManagement = {

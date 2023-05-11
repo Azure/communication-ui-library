@@ -15,6 +15,8 @@ import {
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { IncomingCall, CollectionUpdatedEvent } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -92,6 +94,8 @@ import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../..
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { IncomingCallListener } from '../../CallComposite/adapter/IncomingCallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -238,6 +242,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.stopVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.acceptCall.bind(this);
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.rejectCall.bind(this);
   }
 
   /** Join existing Call. */
@@ -493,6 +501,20 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
+  /* @conditional-compile-remove(incoming-call-composites) */
+  public acceptCall(
+    incomingCall: IncomingCall,
+    video?: boolean | undefined,
+    audio?: boolean | undefined
+  ): Promise<Call> {
+    return this.callAdapter.acceptCall(incomingCall, video, audio);
+  }
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  public rejectCall(incomingCall: IncomingCall): Promise<void> {
+    return this.callAdapter.rejectCall(incomingCall);
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
@@ -514,6 +536,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  on(event: 'incomingCall', listener: IncomingCallListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -555,6 +581,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       /* @conditional-compile-remove(close-captions) */
       case 'isCaptionsActiveChanged':
         this.callAdapter.on('isCaptionsActiveChanged', listener);
+        break;
+      /* @conditional-compile-remove(incoming-call-composites) */
+      case 'incomingCall':
+        this.callAdapter.on('incomingCall', listener);
+        break;
+      /* @conditional-compile-remove(incoming-call-composites) */
+      case 'callsUpdated':
+        this.callAdapter.on('callsUpdated', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
@@ -604,6 +638,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  off(event: 'incomingCall', listener: IncomingCallListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {

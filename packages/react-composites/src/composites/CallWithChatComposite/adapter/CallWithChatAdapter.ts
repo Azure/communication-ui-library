@@ -26,6 +26,8 @@ import type { AdapterError, AdapterState, Disposable } from '../../common/adapte
 import {
   AudioDeviceInfo,
   Call,
+  CollectionUpdatedEvent,
+  IncomingCall,
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
@@ -53,6 +55,7 @@ import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../..
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { IncomingCallListener } from '../../CallComposite/adapter/IncomingCallAdapter';
 
 /**
  * Functionality for managing the current call with chat.
@@ -411,6 +414,24 @@ export interface CallWithChatAdapterManagement {
    * @beta
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Handler for accepting an incoming call.
+   * @param incomingCall - incoming call object
+   * @param video - whether to accept the call with video on.
+   * @param audio - whether to accept the call with audio on.
+   *
+   * @beta
+   */
+  acceptCall(incomingCall: IncomingCall, video?: boolean, audio?: boolean): Promise<Call>;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Handler for rejecting an incoming call.
+   * @param incomingCall - incoming call object
+   *
+   * @beta
+   */
+  rejectCall(incomingCall: IncomingCall): Promise<void>;
 }
 
 /**
@@ -434,6 +455,10 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  on(event: 'incomingCall', listener: IncomingCallListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -450,6 +475,10 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  off(event: 'incomingCall', listener: IncomingCallListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -498,6 +527,8 @@ export type CallWithChatEvent =
   | 'selectedSpeakerChanged'
   | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged'
   | /* @conditional-compile-remove(close-captions) */ 'captionsReceived'
+  | /* @conditional-compile-remove(incoming-call-composites) */ 'incomingCall'
+  | /* @conditional-compile-remove(incoming-call-composites) */ 'callsUpdated'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'

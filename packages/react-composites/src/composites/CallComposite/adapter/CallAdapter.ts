@@ -2,12 +2,16 @@
 // Licensed under the MIT license.
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { IncomingCallState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { CollectionUpdatedEvent, IncomingCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -37,6 +41,7 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+import { IncomingCallListener } from './IncomingCallAdapter';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -98,6 +103,11 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * an array to track incoming calls for the call agent
+   */
+  incomingCalls: IncomingCallState[];
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Azure communications Phone number to make PSTN calls with.
@@ -519,6 +529,24 @@ export interface CallAdapterCallOperations {
    * @beta
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Handler for accepting an incoming call.
+   * @param incomingCall - incoming call object
+   * @param video - whether to accept the call with video on.
+   * @param audio - whether to accept the call with audio on.
+   *
+   * @beta
+   */
+  acceptCall(incomingCall: IncomingCall, video?: boolean, audio?: boolean): Promise<Call>;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Handler for rejecting an incoming call.
+   * @param incomingCall - incoming call object
+   *
+   * @beta
+   */
+  rejectCall(incomingCall: IncomingCall): Promise<void>;
 }
 
 /**
@@ -676,6 +704,16 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Subscribe function for 'incomingCall' event.
+   */
+  on(event: 'incomingCall', listener: IncomingCallListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Subscribe function for 'callsUpdated' event.
+   */
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -735,6 +773,16 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Unsubscribe function for 'incomingCall' event.
+   */
+  off(event: 'incomingCall', listener: IncomingCallListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /**
+   * Unsibscribe function for 'callsUpdated' event.
+   */
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
 }
 
 // This type remains for non-breaking change reason

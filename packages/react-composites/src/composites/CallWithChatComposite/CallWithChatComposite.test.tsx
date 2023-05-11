@@ -37,7 +37,8 @@ function createMockCallWithChatAdapter(): CallWithChatAdapter {
       call: undefined,
       chat: undefined,
       latestCallErrors: { test: new Error() as AdapterError },
-      latestChatErrors: { test: new Error() as AdapterError }
+      latestChatErrors: { test: new Error() as AdapterError },
+      incomingCalls: []
     })
   );
   return callWithChatAdapter;

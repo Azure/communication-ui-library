@@ -11,7 +11,8 @@ import {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions
+  StartCallOptions,
+  IncomingCall
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -156,6 +157,18 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
       return this.callWithChatAdapter.addParticipant(participant as CommunicationUserIdentifier);
     }
   }
+  /* @conditional-compile-remove(incoming-call-composites) */
+  public async acceptCall(
+    incomingCall: IncomingCall,
+    video?: boolean | undefined,
+    audio?: boolean | undefined
+  ): Promise<Call> {
+    return this.callWithChatAdapter.acceptCall(incomingCall, video, audio);
+  }
+  /* @conditional-compile-remove(incoming-call-composites) */
+  public async rejectCall(incomingCall: IncomingCall): Promise<void> {
+    return this.callWithChatAdapter.rejectCall(incomingCall);
+  }
 
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
@@ -228,6 +241,7 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
+    incomingCalls: callWithChatAdapterState.incomingCalls
   };
 }

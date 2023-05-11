@@ -54,3 +54,11 @@ export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
+
+/* @conditional-compile-remove(incoming-call-composites) */
+export type {
+  IncomingCallListener,
+  IncomingCallAdapter,
+  IncomingCallAdapterIncomingCallOperations,
+  IncomingCallAdapterSubscribers
+} from './IncomingCallAdapter';

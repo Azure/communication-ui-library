@@ -1,7 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  DtmfTone,
+  IncomingCall,
+  PermissionConstraints,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -177,6 +184,14 @@ export class MockCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
+  /* @conditional-compile-remove(incoming-call-composites) */
+  acceptCall(incomingCall: IncomingCall, video?: boolean | undefined, audio?: boolean | undefined): Promise<Call> {
+    throw new Error('Method not implemented.');
+  }
+  /* @conditional-compile-remove(incoming-call-composites) */
+  rejectCall(incomingCall: IncomingCall): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 }
 
 /**
@@ -231,5 +246,7 @@ const defaultCallAdapterState: CallAdapterState = {
     deviceAccess: { video: true, audio: true }
   },
   isTeamsCall: false,
-  latestErrors: {}
+  latestErrors: {},
+  /* @conditional-compile-remove(incoming-call-composites) */
+  incomingCalls: []
 };

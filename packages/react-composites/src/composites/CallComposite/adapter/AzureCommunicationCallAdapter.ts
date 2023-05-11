@@ -32,6 +32,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { CollectionUpdatedEvent, IncomingCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -91,6 +93,10 @@ import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
 import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchProfileCallback';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { IncomingCallAdapter, IncomingCallListener } from './IncomingCallAdapter';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { AzureCommunicationIncomingCallAdapter } from './AzureCommunicationIncomingCallAdapter';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -126,7 +132,8 @@ class CallContext {
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages: options?.videoBackgroundImages,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
-      cameraStatus: undefined
+      cameraStatus: undefined,
+      /* @conditional-compile-remove(incoming-call-composites) */ incomingCalls: []
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -205,6 +212,9 @@ class CallContext {
         userId: clientState.userId,
         displayName: clientState.callAgent?.displayName,
         call,
+        /* @conditional-compile-remove(incoming-call-composites) */ incomingCalls: Object.values(
+          clientState.incomingCalls
+        ),
         page: newPage,
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
@@ -272,6 +282,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private incomingCallAdapter: IncomingCallAdapter;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private incomingCalls: IncomingCall[] = [];
 
   private get call(): CallCommon | undefined {
     return this._call;
@@ -294,6 +308,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.callAgent = callAgent;
     this.locator = locator;
     this.deviceManager = deviceManager;
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.incomingCallAdapter = new AzureCommunicationIncomingCallAdapter(callAgent);
     const isTeamsMeeting = 'meetingLink' in this.locator;
 
     /* @conditional-compile-remove(rooms) */
@@ -332,6 +348,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.onClientStateChange = onStateChange;
 
     this.subscribeDeviceManagerEvents();
+
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.subscribeCallAgentEvents();
+
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.subscribeToIncomingCallEvents();
 
     this.callClient.onStateChange(onStateChange);
   }
@@ -398,10 +420,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.onIncomingCall.bind(this);
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.acceptCall.bind(this);
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.rejectCall.bind(this);
   }
 
   public dispose(): void {
     this.resetDiagnosticsForwarder();
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.unsubscribeFromIncomingCallEvents();
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.unsubscribeCallAgentEvents();
+    /* @conditional-compile-remove(incoming-call-composites) */
+    this.incomingCallAdapter.dispose();
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
   }
@@ -519,6 +553,35 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call = undefined;
     this.stopCamera();
     this.mute();
+  }
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  public async acceptCall(incomingCall: IncomingCall, video?: boolean, audio?: boolean): Promise<Call> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      const localStream = this.deviceManager.getUnparentedVideoStreams()[0];
+      const call = await this.incomingCallAdapter.accept(incomingCall, {
+        videoOptions: { localVideoStreams: localStream && video ? [localStream] : undefined },
+        audioOptions: { muted: audio }
+      });
+      // we need to remove the incoming call from the array once its been accepted.
+      const incomingCallToRemove = this.incomingCalls.indexOf(incomingCall);
+      if (incomingCallToRemove !== -1) {
+        this.incomingCalls.splice(incomingCallToRemove, 1);
+      }
+      return call;
+    });
+  }
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  public async rejectCall(incomingCall: IncomingCall): Promise<void> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      await this.incomingCallAdapter.reject(incomingCall);
+      // we need to remove the incoming call from the array once its been rejected.
+      const incomingCallToRemove = this.incomingCalls.indexOf(incomingCall);
+      if (incomingCallToRemove !== -1) {
+        this.incomingCalls.splice(incomingCallToRemove, 1);
+      }
+    });
   }
 
   public async setCamera(device: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void> {
@@ -756,6 +819,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  on(event: 'incomingCall', listener: IncomingCallListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -797,11 +864,44 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
   }
 
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private subscribeToIncomingCallEvents(): void {
+    this.incomingCallAdapter.on('incomingCall', this.onIncomingCall.bind(this));
+  }
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private unsubscribeFromIncomingCallEvents(): void {
+    this.incomingCallAdapter.off('incomingCall', this.onIncomingCall.bind(this));
+  }
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private onIncomingCall(event: { incomingCall: IncomingCall }): void {
+    this.incomingCalls.push(event.incomingCall);
+    this.emitter.emit('incomingCall', event);
+  }
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private subscribeCallAgentEvents(): void {
+    (this.callAgent as CallAgent).on('callsUpdated', this.onCallsUpdated.bind(this));
+  }
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private unsubscribeCallAgentEvents(): void {
+    (this.callAgent as CallAgent).off('callsUpdated', this.onCallsUpdated.bind(this));
+  }
+
   private isMyMutedChanged = (): void => {
     this.emitter.emit('isMutedChanged', {
       participantId: this.getState().userId,
       isMuted: this.call?.isMuted
     });
+  };
+
+  /* @conditional-compile-remove(incoming-call-composites) */
+  private onCallsUpdated = ({ added, removed }: { added: Call[]; removed: Call[] }): void => {
+    this.emitter.emit('callsUpdated', { added, removed });
+    if (added.length > 0) {
+      this.processNewCall(added[0]);
+    }
   };
 
   private onRemoteParticipantsUpdated({
@@ -877,6 +977,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  off(event: 'incomingCall', listener: IncomingCallListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

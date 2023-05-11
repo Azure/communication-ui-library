@@ -3,6 +3,8 @@
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { IncomingCallState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
@@ -86,6 +88,9 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(video-background-effects) */
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+  /* @conditional-compile-remove(incoming-call-composites) */
+  /** State to track the incoming calls in the callAgent to display toast notifications */
+  incomingCalls: IncomingCallState[];
 }
 
 /**
@@ -126,7 +131,9 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(incoming-call-composites) */
+    incomingCalls: callAdapterState.incomingCalls
   };
 }
 
@@ -166,6 +173,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(incoming-call-composites) */
+    incomingCalls: callAdapterState.incomingCalls
   };
 }
