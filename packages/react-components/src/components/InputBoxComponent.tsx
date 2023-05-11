@@ -323,6 +323,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         event.currentTarget.selectionStart !== null &&
         event.currentTarget.selectionStart !== -1
       ) {
+        // just a caret movement/usual typing or deleting
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
         if (
           mentionTag !== undefined &&
@@ -332,9 +333,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               event.currentTarget.selectionStart < mentionTag.plainTextEndIndex))
         ) {
           if (selectionStartValue === null) {
+            // no previous selection value, use the mention tag indexes
+            //TODO: check if used
+            console.log('selectionStartValue === null');
             updatedStartIndex = mentionTag.plainTextBeginIndex;
             updatedEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
           } else {
+            // get updated selection index
             const newSelectionIndex = findNewSelectionIndexForMention(
               mentionTag,
               inputTextValue,
@@ -353,7 +358,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           //TODO: is there another check should be here as in the previous if?
           const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-            //TODO: update selectionstart and end with mouse move and or touch move
             updatedStartIndex = findNewSelectionIndexForMention(
               mentionTag,
               inputTextValue,
@@ -366,7 +370,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           // the selection end is changed
           const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-            //TODO: update selectionstart and end with mouse move and or touch move
             updatedEndIndex = findNewSelectionIndexForMention(
               mentionTag,
               inputTextValue,
@@ -530,14 +533,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         );
         result = updatedHTML;
         if (updatedChangeNewEndIndex !== null) {
-          if (
-            (change.length === 1 && event.currentTarget.selectionStart === event.currentTarget.selectionEnd) || // simple input
-            (change.length === 0 && newChangeEnd === changeStart) //delete
-          ) {
-            setCaretIndex(updatedChangeNewEndIndex);
-            setSelectionEndValue(updatedChangeNewEndIndex);
-            setSelectionStartValue(updatedChangeNewEndIndex);
-          }
+          setCaretIndex(updatedChangeNewEndIndex);
+          setSelectionEndValue(updatedChangeNewEndIndex);
+          setSelectionStartValue(updatedChangeNewEndIndex);
         }
       }
 
@@ -583,8 +581,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           placeholder={placeholderText}
           value={getInputFieldTextValue()}
           onChange={(e, newValue) => {
-            // TODO: add bool and check if onSelect should be handled and update the selection range directly instead of caret update
-            //TODO: remove optional value from event when switching to react 17+, currently needed because of https://legacy.reactjs.org/docs/legacy-event-pooling.html
+            // Remove when switching to react 17+, currently needed because of https://legacy.reactjs.org/docs/legacy-event-pooling.html
             /* @conditional-compile-remove(mention) */
             // Prevents React from resetting event's properties
             e.persist();
