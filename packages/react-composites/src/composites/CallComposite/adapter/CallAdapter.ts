@@ -41,6 +41,7 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(incoming-call-composites) */
 import { IncomingCallListener } from './IncomingCallAdapter';
 
 /**

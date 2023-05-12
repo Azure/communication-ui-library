@@ -38,6 +38,7 @@ function createMockCallWithChatAdapter(): CallWithChatAdapter {
       chat: undefined,
       latestCallErrors: { test: new Error() as AdapterError },
       latestChatErrors: { test: new Error() as AdapterError },
+      /* @conditional-compile-remove(incoming-call-composites) */
       incomingCalls: []
     })
   );
