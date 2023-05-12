@@ -11,9 +11,10 @@ import {
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions,
-  IncomingCall
+  StartCallOptions
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { IncomingCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -242,6 +243,7 @@ function callAdapterStateFromCallWithChatAdapterState(
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(incoming-call-composites) */
     incomingCalls: callWithChatAdapterState.incomingCalls
   };
 }

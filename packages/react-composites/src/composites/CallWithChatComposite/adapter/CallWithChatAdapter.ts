@@ -26,13 +26,13 @@ import type { AdapterError, AdapterState, Disposable } from '../../common/adapte
 import {
   AudioDeviceInfo,
   Call,
-  CollectionUpdatedEvent,
-  IncomingCall,
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(incoming-call-composites) */
+import { CollectionUpdatedEvent, IncomingCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -55,6 +55,7 @@ import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../..
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+/* @conditional-compile-remove(incoming-call-composites) */
 import { IncomingCallListener } from '../../CallComposite/adapter/IncomingCallAdapter';
 
 /**
