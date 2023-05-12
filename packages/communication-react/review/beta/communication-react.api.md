@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { AcceptCallOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
@@ -2620,22 +2619,6 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
-}
-
-// @beta
-export interface IncomingCallAdapter extends IncomingCallAdapterSubscribers, IncomingCallAdapterIncomingCallOperations, Disposable {
-}
-
-// @beta
-export interface IncomingCallAdapterIncomingCallOperations {
-    accept(incomingCall: IncomingCall, options?: AcceptCallOptions): Promise<Call>;
-    reject(incomingCall: IncomingCall): Promise<void>;
-}
-
-// @beta
-export interface IncomingCallAdapterSubscribers {
-    off(event: 'incomingCall', listener: IncomingCallListener): void;
-    on(event: 'incomingCall', listener: IncomingCallListener): void;
 }
 
 // @beta

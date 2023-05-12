@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { AcceptCallOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
@@ -1377,22 +1376,6 @@ export interface FileUploadState {
 
 // @beta
 export type FileUploadsUiState = Record<string, FileUploadState>;
-
-// @beta
-export interface IncomingCallAdapter extends IncomingCallAdapterSubscribers, IncomingCallAdapterIncomingCallOperations, Disposable {
-}
-
-// @beta
-export interface IncomingCallAdapterIncomingCallOperations {
-    accept(incomingCall: IncomingCall, options?: AcceptCallOptions): Promise<Call>;
-    reject(incomingCall: IncomingCall): Promise<void>;
-}
-
-// @beta
-export interface IncomingCallAdapterSubscribers {
-    off(event: 'incomingCall', listener: IncomingCallListener): void;
-    on(event: 'incomingCall', listener: IncomingCallListener): void;
-}
 
 // @beta
 export type IncomingCallListener = (event: {

@@ -84,9 +84,4 @@ export type {
 export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './adapter';
 
 /* @conditional-compile-remove(incoming-call-composites) */
-export type {
-  IncomingCallListener,
-  IncomingCallAdapter,
-  IncomingCallAdapterIncomingCallOperations,
-  IncomingCallAdapterSubscribers
-} from './adapter';
+export type { IncomingCallListener } from './adapter';
