@@ -69,11 +69,14 @@ export async function sendMessageFromHiddenChatComposite(
 }
 
 /**
- * Start Type a message from one of the hidden chat composites
+ * Type a message from one of the hidden chat composites. This is useful for testing the typing indicator.
+ *
+ * @remarks
+ * Becuase the hidden chat composite is unmounted when hidden, anything typed here is lost when the composite is hidden.
  *
  * @private
  */
-export async function startTypeMessageFromHiddenChatComposite(
+export async function typeMessageFromHiddenChatComposite(
   page: Page,
   participant: ChatParticipant,
   message: string
@@ -86,15 +89,19 @@ export async function startTypeMessageFromHiddenChatComposite(
 }
 
 /**
- * Stop typing and send the message from one of the hidden chat composites.
+ * Type and send the message from one of the hidden chat composites.
  *
  * @private
  */
-export async function stopTypingAndSendMessageFromHiddenChatComposite(
+export async function typeAndSendMessageFromHiddenChatComposite(
   page: Page,
-  participant: ChatParticipant
+  participant: ChatParticipant,
+  message: string
 ): Promise<void> {
   await withHiddenChatCompositeInForeground(page, participant, async () => {
+    await page.type(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`, message, {
+      timeout: perStepLocalTimeout()
+    });
     await page.focus(`${hiddenCompositeSelector(participant)} ${dataUiId(IDS.sendboxTextField)}`);
     await page.keyboard.press('Enter');
   });
