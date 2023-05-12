@@ -16,11 +16,10 @@ export const loadChatComposite = async function (args, htmlElement, props) {
     threadId
   });
 
-  const domNode = document.getElementById(htmlElement);
-  if (!domNode) {
+  if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(domNode).render(React.createElement(ChatComposite, { ...props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(ChatComposite, { ...props, adapter }, null));
   return adapter;
 };

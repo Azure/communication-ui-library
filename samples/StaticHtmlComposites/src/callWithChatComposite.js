@@ -18,11 +18,10 @@ export const loadCallWithChatComposite = async function (args, htmlElement, prop
     locator: locator
   });
 
-  const domNode = document.getElementById(htmlElement);
-  if (!domNode) {
+  if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(domNode).render(React.createElement(CallWithChatComposite, { ...props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(CallWithChatComposite, { ...props, adapter }, null));
   return adapter;
 };

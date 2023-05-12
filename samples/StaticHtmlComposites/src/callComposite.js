@@ -15,11 +15,10 @@ export const loadCallComposite = async function (args, htmlElement, props) {
     locator: locator || { groupId }
   });
 
-  const domNode = document.getElementById(htmlElement);
-  if (!domNode) {
+  if (!htmlElement) {
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(domNode).render(React.createElement(CallComposite, { ...props, adapter }, null));
+  createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
   return adapter;
 };
