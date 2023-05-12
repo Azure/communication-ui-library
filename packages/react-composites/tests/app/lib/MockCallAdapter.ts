@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo, Call, EnvironmentInfo, IncomingCall, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
@@ -169,6 +169,14 @@ export class MockCallAdapter implements CallAdapter {
 
   updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
+  }
+
+  acceptCall(incomingCall: IncomingCall, video?: boolean | undefined, audio?: boolean | undefined): Promise<Call> {
+    throw new Error('Method not implemented.');
+  }
+
+  rejectCall(incomingCall: IncomingCall): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }
 
