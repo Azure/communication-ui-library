@@ -45,7 +45,7 @@ export const HiddenChatComposites = (props: { adapters: ChatAdapter[] }): JSX.El
           <div
             id={hiddenCompositeProps.key}
             key={hiddenCompositeProps.key}
-            style={{ height: '100px', width: '100px', overflow: 'hidden', display: 'none' }}
+            style={{ height: '100vh', width: '100vw', overflow: 'hidden', display: 'none' }}
           >
             {hiddenCompositeProps.isVisible && (
               <ChatComposite adapter={hiddenCompositeProps.adapter} options={{ participantPane: true }} />
