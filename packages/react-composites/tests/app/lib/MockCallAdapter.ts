@@ -170,11 +170,11 @@ export class MockCallAdapter implements CallAdapter {
   updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   acceptCall(incomingCall: IncomingCall, video?: boolean | undefined, audio?: boolean | undefined): Promise<Call> {
     throw new Error('Method not implemented.');
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   rejectCall(incomingCall: IncomingCall): Promise<void> {
     throw new Error('Method not implemented.');
   }
