@@ -33,7 +33,7 @@ import {
   Call
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(incoming-call-composites) */
-import { CollectionUpdatedEvent, IncomingCall } from '@azure/communication-calling';
+import { CollectionUpdatedEvent, IncomingCall, LocalVideoStream, LocalAudioStream } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -558,10 +558,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(incoming-call-composites) */
   public async acceptCall(incomingCall: IncomingCall, video?: boolean, audio?: boolean): Promise<Call> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      const localStream = this.deviceManager.getUnparentedVideoStreams()[0];
+      const cameras = await this.deviceManager.getCameras();
+      const microphones = await this.deviceManager.getMicrophones();
+      const localVideoStream = new LocalVideoStream(cameras[0]);
+      const localAudioStream = new LocalAudioStream(microphones[0]);
       const call = await this.incomingCallAdapter.accept(incomingCall, {
-        videoOptions: { localVideoStreams: localStream && video ? [localStream] : undefined },
-        audioOptions: { muted: audio }
+        videoOptions: { localVideoStreams: localVideoStream && video ? [localVideoStream] : undefined },
+        audioOptions: { muted: audio, localAudioStreams: localAudioStream ? [localAudioStream] : undefined }
       });
       // we need to remove the incoming call from the array once its been accepted.
       const incomingCallToRemove = this.incomingCalls.indexOf(incomingCall);
@@ -899,7 +902,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(incoming-call-composites) */
   private onCallsUpdated = ({ added, removed }: { added: Call[]; removed: Call[] }): void => {
     this.emitter.emit('callsUpdated', { added, removed });
-    if (added.length > 0) {
+    console.log(this.callAgent.calls);
+    // we only want to process the call if the direction is incoming.
+    if (added.length > 0 && added[0].direction === 'Incoming') {
       this.processNewCall(added[0]);
     }
   };
