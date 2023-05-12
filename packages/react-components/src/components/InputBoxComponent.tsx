@@ -25,10 +25,10 @@ import {
   inputButtonStyle,
   textFieldStyle,
   textContainerStyle,
-  inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
-  inputButtonTooltipStyle
+  inputButtonTooltipStyle,
+  iconWrapperStyle
 } from './styles/InputBoxComponent.style';
 /* @conditional-compile-remove(mention) */
 import { Caret } from 'textarea-caret-ts';
@@ -172,8 +172,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
     fieldGroup: styles?.textField,
-    errorMessage: styles?.systemMessage
+    errorMessage: styles?.systemMessage,
+    suffix: {
+      backgroundColor: 'transparent',
+      // Remove empty space in the suffix area when adding newline-style buttons
+      display: props.inlineChildren ? 'flex' : 'contents',
+      padding: '0 0.25rem'
+    }
   });
+
+  const mergedChildrenStyle = mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle);
 
   /* @conditional-compile-remove(mention) */
   const onSuggestionSelected = useCallback(
@@ -289,6 +297,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       onSuggestionSelected
     ]
   );
+
+  const onRenderChildren = (): JSX.Element => {
+    return (
+      <Stack horizontal className={mergedChildrenStyle}>
+        {children}
+      </Stack>
+    );
+  };
 
   /* @conditional-compile-remove(mention) */
   const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
@@ -651,14 +667,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           styles={mergedTextFieldStyle}
           disabled={disabled}
           errorMessage={errorMessage}
+          onRenderSuffix={onRenderChildren}
           elementRef={inputBoxRef}
         />
-        <Stack
-          horizontal
-          className={mergeStyles(props.inlineChildren ? inlineButtonsContainerStyle : newLineButtonsContainerStyle)}
-        >
-          {children}
-        </Stack>
       </div>
     </Stack>
   );
@@ -708,7 +719,8 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onMouseLeave={() => {
           setIsHover(false);
         }}
-        onRenderIcon={() => onRenderIcon(isHover)}
+        // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
+        onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
       />
     </TooltipHost>
   );
