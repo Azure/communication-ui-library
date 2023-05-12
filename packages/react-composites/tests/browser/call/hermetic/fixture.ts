@@ -103,7 +103,9 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
-    latestErrors: {}
+    latestErrors: {},
+    /* @conditional-compile-remove(incoming-call-composites) */
+    incomingCalls: []
   };
 }
 
