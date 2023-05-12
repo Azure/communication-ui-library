@@ -16,7 +16,9 @@ import { dataUiId, perStepLocalTimeout, screenshotOnFailure, waitForSelector } f
 export async function temporarilyShowHiddenChatComposite(page: Page, participant: ChatParticipant): Promise<void> {
   await withHiddenChatCompositeInForeground(page, participant, async () => {
     // wait for messages to have loaded
-    await waitForSelector(page, dataUiId(IDS.messageContent));
+    await waitForSelector(page, dataUiId('chat-composite-message'));
+    // sleep for 100ms to give time for the messagethread hook to send the read receipt
+    await page.waitForTimeout(100);
   });
 }
 
