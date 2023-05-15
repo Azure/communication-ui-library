@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { Persona, PersonaSize, Stack, mergeStyles, useTheme } from '@fluentui/react';
+import { Persona, PersonaSize, Stack, mergeStyles, useTheme, FocusZone } from '@fluentui/react';
 import {
   mentionPopoverContainerStyle,
   headerStyleThemed,
@@ -251,6 +251,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, active: boolean): JSX.Element => {
       return (
         <div
+          role={'menuitem'}
           data-is-focusable={true}
           /* @conditional-compile-remove(mention) */
           data-ui-id={ids.mentionSuggestionItem}
@@ -314,18 +315,20 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
           {getHeaderTitle()}
         </Stack.Item>
-        <Stack
-          /* @conditional-compile-remove(mention) */
-          data-ui-id={ids.mentionSuggestionList}
-          className={suggestionListStyle}
-        >
-          {suggestions.map((suggestion, index) => {
-            const active = index === activeSuggestionIndex;
-            return onRenderSuggestionItem
-              ? onRenderSuggestionItem(suggestion, onSuggestionSelected, active)
-              : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, active);
-          })}
-        </Stack>
+        <FocusZone shouldFocusOnMount={true}>
+          <Stack
+            /* @conditional-compile-remove(mention) */
+            data-ui-id={ids.mentionSuggestionList}
+            className={suggestionListStyle}
+          >
+            {suggestions.map((suggestion, index) => {
+              const active = index === activeSuggestionIndex;
+              return onRenderSuggestionItem
+                ? onRenderSuggestionItem(suggestion, onSuggestionSelected, active)
+                : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, active);
+            })}
+          </Stack>
+        </FocusZone>
       </Stack>
     </div>
   );
