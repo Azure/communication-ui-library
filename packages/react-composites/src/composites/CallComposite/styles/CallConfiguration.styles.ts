@@ -136,6 +136,13 @@ export const startCallButtonStyleMobile = mergeStyles({
   maxWidth: 'unset'
 });
 
+/** @private */
+export const cameraAndVideoEffectsContainerStyleDesktop: IStackItemStyles = {
+  root: {
+    alignItems: 'center'
+  }
+};
+
 /**
  * @private
  */
@@ -145,8 +152,7 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
       background: 'transparent',
       border: 'none',
       color: theme.palette.blue,
-      width: '40%',
-      alignSelf: 'end',
+      padding: '5px 0px',
       ':hover, :focus': {
         color: theme.palette.blue
       }

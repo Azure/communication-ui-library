@@ -312,16 +312,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   {title}
                   {callDescription}
                 </Stack.Item>
-                {
-                  /* @conditional-compile-remove(video-background-effects) */
-                  <DefaultButton
-                    iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
-                    styles={effectsButtonStyles(theme)}
-                    onClick={toggleVideoEffectsPane}
-                  >
-                    {locale.strings.call.configurationPageVideoEffectsButtonLabel}
-                  </DefaultButton>
-                }
                 <LocalDeviceSettings
                   {...options}
                   {...localDeviceSettingsHandlers}
@@ -337,6 +327,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   onClickEnableDevicePermission={() => {
                     setIsPermissionsModalDismissed(true);
                   }}
+                  /* @conditional-compile-remove(video-background-effects) */
+                  onVideoEffectsClick={toggleVideoEffectsPane}
                 />
               </>
             )}
