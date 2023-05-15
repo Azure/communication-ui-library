@@ -3,19 +3,12 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
-import {
-  sendBoxStyle,
-  sendButtonStyle,
-  sendIconStyle,
-  sendBoxWrapperStyles,
-  borderAndBoxShadowStyle
-} from './styles/SendBox.styles';
+import { sendButtonStyle, sendIconStyle, sendBoxWrapperStyles, borderAndBoxShadowStyle } from './styles/SendBox.styles';
 import { BaseCustomStyles } from '../types';
 import { useTheme } from '../theming';
 import { useLocale } from '../localization';
 import { useIdentifiers } from '../identifiers';
-import { InputBoxComponent } from './InputBoxComponent';
-import { VoiceOverButton } from './VoiceOverButton';
+import { InputBoxButton, InputBoxComponent } from './InputBoxComponent';
 import { SendBoxErrors } from './SendBoxErrors';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileUploadCards } from './FileUploadCards';
@@ -377,7 +370,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
           textFieldRef={sendTextFieldRef}
           id="sendbox"
-          inputClassName={sendBoxStyle}
           placeholderText={strings.placeholderText}
           textValue={textValue}
           onChange={(_, newValue) => setText(newValue)}
@@ -396,7 +388,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
         >
-          <VoiceOverButton
+          <InputBoxButton
             onRenderIcon={onRenderSendIcon}
             onClick={(e) => {
               if (!textValueOverflow) {
