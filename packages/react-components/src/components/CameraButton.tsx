@@ -9,6 +9,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import {
   ContextualMenuItemType,
+  IButtonProps,
   IContextualMenuItem,
   IContextualMenuItemStyles,
   IContextualMenuStyles
@@ -228,6 +229,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   if (props.onShowVideoEffectsPicker) {
     splitButtonMenuItems.push({
       key: 'effects',
+      'data-ui-id': 'camera-split-button-video-effects',
       text: strings.videoEffectsMenuItemTitle,
       iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
       onClick: () => {
@@ -246,6 +248,10 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       topDivider: true,
       items: splitButtonMenuItems
     }
+  };
+
+  const splitButtonMenuProps: IButtonProps = {
+    className: 'camera-split-button'
   };
 
   return (
@@ -273,6 +279,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         split={props.split ?? props.enableDeviceSelectionMenu}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
+        splitButtonMenuProps={splitButtonMenuProps}
       />
     </>
   );

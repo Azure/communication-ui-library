@@ -140,6 +140,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         verticalAlign="center"
         horizontalAlign="center"
         styles={containerStyles}
+        data-ui-id={`video-effects-item`}
         onClick={disabled ? undefined : () => props.onSelect?.(props.key)}
         onKeyDown={
           disabled
