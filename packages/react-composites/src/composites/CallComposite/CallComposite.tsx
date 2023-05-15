@@ -262,7 +262,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
-          /* @conditional-compile-remove(call-readiness) */
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
           deviceChecks={props.options?.deviceChecks}
