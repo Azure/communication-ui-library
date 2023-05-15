@@ -152,7 +152,7 @@ describe('VideoGallery default layout tests', () => {
     expect(horizontalGalleryTiles.length).toBe(2);
     expect(horizontalGalleryTiles.filter(tileIsVideo).length).toBe(1);
 
-    expect(horizontalGalleryTiles[0].textContent).toBe('RPRemote Screensharing Participant');
+    expect(horizontalGalleryTiles[0].textContent).toBe('Remote Screensharing Participant');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
     expect(horizontalGalleryTiles[1].textContent).toBe('Remote Video Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
@@ -371,9 +371,9 @@ describe('VideoGallery pinned participants tests', () => {
     const horizontalGalleryTiles = getTiles(getHorizontalGallery(container));
 
     expect(horizontalGalleryTiles.length).toBe(2);
-    expect(horizontalGalleryTiles[0].textContent).toBe('R7Remote Participant 7');
+    expect(horizontalGalleryTiles[0].textContent).toBe('Remote Participant 7');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
-    expect(horizontalGalleryTiles[1].textContent).toBe('R6Remote Participant 6');
+    expect(horizontalGalleryTiles[1].textContent).toBe('Remote Participant 6');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(false);
   });
 
@@ -406,9 +406,9 @@ describe('VideoGallery pinned participants tests', () => {
       const gridTiles = getGridTiles(container);
 
       // verify that video tiles in the grid layout are in the same order as the pinned
-      expect(gridTiles[0].textContent).toBe('77');
-      expect(gridTiles[1].textContent).toBe('88');
-      expect(gridTiles[2].textContent).toBe('99');
+      expect(gridTiles[0].textContent).toBe('7');
+      expect(gridTiles[1].textContent).toBe('8');
+      expect(gridTiles[2].textContent).toBe('9');
       expect(gridTiles[3].textContent).toBe('1');
       expect(gridTiles[4].textContent).toBe('2');
 
@@ -501,7 +501,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
 
     expect(verticalGalleryTiles.length).toBe(4);
     expect(verticalGalleryTiles.filter(tileIsVideo).length).toBe(1);
-    expect(verticalGalleryTiles[0].textContent).toBe('RRemote Screen Sharing Participant');
+    expect(verticalGalleryTiles[0].textContent).toBe('Remote Screen Sharing Participant');
     expect(tileIsVideo(verticalGalleryTiles[0])).toBe(false);
     expect(verticalGalleryTiles[1].textContent).toBe('Remote Video Participant');
     expect(tileIsVideo(verticalGalleryTiles[1])).toBe(true);
@@ -536,9 +536,9 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     const verticalGalleryTiles = getTiles(getVerticalGallery(container));
 
     expect(gridTiles.length).toBe(2);
-    expect(gridTiles[0].textContent).toBe('R7Remote Participant 7');
+    expect(gridTiles[0].textContent).toBe('Remote Participant 7');
     expect(tileIsVideo(gridTiles[0])).toBe(false);
-    expect(gridTiles[1].textContent).toBe('R6Remote Participant 6');
+    expect(gridTiles[1].textContent).toBe('Remote Participant 6');
     expect(tileIsVideo(gridTiles[1])).toBe(false);
     expect(verticalGalleryTiles.length).toBe(4);
     expect(verticalGalleryTiles[0].textContent).toBe('Remote Participant 1');
