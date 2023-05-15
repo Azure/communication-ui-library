@@ -146,9 +146,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     setInputTextValue(plainText);
     setTagsValue(tags);
     updateMentionSuggestions([]);
-    console.log('InputBoxComponent: useEffect: textValue: ', textValue);
-    console.log('InputBoxComponent: useEffect:plainText: ', plainText);
-    console.log('InputBoxComponent: useEffect:tags: ', tags);
   }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
@@ -430,7 +427,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     ): void => {
       /* @conditional-compile-remove(mention) */
       if (shouldHandleOnMouseDownDuringSelect && event.currentTarget.selectionStart !== null) {
-        //TODO: don't include begin and end as part of mention selection by mouse click?
         // on select was triggered by mouse down
         const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
@@ -755,20 +751,24 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
     const tag = tags[i];
 
     const [plainTextEndIndex] = getTagCloseTagInfo(tag);
-    if (tag.subTags !== undefined && tag.subTags.length !== 0) {
-      //TODO: add check if we need to check subtags for this tag
-      const selectedTag = findMentionTagForSelection(tag.subTags, selection);
-      if (selectedTag !== undefined) {
-        mentionTag = selectedTag;
-        break;
-      }
-    } else if (
-      tag.tagType === 'msft-mention' &&
+    if (
       tag.plainTextBeginIndex !== undefined &&
       tag.plainTextBeginIndex <= selection &&
       selection <= plainTextEndIndex
     ) {
-      mentionTag = tag;
+      // no need to check if tag doesn't contain selection
+      if (tag.subTags !== undefined && tag.subTags.length !== 0) {
+        const selectedTag = findMentionTagForSelection(tag.subTags, selection);
+        if (selectedTag !== undefined) {
+          mentionTag = selectedTag;
+          break;
+        }
+      } else if (tag.tagType === 'msft-mention') {
+        mentionTag = tag;
+        break;
+      }
+    } else if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
+      // no need to check further as the selection is before the tag
       break;
     }
   }
@@ -884,7 +884,6 @@ const handleMentionTagUpdate = (
     result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff);
 
     if (startIndex < tag.plainTextBeginIndex) {
-      //TODO: SHould be nulified in this case?
       // if the change is before the tag, the selection should start from startIndex
       plainTextSelectionEndIndex = startIndex + change.length;
     } else {
@@ -957,7 +956,6 @@ const updateHTML = (
 
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
-    console.log('tagtype 1', tag.tagType);
     if (tag.plainTextBeginIndex === undefined) {
       continue;
     }
@@ -990,19 +988,6 @@ const updateHTML = (
       }
     }
     const [plainTextEndIndex, closeTagIdx, closeTagLength] = getTagCloseTagInfo(tag);
-
-    console.log(tag.tagType);
-    console.log(
-      'startIndex',
-      startIndex,
-      'tag.plainTextBeginIndex',
-      tag.plainTextBeginIndex,
-      'oldPlainTextEndIndex',
-      oldPlainTextEndIndex,
-      'plainTextEndIndex',
-      plainTextEndIndex
-    );
-    //TODO: need to check that everythign works!
     if (startIndex <= plainTextEndIndex) {
       // change started before the end tag
       if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
@@ -1014,7 +999,6 @@ const updateHTML = (
         // the change is handled; exit
         break;
       } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex <= plainTextEndIndex) {
-        console.log('here');
         // the change is between the tag
         if (isMentionTag) {
           if (change !== '') {
@@ -1064,8 +1048,8 @@ const updateHTML = (
             oldPlainText,
             newPlainText,
             tag.subTags,
-            startIndex - mentionTagLength,
-            oldPlainTextEndIndex - mentionTagLength,
+            startIndex,
+            oldPlainTextEndIndex,
             processedChange,
             mentionTrigger
           );
@@ -1073,15 +1057,13 @@ const updateHTML = (
           changeNewEndIndex = updatedChangeNewEndIndex;
         } else {
           // no subtags
-          //TODO: should remove mentionTagLength
-          console.log('mentionTagLength', mentionTagLength);
-          const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
+          const startChangeDiff = startIndex - tag.plainTextBeginIndex;
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
             processedChange;
           processedChange = '';
           if (oldPlainTextEndIndex < plainTextEndIndex) {
-            const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex - mentionTagLength;
+            const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex;
             lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
           } else if (oldPlainTextEndIndex === plainTextEndIndex) {
             lastProcessedHTMLIndex = closeTagIdx;
@@ -1119,8 +1101,8 @@ const updateHTML = (
             oldPlainText,
             newPlainText,
             tag.subTags,
-            startIndex - mentionTagLength,
-            oldPlainTextEndIndex - mentionTagLength,
+            startIndex,
+            oldPlainTextEndIndex,
             '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
           );
@@ -1176,8 +1158,8 @@ const updateHTML = (
             oldPlainText,
             newPlainText,
             tag.subTags,
-            startIndex - mentionTagLength,
-            oldPlainTextEndIndex - mentionTagLength,
+            startIndex,
+            oldPlainTextEndIndex,
             processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
             mentionTrigger
           );
