@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix bug where error bar overlays with pane",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -59,6 +59,8 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { useIsParticularSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
@@ -142,12 +144,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
-  const callCompositeContainerCSS = useMemo(() => {
+  const callCompositeContainerCSS = useMemo((): React.CSSProperties => {
     return {
       display: isMobileWithActivePane ? 'none' : 'flex',
       minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
       width: '100%',
-      height: '100%'
+      height: '100%',
+      position: 'relative'
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
@@ -166,7 +169,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(video-background-effects) */
   const { openVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, props.mobileView);
-
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
     setShowDrawer(true);
@@ -216,6 +218,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     };
   }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if (useIsParticularSidePaneOpen('videoeffects') && props.errorBarProps) {
+    errorBarProps = {
+      ...props.errorBarProps,
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
+    };
+  }
+
   /* @conditional-compile-remove(close-captions) */
   const isTeamsCall = useSelector(getIsTeamsCall);
   /* @conditional-compile-remove(close-captions) */
