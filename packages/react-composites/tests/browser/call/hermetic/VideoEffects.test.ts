@@ -12,6 +12,7 @@ import {
 } from './fixture';
 import type { MockCallAdapterState } from '../../../common';
 
+/* @conditional-compile-remove(video-background-effects) */
 test.describe('Video background effects tests', async () => {
   test('blur video effect is not enabled when camera if off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
