@@ -142,9 +142,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
-    const [tags, plainText] = textToTagParser(textValue, trigger);
-    setInputTextValue(plainText);
-    setTagsValue(tags);
+    const parsedHTMLData = textToTagParser(textValue, trigger);
+    setInputTextValue(parsedHTMLData.plainText);
+    setTagsValue(parsedHTMLData.tags);
     updateMentionSuggestions([]);
   }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
@@ -200,7 +200,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
       // update html text with updated plain text
-      const [updatedHTML] = updateHTML(
+      const updatedContent = updateHTML(
         textValue,
         oldPlainText,
         newPlainText,
@@ -220,7 +220,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       updateMentionSuggestions([]);
       textFieldRef?.current?.focus();
       setActiveSuggestionIndex(undefined);
-      onChange && onChange(undefined, updatedHTML);
+      onChange && onChange(undefined, updatedContent.updatedHTML);
     },
     [
       textFieldRef,
@@ -452,7 +452,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       } else {
         updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
       }
-      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event
+      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly
     },
     [updateSelectionIndexesWithMentionIfNeeded]
   );
@@ -538,7 +538,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         );
         // get updated html string
         const change = newValue.substring(changeStart, newChangeEnd);
-        const [updatedHTML, updatedChangeNewEndIndex] = updateHTML(
+        const updatedContent = updateHTML(
           htmlTextValue,
           inputTextValue,
           newValue,
@@ -548,11 +548,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           change,
           triggerText
         );
-        result = updatedHTML;
-        if (updatedChangeNewEndIndex !== null) {
-          setCaretIndex(updatedChangeNewEndIndex);
-          setSelectionEndValue(updatedChangeNewEndIndex);
-          setSelectionStartValue(updatedChangeNewEndIndex);
+        result = updatedContent.updatedHTML;
+        if (updatedContent.updatedSelectionIndex !== null) {
+          setCaretIndex(updatedContent.updatedSelectionIndex);
+          setSelectionEndValue(updatedContent.updatedSelectionIndex);
+          setSelectionStartValue(updatedContent.updatedSelectionIndex);
         }
       }
 
@@ -750,11 +750,14 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
 
-    const [plainTextEndIndex] = getTagCloseTagInfo(tag);
-    if (
+    const closingTagInfo = getTagClosingTagInfo(tag);
+    if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
+      // no need to check further as the selection is before the tag
+      break;
+    } else if (
       tag.plainTextBeginIndex !== undefined &&
       tag.plainTextBeginIndex <= selection &&
-      selection <= plainTextEndIndex
+      selection <= closingTagInfo.plainTextEndIndex
     ) {
       // no need to check if tag doesn't contain selection
       if (tag.subTags !== undefined && tag.subTags.length !== 0) {
@@ -765,11 +768,9 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
         }
       } else if (tag.tagType === 'msft-mention') {
         mentionTag = tag;
+        //TODO: move msft-mention to a constant
         break;
       }
-    } else if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
-      // no need to check further as the selection is before the tag
-      break;
     }
   }
   return mentionTag;
@@ -789,8 +790,8 @@ const findNewSelectionIndexForMention = (
 ): number => {
   // check if this is a mention tag and selection should be updated
   if (
-    tag.plainTextBeginIndex === undefined ||
     tag.tagType !== 'msft-mention' ||
+    tag.plainTextBeginIndex === undefined ||
     selection === previousSelection ||
     tag.plainTextEndIndex === undefined
   ) {
@@ -836,9 +837,14 @@ const handleMentionTagUpdate = (
   startIndex: number,
   oldPlainTextEndIndex: number,
   mentionTagLength: number
-): [resultValue: string, updatedChange: string, htmlIndex: number, plainTextSelectionEndIndex: number | null] => {
+): { result: string; updatedChange: string; htmlIndex: number; plainTextSelectionEndIndex: number | null } => {
   if (tag.tagType !== 'msft-mention' || tag.plainTextBeginIndex === undefined) {
-    return ['', processedChange, lastProcessedHTMLIndex, null];
+    return {
+      result: '',
+      updatedChange: processedChange,
+      htmlIndex: lastProcessedHTMLIndex,
+      plainTextSelectionEndIndex: null
+    };
   }
   let result = '';
   let plainTextSelectionEndIndex: number | null = null;
@@ -892,7 +898,7 @@ const handleMentionTagUpdate = (
     lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
     // processed change should not be changed as it should be added after the tag
   }
-  return [result, processedChange, lastProcessedHTMLIndex, plainTextSelectionEndIndex];
+  return { result, updatedChange: processedChange, htmlIndex: lastProcessedHTMLIndex, plainTextSelectionEndIndex };
 };
 
 /* @conditional-compile-remove(mention) */
@@ -901,7 +907,9 @@ const handleMentionTagUpdate = (
  *
  * @private
  */
-const getTagCloseTagInfo = (tag: TagData): [plainTextEndIndex: number, closeTagIdx: number, closeTagLength: number] => {
+const getTagClosingTagInfo = (
+  tag: TagData
+): { plainTextEndIndex: number; closeTagIdx: number; closeTagLength: number } => {
   let plainTextEndIndex = 0;
   let closeTagIdx = 0;
   let closeTagLength = 0;
@@ -917,7 +925,7 @@ const getTagCloseTagInfo = (tag: TagData): [plainTextEndIndex: number, closeTagI
     closeTagIdx = tag.openTagIdx + tag.openTagBody.length;
     closeTagLength = 0;
   }
-  return [plainTextEndIndex, closeTagIdx, closeTagLength];
+  return { plainTextEndIndex, closeTagIdx, closeTagLength };
 };
 
 /* @conditional-compile-remove(mention) */
@@ -934,11 +942,11 @@ const updateHTML = (
   startIndex: number,
   oldPlainTextEndIndex: number,
   change: string,
-  mentionTrigger: string // TODO: add names for returned parameters
-): [string, number | null] => {
+  mentionTrigger: string
+): { updatedHTML: string; updatedSelectionIndex: number | null } => {
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
-    return [newPlainText, null];
+    return { updatedHTML: newPlainText, updatedSelectionIndex: null };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -987,63 +995,65 @@ const updateHTML = (
         // proceed to the next check
       }
     }
-    const [plainTextEndIndex, closeTagIdx, closeTagLength] = getTagCloseTagInfo(tag);
-    if (startIndex <= plainTextEndIndex) {
+    const closingTagInfo = getTagClosingTagInfo(tag);
+    if (startIndex <= closingTagInfo.plainTextEndIndex) {
       // change started before the end tag
-      if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === plainTextEndIndex) {
+      if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === closingTagInfo.plainTextEndIndex) {
         // the change is a tag or starts before the tag
         // tag should be removed, no matter if there are subtags
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
         processedChange = '';
-        lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+        lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
         // the change is handled; exit
         break;
-      } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex <= plainTextEndIndex) {
+      } else if (startIndex >= tag.plainTextBeginIndex && oldPlainTextEndIndex <= closingTagInfo.plainTextEndIndex) {
         // the change is between the tag
         if (isMentionTag) {
           if (change !== '') {
-            if (startIndex !== tag.plainTextBeginIndex && startIndex !== plainTextEndIndex) {
+            if (startIndex !== tag.plainTextBeginIndex && startIndex !== closingTagInfo.plainTextEndIndex) {
               // mention tag should be deleted when user tries to edit it in the middle
               result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
               changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
-              lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+              lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
             } else if (startIndex === tag.plainTextBeginIndex) {
               // non empty change at the beginning of the mention tag to be added before the mention tag
               result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx) + processedChange;
               changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
               lastProcessedHTMLIndex = tag.openTagIdx;
-            } else if (startIndex === plainTextEndIndex) {
+            } else if (startIndex === closingTagInfo.plainTextEndIndex) {
               // non empty change at the end of the mention tag to be added after the mention tag
-              result += htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength) + processedChange;
-              changeNewEndIndex = plainTextEndIndex + processedChange.length;
-              lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+              result +=
+                htmlText.substring(lastProcessedHTMLIndex, closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength) +
+                processedChange;
+              changeNewEndIndex = closingTagInfo.plainTextEndIndex + processedChange.length;
+              lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
             }
             processedChange = '';
           } else {
-            const [resultValue, updatedChange, htmlIndex, plainTextSelectionEndIndex] = handleMentionTagUpdate(
+            const updateMentionTagResult = handleMentionTagUpdate(
               htmlText,
               oldPlainText,
               lastProcessedHTMLIndex,
               processedChange,
               change,
               tag,
-              closeTagIdx,
-              closeTagLength,
-              plainTextEndIndex,
+              closingTagInfo.closeTagIdx,
+              closingTagInfo.closeTagLength,
+              closingTagInfo.plainTextEndIndex,
               startIndex,
               oldPlainTextEndIndex,
               mentionTagLength
             );
-            result += resultValue;
-            changeNewEndIndex = plainTextSelectionEndIndex;
-            processedChange = updatedChange;
-            lastProcessedHTMLIndex = htmlIndex;
+            result += updateMentionTagResult.result;
+            changeNewEndIndex = updateMentionTagResult.plainTextSelectionEndIndex;
+            processedChange = updateMentionTagResult.updatedChange;
+            lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
           }
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
-          lastProcessedHTMLIndex = closeTagIdx;
-          const [content, updatedChangeNewEndIndex] = updateHTML(
+          lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
+          const updatedContent = updateHTML(
             tag.content,
             oldPlainText,
             newPlainText,
@@ -1053,8 +1063,8 @@ const updateHTML = (
             processedChange,
             mentionTrigger
           );
-          result += stringBefore + content;
-          changeNewEndIndex = updatedChangeNewEndIndex;
+          result += stringBefore + updatedContent.updatedHTML;
+          changeNewEndIndex = updatedContent.updatedSelectionIndex;
         } else {
           // no subtags
           const startChangeDiff = startIndex - tag.plainTextBeginIndex;
@@ -1062,41 +1072,41 @@ const updateHTML = (
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff) +
             processedChange;
           processedChange = '';
-          if (oldPlainTextEndIndex < plainTextEndIndex) {
+          if (oldPlainTextEndIndex < closingTagInfo.plainTextEndIndex) {
             const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex;
             lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
-          } else if (oldPlainTextEndIndex === plainTextEndIndex) {
-            lastProcessedHTMLIndex = closeTagIdx;
+          } else if (oldPlainTextEndIndex === closingTagInfo.plainTextEndIndex) {
+            lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
           }
         }
         // the change is handled; exit
         break;
-      } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
+      } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > closingTagInfo.plainTextEndIndex) {
         // the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
-          const [resultValue, , htmlIndex] = handleMentionTagUpdate(
+          const updateMentionTagResult = handleMentionTagUpdate(
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
             '',
             change,
             tag,
-            closeTagIdx,
-            closeTagLength,
-            plainTextEndIndex,
+            closingTagInfo.closeTagIdx,
+            closingTagInfo.closeTagLength,
+            closingTagInfo.plainTextEndIndex,
             startIndex,
             oldPlainTextEndIndex,
             mentionTagLength
           );
-          result += resultValue;
-          lastProcessedHTMLIndex = htmlIndex;
+          result += updateMentionTagResult.result;
+          lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
           // no need to handle plainTextSelectionEndIndex as the change will be added later
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
-          lastProcessedHTMLIndex = closeTagIdx;
-          const [content] = updateHTML(
+          lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
+          const updatedContent = updateHTML(
             tag.content,
             oldPlainText,
             newPlainText,
@@ -1106,54 +1116,54 @@ const updateHTML = (
             '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
           );
-          result += stringBefore + content;
+          result += stringBefore + updatedContent.updatedHTML;
         } else {
           // no subtags
           result += htmlText.substring(
             lastProcessedHTMLIndex,
             tag.openTagIdx + tag.openTagBody.length + startChangeDiff
           );
-          lastProcessedHTMLIndex = closeTagIdx;
+          lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
         }
         // proceed with the next calculations
-      } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
+      } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex > closingTagInfo.plainTextEndIndex) {
         // the change starts before  the tag and finishes after it
         // tag should be removed, no matter if there are subtags
         // no need to save anything between lastProcessedHTMLIndex and closeTagIdx + closeTagLength
-        lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+        lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
         // proceed with the next calculations
-      } else if (startIndex === tag.plainTextBeginIndex && oldPlainTextEndIndex > plainTextEndIndex) {
+      } else if (startIndex === tag.plainTextBeginIndex && oldPlainTextEndIndex > closingTagInfo.plainTextEndIndex) {
         // the change starts in the tag and finishes after it
         // tag should be removed, no matter if there are subtags
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx);
         // processedChange shouldn't be updated as it will be added after the tag
-        lastProcessedHTMLIndex = closeTagIdx + closeTagLength;
+        lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
         // proceed with the next calculations
-      } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < plainTextEndIndex) {
+      } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < closingTagInfo.plainTextEndIndex) {
         // the change  starts before the tag and ends in a tag
         if (isMentionTag) {
-          const [resultValue, , htmlIndex, plainTextSelectionEndIndex] = handleMentionTagUpdate(
+          const updateMentionTagResult = handleMentionTagUpdate(
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
             '', // the part of mention should be just deleted without processedChange update
             change,
             tag,
-            closeTagIdx,
-            closeTagLength,
-            plainTextEndIndex,
+            closingTagInfo.closeTagIdx,
+            closingTagInfo.closeTagLength,
+            closingTagInfo.plainTextEndIndex,
             startIndex,
             oldPlainTextEndIndex,
             mentionTagLength
           );
-          changeNewEndIndex = plainTextSelectionEndIndex;
-          result += resultValue;
-          lastProcessedHTMLIndex = htmlIndex;
+          changeNewEndIndex = updateMentionTagResult.plainTextSelectionEndIndex;
+          result += updateMentionTagResult.result;
+          lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
-          lastProcessedHTMLIndex = closeTagIdx;
-          const [content] = updateHTML(
+          lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
+          const updatedContent = updateHTML(
             tag.content,
             oldPlainText,
             newPlainText,
@@ -1164,36 +1174,41 @@ const updateHTML = (
             mentionTrigger
           );
           processedChange = '';
-          result += stringBefore + content;
+          result += stringBefore + updatedContent.updatedHTML;
         } else {
           // no subtags
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length) + processedChange;
           processedChange = '';
           // oldPlainTextEndIndex already includes mentionTag length
-          const endChangeDiff = plainTextEndIndex - oldPlainTextEndIndex;
+          const endChangeDiff = closingTagInfo.plainTextEndIndex - oldPlainTextEndIndex;
           // as change may be before the end of the tag, we need to add the rest of the tag
-          lastProcessedHTMLIndex = closeTagIdx - endChangeDiff;
+          lastProcessedHTMLIndex = closingTagInfo.closeTagIdx - endChangeDiff;
         }
         // the change is handled; exit
         break;
       }
-      lastProcessedPlainTextTagEndIndex = plainTextEndIndex;
+      lastProcessedPlainTextTagEndIndex = closingTagInfo.plainTextEndIndex;
     }
 
-    if (i === tags.length - 1 && oldPlainTextEndIndex >= plainTextEndIndex) {
+    if (i === tags.length - 1 && oldPlainTextEndIndex >= closingTagInfo.plainTextEndIndex) {
       // the last tag should handle the end of the change if needed
       // oldPlainTextEndIndex already includes mentionTag length
-      const endChangeDiff = oldPlainTextEndIndex - plainTextEndIndex;
-      if (startIndex >= plainTextEndIndex) {
-        const startChangeDiff = startIndex - plainTextEndIndex;
+      const endChangeDiff = oldPlainTextEndIndex - closingTagInfo.plainTextEndIndex;
+      if (startIndex >= closingTagInfo.plainTextEndIndex) {
+        const startChangeDiff = startIndex - closingTagInfo.plainTextEndIndex;
         result +=
-          htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength + startChangeDiff) + processedChange;
+          htmlText.substring(
+            lastProcessedHTMLIndex,
+            closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength + startChangeDiff
+          ) + processedChange;
       } else {
-        result += htmlText.substring(lastProcessedHTMLIndex, closeTagIdx + closeTagLength) + processedChange;
+        result +=
+          htmlText.substring(lastProcessedHTMLIndex, closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength) +
+          processedChange;
       }
       processedChange = '';
-      lastProcessedHTMLIndex = closeTagIdx + closeTagLength + endChangeDiff;
+      lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength + endChangeDiff;
       // the change is handled; exit
       // break is not required here as this is the last element but added for consistency
       break;
@@ -1203,7 +1218,7 @@ const updateHTML = (
     // add the rest of the html string
     result += htmlText.substring(lastProcessedHTMLIndex);
   }
-  return [result, changeNewEndIndex];
+  return { updatedHTML: result, updatedSelectionIndex: changeNewEndIndex };
 };
 
 /* @conditional-compile-remove(mention) */
@@ -1351,7 +1366,7 @@ type HtmlTag = {
  *
  * @returns An array of tags and the plain text representation
  */
-const textToTagParser = (text: string, trigger: string): [TagData[], string] => {
+const textToTagParser = (text: string, trigger: string): { tags: TagData[]; plainText: string } => {
   const tags: TagData[] = []; // Tags passed back to the caller
   const tagParseStack: TagData[] = []; // Local stack to use while parsing
 
@@ -1434,7 +1449,7 @@ const textToTagParser = (text: string, trigger: string): [TagData[], string] => 
     parseIndex = foundHtmlTag.startIdx + foundHtmlTag.content.length;
   } // While parseIndex < text.length loop
 
-  return [tags, plainTextRepresentation];
+  return { tags, plainText: plainTextRepresentation };
 };
 
 /* @conditional-compile-remove(mention) */
