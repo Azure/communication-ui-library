@@ -152,7 +152,7 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
       background: 'transparent',
       border: 'none',
       color: theme.palette.themePrimary,
-      // These needs to be 5px to match the label padding
+      // Top and bottom padding needs to be 5px to match the label padding
       padding: '5px 0.25rem',
       ':hover, :focus': {
         color: theme.palette.themePrimary
