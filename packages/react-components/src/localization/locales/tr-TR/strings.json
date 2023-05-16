@@ -25,6 +25,9 @@
     "uploading": "Karşıya yükleniyor",
     "uploadCompleted": "Karşıya yükleme tamamlandı"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Öneriler"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
     "deliveredTooltipText": "Gönderilen",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Kameranız kapatıldı",
     "onSplitButtonPrimaryActionCamera": "Kamerayı kapat",
     "offSplitButtonPrimaryActionCamera": "Kamerayı aç",
-    "cameraPrimaryActionSplitButtonTitle": "Kamerayı kullan"
+    "cameraPrimaryActionSplitButtonTitle": "Kamerayı kullan",
+    "videoEffectsMenuItemTitle": "Efektler"
   },
   "microphoneButton": {
     "onLabel": "Sesi kapat",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "Aramaya katılınamadı.",
     "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı.",
     "startScreenSharingGeneric": "Ekran paylaşımı başlatılırken bir sorun oluştu.",
-    "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin."
+    "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin.",
+    "unableToStartVideoEffect": "Video efekti uygulanamıyor."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
