@@ -153,20 +153,18 @@ export class MockCallAdapter implements CallAdapter {
 
   blurVideoBackground(): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
-      if (!draft.call) {
-        throw new Error('Call not found');
-      } else if (draft.call.localVideoStreams.length > 0) {
-        draft.call.localVideoStreams = [
-          {
-            source: {
-              deviceType: 'UsbCamera',
-              id: 'FakeLocalCamera',
-              name: 'FakeLocalCamera'
-            },
-            mediaStreamType: 'Video',
-            view: { scalingMode: 'Crop', isMirrored: false, target: createMockHTMLElement() }
-          }
-        ];
+      if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+        draft.devices.unparentedViews[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElement('blur background')
+        };
+      } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+        draft.call.localVideoStreams[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElement('blur background')
+        };
       }
     });
     return Promise.resolve();

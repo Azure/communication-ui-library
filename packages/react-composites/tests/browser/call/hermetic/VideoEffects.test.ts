@@ -45,7 +45,11 @@ test.describe('Video background effects tests', async () => {
     await pageClick(page, dataUiId('camera-split-button-video-effects'));
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-blur-selected-camera-on.png');
+    expect(
+      await stableScreenshot(page, {
+        maskVideos: false
+      })
+    ).toMatchSnapshot('video-effects-side-pane-blur-selected-camera-on.png');
   });
 });
 
