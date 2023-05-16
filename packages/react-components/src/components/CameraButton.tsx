@@ -80,6 +80,11 @@ export interface CameraButtonStrings {
    * Title for primary action section of split button
    */
   cameraPrimaryActionSplitButtonTitle?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Title for video effects menu item
+   */
+  videoEffectsMenuItemTitle?: string;
 }
 
 /**
@@ -223,8 +228,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   if (props.onShowVideoEffectsPicker) {
     splitButtonMenuItems.push({
       key: 'effects',
-      text: 'Effects',
-      title: 'Video Effects',
+      text: strings.videoEffectsMenuItemTitle,
       iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
       onClick: () => {
         if (props.onShowVideoEffectsPicker) {
