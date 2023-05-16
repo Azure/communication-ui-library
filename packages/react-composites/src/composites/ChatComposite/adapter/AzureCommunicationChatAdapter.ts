@@ -369,9 +369,9 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
-    const isValidatedThread = event.threadId === this.chatThreadClient.threadId;
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
 
-    if (!isValidatedThread) {
+    if (!isCurrentChatAdapterThread) {
       return;
     }
 
