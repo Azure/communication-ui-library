@@ -239,9 +239,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      /* @conditional-compile-remove(mention) */
       // caretIndex should be set to undefined when the user is typing
       setCaretIndex(undefined);
       // shouldHandleOnMouseDownDuringSelect should be set to false after the last mouse down event
+      /* @conditional-compile-remove(mention) */
       setShouldHandleOnMouseDownDuringSelect(false);
       // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
       if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
