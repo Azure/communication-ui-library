@@ -132,7 +132,7 @@ test.describe('Captions buttons in call control', () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
-      initialState.call.captionsFeature.isCaptionsFeatureActive = true;
+      initialState.call.captionsFeature = captionsFeatureState;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
