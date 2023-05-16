@@ -15,13 +15,7 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Panel, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { DefaultButton } from '@fluentui/react';
 import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { useTheme } from '@fluentui/react';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -101,8 +95,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
-  const theme = useTheme();
   const deviceState = adapter.getState().devices;
   /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = adapter.getState().environmentInfo;

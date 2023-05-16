@@ -151,14 +151,28 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
     root: {
       background: 'transparent',
       border: 'none',
-      color: theme.palette.blue,
-      padding: '5px 0px',
+      color: theme.palette.themePrimary,
+      // These needs to be 5px to match the label padding
+      padding: '5px 0.25rem',
       ':hover, :focus': {
-        color: theme.palette.blue
+        color: theme.palette.themePrimary
+      },
+      svg: {
+        height: '1rem',
+        width: '1rem'
       }
     },
     rootChecked: {
-      color: theme.palette.blue
+      color: theme.palette.themePrimary
+    },
+    rootHovered: {
+      color: theme.palette.themePrimary
+    },
+    rootPressed: {
+      color: theme.palette.themePrimary
+    },
+    rootFocused: {
+      color: theme.palette.themePrimary
     }
   };
 };

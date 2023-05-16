@@ -25,7 +25,9 @@ import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdo
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
 /* @conditional-compile-remove(call-readiness) */
 import { useHandlers } from '../hooks/useHandlers';
-import { cameraAndVideoEffectsContainerStyleDesktop, effectsButtonStyles } from '../styles/CallConfiguration.styles';
+import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfiguration.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -220,7 +222,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             {
               /* @conditional-compile-remove(video-background-effects) */
               <DefaultButton
-                iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
+                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
                 styles={effectsButtonStyles(theme)}
                 onClick={props.onVideoEffectsClick}
               >
