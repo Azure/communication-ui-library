@@ -40,7 +40,7 @@ test.describe('Video background effects tests in call screen', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-none-selected.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-warning-camera-off.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-warning-camera-off.png');
   });
 
   test('blur video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
@@ -73,7 +73,7 @@ test.describe('Video background effects tests in config screen', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-pane-none-selected.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-warning-camera-off.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-warning-camera-off.png');
   });
 
   test('blur video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {

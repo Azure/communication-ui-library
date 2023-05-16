@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
@@ -250,9 +250,13 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     }
   };
 
-  const splitButtonMenuProps: IButtonProps = {
-    className: 'camera-split-button'
-  };
+  const splitButtonMenuProps: IButtonProps = useMemo(
+    () => ({
+      ...props.splitButtonMenuProps,
+      className: 'camera-split-button'
+    }),
+    [props.splitButtonMenuProps]
+  );
 
   return (
     <>
