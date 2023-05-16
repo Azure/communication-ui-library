@@ -14,7 +14,8 @@ import {
   JoinCallOptions,
   StartCallOptions,
   TeamsMeetingLinkLocator,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  RoomLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -29,7 +30,7 @@ import {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, RoomLocator, PushNotificationData } from '@azure/communication-calling';
+import { GroupChatCallLocator, MeetingLocator, PushNotificationData } from '@azure/communication-calling';
 import {
   CallState,
   CallClientState,
