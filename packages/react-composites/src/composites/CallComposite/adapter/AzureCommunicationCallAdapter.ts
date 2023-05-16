@@ -35,7 +35,12 @@ import {
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import {
+  BackgroundBlurConfig,
+  BackgroundBlurEffect,
+  BackgroundReplacementConfig,
+  BackgroundReplacementEffect
+} from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -69,8 +74,6 @@ import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
-import { startSelectedVideoEffect } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
@@ -542,9 +545,30 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async startCamera(options?: VideoStreamOptions): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       if (!isCameraOn(this.getState())) {
-        await this.handlers.onToggleCamera(options);
+        // First kick off the effect on the local device before starting the camera in the call.
+        // This prevents the effect not being applied for a brief moment when the camera is started.
         /* @conditional-compile-remove(video-background-effects) */
-        await startSelectedVideoEffect(this);
+        {
+          const selectedEffect = this.getState().selectedVideoBackgroundEffect;
+          const videoDeviceInfo = this.getState().devices.selectedCamera || this.getState().devices.cameras[0];
+          if (selectedEffect && videoDeviceInfo) {
+            const stream = new SDKLocalVideoStream(videoDeviceInfo);
+            const effect =
+              selectedEffect?.effectName === 'blur'
+                ? new BackgroundBlurEffect()
+                : selectedEffect?.effectName === 'replacement'
+                ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
+                : undefined;
+
+            if (effect) {
+              await stream.feature(Features.VideoEffects).startEffects(effect);
+            } else {
+              await stream.feature(Features.VideoEffects).stopEffects();
+            }
+          }
+        }
+
+        await this.handlers.onToggleCamera(options);
       }
     });
   }
