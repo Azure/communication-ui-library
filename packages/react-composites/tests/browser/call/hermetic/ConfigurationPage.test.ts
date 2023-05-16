@@ -13,7 +13,6 @@ import {
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallAdapterState } from '../../../common';
-import type { DeviceManagerState } from '@internal/calling-stateful-client';
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
   test('composite pages load completely', async ({ page, serverUrl }) => {
