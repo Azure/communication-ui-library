@@ -369,6 +369,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
+    const isValidatedThread = event.threadId === this.chatThreadClient.threadId;
+
+    if (!isValidatedThread) {
+      return;
+    }
+
     const message = convertEventToChatMessage(event);
     this.emitter.emit('messageReceived', { message });
 
