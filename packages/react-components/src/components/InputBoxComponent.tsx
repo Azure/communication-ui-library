@@ -781,6 +781,32 @@ type ValidatedIndexRangeProps = {
 
 /* @conditional-compile-remove(mention) */
 /**
+ * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead
+ *
+ * @private
+ */
+const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
+  const { min, max, currentValue } = props;
+  let updatedValue = currentValue ?? -1;
+  updatedValue = Math.max(min, updatedValue);
+  updatedValue = Math.min(updatedValue, max);
+  return updatedValue;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
+ * Props for finding a valid index in range.
+ *
+ * @private
+ */
+type ValidatedIndexRangeProps = {
+  min: number;
+  max: number;
+  currentValue?: number;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
  * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead.
  *
  * @private
@@ -1285,7 +1311,12 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
             lastProcessedHTMLIndex,
             processedChange: '', // the part of mention should be just deleted without processedChange update
             change,
+            processedChange: '', // the part of mention should be just deleted without processedChange update
+            change,
             tag,
+            closeTagIdx: closingTagInfo.closeTagIdx,
+            closeTagLength: closingTagInfo.closeTagLength,
+            plainTextEndIndex: closingTagInfo.plainTextEndIndex,
             closeTagIdx: closingTagInfo.closeTagIdx,
             closeTagLength: closingTagInfo.closeTagLength,
             plainTextEndIndex: closingTagInfo.plainTextEndIndex,
