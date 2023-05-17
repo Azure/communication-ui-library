@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import type { CallAdapter, CallAdapterState } from '../../../src';
+import type { CallAdapter, CallAdapterState, SelectedVideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
@@ -152,7 +152,22 @@ export class MockCallAdapter implements CallAdapter {
   }
 
   blurVideoBackground(): Promise<void> {
-    throw new Error('blurVideoBackground not implemented.');
+    this.modifyState((draft: CallAdapterState) => {
+      if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+        draft.devices.unparentedViews[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElement('blur background')
+        };
+      } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+        draft.call.localVideoStreams[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElement('blur background')
+        };
+      }
+    });
+    return Promise.resolve();
   }
 
   replaceVideoBackground(): Promise<void> {
@@ -167,8 +182,10 @@ export class MockCallAdapter implements CallAdapter {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
 
-  updateSelectedVideoBackgroundEffect(): void {
-    throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+    this.modifyState((draft: CallAdapterState) => {
+      draft.selectedVideoBackgroundEffect = selectedVideoBackground;
+    });
   }
 }
 
