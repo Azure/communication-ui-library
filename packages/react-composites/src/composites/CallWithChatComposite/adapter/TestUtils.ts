@@ -266,9 +266,8 @@ export class MockCallAgent implements CallAgent {
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   join(meetingLocator: any, options?: any): Call {
     throw Error('Method not implemented.');
   }
