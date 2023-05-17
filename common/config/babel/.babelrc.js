@@ -46,6 +46,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'teams-identity-support',
         // Chat teams interop to display images in chat messages
         'teams-inline-images',
+        // Chat teams interop to display file attachments in chat messages
+        'teams-file-attachments',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',

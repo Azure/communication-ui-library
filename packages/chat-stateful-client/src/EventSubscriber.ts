@@ -45,7 +45,87 @@ export class EventSubscriber {
       content: {
         message: event.message,
         /* @conditional-compile-remove(teams-inline-images) */
-        attachments: event.attachments
+        attachments: [
+          { "id": "3faba733-f8d2-4d76-8089-4dfe39358b33",
+            "attachmentType": "file",
+            "contentType": "bmp",
+            "name": "example.bmp",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=ETOnqz_S-HZNgIlN_jk1izMB3Td8THUA6HbZMQ_IDPg4bw",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:i:/g/personal/insravan_adatum_biz/ETOnqz_S-HZNgIlN_jk1izMB3Td8THUA6HbZMQ_IDPg4bw"
+      
+          },
+          {
+            "id": "ef2f7cbd-2ab2-42d6-a84f-1d2c544e8a51",
+            "attachmentType": "file",
+            "contentType": "ddl",
+            "name": "example.ddl",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=Eb18L--yKtZCqE8dLFROilEBvOjAc723Ut0aVDojx2aYuQ",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:u:/g/personal/insravan_adatum_biz/Eb18L--yKtZCqE8dLFROilEBvOjAc723Ut0aVDojx2aYuQ"
+          },
+          {
+            "id": "4c7c9921-857e-47cd-bec3-1d43375b90a8",
+            "attachmentType": "file",
+            "contentType": "dmg",
+            "name": "example.dmg",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=ESGZfEx-hc1HvsMdQzdbkKgBIR56lkGwiuvCny0NCNLr5A",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:u:/g/personal/insravan_adatum_biz/ESGZfEx-hc1HvsMdQzdbkKgBIR56lkGwiuvCny0NCNLr5A"
+          },
+          {
+            "id": "7fa0665e-e93e-4530-9432-3386dfc43d0b",
+            "attachmentType": "file",
+            "contentType": "docx",
+            "name": "example.docx",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=EV5moH8-6TBFlDIzht_EPQsBj8R4bLcouLkCMViaH4DJ6g",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:w:/g/personal/insravan_adatum_biz/EV5moH8-6TBFlDIzht_EPQsBj8R4bLcouLkCMViaH4DJ6g"
+          },
+          {
+            "id": "cd83b0ef-c771-4910-9fc9-fa56b6c36001",
+            "attachmentType": "file",
+            "contentType": "exe",
+            "name": "example.exe",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=Ee-wg81xxxBJn8n6VrbDYAEBGYnz9-KgEa4sj_G2uLA5MQ",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:u:/g/personal/insravan_adatum_biz/Ee-wg81xxxBJn8n6VrbDYAEBGYnz9-KgEa4sj_G2uLA5MQ"
+          },
+          {
+            "id": "5bfc1f90-ce24-42bd-a8c6-26dc709ce88b",
+            "attachmentType": "file",
+            "contentType": "ico",
+            "name": "example.ico",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=EZAf_Fskzr1CqMYm3HCc6IsBJZY9mp3a43s4UKdBORUiuA",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:i:/g/personal/insravan_adatum_biz/EZAf_Fskzr1CqMYm3HCc6IsBJZY9mp3a43s4UKdBORUiuA"
+          },
+          {
+            "id": "c80af5f1-8c11-48fc-8305-65dbebf78230",
+            "attachmentType": "file",
+            "contentType": "java",
+            "name": "example.java",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=EfH1CsgRjPxIgwVl2-v3gjABdlg1DKPU2tq1HvQBvVyBsQ",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:u:/g/personal/insravan_adatum_biz/EfH1CsgRjPxIgwVl2-v3gjABdlg1DKPU2tq1HvQBvVyBsQ"
+          },
+          {
+            "id": "0-wus-d10-34853c12a29c886ef8fc12608a8b2070",
+            "attachmentType": "teamsImage",
+            "contentType": "jpg",
+            "name": "example.jpg",
+            "url": "https://global.chat.ppe.communication.microsoft.com/chat/threads/19:792QHxHUgR5PHsiVOqGUlkGWnvqL3FEwoiYS_bPbGH01@thread.v2/messages/1683677350504/teamsInterop/images/0-wus-d10-34853c12a29c886ef8fc12608a8b2070/views/original?api-version=2023-04-01-preview",
+            "previewUrl": "https://global.chat.ppe.communication.microsoft.com/chat/threads/19:792QHxHUgR5PHsiVOqGUlkGWnvqL3FEwoiYS_bPbGH01@thread.v2/messages/1683677350504/teamsInterop/images/0-wus-d10-34853c12a29c886ef8fc12608a8b2070/views/small?api-version=2023-04-01-preview"
+          },
+          {
+            "id": "764e04cc-e153-49f6-9cfd-4e197186dcd5",
+            "attachmentType": "file",
+            "contentType": "js",
+            "name": "example.js",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=EcwETnZT4fZJnP1OGXGG3NUB7Bk1wcwIgq3NwNvxhGboIw",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:u:/g/personal/insravan_adatum_biz/EcwETnZT4fZJnP1OGXGG3NUB7Bk1wcwIgq3NwNvxhGboIw"
+          },
+          {
+            "id": "381bc9bc-2332-498a-8b96-9afbbba68335",
+            "attachmentType": "file",
+            "contentType": "json",
+            "name": "example.json",
+            "url": "https://adatumbiz-my.sharepoint.com/personal/insravan_adatum_biz/_layouts/download.aspx?share=EbzJGzgyI4pJi5aa-7umgzUB_DxSz_bcpW7rp1hJ4am7yg",
+            "previewUrl": "https://adatumbiz-my.sharepoint.com/:u:/g/personal/insravan_adatum_biz/EbzJGzgyI4pJi5aa-7umgzUB_DxSz_bcpW7rp1hJ4am7yg"
+          }]
       },
       type: this.convertEventType(event.type),
       sender: event.sender,

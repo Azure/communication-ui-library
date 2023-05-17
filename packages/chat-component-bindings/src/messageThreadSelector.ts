@@ -73,8 +73,8 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
-/* @conditional-compile-remove(teams-inline-images) */
-const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+/* @conditional-compile-remove(teams-inline-images) @conditional-compile-remove(teams-file-attachments) */
+const extractTeamsAttachedFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
   return attachments.map((attachment) => ({
     attachmentType: attachment.attachmentType,
     id: attachment.id,
@@ -96,7 +96,8 @@ const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] =>
 
   /* @conditional-compile-remove(teams-inline-images) */
   if (message.content?.attachments) {
-    fileMetadata = fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
+    fileMetadata = fileMetadata.concat(extractTeamsAttachedFilesMetadata(message.content?.attachments));
+    console.log('fileMetadata', fileMetadata);
   }
 
   return fileMetadata;
