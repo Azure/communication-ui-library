@@ -236,7 +236,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       text: props.strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
       onItemClick: props.onPeopleButtonClicked,
-      disabled: isDisabled(drawerSelectionOptions.peopleButton)
+      disabled: isDisabled(drawerSelectionOptions.peopleButton) || props.disableButtonsForHoldScreen
     });
   }
 
