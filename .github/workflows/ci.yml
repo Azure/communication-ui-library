@@ -123,6 +123,61 @@ jobs:
           path: |
             packages/communication-react/temp/communication-react.api.json
 
+  in-progress-feature-validation:
+    needs: get_matrix
+    name: Check if in progress feature can be removed separately
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for beta-release build
+        id: switch-flavor
+        run: |
+          rush switch-flavor:beta-release
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
+      # Builds
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      # Type check test folder
+      # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      - name: Type check test folder
+        if: ${{ matrix.flavor == 'beta' }}
+        run: cd packages/react-composites && rushx tsc:e2e
+      # Tests
+      - name: Test Packages
+        run: rush test -t @azure/communication-react
+      # Upload azure-communication api.md files for easy access
+      - name: Upload communication-react api files
+        uses: actions/upload-artifact@v3
+        with:
+          name: communication-react.beta-release.api.json
+          path: |
+            packages/communication-react/temp/communication-react.api.json
+
   call_composite_automation_test:
     needs: get_matrix
     name: Call Composite automation test
