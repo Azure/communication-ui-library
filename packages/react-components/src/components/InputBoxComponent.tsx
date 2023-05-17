@@ -39,7 +39,10 @@ import { MentionLookupOptions, _MentionPopover, Mention } from './MentionPopover
 /* @conditional-compile-remove(mention) */
 import { useDebouncedCallback } from 'use-debounce';
 /* @conditional-compile-remove(mention) */
-const defaultMentionTrigger = '@';
+const DEFAULT_MENTION_TRIGGER = '@';
+/* @conditional-compile-remove(mention) */
+const MENTION_TAG_NAME = 'msft-mention';
+
 /**
  * @private
  */
@@ -124,7 +127,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Index of the previous selection end in the text field
   const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
-  // Boolean value to check if on mouse down event should be handled during select as selection range for onMouseDown event is not updated yet and the selection range for mouse click/taps will be updated in onSelect event if needed.
+  // Boolean value to check if onMouseDown event should be handled during select as selection range for onMouseDown event is not updated yet and the selection range for mouse click/taps will be updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
 
   /* @conditional-compile-remove(mention) */
@@ -137,6 +140,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const localeStrings = useLocale().strings;
 
   /* @conditional-compile-remove(mention) */
+  // Set mention suggestions
   const updateMentionSuggestions = useCallback(
     (suggestions: Mention[]) => {
       setMentionSuggestions(suggestions);
@@ -147,7 +151,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
-    const trigger = mentionLookupOptions?.trigger || defaultMentionTrigger;
+    const trigger = mentionLookupOptions?.trigger || DEFAULT_MENTION_TRIGGER;
     const parsedHTMLData = textToTagParser(textValue, trigger);
     setInputTextValue(parsedHTMLData.plainText);
     setTagsValue(parsedHTMLData.tags);
@@ -167,11 +171,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (caretIndex === undefined || textFieldRef === undefined || textFieldRef?.current === undefined) {
       return;
     }
-    let updatedCaretIndex = caretIndex;
-    updatedCaretIndex = getValidatedIndexInRange({
+    // get validated caret index between 0 and inputTextValue.length otherwise caret will be set to incorrect index
+    const updatedCaretIndex = getValidatedIndexInRange({
       min: 0,
       max: inputTextValue.length,
-      currentValue: updatedCaretIndex
+      currentValue: caretIndex
     });
     textFieldRef?.current?.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
     setSelectionStartValue(updatedCaretIndex);
@@ -207,7 +211,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       // update plain text with the mention html text
       const newPlainText =
         inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
-      const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
+      const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
       const updatedContent = updateHTML({
         htmlText: textValue,
@@ -221,12 +225,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       });
       const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
       const newCaretIndex = currentTriggerStartIndex + displayName.length + triggerText.length;
-      // Move the caret in the text field to the end of the mention plain text
+      // move the caret in the text field to the end of the mention plain text
       setCaretIndex(newCaretIndex);
       setSelectionEndValue(newCaretIndex);
       setSelectionStartValue(newCaretIndex);
       setCurrentTriggerStartIndex(-1);
       updateMentionSuggestions([]);
+      // set focus back to text field
       textFieldRef?.current?.focus();
       setActiveSuggestionIndex(undefined);
       onChange && onChange(undefined, updatedContent.updatedHTML);
@@ -339,6 +344,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, [debouncedQueryUpdate]);
 
   /* @conditional-compile-remove(mention) */
+  // Update selections index in mention to navigate by words
   const updateSelectionIndexesWithMentionIfNeeded = useCallback(
     (
       event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -356,7 +362,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       ) {
         // just a caret movement/usual typing or deleting
         const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-        // don't include boundary cases to show correct selection, otherwise it will show selection for 1 character earlier than mention
+        // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
         if (
           mentionTag !== undefined &&
           mentionTag.plainTextBeginIndex !== undefined &&
@@ -378,7 +384,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
           // the selection start is changed
           const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-          // don't include boundary cases to show correct selection, otherwise it will show selection for 1 character earlier than mention
+          // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
           if (
             mentionTag !== undefined &&
             mentionTag.plainTextBeginIndex !== undefined &&
@@ -396,7 +402,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
           // the selection end is changed
           const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
-          // don't include boundary cases to show correct selection, otherwise it will show selection for 1 character earlier than mention
+          // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
           if (
             mentionTag !== undefined &&
             mentionTag.plainTextBeginIndex !== undefined &&
@@ -463,6 +469,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           setSelectionEndValue(event.currentTarget.selectionEnd);
         }
       } else {
+        // selection was changed by keyboard
         updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
       }
       // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly (because of setSelectionRange calls or rerender)
@@ -487,10 +494,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (event.currentTarget === null) {
         return;
       }
-      // handle backspace change (onSelect is not called for backspace and caret position is outdated)
+      // handle backspace change
+      // onSelect is not called for backspace as selection is not changed and local caret index is outdated
       setCaretIndex(undefined);
       const newValue = updatedValue ?? '';
-      const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
+      const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
 
       const newTextLength = newValue.length;
       // updating indexes to set between 0 and text length, otherwise selectionRange won't be set correctly
@@ -554,10 +562,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       let result = '';
       if (tagsValue.length === 0) {
-        // no tags in the string, htmlTextValue is a string
+        // no tags in the string, newValue is a result string
         result = newValue;
       } else {
         // there are tags in the text value, htmlTextValue is html string
+        // find diff between old and new text
         const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
           oldText: inputTextValue,
           newText: newValue,
@@ -566,8 +575,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           currentSelectionStart: currentSelectionStartValue,
           currentSelectionEnd: currentSelectionEndValue
         });
-        // get updated html string
         const change = newValue.substring(changeStart, newChangeEnd);
+        // get updated html string
         const updatedContent = updateHTML({
           htmlText: htmlTextValue,
           oldPlainText: inputTextValue,
@@ -579,6 +588,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           mentionTrigger: triggerText
         });
         result = updatedContent.updatedHTML;
+        // update caret index if needed
         if (updatedContent.updatedSelectionIndex !== null) {
           setCaretIndex(updatedContent.updatedSelectionIndex);
           setSelectionEndValue(updatedContent.updatedSelectionIndex);
@@ -653,6 +663,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           }}
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
+            // update selection if needed
             if (caretIndex !== undefined) {
               setCaretIndex(undefined);
               // sometimes setting selectionRage in effect for updating caretIndex doesn't work as expected and onSelect should handle this case
@@ -674,19 +685,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           onMouseDown={() => {
             // as events order is onMouseDown -> onSelect -> onClick
             // onClick and onMouseDown can't handle clicking on mention event because
+            // onMouseDown doesn't have correct selectionRange yet and
             // onClick already has wrong range as it's called after onSelect that updates the selection range
-            // onMouseDown doesn't have correct selectionRange yet
             // so we need to handle onMouseDown to prevent onSelect default behavior
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
           /* @conditional-compile-remove(mention) */
           onTouchStart={() => {
             // see onMouseDown for more details
-            /* @conditional-compile-remove(mention) */
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
           /* @conditional-compile-remove(mention) */
           onBlur={() => {
+            // setup all flags to default values when text field loses focus
             setShouldHandleOnMouseDownDuringSelect(false);
             setCaretIndex(undefined);
             setSelectionStartValue(null);
@@ -770,9 +781,11 @@ type ValidatedIndexRangeProps = {
 
 /* @conditional-compile-remove(mention) */
 /**
- * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead
+ * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead.
  *
  * @private
+ * @param props - Props for finding a valid index in range.
+ * @returns Valid index in the range.
  */
 const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
   const { min, max, currentValue } = props;
@@ -784,9 +797,12 @@ const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
 
 /* @conditional-compile-remove(mention) */
 /**
- * Find mention tag if selection is inside of it
+ * Find mention tag for selection if exists.
  *
  * @private
+ * @param tags - Existing list of tags.
+ * @param selection - Selection index.
+ * @returns Mention tag if exists, otherwise undefined.
  */
 const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
   let mentionTag: TagData | undefined = undefined;
@@ -809,9 +825,8 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
           mentionTag = selectedTag;
           break;
         }
-      } else if (tag.tagType === 'msft-mention') {
+      } else if (tag.tagType === MENTION_TAG_NAME) {
         mentionTag = tag;
-        //TODO: move msft-mention to a constant
         break;
       }
     }
@@ -828,23 +843,25 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
 type NewSelectionIndexForMentionProps = {
   tag: TagData;
   textValue: string;
+  // current selection index
   selection: number;
+  // previous selection index
   previousSelection: number;
 };
 
 /* @conditional-compile-remove(mention) */
 /**
- * Find a new the selection index
+ * Find a new the selection index.
  *
  * @private
- * @param props Props for finding new selection index for mention
- * @returns New selection index if it is inside of a mention tag, otherwise the current selection
+ * @param props - Props for finding new selection index for mention.
+ * @returns New selection index if it is inside of a mention tag, otherwise the current selection.
  */
 const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps): number => {
   const { tag, textValue, selection, previousSelection } = props;
   // check if this is a mention tag and selection should be updated
   if (
-    tag.tagType !== 'msft-mention' ||
+    tag.tagType !== MENTION_TAG_NAME ||
     tag.plainTextBeginIndex === undefined ||
     selection === previousSelection ||
     tag.plainTextEndIndex === undefined
@@ -853,14 +870,14 @@ const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps
   }
   let spaceIndex = 0;
   if (selection <= previousSelection) {
-    // the cursor is moved to the left
+    // the cursor is moved to the left, find the last index before the cursor
     spaceIndex = textValue.lastIndexOf(' ', selection ?? 0);
     if (spaceIndex === -1) {
       // no space before the selection, use the beginning of the tag
       spaceIndex = tag.plainTextBeginIndex;
     }
   } else {
-    // the cursor is moved to the right
+    // the cursor is moved to the right, find the fist index after the cursor
     spaceIndex = textValue.indexOf(' ', selection ?? 0);
     if (spaceIndex === -1) {
       // no space after the selection, use the end of the tag
@@ -911,6 +928,8 @@ type MentionTagUpdateResult = {
  * Handle mention tag edit and by word deleting
  *
  * @private
+ * @param props - Props for mention update HTML function.
+ * @returns Updated texts and indexes.
  */
 const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateResult => {
   const {
@@ -927,7 +946,8 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
   } = props;
   let processedChange = props.processedChange;
   let lastProcessedHTMLIndex = props.lastProcessedHTMLIndex;
-  if (tag.tagType !== 'msft-mention' || tag.plainTextBeginIndex === undefined) {
+  if (tag.tagType !== MENTION_TAG_NAME || tag.plainTextBeginIndex === undefined) {
+    // not a mention tag
     return {
       result: '',
       updatedChange: processedChange,
@@ -956,9 +976,11 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
   isSpaceLengthHandled = true;
 
   if (rangeStart === -1 || rangeStart === undefined || rangeStart < tag.plainTextBeginIndex) {
+    // rangeStart should be at least equal tag.plainTextBeginIndex
     rangeStart = tag.plainTextBeginIndex;
   }
   if (rangeEnd > plainTextEndIndex) {
+    // rangeEnd should be at most equal plainTextEndIndex
     rangeEnd = plainTextEndIndex;
   }
   if (rangeStart === tag.plainTextBeginIndex && rangeEnd === plainTextEndIndex) {
@@ -979,9 +1001,10 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
     result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length + startChangeDiff);
 
     if (startIndex < tag.plainTextBeginIndex) {
-      // if the change is before the tag, the selection should start from startIndex
+      // if the change is before the tag, the selection should start from startIndex (rangeStart will be equal to tag.plainTextBeginIndex)
       plainTextSelectionEndIndex = startIndex + change.length;
     } else {
+      // if the change is inside the tag, the selection should start with rangeStart
       plainTextSelectionEndIndex = rangeStart + processedChange.length;
     }
     lastProcessedHTMLIndex = tag.openTagIdx + tag.openTagBody.length + endChangeDiff;
@@ -992,7 +1015,7 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
 
 /* @conditional-compile-remove(mention) */
 /**
- * Get close tag information if exists otherwise return information as for self closing tag
+ * Get closing tag information
  *
  * @private
  */
@@ -1004,9 +1027,11 @@ type ClosingTagInfoResult = {
 
 /* @conditional-compile-remove(mention) */
 /**
- * Get close tag information if exists otherwise return information as for self closing tag
+ * Get closing tag information if exists otherwise return information as for self closing tag
  *
  * @private
+ * @param tag - Tag data.
+ * @returns Closing tag information for the provided tag.
  */
 const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
   let plainTextEndIndex = 0;
@@ -1049,6 +1074,8 @@ type UpdateHTMLProps = {
  * Go through the text and update it with the changed text
  *
  * @private
+ * @param props - Props for update HTML function.
+ * @returns Updated HTML and selection index if the selection index should be set.
  */
 const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | null } => {
   const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
@@ -1078,10 +1105,10 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
     }
     // all plain text indexes includes trigger length for the mention that shouldn't be included in
     // htmlText.substring because html strings don't include the trigger
-    // mentionTagLength will be set only for 'msft-mention', otherwise should be 0
+    // mentionTagLength will be set only for mention tag, otherwise should be 0
     let mentionTagLength = 0;
     let isMentionTag = false;
-    if (tag.tagType === 'msft-mention') {
+    if (tag.tagType === MENTION_TAG_NAME) {
       mentionTagLength = mentionTrigger.length;
       isMentionTag = true;
     }
@@ -1251,6 +1278,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < closingTagInfo.plainTextEndIndex) {
         // the change  starts before the tag and ends in a tag
         if (isMentionTag) {
+          // mention tag
           const updateMentionTagResult = handleMentionTagUpdate({
             htmlText,
             oldPlainText,
@@ -1367,8 +1395,9 @@ type DiffIndexesResult = {
 /**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
- * @returns change start index, old end index and new end index. The old and new end indexes are exclusive.
  * @private
+ * @param props - Props for finding stings diff indexes function.
+ * @returns Indexes for change start and ends in new and old texts. The old and new end indexes are exclusive.
  */
 const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
   const { oldText, newText, previousSelectionStart, previousSelectionEnd, currentSelectionStart, currentSelectionEnd } =
@@ -1455,14 +1484,31 @@ const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
 };
 
 /* @conditional-compile-remove(mention) */
+/**
+ * Get the html string for the mention suggestion.
+ *
+ * @private
+ * @param suggestion - The mention suggestion.
+ * @param localeStrings - The locale strings.
+ * @returns The html string for the mention suggestion.
+ */
 const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
   const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
-  return '<msft-mention' + idHTML + displayTextHTML + '>' + displayText + '</msft-mention>';
+  return '<' + MENTION_TAG_NAME + idHTML + displayTextHTML + '>' + displayText + '</' + MENTION_TAG_NAME + '>';
 };
 
 /* @conditional-compile-remove(mention) */
+/**
+ * Get display name for the mention suggestion.
+ *
+ * @private
+ *
+ * @param suggestion - The mention suggestion.
+ * @param localeStrings - The locale strings.
+ * @returns The display name for the mention suggestion or display name placeholder if display name is empty.
+ */
 const getDisplayNameForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
   return suggestion.displayText !== '' ? suggestion.displayText : displayNamePlaceholder ?? '';
@@ -1492,8 +1538,9 @@ type HtmlTag = {
 /* @conditional-compile-remove(mention) */
 /**
  * Parse the text and return the tags and the plain text in one go
+ * @private
  * @param text - The text to parse for HTML tags
- * @param trigger The trigger to show for the msft-mention tag in plain text
+ * @param trigger The trigger to show for the mention tag in plain text
  *
  * @returns An array of tags and the plain text representation
  */
@@ -1545,7 +1592,7 @@ const textToTagParser = (text: string, trigger: string): { tags: TagData[]; plai
         );
 
         // Insert the plain text pieces for the sub tags
-        if (currentOpenTag.tagType === 'msft-mention') {
+        if (currentOpenTag.tagType === MENTION_TAG_NAME) {
           plainTextRepresentation =
             plainTextRepresentation.slice(0, currentOpenTag.plainTextBeginIndex) +
             trigger +
