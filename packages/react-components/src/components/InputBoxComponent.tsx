@@ -781,32 +781,6 @@ type ValidatedIndexRangeProps = {
 
 /* @conditional-compile-remove(mention) */
 /**
- * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead
- *
- * @private
- */
-const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
-  const { min, max, currentValue } = props;
-  let updatedValue = currentValue ?? -1;
-  updatedValue = Math.max(min, updatedValue);
-  updatedValue = Math.min(updatedValue, max);
-  return updatedValue;
-};
-
-/* @conditional-compile-remove(mention) */
-/**
- * Props for finding a valid index in range.
- *
- * @private
- */
-type ValidatedIndexRangeProps = {
-  min: number;
-  max: number;
-  currentValue?: number;
-};
-
-/* @conditional-compile-remove(mention) */
-/**
  * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead.
  *
  * @private
