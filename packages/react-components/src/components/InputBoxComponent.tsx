@@ -118,10 +118,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   const [tagsValue, setTagsValue] = useState<TagData[]>([]);
   /* @conditional-compile-remove(mention) */
+  // Index of the previous selection start in the text field
   const [selectionStartValue, setSelectionStartValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
+  // Index of the previous selection end in the text field
   const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
+  // Boolean value to check if on mouse down event should be handled during select as selection range for onMouseDown event is not updated yet and the selection range for mouse click/taps will be updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
 
   /* @conditional-compile-remove(mention) */
@@ -162,8 +165,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return;
     }
     let updatedCaretIndex = caretIndex;
-    updatedCaretIndex = Math.max(0, updatedCaretIndex);
-    updatedCaretIndex = Math.min(inputTextValue.length, updatedCaretIndex);
+    updatedCaretIndex = getValidatedIndexInRange({
+      min: 0,
+      max: inputTextValue.length,
+      currentValue: updatedCaretIndex
+    });
     textFieldRef?.current?.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
     setSelectionStartValue(updatedCaretIndex);
     setSelectionEndValue(updatedCaretIndex);
@@ -200,16 +206,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
       // update html text with updated plain text
-      const updatedContent = updateHTML(
-        textValue,
+      const updatedContent = updateHTML({
+        htmlText: textValue,
         oldPlainText,
         newPlainText,
-        tagsValue,
-        currentTriggerStartIndex,
-        selectionEnd,
-        mention,
-        triggerText
-      );
+        tags: tagsValue,
+        startIndex: currentTriggerStartIndex,
+        oldPlainTextEndIndex: selectionEnd,
+        change: mention,
+        mentionTrigger: triggerText
+      });
       const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
       const newCaretIndex = currentTriggerStartIndex + displayName.length + triggerText.length;
       // Move the caret in the text field to the end of the mention plain text
@@ -242,7 +248,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       /* @conditional-compile-remove(mention) */
       // caretIndex should be set to undefined when the user is typing
       setCaretIndex(undefined);
-      // shouldHandleOnMouseDownDuringSelect should be set to false after the last mouse down event
+      // shouldHandleOnMouseDownDuringSelect should be set to false after the last mouse down event.
+      // it shouldn't be updated in onMouseUp
+      // as onMouseUp can be triggered before or after onSelect event
+      // because its order depends on mouse events not selection.
       /* @conditional-compile-remove(mention) */
       setShouldHandleOnMouseDownDuringSelect(false);
       // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
@@ -352,13 +361,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           event.currentTarget.selectionStart < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
         ) {
           // get updated selection index
-          const newSelectionIndex = findNewSelectionIndexForMention(
-            mentionTag,
-            inputTextValue,
-            event.currentTarget.selectionStart,
-            selectionStartValue ?? inputTextValue.length
-          );
-
+          const newSelectionIndex = findNewSelectionIndexForMention({
+            tag: mentionTag,
+            textValue: inputTextValue,
+            selection: event.currentTarget.selectionStart,
+            previousSelection: selectionStartValue ?? inputTextValue.length
+          });
           updatedStartIndex = newSelectionIndex;
           updatedEndIndex = newSelectionIndex;
         }
@@ -374,12 +382,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             event.currentTarget.selectionStart > mentionTag.plainTextBeginIndex &&
             event.currentTarget.selectionStart < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
           ) {
-            updatedStartIndex = findNewSelectionIndexForMention(
-              mentionTag,
-              inputTextValue,
-              event.currentTarget.selectionStart,
-              selectionStartValue ?? inputTextValue.length
-            );
+            updatedStartIndex = findNewSelectionIndexForMention({
+              tag: mentionTag,
+              textValue: inputTextValue,
+              selection: event.currentTarget.selectionStart,
+              previousSelection: selectionStartValue ?? inputTextValue.length
+            });
           }
         }
         if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
@@ -392,12 +400,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             event.currentTarget.selectionEnd > mentionTag.plainTextBeginIndex &&
             event.currentTarget.selectionEnd < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
           ) {
-            updatedEndIndex = findNewSelectionIndexForMention(
-              mentionTag,
-              inputTextValue,
-              event.currentTarget.selectionEnd,
-              selectionEndValue ?? inputTextValue.length
-            );
+            updatedEndIndex = findNewSelectionIndexForMention({
+              tag: mentionTag,
+              textValue: inputTextValue,
+              selection: event.currentTarget.selectionEnd,
+              previousSelection: selectionEndValue ?? inputTextValue.length
+            });
           }
         }
       }
@@ -454,7 +462,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       } else {
         updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
       }
-      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly
+      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly (because of setSelectionRange calls or rerender)
     },
     [updateSelectionIndexesWithMentionIfNeeded]
   );
@@ -482,10 +490,27 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       const triggerText = mentionLookupOptions?.trigger ?? defaultMentionTrigger;
 
       const newTextLength = newValue.length;
-      const currentSelectionEndValue = getValidatedIndex(0, newTextLength, currentSelectionEnd);
-      const currentSelectionStartValue = getValidatedIndex(0, newTextLength, currentSelectionStart);
-      const previousSelectionStartValue = getValidatedIndex(0, inputTextValue.length, previousSelectionStart);
-      const previousSelectionEndValue = getValidatedIndex(0, inputTextValue.length, previousSelectionEnd);
+      // updating indexes to set between 0 and text length, otherwise selectionRange won't be set correctly
+      const currentSelectionEndValue = getValidatedIndexInRange({
+        min: 0,
+        max: newTextLength,
+        currentValue: currentSelectionEnd
+      });
+      const currentSelectionStartValue = getValidatedIndexInRange({
+        min: 0,
+        max: newTextLength,
+        currentValue: currentSelectionStart
+      });
+      const previousSelectionStartValue = getValidatedIndexInRange({
+        min: 0,
+        max: inputTextValue.length,
+        currentValue: previousSelectionStart
+      });
+      const previousSelectionEndValue = getValidatedIndexInRange({
+        min: 0,
+        max: inputTextValue.length,
+        currentValue: previousSelectionEnd
+      });
 
       // If we are enabled for lookups,
       if (mentionLookupOptions !== undefined) {
@@ -526,30 +551,30 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       let result = '';
       if (tagsValue.length === 0) {
-        // no tags in the string, htmlTextValue is a sting
+        // no tags in the string, htmlTextValue is a string
         result = newValue;
       } else {
         // there are tags in the text value, htmlTextValue is html string
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
-          inputTextValue,
-          newValue,
-          previousSelectionStartValue,
-          previousSelectionEndValue,
-          currentSelectionStartValue,
-          currentSelectionEndValue
-        );
+        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
+          oldText: inputTextValue,
+          newText: newValue,
+          previousSelectionStart: previousSelectionStartValue,
+          previousSelectionEnd: previousSelectionEndValue,
+          currentSelectionStart: currentSelectionStartValue,
+          currentSelectionEnd: currentSelectionEndValue
+        });
         // get updated html string
         const change = newValue.substring(changeStart, newChangeEnd);
-        const updatedContent = updateHTML(
-          htmlTextValue,
-          inputTextValue,
-          newValue,
-          tagsValue,
-          changeStart,
-          oldChangeEnd,
+        const updatedContent = updateHTML({
+          htmlText: htmlTextValue,
+          oldPlainText: inputTextValue,
+          newPlainText: newValue,
+          tags: tagsValue,
+          startIndex: changeStart,
+          oldPlainTextEndIndex: oldChangeEnd,
           change,
-          triggerText
-        );
+          mentionTrigger: triggerText
+        });
         result = updatedContent.updatedHTML;
         if (updatedContent.updatedSelectionIndex !== null) {
           setCaretIndex(updatedContent.updatedSelectionIndex);
@@ -730,11 +755,24 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
 
 /* @conditional-compile-remove(mention) */
 /**
- * Get validated value for index
+ * Props for finding a valid index in range.
  *
  * @private
  */
-const getValidatedIndex = (min: number, max: number, currentValue?: number): number => {
+type ValidatedIndexRangeProps = {
+  min: number;
+  max: number;
+  currentValue?: number;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
+ * Get validated value for index between min and max values. If currentValue is not defined, -1 will be used instead
+ *
+ * @private
+ */
+const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
+  const { min, max, currentValue } = props;
   let updatedValue = currentValue ?? -1;
   updatedValue = Math.max(min, updatedValue);
   updatedValue = Math.min(updatedValue, max);
@@ -780,16 +818,27 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
 
 /* @conditional-compile-remove(mention) */
 /**
- * Go through tags and find a new the selection index if it is inside of a mention tag
+ * Props for finding new selection index for mention
  *
  * @private
  */
-const findNewSelectionIndexForMention = (
-  tag: TagData,
-  textValue: string,
-  selection: number,
-  previousSelection: number
-): number => {
+type NewSelectionIndexForMentionProps = {
+  tag: TagData;
+  textValue: string;
+  selection: number;
+  previousSelection: number;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
+ * Find a new the selection index
+ *
+ * @private
+ * @param props Props for finding new selection index for mention
+ * @returns New selection index if it is inside of a mention tag, otherwise the current selection
+ */
+const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps): number => {
+  const { tag, textValue, selection, previousSelection } = props;
   // check if this is a mention tag and selection should be updated
   if (
     tag.tagType !== 'msft-mention' ||
@@ -804,14 +853,14 @@ const findNewSelectionIndexForMention = (
     // the cursor is moved to the left
     spaceIndex = textValue.lastIndexOf(' ', selection ?? 0);
     if (spaceIndex === -1) {
-      // no space before the selection
+      // no space before the selection, use the beginning of the tag
       spaceIndex = tag.plainTextBeginIndex;
     }
   } else {
     // the cursor is moved to the right
     spaceIndex = textValue.indexOf(' ', selection ?? 0);
     if (spaceIndex === -1) {
-      // no space after the selection
+      // no space after the selection, use the end of the tag
       spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
     }
   }
@@ -822,24 +871,59 @@ const findNewSelectionIndexForMention = (
 
 /* @conditional-compile-remove(mention) */
 /**
+ * Props for mention update HTML function
+ *
+ * @private
+ */
+type MentionTagUpdateProps = {
+  htmlText: string;
+  oldPlainText: string;
+  lastProcessedHTMLIndex: number;
+  processedChange: string;
+  change: string;
+  tag: TagData;
+  closeTagIdx: number;
+  closeTagLength: number;
+  plainTextEndIndex: number;
+  startIndex: number;
+  oldPlainTextEndIndex: number;
+  mentionTagLength: number;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
+ * Result for mention update HTML function
+ *
+ * @private
+ */
+type MentionTagUpdateResult = {
+  result: string;
+  updatedChange: string;
+  htmlIndex: number;
+  plainTextSelectionEndIndex: number | null;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
  * Handle mention tag edit and by word deleting
  *
  * @private
  */
-const handleMentionTagUpdate = (
-  htmlText: string,
-  oldPlainText: string,
-  lastProcessedHTMLIndex: number,
-  processedChange: string,
-  change: string,
-  tag: TagData,
-  closeTagIdx: number,
-  closeTagLength: number,
-  plainTextEndIndex: number,
-  startIndex: number,
-  oldPlainTextEndIndex: number,
-  mentionTagLength: number
-): { result: string; updatedChange: string; htmlIndex: number; plainTextSelectionEndIndex: number | null } => {
+const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateResult => {
+  const {
+    htmlText,
+    oldPlainText,
+    change,
+    tag,
+    closeTagIdx,
+    closeTagLength,
+    plainTextEndIndex,
+    startIndex,
+    oldPlainTextEndIndex,
+    mentionTagLength
+  } = props;
+  let processedChange = props.processedChange;
+  let lastProcessedHTMLIndex = props.lastProcessedHTMLIndex;
   if (tag.tagType !== 'msft-mention' || tag.plainTextBeginIndex === undefined) {
     return {
       result: '',
@@ -909,9 +993,19 @@ const handleMentionTagUpdate = (
  *
  * @private
  */
-const getTagClosingTagInfo = (
-  tag: TagData
-): { plainTextEndIndex: number; closeTagIdx: number; closeTagLength: number } => {
+type ClosingTagInfoResult = {
+  plainTextEndIndex: number;
+  closeTagIdx: number;
+  closeTagLength: number;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
+ * Get close tag information if exists otherwise return information as for self closing tag
+ *
+ * @private
+ */
+const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
   let plainTextEndIndex = 0;
   let closeTagIdx = 0;
   let closeTagLength = 0;
@@ -932,20 +1026,30 @@ const getTagClosingTagInfo = (
 
 /* @conditional-compile-remove(mention) */
 /**
+ * Props for update HTML function
+ *
+ * @private
+ */
+type UpdateHTMLProps = {
+  htmlText: string;
+  oldPlainText: string;
+  newPlainText: string;
+  tags: TagData[];
+  startIndex: number;
+  oldPlainTextEndIndex: number;
+  change: string;
+  mentionTrigger: string;
+};
+
+/* @conditional-compile-remove(mention) */
+/**
  * Go through the text and update it with the changed text
  *
  * @private
  */
-const updateHTML = (
-  htmlText: string,
-  oldPlainText: string,
-  newPlainText: string,
-  tags: TagData[],
-  startIndex: number,
-  oldPlainTextEndIndex: number,
-  change: string,
-  mentionTrigger: string
-): { updatedHTML: string; updatedSelectionIndex: number | null } => {
+const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | null } => {
+  const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
+    props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
     return { updatedHTML: newPlainText, updatedSelectionIndex: null };
@@ -1032,20 +1136,20 @@ const updateHTML = (
             }
             processedChange = '';
           } else {
-            const updateMentionTagResult = handleMentionTagUpdate(
+            const updateMentionTagResult = handleMentionTagUpdate({
               htmlText,
               oldPlainText,
               lastProcessedHTMLIndex,
               processedChange,
               change,
               tag,
-              closingTagInfo.closeTagIdx,
-              closingTagInfo.closeTagLength,
-              closingTagInfo.plainTextEndIndex,
+              closeTagIdx: closingTagInfo.closeTagIdx,
+              closeTagLength: closingTagInfo.closeTagLength,
+              plainTextEndIndex: closingTagInfo.plainTextEndIndex,
               startIndex,
               oldPlainTextEndIndex,
               mentionTagLength
-            );
+            });
             result += updateMentionTagResult.result;
             changeNewEndIndex = updateMentionTagResult.plainTextSelectionEndIndex;
             processedChange = updateMentionTagResult.updatedChange;
@@ -1055,16 +1159,16 @@ const updateHTML = (
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
-          const updatedContent = updateHTML(
-            tag.content,
+          const updatedContent = updateHTML({
+            htmlText: tag.content,
             oldPlainText,
             newPlainText,
-            tag.subTags,
+            tags: tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
-            processedChange,
+            change: processedChange,
             mentionTrigger
-          );
+          });
           result += stringBefore + updatedContent.updatedHTML;
           changeNewEndIndex = updatedContent.updatedSelectionIndex;
         } else {
@@ -1087,20 +1191,20 @@ const updateHTML = (
         // the change started in the tag but finishes somewhere further
         const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
-          const updateMentionTagResult = handleMentionTagUpdate(
+          const updateMentionTagResult = handleMentionTagUpdate({
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
-            '',
+            processedChange: '',
             change,
             tag,
-            closingTagInfo.closeTagIdx,
-            closingTagInfo.closeTagLength,
-            closingTagInfo.plainTextEndIndex,
+            closeTagIdx: closingTagInfo.closeTagIdx,
+            closeTagLength: closingTagInfo.closeTagLength,
+            plainTextEndIndex: closingTagInfo.plainTextEndIndex,
             startIndex,
             oldPlainTextEndIndex,
             mentionTagLength
-          );
+          });
           result += updateMentionTagResult.result;
           lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
           // no need to handle plainTextSelectionEndIndex as the change will be added later
@@ -1108,16 +1212,16 @@ const updateHTML = (
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
-          const updatedContent = updateHTML(
-            tag.content,
+          const updatedContent = updateHTML({
+            htmlText: tag.content,
             oldPlainText,
             newPlainText,
-            tag.subTags,
+            tags: tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
-            '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
+            change: '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
-          );
+          });
           result += stringBefore + updatedContent.updatedHTML;
         } else {
           // no subtags
@@ -1144,20 +1248,20 @@ const updateHTML = (
       } else if (startIndex < tag.plainTextBeginIndex && oldPlainTextEndIndex < closingTagInfo.plainTextEndIndex) {
         // the change  starts before the tag and ends in a tag
         if (isMentionTag) {
-          const updateMentionTagResult = handleMentionTagUpdate(
+          const updateMentionTagResult = handleMentionTagUpdate({
             htmlText,
             oldPlainText,
             lastProcessedHTMLIndex,
-            '', // the part of mention should be just deleted without processedChange update
+            processedChange: '', // the part of mention should be just deleted without processedChange update
             change,
             tag,
-            closingTagInfo.closeTagIdx,
-            closingTagInfo.closeTagLength,
-            closingTagInfo.plainTextEndIndex,
+            closeTagIdx: closingTagInfo.closeTagIdx,
+            closeTagLength: closingTagInfo.closeTagLength,
+            plainTextEndIndex: closingTagInfo.plainTextEndIndex,
             startIndex,
             oldPlainTextEndIndex,
             mentionTagLength
-          );
+          });
           changeNewEndIndex = updateMentionTagResult.plainTextSelectionEndIndex;
           result += updateMentionTagResult.result;
           lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
@@ -1165,16 +1269,16 @@ const updateHTML = (
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIdx + tag.openTagBody.length);
           lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
-          const updatedContent = updateHTML(
-            tag.content,
+          const updatedContent = updateHTML({
+            htmlText: tag.content,
             oldPlainText,
             newPlainText,
-            tag.subTags,
+            tags: tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
-            processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
+            change: processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
             mentionTrigger
-          );
+          });
           processedChange = '';
           result += stringBefore + updatedContent.updatedHTML;
         } else {
@@ -1223,27 +1327,37 @@ const updateHTML = (
   return { updatedHTML: result, updatedSelectionIndex: changeNewEndIndex };
 };
 
+type DiffIndexesProps = {
+  // the old text
+  oldText: string;
+  // the new text
+  newText: string;
+  // the start of previous selection, should be a valid position in the input field
+  previousSelectionStart: number;
+  // the end of previous selection, should be a valid position in the input field
+  previousSelectionEnd: number;
+  // the start of current selection, should be a valid position in the input field
+  currentSelectionStart: number;
+  // the end of current selection, should be a valid position in the input field
+  currentSelectionEnd: number;
+};
+
+type DiffIndexesResult = {
+  changeStart: number;
+  oldChangeEnd: number;
+  newChangeEnd: number;
+};
+
 /* @conditional-compile-remove(mention) */
 /**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
- * @param oldText - the old text
- * @param newText - the new text
- * @param previousSelectionStart - the start of previous selection
- * @param previousSelectionEnd - the end of previous selection
- * @param currentSelectionStart - the start of current selection
- * @param currentSelectionEnd - the end of current selection
  * @returns change start index, old end index and new end index. The old and new end indexes are exclusive.
  * @private
  */
-const findStringsDiffIndexes = (
-  oldText: string,
-  newText: string,
-  previousSelectionStart: number, // should be a valid position in the input field
-  previousSelectionEnd: number, // should be a valid position in the input field
-  currentSelectionStart: number, // should be a valid position in the input field
-  currentSelectionEnd: number // should be a valid position in the input field
-): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
+const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
+  const { oldText, newText, previousSelectionStart, previousSelectionEnd, currentSelectionStart, currentSelectionEnd } =
+    props;
   const newTextLength = newText.length;
   const oldTextLength = oldText.length;
   // let changeStart = 0;
