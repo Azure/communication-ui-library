@@ -22,7 +22,7 @@ import type { MockCallAdapterState } from '../../../common';
 import type { LocalVideoStreamState } from '@internal/calling-stateful-client';
 
 /* @conditional-compile-remove(video-background-effects) */
-test.describe('Video background effects tests', async () => {
+test.describe('Video background effects tests in call screen', async () => {
   test('blur video effect is not enabled when camera if off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
@@ -63,11 +63,43 @@ test.describe('Video background effects tests', async () => {
 });
 
 /* @conditional-compile-remove(video-background-effects) */
+test.describe('Video background effects tests in config screen', async () => {
+  test('blur video effect is not enabled when camera if off', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
+    await waitForCallCompositeToLoad(page);
+    await waitForSelector(page, dataUiId('call-config-video-effects-button'));
+    await pageClick(page, dataUiId('call-config-video-effects-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-pane-none-selected.png');
+    await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
+    await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-warning-camera-off.png');
+  });
+
+  test('blur video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const state = defaultMockConfigurationPageState();
+    state.devices.unparentedViews = deviceManagerWithUnparentedView();
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+    await waitForCallCompositeToLoad(page);
+    await waitForSelector(page, dataUiId('call-config-video-effects-button'));
+    await pageClick(page, dataUiId('call-config-video-effects-button'));
+    await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
+    await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
+    expect(
+      await stableScreenshot(page, {
+        maskVideos: false
+      })
+    ).toMatchSnapshot('video-effects-config-screen-blur-camera-on.png');
+  });
+});
+
+/* @conditional-compile-remove(video-background-effects) */
 test.describe('Custom video background effects tests in call screen', async () => {
   test('custom video effect is not enabled when camera is off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
-    const initialState = videoBackgeoundImagesInitialState();
+    const initialState = videoBackgroundImagesInitialState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
 
     await waitForSelector(page, '.camera-split-button');
@@ -82,7 +114,7 @@ test.describe('Custom video background effects tests in call screen', async () =
 
   test('custom video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
-    const initialState = videoBackgeoundImagesInitialState();
+    const initialState = videoBackgroundImagesInitialState();
     addDefaultMockLocalVideoStreamState(initialState);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, '.camera-split-button');
@@ -204,7 +236,7 @@ const deviceManagerWithUnparentedView = (): LocalVideoStreamState[] => {
   ];
 };
 
-const videoBackgeoundImagesInitialState = (): MockCallAdapterState => {
+const videoBackgroundImagesInitialState = (): MockCallAdapterState => {
   const paul = defaultMockRemoteParticipant('Paul Bridges');
   const initialState = defaultMockCallAdapterState([paul]);
   initialState.videoBackgroundImages = videoBackgroundImages;
