@@ -124,11 +124,8 @@ jobs:
             packages/communication-react/temp/communication-react.api.json
 
   in-progress-feature-validation:
-    needs: get_matrix
     name: Check if in progress feature can be removed separately
     runs-on: ubuntu-latest
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
