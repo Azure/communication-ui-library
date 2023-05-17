@@ -137,9 +137,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const localeStrings = useLocale().strings;
 
   /* @conditional-compile-remove(mention) */
-  const updateMentionSuggestions = useCallback((suggestions: Mention[]) => {
-    setMentionSuggestions(suggestions);
-  }, []);
+  const updateMentionSuggestions = useCallback(
+    (suggestions: Mention[]) => {
+      setMentionSuggestions(suggestions);
+    },
+    [setMentionSuggestions]
+  );
 
   /* @conditional-compile-remove(mention) */
   // Parse the text and get the plain text version to display in the input box
