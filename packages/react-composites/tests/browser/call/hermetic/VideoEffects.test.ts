@@ -94,6 +94,46 @@ test.describe('Video background effects tests in config screen', async () => {
   });
 });
 
+/* @conditional-compile-remove(video-background-effects) */
+test.describe('Video background effects error tests', async () => {
+  test('video effect error when effect fails and side pane is closed', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const initialState = videoEnabledInitialState();
+    initialState.latestErrors = {
+      'VideoEffectsFeature.startEffects': {
+        // Add 24 hours to current time to ensure the error is not dismissed by default
+        timestamp: new Date(Date.now() + 3600 * 1000 * 24),
+        name: 'Failure to start video effect',
+        message: 'Could not start video effect',
+        target: 'VideoEffectsFeature.startEffects',
+        innerError: new Error('Unable to apply video effect')
+      }
+    };
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-closed.png');
+  });
+
+  test('video effect error when effect fails and side pane is open', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const initialState = videoEnabledInitialState();
+    initialState.latestErrors = {
+      'VideoEffectsFeature.startEffects': {
+        // Add 24 hours to current time to ensure the error is not dismissed by default
+        timestamp: new Date(Date.now() + 3600 * 1000 * 24),
+        name: 'Failure to start video effect',
+        message: 'Could not start video effect',
+        target: 'VideoEffectsFeature.startEffects',
+        innerError: new Error('Unable to apply video effect')
+      }
+    };
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await waitForSelector(page, '.camera-split-button');
+    await pageClick(page, '.camera-split-button');
+    await waitForSelector(page, dataUiId('camera-split-button-video-effects'));
+    await pageClick(page, dataUiId('camera-split-button-video-effects'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-open.png');
+  });
+});
 const videoEnabledInitialState = (): MockCallAdapterState => {
   const paul = defaultMockRemoteParticipant('Paul Bridges');
   const initialState = defaultMockCallAdapterState([paul]);
