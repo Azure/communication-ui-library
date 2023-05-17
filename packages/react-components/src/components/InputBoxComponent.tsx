@@ -1327,6 +1327,12 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
   return { updatedHTML: result, updatedSelectionIndex: changeNewEndIndex };
 };
 
+/* @conditional-compile-remove(mention) */
+/**
+ * Props for finding strings diff indexes
+ *
+ * @private
+ */
 type DiffIndexesProps = {
   // the old text
   oldText: string;
@@ -1342,6 +1348,12 @@ type DiffIndexesProps = {
   currentSelectionEnd: number;
 };
 
+/* @conditional-compile-remove(mention) */
+/**
+ * Result of finding strings diff indexes function
+ *
+ * @private
+ */
 type DiffIndexesResult = {
   changeStart: number;
   oldChangeEnd: number;
