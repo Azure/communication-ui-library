@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Remove Rooms beta code from storybook basic example snippet",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
