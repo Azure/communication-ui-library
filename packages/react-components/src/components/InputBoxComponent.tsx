@@ -41,7 +41,7 @@ import { useDebouncedCallback } from 'use-debounce';
 /* @conditional-compile-remove(mention) */
 const DEFAULT_MENTION_TRIGGER = '@';
 /* @conditional-compile-remove(mention) */
-const MENTION_TAG_NAME = 'msft-mention';
+const MSFT_MENTION_TAG = 'msft-mention';
 
 /**
  * @private
@@ -373,8 +373,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           const newSelectionIndex = findNewSelectionIndexForMention({
             tag: mentionTag,
             textValue: inputTextValue,
-            selection: event.currentTarget.selectionStart,
-            previousSelection: selectionStartValue ?? inputTextValue.length
+            currentSelectionIndex: event.currentTarget.selectionStart,
+            previousSelectionIndex: selectionStartValue ?? inputTextValue.length
           });
           updatedStartIndex = newSelectionIndex;
           updatedEndIndex = newSelectionIndex;
@@ -394,8 +394,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             updatedStartIndex = findNewSelectionIndexForMention({
               tag: mentionTag,
               textValue: inputTextValue,
-              selection: event.currentTarget.selectionStart,
-              previousSelection: selectionStartValue ?? inputTextValue.length
+              currentSelectionIndex: event.currentTarget.selectionStart,
+              previousSelectionIndex: selectionStartValue ?? inputTextValue.length
             });
           }
         }
@@ -412,8 +412,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             updatedEndIndex = findNewSelectionIndexForMention({
               tag: mentionTag,
               textValue: inputTextValue,
-              selection: event.currentTarget.selectionEnd,
-              previousSelection: selectionEndValue ?? inputTextValue.length
+              currentSelectionIndex: event.currentTarget.selectionEnd,
+              previousSelectionIndex: selectionEndValue ?? inputTextValue.length
             });
           }
         }
@@ -562,10 +562,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       }
       let result = '';
       if (tagsValue.length === 0) {
-        // no tags in the string, newValue is a result string
+        // no tags in the string and newValue should be used as a result string
         result = newValue;
       } else {
-        // there are tags in the text value, htmlTextValue is html string
+        // there are tags in the text value and htmlTextValue is html string
         // find diff between old and new text
         const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
           oldText: inputTextValue,
@@ -825,7 +825,7 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
           mentionTag = selectedTag;
           break;
         }
-      } else if (tag.tagType === MENTION_TAG_NAME) {
+      } else if (tag.tagType === MSFT_MENTION_TAG) {
         mentionTag = tag;
         break;
       }
@@ -843,10 +843,8 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
 type NewSelectionIndexForMentionProps = {
   tag: TagData;
   textValue: string;
-  // current selection index
-  selection: number;
-  // previous selection index
-  previousSelection: number;
+  currentSelectionIndex: number;
+  previousSelectionIndex: number;
 };
 
 /* @conditional-compile-remove(mention) */
@@ -858,27 +856,27 @@ type NewSelectionIndexForMentionProps = {
  * @returns New selection index if it is inside of a mention tag, otherwise the current selection.
  */
 const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps): number => {
-  const { tag, textValue, selection, previousSelection } = props;
+  const { tag, textValue, currentSelectionIndex, previousSelectionIndex } = props;
   // check if this is a mention tag and selection should be updated
   if (
-    tag.tagType !== MENTION_TAG_NAME ||
+    tag.tagType !== MSFT_MENTION_TAG ||
     tag.plainTextBeginIndex === undefined ||
-    selection === previousSelection ||
+    currentSelectionIndex === previousSelectionIndex ||
     tag.plainTextEndIndex === undefined
   ) {
-    return selection;
+    return currentSelectionIndex;
   }
   let spaceIndex = 0;
-  if (selection <= previousSelection) {
+  if (currentSelectionIndex <= previousSelectionIndex) {
     // the cursor is moved to the left, find the last index before the cursor
-    spaceIndex = textValue.lastIndexOf(' ', selection ?? 0);
+    spaceIndex = textValue.lastIndexOf(' ', currentSelectionIndex ?? 0);
     if (spaceIndex === -1) {
       // no space before the selection, use the beginning of the tag
       spaceIndex = tag.plainTextBeginIndex;
     }
   } else {
     // the cursor is moved to the right, find the fist index after the cursor
-    spaceIndex = textValue.indexOf(' ', selection ?? 0);
+    spaceIndex = textValue.indexOf(' ', currentSelectionIndex ?? 0);
     if (spaceIndex === -1) {
       // no space after the selection, use the end of the tag
       spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
@@ -946,7 +944,7 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
   } = props;
   let processedChange = props.processedChange;
   let lastProcessedHTMLIndex = props.lastProcessedHTMLIndex;
-  if (tag.tagType !== MENTION_TAG_NAME || tag.plainTextBeginIndex === undefined) {
+  if (tag.tagType !== MSFT_MENTION_TAG || tag.plainTextBeginIndex === undefined) {
     // not a mention tag
     return {
       result: '',
@@ -976,11 +974,11 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
   isSpaceLengthHandled = true;
 
   if (rangeStart === -1 || rangeStart === undefined || rangeStart < tag.plainTextBeginIndex) {
-    // rangeStart should be at least equal tag.plainTextBeginIndex
+    // rangeStart should be at least equal to tag.plainTextBeginIndex
     rangeStart = tag.plainTextBeginIndex;
   }
   if (rangeEnd > plainTextEndIndex) {
-    // rangeEnd should be at most equal plainTextEndIndex
+    // rangeEnd should be at most equal to plainTextEndIndex
     rangeEnd = plainTextEndIndex;
   }
   if (rangeStart === tag.plainTextBeginIndex && rangeEnd === plainTextEndIndex) {
@@ -1015,7 +1013,7 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
 
 /* @conditional-compile-remove(mention) */
 /**
- * Get closing tag information
+ * Closing tag information
  *
  * @private
  */
@@ -1108,7 +1106,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
     // mentionTagLength will be set only for mention tag, otherwise should be 0
     let mentionTagLength = 0;
     let isMentionTag = false;
-    if (tag.tagType === MENTION_TAG_NAME) {
+    if (tag.tagType === MSFT_MENTION_TAG) {
       mentionTagLength = mentionTrigger.length;
       isMentionTag = true;
     }
@@ -1496,7 +1494,7 @@ const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: Comp
   const idHTML = ' id ="' + suggestion.id + '"';
   const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
-  return '<' + MENTION_TAG_NAME + idHTML + displayTextHTML + '>' + displayText + '</' + MENTION_TAG_NAME + '>';
+  return '<' + MSFT_MENTION_TAG + idHTML + displayTextHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
 };
 
 /* @conditional-compile-remove(mention) */
@@ -1592,7 +1590,7 @@ const textToTagParser = (text: string, trigger: string): { tags: TagData[]; plai
         );
 
         // Insert the plain text pieces for the sub tags
-        if (currentOpenTag.tagType === MENTION_TAG_NAME) {
+        if (currentOpenTag.tagType === MSFT_MENTION_TAG) {
           plainTextRepresentation =
             plainTextRepresentation.slice(0, currentOpenTag.plainTextBeginIndex) +
             trigger +
