@@ -1285,12 +1285,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
             lastProcessedHTMLIndex,
             processedChange: '', // the part of mention should be just deleted without processedChange update
             change,
-            processedChange: '', // the part of mention should be just deleted without processedChange update
-            change,
             tag,
-            closeTagIdx: closingTagInfo.closeTagIdx,
-            closeTagLength: closingTagInfo.closeTagLength,
-            plainTextEndIndex: closingTagInfo.plainTextEndIndex,
             closeTagIdx: closingTagInfo.closeTagIdx,
             closeTagLength: closingTagInfo.closeTagLength,
             plainTextEndIndex: closingTagInfo.plainTextEndIndex,
