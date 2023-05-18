@@ -77,7 +77,7 @@ Below are some examples that might be helpful, but additional methods are availa
 
 <Source code={ChatAdapterStateChangesText} />
 
-The ChatAdapter and the ChatComposite are purpose-built to support single chat thread. Only events, such as 'messagesReceived', from the thread that initialized the ChatAdapter, will be triggered. To accommodate multiple threads usage, consider utilizing a more fundamental service, such as the Chat [StatefulClient](./?path=/docs/statefulclient-overview--page), or directly employing the [ChatClient](https://azuresdkdocs.blob.core.windows.net/$web/javascript/azure-communication-chat/1.0.0/classes/chatclient.html). This will allow management of all chat threads that the user has joined.
+The ChatAdapter and the ChatComposite are purpose-built to support single chat thread. Only events, such as 'messagesReceived', from the thread that initialized the ChatAdapter, will be triggered. To accommodate multiple threads usage, you can leverage the foundational service assistant, the Chat [StatefulClient](./?path=/docs/statefulclient-overview--page), in conjunction with [usePropsFor](./?path=/docs/statefulclient-reacthooks-usepropsfor--page) to render the Chat UI Component for an enhanced chatting experience. Alternatively, you can manage multiple adapters corresponding to different threads, and display the Chat UI Composite based on the threads the user wishes to access.
 
 ## Interfaces
 
