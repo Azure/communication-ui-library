@@ -15,12 +15,9 @@ chatAdapter.setTopic()
 chatAdapter.on('messageReceived', (event) => {
   console.log(event.message.content?.message);
 })
-
 chatAdapter.on('messageSent', (event) => {
   console.log(event.message.content?.message);
 })
 chatAdapter.on('topicChanged', (event) => {
   console.log(event.topic);
 })
-
-
