@@ -112,6 +112,11 @@ export interface RemoteVideoTileMenuOptions {
 export interface LocalVideoTileOptions {
   /**
    * Position of the local video tile. If unset will render the local tile in the floating local position.
+   *
+   * @defaultValue 'floating'
+   * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
+   * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
+   * local tile rules
    */
   position?: 'grid' | 'floating' | 'hidden';
 }

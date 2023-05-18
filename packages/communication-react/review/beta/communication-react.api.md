@@ -2683,16 +2683,12 @@ export interface LocalVideoStreamVideoEffectsState {
 }
 
 // @beta
-<<<<<<< HEAD
 export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating' | 'hidden';
 }
 
 // @beta
-export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'matchStream';
-=======
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
->>>>>>> 2627d48632d2c53d2b6a2e7c44d1d23d51799eaf
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
