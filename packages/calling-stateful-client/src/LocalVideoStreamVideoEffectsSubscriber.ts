@@ -39,7 +39,7 @@ export class LocalVideoStreamVideoEffectsSubscriber {
   }
 
   private subscribe = (): void => {
-    this._localVideoStreamEffectsAPI.on('effectsStarted', this.upsertEffects);
+    this._localVideoStreamEffectsAPI.on('effectsStarted', this.effectsStarted);
     this._localVideoStreamEffectsAPI.on('effectsStopped', this.effectsStopped);
     this._localVideoStreamEffectsAPI.on('effectsError', this.effectsError);
   };
@@ -51,6 +51,10 @@ export class LocalVideoStreamVideoEffectsSubscriber {
   };
 
   private effectsStarted = (effects: VideoEffectName[]): void => {
+    // there is a bug in the calling sdk where no effectsStopped event is fired when effects are changed from one to another.
+    // so we need to clear all effects before adding new ones.
+    this.clearAllEffects();
+
     this.upsertEffects(effects);
   };
 
