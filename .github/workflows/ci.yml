@@ -62,13 +62,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
+      - name: Switch flavor for build
         id: switch-flavor
-        if: ${{ matrix.flavor == 'stable' }}
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
@@ -201,12 +203,15 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
@@ -271,12 +276,15 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Chat Composite Test App
         run: |
           cd packages/react-composites
@@ -341,12 +349,15 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build CallWithChatComposite Test App
         run: |
           cd packages/react-composites
@@ -438,12 +449,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -479,12 +493,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -520,12 +537,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
@@ -556,12 +576,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
@@ -609,12 +632,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor when necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -t component-examples
       - name: Visual Regression Tests
