@@ -25,6 +25,9 @@
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "الاقتراحات"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "تم إرسال الرسالة",
     "deliveredTooltipText": "تم الإرسال",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "تم إيقاف تشغيل كاميراتك",
     "onSplitButtonPrimaryActionCamera": "إيقاف تشغيل الكاميرا",
     "offSplitButtonPrimaryActionCamera": "تشغيل الكاميرا",
-    "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا"
+    "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا",
+    "videoEffectsMenuItemTitle": "التأثيرات"
   },
   "microphoneButton": {
     "onLabel": "كتم الصوت",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "فشل في الانضمام إلى المكالمة.",
     "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
     "startScreenSharingGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
-    "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك."
+    "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
+    "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
