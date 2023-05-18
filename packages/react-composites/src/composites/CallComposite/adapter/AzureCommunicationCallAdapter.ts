@@ -35,12 +35,7 @@ import {
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import {
-  BackgroundBlurConfig,
-  BackgroundBlurEffect,
-  BackgroundReplacementConfig,
-  BackgroundReplacementEffect
-} from '@azure/communication-calling-effects';
+import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -94,6 +89,8 @@ import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
 import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchProfileCallback';
+/* @conditional-compile-remove(video-background-effects) */
+import { getBackgroundEffectFromSelectedEffect, getSelectedCameraFromAdapterState } from '../utils';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -550,15 +547,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         /* @conditional-compile-remove(video-background-effects) */
         {
           const selectedEffect = this.getState().selectedVideoBackgroundEffect;
-          const videoDeviceInfo = this.getState().devices.selectedCamera || this.getState().devices.cameras[0];
-          if (selectedEffect && videoDeviceInfo) {
-            const stream = new SDKLocalVideoStream(videoDeviceInfo);
-            const effect =
-              selectedEffect?.effectName === 'blur'
-                ? new BackgroundBlurEffect()
-                : selectedEffect?.effectName === 'replacement'
-                ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
-                : undefined;
+          const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+          if (selectedEffect && selectedCamera) {
+            const stream = new SDKLocalVideoStream(selectedCamera);
+            const effect = getBackgroundEffectFromSelectedEffect(selectedEffect);
 
             if (effect) {
               await stream.feature(Features.VideoEffects).startEffects(effect);
