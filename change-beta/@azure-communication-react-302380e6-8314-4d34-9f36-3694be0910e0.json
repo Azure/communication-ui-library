@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix flakey import error when trying to import from fs package",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

@@ -2,6 +2,57 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Thu, 18 May 2023 06:57:22 GMT",
+      "tag": "@internal/react-composites_v1.5.1-beta.5",
+      "version": "1.5.1-beta.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/fake-backends to v1.5.1-beta.5",
+            "commit": "9df717ddddc612fafe24047c5d8960c33ee720bd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Apr 2023 15:39:40 GMT",
       "tag": "@internal/react-composites_v1.5.1-beta.3",
       "version": "1.5.1-beta.3",
