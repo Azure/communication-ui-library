@@ -39,7 +39,7 @@ export class LocalVideoStreamVideoEffectsSubscriber {
   }
 
   private subscribe = (): void => {
-    this._localVideoStreamEffectsAPI.on('effectsStarted', this.effectsStarted);
+    this._localVideoStreamEffectsAPI.on('effectsStarted', this.upsertEffects);
     this._localVideoStreamEffectsAPI.on('effectsStopped', this.effectsStopped);
     this._localVideoStreamEffectsAPI.on('effectsError', this.effectsError);
   };
@@ -51,25 +51,42 @@ export class LocalVideoStreamVideoEffectsSubscriber {
   };
 
   private effectsStarted = (effects: VideoEffectName[]): void => {
-    this.updateEffectsState(effects);
+    this.upsertEffects(effects);
   };
 
-  private effectsStopped = (): void => {
-    this.updateEffectsState([]);
+  private effectsStopped = (effects: VideoEffectName[]): void => {
+    this.deleteEffects(effects);
   };
 
   private effectsError = (error: VideoEffectErrorPayload): void => {
     // When there is an error the effects have stopped. Update the state to reflect this.
-    this.updateEffectsState([]);
+    this.clearAllEffects();
     this._context.teeErrorToState(new Error(error.message), 'VideoEffectsFeature.startEffects');
   };
 
-  private updateEffectsState = (newEffects: VideoEffectName[]): void => {
+  private upsertEffects = (newEffects: VideoEffectName[]): void => {
     const statefulVideoEffects = convertFromSDKToDeclarativeVideoStreamVideoEffects(newEffects);
     if (this._parent === 'unparented') {
-      this._context.setDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, statefulVideoEffects);
+      this._context.addDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, statefulVideoEffects);
     } else {
-      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, statefulVideoEffects);
+      this._context.addCallLocalVideoStreamVideoEffects(this._parent.callId, statefulVideoEffects);
+    }
+  };
+
+  private deleteEffects = (newEffects: VideoEffectName[]): void => {
+    const statefulVideoEffects = convertFromSDKToDeclarativeVideoStreamVideoEffects(newEffects);
+    if (this._parent === 'unparented') {
+      this._context.deleteDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, statefulVideoEffects);
+    } else {
+      this._context.deleteCallLocalVideoStreamVideoEffects(this._parent.callId, statefulVideoEffects);
+    }
+  };
+
+  private clearAllEffects = (): void => {
+    if (this._parent === 'unparented') {
+      this._context.clearDeviceManagerUnparentedViewVideoEffects(this._localVideoStream);
+    } else {
+      this._context.clearCallLocalVideoStreamVideoEffects(this._parent.callId);
     }
   };
 }
