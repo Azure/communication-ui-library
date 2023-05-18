@@ -52,7 +52,7 @@ export class LocalVideoStreamVideoEffectsSubscriber {
 
   private effectsStarted = (effects: VideoEffectName[]): void => {
     // there is a bug in the calling sdk where no effectsStopped event is fired when effects are changed from one to another.
-    // so we need to clear all effects before adding new ones.
+    // so we need to clear all effects before adding new ones. This should be removed once https://skype.visualstudio.com/SPOOL/_workitems/edit/3272066 is fixed.
     this.clearAllEffects();
 
     this.upsertEffects(effects);
