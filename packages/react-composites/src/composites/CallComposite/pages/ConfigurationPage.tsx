@@ -318,6 +318,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
                     styles={effectsButtonStyles(theme)}
                     onClick={toggleVideoEffectsPane}
+                    data-ui-id={'call-config-video-effects-button'}
                   >
                     {locale.strings.call.configurationPageVideoEffectsButtonLabel}
                   </DefaultButton>
