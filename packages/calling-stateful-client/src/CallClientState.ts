@@ -177,9 +177,9 @@ export interface LocalVideoStreamState {
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
-   * Name of the effect if one is active.
+   * List of effects if any are active.
    */
-  activeEffect?: VideoEffectName;
+  activeEffects?: VideoEffectName[];
 }
 
 /**

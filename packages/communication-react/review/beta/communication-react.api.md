@@ -2675,7 +2675,7 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    activeEffect?: VideoEffectName;
+    activeEffects?: VideoEffectName[];
 }
 
 // @public

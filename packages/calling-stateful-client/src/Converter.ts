@@ -48,7 +48,7 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
     mediaStreamType: stream.mediaStreamType,
     view: undefined,
     /* @conditional-compile-remove(video-background-effects) */
-    videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects[0]) // TODO: support multiple effects
+    videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects)
   };
 }
 
@@ -178,9 +178,9 @@ export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): Ca
 /* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
-  videoEffectName: VideoEffectName
+  videoEffects: VideoEffectName[]
 ): LocalVideoStreamVideoEffectsState {
   return {
-    activeEffect: videoEffectName
+    activeEffects: videoEffects
   };
 }

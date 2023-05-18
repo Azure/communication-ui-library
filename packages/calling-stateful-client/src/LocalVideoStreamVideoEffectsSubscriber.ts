@@ -51,26 +51,25 @@ export class LocalVideoStreamVideoEffectsSubscriber {
   };
 
   private effectsStarted = (effects: VideoEffectName[]): void => {
-    // TODO: support multiple effects
-    this.updateEffectsState(effects[0]);
+    this.updateEffectsState(effects);
   };
 
   private effectsStopped = (): void => {
-    this.updateEffectsState(undefined);
+    this.updateEffectsState([]);
   };
 
   private effectsError = (error: VideoEffectErrorPayload): void => {
     // When there is an error the effects have stopped. Update the state to reflect this.
-    this.updateEffectsState(undefined);
+    this.updateEffectsState([]);
     this._context.teeErrorToState(new Error(error.message), 'VideoEffectsFeature.startEffects');
   };
 
-  private updateEffectsState = (newEffect: VideoEffectName | undefined): void => {
-    const statefulVideoEffect = newEffect && convertFromSDKToDeclarativeVideoStreamVideoEffects(newEffect);
+  private updateEffectsState = (newEffects: VideoEffectName[]): void => {
+    const statefulVideoEffects = convertFromSDKToDeclarativeVideoStreamVideoEffects(newEffects);
     if (this._parent === 'unparented') {
-      this._context.setDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, statefulVideoEffect);
+      this._context.setDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, statefulVideoEffects);
     } else {
-      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, statefulVideoEffect);
+      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, statefulVideoEffects);
     }
   };
 }
