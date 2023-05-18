@@ -48,17 +48,17 @@ export class LocalVideoStreamVideoEffectsSubscriber {
     this._localVideoStreamEffectsAPI.off('effectsError', this.effectsError);
   };
 
-  private effectsStarted = (effectName: VideoEffectName): void => {
+  private effectsStarted = (effects: VideoEffectName[]): void => {
     this.updateEffectsState({
       isActive: true,
-      effectName: effectName
+      effectName: effects[0]
     });
   };
 
-  private effectsStopped = (effectName: VideoEffectName): void => {
+  private effectsStopped = (effects: VideoEffectName[]): void => {
     this.updateEffectsState({
       isActive: false,
-      effectName: effectName
+      effectName: effects[0]
     });
   };
 

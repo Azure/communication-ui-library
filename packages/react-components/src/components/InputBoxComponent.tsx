@@ -326,7 +326,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   };
 
   /* @conditional-compile-remove(mention) */
-  const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
+  const debouncedQueryUpdate = useDebouncedCallback(async (query?: string) => {
+    if (query === undefined) {
+      updateMentionSuggestions([]);
+      return;
+    }
     const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
@@ -548,7 +552,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCurrentTriggerStartIndex(tagIndex);
           }
           if (tagIndex === -1) {
-            updateMentionSuggestions([]);
+            await debouncedQueryUpdate(undefined);
           } else {
             // In the middle of a @mention lookup
             if (tagIndex > -1) {
@@ -598,7 +602,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
       onChange && onChange(event, result);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
+    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, debouncedQueryUpdate]
   );
 
   const getInputFieldTextValue = (): string => {
