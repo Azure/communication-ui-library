@@ -225,6 +225,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
                 iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
                 styles={effectsButtonStyles(theme)}
                 onClick={props.onVideoEffectsClick}
+                data-ui-id={'call-config-video-effects-button'}
               >
                 {locale.strings.call.configurationPageVideoEffectsButtonLabel}
               </DefaultButton>
