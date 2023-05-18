@@ -4,9 +4,7 @@
 import {
   Icon,
   IIconProps,
-  IStackStyles,
   IStyle,
-  ITheme,
   ITooltipHostProps,
   mergeStyles,
   Stack,
@@ -15,6 +13,7 @@ import {
   useTheme
 } from '@fluentui/react';
 import React, { useCallback } from 'react';
+import { videoEffectsItemContainerStyles } from './VideoEffectsItem.styles';
 
 /**
  * Props for {@link _VideoEffectsItem}
@@ -125,9 +124,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         theme,
         isSelected,
         disabled,
-        backgroundImage,
-        backgroundPosition,
-        backgroundSize
+        backgroundImage
       }),
     [backgroundImage, disabled, isSelected, theme]
   );
@@ -169,56 +166,4 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
       </Stack>
     </TooltipHost>
   );
-};
-
-const backgroundPosition = 'center';
-const backgroundSize = 'cover';
-
-const videoEffectsItemContainerStyles = (args: {
-  theme: ITheme;
-  isSelected: boolean;
-  disabled: boolean;
-  backgroundImage?: string;
-  backgroundPosition?: string;
-  backgroundSize?: string;
-}): IStackStyles => {
-  const borderDefaultThickness = '1px';
-  const borderActiveThickness = '2px';
-  return {
-    root: {
-      background: args.disabled ? args.theme.palette.neutralQuaternaryAlt : undefined,
-      backgroundImage: args.backgroundImage ? `url(${args.backgroundImage})` : undefined,
-      backgroundPosition: args.backgroundPosition,
-      backgroundSize: args.backgroundSize,
-      borderRadius: '0.25rem',
-      color: args.theme.palette.neutralPrimary,
-      cursor: args.disabled ? 'default' : 'pointer',
-      height: '3.375rem',
-      position: 'relative', // Used for absolute positioning of :after
-      width: '4.83rem',
-      // Use :after to display a border element. This is used to prevent the background image
-      // resizing when the border thichkness is changed. We also want the border to be inside
-      // the frame of the container, i.e. we want it to expand inwards and not outwards when
-      // border thickness changes from hover/selection.
-      ':after': {
-        content: '""',
-        position: 'absolute',
-        boxSizing: 'border-box',
-        border: args.isSelected
-          ? `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
-          : `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`,
-        height: '100%',
-        width: '100%',
-        borderRadius: '0.25rem'
-      },
-      ':hover': {
-        ':after': {
-          border:
-            args.disabled && !args.isSelected
-              ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
-              : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
-        }
-      }
-    }
-  };
 };
