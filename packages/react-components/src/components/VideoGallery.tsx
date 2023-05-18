@@ -157,7 +157,7 @@ export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
  *
  * @beta
  */
-export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'matchStream';
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 /**
  * Props for {@link VideoGallery}.
@@ -254,9 +254,9 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
-   * @remarks 'matchStream' will be responsive to the screen orientation and will change between 9:16 (portrait) and
+   * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
    * 16:9 (landscape) aspect ratios.
-   * @defaultValue 'matchStream'
+   * @defaultValue 'followDeviceOrientation'
    */
   localVideoTileSize?: LocalVideoTileSize;
 }
@@ -327,7 +327,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
     /* @conditional-compile-remove(click-to-call) */
-    localVideoTileSize = 'matchStream'
+    localVideoTileSize = 'followDeviceOrientation'
   } = props;
 
   const ids = useIdentifiers();

@@ -1219,7 +1219,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @beta
-export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'matchStream';
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @beta
 export interface Mention {

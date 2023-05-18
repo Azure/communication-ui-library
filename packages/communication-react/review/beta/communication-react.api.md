@@ -2680,7 +2680,7 @@ export interface LocalVideoStreamVideoEffectsState {
 }
 
 // @beta
-export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'matchStream';
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
