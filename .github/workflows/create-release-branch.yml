@@ -113,8 +113,8 @@ jobs:
         run: rush build -t @azure/communication-react
         id: buildapifiles
 
-      - name: Commit new snapshots
-        if: ${{  always() && matrix.flavor == 'beta-release' && steps.changescheck.outputs.hasChanged == 'true' }}
+      - name: Commit beta release snapshots
+        if: ${{ always() && matrix.flavor == 'beta-release' }}
         run: |
           git add packages/**/*.api.md
           git commit -m 'Update ${{ matrix.flavor }} API files'
