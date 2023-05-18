@@ -105,16 +105,16 @@ jobs:
 
       # Switch flavor when necessary
       - name: Switch flavor for beta-release build
-        if: ${{ matrix.flavor == 'beta-release' }}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: rush switch-flavor:beta-release
 
       - name: Build NPM Package
-        if: ${{ matrix.flavor == 'beta-release' }}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: rush build -t @azure/communication-react
         id: buildapifiles
 
       - name: Commit beta release snapshots
-        if: ${{ always() && matrix.flavor == 'beta-release' }}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: |
           git add packages/**/*.api.md
           git commit -m 'Update ${{ matrix.flavor }} API files'
