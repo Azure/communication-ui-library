@@ -275,56 +275,13 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public addCallLocalVideoStreamVideoEffects(
-    callId: string,
-    videoEffectsToAdd: LocalVideoStreamVideoEffectsState
-  ): void {
+  public setCallLocalVideoStreamVideoEffects(callId: string, videoEffects: LocalVideoStreamVideoEffectsState): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
         if (stream) {
-          stream.videoEffects = {
-            activeEffects: [
-              ...new Set([...(stream.videoEffects?.activeEffects ?? []), ...(videoEffectsToAdd.activeEffects ?? [])])
-            ]
-          };
-        }
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public deleteCallLocalVideoStreamVideoEffects(
-    callId: string,
-    videoEffectsToRemove: LocalVideoStreamVideoEffectsState
-  ): void {
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if (call) {
-        const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
-        if (stream) {
-          const remainingEffects = stream.videoEffects?.activeEffects?.filter(
-            (effectName) => videoEffectsToRemove.activeEffects?.indexOf(effectName) === -1
-          );
-          stream.videoEffects = {
-            activeEffects: remainingEffects
-          };
-        }
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public clearCallLocalVideoStreamVideoEffects(callId: string): void {
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if (call) {
-        const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
-        if (stream) {
-          stream.videoEffects = {
-            activeEffects: []
-          };
+          stream.videoEffects = videoEffects;
         }
       }
     });
@@ -719,9 +676,9 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public addDeviceManagerUnparentedViewVideoEffects(
+  public setDeviceManagerUnparentedViewVideoEffects(
     localVideoStream: LocalVideoStreamState,
-    videoEffectsToAdd: LocalVideoStreamVideoEffectsState
+    videoEffects: LocalVideoStreamVideoEffectsState
   ): void {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
@@ -729,50 +686,7 @@ export class CallContext {
           stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
-        draft.deviceManager.unparentedViews[foundIndex].videoEffects = {
-          activeEffects: [
-            ...new Set([
-              ...(draft.deviceManager.unparentedViews[foundIndex].videoEffects?.activeEffects ?? []),
-              ...(videoEffectsToAdd.activeEffects ?? [])
-            ])
-          ]
-        };
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public deleteDeviceManagerUnparentedViewVideoEffects(
-    localVideoStream: LocalVideoStreamState,
-    videoEffectsToRemove: LocalVideoStreamVideoEffectsState
-  ): void {
-    this.modifyState((draft: CallClientState) => {
-      const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
-      );
-      if (foundIndex !== -1) {
-        const remainingEffects = draft.deviceManager.unparentedViews[foundIndex].videoEffects?.activeEffects?.filter(
-          (effectName) => videoEffectsToRemove.activeEffects?.indexOf(effectName) === -1
-        );
-        draft.deviceManager.unparentedViews[foundIndex].videoEffects = {
-          activeEffects: remainingEffects
-        };
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(video-background-effects) */
-  public clearDeviceManagerUnparentedViewVideoEffects(localVideoStream: LocalVideoStreamState): void {
-    this.modifyState((draft: CallClientState) => {
-      const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
-      );
-      if (foundIndex !== -1) {
-        draft.deviceManager.unparentedViews[foundIndex].videoEffects = {
-          activeEffects: []
-        };
+        draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;
       }
     });
   }
