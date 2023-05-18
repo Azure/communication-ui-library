@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix issue where after changing background, the previous background persisted for a split second",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
