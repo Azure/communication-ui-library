@@ -22,8 +22,6 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
-/* @conditional-compile-remove(video-background-effects) */
-import { convertFromSDKToDeclarativeVideoStreamVideoEffects } from './Converter';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us

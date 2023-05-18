@@ -241,7 +241,7 @@ describe('Stateful call client', () => {
       expect(await waitWithBreakCondition(() => client.getState().calls[callId]?.localVideoStreams.length !== 0)).toBe(
         true
       );
-      expect(listener.onChangeCalledCount).toBe(2); // One onChange for the local video stream, and one for the localVideoStreamEffects
+      expect(listener.onChangeCalledCount).toBe(1);
     }
     {
       const listener = new StateChangeListener(client);
