@@ -25,6 +25,9 @@
     "uploading": "Carregando",
     "uploadCompleted": "Carregamento concluído"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Sugestões"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensagem enviada",
     "deliveredTooltipText": "Enviado",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "A câmera foi desligada",
     "onSplitButtonPrimaryActionCamera": "Desligar a câmera",
     "offSplitButtonPrimaryActionCamera": "Ligar a câmera",
-    "cameraPrimaryActionSplitButtonTitle": "Usar câmera"
+    "cameraPrimaryActionSplitButtonTitle": "Usar câmera",
+    "videoEffectsMenuItemTitle": "Efeitos"
   },
   "microphoneButton": {
     "onLabel": "Mudo",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "Ocorreu um erro ao ingressar na chamada.",
     "failedToJoinCallInvalidMeetingLink": "Não é possível ingressar na Reunião. Link Inválido.",
     "startScreenSharingGeneric": "Ocorreu um problema ao iniciar o compartilhamento de tela.",
-    "cameraFrozenForRemoteParticipants": "Os usuários na chamada estão enfrentando problemas para ver seu vídeo. Verifique seus dispositivos e a rede."
+    "cameraFrozenForRemoteParticipants": "Os usuários na chamada estão enfrentando problemas para ver seu vídeo. Verifique seus dispositivos e a rede.",
+    "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",

@@ -25,6 +25,9 @@
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggesties"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
     "deliveredTooltipText": "Verzonden",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Uw camera is uitgeschakeld",
     "onSplitButtonPrimaryActionCamera": "Camera uitschakelen",
     "offSplitButtonPrimaryActionCamera": "Camera inschakelen",
-    "cameraPrimaryActionSplitButtonTitle": "Camera gebruiken"
+    "cameraPrimaryActionSplitButtonTitle": "Camera gebruiken",
+    "videoEffectsMenuItemTitle": "Effecten"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "Deelnemen aan gesprek mislukt.",
     "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling.",
     "startScreenSharingGeneric": "Er is een probleem opgetreden bij het starten van scherm delen.",
-    "cameraFrozenForRemoteParticipants": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video. Controleer uw apparaten en netwerk."
+    "cameraFrozenForRemoteParticipants": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video. Controleer uw apparaten en netwerk.",
+    "unableToStartVideoEffect": "Kan video-effect niet toepassen."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
