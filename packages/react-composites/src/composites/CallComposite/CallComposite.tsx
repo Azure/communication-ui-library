@@ -116,8 +116,8 @@ export interface LocalVideoTileOptions {
    * @defaultValue 'floating'
    * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
    * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery.
+   * local video tile rules and be docked in the bottom corner.
    * 'hidden' - local video tile will not be rendered.
-   * local tile rules
    * This also does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
   position?: 'grid' | 'floating' | 'hidden';
