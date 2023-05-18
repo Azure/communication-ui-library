@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Update for edit, delete and mouse clicks selection functionality for mentions",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
