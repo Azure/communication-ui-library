@@ -28,6 +28,8 @@ import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
@@ -38,11 +40,15 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
+  /* @conditional-compile-remove(video-background-effects) */
+  const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
+
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
-    view: undefined
-    // TODO [video-background-effects]: Add video effects state when it is added to the SDK
+    view: undefined,
+    /* @conditional-compile-remove(video-background-effects) */
+    videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects[0]) // TODO: support multiple effects
   };
 }
 
@@ -172,9 +178,9 @@ export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): Ca
 /* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
-  VideoEffectName: VideoEffectName
+  videoEffectName: VideoEffectName
 ): LocalVideoStreamVideoEffectsState {
   return {
-    activeEffect: VideoEffectName
+    activeEffect: videoEffectName
   };
 }

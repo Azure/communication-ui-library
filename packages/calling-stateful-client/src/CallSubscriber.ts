@@ -254,15 +254,6 @@ export class CallSubscriber {
 
       /* @conditional-compile-remove(video-background-effects) */
       {
-        // set any video effects that are already applied to the local video stream
-        const newLocalVideoStream = this._call.localVideoStreams[0];
-        const localVideoStreamEffectsAPI = newLocalVideoStream.feature(Features.VideoEffects);
-        this._context.setCallLocalVideoStreamVideoEffects(
-          this._callIdRef.callId,
-          // TODO: support multiple effects
-          convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects[0])
-        );
-
         // Subscribe to video effect changes
         const localVideoStreamKey = event.added[0].source.id;
         this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
@@ -271,8 +262,8 @@ export class CallSubscriber {
           new LocalVideoStreamVideoEffectsSubscriber({
             parent: this._callIdRef,
             context: this._context,
-            localVideoStream: newLocalVideoStream,
-            localVideoStreamEffectsAPI
+            localVideoStream: this._call.localVideoStreams[0],
+            localVideoStreamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
           })
         );
       }
