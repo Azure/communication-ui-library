@@ -22,6 +22,8 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
+/* @conditional-compile-remove(video-background-effects) */
+import { convertFromSDKToDeclarativeVideoStreamVideoEffects } from './Converter';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -252,6 +254,16 @@ export class CallSubscriber {
 
       /* @conditional-compile-remove(video-background-effects) */
       {
+        // set any video effects that are already applied to the local video stream
+        const newLocalVideoStream = this._call.localVideoStreams[0];
+        const localVideoStreamEffectsAPI = newLocalVideoStream.feature(Features.VideoEffects);
+        this._context.setCallLocalVideoStreamVideoEffects(
+          this._callIdRef.callId,
+          // TODO: support multiple effects
+          convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects[0])
+        );
+
+        // Subscribe to video effect changes
         const localVideoStreamKey = event.added[0].source.id;
         this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
         this._localVideoStreamVideoEffectsSubscribers.set(
@@ -259,8 +271,8 @@ export class CallSubscriber {
           new LocalVideoStreamVideoEffectsSubscriber({
             parent: this._callIdRef,
             context: this._context,
-            localVideoStream: this._call.localVideoStreams[0],
-            localVideoStreamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
+            localVideoStream: newLocalVideoStream,
+            localVideoStreamEffectsAPI
           })
         );
       }

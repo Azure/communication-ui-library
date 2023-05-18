@@ -277,17 +277,14 @@ export class CallContext {
   /* @conditional-compile-remove(video-background-effects) */
   public setCallLocalVideoStreamVideoEffects(
     callId: string,
-    videoEffects: Partial<LocalVideoStreamVideoEffectsState>
+    videoEffects: LocalVideoStreamVideoEffectsState | undefined
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
         if (stream) {
-          stream.videoEffects = {
-            isActive: videoEffects.isActive ?? stream.videoEffects?.isActive ?? false,
-            effectName: videoEffects.effectName ?? stream.videoEffects?.effectName
-          };
+          stream.videoEffects = videoEffects;
         }
       }
     });
@@ -684,7 +681,7 @@ export class CallContext {
   /* @conditional-compile-remove(video-background-effects) */
   public setDeviceManagerUnparentedViewVideoEffects(
     localVideoStream: LocalVideoStreamState,
-    videoEffects: LocalVideoStreamVideoEffectsState
+    videoEffects: LocalVideoStreamVideoEffectsState | undefined
   ): void {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
@@ -692,11 +689,7 @@ export class CallContext {
           stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
-        const draftStream = draft.deviceManager.unparentedViews[foundIndex];
-        draftStream.videoEffects = {
-          isActive: videoEffects.isActive ?? draftStream.videoEffects?.isActive ?? false,
-          effectName: videoEffects.effectName ?? draftStream.videoEffects?.effectName
-        };
+        draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;
       }
     });
   }
