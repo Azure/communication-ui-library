@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectErrorPayload, VideoEffectName, VideoEffectsFeature } from '@azure/communication-calling';
+import { VideoEffectErrorPayload, VideoEffectsFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(video-background-effects) */
