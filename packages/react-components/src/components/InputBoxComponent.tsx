@@ -602,7 +602,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
       onChange && onChange(event, result);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
+    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, debouncedQueryUpdate]
   );
 
   const getInputFieldTextValue = (): string => {
