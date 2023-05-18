@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Filter messageReceived notification by threadId in ChatAdapter",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "patch"
+}

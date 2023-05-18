@@ -142,7 +142,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
-          props.localVideoTileOptions?.position === 'hidden' ? 'hidden' : props.isMobile ? 'matchStream' : '16:9'
+          props.localVideoTileOptions?.position === 'hidden'
+            ? 'hidden'
+            : props.isMobile
+            ? 'followDeviceOrientation'
+            : '16:9'
         }
       />
     );
