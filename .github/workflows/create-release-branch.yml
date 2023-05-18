@@ -87,7 +87,7 @@ jobs:
 
       - name: Force build flavor to `beta`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
-        run: node ./common/scripts/force-build-flavor.mjs beta
+        run: node ./common/scripts/force-build-flavor.mjs beta-release
 
       # Synchronize the telemetry package versions.
       - name: Synchronize package version reported to telemetry
@@ -101,6 +101,23 @@ jobs:
         run: |
           git add .
           git commit -m "Selected stable sdk's for release branch"
+          git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
+
+      # Switch flavor when necessary
+      - name: Switch flavor for beta-release build
+        if: ${{ matrix.flavor == 'beta-release' }}
+        run: rush switch-flavor:beta-release
+
+      - name: Build NPM Package
+        if: ${{ matrix.flavor == 'beta-release' }}
+        run: rush build -t @azure/communication-react
+        id: buildapifiles
+
+      - name: Commit new snapshots
+        if: ${{  always() && matrix.flavor == 'beta-release' && steps.changescheck.outputs.hasChanged == 'true' }}
+        run: |
+          git add packages/**/*.api.md
+          git commit -m 'Update ${{ matrix.flavor }} API files'
           git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
 
       # Checkout back to pre-release branch
