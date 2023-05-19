@@ -207,6 +207,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
 
+  const sideButtonsPresent =
+    isEnabled(options.peopleButton) || isEnabled(options.chatButton) || customButtons['secondary'] !== undefined;
+
   let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
   /* @conditional-compile-remove(rooms) */
   screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
@@ -341,7 +344,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </Stack>
           </CallAdapterProvider>
         </Stack.Item>
-        {!props.mobileView && (
+        {!props.mobileView && sideButtonsPresent && (
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
@@ -352,7 +355,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
-                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                    disabled={
+                      props.disableButtonsForLobbyPage ||
+                      props.disableButtonsForHoldScreen ||
+                      isDisabled(options.peopleButton)
+                    }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
                   />

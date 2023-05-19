@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "UI update for storybook MessageThread",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "none"
+}
