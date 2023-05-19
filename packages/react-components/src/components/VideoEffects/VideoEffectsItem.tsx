@@ -27,7 +27,7 @@ export interface _VideoEffectsItemProps {
    * It must be unique within the set of options.
    * @example 'blur'
    */
-  key: string;
+  itemKey: string;
 
   /**
    * The text to display for the Video effects item.
@@ -132,19 +132,19 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   return (
     <TooltipHost {...props.tooltipProps}>
       <Stack
-        key={props.key}
+        key={props.itemKey}
         className={mergeStyles(props.styles?.root)}
         verticalAlign="center"
         horizontalAlign="center"
         styles={containerStyles}
         data-ui-id={`video-effects-item`}
-        onClick={disabled ? undefined : () => props.onSelect?.(props.key)}
+        onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
         onKeyDown={
           disabled
             ? undefined
             : (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
-                  props.onSelect?.(props.key);
+                  props.onSelect?.(props.itemKey);
                 }
               }
         }
