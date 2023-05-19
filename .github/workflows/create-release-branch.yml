@@ -85,7 +85,7 @@ jobs:
           node ./common/scripts/force-build-flavor.mjs stable
           rush update
 
-      - name: Force build flavor to `beta`
+      - name: Force build flavor to `beta-release`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: node ./common/scripts/force-build-flavor.mjs beta-release
 

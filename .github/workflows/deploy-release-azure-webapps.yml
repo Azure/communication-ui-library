@@ -44,8 +44,8 @@ jobs:
         run: rush switch-flavor:stable
 
       # Switch flavor to beta release when it is beta release branch
-      - name: Switch flavor for stable build
-        if: ${{ !contains(github.ref, 'beta') }}
+      - name: Switch flavor for beta release build
+        if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
 
       - name: Build Projects
