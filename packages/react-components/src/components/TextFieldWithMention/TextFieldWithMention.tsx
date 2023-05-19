@@ -19,6 +19,7 @@ import {
   textToTagParser,
   updateHTML
 } from './../TextFieldWithMention/mentionTagHelpers';
+import { isEnterKeyEventFromCompositionSession } from '../utils/keyboardNavigation';
 
 const DEFAULT_MENTION_TRIGGER = '@';
 
@@ -169,8 +170,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       // as onMouseUp can be triggered before or after onSelect event
       // because its order depends on mouse events not selection.
       setShouldHandleOnMouseDownDuringSelect(false);
-      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
+      if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
       if (ev.key === 'ArrowUp') {

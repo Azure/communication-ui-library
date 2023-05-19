@@ -31,6 +31,7 @@ import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions, _MentionPopover } from './MentionPopover';
 import { TextFieldWithMention, TextFieldWithMentionProps } from './TextFieldWithMention/TextFieldWithMention';
+import { isEnterKeyEventFromCompositionSession } from './utils/keyboardNavigation';
 
 /**
  * @private
@@ -113,8 +114,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
+      if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
@@ -157,7 +157,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       dataUiId: dataUiId,
       textValue: textValue,
       onChange: onChange,
-      onKeyDown: onTextFieldKeyDown,
+      onKeyDown: onKeyDown,
       onEnterKeyDown: onEnterKeyDown,
       textFieldRef: textFieldRef,
       supportNewline: supportNewline,
