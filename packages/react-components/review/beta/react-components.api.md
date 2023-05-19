@@ -751,7 +751,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
+    ControlButtonVideoEffectsOption: JSX.Element;
+    ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -2032,7 +2033,7 @@ export interface _VideoEffectsItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
-    key: string;
+    itemKey: string;
     onSelect?: (key: string) => void;
     styles?: _VideoEffectsItemStyles;
     title?: string;

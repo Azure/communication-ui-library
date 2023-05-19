@@ -25,6 +25,9 @@
     "uploading": "מעלה",
     "uploadCompleted": "ההעלאה הושלמה"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "הצעות"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "ההודעה נשלחה",
     "deliveredTooltipText": "‏‏נשלח",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "המצלמה שלך כבויה",
     "onSplitButtonPrimaryActionCamera": "כבה מצלמה",
     "offSplitButtonPrimaryActionCamera": "הפעל את המצלמה",
-    "cameraPrimaryActionSplitButtonTitle": "השתמש במצלמה"
+    "cameraPrimaryActionSplitButtonTitle": "השתמש במצלמה",
+    "videoEffectsMenuItemTitle": "אפקטים"
   },
   "microphoneButton": {
     "onLabel": "השתק",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "הצטרפות לשיחה נכשלה.",
     "failedToJoinCallInvalidMeetingLink": "לא ניתן להצטרף לפגישה. קישור לא חוקי.",
     "startScreenSharingGeneric": "הייתה בעיה בהפעלת שיתוף מסך.",
-    "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך."
+    "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך.",
+    "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
