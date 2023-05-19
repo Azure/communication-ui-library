@@ -2,13 +2,15 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectErrorPayload, VideoEffectName, VideoEffectsFeature } from '@azure/communication-calling';
+import { VideoEffectErrorPayload, VideoEffectsFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { LocalVideoStreamState, LocalVideoStreamVideoEffectsState } from './CallClientState';
+import { LocalVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(video-background-effects) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(video-background-effects) */
 import { CallIdRef } from './CallIdRef';
+/* @conditional-compile-remove(video-background-effects) */
+import { convertFromSDKToDeclarativeVideoStreamVideoEffects } from './Converter';
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -48,33 +50,28 @@ export class LocalVideoStreamVideoEffectsSubscriber {
     this._localVideoStreamEffectsAPI.off('effectsError', this.effectsError);
   };
 
-  private effectsStarted = (effects: VideoEffectName[]): void => {
-    this.updateEffectsState({
-      isActive: true,
-      effectName: effects[0]
-    });
+  private effectsStarted = (): void => {
+    this.updateStatefulVideoEffects();
   };
 
-  private effectsStopped = (effects: VideoEffectName[]): void => {
-    this.updateEffectsState({
-      isActive: false,
-      effectName: effects[0]
-    });
+  private effectsStopped = (): void => {
+    this.updateStatefulVideoEffects();
   };
 
   private effectsError = (error: VideoEffectErrorPayload): void => {
-    // When there is an error the effects have stopped. Update the state to reflect this.
-    this.updateEffectsState({
-      isActive: false
-    });
+    // When there is an error the effects have stopped. Ensure state is updated to reflect if effects are active or not.
+    this.updateStatefulVideoEffects();
     this._context.teeErrorToState(new Error(error.message), 'VideoEffectsFeature.startEffects');
   };
 
-  private updateEffectsState = (newEffectsState: LocalVideoStreamVideoEffectsState): void => {
+  private updateStatefulVideoEffects = (): void => {
+    const statefulVideoEffects = convertFromSDKToDeclarativeVideoStreamVideoEffects(
+      this._localVideoStreamEffectsAPI.activeEffects
+    );
     if (this._parent === 'unparented') {
-      this._context.setDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, newEffectsState);
+      this._context.setDeviceManagerUnparentedViewVideoEffects(this._localVideoStream, statefulVideoEffects);
     } else {
-      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, newEffectsState);
+      this._context.setCallLocalVideoStreamVideoEffects(this._parent.callId, statefulVideoEffects);
     }
   };
 }
