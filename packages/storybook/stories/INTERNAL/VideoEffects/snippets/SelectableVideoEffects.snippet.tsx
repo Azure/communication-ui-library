@@ -50,6 +50,7 @@ export const SelectableVideoEffects = (): JSX.Element => {
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
         {sampleBackgrounds.slice(0, 3).map((url, index) => (
           <_VideoEffectsItem
+            key={`customBackground${index}`}
             isSelected={selectedEffect === `bg${index}`}
             onSelect={() => setSelectedEffect(`bg${index}`)}
             itemKey={`customBackground${index}`}
