@@ -734,6 +734,11 @@ export const getDisplayNameForMentionSuggestion = (suggestion: Mention, localeSt
   return suggestion.displayText !== '' ? suggestion.displayText : displayNamePlaceholder ?? '';
 };
 
+/**
+ * Represents a tag in the text.
+ *
+ * @private
+ */
 export type TagData = {
   tagType: string; // The type of tag (e.g. msft-mention)
   openTagIdx: number; // Start of the tag relative to the parent content
@@ -745,8 +750,18 @@ export type TagData = {
   plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
 };
 
+/**
+ * The type of an HTML tag.
+ *
+ * @private
+ */
 export type HtmlTagType = 'open' | 'close' | 'self-closing';
 
+/**
+ * Represents an HTML tag.
+ *
+ * @private
+ */
 export type HtmlTag = {
   content: string;
   startIdx: number;
@@ -847,6 +862,14 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
   return { tags, plainText: plainTextRepresentation };
 };
 
+/**
+ * Parses an open HTML tag and returns the tag data.
+ * @param tag - The HTML tag to parse.
+ * @param startIdx - The starting index of the tag in the text.
+ * @returns The tag data.
+ *
+ * @private
+ */
 export const parseOpenTag = (tag: string, startIdx: number): TagData => {
   const tagType = tag
     .substring(1, tag.length - 1)
@@ -860,6 +883,14 @@ export const parseOpenTag = (tag: string, startIdx: number): TagData => {
   };
 };
 
+/**
+ * Finds the next HTML tag in the given text starting from the given index.
+ * @param text - The text to search for HTML tags.
+ * @param startIndex - The index to start searching for HTML tags.
+ * @returns The next HTML tag found, or undefined if no more tags are found.
+ *
+ * @private
+ */
 export const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
   const tagStartIndex = text.indexOf('<', startIndex);
   if (tagStartIndex === -1) {
@@ -881,10 +912,18 @@ export const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | und
   return {
     content: tag,
     startIdx: tagStartIndex,
-    type
+    type: type
   };
 };
 
+/**
+ * Adds a tag to the tag stack and updates the parent tag's subtags.
+ * @param tag - The tag to add.
+ * @param tagStack - The tag stack.
+ * @param tags - The array of tags.
+ *
+ * @private
+ */
 export const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];
