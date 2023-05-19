@@ -1009,6 +1009,11 @@ export type TeamsAdapterOptions = {
    * and would not be updated again within the lifecycle of adapter.
    */
   onFetchProfile?: OnFetchProfileCallback;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background image picker.
+   */
+  videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 /**
@@ -1167,11 +1172,6 @@ const useAzureCommunicationCallAdapterGeneric = <
             /* @conditional-compile-remove(rooms) */ options
           })) as Adapter;
         } else if (adapterKind === 'Teams') {
-          // This is just the type check to ensure that roleHint is defined.
-          /* @conditional-compile-remove(teams-identity-support)) */
-          if (options && !('onFetchProfile' in options)) {
-            throw new Error('Unreachable code, provided a options without roleHint.');
-          }
           /* @conditional-compile-remove(teams-identity-support) */
           newAdapter = (await createTeamsCallAdapter({
             credential,

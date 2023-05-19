@@ -1447,6 +1447,7 @@ export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBac
 // @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @beta

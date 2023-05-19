@@ -3382,6 +3382,7 @@ export interface SystemMessageCommon extends MessageCommon {
 // @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
+    videoBackgroundImages?: VideoBackgroundImage[];
 };
 
 // @beta
