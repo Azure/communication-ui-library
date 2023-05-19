@@ -98,7 +98,7 @@ export const VideoEffectsPaneContent = (props: {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(noneEffect);
-        await adapter.stopVideoBackgroundEffect();
+        await adapter.stopVideoBackgroundEffects();
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
           return effect.key === effectKey;
