@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
+import React, { useState, FormEvent, useCallback, useRef } from 'react';
 import { useEffect } from 'react';
 import { useLocale } from '../../localization';
-import { Stack, TextField, IStyle, ITextField } from '@fluentui/react';
-import { BaseCustomStyles } from './../../types';
+import { TextField, ITextField, ITextFieldProps } from '@fluentui/react';
 import { Caret } from 'textarea-caret-ts';
 import { MentionLookupOptions, _MentionPopover, Mention } from './../MentionPopover';
 import { useDebouncedCallback } from 'use-debounce';
@@ -24,59 +23,36 @@ import {
 const DEFAULT_MENTION_TRIGGER = '@';
 
 /**
+ * Props for the TextFieldWithMention component.
+ *
  * @private
  */
-export interface InputBoxStylesProps extends BaseCustomStyles {
-  /** Styles for the text field. */
-  textField?: IStyle;
-  /** Styles for the system message; These styles will be ignored when a custom system message component is provided. */
-  systemMessage?: IStyle;
-  /** Styles for customizing the container of the text field */
-  textFieldContainer?: IStyle;
-}
-
-type InputBoxComponentProps = {
-  children: ReactNode;
-  /**
-   * Inline child elements passed in. Setting to false will mean they are on a new line.
-   */
-  inlineChildren: boolean;
-  'data-ui-id'?: string;
-  id?: string;
+export interface TextFieldWithMentionProps {
+  textFieldProps: ITextFieldProps;
+  dataUiId: string | undefined;
   textValue: string; // This could be plain text or HTML.
   onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
-  textFieldRef?: React.RefObject<ITextField>;
-  inputClassName?: string;
-  placeholderText?: string;
-  supportNewline?: boolean;
-  maxLength: number;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEnterKeyDown?: () => void;
-  errorMessage?: string | React.ReactElement;
-  disabled?: boolean;
-  styles?: InputBoxStylesProps;
-  autoFocus?: 'sendBoxTextField';
+  textFieldRef?: React.RefObject<ITextField>;
+  supportNewline?: boolean;
   mentionLookupOptions?: MentionLookupOptions;
-};
+}
 
 /**
  * @private
  */
-export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element => {
+export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Element => {
   const {
-    id,
-    'data-ui-id': dataUiId,
+    textFieldProps,
+    dataUiId,
     textValue,
     onChange,
     textFieldRef,
-    placeholderText,
     onKeyDown,
     onEnterKeyDown,
     supportNewline,
-    errorMessage,
-    disabled,
-    mentionLookupOptions,
-    children
+    mentionLookupOptions
   } = props;
   const inputBoxRef = useRef<HTMLDivElement>(null);
 
@@ -521,23 +497,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         />
       )}
       <TextField
-        autoFocus={props.autoFocus === 'sendBoxTextField'}
+        {...textFieldProps}
         data-ui-id={dataUiId}
-        multiline
-        autoAdjustHeight
-        multiple={false}
-        resizable={false}
-        componentRef={textFieldRef}
-        id={id}
-        placeholder={placeholderText}
         value={inputTextValue}
         onChange={(e, newValue) => {
           // Remove when switching to react 17+, currently needed because of https://legacy.reactjs.org/docs/legacy-event-pooling.html
           // Prevents React from resetting event's properties
           e.persist();
-
           setInputTextValue(newValue ?? '');
-
           handleOnChange(
             e,
             tagsValue,
@@ -589,10 +556,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           setSelectionStartValue(null);
           setSelectionEndValue(null);
         }}
-        autoComplete="off"
         onKeyDown={onTextFieldKeyDown}
-        disabled={disabled}
-        errorMessage={errorMessage}
         elementRef={inputBoxRef}
       />
     </div>
