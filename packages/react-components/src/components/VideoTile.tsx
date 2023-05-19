@@ -389,6 +389,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   className={mergeStyles(displayNameStyle)}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
+                  data-ui-id="video-tile-display-name"
                 >
                   {displayName}
                 </Text>
