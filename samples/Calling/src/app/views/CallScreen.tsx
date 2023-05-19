@@ -112,7 +112,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  const callAdapterOptions: TeamsAdapterOptions = useMemo(
+  const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
       videoBackgroundImages
     }),
@@ -124,7 +124,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions
+      /* @conditional-compile-remove(video-background-effects) */ options: teamsAdapterOptions
     },
     afterCreate
   );

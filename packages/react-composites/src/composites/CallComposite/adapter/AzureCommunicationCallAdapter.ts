@@ -953,6 +953,19 @@ export type CallAdapterLocator =
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 
 /**
+ * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
+ *
+ * @beta
+ */
+export type CommonCallAdapterOptions = {
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Default set of background images for background image picker.
+   */
+  videoBackgroundImages?: VideoBackgroundImage[];
+};
+
+/**
  * Optional parameters to create {@link AzureCommunicationCallAdapter}
  *
  * @beta
@@ -965,12 +978,7 @@ export type AzureCommunicationCallAdapterOptions = {
    * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
    */
   roleHint?: Role;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Default set of background images for background image picker.
-   */
-  videoBackgroundImages?: VideoBackgroundImage[];
-};
+} & CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -998,7 +1006,7 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 /**
- * Optional parameters to create {@link AzureCommunicationCallAdapter}
+ * Optional parameters to create {@link TeamsCallAdapter}
  *
  * @beta
  */
@@ -1009,12 +1017,7 @@ export type TeamsAdapterOptions = {
    * and would not be updated again within the lifecycle of adapter.
    */
   onFetchProfile?: OnFetchProfileCallback;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Default set of background images for background image picker.
-   */
-  videoBackgroundImages?: VideoBackgroundImage[];
-};
+} & CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
