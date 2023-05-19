@@ -273,7 +273,7 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
 /* @conditional-compile-remove(video-background-effects) */
 const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
   addMockEmitter({
-    name: 'MockVideoEffect',
+    activeEffects: ['MockVideoEffect'],
     startEffects: () => Promise.resolve(),
     stopEffects: () => Promise.resolve(),
     dispose: () => Promise.resolve()
