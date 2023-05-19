@@ -355,7 +355,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
-                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                    disabled={
+                      props.disableButtonsForLobbyPage ||
+                      props.disableButtonsForHoldScreen ||
+                      isDisabled(options.peopleButton)
+                    }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
                   />

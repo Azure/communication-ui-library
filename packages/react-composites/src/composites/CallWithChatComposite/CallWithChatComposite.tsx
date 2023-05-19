@@ -242,6 +242,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     }, 300);
   }, [compositeParentDivId]);
 
+  const isOnHold = isOnHoldTrampoline(currentPage);
+  useEffect(() => {
+    if (isOnHold) {
+      closeChat();
+    }
+  }, [closeChat, isOnHold]);
+
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const toggleChat = useCallback(() => {
     isChatOpen || !hasJoinedCall ? closeChat() : openChat();
@@ -263,7 +270,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   );
 
   const showChatButton = checkShowChatButton(props.callControls);
-  const chatButtonDisabled = showChatButton && (checkChatButtonIsDisabled(props.callControls) || !hasJoinedCall);
+  const chatButtonDisabled =
+    showChatButton && (checkChatButtonIsDisabled(props.callControls) || !hasJoinedCall || isOnHold);
   const chatTabHeaderProps = useMemo(
     () =>
       mobileView && showChatButton
@@ -495,4 +503,10 @@ const checkShowChatButton = (callControls?: boolean | CallWithChatControlOptions
 
 const checkChatButtonIsDisabled = (callControls?: boolean | CallWithChatControlOptions): boolean => {
   return typeof callControls === 'object' && isDisabled(callControls?.chatButton);
+};
+
+const isOnHoldTrampoline = (page: CallCompositePage | undefined): boolean => {
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  return page === 'hold';
+  return false;
 };
