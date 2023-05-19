@@ -1,4 +1,7 @@
 import { Meta } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
+import { Stack } from '@fluentui/react';
+import { overviewPageImagesStackStyle } from './constants';
 
 <Meta
   id="accessibility"
@@ -12,3 +15,33 @@ Accessibility by design is a principle across Microsoft products.
 UI Library follows this principle in making sure that all UI Components are fully accessible.
 The UI Library is fully compliant with Microsoft standards for accessibility.
 Learn more about how Microsoft develops with [accessibility by design](https://www.microsoft.com/accessibility).
+
+## Closed Captions
+
+<DetailedBetaBanner version={'1.5.1-beta.1'} />
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/captions_Desktop.png" alt="example of captions on web desktop" />
+  </Stack.Item>
+</Stack>
+
+Closed captions are a powerful tool that enables developers to enhance the accessibility of their videos. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Here are main scenarios where Closed Captions are useful:
+
+**Accessibility:** In the workplace or consumer apps, Closed Captioning for meetings, conference calls, and training videos can make a dramatic difference. Scenarios when audio cannot be heard, either because of a noisy environment, such as an airport, or because of an environment that must be kept quiet, such as a hospital.
+
+**Inclusivity:** Closed Captioning was developed to aid hearing-impaired people but can also be useful in language proficiency as well.
+
+### Incorporating Closed Captions in your experience
+
+The UI Library helps Contoso become more accessible and inclusive by providing closed captions within the CallComposite experiences. Closed Captions are enabled by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+
+**Currently, Closed Captions are only available for Teams Interop and Teams CTE Calls. Captions can be enabled both in Mobile Web sessions and in Desktop Web sessions.**
+
+Users can enable captions in the menu and select the spoken language for the captions. Captions does not detect language automatically, so the spoken language selected needs to match the language that will be used in the call. Translation is not currently supported.
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <img src="images/captions_language_Desktop.png" alt="example of choosing a language on web desktop" />
+  </Stack.Item>
+</Stack>
