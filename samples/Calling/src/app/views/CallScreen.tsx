@@ -25,6 +25,8 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { Profile } from '@internal/react-composites';
 
 export interface CallScreenProps {
   token: string;
@@ -115,10 +117,10 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(video-background-effects) */
   const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
-      videoBackgroundImages
+      /* @conditional-compile-remove(teams-adhoc-call) */ onFetchProfile,
+      /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages
     }),
     []
   );
@@ -128,7 +130,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(video-background-effects) */ options: teamsAdapterOptions
+      options: teamsAdapterOptions
     },
     afterCreate
   );
@@ -149,9 +151,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
 
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
+      /* @conditional-compile-remove(teams-adhoc-call) */
+      onFetchProfile,
       /* @conditional-compile-remove(rooms) */
       roleHint,
       /* @conditional-compile-remove(video-background-effects) */
@@ -164,7 +167,6 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       ...adapterArgs,
       userId,
       locator,
-      /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */
       options: callAdapterOptions
     },
     afterCreate
@@ -224,3 +226,12 @@ const videoBackgroundImages = [
     tooltipText: 'Custom Background'
   }
 ];
+
+/* @conditional-compile-remove(teams-adhoc-call) */
+const onFetchProfile = async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
+  // TODO: Explore using Graph API to differentiate Call queues from other Voice app bots
+  if (userId.startsWith('28:orgid:')) {
+    return { displayName: 'Call queue' };
+  }
+  return defaultProfile;
+};

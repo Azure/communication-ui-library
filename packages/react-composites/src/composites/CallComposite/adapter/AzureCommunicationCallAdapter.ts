@@ -136,11 +136,7 @@ class CallContext {
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
-    this.displayNameModifier = options?.onFetchProfile
-      ? createProfileStateModifier(options.onFetchProfile, () => {
-          this.setState(this.getState());
-        })
-      : undefined;
+    this.displayNameModifier = options?.onFetchProfile ? createProfileStateModifier(options.onFetchProfile) : undefined;
   }
 
   private bindPublicMethods(): void {
@@ -1050,6 +1046,12 @@ export type CommonCallAdapterOptions = {
    * Default set of background images for background image picker.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /**
+   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
+   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
+   * and would not be updated again within the lifecycle of adapter.
+   */
+  onFetchProfile?: OnFetchProfileCallback;
 };
 
 /**
@@ -1097,14 +1099,7 @@ export type AzureCommunicationCallAdapterArgs = {
  *
  * @beta
  */
-export type TeamsAdapterOptions = {
-  /**
-   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
-   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
-   * and would not be updated again within the lifecycle of adapter.
-   */
-  onFetchProfile?: OnFetchProfileCallback;
-} & CommonCallAdapterOptions;
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
