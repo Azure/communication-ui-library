@@ -107,7 +107,7 @@ const statefulChatClient = createStatefulChatClient({
 
 // You can then use the `statefulChatClient` in the same way as a `ChatClient` with a slight variation.
 
-const chatThreadClient = await statefulChatClient.createChatThread({});
+const chatThreadClient = await statefulChatClient.createChatThread({ topic: '' });
 ```
 
 To interact with the chat thread, developers have access `statefulChatClient` and `chatThreadClient`. The stateful clients are a 1:1 representation.

@@ -340,7 +340,7 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -860,7 +860,7 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -2678,16 +2678,18 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    effectName?: VideoEffectName;
-    isActive: boolean;
+    activeEffects?: VideoEffectName[];
 }
 
 // @beta
+<<<<<<< HEAD
 export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating' | 'hidden';
 }
 
 // @beta
+=======
+>>>>>>> 66c7308868ecc013370d5106dd80d822d811324b
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
