@@ -6,6 +6,7 @@ import { useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
 import { _VideoEffectsItem, _VideoEffectsItemProps } from './VideoEffectsItem';
+import { hiddenVideoEffectsItemContainerStyles } from './VideoEffectsItem.styles';
 
 /**
  * Props for {@link _VideoBackgroundEffectsPicker}
@@ -116,8 +117,11 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
     ...option
   }));
 
-  const optionsByRow =
-    props.itemsPerRow === 'wrap' ? [convertedOptions] : chunk(convertedOptions, props.itemsPerRow ?? 3);
+  const itemsPerRow = props.itemsPerRow ?? 3;
+  const optionsByRow = itemsPerRow === 'wrap' ? [convertedOptions] : chunk(convertedOptions, itemsPerRow);
+
+  // If the final row is not full, fill it with hidden items to ensure layout.
+  const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - optionsByRow[optionsByRow.length - 1].length;
 
   return (
     <Stack tokens={{ childrenGap: '0.5rem' }}>
@@ -133,6 +137,11 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           {options.map((option) => (
             <_VideoEffectsItem {...option} key={option.key} />
           ))}
+          {fillCount > 0 &&
+            rowIndex === optionsByRow.length - 1 &&
+            Array.from({ length: fillCount }).map((_, index) => (
+              <Stack key={index} styles={hiddenVideoEffectsItemContainerStyles} />
+            ))}
         </Stack>
       ))}
     </Stack>
