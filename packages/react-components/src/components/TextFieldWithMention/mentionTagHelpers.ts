@@ -845,13 +845,13 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
         currentOpenTag.plainTextEndIndex = plainTextRepresentation.length;
         addTag(currentOpenTag, tagParseStack, tags);
       } else {
-        console.error(
+        const errorMessage =
           'Unexpected close tag found. Got "' +
-            closeTagType +
-            '" but expected "' +
-            tagParseStack[tagParseStack.length - 1]?.tagType +
-            '"'
-        );
+          closeTagType +
+          '" but expected "' +
+          tagParseStack[tagParseStack.length - 1]?.tagType +
+          '"';
+        throw new Error(errorMessage);
       }
     }
 
