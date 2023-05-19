@@ -252,6 +252,7 @@ export class CallSubscriber {
 
       /* @conditional-compile-remove(video-background-effects) */
       {
+        // Subscribe to video effect changes
         const localVideoStreamKey = event.added[0].source.id;
         this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
         this._localVideoStreamVideoEffectsSubscribers.set(

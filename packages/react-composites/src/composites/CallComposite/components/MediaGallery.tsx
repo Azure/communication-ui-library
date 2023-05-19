@@ -131,6 +131,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        /* @conditional-compile-remove(click-to-call) */
+        localVideoTileSize={props.isMobile ? 'followDeviceOrientation' : '16:9'}
       />
     );
   }, [

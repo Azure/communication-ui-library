@@ -398,7 +398,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  stopVideoBackgroundEffect(): Promise<void>;
+  stopVideoBackgroundEffects(): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Override the background picker images for background replacement effect.

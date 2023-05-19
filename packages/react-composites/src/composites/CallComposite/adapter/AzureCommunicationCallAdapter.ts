@@ -71,8 +71,6 @@ import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(video-background-effects) */
-import { startSelectedVideoEffect } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
@@ -97,6 +95,8 @@ import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchPro
 import { IncomingCallAdapter, IncomingCallListener } from './IncomingCallAdapter';
 /* @conditional-compile-remove(incoming-call-composites) */
 import { AzureCommunicationIncomingCallAdapter } from './AzureCommunicationIncomingCallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { getBackgroundEffectFromSelectedEffect, getSelectedCameraFromAdapterState } from '../utils';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -417,7 +417,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(video-background-effects) */
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.stopVideoBackgroundEffect.bind(this);
+    this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.updateBackgroundPickerImages.bind(this);
     /* @conditional-compile-remove(incoming-call-composites) */
@@ -608,9 +608,25 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async startCamera(options?: VideoStreamOptions): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       if (!isCameraOn(this.getState())) {
-        await this.handlers.onToggleCamera(options);
+        // First kick off the effect on the local device before starting the camera in the call.
+        // This prevents the effect not being applied for a brief moment when the camera is started.
         /* @conditional-compile-remove(video-background-effects) */
-        await startSelectedVideoEffect(this);
+        {
+          const selectedEffect = this.getState().selectedVideoBackgroundEffect;
+          const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+          if (selectedEffect && selectedCamera) {
+            const stream = new SDKLocalVideoStream(selectedCamera);
+            const effect = getBackgroundEffectFromSelectedEffect(selectedEffect);
+
+            if (effect) {
+              await stream.feature(Features.VideoEffects).startEffects(effect);
+            } else {
+              await stream.feature(Features.VideoEffects).stopEffects();
+            }
+          }
+        }
+
+        await this.handlers.onToggleCamera(options);
       }
     });
   }
@@ -673,7 +689,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async stopVideoBackgroundEffect(): Promise<void> {
+  public async stopVideoBackgroundEffects(): Promise<void> {
     await this.handlers.onRemoveVideoBackgroundEffects();
   }
   /* @conditional-compile-remove(video-background-effects) */

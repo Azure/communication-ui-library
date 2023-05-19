@@ -60,7 +60,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
         // feature for incoming call at the composite level
-        'incoming-call-composites'
+        'incoming-call-composites',
+        // Feature for updates needed for Click to Call (C2C) scenarios
+        'click-to-call'
       ],
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
