@@ -331,8 +331,7 @@ const MessageThreadStory = (args): JSX.Element => {
     });
   };
 
-  const onClickHandler = (): void => {
-    console.info(selectedMessageType);
+  const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
       case 'newMessage':
         onSendNewMessage();
@@ -381,8 +380,7 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
-      {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
-        Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
+      {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
         <Dropdown
           style={{ width: '15rem' }}
@@ -393,7 +391,7 @@ const MessageThreadStory = (args): JSX.Element => {
             setSelectedMessageType(option);
           }}
         />
-        <PrimaryButton text="Send" onClick={onClickHandler} />
+        <PrimaryButton text="Send" onClick={onSendHandler} />
       </Stack>
     </Stack>
   );
