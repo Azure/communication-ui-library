@@ -1220,6 +1220,9 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @beta
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @beta
 export interface Mention {
     displayText: string;
     icon?: JSX.Element;
@@ -2033,7 +2036,7 @@ export interface _VideoEffectsItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
-    key: string;
+    itemKey: string;
     onSelect?: (key: string) => void;
     styles?: _VideoEffectsItemStyles;
     title?: string;
@@ -2071,6 +2074,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

@@ -339,7 +339,7 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -858,7 +858,7 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -2681,9 +2681,11 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    effectName?: VideoEffectName;
-    isActive: boolean;
+    activeEffects?: VideoEffectName[];
 }
+
+// @beta
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
@@ -3628,6 +3630,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

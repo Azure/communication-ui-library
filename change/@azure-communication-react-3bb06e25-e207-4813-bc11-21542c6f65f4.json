@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix positioning of video effects picker tiles when there is a row with a differing count",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
