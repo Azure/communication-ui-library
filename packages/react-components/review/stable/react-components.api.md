@@ -1486,7 +1486,7 @@ export interface _VideoEffectsItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
-    key: string;
+    itemKey: string;
     onSelect?: (key: string) => void;
     styles?: _VideoEffectsItemStyles;
     title?: string;
