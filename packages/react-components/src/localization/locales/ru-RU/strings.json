@@ -25,6 +25,9 @@
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Рекомендации"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
     "deliveredTooltipText": "Отправлено",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Камера отключена",
     "onSplitButtonPrimaryActionCamera": "Выключить камеру",
     "offSplitButtonPrimaryActionCamera": "Включить камеру",
-    "cameraPrimaryActionSplitButtonTitle": "Использовать камеру"
+    "cameraPrimaryActionSplitButtonTitle": "Использовать камеру",
+    "videoEffectsMenuItemTitle": "Эффекты"
   },
   "microphoneButton": {
     "onLabel": "Отключить звук",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "Не удалось присоединиться к звонку.",
     "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
     "startScreenSharingGeneric": "Возникла проблема с запуском демонстрации экрана.",
-    "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть."
+    "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть.",
+    "unableToStartVideoEffect": "Не удалось применить эффект видео."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",

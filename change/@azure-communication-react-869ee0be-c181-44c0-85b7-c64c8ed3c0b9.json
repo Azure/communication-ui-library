@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix styling for the video effects button on the configuration page",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

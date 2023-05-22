@@ -68,6 +68,8 @@ export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoG
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
+/* @conditional-compile-remove(click-to-call) */
+export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';

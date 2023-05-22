@@ -25,23 +25,12 @@ export type ContainerProps = {
 
 const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://teams.microsoft.com/l/meetup-join');
 const isGroupID = (id: string): boolean => validateUUID(id);
-const isRoomID = (id: string): boolean => {
-  const num = Number(id);
-
-  if (Number.isInteger(num) && num > 0) {
-    return true;
-  }
-
-  return false;
-};
 
 const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefined => {
   if (isTeamsMeetingLink(locator)) {
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
     return { groupId: locator };
-  } else if (isRoomID(locator)) {
-    return { roomId: locator };
   }
   return undefined;
 };

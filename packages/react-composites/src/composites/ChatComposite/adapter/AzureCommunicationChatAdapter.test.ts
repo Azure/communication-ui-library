@@ -5,9 +5,15 @@ import { ChatClient, ChatMessage } from '@azure/communication-chat';
 /* @conditional-compile-remove(teams-inline-images) */
 import { CommunicationGetTokenOptions } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
-import { createAzureCommunicationChatAdapter } from './AzureCommunicationChatAdapter';
+import {
+  createAzureCommunicationChatAdapter,
+  createAzureCommunicationChatAdapterFromClient
+} from './AzureCommunicationChatAdapter';
+/* @conditional-compile-remove(teams-inline-images) */
+import { AzureCommunicationChatAdapterOptions } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
+import { createStatefulChatClientMock } from '../../../mocks';
 import { AdapterError } from '../../common/adapters';
 
 jest.useFakeTimers();
@@ -15,6 +21,33 @@ jest.mock('@azure/communication-chat');
 
 const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
+describe('Adapter is created as expected', () => {
+  it('when creating a new adapter from stateful client', async () => {
+    /* @conditional-compile-remove(teams-inline-images) */
+    const fakeToken: CommunicationTokenCredential = {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
+        return new Promise<MockAccessToken>((resolve) => {
+          resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });
+        });
+      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
+      dispose(): any {}
+    };
+
+    const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
+    const threadClient = statefulChatClient.getChatThreadClient('threadId');
+    /* @conditional-compile-remove(teams-inline-images) */
+    const options: AzureCommunicationChatAdapterOptions = { credential: fakeToken };
+
+    const adapter = await createAzureCommunicationChatAdapterFromClient(
+      statefulChatClient,
+      threadClient,
+      /* @conditional-compile-remove(teams-inline-images) */ options
+    );
+    expect(adapter).toBeDefined();
+  });
+});
 describe('Error is reflected in state and events', () => {
   it('when sendMessage fails', async () => {
     const threadClient = new StubChatThreadClient();
