@@ -1,5 +1,5 @@
 const plugins = [];
-process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
+process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
     {
@@ -60,8 +60,19 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
         // Feature for updates needed for Click to Call (C2C) scenarios
-        'click-to-call'
+        'click-to-call',
+        // a demo feature flag for those beta feature not ready for beta release
+        'in-progress-beta-feature-demo'
+      ],      
+      // A list of in progress beta feature.
+      // These features are still beta feature but "in progress"
+      // causing a build failure, but they are ignored by the preprocessing step.
+      inProgressFeatures: [
+        // Demo feature. Used in live-documentation of conditional compilation.
+        // Do not use in production code.
+        'in-progress-beta-feature-demo'
       ],
+      betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
       // causing a build failure, but they are ignored by the preprocessing step.

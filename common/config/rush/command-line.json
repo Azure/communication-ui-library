@@ -35,6 +35,15 @@
     },
     {
       "commandKind": "global",
+      "name": "switch-flavor:beta-release",
+      "summary": "Switch flavor to beta release mode (strip out in-progress features)",
+      "description": "Every build and test command will run based on beta version.",
+      "autoinstallerName": "rush-cpy",
+      "shellCommand": "rush switch-flavor:beta && cpy --flat common/config/env/beta-release.env common/config/env --rename .env",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:stable",
       "summary": "Switch flavor to stable",
       "description": "Every build and test command will run based on stable version.",
