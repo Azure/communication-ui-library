@@ -59,6 +59,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
+        // Feature for updates needed for Click to Call (C2C) scenarios
+        'click-to-call',
         // a demo feature flag for those beta feature not ready for beta release
         'in-progress-beta-feature-demo'
       ],      
