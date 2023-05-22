@@ -145,7 +145,7 @@ export type MentionTagUpdateResult = {
   result: string;
   updatedChange: string;
   htmlIndex: number;
-  plainTextSelectionEndIndex: number | null;
+  plainTextSelectionEndIndex: number | undefined;
 };
 
 /**
@@ -176,11 +176,11 @@ export const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTag
       result: '',
       updatedChange: processedChange,
       htmlIndex: lastProcessedHTMLIndex,
-      plainTextSelectionEndIndex: null
+      plainTextSelectionEndIndex: undefined
     };
   }
   let result = '';
-  let plainTextSelectionEndIndex: number | null = null;
+  let plainTextSelectionEndIndex: number | undefined = undefined;
   let rangeStart: number;
   let rangeEnd: number;
   // check if space symbol is handled in case if string looks like '<1 2 3>'
@@ -297,12 +297,14 @@ export type UpdateHTMLProps = {
  * @param props - Props for update HTML function.
  * @returns Updated HTML and selection index if the selection index should be set.
  */
-export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | null } => {
+export const updateHTML = (
+  props: UpdateHTMLProps
+): { updatedHTML: string; updatedSelectionIndex: number | undefined } => {
   const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
     props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
-    return { updatedHTML: newPlainText, updatedSelectionIndex: null };
+    return { updatedHTML: newPlainText, updatedSelectionIndex: undefined };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -316,7 +318,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
   // as some tags/text can be removed fully, selection should be updated correctly
-  let changeNewEndIndex: number | null = null;
+  let changeNewEndIndex: number | undefined = undefined;
 
   for (const [i, tag] of tags.entries()) {
     if (tag.plainTextBeginIndex === undefined) {

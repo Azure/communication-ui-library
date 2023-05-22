@@ -66,10 +66,11 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
   const [inputTextValue, setInputTextValue] = useState<string>('');
   const [tagsValue, setTagsValue] = useState<TagData[]>([]);
   // Index of the previous selection start in the text field
-  const [selectionStartValue, setSelectionStartValue] = useState<number | null>(null);
+  const [selectionStartValue, setSelectionStartValue] = useState<number | undefined>(undefined);
   // Index of the previous selection end in the text field
-  const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
-  // Boolean value to check if onMouseDown event should be handled during select as selection range for onMouseDown event is not updated yet and the selection range for mouse click/taps will be updated in onSelect event if needed.
+  const [selectionEndValue, setSelectionEndValue] = useState<number | undefined>(undefined);
+  // Boolean value to check if onMouseDown event should be handled during select as selection range for onMouseDown event is not updated yet
+  // and the selection range for mouse click/taps will be updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
@@ -253,6 +254,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         });
         return newSelectionIndex;
       }
+      return undefined;
     },
     []
   );
@@ -262,59 +264,70 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     (
       event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
       inputTextValue: string,
-      selectionStartValue: number | null,
-      selectionEndValue: number | null,
+      selectionStartValue: number | undefined,
+      selectionEndValue: number | undefined,
       tagsValue: TagData[]
     ): void => {
-      let updatedStartIndex = event.currentTarget.selectionStart;
-      let updatedEndIndex = event.currentTarget.selectionEnd;
+      const currentSelectionStart =
+        event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
+      const currentSelectionEnd =
+        event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
+      let updatedStartIndex = currentSelectionStart;
+      let updatedEndIndex = currentSelectionEnd;
       if (
-        event.currentTarget.selectionStart === event.currentTarget.selectionEnd &&
-        event.currentTarget.selectionStart !== null &&
-        event.currentTarget.selectionStart !== -1
+        currentSelectionStart === currentSelectionEnd &&
+        currentSelectionStart !== undefined &&
+        currentSelectionStart !== -1
       ) {
         // just a caret movement/usual typing or deleting
-        updatedStartIndex = getUpdatedSelectionStartIndexOrEndIndex(
-          inputTextValue,
-          tagsValue,
-          event.currentTarget.selectionStart,
-          selectionStartValue
-        );
-
-        updatedEndIndex = getUpdatedSelectionStartIndexOrEndIndex(
-          inputTextValue,
-          tagsValue,
-          event.currentTarget.selectionStart,
-          selectionEndValue
-        );
-      } else if (event.currentTarget.selectionStart !== event.currentTarget.selectionEnd) {
-        // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
-        if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
-          // the selection start is changed
-          updatedStartIndex = getUpdatedSelectionStartIndexOrEndIndex(
+        updatedStartIndex =
+          getUpdatedSelectionStartIndexOrEndIndex(
             inputTextValue,
             tagsValue,
-            event.currentTarget.selectionStart,
+            currentSelectionStart,
             selectionStartValue
-          );
-        }
-        if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
-          // the selection end is changed
-          updatedEndIndex = getUpdatedSelectionStartIndexOrEndIndex(
+          ) || updatedStartIndex;
+
+        updatedEndIndex =
+          getUpdatedSelectionStartIndexOrEndIndex(
             inputTextValue,
             tagsValue,
-            event.currentTarget.selectionEnd,
+            currentSelectionStart,
             selectionEndValue
-          );
+          ) || updatedEndIndex;
+      } else if (currentSelectionStart !== currentSelectionEnd) {
+        // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
+        if (currentSelectionStart !== undefined && currentSelectionStart !== selectionStartValue) {
+          // the selection start is changed
+          updatedStartIndex =
+            getUpdatedSelectionStartIndexOrEndIndex(
+              inputTextValue,
+              tagsValue,
+              currentSelectionStart,
+              selectionStartValue
+            ) || updatedStartIndex;
+        }
+        if (currentSelectionEnd !== undefined && currentSelectionEnd !== selectionEndValue) {
+          // the selection end is changed
+          updatedEndIndex =
+            getUpdatedSelectionStartIndexOrEndIndex(
+              inputTextValue,
+              tagsValue,
+              currentSelectionEnd,
+              selectionEndValue
+            ) || updatedEndIndex;
         }
       }
       // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
       if (event.currentTarget.selectionDirection === null) {
-        event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex);
+        event.currentTarget.setSelectionRange(
+          updatedStartIndex === undefined ? null : updatedStartIndex,
+          updatedEndIndex === undefined ? null : updatedEndIndex
+        );
       } else {
         event.currentTarget.setSelectionRange(
-          updatedStartIndex,
-          updatedEndIndex,
+          updatedStartIndex === undefined ? null : updatedStartIndex,
+          updatedEndIndex === undefined ? null : updatedEndIndex,
           event.currentTarget.selectionDirection
         );
       }
@@ -330,12 +343,16 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       inputTextValue: string,
       tags: TagData[],
       shouldHandleOnMouseDownDuringSelect: boolean,
-      selectionStartValue: number | null,
-      selectionEndValue: number | null
+      selectionStartValue?: number,
+      selectionEndValue?: number
     ): void => {
-      if (shouldHandleOnMouseDownDuringSelect && event.currentTarget.selectionStart !== null) {
+      const currentSelectionStart =
+        event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
+      const currentSelectionEnd =
+        event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
+      if (shouldHandleOnMouseDownDuringSelect && currentSelectionStart !== undefined) {
         // on select was triggered by mouse down
-        const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
+        const mentionTag = findMentionTagForSelection(tags, currentSelectionStart);
         if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
           // handle mention click
           if (event.currentTarget.selectionDirection === null) {
@@ -353,14 +370,15 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           setSelectionStartValue(mentionTag.plainTextBeginIndex);
           setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
         } else {
-          setSelectionStartValue(event.currentTarget.selectionStart);
-          setSelectionEndValue(event.currentTarget.selectionEnd);
+          setSelectionStartValue(currentSelectionStart);
+          setSelectionEndValue(currentSelectionEnd);
         }
       } else {
         // selection was changed by keyboard
         updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
       }
-      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly (because of setSelectionRange calls or rerender)
+      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event
+      // and they may not be handled correctly (because of setSelectionRange calls or rerender)
     },
     [updateSelectionIndexesWithMentionIfNeeded]
   );
@@ -474,7 +492,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         });
         result = updatedContent.updatedHTML;
         // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== null) {
+        if (updatedContent.updatedSelectionIndex !== undefined) {
           setCaretIndex(updatedContent.updatedSelectionIndex);
           setSelectionEndValue(updatedContent.updatedSelectionIndex);
           setSelectionStartValue(updatedContent.updatedSelectionIndex);
@@ -516,8 +534,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             textValue,
             inputTextValue,
             currentTriggerStartIndex,
-            selectionStartValue === null ? undefined : selectionStartValue,
-            selectionEndValue === null ? undefined : selectionEndValue,
+            selectionStartValue === undefined ? undefined : selectionStartValue,
+            selectionEndValue === undefined ? undefined : selectionEndValue,
             e.currentTarget.selectionStart === null ? undefined : e.currentTarget.selectionStart,
             e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
             newValue
@@ -558,8 +576,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           // setup all flags to default values when text field loses focus
           setShouldHandleOnMouseDownDuringSelect(false);
           setCaretIndex(undefined);
-          setSelectionStartValue(null);
-          setSelectionEndValue(null);
+          setSelectionStartValue(undefined);
+          setSelectionEndValue(undefined);
         }}
         onKeyDown={onTextFieldKeyDown}
         elementRef={inputBoxRef}
