@@ -18,7 +18,7 @@ This feature includes:
 - Ability to use your own hosted images as custom backgrounds.
 
 ### Features
-  - Update stateful client video effects API to use activeEffect naming. ([PR #3074](https://github.com/azure/communication-ui-library/pull/3074) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update stateful client video effects API to use activeEffect naming ([PR #3074](https://github.com/azure/communication-ui-library/pull/3074) by 2684369+JamesBurnside@users.noreply.github.com)
   - Add video effects warning when camera is turned off ([PR #2980](https://github.com/azure/communication-ui-library/pull/2980) by 2684369+JamesBurnside@users.noreply.github.com)
   - Update configuration page side pane styles and close on starting a call ([PR #3028](https://github.com/azure/communication-ui-library/pull/3028) by 2684369+JamesBurnside@users.noreply.github.com)
   - Filter the errors based on whether the side pane is currently showing the video effects side pane ([PR #3020](https://github.com/azure/communication-ui-library/pull/3020) by 97124699+prabhjot-msft@users.noreply.github.com)
@@ -47,7 +47,7 @@ This feature includes:
 ## [1.5.1-beta.4](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.4)
 
 Fri, 28 Apr 2023 23:16:11 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.3...@azure/communication-react_v1.5.1-beta.4)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.5.1-beta.3...1.5.1-beta.4)
 
 ### Bug fixes
   - Revert a breaking change for createAzureCommunicationCallWithChatAdapterFromClients
