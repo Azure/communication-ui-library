@@ -9,7 +9,7 @@ import { _StartCaptionsButton } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
-import { useMemo, useCallback, useEffect } from 'react';
+import { useMemo, useCallback, useEffect, useState } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -65,13 +65,23 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */
+  const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
+
+  /* @conditional-compile-remove(close-captions) */
   useEffect(() => {
     // set spoken language when start captions with a spoken language specified.
     // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-    if (startCaptionsButtonProps.checked) {
+    if (startCaptionsButtonProps.checked && !hasSetSpokenLanguage) {
       startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
+      // we only need to call set spoken language once when first starting captions
+      setHasSetSpokenLanguage(true);
     }
-  }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+  }, [
+    startCaptionsButtonProps.checked,
+    startCaptionsButtonHandlers,
+    startCaptionsButtonProps.currentSpokenLanguage,
+    hasSetSpokenLanguage
+  ]);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(

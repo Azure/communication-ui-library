@@ -84,6 +84,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
   });
 
+  const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
+
   const onDismiss = useCallback((): void => {
     if (onDismissCaptionsSettings) {
       onDismissCaptionsSettings();
@@ -93,10 +95,12 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   useEffect(() => {
     // set spoken language when start captions with a spoken language specified.
     // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-    if (isCaptionsFeatureActive) {
+    if (isCaptionsFeatureActive && !hasSetSpokenLanguage) {
       onSetSpokenLanguage(selectedItem.key.toString());
+      // we only need to call set spoken language once when first starting captions
+      setHasSetSpokenLanguage(true);
     }
-  }, [isCaptionsFeatureActive, onSetSpokenLanguage, selectedItem.key]);
+  }, [isCaptionsFeatureActive, onSetSpokenLanguage, selectedItem.key, hasSetSpokenLanguage]);
 
   const onConfirm = useCallback(async (): Promise<void> => {
     const languageCode = selectedItem.key.toString();
