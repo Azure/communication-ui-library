@@ -113,7 +113,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     }
   }
 
-  process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
+  process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
     config.module.rules.push({
       test: /\.tsx?$/,
       exclude: /node_modules/,
