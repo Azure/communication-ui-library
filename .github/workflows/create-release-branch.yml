@@ -100,7 +100,7 @@ jobs:
       - name: Commit changes
         run: |
           git add .
-          git commit -m "Selected stable sdk's for release branch"
+          git commit -m "Selected right flavor sdk's for release branch"
           git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
 
       # Switch flavor when necessary
