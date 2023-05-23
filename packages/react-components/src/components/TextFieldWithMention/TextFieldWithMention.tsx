@@ -280,42 +280,35 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         currentSelectionStart !== -1
       ) {
         // just a caret movement/usual typing or deleting
-        updatedStartIndex =
-          getUpdatedSelectionStartIndexOrEndIndex(
-            inputTextValue,
-            tagsValue,
-            currentSelectionStart,
-            selectionStartValue
-          ) || updatedStartIndex;
-
-        updatedEndIndex =
-          getUpdatedSelectionStartIndexOrEndIndex(
-            inputTextValue,
-            tagsValue,
-            currentSelectionStart,
-            selectionEndValue
-          ) || updatedEndIndex;
+        const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
+          inputTextValue,
+          tagsValue,
+          currentSelectionStart,
+          selectionStartValue
+        );
+        updatedStartIndex = newIndex !== undefined ? newIndex : updatedStartIndex;
+        updatedEndIndex = newIndex !== undefined ? newIndex : updatedEndIndex;
       } else if (currentSelectionStart !== currentSelectionEnd) {
         // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
         if (currentSelectionStart !== undefined && currentSelectionStart !== selectionStartValue) {
           // the selection start is changed
-          updatedStartIndex =
-            getUpdatedSelectionStartIndexOrEndIndex(
-              inputTextValue,
-              tagsValue,
-              currentSelectionStart,
-              selectionStartValue
-            ) || updatedStartIndex;
+          const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
+            inputTextValue,
+            tagsValue,
+            currentSelectionStart,
+            selectionStartValue
+          );
+          updatedStartIndex = newIndex !== undefined ? newIndex : updatedStartIndex;
         }
         if (currentSelectionEnd !== undefined && currentSelectionEnd !== selectionEndValue) {
           // the selection end is changed
-          updatedEndIndex =
-            getUpdatedSelectionStartIndexOrEndIndex(
-              inputTextValue,
-              tagsValue,
-              currentSelectionEnd,
-              selectionEndValue
-            ) || updatedEndIndex;
+          const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
+            inputTextValue,
+            tagsValue,
+            currentSelectionEnd,
+            selectionEndValue
+          );
+          updatedEndIndex = newIndex !== undefined ? newIndex : updatedEndIndex;
         }
       }
       // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
