@@ -30,9 +30,7 @@ export const MentionsExample: () => JSX.Element = () => (
     <div style={{ width: '31.25rem', height: '20rem' }}>
       <div style={{ width: '31.25rem', height: '17rem' }} /> {/*Spacer for layout*/}
       <SendBox
-        onSendMessage={async () => {
-          return;
-        }}
+        onSendMessage={async (message) => alert(`sent message: ${message} `)}
         onTyping={async () => {
           return;
         }}
