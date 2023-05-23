@@ -112,8 +112,8 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
   };
 
   const convertedOptions: _VideoEffectsItemProps[] = props.options.map((option) => ({
-    isSelected: option.key === selectedEffect,
-    onSelect: () => setSelectedEffect(option.key),
+    isSelected: option.itemKey === selectedEffect,
+    onSelect: () => setSelectedEffect(option.itemKey),
     ...option
   }));
 
@@ -133,14 +133,19 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           horizontal
           key={rowIndex}
           tokens={{ childrenGap: '0.5rem' }}
+          data-ui-id="video-effects-picker-row"
         >
           {options.map((option) => (
-            <_VideoEffectsItem {...option} key={option.key} />
+            <_VideoEffectsItem {...option} key={option.itemKey} itemKey={option.itemKey} />
           ))}
           {fillCount > 0 &&
             rowIndex === optionsByRow.length - 1 &&
             Array.from({ length: fillCount }).map((_, index) => (
-              <Stack key={index} styles={hiddenVideoEffectsItemContainerStyles} />
+              <Stack
+                key={index}
+                styles={hiddenVideoEffectsItemContainerStyles}
+                data-ui-id="video-effects-hidden-item"
+              />
             ))}
         </Stack>
       ))}

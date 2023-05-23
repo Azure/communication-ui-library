@@ -19,8 +19,8 @@ const MATRIX_JSON = path.join(REPO_ROOT, 'common', 'config', 'workflows', 'matri
  */
 function main(args) {
   const target = args[2]
-  if (target !== 'stable' && target !== 'beta') {
-      throw new Error(`Usage: ${args[1]} ['stable' | 'beta']\n`);
+  if (target !== 'stable' && target !== 'beta' && target !== 'beta-release') {
+    throw new Error(`Usage: ${args[1]} ['stable' | 'beta' | 'beta-release']\n`);
   }
 
   restrictBuildFlavorForWorkflows(target);
@@ -29,10 +29,14 @@ function main(args) {
 }
 
 function restrictBuildFlavorForWorkflows(target) {
-  const text = readFileSync(MATRIX_JSON, 'utf8');
-    const data = JSON.parse(text);
-    data.include = data.include.filter((include) => include.flavor === target);
-    writeFileSync(MATRIX_JSON, JSON.stringify(data, null, 2), 'utf8');
+  const flavorJson = {
+    "include": [
+      {
+        "flavor": target
+      }
+    ]
+  }
+  writeFileSync(MATRIX_JSON, JSON.stringify(flavorJson, null, 2), 'utf8');
 }
 
 // Dependencies to choose the right version for beta and stable
@@ -47,22 +51,22 @@ function chooseSdkDependencies(target) {
 
 const chooseStableVersion = (semver) => {
   const versions = semver.split('||').map(version => version.trim());
-  if(versions.length === 1) {
+  if (versions.length === 1) {
     return semver;
   }
-  for(const version of versions) {
-    if(!version.includes('beta') && !version.includes('alpha')) return version;
+  for (const version of versions) {
+    if (!version.includes('beta') && !version.includes('alpha')) return version;
   }
   throw 'can\'t find the right version for stable!';
 }
 
 const chooseBetaVersion = (semver) => {
   const versions = semver.split('||').map(version => version.trim());
-  if(versions.length === 1) {
+  if (versions.length === 1) {
     return semver;
   }
-  for(const version of versions) {
-    if(version.includes('beta')) return version;
+  for (const version of versions) {
+    if (version.includes('beta')) return version;
   }
   throw 'can\'t find the right version for beta!';
 }
