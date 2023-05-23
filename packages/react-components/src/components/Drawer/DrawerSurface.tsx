@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FocusTrapZone, IStyle, mergeStyles, Stack } from '@fluentui/react';
+import { FocusTrapZone, IStyle, mergeStyles, mergeStyleSets, Stack } from '@fluentui/react';
 import React from 'react';
 import { BaseCustomStyles } from '../../types';
 import { DrawerContentContainer } from './DrawerContentContainer';
@@ -52,6 +52,7 @@ export interface _DrawerSurfaceProps {
  */
 export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
   const rootStyles = mergeStyles(drawerSurfaceStyles, props.styles?.root);
+  const containerStyles = mergeStyleSets(drawerContentContainerStyles, props.styles?.drawerContentContainer);
 
   return (
     <Stack className={rootStyles}>
@@ -66,7 +67,7 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
         // Note: this still correctly captures keyboard focus, this just allows mouse click outside of the focus trap.
         isClickableOutsideFocusTrap={true}
       >
-        <DrawerContentContainer styles={props.styles?.drawerContentContainer} heading={props.heading}>
+        <DrawerContentContainer styles={containerStyles} heading={props.heading}>
           {props.children}
         </DrawerContentContainer>
       </FocusTrapZone>
@@ -77,5 +78,19 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
 const drawerSurfaceStyles: IStyle = {
   width: '100%',
   height: '100%',
-  background: 'rgba(0,0,0,0.4)'
+  background: 'rgba(0,0,0,0.4)',
+  // Targets FocusTrapZone in drawer.
+  // Setting percentage to Height to transform a container does not work unless the
+  // direct parent container also has a Height set other than 'auto'.
+  '> div:nth-child(2)': {
+    maxHeight: '75%',
+    overflow: 'auto'
+  }
+};
+
+const drawerContentContainerStyles: BaseCustomStyles = {
+  root: {
+    // Needed to fill max height from parent, drawerSurfaceStyles
+    height: '100%'
+  }
 };

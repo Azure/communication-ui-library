@@ -10,15 +10,10 @@ import { _DrawerMenuStyles } from '@internal/react-components';
  */
 export const spokenLanguageDrawerStyles = (theme: Theme): _DrawerMenuStyles => ({
   root: {
-    height: '100%',
     overflow: 'auto'
   },
   drawerSurfaceStyles: {
     root: {
-      // Targets FocusTrapZone in drawer specific to spokenLanguageDrawer so it does not impact
-      // components using FocusTrapZone.
-      // Setting percentage to Height to transform a container does not work unless the
-      // direct parent container also has a Height set other than 'auto'.
       '> div:nth-child(2)': {
         height: '75%',
         overflow: 'auto'
@@ -26,7 +21,6 @@ export const spokenLanguageDrawerStyles = (theme: Theme): _DrawerMenuStyles => (
     },
     drawerContentContainer: {
       root: {
-        height: '100%',
         span: {
           fontWeight: 600,
           fontSize: _pxToRem(17),
