@@ -30,6 +30,7 @@ import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions, _MentionPopover } from './MentionPopover';
+/* @conditional-compile-remove(mention) */
 import { TextFieldWithMention, TextFieldWithMentionProps } from './TextFieldWithMention/TextFieldWithMention';
 import { isEnterKeyEventFromCompositionSession } from './utils/keyboardNavigation';
 
