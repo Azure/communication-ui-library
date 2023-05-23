@@ -68,6 +68,21 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 
 ![Trigger release branch creation](../images/trigger-create-release-branch.png)
 
+### Step 1.3: Update the UI snapshot (beta-release only)
+
+Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
+
+After finishing creating release branch, you will need to trigger the UI snapshot update for the release branch:
+![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
+
+### Step 1.4: Notify the release thread about api.md update and UI snapshot update (beta-release only)
+
+After you finishing step 1.3, you can check recent lastest commits on release branch, there should be 
+1. One Api snapshot update commit
+2. 0 or several UI snapshot commits
+
+Copy links to those snapshot commits one by one, and post them in the release thread, ask feature owners to check if their features are correctly removed both in api and UI
+
 #### Workflow details
 
 This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
