@@ -43,7 +43,7 @@ import { VerticalGalleryStyles } from './VerticalGallery';
  * @private
  * Currently the Calling JS SDK supports up to 4 remote video streams
  */
-export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 4;
+export const DEFAULT_MAX_REMOTE_VIDEO_STREAMS = 9;
 
 /**
  * @private
@@ -216,7 +216,7 @@ export interface VideoGalleryProps {
   strings?: Partial<VideoGalleryStrings>;
   /**
    * Maximum number of participant remote video streams that is rendered.
-   * @defaultValue 4
+   * @defaultValue 9
    */
   maxRemoteVideoStreams?: number;
   /**
