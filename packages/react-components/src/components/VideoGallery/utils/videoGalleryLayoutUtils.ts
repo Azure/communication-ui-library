@@ -4,6 +4,7 @@
 import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
+import { useOptimalVideoCount } from '../../../../../../packages/calling-component-bindings/src/providers';
 
 /**
  * Arguments used to determine a {@link OrganizedParticipantsResult}
@@ -27,23 +28,21 @@ export interface OrganizedParticipantsResult {
   overflowGalleryParticipants: VideoGalleryParticipant[];
 }
 
-const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
-
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleOverflowGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
+  //const optimalVideoCount = useOptimalVideoCount();
 
   const {
     remoteParticipants = [],
     dominantSpeakers = [],
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEOSTREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = []
   } = props;
-
+  const maxRemoteVideoStreams = useOptimalVideoCount();
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
 
   visibleGridParticipants.current =
