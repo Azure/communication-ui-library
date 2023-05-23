@@ -35,6 +35,15 @@
     },
     {
       "commandKind": "global",
+      "name": "switch-flavor:beta-release",
+      "summary": "Switch flavor to beta release mode (strip out in-progress features)",
+      "description": "Every build and test command will run based on beta version.",
+      "autoinstallerName": "rush-cpy",
+      "shellCommand": "rush switch-flavor:beta && cpy --flat common/config/env/beta-release.env common/config/env --rename .env",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "global",
       "name": "switch-flavor:stable",
       "summary": "Switch flavor to stable",
       "description": "Every build and test command will run based on stable version.",
@@ -73,6 +82,17 @@
       "description": "Build all packages in all flavors in one command, excluding samples and storybook, to update api files. This command will switch current flavor to beta.",
       "shellCommand": "(rush switch-flavor:stable && rush rebuild -t @azure/communication-react) || rush switch-flavor:beta && rush rebuild -t @azure/communication-react",
       "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
+      "name": "build",
+      "summary": "Build all projects that haven't been built, or have changed since they were last built",
+      "description": "This command is similar to \"rush rebuild\", except this will only return non-zero when error happens not warnings.",
+      "safeForSimultaneousRushProcesses": false,
+      "enableParallelism": true,
+      "ignoreDependencyOrder": false,
+      "ignoreMissingScript": false,
+      "allowWarningsInSuccessfulBuild": true
     },
     {
       "commandKind": "bulk",
