@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { CommonCallAdapter } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
@@ -18,6 +16,12 @@ import {
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
 import { AdapterError } from '../../common/adapters';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurEffect, BackgroundReplacementEffect } from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { SelectedVideoBackgroundEffect } from '../adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoDeviceInfo, VideoEffectProcessor } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -41,23 +45,6 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
     }
   }
   return false;
-};
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * @private
- */
-export const startSelectedVideoEffect = async (adapter: CommonCallAdapter): Promise<void> => {
-  if (adapter.getState().selectedVideoBackgroundEffect) {
-    const selectedVideoBackgroundEffect = adapter.getState().selectedVideoBackgroundEffect;
-    if (selectedVideoBackgroundEffect?.effectName === 'blur') {
-      await adapter.blurVideoBackground();
-    } else if (selectedVideoBackgroundEffect?.effectName === 'none') {
-      await adapter.stopVideoBackgroundEffect();
-    } else if (selectedVideoBackgroundEffect?.effectName === 'replacement') {
-      await adapter.replaceVideoBackground({ backgroundImageUrl: selectedVideoBackgroundEffect.backgroundImageUrl });
-    }
-  }
 };
 
 /**
@@ -471,3 +458,22 @@ export const dismissVideoEffectsError = (toDismiss: AdapterError): DismissedErro
     activeSince: toDismiss.timestamp
   };
 };
+
+/* @conditional-compile-remove(video-background-effects) */
+/** @private */
+export const getBackgroundEffectFromSelectedEffect = (
+  selectedEffect: SelectedVideoBackgroundEffect | undefined
+): VideoEffectProcessor | undefined =>
+  selectedEffect?.effectName === 'blur'
+    ? new BackgroundBlurEffect()
+    : selectedEffect?.effectName === 'replacement'
+    ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
+    : undefined;
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * @remarks this logic should mimic the onToggleCamera in the common call handlers.
+ * @private
+ */
+export const getSelectedCameraFromAdapterState = (state: CallAdapterState): VideoDeviceInfo | undefined =>
+  state.devices.selectedCamera || state.devices.cameras[0];

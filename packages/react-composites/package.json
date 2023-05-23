@@ -11,7 +11,7 @@
   "scripts": {
     "babel:prod": "babel ./src --out-dir src-public --extensions \".ts,.tsx\" --keep-file-extension",
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
-    "build:esm": "copyfiles -u 1 src/**/assets/**/* dist/dist-esm && if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc) ",
+    "build:esm": "copyfiles -u 1 src/**/assets/**/* dist/dist-esm && rushx _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc) ",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
@@ -39,11 +39,13 @@
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "rushx lint -- --fix",
     "lint:quiet": "rushx lint -- --quiet",
-    "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (if-env COMMUNICATION_REACT_FLAVOR=beta && api-extractor run --local)",
+    "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
+    "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
+    "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
+    "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
     "@azure/communication-common": "2.2.0",
@@ -70,7 +72,7 @@
     "uuid": "^8.1.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.13.1-beta.1 || >=1.13.1",
+    "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "@types/react": ">=16.8.0 <18.0.0",
@@ -79,7 +81,7 @@
     "react-dom": ">=16.8.0 <18.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.13.1-beta.1 || >=1.13.1",
+    "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
     "@azure/communication-calling-effects": "1.0.0-beta.2",
     "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "@azure/communication-identity": "~1.1.0",

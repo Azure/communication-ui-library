@@ -21,7 +21,8 @@
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_stable-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/stable.env --use-shell",
-    "_typecheck": "rushx _by-flavor \"if-env COMMUNICATION_REACT_FLAVOR=stable && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
+    "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
+    "_typecheck": "rushx _by-flavor \"rushx _if-preprocess && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
     "@azure/abort-controller": "^1.0.0",

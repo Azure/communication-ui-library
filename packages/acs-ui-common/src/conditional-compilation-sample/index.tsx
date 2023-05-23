@@ -65,6 +65,14 @@ interface B {
 }
 
 /**
+ * Conditionally remove a in-progress feature in beta release.
+ */
+/* @conditional-compile-remove(in-progress-beta-feature-demo) */
+export interface _InProgressInterface {
+  foo: boolean;
+}
+
+/**
  * Conditionally import from a package.
  */
 /* @conditional-compile-remove(demo) */

@@ -181,13 +181,9 @@ export interface LocalVideoStreamState {
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
-   * State of the video background effect.
+   * List of effects if any are active.
    */
-  isActive: boolean;
-  /**
-   * Name of the effect if one is active.
-   */
-  effectName?: VideoEffectName;
+  activeEffects?: VideoEffectName[];
 }
 
 /**
