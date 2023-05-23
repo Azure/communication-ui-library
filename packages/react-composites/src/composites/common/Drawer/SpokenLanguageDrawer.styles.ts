@@ -13,12 +13,6 @@ export const spokenLanguageDrawerStyles = (theme: Theme): _DrawerMenuStyles => (
     overflow: 'auto'
   },
   drawerSurfaceStyles: {
-    root: {
-      '> div:nth-child(2)': {
-        height: '75%',
-        overflow: 'auto'
-      }
-    },
     drawerContentContainer: {
       root: {
         span: {
