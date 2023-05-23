@@ -4,77 +4,47 @@ This log was last generated on Tue, 23 May 2023 21:43:12 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.5.1-beta.5](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.5.1-beta.5)
+## [1.5.1-beta.5](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.5)
 
-Tue, 23 May 2023 21:43:12 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.3...@azure/communication-react_v1.5.1-beta.5)
+Tue, 23 May 2023 21:43:12 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.5.1-beta.4...1.5.1-beta.5)
 
-### Minor changes
+### Blurred and Custom Video Backgrounds - Public Preview
+The Web UI Calling and CallWithChat composite now supports Blurred and Custom Video Backgrounds in web desktop.
 
-- `@azure/communication-react`
-  - Add northstar wrapper internal package for react 18 migration interim support ([PR #2983](https://github.com/azure/communication-ui-library/pull/2983) by 3941071+emlynmac@users.noreply.github.com)
-  - Remove public API usage of ComponentSlotStyle and redefine type internally ([PR #2996](https://github.com/azure/communication-ui-library/pull/2996) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Update for edit, delete and mouse clicks selection functionality for mentions ([PR #3052](https://github.com/azure/communication-ui-library/pull/3052) by 98852890+vhuseinova-msft@users.noreply.github.com)
-  - Add AtMentionFlyout component with preliminary positioning ([PR #2982](https://github.com/azure/communication-ui-library/pull/2982) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-  - Bump stable version to 1.13.1 ([PR #3040](https://github.com/azure/communication-ui-library/pull/3040) by jiangnanhello@live.com)
-  - updated the documentation of inline image ([PR #2984](https://github.com/azure/communication-ui-library/pull/2984) by 109105353+jpeng-ms@users.noreply.github.com)
+This feature includes:
+- Ability to enable the blur/custom background effect before the call. 
+- Choose or change the video background effect during the call.
+- Ability to use your own hosted images as custom backgrounds.
 
-### Patches
-
-- `@azure/communication-react`
-  - updating version of tslib for storybook warnings on exports ([PR #3012](https://github.com/azure/communication-ui-library/pull/3012) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Fix bug where captions rtl languages are not right aligned  ([PR #2999](https://github.com/azure/communication-ui-library/pull/2999) by carolinecao@microsoft.com)
-  - updating conditional flags on these lines for a stable build ([PR #3032](https://github.com/azure/communication-ui-library/pull/3032) by alkwa@microsoft.com)
-  - fix regression where chat and hold buttons werent disabled when the call went into hold ([PR #3029](https://github.com/azure/communication-ui-library/pull/3029) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix bug where captions is subscribed to on ACS call ([PR #2974](https://github.com/azure/communication-ui-library/pull/2974) by carolinecao@microsoft.com)
-  - Refactor internal code to better reuse side pane and control bar across composites ([PR #2976](https://github.com/azure/communication-ui-library/pull/2976) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Filter messageReceived notification by threadId in ChatAdapter ([PR #3056](https://github.com/azure/communication-ui-library/pull/3056) by longamy@microsoft.com)
-  - Remove side pane control button container if no controls are present to be used ([PR #2969](https://github.com/azure/communication-ui-library/pull/2969) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Hide Camera, Microphone, and Screenshare buttons in rooms calls depending on role ([PR #2944](https://github.com/azure/communication-ui-library/pull/2944) by 79475487+mgamis-msft@users.noreply.github.com)
-  - Fix quickly delete text with mention does not dismiss MentionPopover ([PR #3031](https://github.com/azure/communication-ui-library/pull/3031) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-  - [AzureCommunicationChatAdapter.test.ts] Adding new unit test for testing factory method ([PR #3030](https://github.com/azure/communication-ui-library/pull/3030) by joshlai@microsoft.com)
-  - removing accidental calling dependency in react-components ([PR #3023](https://github.com/azure/communication-ui-library/pull/3023) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Default roleHint for AzureCommuncationCallAdapter is 'Consumer' if the locator is for a rooms call ([PR #2942](https://github.com/azure/communication-ui-library/pull/2942) by 79475487+mgamis-msft@users.noreply.github.com)
-  - re-doing 1.13.1-beta.1 calling update ([PR #3023](https://github.com/azure/communication-ui-library/pull/3023) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Resolve overlap of tooltip and list of devices on mobile configuration page ([PR #3013](https://github.com/azure/communication-ui-library/pull/3013) by edwardlee@microsoft.com)
-  - Bug fix ([PR #3022](https://github.com/azure/communication-ui-library/pull/3022) by longamy@microsoft.com)
-  - Fix horizontal gallery button icon directions in rtl mode ([PR #3008](https://github.com/azure/communication-ui-library/pull/3008) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix bug where error bar overlays with pane ([PR #3024](https://github.com/azure/communication-ui-library/pull/3024) by carolinecao@microsoft.com)
-
-### Changes
-
-- `@azure/communication-react`
+### Features
   - Update stateful client video effects API to use activeEffect naming. ([PR #3074](https://github.com/azure/communication-ui-library/pull/3074) by 2684369+JamesBurnside@users.noreply.github.com)
   - Add video effects warning when camera is turned off ([PR #2980](https://github.com/azure/communication-ui-library/pull/2980) by 2684369+JamesBurnside@users.noreply.github.com)
-  - fixing comunicationidentifier for theme example in storybook ([PR #3015](https://github.com/azure/communication-ui-library/pull/3015) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Video effects blur tests for configuration screen ([PR #3058](https://github.com/azure/communication-ui-library/pull/3058) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Update Calling SDK beta to 1.13.2-beta.1 ([PR #3071](https://github.com/azure/communication-ui-library/pull/3071) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix styling for the video effects button on the configuration page ([PR #3053](https://github.com/azure/communication-ui-library/pull/3053) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Move click to call to be inprogress feature ([PR #3088](https://github.com/azure/communication-ui-library/pull/3088) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Add unit tests for video effects background picker ([PR #3078](https://github.com/azure/communication-ui-library/pull/3078) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Blur video background effect tests ([PR #3048](https://github.com/azure/communication-ui-library/pull/3048) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Update localization strings for video effects ([PR #3019](https://github.com/azure/communication-ui-library/pull/3019) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix erroneous spacing in the call composite beta packages ([PR #2978](https://github.com/azure/communication-ui-library/pull/2978) by 2684369+JamesBurnside@users.noreply.github.com)
   - Update configuration page side pane styles and close on starting a call ([PR #3028](https://github.com/azure/communication-ui-library/pull/3028) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Update the logic when one is talking over another ([PR #2985](https://github.com/azure/communication-ui-library/pull/2985) by jiangnanhello@live.com)
-  - Added VideoBackgroundImage array property to TeamsAdapterOptions ([PR #3081](https://github.com/azure/communication-ui-library/pull/3081) by 79475487+mgamis-msft@users.noreply.github.com)
-  - Fix issue where after changing background, the previous background persisted for a split second ([PR #3060](https://github.com/azure/communication-ui-library/pull/3060) by 2684369+JamesBurnside@users.noreply.github.com)
-  - bump @azure/communication-react to v1.5.1-beta.4 ([PR #3010](https://github.com/azure/communication-ui-library/pull/3010) by carolinecao@microsoft.com)
   - Filter the errors based on whether the side pane is currently showing the video effects side pane ([PR #3020](https://github.com/azure/communication-ui-library/pull/3020) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - [AzureCommunicationCallWithChatAdapter] Creating call with chat adapter from state now take an options bag ([PR #2998](https://github.com/azure/communication-ui-library/pull/2998) by joshlai@microsoft.com)
-  - updating default extensions and commands when creating a new codespace container ([PR #2986](https://github.com/azure/communication-ui-library/pull/2986) by 79329532+alkwa-msft@users.noreply.github.com)
-  - Custom Video Effect tests ([PR #3059](https://github.com/azure/communication-ui-library/pull/3059) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Video effect errors test ([PR #3066](https://github.com/azure/communication-ui-library/pull/3066) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Show Video Effects errors in side pane ([PR #2995](https://github.com/azure/communication-ui-library/pull/2995) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Fix for tooltip getting hidden under Effects title in video effects pane ([PR #2968](https://github.com/azure/communication-ui-library/pull/2968) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - [ChatMessageContent] Updating the warning text to be string | undefined ([PR #2998](https://github.com/azure/communication-ui-library/pull/2998) by joshlai@microsoft.com)
-  - Fix positioning of video effects picker tiles when there is a row with a differing count ([PR #3076](https://github.com/azure/communication-ui-library/pull/3076) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Introduce mechanism to control local video tile styling for different formfactors. ([PR #3006](https://github.com/azure/communication-ui-library/pull/3006) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - [MessageThread] Remove extra arguments on CancelEditCallback ([PR #2998](https://github.com/azure/communication-ui-library/pull/2998) by joshlai@microsoft.com)
+### Bug Fixes
+  - Fix bug where captions rtl languages are not right aligned  ([PR #2999](https://github.com/azure/communication-ui-library/pull/2999) by carolinecao@microsoft.com)
+  - Fix disabled chat and hold buttons when the call is on hold ([PR #3029](https://github.com/azure/communication-ui-library/pull/3029) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix bug where captions is subscribed to on ACS call ([PR #2974](https://github.com/azure/communication-ui-library/pull/2974) by carolinecao@microsoft.com)
+  - Remove side pane control button container if no controls are present to be used ([PR #2969](https://github.com/azure/communication-ui-library/pull/2969) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Hide Camera, Microphone, and Screenshare buttons in rooms calls depending on role ([PR #2944](https://github.com/azure/communication-ui-library/pull/2944) by 79475487+mgamis-msft@users.noreply.github.com)
+  - Default roleHint for AzureCommuncationCallAdapter is 'Consumer' if the locator is for a rooms call ([PR #2942](https://github.com/azure/communication-ui-library/pull/2942) by 79475487+mgamis-msft@users.noreply.github.com)
+  - Resolve overlap of tooltip and list of devices on mobile configuration page ([PR #3013](https://github.com/azure/communication-ui-library/pull/3013) by edwardlee@microsoft.com)
+  - Fix send button styling in InputBoxComponent ([PR #3022](https://github.com/azure/communication-ui-library/pull/3022) by longamy@microsoft.com)
+  - Fix horizontal gallery button icon directions in rtl mode ([PR #3008](https://github.com/azure/communication-ui-library/pull/3008) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix bug where error bar overlays with pane ([PR #3024](https://github.com/azure/communication-ui-library/pull/3024) by carolinecao@microsoft.com)
+  - Fix erroneous spacing in the call composite ([PR #2978](https://github.com/azure/communication-ui-library/pull/2978) by 2684369+JamesBurnside@users.noreply.github.com)
+### Improvements
+  - Filter messageReceived notification by threadId in ChatAdapter ([PR #3056](https://github.com/azure/communication-ui-library/pull/3056) by longamy@microsoft.com)
+  - Update communication-calling to 1.13.2-beta.1 ([PR #3071](https://github.com/azure/communication-ui-library/pull/3071) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update localization strings for video effects ([PR #3019](https://github.com/azure/communication-ui-library/pull/3019) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update the logic when one is talking over another ([PR #2985](https://github.com/azure/communication-ui-library/pull/2985) by jiangnanhello@live.com)
+  - Creating call with chat adapter from state now take an options bag ([PR #2998](https://github.com/azure/communication-ui-library/pull/2998) by joshlai@microsoft.com)
   - Stabilize the scrolling behavior ([PR #2959](https://github.com/azure/communication-ui-library/pull/2959) by jiangnanhello@live.com)
-  - Fix breaking changes of create adapter from client ([PR #2998](https://github.com/azure/communication-ui-library/pull/2998) by jiangnanhello@live.com)
 
-## [1.5.1-beta.4](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.5.1-beta.4)
+
+## [1.5.1-beta.4](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.4)
 
 Fri, 28 Apr 2023 23:16:11 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.3...@azure/communication-react_v1.5.1-beta.4)
