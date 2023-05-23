@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Move click to call to be inprogress feature",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
