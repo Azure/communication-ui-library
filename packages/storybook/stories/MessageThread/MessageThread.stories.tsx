@@ -321,13 +321,13 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onUpdateMessageCallback = (messageId, content): Promise<void> => {
     const updatedChatMessages = chatMessages;
-    const msgIdx = chatMessages.findIndex((m) => m.messageId === messageId);
-    const message = chatMessages[msgIdx];
+    const msgIndex = chatMessages.findIndex((m) => m.messageId === messageId);
+    const message = chatMessages[msgIndex];
     if (message.messageType === 'chat') {
       message.content = content;
       message.editedOn = new Date(Date.now());
     }
-    updatedChatMessages[msgIdx] = message;
+    updatedChatMessages[msgIndex] = message;
     setChatMessages(updatedChatMessages);
     return Promise.resolve();
   };

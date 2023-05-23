@@ -32,11 +32,11 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
   ];
 
   const onUpdateMessageCallback = (messageId, content): Promise<void> => {
-    const msgIdx = messages.findIndex((m) => m.messageId === messageId);
-    const message = messages[msgIdx];
+    const msgIndex = messages.findIndex((m) => m.messageId === messageId);
+    const message = messages[msgIndex];
     message.content = content;
     message.editedOn = new Date(Date.now());
-    messages[msgIdx] = message;
+    messages[msgIndex] = message;
 
     return Promise.resolve();
   };
