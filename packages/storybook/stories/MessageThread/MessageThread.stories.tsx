@@ -11,7 +11,15 @@ import {
   FileMetadata,
   AttachmentDownloadResult
 } from '@azure/communication-react';
-import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
+import {
+  Persona,
+  PersonaPresence,
+  PersonaSize,
+  PrimaryButton,
+  Stack,
+  Dropdown,
+  IDropdownOption
+} from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -254,6 +262,16 @@ const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
+  const dropdownMenuOptions = [
+    { key: 'newMessage', text: 'New Message' },
+    { key: 'newMessageOthers', text: 'New Message from others' },
+    { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
+    { key: 'newMessageWithMention', text: 'New Message with Mention' },
+    { key: 'newSystemMessage', text: 'New System Message' },
+    { key: 'newCustomMessage', text: 'New Custom Message' }
+  ];
+
+  const [selectedMessageType, setSelectedMessageType] = useState<IDropdownOption>(dropdownMenuOptions[0]);
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
@@ -326,6 +344,31 @@ const MessageThreadStory = (args): JSX.Element => {
     });
   };
 
+  const onSendHandler = (): void => {
+    switch (selectedMessageType.key) {
+      case 'newMessage':
+        onSendNewMessage();
+        break;
+      case 'newMessageOthers':
+        onSendNewMessageFromOthers();
+        break;
+      case 'newMessageWithInlineImage':
+        onSendNewMessageWithInlineImage();
+        break;
+      case 'newMessageWithMention':
+        onSendNewMessageWithMention();
+        break;
+      case 'newSystemMessage':
+        onSendNewSystemMessage();
+        break;
+      case 'newCustomMessage':
+        onSendCustomMessage();
+        break;
+      default:
+        console.log('Invalid message type');
+    }
+  };
+
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -351,15 +394,18 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
-      {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
-        Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
-      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
-        <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
-        <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
-        <PrimaryButton text="Send new message with inline image" onClick={onSendNewMessageWithInlineImage} />
-        <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
-        <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
-        <PrimaryButton text="Send new message with mention" onClick={onSendNewMessageWithMention} />
+      {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
+      <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
+        <Dropdown
+          style={{ width: '15rem' }}
+          label="Send to thread"
+          selectedKey={selectedMessageType.key}
+          options={dropdownMenuOptions}
+          onChange={(_, option) => {
+            setSelectedMessageType(option);
+          }}
+        />
+        <PrimaryButton text="Send" onClick={onSendHandler} />
       </Stack>
     </Stack>
   );
