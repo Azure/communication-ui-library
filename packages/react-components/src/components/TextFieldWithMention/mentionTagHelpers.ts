@@ -93,6 +93,7 @@ export const findNewSelectionIndexForMention = (props: NewSelectionIndexForMenti
     currentSelectionIndex === previousSelectionIndex ||
     tag.plainTextEndIndex === undefined
   ) {
+    // return the current selection since it is not a mention tag or selection is not changed
     return currentSelectionIndex;
   }
   let spaceIndex = 0;
