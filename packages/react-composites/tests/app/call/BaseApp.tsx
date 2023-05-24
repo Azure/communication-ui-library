@@ -12,8 +12,7 @@ import {
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
   CustomCallControlButtonCallbackArgs,
-  CallCompositeOptions,
-  LocalVideoTileOptions
+  CallCompositeOptions
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
