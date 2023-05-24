@@ -77,6 +77,15 @@ export const chatMessageMenuStyle = mergeStyles({
 });
 
 /**
+ * @private
+ */
+export const chatMessageEditContainerStyle = {
+  margin: 0,
+  padding: 0,
+  backgroundColor: 'transparent'
+};
+
+/**
  * Styles that can be applied to ensure flyout items have the minimum touch target size.
  *
  * @private
