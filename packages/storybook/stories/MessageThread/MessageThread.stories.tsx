@@ -92,7 +92,7 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 
 const mentionTag = `
 <msft-mention id="<id>" displayText="<display text>">
-  Displayable Content
+  Displayable Text
 </msft-mention>
 `;
 const getDocs: () => JSX.Element = () => {
