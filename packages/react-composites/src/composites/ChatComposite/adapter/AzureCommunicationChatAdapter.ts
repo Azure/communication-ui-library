@@ -284,7 +284,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     });
   }
 
-  async cancelMessageEdit(messageId: string): Promise<void> {
+  async cancelMessageEdit(/*messageId: string*/): Promise<void> {
     // Reset message to original content, which is a no-op here.
   }
 
