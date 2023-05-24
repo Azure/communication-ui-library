@@ -86,7 +86,10 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
 const drawerSurfaceStyles: IStyle = {
   width: '100%',
   height: '100%',
-  background: 'rgba(0,0,0,0.4)'
+  background: 'rgba(0,0,0,0.4)',
+  '> div:nth-child(2)': {
+    overflow: 'auto'
+  }
 };
 
 const focusTrapZoneStyles: IStyle = {
@@ -94,8 +97,7 @@ const focusTrapZoneStyles: IStyle = {
   // Setting percentage to Height to transform a container does not work unless the
   // direct parent container also has a Height set other than 'auto'.
   '> div:nth-child(2)': {
-    maxHeight: '75%',
-    overflow: 'auto'
+    maxHeight: '75%'
   }
 };
 

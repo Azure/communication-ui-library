@@ -885,6 +885,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    disableMaxHeight?: boolean;
     heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
