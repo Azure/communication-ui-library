@@ -96,9 +96,9 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Build component examples sample application
@@ -185,9 +185,9 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Build static HTML composite sample application
@@ -274,9 +274,9 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
         run: rushx build:e2e:call
@@ -364,9 +364,9 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
         run: rushx build:e2e:chat
@@ -454,9 +454,9 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
         run: rushx build:e2e:callwithchat
