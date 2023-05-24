@@ -13,9 +13,9 @@ Tue, 23 May 2023 21:43:12 GMT
 The Web UI Calling and CallWithChat composite now supports Blurred and Custom Video Backgrounds in web desktop.
 
 This feature includes:
-- Ability to enable the blur/custom background effect before the call. 
-- Choose or change the video background effect during the call.
-- Ability to use your own hosted images as custom backgrounds.
+- Ability to enable the blur/custom background effect before the call
+- Choose or change the video background effect during the call
+- Ability to use your own hosted images as custom backgrounds
 
 ### Features
   - Update stateful client video effects API to use activeEffect naming ([PR #3074](https://github.com/azure/communication-ui-library/pull/3074) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -23,6 +23,7 @@ This feature includes:
   - Update configuration page side pane styles and close on starting a call ([PR #3028](https://github.com/azure/communication-ui-library/pull/3028) by 2684369+JamesBurnside@users.noreply.github.com)
   - Filter the errors based on whether the side pane is currently showing the video effects side pane ([PR #3020](https://github.com/azure/communication-ui-library/pull/3020) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Show Video Effects errors in side pane ([PR #2995](https://github.com/azure/communication-ui-library/pull/2995) by 97124699+prabhjot-msft@users.noreply.github.com)
+
 ### Bug Fixes
   - Fix bug where captions rtl languages are not right aligned  ([PR #2999](https://github.com/azure/communication-ui-library/pull/2999) by carolinecao@microsoft.com)
   - Fix disabled chat and hold buttons when the call is on hold ([PR #3029](https://github.com/azure/communication-ui-library/pull/3029) by 2684369+JamesBurnside@users.noreply.github.com)
@@ -35,6 +36,7 @@ This feature includes:
   - Fix horizontal gallery button icon directions in rtl mode ([PR #3008](https://github.com/azure/communication-ui-library/pull/3008) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix bug where error bar overlays with pane ([PR #3024](https://github.com/azure/communication-ui-library/pull/3024) by carolinecao@microsoft.com)
   - Fix erroneous spacing in the call composite ([PR #2978](https://github.com/azure/communication-ui-library/pull/2978) by 2684369+JamesBurnside@users.noreply.github.com)
+
 ### Improvements
   - Filter messageReceived notification by threadId in ChatAdapter ([PR #3056](https://github.com/azure/communication-ui-library/pull/3056) by longamy@microsoft.com)
   - Update communication-calling to 1.13.2-beta.1 ([PR #3071](https://github.com/azure/communication-ui-library/pull/3071) by 2684369+JamesBurnside@users.noreply.github.com)
