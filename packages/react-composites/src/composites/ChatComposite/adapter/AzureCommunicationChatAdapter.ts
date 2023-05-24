@@ -193,7 +193,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   async fetchInitialData(): Promise<void> {
-    // If get properties fails we dont want to try to get the participants after.
+    // If get properties fails we don't want to try to get the participants after.
     await this.asyncTeeErrorToEventEmitter(async () => {
       await this.chatThreadClient.getProperties();
       // Fetch all participants who joined before the local user.
@@ -282,6 +282,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       return await this.handlers.onUpdateMessage(messageId, content, metadata, options);
       return await this.handlers.onUpdateMessage(messageId, content);
     });
+  }
+
+  async cancelMessageEdit(messageId: string): Promise<void> {
+    // Reset message to original content, which is a no-op here.
   }
 
   async deleteMessage(messageId: string): Promise<void> {
