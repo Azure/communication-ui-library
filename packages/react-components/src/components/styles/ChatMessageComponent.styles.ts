@@ -82,6 +82,8 @@ export const chatMessageMenuStyle = mergeStyles({
 export const chatMessageEditContainerStyle = {
   margin: 0,
   padding: 0,
+  maxWidth: 'unset',
+  minWidth: 'unset',
   backgroundColor: 'transparent'
 };
 

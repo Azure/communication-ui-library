@@ -115,7 +115,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   }, [attachedFilesMetadata]);
 
-  const getContent = () => {
+  const getContent = (): JSX.Element => {
     return (
       <Stack
         className={mergeStyles(
