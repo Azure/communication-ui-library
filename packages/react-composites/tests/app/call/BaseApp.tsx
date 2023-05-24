@@ -12,7 +12,8 @@ import {
   CustomCallControlButtonCallback,
   CustomCallControlButtonProps,
   CustomCallControlButtonCallbackArgs,
-  CallCompositeOptions
+  CallCompositeOptions,
+  LocalVideoTileOptions
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -77,6 +78,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
         ...(options?.callControls instanceof Object ? options?.callControls : {}),
         legacyControlBarExperience: false
       }
+    };
+  }
+
+  if (queryArgs.localVideoTilePosition) {
+    options = {
+      ...options,
+      localVideoTileOptions: { position: queryArgs.localVideoTilePosition }
     };
   }
 
