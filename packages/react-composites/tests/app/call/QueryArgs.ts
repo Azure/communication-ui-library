@@ -57,6 +57,6 @@ export function parseQueryArgs(): QueryArgs {
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined,
-    localVideoTilePosition: params.localVideoTilePosition ?? undefined
+    localVideoTilePosition: (params.localVideoTilePosition as 'grid' | 'floating' | 'hidden') ?? undefined
   };
 }
