@@ -40,6 +40,12 @@ export interface _DrawerSurfaceProps {
    */
   heading?: string;
 
+  /**
+   * By default, maxHeight value is set to 75%.
+   * Set value to true for no default maxHeight to be applied on drawerSurface
+   */
+  disableMaxHeight?: boolean;
+
   /** Styles for the {@link DrawerSurface} */
   styles?: _DrawerSurfaceStyles;
 }
@@ -51,7 +57,9 @@ export interface _DrawerSurfaceProps {
  * @internal
  */
 export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
-  const rootStyles = mergeStyles(drawerSurfaceStyles, props.styles?.root);
+  const rootStyles = props.disableMaxHeight
+    ? mergeStyles(drawerSurfaceStyles, props.styles?.root)
+    : mergeStyles(drawerSurfaceStyles, focusTrapZoneStyles, props.styles?.root);
   const containerStyles = mergeStyleSets(drawerContentContainerStyles, props.styles?.drawerContentContainer);
 
   return (
@@ -78,7 +86,10 @@ export const _DrawerSurface = (props: _DrawerSurfaceProps): JSX.Element => {
 const drawerSurfaceStyles: IStyle = {
   width: '100%',
   height: '100%',
-  background: 'rgba(0,0,0,0.4)',
+  background: 'rgba(0,0,0,0.4)'
+};
+
+const focusTrapZoneStyles: IStyle = {
   // Targets FocusTrapZone in drawer.
   // Setting percentage to Height to transform a container does not work unless the
   // direct parent container also has a Height set other than 'auto'.
