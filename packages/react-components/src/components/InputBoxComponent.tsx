@@ -127,9 +127,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Index of the previous selection end in the text field
   const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
-  // Boolean value to check if onMouseDown event should be handled during select as selection range for onMouseDown event is not updated yet and the selection range for mouse click/taps will be updated in onSelect event if needed.
+  // Boolean value to check if onMouseDown event should be handled during select as selection range
+  // for onMouseDown event is not updated yet and the selection range for mouse click/taps will be
+  // updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
-
+  /* @conditional-compile-remove(mention) */
+  // Point of start of touch/mouse selection
+  const [interactionStartPoint, setInteractionStartPoint] = useState<{ x: number; y: number } | undefined>();
+  /* @conditional-compile-remove(mention) */
+  // Target selection from mouse movement
+  const [targetSelection, setTargetSelection] = useState<{ start: number; end: number | null } | undefined>();
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
@@ -326,11 +333,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   };
 
   /* @conditional-compile-remove(mention) */
-  const debouncedQueryUpdate = useDebouncedCallback(async (query?: string) => {
-    if (query === undefined) {
-      updateMentionSuggestions([]);
-      return;
-    }
+  const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
     const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
@@ -449,36 +452,52 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionEndValue: number | null
     ): void => {
       /* @conditional-compile-remove(mention) */
-      if (shouldHandleOnMouseDownDuringSelect && event.currentTarget.selectionStart !== null) {
-        // on select was triggered by mouse down
-        const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
-        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          // handle mention click
-          if (event.currentTarget.selectionDirection === null) {
-            event.currentTarget.setSelectionRange(
-              mentionTag.plainTextBeginIndex,
-              mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-            );
+      if (shouldHandleOnMouseDownDuringSelect) {
+        if (targetSelection !== undefined) {
+          console.log('handleOnSelect: targetSelection', targetSelection);
+          setSelectionStartValue(targetSelection.start);
+          setSelectionEndValue(targetSelection.end);
+          event.currentTarget.setSelectionRange(targetSelection.start, targetSelection.end);
+          setTargetSelection(undefined);
+        } else if (event.currentTarget.selectionStart !== null) {
+          // on select was triggered by mouse down/up with no movement
+          console.log('handleOnSelect: mouse click');
+          const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
+          if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+            // handle mention click
+            if (event.currentTarget.selectionDirection === null) {
+              event.currentTarget.setSelectionRange(
+                mentionTag.plainTextBeginIndex,
+                mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+              );
+            } else {
+              event.currentTarget.setSelectionRange(
+                mentionTag.plainTextBeginIndex,
+                mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
+                event.currentTarget.selectionDirection
+              );
+            }
+            setSelectionStartValue(mentionTag.plainTextBeginIndex);
+            setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
           } else {
-            event.currentTarget.setSelectionRange(
-              mentionTag.plainTextBeginIndex,
-              mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
-              event.currentTarget.selectionDirection
-            );
+            setSelectionStartValue(event.currentTarget.selectionStart);
+            setSelectionEndValue(event.currentTarget.selectionEnd);
           }
-          setSelectionStartValue(mentionTag.plainTextBeginIndex);
-          setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
-        } else {
-          setSelectionStartValue(event.currentTarget.selectionStart);
-          setSelectionEndValue(event.currentTarget.selectionEnd);
         }
       } else {
+        console.log('handleOnSelect: keyboard');
         // selection was changed by keyboard
         updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
       }
       // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly (because of setSelectionRange calls or rerender)
     },
-    [updateSelectionIndexesWithMentionIfNeeded]
+    [
+      updateSelectionIndexesWithMentionIfNeeded,
+      targetSelection,
+      setTargetSelection,
+      setSelectionStartValue,
+      setSelectionEndValue
+    ]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -552,7 +571,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCurrentTriggerStartIndex(tagIndex);
           }
           if (tagIndex === -1) {
-            await debouncedQueryUpdate(undefined);
+            updateMentionSuggestions([]);
           } else {
             // In the middle of a @mention lookup
             if (tagIndex > -1) {
@@ -602,7 +621,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
       onChange && onChange(event, result);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, debouncedQueryUpdate]
+    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
   );
 
   const getInputFieldTextValue = (): string => {
@@ -667,6 +686,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           }}
           /* @conditional-compile-remove(mention) */
           onSelect={(e) => {
+            console.log('onSelect');
             // update selection if needed
             if (caretIndex !== undefined) {
               setCaretIndex(undefined);
@@ -686,7 +706,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             );
           }}
           /* @conditional-compile-remove(mention) */
-          onMouseDown={() => {
+          onMouseDown={(e) => {
+            console.log('onMouseDown');
+            setInteractionStartPoint({ x: e.clientX, y: e.clientY });
             // as events order is onMouseDown -> onSelect -> onClick
             // onClick and onMouseDown can't handle clicking on mention event because
             // onMouseDown doesn't have correct selectionRange yet and
@@ -695,9 +717,61 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
           /* @conditional-compile-remove(mention) */
-          onTouchStart={() => {
+          onMouseMove={(event) => {
+            // Should we do anything?
+            if (interactionStartPoint !== undefined) {
+              // And did selection change?
+              if (
+                event.currentTarget.selectionStart !== null &&
+                (event.currentTarget.selectionStart !== targetSelection?.start ||
+                  event.currentTarget.selectionEnd !== targetSelection?.end)
+              ) {
+                const prevStart = targetSelection?.start;
+                const prevEnd = targetSelection?.end;
+                let targetStart = event.currentTarget.selectionStart;
+                let targetEnd = event.currentTarget.selectionEnd;
+
+                const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
+                let updateCurrentTarget = false;
+                let direction: 'forward' | 'backward' | 'none' =
+                  event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
+                if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+                  targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
+                  if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
+                    targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
+                  }
+                  updateCurrentTarget = true;
+                  setShouldHandleOnMouseDownDuringSelect(false);
+                }
+                console.log('prev:now: ' + prevStart + ':' + prevEnd + ' -> ' + targetStart + ':' + targetEnd);
+                // Update selection range
+                setTargetSelection({ start: targetStart, end: targetEnd });
+
+                if (updateCurrentTarget) {
+                  // Only set the control, if the values are updated
+                  event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
+                }
+              }
+            }
+          }}
+          onMouseUp={() => {
+            console.log('onMouseUp');
+            setInteractionStartPoint(undefined);
+          }}
+          /* @conditional-compile-remove(mention) */
+          onTouchStart={(e) => {
+            setInteractionStartPoint({
+              x: e.targetTouches.item(0).clientX,
+              y: e.targetTouches.item(0).clientY
+            });
             // see onMouseDown for more details
             setShouldHandleOnMouseDownDuringSelect(true);
+          }}
+          onTouchMove={() => {
+            // see onMouseMove for more details
+          }}
+          onTouchEnd={() => {
+            setInteractionStartPoint(undefined);
           }}
           /* @conditional-compile-remove(mention) */
           onBlur={() => {
