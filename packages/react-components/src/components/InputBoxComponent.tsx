@@ -751,7 +751,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           /* @conditional-compile-remove(mention) */
           onMouseDown={(e) => {
             setInteractionStartPoint({ x: e.clientX, y: e.clientY });
-            // as events order is onMouseDown -> onSelect -> onClick
+            // as events order is onMouseDown -> onMouseMove -> onMouseUp -> onSelect -> onClick
             // onClick and onMouseDown can't handle clicking on mention event because
             // onMouseDown doesn't have correct selectionRange yet and
             // onClick already has wrong range as it's called after onSelect that updates the selection range
@@ -760,6 +760,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           }}
           /* @conditional-compile-remove(mention) */
           onMouseMove={handleOnMove}
+          /* @conditional-compile-remove(mention) */
           onMouseUp={() => {
             setInteractionStartPoint(undefined);
           }}
@@ -772,7 +773,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // see onMouseDown for more details
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
+          /* @conditional-compile-remove(mention) */
           onTouchMove={handleOnMove}
+          /* @conditional-compile-remove(mention) */
           onTouchEnd={() => {
             setInteractionStartPoint(undefined);
           }}
