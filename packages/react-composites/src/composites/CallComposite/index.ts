@@ -55,7 +55,7 @@ export type { CallParticipantsLocator } from './adapter';
 export type {
   VideoBackgroundImage,
   SelectedVideoBackgroundEffect,
-  VideoBackgroundNoneEffect,
+  VideoBackgroundNoEffect,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from './adapter/CallAdapter';
