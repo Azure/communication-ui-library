@@ -11,7 +11,6 @@ import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
-import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions, Mention } from '../MentionPopover';
@@ -21,6 +20,7 @@ import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images) */
 import { FileMetadata } from '../FileDownloadCards';
+import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
 
@@ -66,7 +66,7 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
     <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel}>
-      <LiveMessage message={props.liveMessage} aria-live="polite" />
+      <LiveMessage message={props.liveMessage} ariaLive="polite" />
       {props.content}
     </div>
   );

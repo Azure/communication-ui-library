@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { ChatComposite, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 
@@ -15,6 +15,11 @@ export const loadChatComposite = async function (args, htmlElement, props) {
     credential: new AzureCommunicationTokenCredential(token),
     threadId
   });
-  ReactDOM.render(React.createElement(ChatComposite, { ...props, adapter }, null), htmlElement);
+
+  if (!htmlElement) {
+    throw new Error('Failed to find the root element');
+  }
+
+  createRoot(htmlElement).render(React.createElement(ChatComposite, { ...props, adapter }, null));
   return adapter;
 };
