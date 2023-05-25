@@ -231,7 +231,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       key: 'effects',
       'data-ui-id': 'camera-split-button-video-effects',
       text: strings.videoEffectsMenuItemTitle,
-      iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
+      iconProps: { iconName: 'ControlButtonVideoEffectsOption', styles: { root: { lineHeight: 0 } } },
       onClick: () => {
         if (props.onShowVideoEffectsPicker) {
           props.onShowVideoEffectsPicker(true);

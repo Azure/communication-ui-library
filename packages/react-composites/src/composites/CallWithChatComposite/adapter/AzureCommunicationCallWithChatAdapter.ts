@@ -235,7 +235,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     /* @conditional-compile-remove(video-background-effects) */
     this.replaceVideoBackground.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
-    this.stopVideoBackgroundEffect.bind(this);
+    this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.updateBackgroundPickerImages.bind(this);
   }
@@ -479,8 +479,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async stopVideoBackgroundEffect(): Promise<void> {
-    return await this.callAdapter.stopVideoBackgroundEffect();
+  public async stopVideoBackgroundEffects(): Promise<void> {
+    return await this.callAdapter.stopVideoBackgroundEffects();
   }
 
   /* @conditional-compile-remove(video-background-effects) */

@@ -7,7 +7,7 @@ const commonConfig = require('../../common/config/jest/jest.config');
 const path = require('path');
 
 const config =
-  process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable'
+  process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta'
     ? {
         ...commonConfig,
         testPathIgnorePatterns: ['/node_modules/'],
@@ -24,7 +24,7 @@ const config =
 module.exports = {
   ...config,
   roots: [
-    path.join(__dirname, process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' ? 'preprocessed' : 'src')
+    path.join(__dirname, process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' ? 'preprocessed' : 'src')
     // Uncomment the following line to run E2E browser tests
     // path.join(__dirname, 'tests')
   ]

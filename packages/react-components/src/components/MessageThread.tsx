@@ -6,10 +6,10 @@ import {
   Chat,
   ChatItemProps,
   Flex,
-  Ref,
   ShorthandValue,
-  mergeStyles as mergeNorthstarThemes
-} from '@fluentui/react-northstar';
+  mergeStyles as mergeNorthstarThemes,
+  Ref
+} from '@internal/northstar-wrapper';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -39,7 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -51,7 +50,8 @@ import {
   ParticipantAddedSystemMessage,
   ParticipantRemovedSystemMessage,
   Message,
-  ReadReceiptsBySenderId
+  ReadReceiptsBySenderId,
+  ComponentSlotStyle
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
@@ -69,9 +69,9 @@ import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
+import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-import { ComponentSlotStyle } from '../types';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (

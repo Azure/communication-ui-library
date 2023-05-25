@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[AzureCommunicationChatAdapter.test.ts] Adding new unit test for testing factory method",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}

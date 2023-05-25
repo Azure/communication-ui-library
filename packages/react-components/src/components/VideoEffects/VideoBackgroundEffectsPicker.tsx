@@ -6,6 +6,7 @@ import { useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
 import { _VideoEffectsItem, _VideoEffectsItemProps } from './VideoEffectsItem';
+import { hiddenVideoEffectsItemContainerStyles } from './VideoEffectsItem.styles';
 
 /**
  * Props for {@link _VideoBackgroundEffectsPicker}
@@ -111,13 +112,16 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
   };
 
   const convertedOptions: _VideoEffectsItemProps[] = props.options.map((option) => ({
-    isSelected: option.key === selectedEffect,
-    onSelect: () => setSelectedEffect(option.key),
+    isSelected: option.itemKey === selectedEffect,
+    onSelect: () => setSelectedEffect(option.itemKey),
     ...option
   }));
 
-  const optionsByRow =
-    props.itemsPerRow === 'wrap' ? [convertedOptions] : chunk(convertedOptions, props.itemsPerRow ?? 3);
+  const itemsPerRow = props.itemsPerRow ?? 3;
+  const optionsByRow = itemsPerRow === 'wrap' ? [convertedOptions] : chunk(convertedOptions, itemsPerRow);
+
+  // If the final row is not full, fill it with hidden items to ensure layout.
+  const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - optionsByRow[optionsByRow.length - 1].length;
 
   return (
     <Stack tokens={{ childrenGap: '0.5rem' }}>
@@ -129,10 +133,20 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           horizontal
           key={rowIndex}
           tokens={{ childrenGap: '0.5rem' }}
+          data-ui-id="video-effects-picker-row"
         >
           {options.map((option) => (
-            <_VideoEffectsItem {...option} key={option.key} />
+            <_VideoEffectsItem {...option} key={option.itemKey} itemKey={option.itemKey} />
           ))}
+          {fillCount > 0 &&
+            rowIndex === optionsByRow.length - 1 &&
+            Array.from({ length: fillCount }).map((_, index) => (
+              <Stack
+                key={index}
+                styles={hiddenVideoEffectsItemContainerStyles}
+                data-ui-id="video-effects-hidden-item"
+              />
+            ))}
         </Stack>
       ))}
     </Stack>
