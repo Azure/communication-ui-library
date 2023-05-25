@@ -6,16 +6,16 @@ import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 /* @conditional-compile-remove(date-time-customization) */
 import { screen } from '@testing-library/react';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { render, waitFor } from '@testing-library/react';
-/* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { registerIcons } from '@fluentui/react';
 
 const twentyFourHoursAgo = (): Date => {
@@ -159,7 +159,7 @@ describe('Message blocked should display default blocked text correctly', () => 
   });
 });
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 describe('Message should display inline image correctly', () => {
   beforeAll(() => {
     registerIcons({

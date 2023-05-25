@@ -9,13 +9,13 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @beta
  */
 export type FileMetadataAttachmentType =
   | 'fileSharing'
-  | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage'
   | 'unknown';
 
 /**
@@ -23,13 +23,13 @@ export type FileMetadataAttachmentType =
  * @beta
  */
 export interface FileMetadata {
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
   attachmentType: FileMetadataAttachmentType;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Unique ID of the file.
    */
@@ -48,7 +48,7 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Preview URL for the file.
    * Used in the message bubble for inline images.
@@ -56,7 +56,7 @@ export interface FileMetadata {
   previewUrl?: string;
 }
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
 /**
  * @beta
  */
@@ -193,7 +193,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images) */ fileMetadata[0].attachmentType !== 'fileSharing'
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ fileMetadata[0].attachmentType !== 'fileSharing'
   ) {
     return <></>;
   }

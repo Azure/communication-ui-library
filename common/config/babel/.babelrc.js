@@ -44,10 +44,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
-        // Chat teams interop to display images in chat messages
-        'teams-inline-images',
-        // Chat teams interop to display file attachments in chat messages
-        'teams-file-attachments',
+        // Chat teams interop to display images and file attachments in chat messages
+        'teams-inline-images-and-file-sharing',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',

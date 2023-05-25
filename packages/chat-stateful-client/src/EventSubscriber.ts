@@ -44,7 +44,7 @@ export class EventSubscriber {
       version: event.version,
       content: {
         message: event.message,
-        /* @conditional-compile-remove(teams-inline-images) */
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachments: [
           { "id": "3faba733-f8d2-4d76-8089-4dfe39358b33",
             "attachmentType": "file",
