@@ -98,7 +98,7 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('createStreamView not implemented');
   }
   disposeStreamView(): Promise<void> {
-    throw Error('disposeStreamView not implemented');
+    return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   askDevicePermission(constrain: PermissionConstraints): Promise<void> {

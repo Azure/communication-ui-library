@@ -2,18 +2,20 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
 
-if (document.getElementById('root') !== undefined) {
-  ReactDOM.render(
-    <SwitchableFluentThemeProvider scopeId="SampleChatApp">
-      <div className="wrapper">
-        <App />
-      </div>
-    </SwitchableFluentThemeProvider>,
-    document.getElementById('root')
-  );
+const domNode = document.getElementById('root');
+if (!domNode) {
+  throw new Error('Failed to find the root element');
 }
+
+createRoot(domNode).render(
+  <SwitchableFluentThemeProvider scopeId="SampleChatApp">
+    <div className="wrapper">
+      <App />
+    </div>
+  </SwitchableFluentThemeProvider>
+);
