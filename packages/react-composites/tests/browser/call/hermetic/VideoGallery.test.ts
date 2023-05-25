@@ -10,8 +10,6 @@ import {
 } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot, pageClick, isTestProfileMobile } from '../../common/utils';
-/* @conditional-compile-remove(pinned-participants) */
-import { screenshotOnFailure, perStepLocalTimeout } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
