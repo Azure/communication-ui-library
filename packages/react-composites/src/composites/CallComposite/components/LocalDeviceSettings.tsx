@@ -3,6 +3,8 @@
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(video-background-effects) */
+import { DefaultButton } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */
 import { useEffect } from 'react';
 import { useTheme, VideoStreamOptions, _DevicePermissionDropdown } from '@internal/react-components';
@@ -23,6 +25,9 @@ import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdo
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
 /* @conditional-compile-remove(call-readiness) */
 import { useHandlers } from '../hooks/useHandlers';
+import { cameraAndVideoEffectsContainerStyleDesktop } from '../styles/CallConfiguration.styles';
+/* @conditional-compile-remove(video-background-effects) */
+import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
 
 type iconType = 'Camera' | 'Microphone' | 'Speaker';
 
@@ -88,6 +93,8 @@ export interface LocalDeviceSettingsType {
   onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
+  /* @conditional-compile-remove(video-background-effects) */
+  onVideoEffectsClick?: () => void;
 }
 
 /**
@@ -204,13 +211,26 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
       {roleCanUseCamera && (
         <Stack>
-          <Label
-            id={'call-composite-local-camera-settings-label'}
-            className={mergeStyles(dropDownStyles(theme).label)}
-            disabled={!cameraPermissionGranted} // follows dropdown disabled state
-          >
-            {cameraLabel}
-          </Label>
+          <Stack horizontal horizontalAlign="space-between" styles={cameraAndVideoEffectsContainerStyleDesktop}>
+            <Label
+              id={'call-composite-local-camera-settings-label'}
+              className={mergeStyles(dropDownStyles(theme).label)}
+              disabled={!cameraPermissionGranted} // follows dropdown disabled state
+            >
+              {cameraLabel}
+            </Label>
+            {
+              /* @conditional-compile-remove(video-background-effects) */
+              <DefaultButton
+                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
+                styles={effectsButtonStyles(theme)}
+                onClick={props.onVideoEffectsClick}
+                data-ui-id={'call-config-video-effects-button'}
+              >
+                {locale.strings.call.configurationPageVideoEffectsButtonLabel}
+              </DefaultButton>
+            }
+          </Stack>
           <ConfigurationPageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}
             cameraPermissionGranted={cameraPermissionGranted ?? false}

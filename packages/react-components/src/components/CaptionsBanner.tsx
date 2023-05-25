@@ -3,7 +3,7 @@
 import { Stack, FocusZone } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
-import { Ref } from '@fluentui/react-northstar';
+import { Ref } from '@internal/northstar-wrapper';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,

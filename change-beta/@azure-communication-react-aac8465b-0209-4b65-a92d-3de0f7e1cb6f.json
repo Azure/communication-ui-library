@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add new API for hiding local tile in composite",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

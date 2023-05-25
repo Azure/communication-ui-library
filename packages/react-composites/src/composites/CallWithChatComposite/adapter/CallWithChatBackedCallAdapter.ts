@@ -196,8 +196,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.replaceVideoBackground(backgroundReplacementConfig);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public async stopVideoBackgroundEffect(): Promise<void> {
-    await this.callWithChatAdapter.stopVideoBackgroundEffect();
+  public async stopVideoBackgroundEffects(): Promise<void> {
+    await this.callWithChatAdapter.stopVideoBackgroundEffects();
   }
   /* @conditional-compile-remove(video-background-effects) */
   public updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void {

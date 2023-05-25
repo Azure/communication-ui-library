@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
+import { Chat } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -13,7 +14,9 @@ import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle, chatMessageEditContainerStyle } from '../styles/ChatMessageComponent.styles';
+/* @conditional-compile-remove(mention) */
+import { MentionLookupOptions } from '../MentionPopover';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -29,13 +32,7 @@ const onRenderSubmitIcon = (color: string): JSX.Element => {
 
 /** @private */
 export type ChatMessageComponentAsEditBoxProps = {
-  onCancel?: (
-    messageId: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => void;
+  onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
     metadata?: Record<string, string>,
@@ -50,6 +47,8 @@ export type ChatMessageComponentAsEditBoxProps = {
    * Setting to false will mean they are on a new line inside the editable chat message.
    */
   inlineEditButtons: boolean;
+  /* @conditional-compile-remove(mention) */
+  mentionLookupOptions?: MentionLookupOptions;
 };
 
 type MessageState = 'OK' | 'too short' | 'too long';
@@ -59,6 +58,9 @@ type MessageState = 'OK' | 'too short' | 'too long';
  */
 export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditBoxProps): JSX.Element => {
   const { onCancel, onSubmit, strings, message } = props;
+  /* @conditional-compile-remove(mention) */
+  const { mentionLookupOptions } = props;
+
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
   const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
@@ -71,10 +73,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     editTextFieldRef.current?.focus();
   }, []);
 
-  const setText = (
-    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-    newValue?: string | undefined
-  ): void => {
+  const setText = (event?: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string): void => {
     setTextValue(newValue ?? '');
   };
 
@@ -116,68 +115,74 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   }, [attachedFilesMetadata]);
 
-  return (
-    <Stack
-      className={mergeStyles(
-        borderAndBoxShadowStyle({
-          theme,
-          hasErrorMessage: message.failureReason !== undefined,
-          disabled: false
-        })
-      )}
-    >
-      <InputBoxComponent
-        inlineChildren={props.inlineEditButtons}
-        id={'editbox'}
-        textFieldRef={editTextFieldRef}
-        inputClassName={editBoxStyle(props.inlineEditButtons)}
-        placeholderText={strings.editBoxPlaceholderText}
-        textValue={textValue}
-        onChange={setText}
-        onEnterKeyDown={() => {
-          submitEnabled &&
-            onSubmit(textValue, message.metadata, {
-              attachedFilesMetadata
-            });
-        }}
-        supportNewline={false}
-        maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-        errorMessage={textTooLongMessage}
-        styles={editBoxStyles}
+  const getContent = (): JSX.Element => {
+    return (
+      <Stack
+        className={mergeStyles(
+          borderAndBoxShadowStyle({
+            theme,
+            hasErrorMessage: message.failureReason !== undefined,
+            disabled: false
+          })
+        )}
       >
-        <InputBoxButton
-          className={editingButtonStyle}
-          ariaLabel={strings.editBoxCancelButton}
-          tooltipContent={strings.editBoxCancelButton}
-          onRenderIcon={onRenderThemedCancelIcon}
-          onClick={() => {
-            onCancel && onCancel(message.messageId, message.metadata, { attachedFilesMetadata });
-          }}
-          id={'dismissIconWrapper'}
-        />
-        <InputBoxButton
-          className={editingButtonStyle}
-          ariaLabel={strings.editBoxSubmitButton}
-          tooltipContent={strings.editBoxSubmitButton}
-          onRenderIcon={onRenderThemedSubmitIcon}
-          onClick={(e) => {
+        <InputBoxComponent
+          inlineChildren={props.inlineEditButtons}
+          id={'editbox'}
+          textFieldRef={editTextFieldRef}
+          inputClassName={editBoxStyle(props.inlineEditButtons)}
+          placeholderText={strings.editBoxPlaceholderText}
+          textValue={textValue}
+          onChange={setText}
+          onEnterKeyDown={() => {
             submitEnabled &&
               onSubmit(textValue, message.metadata, {
                 attachedFilesMetadata
               });
-            e.stopPropagation();
           }}
-          id={'submitIconWrapper'}
-        />
-      </InputBoxComponent>
-      {message.failureReason && (
-        <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>
-          {message.failureReason}
-        </div>
-      )}
-      {onRenderFileUploads()}
-    </Stack>
-  );
+          supportNewline={false}
+          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          errorMessage={textTooLongMessage}
+          styles={editBoxStyles}
+          /* @conditional-compile-remove(mention) */
+          mentionLookupOptions={mentionLookupOptions}
+        >
+          <InputBoxButton
+            className={editingButtonStyle}
+            ariaLabel={strings.editBoxCancelButton}
+            tooltipContent={strings.editBoxCancelButton}
+            onRenderIcon={onRenderThemedCancelIcon}
+            onClick={() => {
+              onCancel && onCancel(message.messageId);
+            }}
+            id={'dismissIconWrapper'}
+          />
+          <InputBoxButton
+            className={editingButtonStyle}
+            ariaLabel={strings.editBoxSubmitButton}
+            tooltipContent={strings.editBoxSubmitButton}
+            onRenderIcon={onRenderThemedSubmitIcon}
+            onClick={(e) => {
+              submitEnabled &&
+                onSubmit(textValue, message.metadata, {
+                  attachedFilesMetadata
+                });
+              e.stopPropagation();
+            }}
+            id={'submitIconWrapper'}
+          />
+        </InputBoxComponent>
+        {message.failureReason && (
+          <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>
+            {message.failureReason}
+          </div>
+        )}
+        {onRenderFileUploads()}
+      </Stack>
+    );
+  };
+
+  return <Chat.Message styles={chatMessageEditContainerStyle} content={getContent()} />;
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;

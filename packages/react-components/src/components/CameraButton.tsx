@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useMemo } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
@@ -9,6 +9,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import {
   ContextualMenuItemType,
+  IButtonProps,
   IContextualMenuItem,
   IContextualMenuItemStyles,
   IContextualMenuStyles
@@ -80,6 +81,11 @@ export interface CameraButtonStrings {
    * Title for primary action section of split button
    */
   cameraPrimaryActionSplitButtonTitle?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Title for video effects menu item
+   */
+  videoEffectsMenuItemTitle?: string;
 }
 
 /**
@@ -223,9 +229,9 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   if (props.onShowVideoEffectsPicker) {
     splitButtonMenuItems.push({
       key: 'effects',
-      text: 'Effects',
-      title: 'Video Effects',
-      iconProps: { iconName: 'OptionsVideoBackgroundEffect', styles: { root: { lineHeight: 0 } } },
+      'data-ui-id': 'camera-split-button-video-effects',
+      text: strings.videoEffectsMenuItemTitle,
+      iconProps: { iconName: 'ControlButtonVideoEffectsOption', styles: { root: { lineHeight: 0 } } },
       onClick: () => {
         if (props.onShowVideoEffectsPicker) {
           props.onShowVideoEffectsPicker(true);
@@ -243,6 +249,14 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       items: splitButtonMenuItems
     }
   };
+
+  const splitButtonMenuProps: IButtonProps = useMemo(
+    () => ({
+      ...props.splitButtonMenuProps,
+      className: 'camera-split-button'
+    }),
+    [props.splitButtonMenuProps]
+  );
 
   return (
     <>
@@ -269,6 +283,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         split={props.split ?? props.enableDeviceSelectionMenu}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
+        splitButtonMenuProps={splitButtonMenuProps}
       />
     </>
   );

@@ -21,18 +21,21 @@ import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { reduceCallControlsForMobile } from '../utils';
+import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
  */
 export interface CallPageProps {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
   modalLayerHostId: string;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
 }
 
@@ -82,8 +85,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
-      /* @conditional-compile-remove(one-to-n-calling) */
-      modalLayerHostId={props.modalLayerHostId}
+      modalLayerHostId={drawerMenuHostId}
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
@@ -96,6 +98,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               /* @conditional-compile-remove(pinned-participants) */
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
               drawerMenuHostId={drawerMenuHostId}
+              /* @conditional-compile-remove(click-to-call) */
+              localVideoTileOptions={options?.localVideoTileOptions}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -104,6 +108,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           <></>
         )
       }
+      updateSidePaneRenderer={props.updateSidePaneRenderer}
+      mobileChatTabHeader={props.mobileChatTabHeader}
       dataUiId={'call-page'}
     />
   );

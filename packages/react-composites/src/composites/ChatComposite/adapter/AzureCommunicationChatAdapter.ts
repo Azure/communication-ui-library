@@ -369,6 +369,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
+
+    if (!isCurrentChatAdapterThread) {
+      return;
+    }
+
     const message = convertEventToChatMessage(event);
     this.emitter.emit('messageReceived', { message });
 
@@ -481,7 +487,7 @@ const convertEventType = (type: string): ChatMessageType => {
  * Configuration options to include when creating AzureCommunicationChatAdapter.
  * @beta
  */
-export type ChatAdapterOptions = {
+export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
 };
 

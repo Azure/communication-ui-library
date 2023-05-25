@@ -21,6 +21,7 @@ export interface QueryArgs {
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
+  localVideoTilePosition?: 'grid' | 'floating' | 'hidden';
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -55,6 +56,7 @@ export function parseQueryArgs(): QueryArgs {
     callInvitationUrl: params.callInvitationUrl,
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
-      : undefined
+      : undefined,
+    localVideoTilePosition: (params.localVideoTilePosition as 'grid' | 'floating' | 'hidden') ?? undefined
   };
 }
