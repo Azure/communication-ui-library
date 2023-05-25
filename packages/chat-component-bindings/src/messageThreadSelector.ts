@@ -75,6 +75,7 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  console.log('Inline - attachments', attachments);
   return attachments.filter(attachment => attachment.attachmentType === 'teamsInlineImage').map((attachment) => ({
     attachmentType: attachment.attachmentType,
     id: attachment.id,
@@ -87,6 +88,7 @@ const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMet
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractTeamsFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  console.log('File - attachments', attachments);
   return attachments.filter(attachment => attachment.attachmentType === 'file').map((attachment) => ({
     attachmentType: 'fileSharing',
     id: attachment.id,
@@ -99,6 +101,7 @@ const extractTeamsFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractTeamsImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  console.log('File Inline - attachments', attachments);
   return attachments.filter(attachment => attachment.attachmentType === 'teamsImage').map((attachment) => ({
     attachmentType: 'teamsInlineImage',
     id: attachment.id,
@@ -113,6 +116,8 @@ const extractTeamsImageFilesMetadata = (attachments: ChatAttachment[]): FileMeta
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
   let fileMetadata: FileMetadata[] = [];
+
+  console.log('message.metadata', message.metadata);
 
   /* @conditional-compile-remove(file-sharing) */
   if (message.metadata) {
