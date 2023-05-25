@@ -545,6 +545,7 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    localVideoTileOptions?: LocalVideoTileOptions;
 };
 
 // @public
@@ -2684,6 +2685,11 @@ export interface LocalVideoStreamState {
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
     activeEffects?: VideoEffectName[];
+}
+
+// @beta
+export interface LocalVideoTileOptions {
+    position?: 'grid' | 'floating' | 'hidden';
 }
 
 // @beta
