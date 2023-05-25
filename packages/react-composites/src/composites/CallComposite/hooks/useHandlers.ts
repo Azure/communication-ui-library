@@ -97,7 +97,7 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(video-background-effects) */
     onRemoveVideoBackgroundEffects: async () => {
-      return await adapter.stopVideoBackgroundEffect();
+      return await adapter.stopVideoBackgroundEffects();
     },
     /* @conditional-compile-remove(video-background-effects) */
     onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {

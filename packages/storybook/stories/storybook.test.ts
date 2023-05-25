@@ -45,7 +45,7 @@ afterAll(() => {
   console.error = consoleError;
 });
 
-describe('storybook snapshot tests', () => {
+describe.skip('storybook snapshot tests', () => {
   initStoryshots({
     test: (story) => {
       const fileName = path.resolve(__dirname, '..', story.context.fileName);

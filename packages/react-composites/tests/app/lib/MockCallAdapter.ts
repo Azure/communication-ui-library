@@ -195,8 +195,8 @@ export class MockCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
 
-  stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  stopVideoBackgroundEffects(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffects not implemented.');
   }
 
   updateBackgroundPickerImages(): void {

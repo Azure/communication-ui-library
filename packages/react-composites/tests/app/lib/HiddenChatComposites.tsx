@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ChatAdapter, ChatComposite } from '../../../src';
 
@@ -12,23 +12,67 @@ import { ChatAdapter, ChatComposite } from '../../../src';
  * The added chat composites are hidden, but tests can interact with them programmatically.
  */
 export const HiddenChatComposites = (props: { adapters: ChatAdapter[] }): JSX.Element => {
+  const [hiddenCompositesProps, setHiddenCompositesProps] = useState<HiddenChatCompositesProps[]>([]);
+
+  useEffect(() => {
+    // Run an interval timer to see if the CSS has been updated to hide or show the composites.
+    const handle = setInterval(() => {
+      const newHiddenCompositesProps = getHiddenCompositesProps(props.adapters);
+      setHiddenCompositesProps((previous) => {
+        if (
+          newHiddenCompositesProps.length === previous.length &&
+          newHiddenCompositesProps.every((newHiddenCompositeProps) =>
+            previous.some(
+              (p) => p.key === newHiddenCompositeProps.key && p.isVisible === newHiddenCompositeProps.isVisible
+            )
+          )
+        ) {
+          return previous;
+        }
+        return newHiddenCompositesProps;
+      });
+    }, 100);
+
+    return () => {
+      clearInterval(handle);
+    };
+  }, [props.adapters]);
+
   return (
     <>
-      {props.adapters.map((adapter) => {
-        const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
-        const compositeID = `hidden-composite-${userId}`;
-        // Composite container should be non-zero so that selectors that evaluate whether a hidden
-        // chat composite is being shown evaluate to true when `display` is set to `block`.
+      {hiddenCompositesProps.map((hiddenCompositeProps) => {
         return (
           <div
-            id={compositeID}
-            key={compositeID}
-            style={{ height: '100px', width: '100px', overflow: 'hidden', display: 'none' }}
+            id={hiddenCompositeProps.key}
+            key={hiddenCompositeProps.key}
+            style={{ height: '100vh', width: '100vw', overflow: 'hidden', display: 'none' }}
           >
-            <ChatComposite adapter={adapter} options={{ participantPane: true }} />
+            {hiddenCompositeProps.isVisible && (
+              <ChatComposite adapter={hiddenCompositeProps.adapter} options={{ participantPane: true }} />
+            )}
           </div>
         );
       })}
     </>
   );
+};
+
+const getHiddenCompositesProps = (adapters: ChatAdapter[]): HiddenChatCompositesProps[] =>
+  adapters.map((adapter) => {
+    const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
+    const compositeID = `hidden-composite-${userId}`;
+
+    const isVisible = !!(document.getElementById(compositeID)?.style.getPropertyValue('display') === 'block');
+
+    return {
+      key: compositeID,
+      isVisible,
+      adapter
+    };
+  });
+
+type HiddenChatCompositesProps = {
+  key: string;
+  isVisible: boolean;
+  adapter: ChatAdapter;
 };
