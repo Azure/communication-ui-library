@@ -1452,7 +1452,7 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
 // @beta
 export type TeamsAdapterOptions = {
@@ -1510,7 +1510,7 @@ export interface VideoBackgroundImage {
 }
 
 // @beta
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
     effectName: 'none';
 }
 
