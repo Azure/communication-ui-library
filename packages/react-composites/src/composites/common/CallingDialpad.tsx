@@ -89,7 +89,7 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
       <Stack data-ui-id="call-with-chat-composite-dialpad">
         {showDialpad && (
           <Stack styles={drawerContainerStyles()}>
-            <_DrawerSurface onLightDismiss={onDismissTriggered}>
+            <_DrawerSurface disableMaxHeight={true} onLightDismiss={onDismissTriggered}>
               <Stack style={{ padding: '1rem' }}>{dialpadComponent()}</Stack>
             </_DrawerSurface>
           </Stack>
