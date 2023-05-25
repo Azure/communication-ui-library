@@ -92,7 +92,7 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 
 const mentionTag = `
 <msft-mention id="<id>" displayText="<display text>">
-  Displayable Content
+  Displayable Text
 </msft-mention>
 `;
 const getDocs: () => JSX.Element = () => {
@@ -319,6 +319,19 @@ const MessageThreadStory = (args): JSX.Element => {
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
+  const onUpdateMessageCallback = (messageId, content): Promise<void> => {
+    const updatedChatMessages = chatMessages;
+    const msgIdx = chatMessages.findIndex((m) => m.messageId === messageId);
+    const message = chatMessages[msgIdx];
+    if (message.messageType === 'chat') {
+      message.content = content;
+      message.editedOn = new Date(Date.now());
+    }
+    updatedChatMessages[msgIdx] = message;
+    setChatMessages(updatedChatMessages);
+    return Promise.resolve();
+  };
+
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
@@ -367,6 +380,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachment}
+        onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
