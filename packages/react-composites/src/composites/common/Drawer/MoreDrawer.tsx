@@ -3,7 +3,7 @@
 
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { useMemo } from 'react';
 import {
@@ -40,8 +40,6 @@ import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector
 import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
-/* @conditional-compile-remove(close-captions) */
-import { defaultSpokenLanguage } from '../utils';
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageDrawer } from './SpokenLanguageDrawer';
 /* @conditional-compile-remove(close-captions) */
@@ -281,9 +279,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(close-captions) */
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
-    startCaptionsButtonProps.currentSpokenLanguage === ''
-      ? defaultSpokenLanguage
-      : startCaptionsButtonProps.currentSpokenLanguage
+    startCaptionsButtonProps.currentSpokenLanguage
   );
   /* @conditional-compile-remove(close-captions) */
   const onToggleChange = useCallback(async () => {
@@ -295,19 +291,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       startCaptionsButtonHandlers.onStopCaptions();
     }
   }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, currentSpokenLanguage]);
-  /* @conditional-compile-remove(close-captions) */
-  const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
-
-  /* @conditional-compile-remove(close-captions) */
-  useEffect(() => {
-    if (startCaptionsButtonProps.checked && !hasSetSpokenLanguage) {
-      // set spoken language when start captions with a spoken language specified.
-      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-      startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage);
-      // we only need to call set spoken language once when first starting captions
-      setHasSetSpokenLanguage(true);
-    }
-  }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, currentSpokenLanguage, hasSetSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
