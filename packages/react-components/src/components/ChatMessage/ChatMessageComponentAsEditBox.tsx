@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
-import { Chat } from '@fluentui/react-northstar';
+import { Chat } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
