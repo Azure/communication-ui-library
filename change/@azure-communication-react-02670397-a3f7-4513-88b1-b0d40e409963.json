@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Set MaxHeight to drawerSurface and drawerMenu",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
