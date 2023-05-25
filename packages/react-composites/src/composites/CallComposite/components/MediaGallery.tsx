@@ -97,7 +97,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            {options?.coinSize && (
+              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            )}
           </Stack>
         </Stack>
       );
