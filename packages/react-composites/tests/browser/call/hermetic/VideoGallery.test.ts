@@ -128,6 +128,7 @@ test.describe('VideoGallery tests', async () => {
     sixthVideoTile.hover();
     const moreButton = await sixthVideoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     moreButton.click();
+    await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
     // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
