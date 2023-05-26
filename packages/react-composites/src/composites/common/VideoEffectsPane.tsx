@@ -14,7 +14,7 @@ import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
 import {
   VideoBackgroundImage,
   VideoBackgroundBlurEffect,
-  VideoBackgroundNoneEffect,
+  VideoBackgroundNoEffect,
   VideoBackgroundReplacementEffect
 } from '../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
@@ -94,7 +94,7 @@ export const VideoEffectsPaneContent = (props: {
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
         await adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
-        const noneEffect: VideoBackgroundNoneEffect = {
+        const noneEffect: VideoBackgroundNoEffect = {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(noneEffect);
