@@ -210,7 +210,8 @@ const defaultCallAdapterState: CallAdapterState = {
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },
