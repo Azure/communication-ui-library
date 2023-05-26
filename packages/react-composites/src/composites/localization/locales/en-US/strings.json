@@ -35,6 +35,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "You were not granted entry in the call. If this was a mistake, re-join the call.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Dismissed from lobby",
     "learnMore": "Learn more",
+    "leavingCallTitle": "Leaving...",
     "leftCallMoreDetails": "If this was a mistake, re-join the call.",
     "leftCallTitle": "You left the call",
     "lobbyScreenConnectingToCallTitle": "Joining call",

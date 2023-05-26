@@ -45,3 +45,11 @@ export const drawerContainerStyles = (zIndex: number = DEFAULT_Z_INDEX): IStackS
     zIndex: zIndex
   }
 });
+
+/**
+ * @private
+ * Page container style for leaving page
+ */
+export const leavingPageStyle: IStyle = {
+  background: '#FAF9F8'
+};

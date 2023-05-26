@@ -194,6 +194,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
       return 'call';
+    } else if (call?.state === 'Disconnecting') {
+      return 'leaving';
     } else if (_isInCall(call?.state)) {
       return 'call';
     } else {

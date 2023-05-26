@@ -18,7 +18,11 @@ import { getPage } from './selectors/baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+import {
+  leavingPageStyle,
+  mainScreenContainerStyleDesktop,
+  mainScreenContainerStyleMobile
+} from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
@@ -276,12 +280,22 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    case 'leaving':
+      pageElement = (
+        <NoticePage
+          title={locale.strings.call.leavingCallTitle ?? 'Leaving...'}
+          dataUiId={'leaving-page'}
+          pageStyle={leavingPageStyle}
+          disableStartCallButton={true}
+        />
+      );
+      break;
     case 'leftCall':
       pageElement = (
         <NoticePage
           iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
-          moreDetails={locale.strings.call.leftCallMoreDetails}
+          // moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}
         />
       );

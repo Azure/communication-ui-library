@@ -50,6 +50,7 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
+  | 'leaving'
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
