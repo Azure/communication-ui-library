@@ -3199,7 +3199,7 @@ export interface ScreenShareButtonStrings {
 }
 
 // @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
 // @public
 export type Selector = (state: ClientState, props: any) => any;
@@ -3556,7 +3556,7 @@ export interface VideoBackgroundImage {
 }
 
 // @beta
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
     effectName: 'none';
 }
 
