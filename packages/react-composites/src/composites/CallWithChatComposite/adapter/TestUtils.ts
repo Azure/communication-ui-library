@@ -232,7 +232,8 @@ function createMockCall(mockCallId: string): CallState {
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
     }
   };
   return call;
