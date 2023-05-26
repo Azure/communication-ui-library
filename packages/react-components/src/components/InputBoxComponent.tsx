@@ -941,7 +941,7 @@ const rangeOfWordInSelection = ({
   let start = selectionStart;
   let end = selectionEnd === null ? selectionStart : selectionEnd;
   const firstWordStartIndex = textInput.lastIndexOf(' ', selectionStart);
-  if (firstWordStartIndex == tag.plainTextBeginIndex) {
+  if (firstWordStartIndex === tag.plainTextBeginIndex) {
     start = firstWordStartIndex;
   } else {
     start = Math.max(firstWordStartIndex + 1, tag.plainTextBeginIndex);
