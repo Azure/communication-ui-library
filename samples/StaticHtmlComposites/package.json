@@ -28,7 +28,8 @@
     "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "@fluentui/react": "~8.98.3"
   },
   "devDependencies": {
     "@azure/communication-identity": "~1.1.0",
