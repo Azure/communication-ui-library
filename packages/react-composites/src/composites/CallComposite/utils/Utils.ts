@@ -237,6 +237,7 @@ export const IsCallEndedPage = (
     | 'call'
     | 'configuration'
     | 'joinCallFailedDueToNoNetwork'
+    | 'leaving'
     | 'leftCall'
     | 'lobby'
     | 'removedFromCall'
