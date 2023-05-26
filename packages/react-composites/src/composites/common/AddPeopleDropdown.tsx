@@ -139,7 +139,11 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
 
         {addPeopleDrawerMenuItems.length > 0 && (
           <Stack styles={drawerContainerStyles()} data-ui-id="call-add-people-dropdown">
-            <_DrawerMenu onLightDismiss={() => setAddPeopleDrawerMenuItems([])} items={addPeopleDrawerMenuItems} />
+            <_DrawerMenu
+              disableMaxHeight={true}
+              onLightDismiss={() => setAddPeopleDrawerMenuItems([])}
+              items={addPeopleDrawerMenuItems}
+            />
           </Stack>
         )}
         {alternateCallerId && (

@@ -61,6 +61,13 @@ export const captionsBannerClassName = mergeStyles({
 /**
  * @private
  */
+export const loadingBannerClassName = mergeStyles({
+  height: _pxToRem(100)
+});
+
+/**
+ * @private
+ */
 export const captionsContentContainerClassName = mergeStyles({
   width: '100%'
 });
