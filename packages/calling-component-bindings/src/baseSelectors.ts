@@ -156,6 +156,15 @@ export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSele
 
 /* @conditional-compile-remove(close-captions) */
 /** @private */
+export const getStartCaptionsInProgress = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): boolean | undefined => {
+  return state.calls[props.callId]?.captionsFeature.startCaptionsInProgress;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps

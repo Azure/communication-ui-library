@@ -1,3 +1,4 @@
+@types/html-to-react.d.ts
 docs/
 public/
 dist/

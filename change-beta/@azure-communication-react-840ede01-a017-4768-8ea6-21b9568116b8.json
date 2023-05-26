@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fix regression where chat and hold buttons werent disabled when the call went into hold",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

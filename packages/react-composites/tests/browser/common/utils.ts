@@ -203,6 +203,25 @@ export const loadCallPageWithParticipantVideos = async (pages: Page[]): Promise<
 };
 
 /**
+ * Wait for the count of a selector
+ */
+export const waitForSelectorCount = async (page: Page, selector: string, count: number): Promise<void> => {
+  await waitForFunction(
+    page,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (args: any) => {
+      const nodes = document.querySelectorAll(args.selector);
+      return nodes.length === args.count;
+    },
+    {
+      selector: selector,
+      count: count
+    },
+    { timeout: perStepLocalTimeout() }
+  );
+};
+
+/**
  * Wait for the Composite CallPage page to fully load with video participant video feeds enabled.
  *
  * @param expectedVideoCount If set, the number of video tiles to expect. Default is `pages.length`.

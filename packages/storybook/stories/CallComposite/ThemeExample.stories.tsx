@@ -31,7 +31,7 @@ const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context): JSX.E
   const containerProps = useMemo(() => {
     if (args.userId && args.token) {
       const containerProps = {
-        userId: args.userId,
+        userId: { communicationUserId: args.userId },
         token: args.token,
         locator: createGUID()
       };

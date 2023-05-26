@@ -1,13 +1,13 @@
 {
   "name": "@internal/chat-stateful-client",
-  "version": "1.5.1-beta.3",
+  "version": "1.5.1-beta.4",
   "description": "Stateful proxy over the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/chat-stateful-client.d.ts",
   "scripts": {
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
-    "build:esm": "if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
+    "build:esm": "rushx _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
@@ -21,17 +21,19 @@
     "lint:quiet": "rushx lint -- --quiet",
     "api-extractor": "rushx _by-flavor \"rushx build:esm && rushx _api-extractor:by-flavor\"",
     "generate-doc": "api-documenter markdown -i temp -o docGen",
-    "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (if-env COMMUNICATION_REACT_FLAVOR=beta && api-extractor run --local)",
+    "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
+    "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
+    "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_test:by-flavor": "(if-env COMMUNICATION_REACT_FLAVOR=stable && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
+    "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
     "@azure/communication-common": "2.2.0",
     "@azure/core-paging": "~1.1.3",
     "@azure/logger": "1.0.3",
-    "@internal/acs-ui-common": "1.5.1-beta.3",
+    "@internal/acs-ui-common": "1.5.1-beta.4",
     "events": "~3.3.0",
     "immer": "9.0.6",
     "nanoid": "3.1.32"
@@ -47,7 +49,7 @@
     "@microsoft/api-documenter": "~7.12.11",
     "@microsoft/api-extractor": "~7.18.0",
     "@types/jest": "~26.0.22",
-    "@types/react": "^16.9.49",
+    "@types/react": "18.2.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "@zerollup/ts-transform-paths": "~1.7.18",

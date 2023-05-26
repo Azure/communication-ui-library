@@ -44,6 +44,8 @@ For more information on thread Id, see our [documentation](https://docs.microsof
 
 <Source code={ChatAdapterExampleText} />
 
+<MessageBar>Note: The `adapter` in Chat Composite is specifically designed for single-thread usage only.</MessageBar>
+
 ## Using Adapters
 
 Once initialized, adapters can be used to initialize Composites as well as to pragmatically take actions on the call or chat experience.
@@ -74,6 +76,8 @@ Below are some examples that might be helpful, but additional methods are availa
 #### Chat Adapter Examples
 
 <Source code={ChatAdapterStateChangesText} />
+
+The ChatAdapter and the ChatComposite are purpose-built to support single chat thread. Only events, such as 'messagesReceived', from the thread that initialized the ChatAdapter, will be triggered. To accommodate multiple threads usage, you can leverage the foundational service assistant, the Chat [StatefulClient](./?path=/docs/statefulclient-overview--page), in conjunction with [usePropsFor](./?path=/docs/statefulclient-reacthooks-usepropsfor--page) to render the Chat UI Component for an enhanced chatting experience. Alternatively, you can manage multiple adapters corresponding to different threads, and display the Chat UI Composite based on the threads the user wishes to access.
 
 ## Interfaces
 
@@ -197,7 +201,7 @@ async function createAzureCommunicationCallAdapter(args: AzureCommunicationChatA
 async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-  options?: ChatAdapterOptions
+  options?: AzureCommunicationChatAdapterOptions
 );
 ```
 
@@ -205,10 +209,10 @@ async function createAzureCommunicationChatAdapterFromClient(
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------- |
 | **`chatClient`**         | [`StatefulChatClient`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/statefulchatclient) |
 | **`chatThreadClient`**   | [`ChatThreadClient`](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-chat/chatthreadclient)      |
-| **`options`** **(Beta)** | `ChatAdapterOptions`                                                                                                  |
+| **`options`** **(Beta)** | `AzureCommunicationChatAdapterOptions`                                                                                |
 
 ```ts
-export type ChatAdapterOptions = {
+export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;
 };
 ```

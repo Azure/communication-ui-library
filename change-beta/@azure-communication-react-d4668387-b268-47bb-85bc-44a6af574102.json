@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Embed the EditBox inside a Chat.Message to enable the accessibility",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -4,7 +4,7 @@
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
+import { ComponentSlotStyle } from '../../types';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -91,7 +91,11 @@ export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean
     marginRight: '0rem',
     marginLeft: `${messageAvatarGap}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
-    zIndex: CHAT_MESSAGE_ZINDEX
+    zIndex: CHAT_MESSAGE_ZINDEX,
+    '& msft-mention': {
+      color: '#D83B01',
+      fontWeight: 600
+    }
   };
 };
 

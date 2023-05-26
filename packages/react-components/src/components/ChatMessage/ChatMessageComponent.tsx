@@ -5,14 +5,13 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions } from '../AtMentionFlyout';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
+/* @conditional-compile-remove(mention) */
+import { MentionOptions } from '../MentionPopover';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -28,13 +27,7 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
-  onCancelMessageEdit?: (
-    messageId: string,
-    metadata?: Record<string, string>,
-    options?: {
-      attachedFilesMetadata?: FileMetadata[];
-    }
-  ) => void;
+  onCancelMessageEdit?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
    * @param messageId ID of the message to delete
@@ -85,12 +78,12 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to display suggestions in the at mention scenario.
+   * Optional props needed to lookup suggestions and display mentions in the mention scenario.
    * @beta
    */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  mentionOptions?: MentionOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
@@ -141,10 +134,12 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
             (await props.onUpdateMessage(message.messageId, text, metadata, options));
           setIsEditing(false);
         }}
-        onCancel={(messageId, metadata, options) => {
-          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId, metadata, options);
+        onCancel={(messageId) => {
+          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId);
           setIsEditing(false);
         }}
+        /* @conditional-compile-remove(mention) */
+        mentionLookupOptions={props.mentionOptions?.lookupOptions}
       />
     );
   } else {
@@ -162,6 +157,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onFetchAttachments={props.onFetchAttachments}
         /* @conditional-compile-remove(teams-inline-images) */
         attachmentsMap={props.attachmentsMap}
+        /* @conditional-compile-remove(mention) */
+        mentionDisplayOptions={props.mentionOptions?.displayOptions}
       />
     );
   }

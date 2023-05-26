@@ -102,6 +102,10 @@ export interface CaptionsCallFeatureState {
    */
   isCaptionsFeatureActive: boolean;
   /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsInProgress: boolean;
+  /**
    * supported caption languages
    */
   supportedCaptionLanguages: string[];
@@ -177,13 +181,9 @@ export interface LocalVideoStreamState {
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
-   * State of the video background effect.
+   * List of effects if any are active.
    */
-  isActive: boolean;
-  /**
-   * Name of the effect if one is active.
-   */
-  effectName?: VideoEffectName;
+  activeEffects?: VideoEffectName[];
 }
 
 /**
@@ -609,20 +609,20 @@ export type CallErrorTarget =
   | 'Call.hangUp'
   | 'Call.hold'
   | 'Call.mute'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio'
+  | 'Call.muteIncomingAudio'
   | 'Call.off'
   | 'Call.on'
   | 'Call.removeParticipant'
   | 'Call.resume'
   | 'Call.sendDtmf'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio'
+  | 'Call.startAudio'
   | 'Call.startScreenSharing'
   | 'Call.startVideo'
   | 'Call.stopScreenSharing'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
+  | 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
+  | 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
   | 'CallAgent.join'

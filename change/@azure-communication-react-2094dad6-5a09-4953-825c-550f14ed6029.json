@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "[Contribution] fixing the contribution guide",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "none"
+}

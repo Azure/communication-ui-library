@@ -151,12 +151,13 @@ export type {
   MicrophoneSitePermissionsProps
 } from '../../react-components/src';
 
-/* @conditional-compile-remove(at-mention) */
+/* @conditional-compile-remove(mention) */
 export type {
-  AtMentionOptions,
-  AtMentionDisplayOptions,
-  AtMentionLookupOptions,
-  AtMentionSuggestion
+  MentionOptions,
+  MentionDisplayOptions,
+  MentionLookupOptions,
+  Mention,
+  MentionPopoverStrings
 } from '../../react-components/src';
 
 export type {
@@ -290,6 +291,8 @@ export type {
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
+/* @conditional-compile-remove(click-to-call) */
+export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';
