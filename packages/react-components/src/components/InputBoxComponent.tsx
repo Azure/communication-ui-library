@@ -921,6 +921,7 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
   return mentionTag;
 };
 
+/* @conditional-compile-remove(mention) */
 const rangeOfWordInSelection = ({
   textInput,
   selectionStart,
