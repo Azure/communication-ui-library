@@ -451,7 +451,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionStartValue: number | null,
       selectionEndValue: number | null
     ): void => {
-      /* @conditional-compile-remove(mention) */
       if (shouldHandleOnMouseDownDuringSelect) {
         if (targetSelection !== undefined) {
           setSelectionStartValue(targetSelection.start);
@@ -463,20 +462,25 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
             // handle mention click
+            // Get range of word that was clicked on
+            const selectionRange = rangeOfWordInSelection({
+              textInput: inputTextValue,
+              selectionStart: event.currentTarget.selectionStart,
+              selectionEnd: event.currentTarget.selectionEnd,
+              tag: mentionTag
+            });
+
             if (event.currentTarget.selectionDirection === null) {
-              event.currentTarget.setSelectionRange(
-                mentionTag.plainTextBeginIndex,
-                mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-              );
+              event.currentTarget.setSelectionRange(selectionRange.start, selectionRange.end);
             } else {
               event.currentTarget.setSelectionRange(
-                mentionTag.plainTextBeginIndex,
-                mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
+                selectionRange.start,
+                selectionRange.end,
                 event.currentTarget.selectionDirection
               );
             }
-            setSelectionStartValue(mentionTag.plainTextBeginIndex);
-            setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
+            setSelectionStartValue(selectionRange.start);
+            setSelectionEndValue(selectionRange.end);
           } else {
             setSelectionStartValue(event.currentTarget.selectionStart);
             setSelectionEndValue(event.currentTarget.selectionEnd);
@@ -633,41 +637,40 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Adjust the selection range based on a mouse / touch interaction
   const handleOnMove = useCallback(
     (event) => {
+      let targetStart = event.currentTarget.selectionStart;
+      let targetEnd = event.currentTarget.selectionEnd;
+
       // Should we do anything?
-      if (interactionStartPoint !== undefined) {
+      if (
+        interactionStartPoint !== undefined &&
         // And did selection change?
-        if (
-          event.currentTarget.selectionStart !== null &&
-          (event.currentTarget.selectionStart !== targetSelection?.start ||
-            event.currentTarget.selectionEnd !== targetSelection?.end)
-        ) {
-          let targetStart = event.currentTarget.selectionStart;
-          let targetEnd = event.currentTarget.selectionEnd;
-          const direction: 'forward' | 'backward' | 'none' =
-            event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
-          const mentionTag = findMentionTagForSelection(
-            tagsValue,
-            direction === 'backward'
-              ? event.currentTarget.selectionStart
-              : event.currentTarget.selectionEnd ?? event.currentTarget.selectionStart
-          );
-          let updateCurrentTarget = false;
+        targetStart !== null &&
+        (targetStart !== targetSelection?.start || targetEnd !== targetSelection?.end)
+      ) {
+        const direction: 'forward' | 'backward' | 'none' =
+          event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
+        const mentionTag = findMentionTagForSelection(
+          tagsValue,
+          direction === 'backward'
+            ? event.currentTarget.selectionStart
+            : event.currentTarget.selectionEnd ?? event.currentTarget.selectionStart
+        );
+        let updateCurrentTarget = false;
 
-          if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-            targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
-            if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
-              targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
-            }
-            updateCurrentTarget = true;
-            setShouldHandleOnMouseDownDuringSelect(false);
+        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
+          if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
+            targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
           }
-          // Update selection range
-          setTargetSelection({ start: targetStart, end: targetEnd });
+          updateCurrentTarget = true;
+          setShouldHandleOnMouseDownDuringSelect(false);
+        }
+        // Update selection range
+        setTargetSelection({ start: targetStart, end: targetEnd });
 
-          if (updateCurrentTarget) {
-            // Only set the control, if the values are updated
-            event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
-          }
+        if (updateCurrentTarget) {
+          // Only set the control, if the values are updated
+          event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
         }
       }
     },
@@ -916,6 +919,42 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
     }
   }
   return mentionTag;
+};
+
+const rangeOfWordInSelection = ({
+  textInput,
+  selectionStart,
+  selectionEnd,
+  tag
+}: {
+  textInput: string;
+  selectionStart: number;
+  selectionEnd: number | null;
+  tag: TagData;
+}): { start: number; end: number } => {
+  if (tag.plainTextBeginIndex === undefined) {
+    return { start: selectionStart, end: selectionEnd === null ? selectionStart : selectionEnd };
+  }
+
+  // Look at start word index and optionally end word index.
+  // Select combination of the two and return the range.
+  let start = selectionStart;
+  let end = selectionEnd === null ? selectionStart : selectionEnd;
+  const firstWordStartIndex = textInput.lastIndexOf(' ', selectionStart);
+  if (firstWordStartIndex == tag.plainTextBeginIndex) {
+    start = firstWordStartIndex;
+  } else {
+    start = Math.max(firstWordStartIndex + 1, tag.plainTextBeginIndex);
+  }
+
+  const firstWordEndIndex = textInput.indexOf(' ', selectionStart);
+  end = Math.max(firstWordEndIndex + 1, tag.plainTextEndIndex ?? firstWordEndIndex + 1);
+
+  if (selectionEnd !== null && tag.plainTextEndIndex !== undefined) {
+    const lastWordEndIndex = textInput.indexOf(' ', selectionEnd);
+    end = Math.max(lastWordEndIndex > -1 ? lastWordEndIndex : tag.plainTextEndIndex, selectionEnd);
+  }
+  return { start, end };
 };
 
 /* @conditional-compile-remove(mention) */
