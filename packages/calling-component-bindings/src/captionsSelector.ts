@@ -3,7 +3,7 @@
 /* @conditional-compile-remove(close-captions) */
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
-import { CallingBaseSelectorProps } from './baseSelectors';
+import { CallingBaseSelectorProps, getStartCaptionsInProgress } from './baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import {
   getCaptions,
@@ -99,8 +99,8 @@ export type _CaptionsBannerSelector = (
  * @internal
  */
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
-  [getCaptions, getCaptionsStatus],
-  (captions, isCaptionsFeatureActive) => {
+  [getCaptions, getCaptionsStatus, getStartCaptionsInProgress],
+  (captions, isCaptionsFeatureActive, startCaptionsInProgress) => {
     // Following Teams app logic, no matter how many 'Partial' captions come,
     // we only pick first one according to start time, and all the other partial captions will be filtered out
     // This will give customers a stable captions experience when others talking over the dominant speaker
@@ -122,7 +122,8 @@ export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createS
     });
     return {
       captions: captionsInfo ?? [],
-      isCaptionsOn: isCaptionsFeatureActive ?? false
+      isCaptionsOn: isCaptionsFeatureActive ?? false,
+      startCaptionsInProgress: startCaptionsInProgress ?? false
     };
   }
 );
