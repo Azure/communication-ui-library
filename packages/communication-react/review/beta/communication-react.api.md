@@ -83,6 +83,7 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
+import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
@@ -362,6 +363,7 @@ export type CallAdapterClientState = {
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+    acceptedTransferCallState?: CallState;
 };
 
 // @public
@@ -767,6 +769,7 @@ export interface CallProviderProps {
 
 // @public
 export interface CallState {
+    acceptedTransferCallState?: CallState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     captionsFeature: CaptionsCallFeatureState;

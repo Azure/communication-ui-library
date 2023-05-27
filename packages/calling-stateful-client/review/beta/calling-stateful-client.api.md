@@ -97,6 +97,7 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.fea
 
 // @public
 export interface CallState {
+    acceptedTransferCallState?: CallState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     captionsFeature: CaptionsCallFeatureState;

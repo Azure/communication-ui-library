@@ -3,10 +3,14 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-/* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(call-transfer) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsCallFeature } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-transfer) */
+import { TransferCallFeature, TransferRequestedEvent, TransferRequestedEventArgs } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptTransferOptions } from '@azure/communication-calling';
 /**
  * @private
  */
@@ -82,6 +86,12 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             const proxyFeature = new ProxyTeamsCaptionsFeature(this._context, target);
             return new Proxy(captionsFeature, proxyFeature);
           }
+          /* @conditional-compile-remove(call-transfer) */
+          if (args[0] === Features.Transfer) {
+            const transferFeature = target.feature(Features.Transfer);
+            const proxyFeature = new ProxyTransferCallFeature(this._context, target);
+            return new Proxy(transferFeature, proxyFeature);
+          }
           return target.feature(...args);
         }, 'Call.feature');
       }
@@ -146,6 +156,47 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
           },
           'Call.feature'
         );
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * @private
+ */
+class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
+  private _context: CallContext;
+  private _call: CallCommon;
+
+  constructor(context: CallContext, call: CallCommon) {
+    this._context = context;
+    this._call = call;
+  }
+
+  public get<P extends keyof TransferCallFeature>(target: TransferCallFeature, prop: P): any {
+    switch (prop) {
+      case 'on':
+        return (...args: Parameters<TransferCallFeature['on']>): void => {
+          const isTransferRequested = args[0] === 'transferRequested';
+          if (isTransferRequested) {
+            const listener = args[1] as TransferRequestedEvent;
+            const newListener = (args: TransferRequestedEventArgs) => {
+              const newArgs = {
+                ...args,
+                accept: (acceptOptions?: AcceptTransferOptions) => {
+                  const acceptedTransferCall = args.accept(acceptOptions);
+                  console.log('acceptedTransferCall: ', acceptedTransferCall);
+                  this._context.setAcceptedTransferCallState(this._call.id, acceptedTransferCall);
+                  return acceptedTransferCall;
+                }
+              };
+              listener(newArgs);
+            };
+            return target.on('transferRequested', newListener);
+          }
+        };
       default:
         return Reflect.get(target, prop);
     }

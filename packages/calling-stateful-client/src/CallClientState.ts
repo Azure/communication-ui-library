@@ -352,6 +352,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Call state from accepted transfer request
+   */
+  acceptedTransferCallState?: CallState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */

@@ -9,6 +9,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-transfer) */
+import { CallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -782,6 +784,17 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.supportedSpokenLanguages = spokenLanguages;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  setAcceptedTransferCallState(callId: string, acceptedTransferCall: CallCommon): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      const acceptedTransferCallState = draft.calls[this._callIdHistory.latestCallId(acceptedTransferCall.id)];
+      if (call) {
+        call.acceptedTransferCallState = acceptedTransferCallState;
       }
     });
   }
