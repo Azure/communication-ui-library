@@ -22,6 +22,7 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
+import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -38,6 +39,7 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
   private _captionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
@@ -65,6 +67,12 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
+
+    this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
+      parent: this._callIdRef,
+      context: this._context,
+      localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
+    });
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
@@ -145,6 +153,7 @@ export class CallSubscriber {
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
+    this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
   };

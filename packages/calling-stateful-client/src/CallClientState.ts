@@ -187,6 +187,18 @@ export interface LocalVideoStreamVideoEffectsState {
 }
 
 /**
+ * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+ *
+ * @beta
+ */
+export interface OptimalVideoCountFeatureState {
+  /**
+   * State of the current optimal video count.
+   */
+  optimalVideoCount: number;
+}
+
+/**
  * State only version of {@link @azure/communication-calling#RemoteVideoStream}.
  *
  * @public
@@ -352,6 +364,10 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /**
+   * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+   */
+  optimalVideoCountFeature: OptimalVideoCountFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */

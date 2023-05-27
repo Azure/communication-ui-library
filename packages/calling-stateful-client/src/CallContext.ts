@@ -389,6 +389,15 @@ export class CallContext {
     });
   }
 
+  public setOptimalVideoCount(callId: string, optimalVideoCount: number): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.optimalVideoCountFeature.optimalVideoCount = optimalVideoCount;
+      }
+    });
+  }
+
   /* @conditional-compile-remove(rooms) */
   public setParticipantRole(callId: string, participantKey: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
