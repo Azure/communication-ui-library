@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useContext, createContext, useState, useEffect } from 'react';
-import { Call, Features } from '@azure/communication-calling';
+import React, { useContext, createContext } from 'react';
+import { Call } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 import { _isACSCall, _isTeamsCall } from '@internal/calling-stateful-client';
@@ -86,37 +86,4 @@ export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams
     throw new Error('Incorrect call type: Must provide a TeamsCall object.');
   }
   return call as TeamsCall;
-};
-
-/**
- * Hook to obtain the optimal remote video count.
- *
- * @public
- */
-export const useOptimalVideoCount = (): number => {
-  const call = useCall();
-  const [ovcFeature, setOVCFeature] = useState(call?.feature(Features.OptimalVideoCount));
-  const [optimalVideoCount, setOptimalVideoCount] = useState(1);
-
-  const optimalVideoCountChanged = () => {
-    setOptimalVideoCount(ovcFeature?.optimalVideoCount);
-  };
-
-  useEffect(() => {
-    console.log('** OPTIMAL VIDEO COUNT UPDATED TO: ', optimalVideoCount);
-  }, [optimalVideoCount]);
-
-  useEffect(() => {
-    setInterval(() => {
-      setOptimalVideoCount(Math.max(Math.floor(Math.random() * 9), 5));
-    }, 10000);
-
-    ovcFeature?.on('optimalVideoCountChanged', optimalVideoCountChanged);
-
-    return () => {
-      ovcFeature?.off('optimalVideoCountChanged', optimalVideoCountChanged);
-    };
-  }, []);
-  console.log('******* OVC ********', optimalVideoCount);
-  return optimalVideoCount;
 };
