@@ -187,7 +187,6 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
                 ...args,
                 accept: (acceptOptions?: AcceptTransferOptions) => {
                   const acceptedTransferCall = args.accept(acceptOptions);
-                  console.log('acceptedTransferCall: ', acceptedTransferCall);
                   this._context.setAcceptedTransferCallState(this._call.id, acceptedTransferCall);
                   return acceptedTransferCall;
                 }
