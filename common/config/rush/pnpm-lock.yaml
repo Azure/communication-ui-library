@@ -135,7 +135,7 @@ packages:
     dependencies:
       '@azure/core-http': 2.3.2
       '@azure/core-tracing': 1.0.0-preview.13
-      '@azure/logger': 1.0.4
+      '@azure/logger': 1.0.3
       events: 3.3.0
       tslib: 1.14.1
     dev: false
@@ -200,7 +200,7 @@ packages:
       '@azure/core-auth': 1.4.0
       '@azure/core-tracing': 1.0.0-preview.13
       '@azure/core-util': 1.3.2
-      '@azure/logger': 1.0.4
+      '@azure/logger': 1.0.3
       '@types/node-fetch': 2.6.3
       '@types/tunnel': 0.0.3
       form-data: 4.0.0
@@ -3874,7 +3874,7 @@ packages:
       '@storybook/store': 6.5.16_react-dom@18.2.0+react@18.2.0
       '@storybook/theming': 6.5.16_react-dom@18.2.0+react@18.2.0
       '@storybook/ui': 6.5.16_react-dom@18.2.0+react@18.2.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/webpack': 4.41.33
       autoprefixer: 9.8.8
       babel-loader: 8.1.0_2ca4133eaad1ede48c0159d2a9c3555f
@@ -3936,7 +3936,7 @@ packages:
       '@storybook/semver': 7.3.2
       '@storybook/store': 6.5.14_react-dom@18.2.0+react@18.2.0
       '@storybook/theming': 6.5.14_react-dom@18.2.0+react@18.2.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       babel-loader: 8.1.0_8bcfeef0f56d64c638f22554b76b7b9d
       babel-plugin-named-exports-order: 0.0.2
       browser-assert: 1.2.1
@@ -4279,7 +4279,7 @@ packages:
       '@babel/register': 7.21.0_@babel+core@7.16.12
       '@storybook/node-logger': 6.5.14
       '@storybook/semver': 7.3.2
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/pretty-hrtime': 1.0.1
       babel-loader: 8.1.0_2ca4133eaad1ede48c0159d2a9c3555f
       babel-plugin-macros: 3.1.0
@@ -4345,7 +4345,7 @@ packages:
       '@babel/register': 7.21.0_@babel+core@7.16.12
       '@storybook/node-logger': 6.5.16
       '@storybook/semver': 7.3.2
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/pretty-hrtime': 1.0.1
       babel-loader: 8.1.0_2ca4133eaad1ede48c0159d2a9c3555f
       babel-plugin-macros: 3.1.0
@@ -4413,7 +4413,7 @@ packages:
       '@storybook/semver': 7.3.2
       '@storybook/store': 6.5.16_react-dom@18.2.0+react@18.2.0
       '@storybook/telemetry': 6.5.16_b7a2379abda3c53a7de8a892b5268bcf
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/node-fetch': 2.6.3
       '@types/pretty-hrtime': 1.0.1
       '@types/webpack': 4.41.33
@@ -4550,7 +4550,7 @@ packages:
       '@storybook/node-logger': 6.5.16
       '@storybook/theming': 6.5.16_react-dom@18.2.0+react@18.2.0
       '@storybook/ui': 6.5.16_react-dom@18.2.0+react@18.2.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/webpack': 4.41.33
       babel-loader: 8.1.0_2ca4133eaad1ede48c0159d2a9c3555f
       case-sensitive-paths-webpack-plugin: 2.4.0
@@ -4601,7 +4601,7 @@ packages:
       '@storybook/node-logger': 6.5.14
       '@storybook/theming': 6.5.14_react-dom@18.2.0+react@18.2.0
       '@storybook/ui': 6.5.14_react-dom@18.2.0+react@18.2.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       babel-loader: 8.1.0_8bcfeef0f56d64c638f22554b76b7b9d
       case-sensitive-paths-webpack-plugin: 2.4.0
       chalk: 4.1.2
@@ -4770,7 +4770,7 @@ packages:
       '@storybook/semver': 7.3.2
       '@storybook/store': 6.5.16_react-dom@18.2.0+react@18.2.0
       '@types/estree': 0.0.51
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/webpack-env': 1.18.0
       acorn: 7.4.1
       acorn-jsx: 5.3.2_acorn@7.4.1
@@ -5400,10 +5400,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-yxDeaQIAJlMav7fH5AQqPH1u8YIuhYJXYBzxaQ4PifsU0GDO38MSdmEDeRlIxrKbC6NbEaaEHDanWb+y30U8SQ==
-  /@types/node/14.18.46:
+  /@types/node/16.18.34:
     dev: false
     resolution:
-      integrity: sha512-n4yVT5FuY5NCcGHCosQSGvvCT74HhowymPN2OEcsHPw6U1NuxV9dvxWbrM2dnBukWjdMYzig1WfIkWdTTQJqng==
+      integrity: sha512-VmVm7gXwhkUimRfBwVI1CHhwp86jDWR04B5FGebMMyxV90SlCmFujwUHrxTD4oO+SOYU86SoxvhgeRQJY7iXFg==
   /@types/node/20.1.2:
     dev: false
     resolution:
@@ -16076,10 +16076,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-ii4iagi25WusVoiC4B4lq7pbXfAp3D9v5CwfkY33vffw2+pkDjY1D8GaN7spsxvCSx8dkPqOZCEZyfxcmJG2IA==
-  /rollup-plugin-sourcemaps/0.6.3_cccb5a7e7d7289c70378edc4bf934cb0:
+  /rollup-plugin-sourcemaps/0.6.3_10dee172c2621b35ad52f917304ddbf8:
     dependencies:
       '@rollup/pluginutils': 3.1.0_rollup@2.42.4
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       rollup: 2.42.4
       source-map-resolve: 0.6.0
     dev: false
@@ -19442,7 +19442,7 @@ packages:
       '@fluentui/react-hooks': 8.6.24_@types+react@18.2.0+react@18.2.0
       '@fluentui/react-icons': 2.0.201_react@18.2.0
       '@types/jest': 26.0.24
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/uuid': 8.3.4
@@ -19497,7 +19497,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-mJjDrI1+Cm48jkwy4Bpkso1c8omBgDwTwBsJ+if/YdGJiPd0oI1hFuad+l9axxSzzssxr92FUoh4fxS7j+c1Qg==
+      integrity: sha512-XWcKoIuUgtgCzSjpYPJGusPw5mlHDy6gUn7oIOiJk2p6rj9CYoonsUMhA+xbIgB7oW9IX+2D5es5YoH2qjMwaA==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/callwithchat.tgz:
@@ -19515,7 +19515,7 @@ packages:
       '@fluentui/react': 8.98.8_220a29cdfba4674701d95554891e0a33
       '@fluentui/react-icons': 2.0.201_react@18.2.0
       '@types/jest': 26.0.24
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/uuid': 8.3.4
@@ -19568,7 +19568,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-zjWODOKxf2bnU6D5ISxFX9IQ/05Tum4A9L7tBfpjDselogmEcqdM2zGClpuRNpQQ4bPQJvalHjAeLKjc5BQkXA==
+      integrity: sha512-VUKZ9aE1x/+PLBHMu0DR0ng9ccnMbZtmUBPfEj+hTnRRfTaZrhT8wLJ9WkAFBvjQJwK47CMcH58s8gOIu/P79Q==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -19776,7 +19776,7 @@ packages:
       '@testing-library/react': 14.0.0_react-dom@18.2.0+react@18.2.0
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/react-linkify': 1.0.1
@@ -19833,7 +19833,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-0DkjhCkTTJS3oXh4TgvCVZX6Ot62EAAptqQ2QoNkqf2VYT8iCcYGxrsECeTgeYJNWJpMQmFNTntIw82mLnf+fw==
+      integrity: sha512-0tNslwwYEDpov0I7Vku+/GTMNpRhvuSxQ16wzt29UuLX0ETUzVZma9TbLT37Ff8Wo1q/YnTdGed7RgBUJbiflA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19890,17 +19890,17 @@ packages:
     dependencies:
       '@octokit/rest': 19.0.7
       '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       beachball: 2.31.13
       rollup: 2.42.4
-      rollup-plugin-sourcemaps: 0.6.3_cccb5a7e7d7289c70378edc4bf934cb0
+      rollup-plugin-sourcemaps: 0.6.3_10dee172c2621b35ad52f917304ddbf8
       rollup-plugin-svg: 2.0.0
       ts-node: 9.1.1_typescript@4.3.5
       typescript: 4.3.5
     dev: false
     name: '@rush-temp/config'
     resolution:
-      integrity: sha512-Z0FhsHkb1t5sP+CNSODL5bFSn7obPM7eZfWqXIH0ar7Bt3k56Hubdp9QY2vd8nW3t64bLtTW4HorpHZ2yHqIaA==
+      integrity: sha512-637e3aKSgfcpBsI3RCLGLa1J40Yx8Kuo3ZA4jeq7J9lCDmGSwaBZaaJiSM7xDyRH2pQ+R97uzqyASM/HOCYzWg==
       tarball: file:projects/config.tgz
     version: 0.0.0
   file:projects/fake-backends.tgz:
@@ -19990,7 +19990,7 @@ packages:
       '@testing-library/user-event': 14.4.3_@testing-library+dom@9.3.0
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/react-linkify': 1.0.1
@@ -20079,7 +20079,7 @@ packages:
       '@types/express': 4.17.17
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/puppeteer': 5.4.7
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
@@ -20155,7 +20155,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-bsAS3EkX1HEF96mT7Fjp6t6VJhYxD0BuXlKWBck3HxQl9zC0HiU9hSDheMbHsXseFGnwdupmAf+QGprQaloyIA==
+      integrity: sha512-mAqPf9GkDnfi99O+eLppYA6AjgvoPsNKM2cZvvOSdQQWVh06B1prHkmLe1h7ZGrEwpPiFP+yB5DVWebCZMUfYw==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -20165,7 +20165,7 @@ packages:
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.1.0
       '@playwright/test': 1.22.2
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/node-static': 0.7.7
       cross-env: 7.0.3
       dotenv: 10.0.0
@@ -20179,7 +20179,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-aoI81SaoVEawCKkeBXwMANWq8v28T9g1Bo1g10PtnFCLJ5rwy3f5isN+XW/98cxem4v8zhnAOShz6PMKQ+iZtw==
+      integrity: sha512-EXYb7URVqD3jvJQpOZx9PgnbrzZ1+fQV/LVOejYp7YD9U847AY+MB5W54wi3VeTV734PLgIIEOu8GRISHr4irw==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -20193,7 +20193,7 @@ packages:
       '@fluentui/react': 8.98.8_react-dom@18.2.0+react@18.2.0
       '@playwright/test': 1.22.2
       '@types/copy-webpack-plugin': 6.4.3
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/node-static': 0.7.7
       babel-loader: 8.1.0_8bcfeef0f56d64c638f22554b76b7b9d
       concurrently: 5.3.0
@@ -20219,7 +20219,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-q3KrAjvqb1h+aLabM8YRIIFD5u2ngIkYWe1s4TzfE3ZupnKaKlz7QxdOFUGjvWSPfbWaMFNl8mBtiUCqD7KDFA==
+      integrity: sha512-QdaG6H/lEibusUAXe3Tg17XkOXCMRosW1RVYm7ed7iZBQhNFvTEM71JYlEyip69SgYYt3z7EfACZG9SSKBvinw==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -20235,7 +20235,7 @@ packages:
       '@types/http-errors': 1.8.2
       '@types/jest': 26.0.24
       '@types/morgan': 1.9.4
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/supertest': 2.0.12
       '@types/webpack-node-externals': 2.5.3_webpack-cli@4.10.0
       '@typescript-eslint/eslint-plugin': 4.33.0_d212f40a84a592446cd1718bfda08a13
@@ -20272,7 +20272,7 @@ packages:
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-E5DK1IeEBpG0UDst9I6O7quAwvueQhYUPZAhTKHGzqWYKpZx0MIiC11g4vaxGNm7NvusN2xBEZ1j7ZqhrDjSFg==
+      integrity: sha512-/8fmmhs80jRgf8yGJeowFO6n3qTbsJkvJlIbU/lsULTChnZVVPEHa0/k0EBRLfcwtYJO7HZKI4F4ldZXyXsy1g==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/storybook.tgz:
@@ -20314,7 +20314,7 @@ packages:
       '@types/classnames': 2.3.1
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
-      '@types/node': 14.18.46
+      '@types/node': 16.18.34
       '@types/react': 18.2.0
       '@types/react-dom': 18.2.1
       '@types/react-linkify': 1.0.1
@@ -20370,7 +20370,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-eKOimCg89wQilGIUFcPBJe+ffQ574X69r+OREIxjHIfJ5xDalpepVPXMdANu9q/Z2r6bBQDALIerE8fg1VD1Cg==
+      integrity: sha512-KIQZlmySwwmSn4t+EJ5pBmqXQemXXjv1cgqHZLT6LRiFwItIGhrym6zCS+ik+FV/hG6C/7wgHQyKbRjUkVr16w==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
