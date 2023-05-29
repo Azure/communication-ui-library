@@ -11,7 +11,15 @@ import {
   FileMetadata,
   AttachmentDownloadResult
 } from '@azure/communication-react';
-import { Persona, PersonaPresence, PersonaSize, PrimaryButton, Stack } from '@fluentui/react';
+import {
+  Persona,
+  PersonaPresence,
+  PersonaSize,
+  PrimaryButton,
+  Stack,
+  Dropdown,
+  IDropdownOption
+} from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -31,7 +39,8 @@ import {
   GenerateMockSystemMessage,
   GenerateMockCustomMessage,
   GetAvatarUrlByUserId,
-  GenerateMockNewChatMessageWithInlineImage
+  GenerateMockNewChatMessageWithInlineImage,
+  GenerateMockNewChatMessageWithMention
 } from './placeholdermessages';
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 import { MessageThreadWithCustomAvatarExample } from './snippets/CustomAvatar.snippet';
@@ -43,6 +52,7 @@ import { MessageThreadWithCustomMessageStatusIndicatorExample } from './snippets
 import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
 import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './snippets/MessageStatusIndicator.snippet';
+import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
 import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
@@ -66,6 +76,8 @@ const MessageThreadWithCustomTimestampExampleText =
 const DefaultMessageThreadExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const MessageThreadWithMessageStatusIndicatorExampleText =
   require('!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx').default;
+const MessageWithCustomMentionRendererText =
+  require('!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx').default;
 const MessageWithFileText = require('!!raw-loader!./snippets/MessageWithFile.snippet.tsx').default;
 const ExampleConstantsText = require('!!raw-loader!./snippets/placeholdermessages.ts').default;
 const MessageThreadWithSystemMessagesExampleText =
@@ -78,6 +90,11 @@ const importStatement = `
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
+const mentionTag = `
+<msft-mention id="<id>" displayText="<display text>">
+  Displayable Text
+</msft-mention>
+`;
 const getDocs: () => JSX.Element = () => {
   return (
     <>
@@ -223,6 +240,18 @@ const getDocs: () => JSX.Element = () => {
         <MessageWithFile />
       </Canvas>
 
+      <Heading>Display Mentions of Users within Messages</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        When a user is mentioned in a message, a custom HTML tag can be used to represent the element in the
+        MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+        further customization. The HTML Tag is defined:
+      </Description>
+      <Source code={mentionTag} />
+      <Canvas mdxSource={MessageWithCustomMentionRendererText}>
+        <MessageWithCustomMentionRenderer />
+      </Canvas>
+
       <Heading>Props</Heading>
       <Props of={MessageThreadComponent} />
     </>
@@ -233,6 +262,16 @@ const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
+  const dropdownMenuOptions = [
+    { key: 'newMessage', text: 'New Message' },
+    { key: 'newMessageOthers', text: 'New Message from others' },
+    { key: 'newMessageWithInlineImage', text: 'New Message with Inline Image' },
+    { key: 'newMessageWithMention', text: 'New Message with Mention' },
+    { key: 'newSystemMessage', text: 'New System Message' },
+    { key: 'newCustomMessage', text: 'New Custom Message' }
+  ];
+
+  const [selectedMessageType, setSelectedMessageType] = useState<IDropdownOption>(dropdownMenuOptions[0]);
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
@@ -252,6 +291,11 @@ const MessageThreadStory = (args): JSX.Element => {
   const onSendNewMessageWithInlineImage = (): void => {
     setChatMessages([...chatMessages, GenerateMockNewChatMessageWithInlineImage()]);
   };
+
+  const onSendNewMessageWithMention = (): void => {
+    setChatMessages([...chatMessages, GenerateMockNewChatMessageWithMention()]);
+  };
+
   const onLoadPreviousMessages = async (): Promise<boolean> => {
     return new Promise((resolve) => {
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
@@ -275,6 +319,19 @@ const MessageThreadStory = (args): JSX.Element => {
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
   };
 
+  const onUpdateMessageCallback = (messageId, content): Promise<void> => {
+    const updatedChatMessages = chatMessages;
+    const msgIdx = chatMessages.findIndex((m) => m.messageId === messageId);
+    const message = chatMessages[msgIdx];
+    if (message.messageType === 'chat') {
+      message.content = content;
+      message.editedOn = new Date(Date.now());
+    }
+    updatedChatMessages[msgIdx] = message;
+    setChatMessages(updatedChatMessages);
+    return Promise.resolve();
+  };
+
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
@@ -285,6 +342,31 @@ const MessageThreadStory = (args): JSX.Element => {
         }
       ];
     });
+  };
+
+  const onSendHandler = (): void => {
+    switch (selectedMessageType.key) {
+      case 'newMessage':
+        onSendNewMessage();
+        break;
+      case 'newMessageOthers':
+        onSendNewMessageFromOthers();
+        break;
+      case 'newMessageWithInlineImage':
+        onSendNewMessageWithInlineImage();
+        break;
+      case 'newMessageWithMention':
+        onSendNewMessageWithMention();
+        break;
+      case 'newSystemMessage':
+        onSendNewSystemMessage();
+        break;
+      case 'newCustomMessage':
+        onSendCustomMessage();
+        break;
+      default:
+        console.log('Invalid message type');
+    }
   };
 
   return (
@@ -298,6 +380,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachment}
+        onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (
             <Persona
@@ -311,14 +394,18 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
-      {/* We need to use these two buttons to render more messages in the chat thread and showcase the "new message" button.
-        Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
-      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
-        <PrimaryButton text="Send new message from others" onClick={onSendNewMessageFromOthers} />
-        <PrimaryButton text="Send new message" onClick={onSendNewMessage} />
-        <PrimaryButton text="Send new message with inline image" onClick={onSendNewMessageWithInlineImage} />
-        <PrimaryButton text="Send new system message" onClick={onSendNewSystemMessage} />
-        <PrimaryButton text="Send new custom message" onClick={onSendCustomMessage} />
+      {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
+      <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
+        <Dropdown
+          style={{ width: '15rem' }}
+          label="Send to thread"
+          selectedKey={selectedMessageType.key}
+          options={dropdownMenuOptions}
+          onChange={(_, option) => {
+            setSelectedMessageType(option);
+          }}
+        />
+        <PrimaryButton text="Send" onClick={onSendHandler} />
       </Stack>
     </Stack>
   );

@@ -1,9 +1,8 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist/dist-esm",
-    "baseUrl": "./src",
-    "paths": {}
+    "outDir": "./tsc-out",
+    "baseUrl": "./src"
   },
   "typeRoots": ["./node_modules/@types"],
   "include": ["src/**/*"],

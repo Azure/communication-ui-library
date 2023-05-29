@@ -2,10 +2,11 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CallComposite, createAzureCommunicationCallAdapter } from '@azure/communication-react';
-
+import { initializeIcons } from '@fluentui/react';
+initializeIcons();
 export const loadCallComposite = async function (args, htmlElement, props) {
   const { userId, token, groupId, displayName, locator } = args;
   const adapter = await createAzureCommunicationCallAdapter({
@@ -14,6 +15,11 @@ export const loadCallComposite = async function (args, htmlElement, props) {
     credential: new AzureCommunicationTokenCredential(token),
     locator: locator || { groupId }
   });
-  ReactDOM.render(React.createElement(CallComposite, { ...props, adapter }, null), htmlElement);
+
+  if (!htmlElement) {
+    throw new Error('Failed to find the root element');
+  }
+
+  createRoot(htmlElement).render(React.createElement(CallComposite, { ...props, adapter }, null));
   return adapter;
 };

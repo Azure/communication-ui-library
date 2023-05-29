@@ -38,8 +38,8 @@ export const IDS = {
   verticalGalleryPageCounter: 'vertical-gallery-page-counter',
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
-  atMentionSuggestionList: 'at-mention-suggestion-list',
-  atMentionSuggestionItem: 'at-mention-suggestion-item'
+  mentionSuggestionList: 'mention-suggestion-list',
+  mentionSuggestionItem: 'mention-suggestion-item'
 };
 
 export const captionsAvailableLanguageStrings = [
@@ -123,7 +123,8 @@ export const captionsFeatureState = {
   supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'en-us',
   currentSpokenLanguage: 'en-us',
-  isCaptionsFeatureActive: true
+  isCaptionsFeatureActive: true,
+  startCaptionsInProgress: true
 };
 
 export const captionsFeatureStateArabic = {
@@ -163,5 +164,6 @@ export const captionsFeatureStateArabic = {
   supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'ar-ae',
   currentSpokenLanguage: 'ar-ae',
-  isCaptionsFeatureActive: true
+  isCaptionsFeatureActive: true,
+  startCaptionsInProgress: true
 };

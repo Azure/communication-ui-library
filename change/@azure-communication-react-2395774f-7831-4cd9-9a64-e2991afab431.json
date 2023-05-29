@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixed start captions console error and add loading screen ",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

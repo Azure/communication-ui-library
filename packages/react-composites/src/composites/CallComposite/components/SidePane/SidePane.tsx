@@ -82,7 +82,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
       <Header />
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
-        <Stack horizontal styles={scrollableContainer}>
+        <Stack verticalFill styles={scrollableContainer}>
           {ContentRender && (
             <Stack.Item verticalFill styles={scrollableContainerContents}>
               <ContentRender />

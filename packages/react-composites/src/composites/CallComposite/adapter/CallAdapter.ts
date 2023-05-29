@@ -279,7 +279,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
  * @beta
  */
 export type SelectedVideoBackgroundEffect =
-  | VideoBackgroundNoneEffect
+  | VideoBackgroundNoEffect
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
 
@@ -289,7 +289,7 @@ export type SelectedVideoBackgroundEffect =
  *
  * @beta
  */
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
   /**
    * Name of effect to remove video background effect
    */
@@ -502,7 +502,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  stopVideoBackgroundEffect(): Promise<void>;
+  stopVideoBackgroundEffects(): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Override the background picker images for background replacement effect.

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
-import { Chat, Text } from '@fluentui/react-northstar';
+import { Chat, Text } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
 import {
@@ -24,12 +24,11 @@ import { BlockedMessageContent } from './ChatMessageContent';
 import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
-import { OnRenderAvatarCallback } from '../../types';
+import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions } from '../AtMentionFlyout';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
+/* @conditional-compile-remove(mention) */
+import { MentionDisplayOptions } from '../MentionPopover';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -71,12 +70,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to display suggestions in the at mention scenario.
-   * @beta
+   * Optional props needed to display suggestions in the mention scenario.
+   * @internal
    */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
+  mentionDisplayOptions?: MentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images) */
   /**
    * Optional function to fetch attachments.
@@ -238,6 +237,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           onFetchAttachment={props.onFetchAttachments}
           /* @conditional-compile-remove(teams-inline-images) */
           attachmentsMap={props.attachmentsMap}
+          /* @conditional-compile-remove(mention) */
+          mentionDisplayOptions={props.mentionDisplayOptions}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>

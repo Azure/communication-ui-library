@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { create, act } from 'react-test-renderer';
 import { v1 as createGUID } from 'uuid';
 import { VideoGalleryRemoteParticipant } from '../../../types';
 import {
@@ -10,6 +9,7 @@ import {
   OrganizedParticipantsArgs,
   OrganizedParticipantsResult
 } from './videoGalleryLayoutUtils';
+import { render } from '@testing-library/react';
 
 describe('useOrganizedParticipants hook tests', () => {
   test('4 video participants should be in grid starting with dominant speakers and the rest in overflow gallery', () => {
@@ -320,15 +320,10 @@ const setup = (
     return null;
   };
 
-  let root;
-  act(() => {
-    root = create(<TestComponent {...initialArgs} />);
-  });
+  const { rerender } = render(<TestComponent {...initialArgs} />);
 
   if (updatedArgs) {
-    act(() => {
-      root.update(<TestComponent {...updatedArgs} />);
-    });
+    rerender(<TestComponent {...updatedArgs} />);
   }
 
   return layout;

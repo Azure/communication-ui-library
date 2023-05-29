@@ -102,6 +102,26 @@ export interface RemoteVideoTileMenuOptions {
    */
   isHidden?: boolean;
 }
+
+/* @conditional-compile-remove(click-to-call) */
+/**
+ * Options for the local video tile in the Call composite.
+ *
+ * @beta
+ */
+export interface LocalVideoTileOptions {
+  /**
+   * Position of the local video tile. If unset will render the local tile in the floating local position.
+   *
+   * @defaultValue 'floating'
+   * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
+   * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
+   * local video tile rules and be docked in the bottom corner.
+   * 'hidden' - local video tile will not be rendered.
+   * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
+   */
+  position?: 'grid' | 'floating' | 'hidden';
+}
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -179,6 +199,11 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+  /* @conditional-compile-remove(click-to-call) */
+  /**
+   * Options for controlling the local video tile.
+   */
+  localVideoTileOptions?: LocalVideoTileOptions;
 };
 
 type MainScreenProps = {
@@ -262,7 +287,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
-          /* @conditional-compile-remove(call-readiness) */
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
           deviceChecks={props.options?.deviceChecks}

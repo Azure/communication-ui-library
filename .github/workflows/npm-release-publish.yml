@@ -69,6 +69,12 @@ jobs:
         if: ${{ github.event.inputs.release-flavor == 'stable' }}
         run: rush switch-flavor:stable
 
+      # Switch flavor to stable when it is release branch
+      - name: Switch flavor for beta-release build
+        # If no param for release flavor, get it from branch name
+        if: ${{ github.event.inputs.release-flavor == 'beta' }}
+        run: rush switch-flavor:beta-release
+
       # Builds
       - name: Build Packages and Samples
         run: rush build

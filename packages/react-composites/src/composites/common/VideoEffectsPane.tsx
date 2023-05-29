@@ -14,7 +14,7 @@ import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
 import {
   VideoBackgroundImage,
   VideoBackgroundBlurEffect,
-  VideoBackgroundNoneEffect,
+  VideoBackgroundNoEffect,
   VideoBackgroundReplacementEffect
 } from '../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
@@ -46,7 +46,7 @@ export const VideoEffectsPaneContent = (props: {
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
     const videoEffects: _VideoEffectsItemProps[] = [
       {
-        key: 'none',
+        itemKey: 'none',
         iconProps: {
           iconName: 'RemoveVideoBackgroundEffect'
         },
@@ -56,7 +56,7 @@ export const VideoEffectsPaneContent = (props: {
         }
       },
       {
-        key: 'blur',
+        itemKey: 'blur',
         iconProps: {
           iconName: 'BlurVideoBackground'
         },
@@ -71,7 +71,7 @@ export const VideoEffectsPaneContent = (props: {
     if (videoEffectImages) {
       videoEffectImages.forEach((img: VideoBackgroundImage) => {
         videoEffects.push({
-          key: img.key,
+          itemKey: img.key,
           backgroundProps: {
             url: img.url
           },
@@ -94,14 +94,14 @@ export const VideoEffectsPaneContent = (props: {
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
         await adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
-        const noneEffect: VideoBackgroundNoneEffect = {
+        const noneEffect: VideoBackgroundNoEffect = {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(noneEffect);
-        await adapter.stopVideoBackgroundEffect();
+        await adapter.stopVideoBackgroundEffects();
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
-          return effect.key === effectKey;
+          return effect.itemKey === effectKey;
         });
         if (backgroundImg && backgroundImg.backgroundProps) {
           const replaceEffect: VideoBackgroundReplacementEffect = {
@@ -157,7 +157,7 @@ const VideoEffectsPaneTrampoline = (
         </MessageBar>
       )}
       <_VideoBackgroundEffectsPicker
-        label="Background" // TODO [jaburnsi]: localize
+        label={locale.strings.call.videoEffectsPaneBackgroundSelectionTitle}
         styles={backgroundPickerStyles}
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
