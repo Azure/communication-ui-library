@@ -21,7 +21,6 @@ export type {
   RemoteParticipantState,
   RemoteVideoStreamState,
   TranscriptionCallFeatureState as TranscriptionCallFeature,
-  TransferFeatureState as TransferFeature,
   VideoStreamRendererViewState
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
@@ -33,3 +32,5 @@ export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+export type { TransferFeatureState as TransferFeature } from './CallClientState';
