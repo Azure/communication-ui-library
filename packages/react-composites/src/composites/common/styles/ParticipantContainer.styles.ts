@@ -79,6 +79,10 @@ export const scrollableContainerContents: IStackItemStyles = {
 /**
  * @private
  */
+export const containerContextStyles: IStackStyles = { root: { position: 'absolute', height: '100%', width: '100%' } };
+/**
+ * @private
+ */
 export const peopleSubheadingStyle: IStackItemStyles = {
   root: {
     fontSize: '0.75rem'
