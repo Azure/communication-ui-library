@@ -19,8 +19,7 @@ import {
   CommunicationParticipant,
   SystemMessage,
   MessageContentType,
-  ReadReceiptsBySenderId,
-  FileMetadataAttachmentType
+  ReadReceiptsBySenderId
 } from '@internal/react-components';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '@internal/react-components';
@@ -31,7 +30,7 @@ import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
-import { FileMetadata } from '@internal/react-components';
+import { FileMetadata, FileMetadataAttachmentType } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images) */
 import { AttachmentType, ChatAttachment } from '@azure/communication-chat';
 
