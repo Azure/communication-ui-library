@@ -239,24 +239,16 @@ export const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTag
 };
 
 /**
- * Closing tag information
- *
- * @private
- */
-export type ClosingTagInfoResult = {
-  plainTextEndIndex: number;
-  closeTagIndex: number;
-  closeTagLength: number;
-};
-
-/**
  * Get closing tag information if exists otherwise return information as for self closing tag
  *
+ * @param tag - The tag data.
+ * @returns An object containing the plain text end index, close tag index, and close tag length.
+ *
  * @private
- * @param tag - Tag data.
- * @returns Closing tag information for the provided tag.
  */
-export const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
+export const getTagClosingTagInfo = (
+  tag: TagData
+): { plainTextEndIndex: number; closeTagIndex: number; closeTagLength: number } => {
   let plainTextEndIndex = 0;
   let closeTagIndex = 0;
   let closeTagLength = 0;
@@ -276,22 +268,6 @@ export const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
 };
 
 /**
- * Props for update HTML function
- *
- * @private
- */
-export type UpdateHTMLProps = {
-  htmlText: string;
-  oldPlainText: string;
-  newPlainText: string;
-  tags: TagData[];
-  startIndex: number;
-  oldPlainTextEndIndex: number;
-  change: string;
-  mentionTrigger: string;
-};
-
-/**
  * Go through the text and update it with the changed text
  *
  * @private
@@ -299,10 +275,15 @@ export type UpdateHTMLProps = {
  * @returns Updated HTML and selection index if the selection index should be set.
  */
 export const updateHTML = (
-  props: UpdateHTMLProps
+  htmlText: string,
+  oldPlainText: string,
+  newPlainText: string,
+  tags: TagData[],
+  startIndex: number,
+  oldPlainTextEndIndex: number,
+  change: string,
+  mentionTrigger: string
 ): { updatedHTML: string; updatedSelectionIndex: number | undefined } => {
-  const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
-    props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
     return { updatedHTML: newPlainText, updatedSelectionIndex: undefined };
@@ -413,16 +394,16 @@ export const updateHTML = (
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex + tag.openTagBody.length);
           lastProcessedHTMLIndex = closingTagInfo.closeTagIndex;
-          const updatedContent = updateHTML({
-            htmlText: tag.content,
+          const updatedContent = updateHTML(
+            tag.content,
             oldPlainText,
             newPlainText,
-            tags: tag.subTags,
+            tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
-            change: processedChange,
+            processedChange,
             mentionTrigger
-          });
+          );
           result += stringBefore + updatedContent.updatedHTML;
           changeNewEndIndex = updatedContent.updatedSelectionIndex;
         } else {
@@ -466,16 +447,16 @@ export const updateHTML = (
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex + tag.openTagBody.length);
           lastProcessedHTMLIndex = closingTagInfo.closeTagIndex;
-          const updatedContent = updateHTML({
-            htmlText: tag.content,
+          const updatedContent = updateHTML(
+            tag.content,
             oldPlainText,
             newPlainText,
-            tags: tag.subTags,
+            tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
-            change: '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
+            '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
-          });
+          );
           result += stringBefore + updatedContent.updatedHTML;
         } else {
           // no subtags
@@ -524,16 +505,16 @@ export const updateHTML = (
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex + tag.openTagBody.length);
           lastProcessedHTMLIndex = closingTagInfo.closeTagIndex;
-          const updatedContent = updateHTML({
-            htmlText: tag.content,
+          const updatedContent = updateHTML(
+            tag.content,
             oldPlainText,
             newPlainText,
-            tags: tag.subTags,
+            tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
-            change: processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
+            processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
             mentionTrigger
-          });
+          );
           processedChange = '';
           result += stringBefore + updatedContent.updatedHTML;
         } else {
@@ -603,29 +584,35 @@ export type DiffIndexesProps = {
 };
 
 /**
- * Result of finding strings diff indexes function
- *
- * @private
- */
-export type DiffIndexesResult = {
-  changeStart: number;
-  oldChangeEnd: number;
-  newChangeEnd: number;
-};
-
-/**
  * Given the oldText and newText, find the start index, old end index and new end index for the changes
  *
  * @private
  * @param props - Props for finding stings diff indexes function.
  * @returns Indexes for change start and ends in new and old texts. The old and new end indexes are exclusive.
  */
-export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
-  const { oldText, newText, previousSelectionStart, previousSelectionEnd, currentSelectionStart, currentSelectionEnd } =
-    props;
+
+/**
+ * Given the oldText and newText, find the start index, old end index and new end index for the changes
+ *
+ * @private
+ * @param oldText - The old text to compare.
+ * @param newText - The new text to compare.
+ * @param previousSelectionStart - The start of the previous selection. Should be a valid position in the input field.
+ * @param previousSelectionEnd - The end of the previous selection. Should be a valid position in the input field.
+ * @param currentSelectionStart - The start of the current selection. Should be a valid position in the input field.
+ * @param currentSelectionEnd - The end of the current selection. Should be a valid position in the input field.
+ * @returns An object containing the start and end indexes of the changes in the old and new strings.
+ */
+export const findStringsDiffIndexes = (
+  oldText: string,
+  newText: string,
+  previousSelectionStart: number,
+  previousSelectionEnd: number,
+  currentSelectionStart: number,
+  currentSelectionEnd: number
+): { changeStart: number; oldChangeEnd: number; newChangeEnd: number } => {
   const newTextLength = newText.length;
   const oldTextLength = oldText.length;
-  // let changeStart = 0;
   let newChangeEnd = newTextLength;
   let oldChangeEnd = oldTextLength;
   const previousSelectionStartValue = previousSelectionStart > -1 ? previousSelectionStart : oldTextLength;

@@ -126,16 +126,16 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
-      const updatedContent = updateHTML({
-        htmlText: textValue,
+      const updatedContent = updateHTML(
+        textValue,
         oldPlainText,
         newPlainText,
-        tags: tagsValue,
-        startIndex: currentTriggerStartIndex,
-        oldPlainTextEndIndex: selectionEnd,
-        change: mention,
-        mentionTrigger: triggerText
-      });
+        tagsValue,
+        currentTriggerStartIndex,
+        selectionEnd,
+        mention,
+        triggerText
+      );
       const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
       const newCaretIndex = currentTriggerStartIndex + displayName.length + triggerText.length;
       // move the caret in the text field to the end of the mention plain text
@@ -460,26 +460,26 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       } else {
         // there are tags in the text value and htmlTextValue is html string
         // find diff between old and new text
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
-          oldText: inputTextValue,
-          newText: newValue,
-          previousSelectionStart: previousSelectionStartValue,
-          previousSelectionEnd: previousSelectionEndValue,
-          currentSelectionStart: currentSelectionStartValue,
-          currentSelectionEnd: currentSelectionEndValue
-        });
+        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
+          inputTextValue,
+          newValue,
+          previousSelectionStartValue,
+          previousSelectionEndValue,
+          currentSelectionStartValue,
+          currentSelectionEndValue
+        );
         const change = newValue.substring(changeStart, newChangeEnd);
         // get updated html string
-        const updatedContent = updateHTML({
-          htmlText: htmlTextValue,
-          oldPlainText: inputTextValue,
-          newPlainText: newValue,
-          tags: tagsValue,
-          startIndex: changeStart,
-          oldPlainTextEndIndex: oldChangeEnd,
+        const updatedContent = updateHTML(
+          htmlTextValue,
+          inputTextValue,
+          newValue,
+          tagsValue,
+          changeStart,
+          oldChangeEnd,
           change,
-          mentionTrigger: triggerText
-        });
+          triggerText
+        );
         result = updatedContent.updatedHTML;
         // update caret index if needed
         if (updatedContent.updatedSelectionIndex !== undefined) {
