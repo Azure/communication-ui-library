@@ -5050,7 +5050,7 @@ packages:
     dev: false
     resolution:
       integrity: sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==
-  /@testing-library/dom/9.2.0:
+  /@testing-library/dom/9.3.0:
     dependencies:
       '@babel/code-frame': 7.21.4
       '@babel/runtime': 7.21.5
@@ -5064,7 +5064,7 @@ packages:
     engines:
       node: '>=14'
     resolution:
-      integrity: sha512-xTEnpUKiV/bMyEsE5bT4oYA0x0Z/colMtxzUY8bKyPXBNLn/e0V4ZjBZkEhms0xE4pv9QsPfSRu9AWS4y5wGvA==
+      integrity: sha512-Dffe68pGwI6WlLRYR2I0piIkyole9cSBH5jGQKCGMRpHW5RHCqAUaqc2Kv0tUyd4dU4DLPKhJIjyKOnjv4tuUw==
   /@testing-library/jest-dom/5.16.5:
     dependencies:
       '@adobe/css-tools': 4.2.0
@@ -5086,7 +5086,7 @@ packages:
   /@testing-library/react/14.0.0_react-dom@18.2.0+react@18.2.0:
     dependencies:
       '@babel/runtime': 7.21.5
-      '@testing-library/dom': 9.2.0
+      '@testing-library/dom': 9.3.0
       '@types/react-dom': 18.2.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -5098,6 +5098,17 @@ packages:
       react-dom: ^18.0.0
     resolution:
       integrity: sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==
+  /@testing-library/user-event/14.4.3_@testing-library+dom@9.3.0:
+    dependencies:
+      '@testing-library/dom': 9.3.0
+    dev: false
+    engines:
+      node: '>=12'
+      npm: '>=6'
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
+    resolution:
+      integrity: sha512-kCUc5MEwaEMakkO5x7aoD+DLi02ehmEM2QCGWvNqAS1dV/fAvORWEjnjsEIvml59M7Y5kCkWN6fCCyPOe8OL6Q==
   /@tootallnate/once/1.1.2:
     dev: false
     engines:
@@ -19973,8 +19984,10 @@ packages:
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
+      '@testing-library/dom': 9.3.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 14.0.0_react-dom@18.2.0+react@18.2.0
+      '@testing-library/user-event': 14.4.3_@testing-library+dom@9.3.0
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 14.18.46
@@ -20037,7 +20050,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-LK3zqK5zxBCiXuc/PBYGqRe6aXPUsjnUr2hSh86GICLIaMGOzkUi/Ozppx/eNAH974GdVrEN8+mU0j+XDLOsoQ==
+      integrity: sha512-T7jEJyF1Fc+gQsfgwb1akWgrazaEaVl6gdu3MUEg/7Gj5Qw8LclSu+0rCx4subhV4pFjOb0GzrS/43pV4uSRrA==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
