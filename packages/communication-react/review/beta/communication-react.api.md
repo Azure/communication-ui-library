@@ -767,7 +767,6 @@ export interface CallProviderProps {
 
 // @public
 export interface CallState {
-    acceptedTransferCallState?: CallState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     captionsFeature: CaptionsCallFeatureState;
@@ -793,6 +792,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
+    transferFeature?: TransferFeature;
 }
 
 // @public
@@ -3439,6 +3439,11 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
+}
+
+// @beta (undocumented)
+export interface TransferFeature {
+    acceptedTransferCallId?: string;
 }
 
 // @public

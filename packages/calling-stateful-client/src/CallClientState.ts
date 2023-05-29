@@ -352,11 +352,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
-  /* @conditional-compile-remove(call-transfer) */
-  /**
-   * Call state from accepted transfer request
-   */
-  acceptedTransferCallState?: CallState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
@@ -397,6 +392,22 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Transfer state of call
+   */
+  transferFeature?: TransferFeatureState;
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * @beta
+ */
+export interface TransferFeatureState {
+  /**
+   * Call id of accepted transfer call
+   */
+  acceptedTransferCallId?: string;
 }
 
 /**

@@ -21,6 +21,7 @@ export type {
   RemoteParticipantState,
   RemoteVideoStreamState,
   TranscriptionCallFeatureState as TranscriptionCallFeature,
+  TransferFeatureState as TransferFeature,
   VideoStreamRendererViewState
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';

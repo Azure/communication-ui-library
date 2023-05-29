@@ -97,7 +97,6 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.fea
 
 // @public
 export interface CallState {
-    acceptedTransferCallState?: CallState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     captionsFeature: CaptionsCallFeatureState;
@@ -123,6 +122,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
+    transferFeature?: TransferFeature;
 }
 
 // @beta (undocumented)
@@ -306,6 +306,11 @@ export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identi
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
+}
+
+// @beta (undocumented)
+export interface TransferFeature {
+    acceptedTransferCallId?: string;
 }
 
 // @public
