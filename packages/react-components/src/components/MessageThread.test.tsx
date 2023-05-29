@@ -169,14 +169,6 @@ describe('Message blocked should display default blocked text correctly', () => 
 
 /* @conditional-compile-remove(teams-inline-images) */
 describe('Message should display inline image correctly', () => {
-  // beforeAll(() => {
-  //   registerIcons({
-  //     icons: {
-  //       datalosspreventionprohibited: <></>
-  //     }
-  //   });
-  // });
-
   test('Message richtext/html img src should be correct', async () => {
     const imgId1 = 'SomeImageId1';
     const imgId2 = 'SomeImageId2';
