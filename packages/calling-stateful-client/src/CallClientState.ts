@@ -401,6 +401,8 @@ export interface CallState {
 
 /* @conditional-compile-remove(call-transfer) */
 /**
+ * Transfer feature state
+ *
  * @beta
  */
 export interface TransferFeatureState {

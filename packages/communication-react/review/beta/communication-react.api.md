@@ -3441,7 +3441,7 @@ export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
 
-// @beta (undocumented)
+// @beta
 export interface TransferFeature {
     acceptedTransferCallId?: string;
 }
