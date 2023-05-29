@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "[ChatSDK] Version bump",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}
