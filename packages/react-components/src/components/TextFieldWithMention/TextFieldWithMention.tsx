@@ -424,75 +424,6 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     [debouncedQueryUpdate, mentionLookupOptions]
   );
 
-  const getUpdatedNewValueForOnChange = useCallback(
-    (
-      newValue: string,
-      triggerText: string,
-      currentSelectionEndValue: number,
-      tagsValue: TagData[],
-      htmlTextValue: string,
-      inputTextValue: string,
-      previousSelectionStart?: number,
-      previousSelectionEnd?: number,
-      currentSelectionStart?: number
-    ): string => {
-      const newTextLength = newValue.length;
-      const currentSelectionStartValue = getValidatedIndexInRange({
-        min: 0,
-        max: newTextLength,
-        currentValue: currentSelectionStart
-      });
-      const previousSelectionStartValue = getValidatedIndexInRange({
-        min: 0,
-        max: inputTextValue.length,
-        currentValue: previousSelectionStart
-      });
-      const previousSelectionEndValue = getValidatedIndexInRange({
-        min: 0,
-        max: inputTextValue.length,
-        currentValue: previousSelectionEnd
-      });
-
-      let result = '';
-      if (tagsValue.length === 0) {
-        // no tags in the string and newValue should be used as a result string
-        result = newValue;
-      } else {
-        // there are tags in the text value and htmlTextValue is html string
-        // find diff between old and new text
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
-          inputTextValue,
-          newValue,
-          previousSelectionStartValue,
-          previousSelectionEndValue,
-          currentSelectionStartValue,
-          currentSelectionEndValue
-        );
-        const change = newValue.substring(changeStart, newChangeEnd);
-        // get updated html string
-        const updatedContent = updateHTML(
-          htmlTextValue,
-          inputTextValue,
-          newValue,
-          tagsValue,
-          changeStart,
-          oldChangeEnd,
-          change,
-          triggerText
-        );
-        result = updatedContent.updatedHTML;
-        // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== undefined) {
-          setCaretIndex(updatedContent.updatedSelectionIndex);
-          setSelectionEndValue(updatedContent.updatedSelectionIndex);
-          setSelectionStartValue(updatedContent.updatedSelectionIndex);
-        }
-      }
-      return result;
-    },
-    []
-  );
-
   const handleOnChange = useCallback(
     async (
       event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -530,7 +461,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         currentTriggerStartIndex
       );
 
-      const updatedNewValue = getUpdatedNewValueForOnChange(
+      const { updatedNewValue, updatedSelectionIndex } = getUpdatedNewValueForOnChange(
         newValue,
         triggerText,
         currentSelectionEndValue,
@@ -541,9 +472,15 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         previousSelectionEnd,
         currentSelectionStart
       );
+
+      if (updatedSelectionIndex !== undefined) {
+        setCaretIndex(updatedSelectionIndex);
+        setSelectionEndValue(updatedSelectionIndex);
+        setSelectionStartValue(updatedSelectionIndex);
+      }
       onChange && onChange(event, updatedNewValue);
     },
-    [mentionLookupOptions?.trigger, updateCurrentTriggerStartIndexAndQuery, getUpdatedNewValueForOnChange, onChange]
+    [mentionLookupOptions?.trigger, updateCurrentTriggerStartIndexAndQuery, onChange]
   );
 
   return (

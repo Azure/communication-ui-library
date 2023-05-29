@@ -942,3 +942,81 @@ export const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): vo
     }
   }
 };
+
+/**
+ * Returns the updated value and selection index for the onChange event of a text input with mentions.
+ * @param newValue - The new value of the text input.
+ * @param triggerText - The trigger text for the mention.
+ * @param currentSelectionEndValue - The current selection end index of the text input.
+ * @param tagsValue - The array of TagData.
+ * @param htmlTextValue - The HTML text value.
+ * @param inputTextValue - The input text value.
+ * @param previousSelectionStart - The previous selection start index of the text input.
+ * @param previousSelectionEnd - The previous selection end index of the text input.
+ * @param currentSelectionStart - The current selection start index of the text input.
+ * @returns An object containing the updated value and updated selection index.
+ */
+export const getUpdatedNewValueForOnChange = (
+  newValue: string,
+  triggerText: string,
+  currentSelectionEndValue: number,
+  tagsValue: TagData[],
+  htmlTextValue: string,
+  inputTextValue: string,
+  previousSelectionStart?: number,
+  previousSelectionEnd?: number,
+  currentSelectionStart?: number
+): { updatedNewValue: string; updatedSelectionIndex: number | undefined } => {
+  const newTextLength = newValue.length;
+  const currentSelectionStartValue = getValidatedIndexInRange({
+    min: 0,
+    max: newTextLength,
+    currentValue: currentSelectionStart
+  });
+  const previousSelectionStartValue = getValidatedIndexInRange({
+    min: 0,
+    max: inputTextValue.length,
+    currentValue: previousSelectionStart
+  });
+  const previousSelectionEndValue = getValidatedIndexInRange({
+    min: 0,
+    max: inputTextValue.length,
+    currentValue: previousSelectionEnd
+  });
+
+  let updatedNewValue = '';
+  let updatedSelectionIndex: number | undefined = undefined;
+  if (tagsValue.length === 0) {
+    // no tags in the string and newValue should be used as a result string
+    updatedNewValue = newValue;
+  } else {
+    // there are tags in the text value and htmlTextValue is html string
+    // find diff between old and new text
+    const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes(
+      inputTextValue,
+      newValue,
+      previousSelectionStartValue,
+      previousSelectionEndValue,
+      currentSelectionStartValue,
+      currentSelectionEndValue
+    );
+    const change = newValue.substring(changeStart, newChangeEnd);
+    // get updated html string
+    const updatedContent = updateHTML(
+      htmlTextValue,
+      inputTextValue,
+      newValue,
+      tagsValue,
+      changeStart,
+      oldChangeEnd,
+      change,
+      triggerText
+    );
+    updatedNewValue = updatedContent.updatedHTML;
+    // update caret index if needed
+    if (updatedContent.updatedSelectionIndex !== undefined) {
+      updatedSelectionIndex = updatedContent.updatedSelectionIndex;
+    }
+  }
+  return { updatedNewValue, updatedSelectionIndex };
+};
