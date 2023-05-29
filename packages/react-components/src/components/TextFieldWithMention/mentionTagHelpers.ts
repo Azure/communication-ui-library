@@ -7,6 +7,22 @@ import { Mention } from '../MentionPopover';
 const MSFT_MENTION_TAG = 'msft-mention';
 
 /**
+ * Represents a tag in the text.
+ *
+ * @private
+ */
+export type TagData = {
+  tagType: string; // The type of tag (e.g. msft-mention)
+  openTagIndex: number; // Start of the tag relative to the parent content
+  openTagBody: string; // Complete open tag body
+  content?: string; // All content between the open and close tags
+  closeTagIndex?: number; // Start of the close tag relative to the parent content
+  subTags?: TagData[]; // Any child tags
+  plainTextBeginIndex?: number; // Absolute index of the open tag start should be in plain text
+  plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
+};
+
+/**
  * Props for finding a valid index in range.
  *
  * @private
@@ -721,22 +737,6 @@ export const getDisplayNameForMentionSuggestion = (suggestion: Mention, localeSt
 };
 
 /**
- * Represents a tag in the text.
- *
- * @private
- */
-export type TagData = {
-  tagType: string; // The type of tag (e.g. msft-mention)
-  openTagIndex: number; // Start of the tag relative to the parent content
-  openTagBody: string; // Complete open tag body
-  content?: string; // All content between the open and close tags
-  closeTagIndex?: number; // Start of the close tag relative to the parent content
-  subTags?: TagData[]; // Any child tags
-  plainTextBeginIndex?: number; // Absolute index of the open tag start should be in plain text
-  plainTextEndIndex?: number; // Absolute index of the close tag start should be in plain text
-};
-
-/**
  * The type of an HTML tag.
  *
  * @private
@@ -1019,4 +1019,177 @@ export const getUpdatedNewValueForOnChange = (
     }
   }
   return { updatedNewValue, updatedSelectionIndex };
+};
+
+/**
+ * Returns the updated selection start or end index for the onChange event of a text input with mentions.
+ * @param inputTextValue - The input text value.
+ * @param tagsValue - The array of TagData.
+ * @param selectionIndex - The current selection index of the text input.
+ * @param selectionValue - The previous selection index of the text input.
+ * @returns The updated selection start or end index.
+ *
+ * @private
+ */
+const getUpdatedSelectionStartIndexOrEndIndex = (
+  inputTextValue: string,
+  tagsValue: TagData[],
+  selectionIndex: number,
+  selectionValue?: number
+): number | undefined => {
+  const mentionTag = findMentionTagForSelection(tagsValue, selectionIndex);
+  // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
+  if (
+    mentionTag !== undefined &&
+    mentionTag.plainTextBeginIndex !== undefined &&
+    selectionIndex > mentionTag.plainTextBeginIndex &&
+    selectionIndex < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
+  ) {
+    // get updated selection index
+    const newSelectionIndex = findNewSelectionIndexForMention({
+      tag: mentionTag,
+      textValue: inputTextValue,
+      currentSelectionIndex: selectionIndex,
+      previousSelectionIndex: selectionValue ?? inputTextValue.length
+    });
+    return newSelectionIndex;
+  }
+  return undefined;
+};
+
+/**
+ * Gets the selection indices in mention when selection is changed by keyboard.
+ * @param event - The input event.
+ * @param inputTextValue - The input text value.
+ * @param selectionStartValue - The previous selection start value.
+ * @param selectionEndValue - The previous selection end value.
+ * @param tagsValue - The array of TagData.
+ * @returns The updated selection start and end indexes.
+ *
+ * @private
+ */
+const getSelectionIndicesWhenChangedByKeyboard = (
+  event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  inputTextValue: string,
+  selectionStartValue: number | undefined,
+  selectionEndValue: number | undefined,
+  tagsValue: TagData[]
+): { updatedStartIndex?: number; updatedEndIndex?: number } => {
+  const currentSelectionStart =
+    event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
+  const currentSelectionEnd = event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
+  let updatedStartIndex = currentSelectionStart;
+  let updatedEndIndex = currentSelectionEnd;
+  if (
+    currentSelectionStart === currentSelectionEnd &&
+    currentSelectionStart !== undefined &&
+    currentSelectionStart !== -1
+  ) {
+    // just a caret movement/usual typing or deleting
+    const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
+      inputTextValue,
+      tagsValue,
+      currentSelectionStart,
+      selectionStartValue
+    );
+    updatedStartIndex = newIndex !== undefined ? newIndex : updatedStartIndex;
+    updatedEndIndex = newIndex !== undefined ? newIndex : updatedEndIndex;
+  } else if (currentSelectionStart !== currentSelectionEnd) {
+    // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
+    if (currentSelectionStart !== undefined && currentSelectionStart !== selectionStartValue) {
+      // the selection start is changed
+      const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
+        inputTextValue,
+        tagsValue,
+        currentSelectionStart,
+        selectionStartValue
+      );
+      updatedStartIndex = newIndex !== undefined ? newIndex : updatedStartIndex;
+    }
+    if (currentSelectionEnd !== undefined && currentSelectionEnd !== selectionEndValue) {
+      // the selection end is changed
+      const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
+        inputTextValue,
+        tagsValue,
+        currentSelectionEnd,
+        selectionEndValue
+      );
+      updatedEndIndex = newIndex !== undefined ? newIndex : updatedEndIndex;
+    }
+  }
+  // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
+  if (event.currentTarget.selectionDirection === null) {
+    event.currentTarget.setSelectionRange(
+      updatedStartIndex === undefined ? null : updatedStartIndex,
+      updatedEndIndex === undefined ? null : updatedEndIndex
+    );
+  } else {
+    event.currentTarget.setSelectionRange(
+      updatedStartIndex === undefined ? null : updatedStartIndex,
+      updatedEndIndex === undefined ? null : updatedEndIndex,
+      event.currentTarget.selectionDirection
+    );
+  }
+  return { updatedStartIndex, updatedEndIndex };
+};
+
+/**
+ * Updates the selection indices in mention to navigate by words if needed.
+ * @param inputTextValue - The input text value.
+ * @param tagsValue - The array of TagData.
+ * @param selectionStartValue - The previous selection start value.
+ * @param selectionEndValue - The previous selection end value.
+ * @returns The updated selection start and end indexes.
+ *
+ * @private
+ */
+export const updateSelectionIndicesWithMentionIfNeeded = (
+  event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  inputTextValue: string,
+  tags: TagData[],
+  shouldHandleOnMouseDownDuringSelect: boolean,
+  selectionStartValue?: number,
+  selectionEndValue?: number
+): { updatedStartIndex?: number; updatedEndIndex?: number } => {
+  const currentSelectionStart =
+    event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
+  const currentSelectionEnd = event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
+  if (shouldHandleOnMouseDownDuringSelect && currentSelectionStart !== undefined) {
+    // on select was triggered by mouse down
+    const mentionTag = findMentionTagForSelection(tags, currentSelectionStart);
+    if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+      // handle mention click
+      if (event.currentTarget.selectionDirection === null) {
+        event.currentTarget.setSelectionRange(
+          mentionTag.plainTextBeginIndex,
+          mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+        );
+      } else {
+        event.currentTarget.setSelectionRange(
+          mentionTag.plainTextBeginIndex,
+          mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
+          event.currentTarget.selectionDirection
+        );
+      }
+      return {
+        updatedStartIndex: mentionTag.plainTextBeginIndex,
+        updatedEndIndex: mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+      };
+    } else {
+      return {
+        updatedStartIndex: currentSelectionStart,
+        updatedEndIndex: currentSelectionEnd
+      };
+    }
+  } else {
+    // selection was changed by keyboard
+    const { updatedStartIndex, updatedEndIndex } = getSelectionIndicesWhenChangedByKeyboard(
+      event,
+      inputTextValue,
+      selectionStartValue,
+      selectionEndValue,
+      tags
+    );
+    return { updatedStartIndex, updatedEndIndex };
+  }
 };
