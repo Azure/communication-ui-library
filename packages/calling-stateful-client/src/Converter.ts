@@ -7,6 +7,8 @@ import {
   LocalVideoStream as SdkLocalVideoStream,
   VideoStreamRendererView
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -18,9 +20,19 @@ import {
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView
 } from './CallClientState';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from './CallClientState';
+
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
+
+/* @conditional-compile-remove(video-background-effects) */
+import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectName } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 
 /**
  * @private
@@ -28,11 +40,15 @@ import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 export function convertSdkLocalStreamToDeclarativeLocalStream(
   stream: SdkLocalVideoStream
 ): DeclarativeLocalVideoStream {
+  /* @conditional-compile-remove(video-background-effects) */
+  const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
+
   return {
     source: stream.source,
     mediaStreamType: stream.mediaStreamType,
-    view: undefined
-    // TODO [video-background-effects]: Add video effects state when it is added to the SDK
+    view: undefined,
+    /* @conditional-compile-remove(video-background-effects) */
+    videoEffects: convertFromSDKToDeclarativeVideoStreamVideoEffects(localVideoStreamEffectsAPI.activeEffects)
   };
 }
 
@@ -111,7 +127,17 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     startTime: new Date(),
     endTime: undefined,
     /* @conditional-compile-remove(rooms) */
-    role: call.role
+    role: call.role,
+    /* @conditional-compile-remove(close-captions) */
+    captionsFeature: {
+      captions: [],
+      supportedSpokenLanguages: [],
+      supportedCaptionLanguages: [],
+      currentCaptionLanguage: '',
+      currentSpokenLanguage: '',
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
+    }
   };
 }
 
@@ -137,5 +163,25 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
     scalingMode: view.scalingMode,
     isMirrored: view.isMirrored,
     target: view.target
+  };
+}
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @private
+ */
+export function convertFromSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
+  return {
+    ...caption
+  };
+}
+
+/* @conditional-compile-remove(video-background-effects) */
+/** @private */
+export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
+  videoEffects: VideoEffectName[]
+): LocalVideoStreamVideoEffectsState {
+  return {
+    activeEffects: videoEffects
   };
 }

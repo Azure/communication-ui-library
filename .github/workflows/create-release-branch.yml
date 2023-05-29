@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           # Use a machine account when checking out. This is to workaround the issue were GitHub
@@ -45,7 +45,7 @@ jobs:
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
 
@@ -85,9 +85,9 @@ jobs:
           node ./common/scripts/force-build-flavor.mjs stable
           rush update
 
-      - name: Force build flavor to `beta`
+      - name: Force build flavor to `beta-release`
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
-        run: node ./common/scripts/force-build-flavor.mjs beta
+        run: node ./common/scripts/force-build-flavor.mjs beta-release
 
       # Synchronize the telemetry package versions.
       - name: Synchronize package version reported to telemetry
@@ -100,7 +100,24 @@ jobs:
       - name: Commit changes
         run: |
           git add .
-          git commit -m "Selected stable sdk's for release branch"
+          git commit -m "Selected right flavor sdk's for release branch"
+          git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
+
+      # Switch flavor when necessary
+      - name: Switch flavor for beta-release build
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+        run: rush switch-flavor:beta-release
+
+      - name: Build NPM Package
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+        run: rush build -t @azure/communication-react
+        id: buildapifiles
+
+      - name: Commit beta release snapshots
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+        run: |
+          git add packages/**/*.api.md
+          git commit -m 'Update ${{ matrix.flavor }} API files'
           git push -u origin ${{ steps.releasebranch.outputs.releasebranch }}
 
       # Checkout back to pre-release branch

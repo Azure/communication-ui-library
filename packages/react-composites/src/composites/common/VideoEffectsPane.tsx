@@ -4,36 +4,49 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { Panel } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { _VideoEffectsItemProps } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
 import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage } from '../CallComposite';
-import { CallAdapter, CommonCallAdapter } from '../CallComposite';
+import {
+  VideoBackgroundImage,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundNoEffect,
+  VideoBackgroundReplacementEffect
+} from '../CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/activeVideoBackgroundEffectSelector';
+/* @conditional-compile-remove(video-background-effects) */
+import { useSelector } from '../CallComposite/hooks/useSelector';
+/* @conditional-compile-remove(video-background-effects) */
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+import { AdapterError } from './adapters';
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * Pane that is used to show video effects button
  * @private
  */
 /** @beta */
-export const VideoEffectsPane = (props: {
-  showVideoEffectsOptions: boolean;
-  setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void;
-  adapter: CallAdapter | CommonCallAdapter;
+export const VideoEffectsPaneContent = (props: {
+  onDismissError: (error: AdapterError) => void;
+  activeVideoEffectError: () => AdapterError | undefined;
 }): JSX.Element => {
-  const { showVideoEffectsOptions, setshowVideoEffectsOptions } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
+  /* @conditional-compile-remove(video-background-effects) */
+  const adapter = useAdapter();
   /* @conditional-compile-remove(video-background-effects) */
   const strings = locale.strings.call;
   /* @conditional-compile-remove(video-background-effects) */
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
     const videoEffects: _VideoEffectsItemProps[] = [
       {
-        key: 'none',
+        itemKey: 'none',
         iconProps: {
           iconName: 'RemoveVideoBackgroundEffect'
         },
@@ -43,7 +56,7 @@ export const VideoEffectsPane = (props: {
         }
       },
       {
-        key: 'blur',
+        itemKey: 'blur',
         iconProps: {
           iconName: 'BlurVideoBackground'
         },
@@ -53,12 +66,12 @@ export const VideoEffectsPane = (props: {
         }
       }
     ];
-    const videoEffectImages = props.adapter.getState().videoBackgroundImages;
+    const videoEffectImages = adapter.getState().videoBackgroundImages;
 
     if (videoEffectImages) {
       videoEffectImages.forEach((img: VideoBackgroundImage) => {
         videoEffects.push({
-          key: img.key,
+          itemKey: img.key,
           backgroundProps: {
             url: img.url
           },
@@ -69,30 +82,43 @@ export const VideoEffectsPane = (props: {
       });
     }
     return videoEffects;
-  }, [strings, props.adapter]);
+  }, [strings, adapter]);
 
   /* @conditional-compile-remove(video-background-effects) */
   const onEffectChange = useCallback(
     async (effectKey: string) => {
-      console.log(props.adapter.getState());
       if (effectKey === 'blur') {
-        props.adapter.blurVideoBackground();
+        const blurEffect: VideoBackgroundBlurEffect = {
+          effectName: effectKey
+        };
+        adapter.updateSelectedVideoBackgroundEffect(blurEffect);
+        await adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
-        props.adapter.stopVideoBackgroundEffect();
+        const noneEffect: VideoBackgroundNoEffect = {
+          effectName: effectKey
+        };
+        adapter.updateSelectedVideoBackgroundEffect(noneEffect);
+        await adapter.stopVideoBackgroundEffects();
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
-          return effect.key === effectKey;
+          return effect.itemKey === effectKey;
         });
         if (backgroundImg && backgroundImg.backgroundProps) {
-          props.adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
+          const replaceEffect: VideoBackgroundReplacementEffect = {
+            effectName: 'replacement',
+            effectKey,
+            backgroundImageUrl: backgroundImg.backgroundProps.url
+          };
+          adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
+          await adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
         }
       }
     },
-    [props.adapter, selectableVideoEffects]
+    [adapter, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
-    showVideoEffectsOptions,
-    setshowVideoEffectsOptions,
+    props.onDismissError,
+    props.activeVideoEffectError,
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
@@ -101,30 +127,52 @@ export const VideoEffectsPane = (props: {
 };
 
 const VideoEffectsPaneTrampoline = (
-  showVideoEffectsOptions: boolean,
-  setshowVideoEffectsOptions: (showVideoEffectsOptions: boolean) => void,
+  onDismissError: (error: AdapterError) => void,
+  activeVideoEffectError?: () => AdapterError | undefined,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
+  const videoEffectError = activeVideoEffectError && activeVideoEffectError();
+  /* @conditional-compile-remove(video-background-effects) */
+  const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
+  /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  /* @conditional-compile-remove(video-background-effects) */
+  const showWarning = !isCameraOn && selectedEffect !== 'none';
+  /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
+
   /* @conditional-compile-remove(video-background-effects) */
   return (
-    <Panel
-      headerText={locale.strings.call.effects}
-      isOpen={showVideoEffectsOptions}
-      onDismiss={() => setshowVideoEffectsOptions(false)}
-      hasCloseButton={true}
-      closeButtonAriaLabel="Close"
-      isLightDismiss={true}
-    >
-      {selectableVideoEffects && (
-        <_VideoBackgroundEffectsPicker
-          options={selectableVideoEffects}
-          onChange={onEffectChange}
-        ></_VideoBackgroundEffectsPicker>
+    <Stack horizontalAlign="center">
+      {videoEffectError && (
+        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(videoEffectError)}>
+          {locale.strings.call.unableToStartVideoEffect}
+        </MessageBar>
       )}
-    </Panel>
+      {showWarning && (
+        <MessageBar messageBarType={MessageBarType.warning}>
+          {locale.strings.call.cameraOffBackgroundEffectWarningText}
+        </MessageBar>
+      )}
+      <_VideoBackgroundEffectsPicker
+        label={locale.strings.call.videoEffectsPaneBackgroundSelectionTitle}
+        styles={backgroundPickerStyles}
+        options={selectableVideoEffects ?? []}
+        onChange={onEffectChange}
+        selectedEffectKey={selectedEffect}
+      />
+    </Stack>
   );
   return <></>;
+};
+
+/* @conditional-compile-remove(video-background-effects) */
+const backgroundPickerStyles = {
+  label: {
+    fontSize: '0.75rem',
+    lineHeight: '0.5rem',
+    fontWeight: '400'
+  }
 };

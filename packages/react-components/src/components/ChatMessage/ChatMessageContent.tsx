@@ -2,21 +2,37 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(teams-inline-images) */
+import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
-import { Parser } from 'html-to-react';
+import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
+
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
-import { LiveMessage } from 'react-aria-live';
 import { Link } from '@fluentui/react';
+/* @conditional-compile-remove(mention) */
+import { MentionDisplayOptions, Mention } from '../MentionPopover';
+
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
+/* @conditional-compile-remove(teams-inline-images) */
+import { FileMetadata } from '../FileDownloadCards';
+import LiveMessage from '../Announcer/LiveMessage';
+/* @conditional-compile-remove(mention) */
+import { defaultOnMentionRender } from './MentionRenderer';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
+  /* @conditional-compile-remove(mention) */
+  mentionDisplayOptions?: MentionDisplayOptions;
+  /* @conditional-compile-remove(teams-inline-images) */
+  attachmentsMap?: Record<string, string>;
+  /* @conditional-compile-remove(teams-inline-images) */
+  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -50,21 +66,30 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
     <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel}>
-      <LiveMessage message={props.liveMessage} aria-live="polite" />
+      <LiveMessage message={props.liveMessage} ariaLive="polite" />
       {props.content}
     </div>
   );
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const htmlToReactParser = new Parser();
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  /* @conditional-compile-remove(teams-inline-images) */
+  useEffect(() => {
+    props.message.attachedFilesMetadata?.map((fileMetadata) => {
+      if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+        props.onFetchAttachment(fileMetadata);
+      }
+    });
+  }, [props]);
+
   return (
     <MessageContentWithLiveAria
       message={props.message}
       liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
       ariaLabel={messageContentAriaText(props)}
-      content={htmlToReactParser.parse(props.message.content)}
+      content={processHtmlToReact(props)}
     />
   );
 };
@@ -100,11 +125,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
 export const BlockedMessageContent = (props: BlockedMessageContentProps): JSX.Element => {
   const Icon: JSX.Element = <FontIcon iconName={'DataLossPreventionProhibited'} />;
   const blockedMessage =
-    props.message.warningText === false
-      ? ''
-      : props.message.warningText === '' || props.message.warningText === undefined
-      ? props.strings.blockedWarningText
-      : props.message.warningText;
+    props.message.warningText === undefined ? props.strings.blockedWarningText : props.message.warningText;
   const blockedMessageLink = props.message.link;
   const blockedMessageLinkText = blockedMessageLink
     ? props.message.linkText ?? props.strings.blockedWarningLinkText
@@ -151,4 +172,71 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
           message: props.message.content
         })
     : undefined;
+};
+
+const processNodeDefinitions = ProcessNodeDefinitions();
+const htmlToReactParser = Parser();
+
+/* @conditional-compile-remove(teams-inline-images) */
+const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
+  // Custom <img> processing
+  shouldProcessNode: (node): boolean => {
+    // Process img node with id in attachments list
+    return (
+      node.name &&
+      node.name === 'img' &&
+      node.attribs &&
+      node.attribs.id &&
+      props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+    );
+  },
+  processNode: (node, children, index): HTMLElement => {
+    // logic to check id in map/list
+    if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
+      node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
+    }
+    return processNodeDefinitions.processDefaultNode(node, children, index);
+  }
+});
+
+/* @conditional-compile-remove(mention) */
+const processMention = (props: ChatMessageContentProps): ProcessingInstructionType => ({
+  shouldProcessNode: (node) => {
+    if (props.mentionDisplayOptions?.onRenderMention) {
+      // Override the handling of the <msft-mention> tag in the HTML if there's a custom renderer
+      return node.name === 'msft-mention';
+    }
+    return false;
+  },
+  processNode: (node) => {
+    if (props.mentionDisplayOptions?.onRenderMention) {
+      const { id, displaytext } = node.attribs;
+      const mention: Mention = {
+        id: id,
+        displayText: displaytext
+      };
+      return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
+    }
+    return processNodeDefinitions.processDefaultNode;
+  }
+});
+
+const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
+  const steps: ProcessingInstructionType[] = [
+    /* @conditional-compile-remove(teams-inline-images) */
+    processInlineImage(props),
+    /* @conditional-compile-remove(mention) */
+    processMention(props),
+    {
+      // Process everything else in the default way
+      shouldProcessNode: IsValidNodeDefinitions.alwaysValid,
+      processNode: processNodeDefinitions.processDefaultNode
+    }
+  ];
+
+  return htmlToReactParser.parseWithInstructions(
+    props.message.content ?? '',
+    IsValidNodeDefinitions.alwaysValid,
+    steps
+  );
 };

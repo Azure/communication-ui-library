@@ -38,13 +38,13 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   test('People pane opens and displays correctly', async ({ pages }, testInfo) => {
     const page = pages[1];
     if (isTestProfileDesktop(testInfo)) {
-      await pageClick(page, dataUiId('call-with-chat-composite-people-button'));
+      await pageClick(page, dataUiId('common-call-composite-people-button'));
     } else {
-      await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+      await pageClick(page, dataUiId('common-call-composite-more-button'));
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     }
-    await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
 
     if (!isTestProfileDesktop(testInfo)) {
       await waitForPiPiPToHaveLoaded(page);
@@ -56,7 +56,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   /* @conditional-compile-remove(PSTN-calls) */
   test('More Drawer menu opens and displays dialpad', async ({ pages }) => {
     const page = pages[1];
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-dtmf-dialpad.png`);
@@ -65,7 +65,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling) */
   test('More Drawer menu opens and can choose to be on hold', async ({ pages }) => {
     const page = pages[1];
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     const moreButtonHoldCallButton = await page.$('div[role="menu"] >> text="Hold call"');
     await moreButtonHoldCallButton?.click();
 

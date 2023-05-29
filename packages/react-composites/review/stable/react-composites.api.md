@@ -814,7 +814,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapterFromClient: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
@@ -917,6 +917,7 @@ export type _FakeChatAdapterArgs = {
     fileUploads?: _MockFileUpload[];
     failFileDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
+    sendRemoteInlineImageMessage?: boolean;
     frenchLocaleEnabled?: boolean;
     showParticipantPane?: boolean;
     participantsWithHiddenComposites?: ChatParticipant[];

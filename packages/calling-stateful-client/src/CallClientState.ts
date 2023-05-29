@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -45,6 +47,76 @@ export interface CallAgentState {
    * Proxy of {@link @azure/communication-calling#CallAgent.displayName}.
    */
   displayName?: string;
+}
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @beta
+ */
+export interface CaptionsInfo {
+  /**
+   * The state in which this caption data can be classified.
+   */
+  resultType: CaptionsResultType;
+  /**
+   * The information of the call participant who spoke the captioned text.
+   */
+  speaker: CallerInfo;
+  /**
+   * The language that the spoken words were interpretted as. Corresponds to the language specified in startCaptions / setSpokenLanguage.
+   */
+  spokenLanguage: string;
+  /**
+   * The caption text.
+   */
+  captionText: string;
+  /**
+   * Timestamp of when the captioned words were initially spoken.
+   */
+  timestamp: Date;
+  /**
+   * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
+   */
+  captionLanguage?: string;
+  /**
+   * The original spoken caption text prior to translating to subtitle language
+   */
+  spokenText?: string;
+}
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * @beta
+ */
+export interface CaptionsCallFeatureState {
+  /**
+   * supported spoken languages
+   */
+  supportedSpokenLanguages: string[];
+  /**
+   * array of received captions
+   */
+  captions: CaptionsInfo[];
+  /**
+   * whether captions is on/off
+   */
+  isCaptionsFeatureActive: boolean;
+  /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsInProgress: boolean;
+  /**
+   * supported caption languages
+   */
+  supportedCaptionLanguages: string[];
+  /**
+   * current spoken language
+   */
+  currentSpokenLanguage: string;
+  /**
+   * current caption language
+   */
+  currentCaptionLanguage: string;
 }
 
 /**
@@ -109,13 +181,9 @@ export interface LocalVideoStreamState {
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
-   * State of the video background effect.
+   * List of effects if any are active.
    */
-  isActive: boolean;
-  /**
-   * Name of the effect if one is active.
-   */
-  effectName?: VideoEffectName;
+  activeEffects?: VideoEffectName[];
 }
 
 /**
@@ -279,6 +347,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   transcription: TranscriptionCallFeatureState;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
+   */
+  captionsFeature: CaptionsCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
@@ -531,25 +604,25 @@ export class CallError extends Error {
  */
 export type CallErrorTarget =
   | 'Call.addParticipant'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose'
+  | 'Call.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
   | 'Call.mute'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio'
+  | 'Call.muteIncomingAudio'
   | 'Call.off'
   | 'Call.on'
   | 'Call.removeParticipant'
   | 'Call.resume'
   | 'Call.sendDtmf'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio'
+  | 'Call.startAudio'
   | 'Call.startScreenSharing'
   | 'Call.startVideo'
   | 'Call.stopScreenSharing'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
+  | 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
+  | 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
   | 'CallAgent.join'
@@ -557,7 +630,7 @@ export type CallErrorTarget =
   | 'CallAgent.on'
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent'
+  | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
@@ -573,7 +646,10 @@ export type CallErrorTarget =
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
   | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

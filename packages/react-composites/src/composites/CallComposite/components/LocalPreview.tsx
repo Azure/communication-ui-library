@@ -23,6 +23,7 @@ import { localPreviewSelector } from '../selectors/localPreviewSelector';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 import {
   cameraOffLabelStyle,
+  localPreviewButtonStyle,
   localPreviewContainerStyleDesktop,
   localPreviewContainerStyleMobile,
   localPreviewTileStyle
@@ -113,12 +114,29 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
             onToggleMicrophone={onToggleMic}
             disabled={!microphonePermissionGranted || !hasMicrophones}
             showLabel={true}
+            // disable tooltip as it obscures list of devices on mobile
+            strings={
+              props.mobileView ? { tooltipOnContent: '', tooltipOffContent: '', tooltipDisabledContent: '' } : {}
+            }
+            styles={localPreviewButtonStyle}
           />
           <CameraButton
             data-ui-id="call-composite-local-device-settings-camera-button"
             {...cameraButtonProps}
             showLabel={true}
             disabled={!cameraPermissionGranted || !hasCameras}
+            // disable tooltip as it obscures list of devices on mobile
+            strings={
+              props.mobileView
+                ? {
+                    tooltipOnContent: '',
+                    tooltipOffContent: '',
+                    tooltipDisabledContent: '',
+                    tooltipVideoLoadingContent: ''
+                  }
+                : {}
+            }
+            styles={localPreviewButtonStyle}
           />
           {props.showDevicesButton && (
             <DevicesButton
@@ -127,6 +145,8 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
               // disable button whilst all other buttons are disabled
               disabled={!microphonePermissionGranted || !cameraPermissionGranted || hasNoDevices}
               showLabel={true}
+              // disable tooltip as it obscures list of devices on mobile
+              strings={props.mobileView ? { tooltipContent: '' } : {}}
               styles={devicesButtonStyles}
             />
           )}

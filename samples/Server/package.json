@@ -14,12 +14,12 @@
     "test:stable": "echo skip",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
-    "lint": "eslint --max-warnings 0 */**/*.{ts,tsx}",
+    "lint": "eslint --max-warnings 0 \"**/*.{js,ts,tsx}\"",
     "lint:fix": "eslint */**/*.{ts,tsx} --fix",
     "lint:quiet": "eslint */**/*.{ts,tsx} --quiet"
   },
   "dependencies": {
-    "@azure/communication-chat": ">=1.2.0",
+    "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
     "@azure/communication-common": "2.2.0",
     "@azure/communication-identity": "~1.1.0",
     "@types/cors": "^2.8.8",

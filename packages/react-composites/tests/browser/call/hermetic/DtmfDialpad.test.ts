@@ -17,10 +17,11 @@ test.describe('Dtmf dialpad tests', async () => {
     initialState.alternateCallerId = '+1676568678999';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await waitForSelector(page, dataUiId('call-with-chat-composite-more-button'));
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await waitForSelector(page, dataUiId('common-call-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
     const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
+    await waitForSelector(page, dataUiId('dialpadContainer'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`Call-Dtmf-Dialpad.png`);
   });
   test('Dtmf dialpad should not render in non-PSTN call', async ({ page, serverUrl }) => {
@@ -28,8 +29,8 @@ test.describe('Dtmf dialpad tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await waitForSelector(page, dataUiId('call-with-chat-composite-more-button'));
-    await pageClick(page, dataUiId('call-with-chat-composite-more-button'));
+    await waitForSelector(page, dataUiId('common-call-composite-more-button'));
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
   });

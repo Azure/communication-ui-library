@@ -29,6 +29,8 @@ export interface _DrawerMenuItemProps {
   text?: string;
   /** Text that shows at the end of the menu item before any secondaryIcon is supplied */
   secondaryText?: string;
+  /** A component that shows at the end of the menu item before any secondaryIcon is supplied */
+  secondaryComponent?: JSX.Element;
   /** Icon shown at the start of the menu item (before the menu item text) */
   iconProps?: IIconProps;
   /**
@@ -105,6 +107,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
           </Text>
         </Stack.Item>
       )}
+      {props.secondaryComponent && <Stack.Item>{props.secondaryComponent}</Stack.Item>}
       {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
     </Stack>
   );

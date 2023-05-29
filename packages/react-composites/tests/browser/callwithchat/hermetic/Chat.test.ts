@@ -3,8 +3,8 @@
 
 import {
   sendMessageFromHiddenChatComposite,
-  startTypeMessageFromHiddenChatComposite,
-  stopTypingAndSendMessageFromHiddenChatComposite,
+  typeMessageFromHiddenChatComposite,
+  typeAndSendMessageFromHiddenChatComposite,
   temporarilyShowHiddenChatComposite
 } from '../../common/hermeticChatTestHelpers';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
@@ -35,18 +35,18 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     // Send a message from local participant.
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(page, dataUiId('call-with-chat-composite-chat-pane'));
+    await waitForSelector(page, dataUiId('sendbox-textfield'));
     await sendMessage(page, 'Call with Chat composite is awesome!');
 
     await temporarilyShowHiddenChatComposite(page, chatRemoteParticipant);
     await waitForMessageSeen(page);
 
     // Start typing a message
-    await startTypeMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
+    await typeMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
     // Wait for indicator to show up
     await waitForAndHideTypingIndicator(page, APP_UNDER_TEST_ROOT_SELECTOR);
     // Stop typing and send a message
-    await stopTypingAndSendMessageFromHiddenChatComposite(page, chatRemoteParticipant);
+    await typeAndSendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
 
     // Local participant has both a sent message and a received message.
     await waitForNMessages(page, 2, APP_UNDER_TEST_ROOT_SELECTOR);

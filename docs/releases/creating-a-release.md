@@ -13,6 +13,11 @@ _This document applies to beta and stable releases. Alpha releases are created n
 
 _This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
 
+## Before creating a release branch
+
+- Update the strings on `main` these [steps](../references/string-translations.md).
+  - **Note**: String translation can take up to 5 working days to complete. It is a good idea to avoid string changes once before the release process
+
 ## Step 1: Creating a release branch
 
 Both beta and stable release follow a two step workflow, aided by github actions.
@@ -87,10 +92,7 @@ graph LR
   prerelease -.-o|Create Pull Request| main
 ```
 
-After running the action there are two manual steps you must do:
-
-- Create a PR of `release/<release-tag>` into `main` to merge the release branch back into `main`. This PR should be merged after the release is complete.
-- Disable the beta checks on the CI if this is a stable release, or the stable checks if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. Editing the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
+After running the action, the beta checks on the CI should be automatically disabled if this is a stable release. Inversely, the stable checks should be automatically disabled if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. If the wrong build flavor checks were not automatically disabled, edit the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
 
 ## Step 2: Prepare for release
 
@@ -99,10 +101,7 @@ Once the release branch has been created, we must make sure that the package we 
 - Setup a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
   - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in section below.
 - For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-(ARB)-Review) for how to reach out to the API stewardship board.
-- We use a Microsoft-internal service to translate strings. Strings are sent for translation automatically for any changes to `main` or the release branches. But we need to manually fetch back and commit translated strings before release. This repository has a GitHub workflow to [fetch back translated strings](../references/string-translations.md).
-  - **Note**: String translation can take up to 5 working days to complete. It is a good idea to avoid string changes once the release branch is created, and to fetch back strings 5 days after the release branch creation / last strings change cherry-picked into the release branch.
-
-This step typically lasts ~2 weeks.
+- [Fetch translated strings](../references/string-translations.md) again for main to make sure any other string updates that have occured since the start of the release process are included. If there are any strings updated, [cherry-pick](#cherry-picking-changes) the changes to the release branch.
 
 ### Cherry-picking changes
 
@@ -117,8 +116,6 @@ This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 -  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
-
-**Exception**: When [fetching translated strings](../references/string-translations.md), create a PR directly against the release branch. The fetched strings depend on the english strings in the branch that triggers the workflow, so translating the strings on `main` and then cherry-picking over the PR can result in the wrong strings getting translated.
 
 ## Step 3: Publish to NPM
 

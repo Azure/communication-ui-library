@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -19,6 +18,7 @@ import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
+import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
@@ -122,30 +122,8 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<CameraButtonContextualMenuStyles>;
 }
 
-// @internal
-export const _Caption: (props: _CaptionProps) => JSX.Element;
-
-// @internal
-export interface _CaptionProps extends _CaptionsInfo {
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
-// @internal
-export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
-
-// @internal
-export interface _CaptionsBannerProps {
-    // (undocumented)
-    captions: _CaptionsInfo[];
-    onRenderAvatar?: OnRenderAvatarCallback;
-}
-
-// @internal
-export type _CaptionsInfo = {
-    displayName: string;
-    captionText: string;
-    userId?: string;
-};
+// @public
+export type CancelEditCallback = (messageId: string) => void;
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -161,6 +139,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -273,6 +253,9 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 export interface ComponentLocale {
     strings: ComponentStrings;
 }
+
+// @public
+export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
@@ -537,6 +520,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
     // (undocumented)
@@ -548,6 +532,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    disableMaxHeight?: boolean;
     heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
@@ -567,6 +552,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    disableMaxHeight?: boolean;
     heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
@@ -873,6 +859,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -929,6 +916,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1500,7 +1488,7 @@ export interface _VideoEffectsItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
-    key: string;
+    itemKey: string;
     onSelect?: (key: string) => void;
     styles?: _VideoEffectsItemStyles;
     title?: string;

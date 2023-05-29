@@ -11,7 +11,21 @@ export { GridLayout } from './GridLayout';
 export type { GridLayoutProps, GridLayoutStyles } from './GridLayout';
 
 export { SendBox } from './SendBox';
+/* @conditional-compile-remove(mention) */
+export { _MentionPopover } from './MentionPopover';
+
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
+
+/* @conditional-compile-remove(mention) */
+export type {
+  _MentionPopoverProps,
+  MentionLookupOptions,
+  MentionDisplayOptions,
+  MentionOptions,
+  Mention,
+  MentionPopoverStrings
+} from './MentionPopover';
+
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
 
@@ -26,7 +40,8 @@ export type {
   MessageThreadStyles,
   JumpToNewMessageButtonProps,
   MessageRenderer,
-  UpdateMessageCallback
+  UpdateMessageCallback,
+  CancelEditCallback
 } from './MessageThread';
 
 export { StreamMedia } from './StreamMedia';
@@ -53,6 +68,8 @@ export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoG
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
+/* @conditional-compile-remove(click-to-call) */
+export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
 export { LocalVideoCameraCycleButton } from './LocalVideoCameraButton';
@@ -214,6 +231,11 @@ export type {
 } from './VideoEffects/VideoBackgroundEffectsPicker';
 
 export type { VerticalGalleryStyles, VerticalGalleryStrings, VerticalGalleryControlBarStyles } from './VerticalGallery';
-
+/* @conditional-compile-remove(close-captions) */
 export * from './CaptionsBanner';
+/* @conditional-compile-remove(close-captions) */
 export * from './Caption';
+/* @conditional-compile-remove(close-captions) */
+export * from './StartCaptionsButton';
+/* @conditional-compile-remove(close-captions) */
+export * from './CaptionsSettingsModal';

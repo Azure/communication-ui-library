@@ -1,12 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import Enzyme from 'enzyme';
-import { renderHook } from '@testing-library/react-hooks';
-import Adapter from 'enzyme-adapter-react-16';
+import { renderHook } from '@testing-library/react';
 import { _PermissionsProvider, _getPermissions, _Permissions, _usePermissions } from './PermissionsProvider';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 const mockPresenterPermissions: _Permissions = {
   role: 'Presenter',

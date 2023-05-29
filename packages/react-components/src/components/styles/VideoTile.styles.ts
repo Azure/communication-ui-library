@@ -128,7 +128,9 @@ export const moreButtonStyles: IButtonStyles = {
     // To ensure that the button is clickable when there is a floating video tile
     zIndex: 1,
     color: 'inherit',
-    height: '100%'
+    top: '-0.125rem',
+    height: '100%',
+    padding: '0rem'
   },
   rootHovered: {
     background: 'none'

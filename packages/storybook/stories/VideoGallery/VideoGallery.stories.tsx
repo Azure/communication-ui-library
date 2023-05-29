@@ -266,32 +266,27 @@ const getDocs: () => JSX.Element = () => {
         are shown in the GridLayout. This is shown in the video clip below. Pinned participants will be shown in the
         order that they are pinned.
       </Description>
-      <video width="90%" controls>
-        <source src="videos/video-gallery-pinning.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <Image style={{ width: '90%' }} src="images/video-gallery-pinning.gif" alt="VideoGallery pinning" />
       <Description>
         When screensharing is active, pinned participants are placed first in the horizontal gallery as shown in video
         clip below.
       </Description>
-      <video width="90%" controls>
-        <source src="videos/video-gallery-pinning-with-screenshare.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <Image
+        style={{ width: '90%' }}
+        src="images/video-gallery-pinning-with-screenshare.gif"
+        alt="VideoGallery pinning with screenshare active"
+      />
       <Description>
         Pinned participants can be unpinned through the contextual menu as shown in the video clip below.
       </Description>
-      <video width="90%" controls>
-        <source src="videos/video-gallery-unpinning.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <Image style={{ width: '90%' }} src="images/video-gallery-unpinning.gif" alt="VideoGallery unpinning" />
       <Description>
         The maximum pinned participants is currently set to 4 for the VideoGallery. The pin menu item will be disabled
         when this limit is reached as shown in the screenshot below.
       </Description>
       <Image
         style={{ width: '90%' }}
-        /* set an approximate default height to avoid reflow when the image loads */ src="images/pinned-limit-reached-video-gallery.png"
+        src="images/pinned-limit-reached-video-gallery.png"
         alt="Disabled pin menu item in VideoGallery when limit reached"
       />
       <Subheading>Pinning participants via long touch for mobile</Subheading>

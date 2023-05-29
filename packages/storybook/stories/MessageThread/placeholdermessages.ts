@@ -77,24 +77,40 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="250" id="SomeImageId" style="vertical-align:bottom"></p>\r\n<p>&nbsp;</p>\r\n',
+      '<p>Check out this image:&nbsp;</p>\r\n<p><img alt="image" src="" itemscope="png" width="250" height="250" id="SomeImageId" style="vertical-align:bottom"></p><p>&nbsp;</p>\r\n',
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
     contentType: 'html',
-    attachedFilesMetadata: [GenerateMockMessageAttachment()]
+    attachedFilesMetadata: GenerateMockMessageAttachments()
   };
 };
 
-const GenerateMockMessageAttachment = (): FileMetadata => {
+export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
   return {
-    attachmentType: 'teamsInlineImage',
-    id: 'SomeImageId',
-    name: 'SomeImageId.png',
-    extension: 'png',
-    url: 'images/github.png',
-    previewUrl: 'images/github.png'
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content:
+      "<p>Hi <msft-mention id='everyone' displayText='Everyone'>Everyone</msft-mention>, please welcome <msft-mention id='3'>Jeffrey Mathews</msft-mention> to the team</p>",
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: false,
+    attached: false,
+    contentType: 'html'
   };
+};
+
+const GenerateMockMessageAttachments = (): FileMetadata[] => {
+  return [
+    {
+      id: 'SomeImageId',
+      name: 'SomeImageId',
+      attachmentType: 'teamsInlineImage',
+      extension: 'png',
+      url: 'images/github.png',
+      previewUrl: 'images/github.png'
+    }
+  ];
 };
 
 export const GenerateMockSystemMessage = (): SystemMessage => {

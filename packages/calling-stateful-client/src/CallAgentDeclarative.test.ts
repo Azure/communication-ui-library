@@ -4,6 +4,7 @@
 import {
   Call,
   CallAgent,
+  CallAgentKind,
   CollectionUpdatedEvent,
   UserFacingDiagnosticsFeature,
   GroupLocator,
@@ -13,12 +14,11 @@ import {
   RecordingCallFeature,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  StartCallOptions
+  StartCallOptions,
+  RoomLocator
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
-import { CallAgentKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, RoomLocator, PushNotificationData } from '@azure/communication-calling';
+import { GroupChatCallLocator, MeetingLocator, PushNotificationData } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -67,7 +67,6 @@ const mockCallId = 'b';
 class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
-  /* @conditional-compile-remove(teams-identity-support) */
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
@@ -93,7 +92,6 @@ class MockCallAgent implements CallAgent {
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {

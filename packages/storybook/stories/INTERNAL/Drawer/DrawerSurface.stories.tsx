@@ -29,7 +29,7 @@ const DrawerSurfaceStory = (/*args*/): JSX.Element => {
         </Stack>
       )}
       {isDrawerShowing && (
-        <DrawerSurfaceComponent onLightDismiss={onLightDismissTriggered}>
+        <DrawerSurfaceComponent disableMaxHeight={true} onLightDismiss={onLightDismissTriggered}>
           <PowerpointContent />
         </DrawerSurfaceComponent>
       )}

@@ -6,7 +6,6 @@
     "sharingIconLabel": "共有",
     "mutedIconLabel": "ミュート状態",
     "displayNamePlaceholder": "名前のない参加者",
-    "participantStateConnecting": "呼び出し中...",
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中"
   },
@@ -25,6 +24,9 @@
     "removeFile": "ファイルを削除します",
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
+  },
+  "mentionPopover": {
+    "mentionPopoverHeader": "候補"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -54,7 +56,11 @@
     "onSplitButtonAriaLabel": "カメラとカメラ オプションをオフにする",
     "offSplitButtonAriaLabel": "カメラとカメラ オプションをオンにする",
     "cameraActionTurnedOnAnnouncement": "カメラがオンになっています",
-    "cameraActionTurnedOffAnnouncement": "カメラがオフになっています"
+    "cameraActionTurnedOffAnnouncement": "カメラがオフになっています",
+    "onSplitButtonPrimaryActionCamera": "カメラをオフにする",
+    "offSplitButtonPrimaryActionCamera": "カメラをオンにする",
+    "cameraPrimaryActionSplitButtonTitle": "カメラを使用する",
+    "videoEffectsMenuItemTitle": "効果"
   },
   "microphoneButton": {
     "onLabel": "ミュート",
@@ -70,7 +76,10 @@
     "onSplitButtonAriaLabel": "マイクとオーディオのオプションをミュートにする",
     "offSplitButtonAriaLabel": "マイクとオーディオのオプションのミュートを解除する",
     "microphoneActionTurnedOnAnnouncement": "マイクがオンになっています",
-    "microphoneActionTurnedOffAnnouncement": "マイクがオフになっています"
+    "microphoneActionTurnedOffAnnouncement": "マイクがオフになっています",
+    "offSplitButtonMicrophonePrimaryAction": "マイクのミュートを解除する",
+    "onSplitButtonMicrophonePrimaryAction": "マイクをミュートにする",
+    "micPrimaryActionSplitButtonTitle": "マイクを使用する"
   },
   "devicesButton": {
     "label": "デバイス",
@@ -90,7 +99,8 @@
     "menuHeader": "この通話で",
     "participantsListButtonLabel": "{numParticipants} 人",
     "muteAllButtonLabel": "全員をミュート",
-    "copyInviteLinkButtonLabel": "招待用のリンクをコピー"
+    "copyInviteLinkButtonLabel": "招待用のリンクをコピー",
+    "copyInviteLinkActionedAriaLabel": "招待用のリンクがコピーされました"
   },
   "screenShareButton": {
     "onLabel": "プレゼンテーションの停止",
@@ -126,7 +136,9 @@
     "editBoxSubmitButton": "送信",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
     "actionMenuMoreOptions": "その他のオプション",
-    "downloadFile": "ファイルをダウンロード"
+    "downloadFile": "ファイルをダウンロード",
+    "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
+    "blockedWarningLinkText": "詳細"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -146,11 +158,13 @@
     "callNoSpeakerFound": "スピーカーまたはヘッドフォンが見つかりません。音声デバイスを接続して通話を聞きます。",
     "callNoMicrophoneFound": "マイクが見つかりません。オーディオ入力デバイスを接続します。",
     "callMicrophoneAccessDenied": "マイクにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+    "callMicrophoneAccessDeniedSafari": "マイクにアクセスできません。ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
     "callMicrophoneMutedBySystem": "システムによってミュートになっています。",
     "callMicrophoneUnmutedBySystem": "マイクが回復し、システムによってミュートが解除されました。",
     "callMacOsMicrophoneAccessDenied": "マイクにアクセスできません。macOS のプライバシー設定でマイクへのアクセス許可を付与します。",
     "callLocalVideoFreeze": "ネットワーク帯域幅が不十分です。通話中に他のユーザーのビデオが一時停止している可能性があります。",
     "callCameraAccessDenied": "カメラにアクセスできません。アドレス バーのロックをクリックして、この Web ページにアクセス許可を付与します。",
+    "callCameraAccessDeniedSafari": "カメラにアクセスできません。ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
     "callCameraAlreadyInUse": "カメラにアクセスできません。別のアプリケーションによって既に使用されている可能性があります。",
     "callVideoStoppedBySystem": "ビデオはシステムによって停止されました。",
     "callVideoRecoveredBySystem": "ビデオが再開されました。",
@@ -158,7 +172,10 @@
     "callMacOsScreenShareAccessDenied": "MacOS は画面の共有をブロックしています。プライバシー設定を更新して、このブラウザーで画面を録画できるようにします。",
     "dismissButtonAriaLabel": "閉じる",
     "failedToJoinCallGeneric": "通話に参加できませんでした",
-    "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。"
+    "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
+    "startScreenSharingGeneric": "画面共有の開始中に問題が発生しました。",
+    "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
+    "unableToStartVideoEffect": "ビデオ効果を適用できません。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
@@ -167,7 +184,16 @@
     "localVideoCameraSwitcherLabel": "カメラを切り替え",
     "localVideoMovementLabel": "移動可能なローカル ビデオ タイル",
     "localVideoSelectedDescription": "{cameraName} が選択されました。",
-    "displayNamePlaceholder": "名前のない参加者"
+    "displayNamePlaceholder": "名前のない参加者",
+    "fitRemoteParticipantToFrame": "フレームに収める",
+    "fillRemoteParticipantFrame": "トリミングする",
+    "pinParticipantForMe": "自分用にピン留め",
+    "pinParticipantForMeLimitReached": "ピン留め (上限に達しました)",
+    "unpinParticipantForMe": "ピンを外す",
+    "pinParticipantMenuItemAriaLabel": "{participantName} さんをピン留めする",
+    "unpinParticipantMenuItemAriaLabel": "{participantName} さんのピンを外す",
+    "pinnedParticipantAnnouncementAriaLabel": "{participantName} さんをピン留めしました",
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} さんのピンを外しました"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -180,20 +206,102 @@
     "tooltipOffContent": "通話の保留"
   },
   "videoTile": {
-    "participantStateConnecting": "呼び出し中...",
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
     "secondaryText": "これは、参加者があなたのことを見たり聞いたりできるようにするものです。",
     "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
-    "primaryButtonText": "アクセスを許可"
+    "primaryButtonText": "カメラとマイクなしで続行する",
+    "ariaLabel": "カメラとマイクへのアクセスが許可する"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "{appName} にカメラの使用を許可する",
+    "secondaryText": "これは、参加者に表示されるようにするためです。",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "primaryButtonText": "カメラなしで続行",
+    "ariaLabel": "カメラへのアクセスを許可"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "{appName} にマイクの使用を許可する",
+    "secondaryText": "これは、参加者に聞こえるようにするためです。",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "primaryButtonText": "マイクなしで続行",
+    "ariaLabel": "マイクへのアクセスを許可する"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "カメラとマイクへのアクセスを確認しています",
+    "secondaryText": "プロンプトが表示されたら、アクセスを許可します。これは、参加者があなたを見たり聞いたりできるようにするためです。",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "primaryButtonText": "カメラとマイクなしで続行する",
+    "ariaLabel": "カメラとマイクへのアクセスを確認しています。プロンプトが表示されたら、アクセスを許可します。"
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "カメラへのアクセスを確認しています",
+    "secondaryText": "プロンプトが表示されたら、アクセスを許可します。これは、参加者があなたを見ることができるようにするためです。",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "primaryButtonText": "カメラなしで続行する",
+    "ariaLabel": "カメラへのアクセスを確認しています。プロンプトが表示されたら、アクセスを許可します。"
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "マイクへのアクセスを確認しています",
+    "secondaryText": "プロンプトが表示されたら、アクセスを許可します。これは、参加者があなたの声を聞くことができるようにするためです。",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示",
+    "primaryButtonText": "マイクなしで続行する",
+    "ariaLabel": "マイクへのアクセスを確認しています。プロンプトが表示されたら、アクセスを許可します。"
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "カメラとマイクにアクセスできません",
+    "secondaryText": "アドレス バーのロック アイコンをクリックして、この Web ページにマイクのアクセス許可を付与します。ページの更新が必要な可能性があります。",
+    "primaryButtonText": "カメラとマイクなしで続行",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "カメラとマイクにアクセスできません",
+    "secondaryText": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+    "primaryButtonText": "カメラとマイクなしで続行",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "カメラにアクセスできません",
+    "secondaryText": "アドレス バーのロック アイコンをクリックして、この Web ページにカメラのアクセス許可を付与します。ページの更新が必要な可能性があります。",
+    "primaryButtonText": "カメラなしで続行",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "マイクにアクセスできません",
+    "secondaryText": "アドレス バーのロック アイコンをクリックして、この Web ページにマイクのアクセス許可を付与します。ページの更新が必要な可能性があります。",
+    "primaryButtonText": "マイクなしで続行する",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "カメラにアクセスできません",
+    "secondaryText": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+    "primaryButtonText": "カメラなしで続行する",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "マイクにアクセスできません",
+    "secondaryText": "ページを更新してアクセス許可を可能にするか、このブラウザーの設定を確認し、この Web サイトのアクセス許可が有効になっていることを確認してください。",
+    "primaryButtonText": "マイクなしで続行",
+    "linkText": "ヘルプが必要ですか? トラブルシューティングのヘルプを表示"
   },
   "UnsupportedBrowser": {
     "primaryText": "サポートされていないブラウザーです",
     "secondaryText": "互換性のあるブラウザーを使用して、この通話に参加してください。",
-    "moreHelpLink": "さらにヘルプを見る"
+    "moreHelpLinkText": "互換性要件を確認する"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "ブラウザーの更新が必要です",
+    "secondaryText": "可能な限り最善の通話を行うために、ブラウザーを更新してから、もう一度通話に参加してみてください。",
+    "moreHelpLinkText": "互換性要件を確認する",
+    "continueAnywayButtonText": "更新せずに通話を開始する"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "オペレーティング システムがサポートされていません",
+    "secondaryText": "互換性のあるオペレーティング システムのデバイスを使用して、この通話に参加してください。",
+    "moreHelpLinkText": "互換性要件を確認する"
   },
   "BrowserPermissionDenied": {
     "primaryText": "カメラまたはマイクを使用できません",
@@ -215,5 +323,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "前のページ",
+    "rightNavButtonAriaLabel": "次のページ"
   }
 }

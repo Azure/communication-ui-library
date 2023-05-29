@@ -97,7 +97,7 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(video-background-effects) */
     onRemoveVideoBackgroundEffects: async () => {
-      return await adapter.stopVideoBackgroundEffect();
+      return await adapter.stopVideoBackgroundEffects();
     },
     /* @conditional-compile-remove(video-background-effects) */
     onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
@@ -106,6 +106,22 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(video-background-effects) */
     onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
       return await adapter.replaceVideoBackground(backgroundReplacementConfig);
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onStartCaptions: async (options) => {
+      await adapter.startCaptions(options);
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onStopCaptions: async () => {
+      await adapter.stopCaptions();
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onSetSpokenLanguage: async (language) => {
+      await adapter.setSpokenLanguage(language);
+    },
+    /* @conditional-compile-remove(close-captions) */
+    onSetCaptionLanguage: async (language) => {
+      await adapter.setCaptionLanguage(language);
     }
   })
 );

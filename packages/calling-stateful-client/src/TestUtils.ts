@@ -198,6 +198,10 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
     id: mockCallId,
     /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call',
+    /* @conditional-compile-remove(close-captions) */
+    info: {
+      groupId: 'testGroupId'
+    },
     remoteParticipants: [] as RemoteParticipant[],
     localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
     feature: createMockApiFeatures(new Map()),
@@ -269,7 +273,7 @@ export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
 /* @conditional-compile-remove(video-background-effects) */
 const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
   addMockEmitter({
-    name: 'MockVideoEffect',
+    activeEffects: ['MockVideoEffect'],
     startEffects: () => Promise.resolve(),
     stopEffects: () => Promise.resolve(),
     dispose: () => Promise.resolve()

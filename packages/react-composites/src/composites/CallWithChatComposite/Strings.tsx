@@ -55,6 +55,20 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerSpeakerMenuTitle: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Title for the captions sub-menu in more button drawer.
+   *
+   * Only used with `mobileView` set to `true`.
+   */
+  moreDrawerCaptionsMenuTitle: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Title for the spoken language sub-menu in more button drawer.
+   *
+   * Only used with `mobileView` set to `true`.
+   */
+  moreDrawerSpokenLanguageMenuTitle: string;
   /**
    * {@Link CallWithChatComposite} control bar More button label
    */

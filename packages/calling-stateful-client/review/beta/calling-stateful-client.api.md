@@ -16,6 +16,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CaptionsResultType } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -92,12 +93,13 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant' | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 // @public
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -120,6 +122,28 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
+}
+
+// @beta (undocumented)
+export interface CaptionsCallFeatureState {
+    captions: CaptionsInfo[];
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
+    startCaptionsInProgress: boolean;
+    supportedCaptionLanguages: string[];
+    supportedSpokenLanguages: string[];
+}
+
+// @beta (undocumented)
+export interface CaptionsInfo {
+    captionLanguage?: string;
+    captionText: string;
+    resultType: CaptionsResultType;
+    speaker: CallerInfo;
+    spokenLanguage: string;
+    spokenText?: string;
+    timestamp: Date;
 }
 
 // @public
@@ -185,6 +209,9 @@ export const _isTeamsCall: (call: CallCommon) => call is TeamsCall_2;
 // @internal (undocumented)
 export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is TeamsCallAgent_2;
 
+// @internal
+export const _isTeamsMeetingCall: (call: CallCommon) => boolean;
+
 // @public
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
@@ -196,8 +223,7 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    effectName?: VideoEffectName;
-    isActive: boolean;
+    activeEffects?: VideoEffectName[];
 }
 
 // @public

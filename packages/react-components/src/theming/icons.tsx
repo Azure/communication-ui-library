@@ -42,10 +42,17 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(close-captions) */
+import {
+  ClosedCaption20Regular,
+  ClosedCaptionOff20Regular,
+  Settings20Regular,
+  PersonVoice20Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
+import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(pinned-participants) */
 import {
   Pin16Filled,
@@ -74,7 +81,6 @@ import { Warning20Filled } from '@fluentui/react-icons';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import React from 'react';
-/* @conditional-compile-remove(unsupported-browser) */
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
@@ -199,6 +205,16 @@ const DataLossPreventionProhibited16Regular = (): JSX.Element => {
   return <Prohibited16Regular />;
 };
 
+const GalleryLeftButton = (): JSX.Element => {
+  const rtl = useTheme().rtl;
+  return rtl ? <ChevronRight20Regular /> : <ChevronLeft20Regular />;
+};
+
+const GalleryRightButton = (): JSX.Element => {
+  const rtl = useTheme().rtl;
+  return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
+};
+
 /**
  * The default set of icons that are available to use in the UI components.
  *
@@ -241,8 +257,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
-  HorizontalGalleryLeftButton: <ChevronLeft20Regular />,
-  HorizontalGalleryRightButton: <ChevronRight20Regular />,
+  HorizontalGalleryLeftButton: <GalleryLeftButton />,
+  HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
   MessageEdit: <Edit20Regular />,
   MessageFailed: <ErrorCircle16Regular />,
@@ -299,9 +315,19 @@ export const DEFAULT_COMPONENT_ICONS = {
   SplitButtonPrimaryActionMicUnmuted: <Mic20Filled />,
   SplitButtonPrimaryActionMicMuted: <MicOff20Filled />,
   /* @conditional-compile-remove(vertical-gallery) */
-  VerticalGalleryLeftButton: <ChevronLeft20Regular />,
+  VerticalGalleryLeftButton: <GalleryLeftButton />,
   /* @conditional-compile-remove(vertical-gallery) */
-  VerticalGalleryRightButton: <ChevronRight20Regular />,
+  VerticalGalleryRightButton: <GalleryRightButton />,
   /* @conditional-compile-remove(video-background-effects) */
-  OptionsVideoBackgroundEffect: <VideoBackgroundEffect20Regular />
+  ControlButtonVideoEffectsOption: <VideoBackgroundEffect20Regular />,
+  /* @conditional-compile-remove(video-background-effects) */
+  ConfigurationScreenVideoEffectsButton: <VideoBackgroundEffect20Filled />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsIcon: <ClosedCaption20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsOffIcon: <ClosedCaptionOff20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  CaptionsSettingsIcon: <Settings20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  ChangeSpokenLanguageIcon: <PersonVoice20Regular />
 };

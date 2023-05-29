@@ -26,6 +26,7 @@ module.exports = {
     'calling-stateful-client': '<rootDir>/../calling-stateful-client/src/index.ts',
     'calling-component-bindings': '<rootDir>/../calling-component-bindings/src/index.ts',
     'acs-ui-common': '<rootDir>/../acs-ui-common/src/index.ts',
+    'northstar-wrapper': '<rootDir>/../northstar-wrapper/src/index.ts',
     '@internal/fake-backends': '<rootDir>/../fake-backends/src/index.ts',
     // TOC in storybook still import from '@storybook/addon-docs/blocks'
     // This ends up with an import issue, so temporarily fixing it here

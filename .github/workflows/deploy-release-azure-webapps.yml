@@ -19,15 +19,15 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Use Node.js 14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: 14.x
 
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -42,6 +42,11 @@ jobs:
       - name: Switch flavor for stable build
         if: ${{ !contains(github.ref, 'beta') }}
         run: rush switch-flavor:stable
+
+      # Switch flavor to beta release when it is beta release branch
+      - name: Switch flavor for beta release build
+        if: ${{ contains(github.ref, 'beta') }}
+        run: rush switch-flavor:beta-release
 
       - name: Build Projects
         run: rush build

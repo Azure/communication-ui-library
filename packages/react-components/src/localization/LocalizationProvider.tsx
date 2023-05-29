@@ -39,6 +39,8 @@ import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrows
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStrings } from '../components/VerticalGallery';
+/* @conditional-compile-remove(mention) */
+import { MentionPopoverStrings } from '../components/MentionPopover';
 
 /**
  * Locale information for all components exported from this library.
@@ -82,6 +84,9 @@ export interface ComponentStrings {
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
   sendBox: SendBoxStrings;
+  /* @conditional-compile-remove(mention) */
+  /** Strings for MentionPopover */
+  mentionPopover: MentionPopoverStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */

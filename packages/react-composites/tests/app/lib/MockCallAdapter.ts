@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import type { CallAdapter, CallAdapterState } from '../../../src';
+import {
+  AudioDeviceInfo,
+  BackgroundReplacementConfig,
+  Call,
+  EnvironmentInfo,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
+import type { CallAdapter, CallAdapterState, SelectedVideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
@@ -104,6 +110,23 @@ export class MockCallAdapter implements CallAdapter {
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
   }
+  /* @conditional-compile-remove(close-captions) */
+  startCaptions(): Promise<void> {
+    throw Error('startCaptions not implemented');
+  }
+  /* @conditional-compile-remove(close-captions) */
+  stopCaptions(): Promise<void> {
+    throw Error('stopCaptions not implemented');
+  }
+  /* @conditional-compile-remove(close-captions) */
+  setCaptionLanguage(): Promise<void> {
+    throw Error('setCaptionLanguage not implemented');
+  }
+  /* @conditional-compile-remove(close-captions) */
+  setSpokenLanguage(): Promise<void> {
+    throw Error('setSpokenLanguage not implemented');
+  }
+
   async setCamera(sourceInfo: VideoDeviceInfo): Promise<void> {
     this.modifyState((draft: CallAdapterState) => {
       draft.devices.selectedCamera = findDevice(this._state.devices.cameras, sourceInfo);
@@ -135,19 +158,55 @@ export class MockCallAdapter implements CallAdapter {
   }
 
   blurVideoBackground(): Promise<void> {
-    throw new Error('blurVideoBackground not implemented.');
+    this.modifyState((draft: CallAdapterState) => {
+      if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+        draft.devices.unparentedViews[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElement('blur background')
+        };
+      } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+        draft.call.localVideoStreams[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElement('blur background')
+        };
+      }
+    });
+    return Promise.resolve();
   }
 
-  replaceVideoBackground(): Promise<void> {
-    throw new Error('replaceVideoBackground not implemented.');
+  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
+    this.modifyState((draft: CallAdapterState) => {
+      if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+        draft.devices.unparentedViews[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElementWithCustomBackground(backgroundReplacementConfig.backgroundImageUrl)
+        };
+      } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+        draft.call.localVideoStreams[0].view = {
+          scalingMode: 'Crop',
+          isMirrored: false,
+          target: createMockHTMLElementWithCustomBackground(backgroundReplacementConfig.backgroundImageUrl)
+        };
+      }
+    });
+    return Promise.resolve();
   }
 
-  stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  stopVideoBackgroundEffects(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffects not implemented.');
   }
 
   updateBackgroundPickerImages(): void {
     throw new Error('updateBackgroundPickerImages not implemented.');
+  }
+
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+    this.modifyState((draft: CallAdapterState) => {
+      draft.selectedVideoBackgroundEffect = selectedVideoBackground;
+    });
   }
 }
 
@@ -187,6 +246,21 @@ function populateViewTargets(state: MockCallAdapterState): CallAdapterState {
   }
   return state;
 }
+
+/**
+ * Helper function that creates an html element with a custom image background
+ * @returns
+ */
+const createMockHTMLElementWithCustomBackground = (url?: string): HTMLElement => {
+  const mockVideoElement = document.createElement('div');
+  mockVideoElement.innerHTML = '<span />';
+  mockVideoElement.style.width = decodeURIComponent('100%25');
+  mockVideoElement.style.height = decodeURIComponent('100%25');
+  mockVideoElement.style.background = `url(${url})`;
+  mockVideoElement.style.backgroundPosition = 'center';
+  mockVideoElement.style.backgroundRepeat = 'no-repeat';
+  return mockVideoElement;
+};
 
 /**
  * Helper function that creates an html element with a colored background with an input string. To ensure a consistent color,

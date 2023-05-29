@@ -3,6 +3,7 @@
 
 import { mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { scrollbarStyles } from './Common.style';
 
 /**
  * @private
@@ -26,7 +27,16 @@ export const displayNameClassName = mergeStyles({
 export const captionClassName = mergeStyles({
   fontWeight: 400,
   fontSize: _pxToRem(16),
-  lineHeight: _pxToRem(22)
+  lineHeight: _pxToRem(22),
+  width: '100%'
+});
+
+/**
+ * @private
+ */
+export const captionsContainerClassName = mergeStyles({
+  margin: 0,
+  padding: 0
 });
 
 /**
@@ -34,7 +44,8 @@ export const captionClassName = mergeStyles({
  */
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
-  marginBottom: _pxToRem(6)
+  marginBottom: _pxToRem(6),
+  overflowAnchor: 'auto'
 });
 
 /**
@@ -42,5 +53,29 @@ export const captionContainerClassName = mergeStyles({
  */
 export const captionsBannerClassName = mergeStyles({
   height: _pxToRem(100),
-  overflow: 'scroll'
+  overflowY: 'auto',
+  overflowX: 'hidden',
+  ...scrollbarStyles
+});
+
+/**
+ * @private
+ */
+export const loadingBannerClassName = mergeStyles({
+  height: _pxToRem(100)
+});
+
+/**
+ * @private
+ */
+export const captionsContentContainerClassName = mergeStyles({
+  width: '100%'
+});
+
+/**
+ * @private
+ */
+export const displayNameContainerClassName = mergeStyles({
+  overflow: 'hidden',
+  textOverflow: 'ellipsis'
 });

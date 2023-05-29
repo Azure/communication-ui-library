@@ -47,13 +47,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # Check-out repo
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       # Ensure node version is great enough
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
 
@@ -68,6 +68,12 @@ jobs:
         # If no param for release flavor, get it from branch name
         if: ${{ github.event.inputs.release-flavor == 'stable' }}
         run: rush switch-flavor:stable
+
+      # Switch flavor to stable when it is release branch
+      - name: Switch flavor for beta-release build
+        # If no param for release flavor, get it from branch name
+        if: ${{ github.event.inputs.release-flavor == 'beta' }}
+        run: rush switch-flavor:beta-release
 
       # Builds
       - name: Build Packages and Samples

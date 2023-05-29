@@ -14,6 +14,8 @@ import {
   CallErrors,
   DiagnosticsCallFeatureState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsInfo } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -138,4 +140,61 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   /* @conditional-compile-remove(total-participant-count) */
   return state.calls[props.callId]?.totalParticipantCount;
   return undefined;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.captions;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
+  return state.calls[props.callId]?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getStartCaptionsInProgress = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): boolean | undefined => {
+  return state.calls[props.callId]?.captionsFeature.startCaptionsInProgress;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCurrentCaptionLanguage = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getCurrentSpokenLanguage = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getSupportedCaptionLanguages = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getSupportedSpokenLanguages = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
 };

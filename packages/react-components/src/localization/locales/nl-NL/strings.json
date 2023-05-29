@@ -6,7 +6,6 @@
     "sharingIconLabel": "Delen",
     "mutedIconLabel": "Gedempt",
     "displayNamePlaceholder": "Naamloze deelnemer",
-    "participantStateConnecting": "Bellen...",
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht"
   },
@@ -25,6 +24,9 @@
     "removeFile": "Bestand verwijderen",
     "uploading": "Uploaden",
     "uploadCompleted": "Upload voltooid"
+  },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggesties"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
@@ -54,7 +56,11 @@
     "onSplitButtonAriaLabel": "Camera- en cameraopties uitschakelen",
     "offSplitButtonAriaLabel": "Camera- en cameraopties inschakelen",
     "cameraActionTurnedOnAnnouncement": "Uw camera is ingeschakeld",
-    "cameraActionTurnedOffAnnouncement": "Uw camera is uitgeschakeld"
+    "cameraActionTurnedOffAnnouncement": "Uw camera is uitgeschakeld",
+    "onSplitButtonPrimaryActionCamera": "Camera uitschakelen",
+    "offSplitButtonPrimaryActionCamera": "Camera inschakelen",
+    "cameraPrimaryActionSplitButtonTitle": "Camera gebruiken",
+    "videoEffectsMenuItemTitle": "Effecten"
   },
   "microphoneButton": {
     "onLabel": "Dempen",
@@ -70,7 +76,10 @@
     "onSplitButtonAriaLabel": "Microfoon- en audioopties dempen",
     "offSplitButtonAriaLabel": "Microfoon- en audioopties dempen opheffen",
     "microphoneActionTurnedOnAnnouncement": "Uw microfoon is ingeschakeld",
-    "microphoneActionTurnedOffAnnouncement": "Uw microfoon is uitgeschakeld"
+    "microphoneActionTurnedOffAnnouncement": "Uw microfoon is uitgeschakeld",
+    "offSplitButtonMicrophonePrimaryAction": "Microfoon inschakelen",
+    "onSplitButtonMicrophonePrimaryAction": "Microfoon uitschakelen",
+    "micPrimaryActionSplitButtonTitle": "Microfoon gebruiken"
   },
   "devicesButton": {
     "label": "Apparaten",
@@ -90,7 +99,8 @@
     "menuHeader": "In dit gesprek",
     "participantsListButtonLabel": "{numParticipants} personen",
     "muteAllButtonLabel": "Alles dempen",
-    "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren"
+    "copyInviteLinkButtonLabel": "Uitnodigingskoppeling kopiëren",
+    "copyInviteLinkActionedAriaLabel": "Uitnodigingskoppeling gekopieerd"
   },
   "screenShareButton": {
     "onLabel": "Presenteren stoppen",
@@ -126,7 +136,9 @@
     "editBoxSubmitButton": "Verzenden",
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Meer opties",
-    "downloadFile": "Bestand downloaden"
+    "downloadFile": "Bestand downloaden",
+    "blockedWarningText": "Dit bericht is verwijderd vanwege organisatiebeleid.",
+    "blockedWarningLinkText": "Details"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -146,11 +158,13 @@
     "callNoSpeakerFound": "Geen luidsprekers of hoofdtelefoon gevonden. Sluit een audioapparaat aan om het gesprek te beluisteren.",
     "callNoMicrophoneFound": "Geen microfoons gevonden. Sluit een audio-invoerapparaat aan.",
     "callMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
+    "callMicrophoneAccessDeniedSafari": "Kan geen toegang krijgen tot de microfoon. Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
     "callMicrophoneMutedBySystem": "U bent gedempt door jouw systeem.",
     "callMicrophoneUnmutedBySystem": "De microfoon is hersteld en het dempen van de microfoon is door het systeem opgeheven.",
     "callMacOsMicrophoneAccessDenied": "Kan geen toegang krijgen tot de microfoon. Verleen microfoonmachtiging in de privacyinstellingen voor macOS.",
     "callLocalVideoFreeze": "De netwerkbandbreedte is slecht. Je video wordt mogelijk onderbroken weergegeven voor anderen in het gesprek.",
     "callCameraAccessDenied": "Kan geen toegang krijgen tot de camera. Klik op de vergrendeling in de adresbalk om toestemming te verlenen aan deze webpagina.",
+    "callCameraAccessDeniedSafari": "Kan geen toegang krijgen tot de camera. Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
     "callCameraAlreadyInUse": "Kan geen toegang krijgen tot de camera. Het wordt mogelijk al gebruikt door een andere toepassing.",
     "callVideoStoppedBySystem": "Uw video is gestopt door uw systeem.",
     "callVideoRecoveredBySystem": "Uw video is hervat.",
@@ -158,7 +172,10 @@
     "callMacOsScreenShareAccessDenied": "MacOS blokkeert scherm delen. Werk je privacyinstellingen bij, zodat deze browser jouw scherm kan opnemen.",
     "dismissButtonAriaLabel": "Sluiten",
     "failedToJoinCallGeneric": "Deelnemen aan gesprek mislukt.",
-    "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling."
+    "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling.",
+    "startScreenSharingGeneric": "Er is een probleem opgetreden bij het starten van scherm delen.",
+    "cameraFrozenForRemoteParticipants": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video. Controleer uw apparaten en netwerk.",
+    "unableToStartVideoEffect": "Kan video-effect niet toepassen."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
@@ -167,7 +184,16 @@
     "localVideoCameraSwitcherLabel": "Camera wisselen",
     "localVideoMovementLabel": "Tegel voor verwisselbare lokale video",
     "localVideoSelectedDescription": "{cameraName} geselecteerd",
-    "displayNamePlaceholder": "Naamloze deelnemer"
+    "displayNamePlaceholder": "Naamloze deelnemer",
+    "fitRemoteParticipantToFrame": "Aanpassen aan frame",
+    "fillRemoteParticipantFrame": "Frame vullen",
+    "pinParticipantForMe": "Voor mij vastmaken",
+    "pinParticipantForMeLimitReached": "Pin (limiet bereikt)",
+    "unpinParticipantForMe": "Losmaken",
+    "pinParticipantMenuItemAriaLabel": "{participantName} vastmaken",
+    "unpinParticipantMenuItemAriaLabel": "{participantName} losmaken",
+    "pinnedParticipantAnnouncementAriaLabel": "{participantName} vastgemaakt",
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} losgemaakt"
   },
   "dialpad": {
     "placeholderText": "Telefoonnummer invoeren",
@@ -180,20 +206,102 @@
     "tooltipOffContent": "Gesprek in wachtrij plaatsen"
   },
   "videoTile": {
-    "participantStateConnecting": "Bellen...",
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht"
   },
-  "SitePermissions": {
+  "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Toestaan dat {appName} uw camera en microfoon gebruikt",
     "secondaryText": "Dit is zodat deelnemers u kunnen zien en horen.",
     "linkText": "Hulp nodig? Hulp bij probleemoplossing",
-    "primaryButtonText": "Toegang verlenen"
+    "primaryButtonText": "Doorgaan zonder camera en microfoon",
+    "ariaLabel": "Toegang tot camera en microfoon toestaan"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "{appName} toestaan om uw camera te gebruiken",
+    "secondaryText": "Dit is zodat deelnemers u kunnen zien.",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "primaryButtonText": "Doorgaan zonder camera",
+    "ariaLabel": "Cameratoegang toestaan"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "{appName} toestaan om uw microfoon te gebruiken",
+    "secondaryText": "Dit is zodat deelnemers u kunnen horen.",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "primaryButtonText": "Doorgaan zonder microfoon",
+    "ariaLabel": "Microfoontoegang toestaan"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Controleren op toegang tot camera en microfoon",
+    "secondaryText": "Toegang toestaan als hierom wordt gevraagd. Dit is zodat deelnemers u kunnen zien en horen.",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "primaryButtonText": "Doorgaan zonder camera en microfoon",
+    "ariaLabel": "Controleren op toegang tot camera en microfoon. Toegang toestaan als hierom wordt gevraagd."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Controleren op cameratoegang",
+    "secondaryText": "Toegang toestaan als hierom wordt gevraagd. Dit is zodat deelnemers u kunnen zien.",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "primaryButtonText": "Doorgaan zonder camera",
+    "ariaLabel": "Controleren op cameratoegang. Toegang toestaan als hierom wordt gevraagd."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Controleren op toegang tot microfoon",
+    "secondaryText": "Toegang toestaan als hierom wordt gevraagd. Dit is zodat deelnemers u kunnen horen.",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing",
+    "primaryButtonText": "Doorgaan zonder microfoon",
+    "ariaLabel": "Controleren op toegang tot microfoon. Toegang toestaan als hierom wordt gevraagd."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Geen toegang tot camera en microfoon",
+    "secondaryText": "Klik op het vergrendelingspictogram op de adresbalk om microfoonmachtigingen toe te kennen aan deze webpagina. Mogelijk is een paginavernieuwing vereist.",
+    "primaryButtonText": "Doorgaan zonder camera en microfoon",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Geen toegang tot camera en microfoon",
+    "secondaryText": "Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
+    "primaryButtonText": "Doorgaan zonder camera en microfoon",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Geen toegang tot camera",
+    "secondaryText": "Klik op het vergrendelingspictogram op de adresbalk om cameramachtigingen toe te kennen aan deze webpagina. Mogelijk is een paginavernieuwing vereist.",
+    "primaryButtonText": "Doorgaan zonder camera",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Geen toegang tot microfoon",
+    "secondaryText": "Klik op het vergrendelingspictogram op de adresbalk om microfoonmachtigingen toe te kennen aan deze webpagina. Mogelijk is een paginavernieuwing vereist.",
+    "primaryButtonText": "Doorgaan zonder microfoon",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Geen toegang tot camera",
+    "secondaryText": "Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
+    "primaryButtonText": "Doorgaan zonder camera",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Geen toegang tot microfoon",
+    "secondaryText": "Vernieuw de pagina om machtigingen toe te staan of controleer de instellingen van deze browser en controleer of machtigingen zijn ingeschakeld voor deze website.",
+    "primaryButtonText": "Doorgaan zonder microfoon",
+    "linkText": "Hulp nodig? Hulp bij probleemoplossing"
   },
   "UnsupportedBrowser": {
     "primaryText": "Browser wordt niet ondersteund",
     "secondaryText": "Neem deel aan dit gesprek via een compatibele browser.",
-    "moreHelpLink": "Meer hulp"
+    "moreHelpLinkText": "Compatibiliteitsvereisten bekijken"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Browserupdate vereist",
+    "secondaryText": "Werk uw browser bij en probeer opnieuw deel te nemen aan het gesprek om ervoor te zorgen dat u het beste kunt bellen.",
+    "moreHelpLinkText": "Compatibiliteitsvereisten bekijken",
+    "continueAnywayButtonText": "Oproep starten zonder bij te werken"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Besturingssysteem niet ondersteund",
+    "secondaryText": "Neem deel aan dit gesprek via een apparaat met een compatibel besturingssysteem.",
+    "moreHelpLinkText": "Compatibiliteitsvereisten bekijken"
   },
   "BrowserPermissionDenied": {
     "primaryText": "Kan uw camera of microfoon niet gebruiken",
@@ -215,5 +323,9 @@
     "step2DigitText": "2",
     "step3DigitText": "3",
     "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "vorige pagina",
+    "rightNavButtonAriaLabel": "volgende pagina"
   }
 }

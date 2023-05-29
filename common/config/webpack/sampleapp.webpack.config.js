@@ -5,6 +5,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
+const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
@@ -21,7 +22,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         '@internal/chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),
         '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
         '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
-        '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src')
+        '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src'),
+        '@internal/northstar-wrapper': path.resolve(sampleAppDir, '../../packages/northstar-wrapper/src')
       }
     },
     output: {
@@ -61,6 +63,12 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'json',
+      }),
+      new CopyPlugin({
+        patterns: [
+          { from: path.resolve(sampleAppDir, "public/manifest.json"), to: "manifest.json" },
+          { from: path.resolve(sampleAppDir, "public/backgrounds"), to: "backgrounds",  noErrorOnMissing: true },
+        ]
       })
     ],
     devServer: {
@@ -105,7 +113,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     }
   }
 
-  process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
+  process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
     config.module.rules.push({
       test: /\.tsx?$/,
       exclude: /node_modules/,

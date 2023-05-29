@@ -3,7 +3,8 @@
   "rushVersion": "5.47.0",
   "pnpmVersion": "5.17.3",
   "pnpmOptions": {
-    "strictPeerDependencies": true
+    // Setting this to false for the react northstar-wrapper package
+    "strictPeerDependencies": false
   },
   "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0 || >=16.19.0 <17.0.0",
   "ensureConsistentVersions": true,
@@ -114,9 +115,19 @@
       "reviewCategory": "tools"
     },
     {
+      "packageName": "@internal/check-typescript-regression",
+      "projectFolder": "tools/check-typescript-regression",
+      "reviewCategory": "tools"
+    },
+    {
       "packageName": "@internal/fake-backends",
       "projectFolder": "packages/fake-backends",
       "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@internal/northstar-wrapper",
+      "projectFolder": "packages/northstar-wrapper",
+      "reviewCategory": "internal"
     }
   ]
 }

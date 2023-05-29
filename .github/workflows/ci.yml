@@ -23,12 +23,12 @@ jobs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - id: get-matrix
@@ -42,17 +42,17 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -62,13 +62,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
+      - name: Switch flavor for build
         id: switch-flavor
-        if: ${{ matrix.flavor == 'stable' }}
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Check result of flavor switch
         if: ${{ always() && steps.switch-flavor.outcome == 'failure' }}
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
@@ -106,6 +108,10 @@ jobs:
       # Tree-shaking check
       - name: Treeshaking check
         run: rush build --only @internal/check-treeshaking
+      # Typescript version check
+      - name: Typescript version compatibility check
+        run: rush build --only @internal/check-typescript-regression
+      # Ensure all downstream packlet versions are consitent with the base packlet version
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
       # Tests
@@ -113,9 +119,61 @@ jobs:
         run: rush test -t @azure/communication-react
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: communication-react.${{ matrix.flavor }}.api.json
+          path: |
+            packages/communication-react/temp/communication-react.api.json
+
+  in-progress-feature-validation:
+    name: Check if in progress feature can be removed separately
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v14.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      # Switch flavor if necessary
+      - name: Switch flavor for beta-release build
+        id: switch-flavor
+        run: |
+          rush switch-flavor:beta-release
+      # Perform lint check
+      - name: Run linter
+        run: rush lint
+      # Builds
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
+      # Type check test folder
+      # - must be run after building all packlets because it depends on compiled packlet dependencies
+      # - must be run only on beta flavor build because the browser test code is not conditional compiled
+      - name: Type check test folder
+        if: ${{ matrix.flavor == 'beta' }}
+        run: cd packages/react-composites && rushx tsc:e2e
+      # Tests
+      - name: Test Packages
+        run: rush test -t @azure/communication-react
+      # Upload azure-communication api.md files for easy access
+      - name: Upload communication-react api files
+        uses: actions/upload-artifact@v3
+        with:
+          name: communication-react.beta-release.api.json
           path: |
             packages/communication-react/temp/communication-react.api.json
 
@@ -126,15 +184,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -142,12 +200,15 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Call Composite Test App
         run: |
           cd packages/react-composites
@@ -164,7 +225,7 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
@@ -172,7 +233,7 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -196,15 +257,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -212,12 +273,15 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build Chat Composite Test App
         run: |
           cd packages/react-composites
@@ -234,7 +298,7 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
@@ -242,7 +306,7 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -266,15 +330,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -282,12 +346,15 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build CallWithChatComposite Test App
         run: |
           cd packages/react-composites
@@ -304,7 +371,7 @@ jobs:
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
@@ -312,7 +379,7 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -333,15 +400,15 @@ jobs:
     name: Build Storybook
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -362,15 +429,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -379,12 +446,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -403,15 +473,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -420,12 +490,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -444,15 +517,15 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Restore node_modules from cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -461,12 +534,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
@@ -485,11 +561,11 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Install rush
@@ -497,12 +573,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor if necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -t sample-static-html-composites
       - name: Visual Regression Tests
@@ -514,7 +593,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
@@ -538,11 +617,11 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Install rush
@@ -550,12 +629,15 @@ jobs:
       - name: Install dependencies
         run: rush install
       # Switch flavor when necessary
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
         run: |
-          rush switch-flavor:stable
-          node ./common/scripts/force-build-flavor.mjs stable
-          rush update:stable
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Build
         run: rush build -t component-examples
       - name: Visual Regression Tests
@@ -567,7 +649,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
@@ -608,7 +690,7 @@ jobs:
           path: current
           name: ${{ matrix.app }}-report
       - name: Use Node.js v14.x
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       - name: Calculate size change
@@ -685,7 +767,7 @@ jobs:
           if [ $issue_count -gt 0 ]; then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch CI Failed", "body": "Main CI Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["CI_FAILURE", "status:triage"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

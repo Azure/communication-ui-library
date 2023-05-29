@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -21,6 +20,7 @@ import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
+import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
@@ -64,6 +64,12 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta (undocumented)
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    blobUrl: string;
+}
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -90,7 +96,7 @@ export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     status?: MessageStatus;
     // (undocumented)
-    warningText?: string | false;
+    warningText?: string;
 }
 
 // @beta
@@ -215,6 +221,7 @@ export interface CameraButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+    videoEffectsMenuItemTitle?: string;
 }
 
 // @public
@@ -234,12 +241,101 @@ export interface CameraSitePermissionsProps extends CommonSitePermissionsProps {
 // @beta
 export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
+// @public
+export type CancelEditCallback = (messageId: string) => void;
+
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
 // @internal
 export interface _CaptionProps extends _CaptionsInfo {
     onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @beta
+export interface CaptionsAvailableLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
 }
 
 // @internal
@@ -249,15 +345,76 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    // (undocumented)
+    isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    startCaptionsInProgress?: boolean;
+    // (undocumented)
+    strings?: _CaptionsBannerStrings;
+}
+
+// @internal
+export interface _CaptionsBannerStrings {
+    // (undocumented)
+    captionsBannerSpinnerText?: string;
 }
 
 // @internal
 export type _CaptionsInfo = {
+    id: string;
     displayName: string;
     captionText: string;
     userId?: string;
 };
+
+// @internal
+export type _captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @internal
+export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsSettingsModalProps {
+    // (undocumented)
+    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+    // (undocumented)
+    currentSpokenLanguage: string;
+    // (undocumented)
+    isCaptionsFeatureActive?: boolean;
+    // (undocumented)
+    onDismissCaptionsSettings?: () => void;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    // (undocumented)
+    showModal?: boolean;
+    // (undocumented)
+    strings?: _CaptionsSettingsModalStrings;
+    // (undocumented)
+    supportedSpokenLanguages: string[];
+}
+
+// @internal
+export interface _CaptionsSettingsModalStrings {
+    // (undocumented)
+    captionsSettingsCancelButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsConfirmButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsDropdownInfoText?: string;
+    // (undocumented)
+    captionsSettingsDropdownLabel?: string;
+    // (undocumented)
+    captionsSettingsModalAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsModalTitle?: string;
+}
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -275,6 +432,8 @@ export interface ChatMessage extends MessageCommon {
     deletedOn?: Date;
     // (undocumented)
     editedOn?: Date;
+    // (undocumented)
+    failureReason?: string;
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -401,6 +560,9 @@ export interface ComponentLocale {
 }
 
 // @public
+export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
+
+// @public
 export interface ComponentStrings {
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
@@ -418,6 +580,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
+    mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
     microphoneButton: MicrophoneButtonStrings;
@@ -598,7 +761,12 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
+    ControlButtonVideoEffectsOption: JSX.Element;
+    ConfigurationScreenVideoEffectsButton: JSX.Element;
+    CaptionsIcon: JSX.Element;
+    CaptionsOffIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
 };
 
 // @internal
@@ -715,6 +883,7 @@ export interface _DrawerMenuItemProps {
     itemKey: string;
     // (undocumented)
     onItemClick?: (ev?: React_2.MouseEvent<HTMLElement> | React_2.KeyboardEvent<HTMLElement>, itemKey?: string) => void;
+    secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
     // (undocumented)
@@ -726,6 +895,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    disableMaxHeight?: boolean;
     heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
@@ -745,6 +915,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    disableMaxHeight?: boolean;
     heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
@@ -817,6 +988,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
@@ -983,6 +1155,8 @@ export interface _IdentifierProviderProps {
 // @internal
 export interface _Identifiers {
     horizontalGalleryVideoTile: string;
+    mentionSuggestionItem: string;
+    mentionSuggestionList: string;
     messageContent: string;
     messageTimestamp: string;
     overflowGalleryLeftNavButton: string;
@@ -1057,6 +1231,58 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     personaMinSize?: number | undefined;
 }) => JSX.Element>;
 
+// @beta
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
+
+// @beta
+export interface Mention {
+    displayText: string;
+    icon?: JSX.Element;
+    id: string;
+}
+
+// @beta
+export interface MentionDisplayOptions {
+    onRenderMention?: (mention: Mention, defaultOnRender: (mention: Mention) => JSX.Element) => JSX.Element;
+}
+
+// @beta
+export interface MentionLookupOptions {
+    onQueryUpdated: (query: string) => Promise<Mention[]>;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void) => JSX.Element;
+    trigger?: string;
+}
+
+// @beta
+export type MentionOptions = {
+    lookupOptions?: MentionLookupOptions;
+    displayOptions?: MentionDisplayOptions;
+};
+
+// @internal
+export const _MentionPopover: (props: _MentionPopoverProps) => JSX.Element;
+
+// @internal
+export interface _MentionPopoverProps {
+    activeSuggestionIndex?: number;
+    location?: 'above' | 'below';
+    onDismiss?: () => void;
+    onRenderSuggestionItem?: (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, isActive: boolean) => JSX.Element;
+    onSuggestionSelected: (suggestion: Mention) => void;
+    suggestions: Mention[];
+    target: React_2.RefObject<Element>;
+    targetPositionOffset?: {
+        top: number;
+        left: number;
+    };
+    title?: string;
+}
+
+// @beta
+export interface MentionPopoverStrings {
+    mentionPopoverHeader: string;
+}
+
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 
@@ -1082,6 +1308,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1138,13 +1365,16 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
+    onCancelMessageEdit?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
     strings?: Partial<MessageThreadStrings>;
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
+    mentionOptions?: MentionOptions;
 };
 
 // @public
@@ -1495,7 +1725,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1530,6 +1760,8 @@ export interface SendBoxProps {
     activeFileUploads?: ActiveFileUpload[];
     autoFocus?: 'sendBoxTextField';
     disabled?: boolean;
+    // @beta
+    mentionLookupOptions?: MentionLookupOptions;
     // @beta
     onCancelFileUpload?: (fileId: string) => void;
     // @beta
@@ -1577,6 +1809,26 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
+}
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public
@@ -1796,7 +2048,7 @@ export interface _VideoEffectsItemProps {
     disabled?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
-    key: string;
+    itemKey: string;
     onSelect?: (key: string) => void;
     styles?: _VideoEffectsItemStyles;
     title?: string;
@@ -1834,6 +2086,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

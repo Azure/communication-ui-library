@@ -9,17 +9,16 @@ import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, us
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
-import { ChatAdapter } from '../../ChatComposite';
-import { ChatButtonWithUnreadMessagesBadge } from '../../CallWithChatComposite/ChatButtonWithUnreadMessagesBadge';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
+import { _usePermissions } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare';
 import { EndCall } from '../../CallComposite/components/buttons/EndCall';
 import { MoreButton } from '../MoreButton';
 import { ContainerRectProps } from '../ContainerRectProps';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import {
   CUSTOM_BUTTON_OPTIONS,
   generateCustomCallControlBarButton,
@@ -31,27 +30,27 @@ import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 
 /**
  * @private
  */
 export interface CommonCallControlBarProps {
   callAdapter: CallAdapter;
-  chatButtonChecked?: boolean;
   peopleButtonChecked: boolean;
-  onChatButtonClicked?: () => void;
   onPeopleButtonClicked: () => void;
   onMoreButtonClicked?: () => void;
   mobileView: boolean;
   disableButtonsForLobbyPage: boolean;
   callControls?: boolean | CommonCallControlOptions | CallWithChatControlOptions;
-  chatAdapter?: ChatAdapter;
   disableButtonsForHoldScreen?: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
-  rtl?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsSupported?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -81,6 +80,7 @@ const inferCommonCallControlOptions = (
  */
 export const CommonCallControlBar = (props: CommonCallControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
+  const rtl = theme.rtl;
 
   const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
   const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);
@@ -95,6 +95,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
+
+  /* @conditional-compile-remove(close-captions) */
+  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
 
   const handleResize = useCallback((): void => {
     setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -129,14 +132,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     setIsOutOfSpace(totalButtonsWidth > controlBarContainerWidth);
   }, [totalButtonsWidth, controlBarContainerWidth]);
 
-  const chatButtonStrings = useMemo(
-    () => ({
-      label: callWithChatStrings.chatButtonLabel,
-      tooltipOffContent: callWithChatStrings.chatButtonTooltipOpen,
-      tooltipOnContent: callWithChatStrings.chatButtonTooltipClose
-    }),
-    [callWithChatStrings]
-  );
+  /* @conditional-compile-remove(close-captions) */
+  const openCaptionsSettingsModal = useCallback((): void => {
+    setShowCaptionsSettingsModal(true);
+  }, []);
+  /* @conditional-compile-remove(close-captions) */
+  const onDismissCaptionsSettings = useCallback((): void => {
+    setShowCaptionsSettingsModal(false);
+  }, []);
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
@@ -177,17 +180,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const controlBarWrapperDesktopStyles: IStyle = useMemo(
     // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
-    () => (!props.mobileView && !isOutOfSpace ? (props.rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
-    [props.mobileView, props.rtl, isOutOfSpace]
+    () => (!props.mobileView && !isOutOfSpace ? (rtl ? wrapperDesktopRtlStyles : wrapperDesktopStyles) : {}),
+    [props.mobileView, rtl, isOutOfSpace]
   );
 
   // only center control bar buttons based on parent container if there are enough space on the screen and not mobile
   const controlBarDesktopContainerStyles: IStyle = useMemo(
-    () => (!props.mobileView && !isOutOfSpace ? { position: 'relative' } : {}),
+    () => (!props.mobileView && !isOutOfSpace ? { position: 'relative', minHeight: '4.5rem', width: '100%' } : {}),
     [props.mobileView, isOutOfSpace]
   );
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () =>
       generateCustomCallControlBarButton(
@@ -202,24 +204,36 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     return <></>;
   }
 
-  const chatButton = props.chatAdapter ? (
-    <ChatButtonWithUnreadMessagesBadge
-      chatAdapter={props.chatAdapter}
-      checked={props.chatButtonChecked}
-      showLabel={options.displayType !== 'compact'}
-      isChatPaneVisible={props.chatButtonChecked ?? false}
-      onClick={props.onChatButtonClicked}
-      disabled={props.disableButtonsForLobbyPage || isDisabled(options.chatButton)}
-      strings={chatButtonStrings}
-      styles={commonButtonStyles}
-      newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
-    />
-  ) : (
-    <></>
-  );
+  /* @conditional-compile-remove(rooms) */
+  const rolePermissions = _usePermissions();
+
+  const sideButtonsPresent =
+    isEnabled(options.peopleButton) || isEnabled(options.chatButton) || customButtons['secondary'] !== undefined;
+
+  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
+  /* @conditional-compile-remove(rooms) */
+  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+
+  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
+  /* @conditional-compile-remove(rooms) */
+  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+
+  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+  /* @conditional-compile-remove(rooms) */
+  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
     <div ref={controlBarSizeRef}>
+      <CallAdapterProvider adapter={props.callAdapter}>
+        {
+          /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal && (
+            <CaptionsSettingsModal
+              showCaptionsSettingsModal={showCaptionsSettingsModal}
+              onDismissCaptionsSettings={onDismissCaptionsSettings}
+            />
+          )
+        }
+      </CallAdapterProvider>
       <Stack
         horizontal
         reversed={!props.mobileView && !isOutOfSpace}
@@ -249,7 +263,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                    {isEnabled(options.microphoneButton) && (
+                    {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}
                         styles={commonButtonStyles}
@@ -258,7 +272,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                       />
                     )}
-                    {isEnabled(options.cameraButton) && (
+                    {cameraButtonIsEnabled && (
                       <Camera
                         displayType={options.displayType}
                         styles={commonButtonStyles}
@@ -269,8 +283,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
                       />
                     )}
-                    {props.mobileView && isEnabled(options?.chatButton) && chatButton}
-                    {isEnabled(options.screenShareButton) && (
+                    {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
                         displayType={options.displayType}
@@ -279,28 +292,25 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.screenShareButton)}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(control-bar-button-injection) */
-                      customButtons['primary']
-                        ?.slice(
-                          0,
-                          props.mobileView
-                            ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
-                            : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
-                        )
-                        .map((CustomButton, i) => {
-                          return (
-                            <CustomButton
-                              key={`primary-custom-button-${i}`}
-                              styles={commonButtonStyles}
-                              showLabel={options.displayType !== 'compact'}
-                            />
-                          );
-                        })
-                    }
+                    {customButtons['primary']
+                      ?.slice(
+                        0,
+                        props.mobileView
+                          ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                          : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+                      )
+                      .map((CustomButton, i) => {
+                        return (
+                          <CustomButton
+                            key={`primary-custom-button-${i}`}
+                            styles={commonButtonStyles}
+                            showLabel={options.displayType !== 'compact'}
+                          />
+                        );
+                      })}
                     {props.mobileView && (
                       <MoreButton
-                        data-ui-id="call-with-chat-composite-more-button"
+                        data-ui-id="common-call-composite-more-button"
                         strings={moreButtonStrings}
                         onClick={props.onMoreButtonClicked}
                         disabled={props.disableButtonsForLobbyPage}
@@ -320,6 +330,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}
+                            /* @conditional-compile-remove(close-captions) */
+                            isCaptionsSupported={props.isCaptionsSupported}
+                            /* @conditional-compile-remove(close-captions) */
+                            onCaptionsSettingsClick={openCaptionsSettingsModal}
                           />
                         )
                     }
@@ -330,37 +344,37 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             </Stack>
           </CallAdapterProvider>
         </Stack.Item>
-        {!props.mobileView && (
+        {!props.mobileView && sideButtonsPresent && (
           <Stack.Item>
             <div ref={sidepaneControlsRef}>
               <Stack horizontal className={!props.mobileView ? mergeStyles(desktopButtonContainerStyle) : undefined}>
-                {
-                  /* @conditional-compile-remove(control-bar-button-injection) */
-                  customButtons['secondary']
-                    ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
-                    .map((CustomButton, i) => {
-                      return (
-                        <CustomButton
-                          key={`secondary-custom-button-${i}`}
-                          styles={commonButtonStyles}
-                          showLabel={options.displayType !== 'compact'}
-                        />
-                      );
-                    })
-                }
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
                     ariaLabel={peopleButtonStrings?.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
-                    data-ui-id="call-with-chat-composite-people-button"
-                    disabled={props.disableButtonsForLobbyPage || isDisabled(options.peopleButton)}
+                    data-ui-id="common-call-composite-people-button"
+                    disabled={
+                      props.disableButtonsForLobbyPage ||
+                      props.disableButtonsForHoldScreen ||
+                      isDisabled(options.peopleButton)
+                    }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
                   />
                 )}
-                {isEnabled(options?.chatButton) && chatButton}
+                {customButtons['secondary']
+                  ?.slice(0, CUSTOM_BUTTON_OPTIONS.MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS)
+                  .map((CustomButton, i) => {
+                    return (
+                      <CustomButton
+                        key={`secondary-custom-button-${i}`}
+                        styles={commonButtonStyles}
+                        showLabel={options.displayType !== 'compact'}
+                      />
+                    );
+                  })}
               </Stack>
             </div>
           </Stack.Item>
@@ -397,7 +411,8 @@ const wrapperDesktopRtlStyles: IStyle = {
   transform: 'translate(-50%, 0)'
 };
 
-const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
+/** @private */
+export const getDesktopCommonButtonStyles = (theme: ITheme): ControlBarButtonStyles => ({
   root: {
     border: `solid 1px ${theme.palette.neutralQuaternaryAlt}`,
     borderRadius: theme.effects.roundedCorner4,
@@ -449,7 +464,11 @@ const getDesktopScreenShareButtonStyles = (theme: ITheme): ControlBarButtonStyle
     border: 'none',
     background: theme.palette.themePrimary,
     color: theme.palette.white,
-    '* > svg': { fill: theme.palette.white }
+    '* > svg': { fill: theme.palette.white },
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   };
   const overrides: ControlBarButtonStyles = {
     rootChecked: overrideStyles,
@@ -463,6 +482,19 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
     root: {
       // Suppress border around the dark-red button.
       border: 'none'
+    },
+    rootFocused: {
+      '@media (forced-colors: active)': {
+        background: 'highlight',
+        border: '1px solid'
+      }
+    },
+    icon: {
+      '@media (forced-colors: active)': {
+        ':focused': {
+          color: theme.palette.white
+        }
+      }
     }
   };
   return concatStyleSets(getDesktopCommonButtonStyles(theme), overrides);

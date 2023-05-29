@@ -51,6 +51,12 @@ export interface _Identifiers {
   /* @conditional-compile-remove(vertical-gallery) */
   /** `data-ui-id` value for `VerticalGallery` Component's page counter */
   verticalGalleryPageCounter: string;
+  /* @conditional-compile-remove(mention) */
+  /** `data-ui-id` value for `MentionPopover` Component's suggestion list */
+  mentionSuggestionList: string;
+  /* @conditional-compile-remove(mention) */
+  /** `data-ui-id` value for `MentionPopover` Component's suggestion list item */
+  mentionSuggestionItem: string;
 }
 
 const defaultIdentifiers: _Identifiers = {
@@ -71,7 +77,11 @@ const defaultIdentifiers: _Identifiers = {
   verticalGalleryVideoTile: 'vertical-gallery-video-tile',
   horizontalGalleryVideoTile: 'horizontal-gallery-video-tile',
   /* @conditional-compile-remove(vertical-gallery) */
-  verticalGalleryPageCounter: 'vertical-gallery-page-counter'
+  verticalGalleryPageCounter: 'vertical-gallery-page-counter',
+  /* @conditional-compile-remove(mention) */
+  mentionSuggestionList: 'mention-suggestion-list',
+  /* @conditional-compile-remove(mention) */
+  mentionSuggestionItem: 'mention-suggestion-item'
 };
 
 /**

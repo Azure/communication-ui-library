@@ -1,0 +1,331 @@
+{
+  "participantItem": {
+    "isMeText": "(אתה)",
+    "menuTitle": "אפשרויות נוספות",
+    "removeButtonLabel": "הסר",
+    "sharingIconLabel": "משתף",
+    "mutedIconLabel": "מושתק",
+    "displayNamePlaceholder": "משתתף ללא שם",
+    "participantStateRinging": "מתקשר...",
+    "participantStateHold": "בהמתנה"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} מקליד...",
+    "multipleUsers": "{users} מקלידים...",
+    "multipleUsersAbbreviateOne": "{users} ומשתמש אחד נוסף מקלידים...",
+    "multipleUsersAbbreviateMany": "{users} ו{numOthers} אחרים מקלידים...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "הזן הודעה",
+    "textTooLong": "אורך ההודעה שלך חורג מהמגבלה המרבית.",
+    "sendButtonAriaLabel": "שלח הודעה",
+    "fileUploadsPendingError": "מעלה... אנא המתן.",
+    "removeFile": "הסר קובץ",
+    "uploading": "מעלה",
+    "uploadCompleted": "ההעלאה הושלמה"
+  },
+  "mentionPopover": {
+    "mentionPopoverHeader": "הצעות"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "ההודעה נשלחה",
+    "deliveredTooltipText": "‏‏נשלח",
+    "seenAriaLabel": "הודעה שנראתה על-ידי אחרים",
+    "seenTooltipText": "נראה",
+    "readByTooltipText": "נקרא על-ידי {messageThreadReadCount} מתוך {remoteParticipantsCount}",
+    "sendingAriaLabel": "שליחת הודעה",
+    "sendingTooltipText": "שולח",
+    "failedToSendAriaLabel": "שליחת ההודעה נכשלה",
+    "failedToSendTooltipText": "השליחה נכשלה"
+  },
+  "endCallButton": {
+    "label": "עזוב",
+    "tooltipContent": "עזוב את השיחה"
+  },
+  "cameraButton": {
+    "onLabel": "כבה",
+    "offLabel": "הפעל",
+    "tooltipDisabledContent": "המצלמה אינה זמינה",
+    "tooltipOnContent": "כבה מצלמה",
+    "tooltipOffContent": "הפעל מצלמה",
+    "tooltipVideoLoadingContent": "הווידאו נטען",
+    "cameraMenuTitle": "מצלמה",
+    "cameraMenuTooltip": "בחר מצלמה",
+    "cameraButtonSplitRoleDescription": "לחצן פיצול",
+    "onSplitButtonAriaLabel": "כבה את אפשרויות המצלמה והמצלמה",
+    "offSplitButtonAriaLabel": "הפעל אפשרויות מצלמה ומצלמה",
+    "cameraActionTurnedOnAnnouncement": "המצלמה שלך הופעלה",
+    "cameraActionTurnedOffAnnouncement": "המצלמה שלך כבויה",
+    "onSplitButtonPrimaryActionCamera": "כבה מצלמה",
+    "offSplitButtonPrimaryActionCamera": "הפעל את המצלמה",
+    "cameraPrimaryActionSplitButtonTitle": "השתמש במצלמה",
+    "videoEffectsMenuItemTitle": "אפקטים"
+  },
+  "microphoneButton": {
+    "onLabel": "השתק",
+    "offLabel": "בטל השתקה",
+    "tooltipDisabledContent": "המיקרופון אינו זמין",
+    "tooltipOnContent": "השתק מיקרופון",
+    "tooltipOffContent": "בטל השתקה של מיקרופון",
+    "microphoneMenuTitle": "מיקרופון",
+    "microphoneMenuTooltip": "בחר מיקרופון",
+    "speakerMenuTitle": "רמקול",
+    "speakerMenuTooltip": "בחר רמקול",
+    "microphoneButtonSplitRoleDescription": "לחצן פיצול",
+    "onSplitButtonAriaLabel": "השתק אפשרויות מיקרופון ושמע",
+    "offSplitButtonAriaLabel": "בטל השתקה של אפשרויות מיקרופון ושמע",
+    "microphoneActionTurnedOnAnnouncement": "המיקרופון שלך הופעל",
+    "microphoneActionTurnedOffAnnouncement": "המיקרופון שלך כובה",
+    "offSplitButtonMicrophonePrimaryAction": "בטל את ההשתקה של המיקרופון",
+    "onSplitButtonMicrophonePrimaryAction": "השתק את המיקרופון",
+    "micPrimaryActionSplitButtonTitle": "השתמש במיקרופון"
+  },
+  "devicesButton": {
+    "label": "מכשירים",
+    "tooltipContent": "נהל מכשירים",
+    "cameraMenuTitle": "מצלמה",
+    "cameraMenuTooltip": "בחר מצלמה",
+    "audioDeviceMenuTitle": "התקן שמע",
+    "audioDeviceMenuTooltip": "בחר התקן שמע",
+    "microphoneMenuTitle": "מיקרופון",
+    "microphoneMenuTooltip": "בחר מיקרופון",
+    "speakerMenuTitle": "רמקול",
+    "speakerMenuTooltip": "בחר רמקול"
+  },
+  "participantsButton": {
+    "label": "אנשים",
+    "tooltipContent": "הצג משתתפים",
+    "menuHeader": "בשיחה זו",
+    "participantsListButtonLabel": "{numParticipants} אנשים",
+    "muteAllButtonLabel": "השתק הכל",
+    "copyInviteLinkButtonLabel": "העתק קישור הזמנה",
+    "copyInviteLinkActionedAriaLabel": "קישור ההזמנה הועתק"
+  },
+  "screenShareButton": {
+    "onLabel": "הפסק להציג",
+    "offLabel": "נוכח",
+    "tooltipDisabledContent": "הצגה אינה זמינה",
+    "tooltipOnContent": "מציג את המסך שלך",
+    "tooltipOffContent": "הצג את המסך שלך"
+  },
+  "messageThread": {
+    "yesterday": "אתמול",
+    "sunday": "יום ראשון",
+    "monday": "יום שני",
+    "tuesday": "שלישי",
+    "wednesday": "יום רביעי",
+    "thursday": "יום חמישי",
+    "friday": "יום שישי",
+    "saturday": "יום שבת",
+    "participantJoined": "הצטרף לצ'אט.",
+    "participantLeft": "עזב את הצ'אט.",
+    "editMessage": "ערוך",
+    "removeMessage": "מחק",
+    "resendMessage": "נסה לשלוח שוב",
+    "failToSendTag": "השליחה נכשלה",
+    "editedTag": "נערך",
+    "liveAuthorIntro": "{author} אומר",
+    "messageContentAriaText": "{author} אמר {message}",
+    "messageContentMineAriaText": "אמרת {message}",
+    "editBoxTextLimit": "ההודעה שלך נמצאת מעבר למגבלה של {limitNumber} תווים",
+    "editBoxPlaceholderText": "ערוך את ההודעה שלך",
+    "newMessagesIndicator": "הודעות חדשות",
+    "noDisplayNameSub": "ללא שם",
+    "editBoxCancelButton": "בטל",
+    "editBoxSubmitButton": "שלח",
+    "messageReadCount": "נקרא על-ידי {messageReadByCount} מתוך {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "אפשרויות נוספות",
+    "downloadFile": "הורד קובץ",
+    "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
+    "blockedWarningLinkText": "פרטים"
+  },
+  "errorBar": {
+    "unableToReachChatService": "אתה נמצא במצב לא מקוון",
+    "accessDenied": "לא ניתן לגשת אל שירותי צ'אט - בדוק את אישורי המשתמש שסופקו",
+    "userNotInChatThread": "אינך נמצא עוד בהליך משנה זה של צ'אט",
+    "sendMessageNotInChatThread": "שליחת ההודעה נכשלה מכיוון שאתה כבר לא נמצא בהליך משנה זה של צ'אט",
+    "sendMessageGeneric": "שליחת ההודעה נכשלה",
+    "callingNetworkFailure": "ממתקשה בחיבור השיחה - נראה שאתה לא מקוון",
+    "startVideoGeneric": "הפעלת סרטון הווידאו נכשלה",
+    "stopVideoGeneric": "הפסקת הווידאו נכשלה",
+    "muteGeneric": "השתקת המיקרופון נכשלה",
+    "unmuteGeneric": "ביטול השתקת המיקרופון נכשל",
+    "speakingWhileMuted": "המיקרופון שלך מושתק",
+    "startScreenShareGeneric": "הפעלת שיתוף המסך נכשלה",
+    "stopScreenShareGeneric": "הפסקת שיתוף המסכים נכשלה",
+    "callNetworkQualityLow": "איכות הרשת נמוכה.",
+    "callNoSpeakerFound": "לא נמצאו רמקולים או אוזניות. חבר התקן שמע כדי לשמוע את השיחה.",
+    "callNoMicrophoneFound": "לא נמצאו מיקרופונים. חבר התקן קלט שמע.",
+    "callMicrophoneAccessDenied": "לא ניתן לגשת למיקרופון. לחץ על הנעילה בשורת הכתובת כדי להעניק הרשאה לדף אינטרנט זה.",
+    "callMicrophoneAccessDeniedSafari": "לא ניתן לגשת למיקרופון. רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
+    "callMicrophoneMutedBySystem": "אתה מושתק על-ידי המערכת שלך.",
+    "callMicrophoneUnmutedBySystem": "המיקרופון שלך התאושש והמערכת שלך ביטלה את ההשתקה.",
+    "callMacOsMicrophoneAccessDenied": "לא ניתן לגשת למיקרופון. הענק הרשאת מיקרופון בהגדרות הפרטיות של macOS.",
+    "callLocalVideoFreeze": "רוחב הפס של הרשת גרוע. ייתכן שהווידאו שלך יופיע מושהה עבור אחרים בשיחה.",
+    "callCameraAccessDenied": "לא ניתן לגשת למצלמה. לחץ על הנעילה בשורת הכתובת כדי להעניק הרשאה לדף אינטרנט זה.",
+    "callCameraAccessDeniedSafari": "לא ניתן לגשת למצלמה. רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
+    "callCameraAlreadyInUse": "לא ניתן לגשת למצלמה. ייתכן שהוא כבר נמצא בשימוש על-ידי יישום אחר.",
+    "callVideoStoppedBySystem": "הווידאו שלך הופסק על-ידי המערכת.",
+    "callVideoRecoveredBySystem": "הווידאו שלך התחדש.",
+    "callMacOsCameraAccessDenied": "MacOS חוסם את הגישה למצלמה שלך. עדכן את הגדרות הפרטיות שלך כדי לאפשר לדפדפן זה לגשת למצלמה שלך.",
+    "callMacOsScreenShareAccessDenied": "MacOS חוסם שיתוף מסכים. עדכן את הגדרות הפרטיות שלך כדי לאפשר לדפדפן זה להקליט את המסך שלך.",
+    "dismissButtonAriaLabel": "סגור",
+    "failedToJoinCallGeneric": "הצטרפות לשיחה נכשלה.",
+    "failedToJoinCallInvalidMeetingLink": "לא ניתן להצטרף לפגישה. קישור לא חוקי.",
+    "startScreenSharingGeneric": "הייתה בעיה בהפעלת שיתוף מסך.",
+    "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך.",
+    "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו."
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
+    "screenShareLoadingMessage": "טוען את המסך של {participant}",
+    "localVideoLabel": "אתה",
+    "localVideoCameraSwitcherLabel": "החלף מצלמה",
+    "localVideoMovementLabel": "אריח וידאו מקומי נשלף",
+    "localVideoSelectedDescription": "{cameraName} נבחר",
+    "displayNamePlaceholder": "משתתף ללא שם",
+    "fitRemoteParticipantToFrame": "התאם למסגרת",
+    "fillRemoteParticipantFrame": "מלא את המסגרת",
+    "pinParticipantForMe": "הצמד עבורי",
+    "pinParticipantForMeLimitReached": "הצמדה (הגעת למגבלה)",
+    "unpinParticipantForMe": "בטל הצמדה",
+    "pinParticipantMenuItemAriaLabel": "הצמד את {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "בטל את הצמדת {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "{participantName} הוצמד",
+    "unpinnedParticipantAnnouncementAriaLabel": "הצמדת {participantName} בוטלה"
+  },
+  "dialpad": {
+    "placeholderText": "הזן מספר טלפון",
+    "deleteButtonAriaLabel": "מחק"
+  },
+  "holdButton": {
+    "onLabel": "המשך",
+    "offLabel": "החזק",
+    "tooltipOnContent": "חדש שיחה",
+    "tooltipOffContent": "השהה שיחה"
+  },
+  "videoTile": {
+    "participantStateRinging": "מתקשר...",
+    "participantStateHold": "בהמתנה"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "אפשר {appName} להשתמש במצלמה ובמיקרופון שלך",
+    "secondaryText": "זה כדי שהמשתתפים יוכלו לראות ולשמוע אותך.",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "primaryButtonText": "המשך ללא מצלמה ומיקרופון",
+    "ariaLabel": "אפשר גישה למצלמה ולמיקרופון"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "אפשר {appName} להשתמש במצלמה שלך",
+    "secondaryText": "זה כדי שהמשתתפים יוכלו לראות אותך.",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "primaryButtonText": "המשך ללא מצלמה",
+    "ariaLabel": "אפשר גישה למצלמה"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "אפשר {appName} להשתמש במיקרופון שלך",
+    "secondaryText": "זה כדי שהמשתתפים יוכלו לשמוע אותך.",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "primaryButtonText": "המשך ללא מיקרופון",
+    "ariaLabel": "אפשר גישה למיקרופון"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "בודק אם קיימת גישה למצלמה ולמיקרופון",
+    "secondaryText": "אפשר גישה אם תתבקש לעשות זאת. זה כדי שהמשתתפים יוכלו לראות ולשמוע אותך.",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "primaryButtonText": "המשך ללא מצלמה ומיקרופון",
+    "ariaLabel": "בודק אם קיימת גישה למצלמה ולמיקרופון. אפשר גישה אם תתבקש לעשות זאת."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "בודק אם קיימת גישה למצלמה",
+    "secondaryText": "אפשר גישה אם תתבקש לעשות זאת. זה כדי שהמשתתפים יוכלו לראות אותך.",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "primaryButtonText": "המשך ללא מצלמה",
+    "ariaLabel": "בודק אם קיימת גישה למצלמה. אפשר גישה אם תתבקש לעשות זאת."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "בודק אם קיימת גישה למיקרופון",
+    "secondaryText": "אפשר גישה אם תתבקש לעשות זאת. זה כדי שהמשתתפים יוכלו לשמוע אותך.",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "primaryButtonText": "המשך ללא מיקרופון",
+    "ariaLabel": "בודק אם קיימת גישה למיקרופון. אפשר גישה אם תתבקש לעשות זאת."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "לא ניתן לגשת למצלמה ולמיקרופון",
+    "secondaryText": "לחץ על סמל המנעול בשורת הכתובת כדי להעניק הרשאות מיקרופון לדף אינטרנט זה. ייתכן שיידרש רענון דף.",
+    "primaryButtonText": "המשך ללא מצלמה ומיקרופון",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "לא ניתן לגשת למצלמה ולמיקרופון",
+    "secondaryText": "רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
+    "primaryButtonText": "המשך ללא מצלמה ומיקרופון",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "לא ניתן לגשת למצלמה",
+    "secondaryText": "לחץ על סמל המנעול בשורת הכתובת כדי להעניק הרשאות מצלמה לדף אינטרנט זה. ייתכן שיידרש רענון דף.",
+    "primaryButtonText": "המשך ללא מצלמה",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "לא ניתן לגשת למיקרופון",
+    "secondaryText": "לחץ על סמל המנעול בשורת הכתובת כדי להעניק הרשאות מיקרופון לדף אינטרנט זה. ייתכן שיידרש רענון דף.",
+    "primaryButtonText": "המשך ללא מיקרופון",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "לא ניתן לגשת למצלמה",
+    "secondaryText": "רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
+    "primaryButtonText": "המשך ללא מצלמה",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "לא ניתן לגשת למיקרופון",
+    "secondaryText": "רענן את הדף כדי לאפשר הרשאות, או בדוק את ההגדרות של דפדפן זה וודא שהרשאות זמינות עבור אתר אינטרנט זה.",
+    "primaryButtonText": "המשך ללא מיקרופון",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "הדפדפן אינו נתמך",
+    "secondaryText": "הצטרף לשיחה זו באמצעות דפדפן תואם.",
+    "moreHelpLinkText": "ראה דרישות תאימות"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "‏‏נדרש עדכון דפדפן",
+    "secondaryText": "כדי להבטיח את השיחה הטובה ביותר האפשרית, עדכן את הדפדפן ולאחר מכן נסה להצטרף שוב לשיחה.",
+    "moreHelpLinkText": "ראה דרישות תאימות",
+    "continueAnywayButtonText": "התחל שיחה מבלי לעדכן"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "מערכת ההפעלה אינה נתמכת",
+    "secondaryText": "הצטרף לשיחה זו באמצעות התקן עם מערכת הפעלה תואמת.",
+    "moreHelpLinkText": "ראה דרישות תאימות"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "לא ניתן להשתמש במצלמה או במיקרופון שלך",
+    "secondaryText": "ייתכן שלדפדפן שלך אין גישה למצלמה או למיקרופון שלך. כדי לפתור בעיה זו, פתח את 'העדפות מערכת'.",
+    "primaryButtonText": "נסה שוב",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "אפשר גישה למיקרופון כדי להמשיך",
+    "secondaryText": "כך שמשתתפים אחרים יוכלו לשמוע אותך.",
+    "primaryButtonText": "נסה שוב",
+    "imageAltText": "מיקום הרשאה של מיקרופון והתקן מצלמה עבור iOS",
+    "linkText": "זקוק לעזרה? קבל עזרה עבור פתרון בעיות",
+    "step1Text": "עבור אל האפליקציה 'הגדרות'",
+    "step2Text": "גלול למטה להגדרות עבור דפדפן זה",
+    "step3Text": "הפעל מיקרופון (מצלמה אופציונלית)",
+    "step4Text": "נסה להצטרף שוב לשיחה",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "VerticalGallery": {
+    "leftNavButtonAriaLabel": "הדף הקודם",
+    "rightNavButtonAriaLabel": "הדף הבא"
+  }
+}
