@@ -163,14 +163,16 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
       <Stack styles={defaultPersonaStyles}>
-        <Persona
-          coinSize={coinSize}
-          hidePersonaDetails={hidePersonaDetails}
-          text={text ?? ''}
-          initialsTextColor="white"
-          aria-label={noVideoAvailableAriaLabel ?? ''}
-          showOverflowTooltip={false}
-        />
+        {coinSize && (
+          <Persona
+            coinSize={coinSize}
+            hidePersonaDetails={hidePersonaDetails}
+            text={text ?? ''}
+            initialsTextColor="white"
+            aria-label={noVideoAvailableAriaLabel ?? ''}
+            showOverflowTooltip={false}
+          />
+        )}
       </Stack>
     </Stack>
   );
@@ -243,7 +245,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   /* @conditional-compile-remove(pinned-participants) */
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [personaSize, setPersonaSize] = useState(100);
+  const [personaSize, setPersonaSize] = useState<number>();
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -387,6 +389,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   className={mergeStyles(displayNameStyle)}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
+                  data-ui-id="video-tile-display-name"
                 >
                   {displayName}
                 </Text>

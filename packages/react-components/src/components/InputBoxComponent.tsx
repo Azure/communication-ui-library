@@ -127,9 +127,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   // Index of the previous selection end in the text field
   const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
   /* @conditional-compile-remove(mention) */
-  // Boolean value to check if onMouseDown event should be handled during select as selection range for onMouseDown event is not updated yet and the selection range for mouse click/taps will be updated in onSelect event if needed.
+  // Boolean value to check if onMouseDown event should be handled during select as selection range
+  // for onMouseDown event is not updated yet and the selection range for mouse click/taps will be
+  // updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
-
+  /* @conditional-compile-remove(mention) */
+  // Point of start of touch/mouse selection
+  const [interactionStartPoint, setInteractionStartPoint] = useState<{ x: number; y: number } | undefined>();
+  /* @conditional-compile-remove(mention) */
+  // Target selection from mouse movement
+  const [targetSelection, setTargetSelection] = useState<{ start: number; end: number | null } | undefined>();
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
@@ -326,11 +333,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   };
 
   /* @conditional-compile-remove(mention) */
-  const debouncedQueryUpdate = useDebouncedCallback(async (query?: string) => {
-    if (query === undefined) {
-      updateMentionSuggestions([]);
-      return;
-    }
+  const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
     const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
@@ -448,37 +451,56 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       selectionStartValue: number | null,
       selectionEndValue: number | null
     ): void => {
-      /* @conditional-compile-remove(mention) */
-      if (shouldHandleOnMouseDownDuringSelect && event.currentTarget.selectionStart !== null) {
-        // on select was triggered by mouse down
-        const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
-        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          // handle mention click
-          if (event.currentTarget.selectionDirection === null) {
-            event.currentTarget.setSelectionRange(
-              mentionTag.plainTextBeginIndex,
-              mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-            );
+      if (shouldHandleOnMouseDownDuringSelect) {
+        if (targetSelection !== undefined) {
+          setSelectionStartValue(targetSelection.start);
+          setSelectionEndValue(targetSelection.end);
+          event.currentTarget.setSelectionRange(targetSelection.start, targetSelection.end);
+          setTargetSelection(undefined);
+        } else if (event.currentTarget.selectionStart !== null) {
+          // on select was triggered by mouse down/up with no movement
+          const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
+          if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+            // handle mention click
+            // Get range of word that was clicked on
+            const selectionRange = rangeOfWordInSelection({
+              textInput: inputTextValue,
+              selectionStart: event.currentTarget.selectionStart,
+              selectionEnd: event.currentTarget.selectionEnd,
+              tag: mentionTag
+            });
+
+            if (event.currentTarget.selectionDirection === null) {
+              event.currentTarget.setSelectionRange(selectionRange.start, selectionRange.end);
+            } else {
+              event.currentTarget.setSelectionRange(
+                selectionRange.start,
+                selectionRange.end,
+                event.currentTarget.selectionDirection
+              );
+            }
+            setSelectionStartValue(selectionRange.start);
+            setSelectionEndValue(selectionRange.end);
           } else {
-            event.currentTarget.setSelectionRange(
-              mentionTag.plainTextBeginIndex,
-              mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
-              event.currentTarget.selectionDirection
-            );
+            setSelectionStartValue(event.currentTarget.selectionStart);
+            setSelectionEndValue(event.currentTarget.selectionEnd);
           }
-          setSelectionStartValue(mentionTag.plainTextBeginIndex);
-          setSelectionEndValue(mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex);
-        } else {
-          setSelectionStartValue(event.currentTarget.selectionStart);
-          setSelectionEndValue(event.currentTarget.selectionEnd);
         }
       } else {
         // selection was changed by keyboard
         updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
       }
-      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event and they may not be handled correctly (because of setSelectionRange calls or rerender)
+      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange
+      // could trigger additional calls of onSelect event and they may not be handled correctly
+      // (because of setSelectionRange calls or rerender)
     },
-    [updateSelectionIndexesWithMentionIfNeeded]
+    [
+      updateSelectionIndexesWithMentionIfNeeded,
+      targetSelection,
+      setTargetSelection,
+      setSelectionStartValue,
+      setSelectionEndValue
+    ]
   );
 
   /* @conditional-compile-remove(mention) */
@@ -552,7 +574,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCurrentTriggerStartIndex(tagIndex);
           }
           if (tagIndex === -1) {
-            await debouncedQueryUpdate(undefined);
+            updateMentionSuggestions([]);
           } else {
             // In the middle of a @mention lookup
             if (tagIndex > -1) {
@@ -602,7 +624,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
       onChange && onChange(event, result);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, debouncedQueryUpdate]
+    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
   );
 
   const getInputFieldTextValue = (): string => {
@@ -610,6 +632,50 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     return inputTextValue;
     return textValue;
   };
+
+  /* @conditional-compile-remove(mention) */
+  // Adjust the selection range based on a mouse / touch interaction
+  const handleOnMove = useCallback(
+    (event) => {
+      let targetStart = event.currentTarget.selectionStart;
+      let targetEnd = event.currentTarget.selectionEnd;
+
+      // Should we do anything?
+      if (
+        interactionStartPoint !== undefined &&
+        // And did selection change?
+        targetStart !== null &&
+        (targetStart !== targetSelection?.start || targetEnd !== targetSelection?.end)
+      ) {
+        const direction: 'forward' | 'backward' | 'none' =
+          event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
+        const mentionTag = findMentionTagForSelection(
+          tagsValue,
+          direction === 'backward'
+            ? event.currentTarget.selectionStart
+            : event.currentTarget.selectionEnd ?? event.currentTarget.selectionStart
+        );
+        let updateCurrentTarget = false;
+
+        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
+          if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
+            targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
+          }
+          updateCurrentTarget = true;
+          setShouldHandleOnMouseDownDuringSelect(false);
+        }
+        // Update selection range
+        setTargetSelection({ start: targetStart, end: targetEnd });
+
+        if (updateCurrentTarget) {
+          // Only set the control, if the values are updated
+          event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
+        }
+      }
+    },
+    [setTargetSelection, targetSelection, setShouldHandleOnMouseDownDuringSelect, interactionStartPoint, tagsValue]
+  );
 
   return (
     <Stack className={mergedRootStyle}>
@@ -686,8 +752,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             );
           }}
           /* @conditional-compile-remove(mention) */
-          onMouseDown={() => {
-            // as events order is onMouseDown -> onSelect -> onClick
+          onMouseDown={(e) => {
+            setInteractionStartPoint({ x: e.clientX, y: e.clientY });
+            // as events order is onMouseDown -> onMouseMove -> onMouseUp -> onSelect -> onClick
             // onClick and onMouseDown can't handle clicking on mention event because
             // onMouseDown doesn't have correct selectionRange yet and
             // onClick already has wrong range as it's called after onSelect that updates the selection range
@@ -695,9 +762,25 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setShouldHandleOnMouseDownDuringSelect(true);
           }}
           /* @conditional-compile-remove(mention) */
-          onTouchStart={() => {
+          onMouseMove={handleOnMove}
+          /* @conditional-compile-remove(mention) */
+          onMouseUp={() => {
+            setInteractionStartPoint(undefined);
+          }}
+          /* @conditional-compile-remove(mention) */
+          onTouchStart={(e) => {
+            setInteractionStartPoint({
+              x: e.targetTouches.item(0).clientX,
+              y: e.targetTouches.item(0).clientY
+            });
             // see onMouseDown for more details
             setShouldHandleOnMouseDownDuringSelect(true);
+          }}
+          /* @conditional-compile-remove(mention) */
+          onTouchMove={handleOnMove}
+          /* @conditional-compile-remove(mention) */
+          onTouchEnd={() => {
+            setInteractionStartPoint(undefined);
           }}
           /* @conditional-compile-remove(mention) */
           onBlur={() => {
@@ -836,6 +919,43 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
     }
   }
   return mentionTag;
+};
+
+/* @conditional-compile-remove(mention) */
+const rangeOfWordInSelection = ({
+  textInput,
+  selectionStart,
+  selectionEnd,
+  tag
+}: {
+  textInput: string;
+  selectionStart: number;
+  selectionEnd: number | null;
+  tag: TagData;
+}): { start: number; end: number } => {
+  if (tag.plainTextBeginIndex === undefined) {
+    return { start: selectionStart, end: selectionEnd === null ? selectionStart : selectionEnd };
+  }
+
+  // Look at start word index and optionally end word index.
+  // Select combination of the two and return the range.
+  let start = selectionStart;
+  let end = selectionEnd === null ? selectionStart : selectionEnd;
+  const firstWordStartIndex = textInput.lastIndexOf(' ', selectionStart);
+  if (firstWordStartIndex === tag.plainTextBeginIndex) {
+    start = firstWordStartIndex;
+  } else {
+    start = Math.max(firstWordStartIndex + 1, tag.plainTextBeginIndex);
+  }
+
+  const firstWordEndIndex = textInput.indexOf(' ', selectionStart);
+  end = Math.max(firstWordEndIndex + 1, tag.plainTextEndIndex ?? firstWordEndIndex + 1);
+
+  if (selectionEnd !== null && tag.plainTextEndIndex !== undefined) {
+    const lastWordEndIndex = textInput.indexOf(' ', selectionEnd);
+    end = Math.max(lastWordEndIndex > -1 ? lastWordEndIndex : tag.plainTextEndIndex, selectionEnd);
+  }
+  return { start, end };
 };
 
 /* @conditional-compile-remove(mention) */
