@@ -182,7 +182,7 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
           const isTransferRequested = args[0] === 'transferRequested';
           if (isTransferRequested) {
             const listener = args[1] as TransferRequestedEvent;
-            const newListener = (args: TransferRequestedEventArgs) => {
+            const newListener = (args: TransferRequestedEventArgs): void => {
               const newArgs = {
                 ...args,
                 accept: (acceptOptions?: AcceptTransferOptions) => {
