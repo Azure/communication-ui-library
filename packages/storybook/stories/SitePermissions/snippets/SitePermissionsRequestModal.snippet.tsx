@@ -4,10 +4,15 @@
 import {
   CameraAndMicrophoneSitePermissions,
   CameraSitePermissions,
+  DEFAULT_COMPONENT_ICONS,
   MicrophoneSitePermissions
 } from '@azure/communication-react';
-import { Modal, PrimaryButton, Stack } from '@fluentui/react';
+import { Modal, PrimaryButton, Stack, registerIcons } from '@fluentui/react';
 import React, { useState } from 'react';
+
+registerIcons({
+  icons: DEFAULT_COMPONENT_ICONS
+});
 
 export const SitePermissionsRequestModal: () => JSX.Element = () => {
   const [microphoneCameraModalOpen, setMicrophoneCameraModalOpen] = useState<boolean>(false);
