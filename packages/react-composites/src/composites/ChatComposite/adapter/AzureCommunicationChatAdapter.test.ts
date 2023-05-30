@@ -9,7 +9,7 @@ import {
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AzureCommunicationChatAdapterOptions } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
@@ -23,7 +23,7 @@ const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
 describe('Adapter is created as expected', () => {
   it('when creating a new adapter from stateful client', async () => {
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const fakeToken: CommunicationTokenCredential = {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
@@ -37,13 +37,13 @@ describe('Adapter is created as expected', () => {
 
     const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
     const threadClient = statefulChatClient.getChatThreadClient('threadId');
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const options: AzureCommunicationChatAdapterOptions = { credential: fakeToken };
 
     const adapter = await createAzureCommunicationChatAdapterFromClient(
       statefulChatClient,
       threadClient,
-      /* @conditional-compile-remove(teams-inline-images) */ options
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
     );
     expect(adapter).toBeDefined();
   });
