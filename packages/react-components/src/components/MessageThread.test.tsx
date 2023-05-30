@@ -228,6 +228,8 @@ describe('Message should display inline image correctly', () => {
 
 /* @conditional-compile-remove(mention) */
 describe('Message should display Mention correctly', () => {
+  const MSFT_MENTION = 'msft-mention';
+
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -279,14 +281,14 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={Math.random().toString()}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
             }
           }
         }}
       />
     );
 
-    expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual('msft-mention');
+    expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
   });
 
@@ -331,14 +333,14 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={Math.random().toString()}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
             }
           }
         }}
       />
     );
 
-    expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual('msft-mention');
+    expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
 
     // edit message
@@ -356,7 +358,7 @@ describe('Message should display Mention correctly', () => {
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
               onRenderMentionCount++;
-              return <span key={Math.random().toString()}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
             }
           }
         }}
@@ -364,9 +366,9 @@ describe('Message should display Mention correctly', () => {
     );
 
     expect(onRenderMentionCount).toEqual(expectedOnRenderMentionCount);
-    expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual('msft-mention');
+    expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
-    expect(container.querySelector(`#${user3Id}`)?.nodeName.toLowerCase()).toEqual('msft-mention');
+    expect(container.querySelector(`#${user3Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user3Id}`)?.textContent).toEqual(user3Name);
   });
 
@@ -425,7 +427,7 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={Math.random().toString()}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
             }
           },
           lookupOptions: {
@@ -441,7 +443,7 @@ describe('Message should display Mention correctly', () => {
       fail('it should not reach here');
     }
     expect(messageBubble.innerHTML).not.toContain(user1Name);
-    expect(messageBubble.innerHTML).not.toContain('msft-mention');
+    expect(messageBubble.innerHTML).not.toContain(MSFT_MENTION);
 
     // Click on ... button to trigger context menu
     const menuButton = container.querySelector('[data-ui-id="chat-composite-message-action-icon"]');
@@ -471,7 +473,7 @@ describe('Message should display Mention correctly', () => {
     // Select mention from popover for user1Name, verify plain text not contain mention html tag
     fireEvent.click(user1MentionContextMenuItem);
     expect(editBox.innerHTML).toContain(user1Name);
-    expect(editBox.innerHTML).not.toContain('msft-mention');
+    expect(editBox.innerHTML).not.toContain(MSFT_MENTION);
 
     // Submit edited message
     const submitButton = await screen.findByLabelText('Submit');
@@ -482,7 +484,7 @@ describe('Message should display Mention correctly', () => {
       expect(onUpdateMessageCount).toEqual(expectedOnUpdateMessageCount);
       const editedMessageContentWithMention = messages[0].content;
       expect(editedMessageContentWithMention).toContain(user1Name);
-      expect(editedMessageContentWithMention).toContain('msft-mention');
+      expect(editedMessageContentWithMention).toContain(MSFT_MENTION);
     });
 
     rerender(
@@ -493,7 +495,7 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={Math.random().toString()}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
             }
           },
           lookupOptions: {
@@ -509,6 +511,6 @@ describe('Message should display Mention correctly', () => {
       fail('it should not reach here');
     }
     expect(messageBubbleAfterRerender.innerHTML).toContain(user1Name);
-    expect(messageBubbleAfterRerender.innerHTML).toContain('msft-mention');
+    expect(messageBubbleAfterRerender.innerHTML).toContain(MSFT_MENTION);
   });
 });
