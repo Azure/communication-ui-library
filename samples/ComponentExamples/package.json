@@ -22,7 +22,7 @@
     "_typecheck": "rushx _by-flavor \"rushx _if-preprocess && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
-    "@azure/communication-chat": "1.3.2-beta.1 || >=1.2.0",
+    "@azure/communication-chat": "1.3.2-beta.2 || >=1.2.0",
     "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
     "@azure/communication-common": "2.2.0",
     "@azure/communication-identity": "~1.1.0",
