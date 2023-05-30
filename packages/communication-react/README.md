@@ -8,7 +8,7 @@ Read more about Azure Communication Services - UI Library [here](https://azure.g
 
 - An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
 - An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
-- [Node.js (14.19.0 and above)](https://nodejs.org/)
+- [Node.js (16.19.0 and above)](https://nodejs.org/)
 
 ## Installing
 

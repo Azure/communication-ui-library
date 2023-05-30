@@ -5,7 +5,8 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 import { CallWithChatComposite, createAzureCommunicationCallWithChatAdapter } from '@azure/communication-react';
-
+import { initializeIcons } from '@fluentui/react';
+initializeIcons();
 // locator is a different type of custom locator to aggregate a call locator and a chat thread
 // locator = { callLocator: CallLocator, chatThreadId : string }
 export const loadCallWithChatComposite = async function (args, htmlElement, props) {

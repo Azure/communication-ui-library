@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Contribution Guideline updates",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "none"
+}
