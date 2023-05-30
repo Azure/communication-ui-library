@@ -39,7 +39,6 @@ The peer dependencies of this package have been updated to support react 18.
   - Fix horizontal gallery button icon directions in rtl mode ([PR #3008](https://github.com/azure/communication-ui-library/pull/3008) by 2684369+JamesBurnside@users.noreply.github.com)
   - Fix bug where error bar overlays with pane ([PR #3024](https://github.com/azure/communication-ui-library/pull/3024) by carolinecao@microsoft.com)
   - Fix erroneous spacing in the call composite ([PR #2978](https://github.com/azure/communication-ui-library/pull/2978) by 2684369+JamesBurnside@users.noreply.github.com)
-  - Fix scroll and new message prompt in sidepane chat for safari ([PR #3119](https://github.com/Azure/communication-ui-library/pull/3119) by edwardlee@microsoft.com)
   - Prevent device button contextMenu from being dismissed on react re-renders ([PR #3109](https://github.com/Azure/communication-ui-library/pull/3109) by jiangnanhello@live.com)
 
 ### Improvements
