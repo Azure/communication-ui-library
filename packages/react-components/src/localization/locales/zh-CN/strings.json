@@ -25,6 +25,9 @@
     "uploading": "正在上传",
     "uploadCompleted": "已完成上传"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "建议"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
     "deliveredTooltipText": "已发送",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "你的相机已关闭",
     "onSplitButtonPrimaryActionCamera": "关闭摄像头",
     "offSplitButtonPrimaryActionCamera": "打开摄像头",
-    "cameraPrimaryActionSplitButtonTitle": "使用照相机"
+    "cameraPrimaryActionSplitButtonTitle": "使用照相机",
+    "videoEffectsMenuItemTitle": "效果"
   },
   "microphoneButton": {
     "onLabel": "静音",
@@ -170,7 +174,8 @@
     "failedToJoinCallGeneric": "未能加入通话。",
     "failedToJoinCallInvalidMeetingLink": "无法加入会议。无效的链接。",
     "startScreenSharingGeneric": "启动屏幕共享时出现问题。",
-    "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。"
+    "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。",
+    "unableToStartVideoEffect": "无法应用视频效果。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",

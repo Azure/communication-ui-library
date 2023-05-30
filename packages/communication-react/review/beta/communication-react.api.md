@@ -166,8 +166,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    videoBackgroundImages?: VideoBackgroundImage[];
-};
+} & CommonCallAdapterOptions;
 
 // @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
@@ -340,7 +339,7 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -546,6 +545,7 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    localVideoTileOptions?: LocalVideoTileOptions;
 };
 
 // @public
@@ -570,6 +570,7 @@ export interface CallCompositeStrings {
     captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
+    captionsBannerSpinnerText?: string;
     captionsSettingsCancelButtonLabel?: string;
     captionsSettingsCloseModalButtonAriaLabel?: string;
     captionsSettingsConfirmButtonLabel?: string;
@@ -859,7 +860,7 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -1304,6 +1305,7 @@ export interface CaptionsCallFeatureState {
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
+    startCaptionsInProgress: boolean;
     supportedCaptionLanguages: string[];
     supportedSpokenLanguages: string[];
 }
@@ -1578,6 +1580,11 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
 }
+
+// @beta
+export type CommonCallAdapterOptions = {
+    videoBackgroundImages?: VideoBackgroundImage[];
+};
 
 // @public
 export type CommonCallControlOptions = {
@@ -2097,7 +2104,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
+    ControlButtonVideoEffectsOption: JSX.Element;
+    ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -2208,7 +2216,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
+    ControlButtonVideoEffectsOption: JSX.Element;
+    ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -2675,9 +2684,16 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    effectName?: VideoEffectName;
-    isActive: boolean;
+    activeEffects?: VideoEffectName[];
 }
+
+// @beta
+export interface LocalVideoTileOptions {
+    position?: 'grid' | 'floating' | 'hidden';
+}
+
+// @beta
+export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
@@ -3228,7 +3244,7 @@ export interface ScreenShareButtonStrings {
 }
 
 // @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
 // @public
 export type Selector = (state: ClientState, props: any) => any;
@@ -3380,7 +3396,7 @@ export interface SystemMessageCommon extends MessageCommon {
 // @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
-};
+} & CommonCallAdapterOptions;
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
@@ -3587,7 +3603,7 @@ export interface VideoBackgroundImage {
 }
 
 // @beta
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
     effectName: 'none';
 }
 
@@ -3622,6 +3638,7 @@ export interface VideoGalleryProps {
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
+    localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;

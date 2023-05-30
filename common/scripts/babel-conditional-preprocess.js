@@ -9,16 +9,21 @@ const t = require('@babel/types');
 // Note: This uses the non-greedy `*?` so that the first closing `)` finishes the tag.
 const CONDITIONAL_FEATURE_RE = /@conditional-compile-remove\(.*?\)/g;
 
-function createFeatureSet(features) {
+function createFeatureSet(features, inProgressFeatures) {
   const featureSet = {}
-  features.forEach(f => featureSet[`@conditional-compile-remove(${f})`] = true);
+  if(inProgressFeatures !== undefined) {
+    features.forEach(f => featureSet[`@conditional-compile-remove(${f})`] = inProgressFeatures.includes(f));
+  } else {
+    features.forEach(f => featureSet[`@conditional-compile-remove(${f})`] = true);
+  }
+  
   return featureSet;
 }
 
 
 exports.default = babelHelper.declare((_api, opts) => {
-  const { features, stabilizedFeatures } = opts;
-  const featureSet = createFeatureSet(features);
+  const { features, stabilizedFeatures, betaReleaseMode, inProgressFeatures } = opts;
+  const featureSet = createFeatureSet(features, betaReleaseMode ? inProgressFeatures : undefined);
   const stabilizedFeatureSet = createFeatureSet(stabilizedFeatures);
 
   return {
@@ -200,14 +205,14 @@ function nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet)
   }
 
   // Check for validity first to catch errors even when valid features exist.
-  const unknownFeatures = featuresInComment.filter((f) => !(featureSet[f] || stabilizedFeatureSet[f]))
+  const unknownFeatures = featuresInComment.filter((f) => !(featureSet[f] !== undefined || stabilizedFeatureSet[f]))
   if (unknownFeatures.length > 0) {
     throw new Error(`Unknown conditional compilation features ${unknownFeatures} in file ${node.loc?.filename} at line ${node.loc?.start?.line}`);
   }
   // If any of the directives reference a stabilized feature, do not remove the associated node.
   // Justification: If a node is needed for more than one features, the first feature that is stabilized needs
   // that node in the stable build.
-  if (featuresInComment.some(f => stabilizedFeatureSet[f])) {
+  if (featuresInComment.some(f => stabilizedFeatureSet[f] || featureSet[f] === false)) {
     return 'keep';
   }
   return 'remove';

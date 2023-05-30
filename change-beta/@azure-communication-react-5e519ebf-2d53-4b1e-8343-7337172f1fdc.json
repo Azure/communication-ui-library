@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix bug where static html samples are not showing fluent icons",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -186,7 +186,11 @@ export const CallReadinessModal = (props: {
     return (
       <>
         {isPermissionsModalDismissed && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+          <_DrawerSurface
+            disableMaxHeight={true}
+            onLightDismiss={onLightDismissTriggered}
+            styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}
+          >
             {modal()}
           </_DrawerSurface>
         )}
@@ -323,7 +327,11 @@ export const CallReadinessModalFallBack = (props: {
     return (
       <>
         {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+          <_DrawerSurface
+            disableMaxHeight={true}
+            onLightDismiss={onLightDismissTriggered}
+            styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}
+          >
             <CameraAndMicrophoneSitePermissions
               appName={'app'}
               /* @conditional-compile-remove(unsupported-browser) */
@@ -340,7 +348,11 @@ export const CallReadinessModalFallBack = (props: {
           </_DrawerSurface>
         )}
         {isPermissionsModalDismissed && !checkPermissionModalShowing && modal !== undefined && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered} styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}>
+          <_DrawerSurface
+            disableMaxHeight={true}
+            onLightDismiss={onLightDismissTriggered}
+            styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}
+          >
             {modal()}
           </_DrawerSurface>
         )}

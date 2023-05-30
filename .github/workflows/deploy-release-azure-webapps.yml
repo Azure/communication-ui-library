@@ -21,10 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -42,6 +42,11 @@ jobs:
       - name: Switch flavor for stable build
         if: ${{ !contains(github.ref, 'beta') }}
         run: rush switch-flavor:stable
+
+      # Switch flavor to beta release when it is beta release branch
+      - name: Switch flavor for beta release build
+        if: ${{ contains(github.ref, 'beta') }}
+        run: rush switch-flavor:beta-release
 
       - name: Build Projects
         run: rush build

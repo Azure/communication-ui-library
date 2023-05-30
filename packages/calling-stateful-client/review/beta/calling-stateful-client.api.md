@@ -130,6 +130,7 @@ export interface CaptionsCallFeatureState {
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
+    startCaptionsInProgress: boolean;
     supportedCaptionLanguages: string[];
     supportedSpokenLanguages: string[];
 }
@@ -222,8 +223,7 @@ export interface LocalVideoStreamState {
 
 // @beta
 export interface LocalVideoStreamVideoEffectsState {
-    effectName?: VideoEffectName;
-    isActive: boolean;
+    activeEffects?: VideoEffectName[];
 }
 
 // @public

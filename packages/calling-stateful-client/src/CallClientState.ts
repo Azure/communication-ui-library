@@ -102,6 +102,10 @@ export interface CaptionsCallFeatureState {
    */
   isCaptionsFeatureActive: boolean;
   /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsInProgress: boolean;
+  /**
    * supported caption languages
    */
   supportedCaptionLanguages: string[];
@@ -177,13 +181,9 @@ export interface LocalVideoStreamState {
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
-   * State of the video background effect.
+   * List of effects if any are active.
    */
-  isActive: boolean;
-  /**
-   * Name of the effect if one is active.
-   */
-  effectName?: VideoEffectName;
+  activeEffects?: VideoEffectName[];
 }
 
 /**
