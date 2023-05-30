@@ -154,6 +154,7 @@ export class CallContext {
         existingCall.localVideoStreams = call.localVideoStreams;
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
+        existingCall.optimalVideoCountFeature.optimalVideoCount = call.optimalVideoCountFeature.optimalVideoCount;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;

@@ -141,6 +141,10 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(call-transfer) */
     transferFeature: {
       acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCountFeature: {
+      optimalVideoCount: 1
     }
   };
 }
