@@ -14,7 +14,8 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams,
   getRemoteParticipants,
-  getScreenShareRemoteParticipant
+  getScreenShareRemoteParticipant,
+  getOptimalVideoCount
 } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
@@ -38,6 +39,7 @@ export type VideoGallerySelector = (
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
+  optimalVideoCount?: number;
 };
 
 /**
@@ -53,7 +55,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIsScreenSharingOn,
     getDisplayName,
     getIdentifier,
-    getDominantSpeakers
+    getDominantSpeakers,
+    getOptimalVideoCount
   ],
   (
     screenShareRemoteParticipantId,
@@ -63,7 +66,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isScreenSharingOn,
     displayName: string | undefined,
     identifier: string,
-    dominantSpeakers
+    dominantSpeakers,
+    optimalVideoCount
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -90,7 +94,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),
-      dominantSpeakers: dominantSpeakerIds
+      dominantSpeakers: dominantSpeakerIds,
+      maxRemoteVideoStreams: optimalVideoCount
     };
   }
 );
