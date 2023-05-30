@@ -96,6 +96,7 @@ const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachme
 };
 
 const processTeamsImageContent = (message: ChatMessageWithStatus): string | undefined => {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     let teamsImageHtmlContent = '';
     const attachments: ChatAttachment[] = message.content?.attachments;
@@ -312,7 +313,10 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.['fileSharingMetadata'] || message.content?.attachments) {
+  if (
+    message.metadata?.['fileSharingMetadata'] ||
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ message.content?.attachments
+  ) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */
