@@ -63,17 +63,12 @@ jobs:
       - name: Install dependencies
         run: rush install
 
-      # Switch flavor to stable when it is release branch
-      - name: Switch flavor for stable build
-        # If no param for release flavor, get it from branch name
-        if: ${{ github.event.inputs.release-flavor == 'stable' }}
-        run: rush switch-flavor:stable
-
-      # Switch flavor to stable when it is release branch
-      - name: Switch flavor for beta-release build
-        # If no param for release flavor, get it from branch name
-        if: ${{ github.event.inputs.release-flavor == 'beta' }}
-        run: rush switch-flavor:beta-release
+      # Switch flavor if necessary
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
 
       # Builds
       - name: Build Packages and Samples
