@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+import { v1 as generateGUID } from 'uuid';
 import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -253,7 +254,7 @@ describe('Message should display Mention correctly', () => {
         messageType: 'chat',
         senderId: user1Id,
         senderDisplayName: 'Kat Larsson',
-        messageId: Math.random().toString(),
+        messageId: generateGUID(),
         content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}"></msft-mention>, can you help me with my internet connection?`,
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
@@ -265,7 +266,7 @@ describe('Message should display Mention correctly', () => {
         messageType: 'chat',
         senderId: user2Id,
         senderDisplayName: 'Robert Tolbert',
-        messageId: Math.random().toString(),
+        messageId: generateGUID(),
         content: 'Absolutely! What seems to be the problem?',
         createdOn: new Date('2019-04-13T00:00:00.000+08:11'),
         mine: true,
@@ -281,7 +282,7 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
             }
           }
         }}
@@ -305,7 +306,7 @@ describe('Message should display Mention correctly', () => {
         messageType: 'chat',
         senderId: user1Id,
         senderDisplayName: 'Kat Larsson',
-        messageId: Math.random().toString(),
+        messageId: generateGUID(),
         content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}"></msft-mention>, can you help me with my internet connection?`,
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
@@ -317,7 +318,7 @@ describe('Message should display Mention correctly', () => {
         messageType: 'chat',
         senderId: user2Id,
         senderDisplayName: 'Robert Tolbert',
-        messageId: Math.random().toString(),
+        messageId: generateGUID(),
         content: 'Absolutely! What seems to be the problem?',
         createdOn: new Date('2019-04-13T00:00:00.000+08:11'),
         mine: true,
@@ -333,7 +334,7 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
             }
           }
         }}
@@ -358,7 +359,7 @@ describe('Message should display Mention correctly', () => {
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
               onRenderMentionCount++;
-              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
             }
           }
         }}
@@ -383,7 +384,7 @@ describe('Message should display Mention correctly', () => {
         messageType: 'chat',
         senderId: user2Id,
         senderDisplayName: 'Robert Tolbert',
-        messageId: Math.random().toString(),
+        messageId: generateGUID(),
         content: 'Absolutely! What seems to be the problem?',
         createdOn: new Date('2019-04-13T00:00:00.000+08:11'),
         mine: true,
@@ -427,7 +428,7 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
             }
           },
           lookupOptions: {
@@ -495,7 +496,7 @@ describe('Message should display Mention correctly', () => {
         mentionOptions={{
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={mention.id}>{defaultOnMentionRender(mention)}</span>;
+              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
             }
           },
           lookupOptions: {
