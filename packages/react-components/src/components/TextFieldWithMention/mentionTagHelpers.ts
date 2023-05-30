@@ -58,7 +58,7 @@ export const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): numbe
  */
 const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
   for (const tag of tags) {
-    const closingTagInfo = getTagClosingTagInfo(tag);
+    const closingTagInfo = getClosingTagData(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
       // no need to check further as the selection is before the tag
       return;
@@ -259,7 +259,7 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
  *
  * @private
  */
-type ClosingTagInfoResult = {
+type ClosingTagData = {
   plainTextEndIndex: number;
   closeTagIndex: number;
   closeTagLength: number;
@@ -272,7 +272,7 @@ type ClosingTagInfoResult = {
  * @param tag - Tag data.
  * @returns Closing tag information for the provided tag.
  */
-const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
+const getClosingTagData = (tag: TagData): ClosingTagData => {
   let plainTextEndIndex = 0;
   let closeTagIndex = 0;
   let closeTagLength = 0;
@@ -369,7 +369,7 @@ export const updateHTML = (
         // proceed to the next check
       }
     }
-    const closingTagInfo = getTagClosingTagInfo(tag);
+    const closingTagInfo = getClosingTagData(tag);
     if (startIndex <= closingTagInfo.plainTextEndIndex) {
       // change started before the end tag
       if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === closingTagInfo.plainTextEndIndex) {
