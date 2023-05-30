@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(mention) */
 import { v1 as generateGUID } from 'uuid';
 import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
