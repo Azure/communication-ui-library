@@ -98,6 +98,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               /* @conditional-compile-remove(pinned-participants) */
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
               drawerMenuHostId={drawerMenuHostId}
+              /* @conditional-compile-remove(click-to-call) */
+              localVideoTileOptions={options?.localVideoTileOptions}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />

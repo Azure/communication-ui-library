@@ -14,7 +14,7 @@ Additional documentation for this sample can be found on [Microsoft Docs](https:
 ## Prerequisites
 
 - [Visual Studio Code (Stable Build)](https://code.visualstudio.com/Download)
-- [Node.js (14.19.0 and above)](https://nodejs.org/en/download/)
+- [Node.js (16.19.0 and above)](https://nodejs.org/en/download/)
 - Create an Azure account with an active subscription. For details, see [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
 - Create an Azure Communication Services resource. For details, see [Create an Azure Communication Resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource). You'll need to record your resource **connection string** for this quickstart.
 

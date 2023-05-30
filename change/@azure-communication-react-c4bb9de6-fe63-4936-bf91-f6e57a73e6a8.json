@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "`@azure/communication-chat` peer dependency updated to 1.3.2-beta.2 for beta packages",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}

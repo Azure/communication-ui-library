@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Removed Duplicated Package Reference in React Component Package",
+  "packageName": "@azure/communication-react",
+  "email": "109105353+jpeng-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -43,7 +43,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   }, []);
 
   /* @conditional-compile-remove(chat-composite-participant-pane) */
-  const [hideParticipants, setHideParticipants] = useState<boolean>(false);
+  const [hideParticipants, setHideParticipants] = useState<boolean>(true);
 
   const { currentTheme } = useSwitchableFluentTheme();
 
