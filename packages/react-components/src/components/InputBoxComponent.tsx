@@ -6,7 +6,7 @@ import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'reac
 import { useEffect } from 'react';
 /* @conditional-compile-remove(mention) */
 import { ComponentStrings, useLocale } from '../localization';
-
+import { Announcer } from './Announcer';
 import {
   Stack,
   TextField,
@@ -692,6 +692,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               onDismiss={() => {
                 updateMentionSuggestions([]);
               }}
+            />
+          )
+        }
+        {
+          /* @conditional-compile-remove(mention) */ mentionSuggestions.length > 0 && (
+            <Announcer
+              announcementString={mentionSuggestions[activeSuggestionIndex ?? 0].displayText}
+              ariaLive={'assertive'}
             />
           )
         }
