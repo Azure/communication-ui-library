@@ -278,6 +278,9 @@ export const generateDefaultDeviceMenuProps = (
             key: 'sectionCamera',
             title: strings.cameraMenuTooltip,
             subMenuProps: {
+              calloutProps: {
+                preventDismissOnEvent
+              },
               items: cameras.map((camera) => ({
                 key: camera.id,
                 text: camera.name,
@@ -320,6 +323,9 @@ export const generateDefaultDeviceMenuProps = (
             key: key,
             title: title,
             subMenuProps: {
+              calloutProps: {
+                preventDismissOnEvent
+              },
               items: microphones.map((microphone) => ({
                 key: microphone.id,
                 text: microphone.name,
@@ -353,6 +359,9 @@ export const generateDefaultDeviceMenuProps = (
           {
             key: 'sectionSpeaker',
             subMenuProps: {
+              calloutProps: {
+                preventDismissOnEvent
+              },
               items: speakers.map((speaker) => ({
                 key: speaker.id,
                 text: speaker.name,

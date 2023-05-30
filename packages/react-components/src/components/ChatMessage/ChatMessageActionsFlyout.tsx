@@ -12,7 +12,7 @@ import {
   Target,
   useTheme
 } from '@fluentui/react';
-import { _formatString } from '@internal/acs-ui-common';
+import { _pxToRem, _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { OnRenderAvatarCallback } from '../../types';
 import { MessageThreadStrings } from '../MessageThread';
@@ -147,7 +147,16 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         subMenuProps: {
           id: 'chat-composite-message-contextual-menu-read-name-list',
           items: messageReadByList ?? [],
-          calloutProps: preventUnwantedDismissProps
+          calloutProps: preventUnwantedDismissProps,
+          styles: concatStyleSets({
+            root: {
+              maxWidth: _pxToRem(320),
+              span: {
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
+              }
+            }
+          })
         },
         iconProps: {
           iconName: 'MessageSeen',

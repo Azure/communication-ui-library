@@ -7,6 +7,8 @@ export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
 export type { DeviceCheckOptions } from './CallComposite';
 /* @conditional-compile-remove(pinned-participants) */
 export type { RemoteVideoTileMenuOptions } from './CallComposite';
+/* @conditional-compile-remove(click-to-call) */
+export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
@@ -55,7 +57,7 @@ export type { CallParticipantsLocator } from './adapter';
 export type {
   VideoBackgroundImage,
   SelectedVideoBackgroundEffect,
-  VideoBackgroundNoneEffect,
+  VideoBackgroundNoEffect,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from './adapter/CallAdapter';

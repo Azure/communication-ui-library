@@ -290,7 +290,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
  * @beta
  */
 export type SelectedVideoBackgroundEffect =
-  | VideoBackgroundNoneEffect
+  | VideoBackgroundNoEffect
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
 
@@ -300,7 +300,7 @@ export type SelectedVideoBackgroundEffect =
  *
  * @beta
  */
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
   /**
    * Name of effect to remove video background effect
    */

@@ -62,9 +62,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     await startCaptionsButtonHandlers.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-    // set spoken language when start captions with a spoken language specified.
-    // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-    startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */

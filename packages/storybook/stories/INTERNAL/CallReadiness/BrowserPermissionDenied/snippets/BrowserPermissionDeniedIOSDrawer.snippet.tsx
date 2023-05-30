@@ -26,7 +26,7 @@ export const BrowserPermissionDeniedIOSDrawer: () => JSX.Element = () => {
           </Stack>
         )}
         {isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+          <_DrawerSurface disableMaxHeight={true} onLightDismiss={onLightDismissTriggered}>
             <BrowserPermissionDeniedIOS
               onTroubleshootingClick={() => alert('clicked trouble shooting link')}
               onTryAgainClick={() => alert('clicked on try again button')}
