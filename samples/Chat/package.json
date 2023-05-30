@@ -40,7 +40,6 @@
     "@internal/chat-component-bindings": "1.5.1-beta.5",
     "@internal/react-components": "1.5.1-beta.5",
     "@internal/react-composites": "1.5.1-beta.5",
-    "@types/react-aria-live": "^2.0.0",
     "@types/react-linkify": "^1.0.0",
     "json-stringify-safe": "^5.0.1",
     "react": "18.2.0",
