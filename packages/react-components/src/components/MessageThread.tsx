@@ -66,7 +66,7 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
@@ -632,7 +632,7 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional callback to retrieve the inline image in a message.
    * @param attachment - FileMetadata object we want to render
@@ -807,7 +807,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions
@@ -835,7 +835,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
       if (
@@ -1140,7 +1140,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onDisplayDateTimeString,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing) */
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,
       /* @conditional-compile-remove(mention) */
       mentionOptions

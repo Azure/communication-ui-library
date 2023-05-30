@@ -31,7 +31,7 @@ type ChatMessageContentProps = {
   mentionDisplayOptions?: MentionDisplayOptions;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
 };
 
@@ -75,7 +75,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     props.message.attachedFilesMetadata?.map((fileMetadata) => {
       if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
@@ -177,7 +177,7 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 const processNodeDefinitions = ProcessNodeDefinitions();
 const htmlToReactParser = Parser();
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
@@ -223,7 +223,7 @@ const processMention = (props: ChatMessageContentProps): ProcessingInstructionTy
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
   const steps: ProcessingInstructionType[] = [
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     processInlineImage(props),
     /* @conditional-compile-remove(mention) */
     processMention(props),

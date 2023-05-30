@@ -56,7 +56,7 @@ export interface FileMetadata {
   previewUrl?: string;
 }
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @beta
  */

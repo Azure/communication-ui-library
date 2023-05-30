@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { CommunicationGetTokenOptions } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import {
@@ -164,7 +164,7 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('when downloadAttachments with no access token fails', async () => {
     const threadClient = new StubChatThreadClient();
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
@@ -199,7 +199,7 @@ describe('Error is reflected in state and events', () => {
   });
 });
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing)and-file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 type MockAccessToken = {
   token: string;
   expiresOnTimestamp: number;

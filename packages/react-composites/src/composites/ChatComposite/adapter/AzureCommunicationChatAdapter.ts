@@ -184,7 +184,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadAttachments = this.downloadAttachments.bind(this);
   }
 
@@ -667,7 +667,7 @@ export async function createAzureCommunicationChatAdapterFromClient(
   return new AzureCommunicationChatAdapter(
     chatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing) */ options
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
   );
 }
 

@@ -122,7 +122,7 @@ const initializeAdapter = async (
   return await createAzureCommunicationChatAdapterFromClient(
     statefulChatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     { credential: fakeToken }
   );
 };

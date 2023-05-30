@@ -81,7 +81,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function to fetch attachments.
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -235,7 +235,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           strings={strings}
           /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           onFetchAttachment={props.onFetchAttachments}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing)and-file-sharing)and-file-sharing)and-file-sharing) */
+          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
