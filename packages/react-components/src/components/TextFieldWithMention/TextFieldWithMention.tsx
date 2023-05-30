@@ -17,7 +17,7 @@ import {
   textToTagParser,
   updateHTML,
   updateSelectionIndicesWithMentionIfNeeded
-} from './../TextFieldWithMention/mentionTagHelpers';
+} from './mentionTagUtils';
 import { isEnterKeyEventFromCompositionSession } from '../utils/keyboardNavigation';
 
 const DEFAULT_MENTION_TRIGGER = '@';
