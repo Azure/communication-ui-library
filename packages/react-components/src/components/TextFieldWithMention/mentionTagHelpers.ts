@@ -27,7 +27,7 @@ export type TagData = {
  *
  * @private
  */
-export type ValidatedIndexRangeProps = {
+type ValidatedIndexRangeProps = {
   min: number;
   max: number;
   currentValue?: number;
@@ -56,7 +56,7 @@ export const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): numbe
  * @param selection - Selection index.
  * @returns Mention tag if exists, otherwise undefined.
  */
-export const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
+const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
   for (const tag of tags) {
     const closingTagInfo = getTagClosingTagInfo(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
@@ -86,7 +86,7 @@ export const findMentionTagForSelection = (tags: TagData[], selection: number): 
  *
  * @private
  */
-export type NewSelectionIndexForMentionProps = {
+type NewSelectionIndexForMentionProps = {
   tag: TagData;
   textValue: string;
   currentSelectionIndex: number;
@@ -100,7 +100,7 @@ export type NewSelectionIndexForMentionProps = {
  * @param props - Props for finding new selection index for mention.
  * @returns New selection index if it is inside of a mention tag, otherwise the current selection.
  */
-export const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps): number => {
+const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps): number => {
   const { tag, textValue, currentSelectionIndex, previousSelectionIndex } = props;
   // check if this is a mention tag and selection should be updated
   if (
@@ -138,7 +138,7 @@ export const findNewSelectionIndexForMention = (props: NewSelectionIndexForMenti
  *
  * @private
  */
-export type MentionTagUpdateProps = {
+type MentionTagUpdateProps = {
   htmlText: string;
   oldPlainText: string;
   lastProcessedHTMLIndex: number;
@@ -158,7 +158,7 @@ export type MentionTagUpdateProps = {
  *
  * @private
  */
-export type MentionTagUpdateResult = {
+type MentionTagUpdateResult = {
   result: string;
   updatedChange: string;
   htmlIndex: number;
@@ -172,7 +172,7 @@ export type MentionTagUpdateResult = {
  * @param props - Props for mention update HTML function.
  * @returns Updated texts and indexes.
  */
-export const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateResult => {
+const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateResult => {
   const {
     htmlText,
     oldPlainText,
@@ -259,7 +259,7 @@ export const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTag
  *
  * @private
  */
-export type ClosingTagInfoResult = {
+type ClosingTagInfoResult = {
   plainTextEndIndex: number;
   closeTagIndex: number;
   closeTagLength: number;
@@ -272,7 +272,7 @@ export type ClosingTagInfoResult = {
  * @param tag - Tag data.
  * @returns Closing tag information for the provided tag.
  */
-export const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
+const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
   let plainTextEndIndex = 0;
   let closeTagIndex = 0;
   let closeTagLength = 0;
@@ -296,7 +296,7 @@ export const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
  *
  * @private
  */
-export type UpdateHTMLProps = {
+type UpdateHTMLProps = {
   htmlText: string;
   oldPlainText: string;
   newPlainText: string;
@@ -603,7 +603,7 @@ export const updateHTML = (
  *
  * @private
  */
-export type DiffIndexesProps = {
+type ChangeIndicesProps = {
   // the old text
   oldText: string;
   // the new text
@@ -623,7 +623,7 @@ export type DiffIndexesProps = {
  *
  * @private
  */
-export type DiffIndexesResult = {
+type ChangeIndices = {
   changeStart: number;
   oldChangeEnd: number;
   newChangeEnd: number;
@@ -636,7 +636,7 @@ export type DiffIndexesResult = {
  * @param props - Props for finding stings diff indexes function.
  * @returns Indexes for change start and ends in new and old texts. The old and new end indexes are exclusive.
  */
-export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
+const findStringsDiffIndexes = (props: ChangeIndicesProps): ChangeIndices => {
   const { oldText, newText, previousSelectionStart, previousSelectionEnd, currentSelectionStart, currentSelectionEnd } =
     props;
   const newTextLength = newText.length;
@@ -753,14 +753,14 @@ export const getDisplayNameForMentionSuggestion = (suggestion: Mention, localeSt
  *
  * @private
  */
-export type HtmlTagType = 'open' | 'close' | 'self-closing';
+type HtmlTagType = 'open' | 'close' | 'self-closing';
 
 /**
  * Represents an HTML tag.
  *
  * @private
  */
-export type HtmlTag = {
+type HtmlTag = {
   content: string;
   startIndex: number;
   type: HtmlTagType;
@@ -868,7 +868,7 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
  *
  * @private
  */
-export const parseOpenTag = (tag: string, startIndex: number): TagData => {
+const parseOpenTag = (tag: string, startIndex: number): TagData => {
   const tagType = tag
     .substring(1, tag.length - 1)
     .split(' ')[0]
@@ -889,7 +889,7 @@ export const parseOpenTag = (tag: string, startIndex: number): TagData => {
  *
  * @private
  */
-export const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
+const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
   const tagStartIndex = text.indexOf('<', startIndex);
   if (tagStartIndex === -1) {
     // No more tags
@@ -922,7 +922,7 @@ export const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | und
  *
  * @private
  */
-export const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
+const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   // Add as sub-tag to the parent stack tag, if there is one
   const parentTag = parseStack[parseStack.length - 1];
 
