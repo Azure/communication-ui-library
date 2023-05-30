@@ -33,4 +33,4 @@ export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
-export type { TransferFeatureState as TransferFeature } from './CallClientState';
+export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';

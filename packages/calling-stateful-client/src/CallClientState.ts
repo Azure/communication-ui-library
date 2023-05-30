@@ -396,7 +396,7 @@ export interface CallState {
   /**
    * Transfer state of call
    */
-  transferFeature?: TransferFeatureState;
+  transferFeature: TransferFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */
@@ -407,9 +407,26 @@ export interface CallState {
  */
 export interface TransferFeatureState {
   /**
-   * Call id of accepted transfer call
+   * Accepted transfer requests
    */
-  acceptedTransferCallId?: string;
+  acceptedTransfers: { [key: string]: AcceptedTransfer };
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface AcceptedTransfer {
+  /**
+   * Stores call id of accepted transfer
+   */
+  callId: string;
+  /**
+   * Stores timestamp when transfer was accepted
+   */
+  timestamp: Date;
 }
 
 /**

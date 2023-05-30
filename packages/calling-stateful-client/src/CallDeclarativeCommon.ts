@@ -8,9 +8,12 @@ import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsCallFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
-import { TransferCallFeature, TransferRequestedEvent, TransferRequestedEventArgs } from '@azure/communication-calling';
-/* @conditional-compile-remove(call-transfer) */
-import { AcceptTransferOptions } from '@azure/communication-calling';
+import {
+  AcceptTransferOptions,
+  TransferCallFeature,
+  TransferRequestedEvent,
+  TransferRequestedEventArgs
+} from '@azure/communication-calling';
 /**
  * @private
  */
@@ -187,7 +190,10 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
                 ...args,
                 accept: (acceptOptions?: AcceptTransferOptions) => {
                   const acceptedTransferCall = args.accept(acceptOptions);
-                  this._context.setAcceptedTransferCallId(this._call.id, acceptedTransferCall.id);
+                  this._context.setAcceptedTransfer(this._call.id, {
+                    callId: acceptedTransferCall.id,
+                    timestamp: new Date()
+                  });
                   return acceptedTransferCall;
                 }
               };

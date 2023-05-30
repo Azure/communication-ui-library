@@ -46,6 +46,12 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
+// @beta
+export interface AcceptedTransfer {
+    callId: string;
+    timestamp: Date;
+}
+
 // @public
 export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
 
@@ -122,7 +128,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
-    transferFeature?: TransferFeature;
+    transferFeature: TransferFeature;
 }
 
 // @beta (undocumented)
@@ -310,7 +316,9 @@ export interface TranscriptionCallFeature {
 
 // @beta
 export interface TransferFeature {
-    acceptedTransferCallId?: string;
+    acceptedTransfers: {
+        [key: string]: AcceptedTransfer;
+    };
 }
 
 // @public

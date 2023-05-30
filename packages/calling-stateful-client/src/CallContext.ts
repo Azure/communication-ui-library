@@ -39,6 +39,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
@@ -787,11 +789,11 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(call-transfer) */
-  setAcceptedTransferCallId(callId: string, acceptedTransferCallId: string): void {
+  setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.transferFeature = { acceptedTransferCallId: acceptedTransferCallId };
+        call.transferFeature.acceptedTransfers[acceptedTransfer.callId] = acceptedTransfer;
       }
     });
   }

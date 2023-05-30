@@ -91,6 +91,12 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
+// @beta
+export interface AcceptedTransfer {
+    callId: string;
+    timestamp: Date;
+}
+
 // @public
 export interface ActiveErrorMessage {
     timestamp?: Date;
@@ -792,7 +798,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
-    transferFeature?: TransferFeature;
+    transferFeature: TransferFeature;
 }
 
 // @public
@@ -3443,7 +3449,9 @@ export interface TranscriptionCallFeature {
 
 // @beta
 export interface TransferFeature {
-    acceptedTransferCallId?: string;
+    acceptedTransfers: {
+        [key: string]: AcceptedTransfer;
+    };
 }
 
 // @public
