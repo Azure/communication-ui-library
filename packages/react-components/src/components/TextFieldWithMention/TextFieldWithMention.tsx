@@ -126,16 +126,16 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
-      const updatedContent = updateHTML(
-        textValue,
+      const updatedContent = updateHTML({
+        htmlText: textValue,
         oldPlainText,
         newPlainText,
-        tagsValue,
-        currentTriggerStartIndex,
-        selectionEnd,
-        mention,
-        triggerText
-      );
+        tags: tagsValue,
+        startIndex: currentTriggerStartIndex,
+        oldPlainTextEndIndex: selectionEnd,
+        change: mention,
+        mentionTrigger: triggerText
+      });
       const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
       const newCaretIndex = currentTriggerStartIndex + displayName.length + triggerText.length;
       // move the caret in the text field to the end of the mention plain text
