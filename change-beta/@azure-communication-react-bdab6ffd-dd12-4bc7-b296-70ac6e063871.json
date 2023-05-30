@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix release pipeline for switch flavor",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}
