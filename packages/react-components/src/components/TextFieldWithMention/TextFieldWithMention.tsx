@@ -174,36 +174,33 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-      if (ev.key === 'ArrowUp') {
+      if (mentionSuggestions.length > 0) {
         ev.preventDefault();
-        if (mentionSuggestions.length > 0) {
+
+        if (ev.key === 'ArrowUp') {
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? mentionSuggestions.length - 1
               : Math.max(activeSuggestionIndex - 1, 0);
           setActiveSuggestionIndex(newActiveIndex);
-        }
-      } else if (ev.key === 'ArrowDown') {
-        ev.preventDefault();
-        if (mentionSuggestions.length > 0) {
+        } else if (ev.key === 'ArrowDown') {
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? 0
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
           setActiveSuggestionIndex(newActiveIndex);
         }
-      }
-      if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
-        ev.preventDefault();
-        // If we are looking up a mention, select the focused suggestion
-        if (mentionSuggestions.length > 0 && activeSuggestionIndex !== undefined) {
-          const selectedMention = mentionSuggestions[activeSuggestionIndex];
-          if (selectedMention) {
-            onSuggestionSelected(selectedMention);
-            return;
+        if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
+          // If we are looking up a mention, select the focused suggestion
+          if (activeSuggestionIndex !== undefined) {
+            const selectedMention = mentionSuggestions[activeSuggestionIndex];
+            if (selectedMention) {
+              onSuggestionSelected(selectedMention);
+              return;
+            }
           }
+          onEnterKeyDown && onEnterKeyDown();
         }
-        onEnterKeyDown && onEnterKeyDown();
       }
       onKeyDown && onKeyDown(ev);
     },

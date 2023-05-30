@@ -1068,7 +1068,7 @@ const getUpdatedSelectionStartIndexOrEndIndex = (
  *
  * @private
  */
-const getSelectionIndicesWhenChangedByKeyboard = (
+const getSelectionIndicesWhenSelectionChangedByKeyboard = (
   event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
   inputTextValue: string,
   selectionStartValue: number | undefined,
@@ -1133,6 +1133,39 @@ const getSelectionIndicesWhenChangedByKeyboard = (
   return { updatedStartIndex, updatedEndIndex };
 };
 
+const getSelectionIndicesWhenSelectionChangedByMouseDown = (
+  event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  tags: TagData[],
+  currentSelectionStart: number
+): { updatedStartIndex?: number; updatedEndIndex?: number } => {
+  const currentSelectionEnd = event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
+  const mentionTag = findMentionTagForSelection(tags, currentSelectionStart);
+  if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+    // handle mention click
+    if (event.currentTarget.selectionDirection === null) {
+      event.currentTarget.setSelectionRange(
+        mentionTag.plainTextBeginIndex,
+        mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+      );
+    } else {
+      event.currentTarget.setSelectionRange(
+        mentionTag.plainTextBeginIndex,
+        mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
+        event.currentTarget.selectionDirection
+      );
+    }
+    return {
+      updatedStartIndex: mentionTag.plainTextBeginIndex,
+      updatedEndIndex: mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
+    };
+  } else {
+    return {
+      updatedStartIndex: currentSelectionStart,
+      updatedEndIndex: currentSelectionEnd
+    };
+  }
+};
+
 /**
  * Updates the selection indices in mention to navigate by words if needed.
  * @param inputTextValue - The input text value.
@@ -1153,43 +1186,15 @@ export const updateSelectionIndicesWithMentionIfNeeded = (
 ): { updatedStartIndex?: number; updatedEndIndex?: number } => {
   const currentSelectionStart =
     event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
-  const currentSelectionEnd = event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
   if (shouldHandleOnMouseDownDuringSelect && currentSelectionStart !== undefined) {
-    // on select was triggered by mouse down
-    const mentionTag = findMentionTagForSelection(tags, currentSelectionStart);
-    if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-      // handle mention click
-      if (event.currentTarget.selectionDirection === null) {
-        event.currentTarget.setSelectionRange(
-          mentionTag.plainTextBeginIndex,
-          mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-        );
-      } else {
-        event.currentTarget.setSelectionRange(
-          mentionTag.plainTextBeginIndex,
-          mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
-          event.currentTarget.selectionDirection
-        );
-      }
-      return {
-        updatedStartIndex: mentionTag.plainTextBeginIndex,
-        updatedEndIndex: mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-      };
-    } else {
-      return {
-        updatedStartIndex: currentSelectionStart,
-        updatedEndIndex: currentSelectionEnd
-      };
-    }
+    return getSelectionIndicesWhenSelectionChangedByMouseDown(event, tags, currentSelectionStart);
   } else {
-    // selection was changed by keyboard
-    const { updatedStartIndex, updatedEndIndex } = getSelectionIndicesWhenChangedByKeyboard(
+    return getSelectionIndicesWhenSelectionChangedByKeyboard(
       event,
       inputTextValue,
       selectionStartValue,
       selectionEndValue,
       tags
     );
-    return { updatedStartIndex, updatedEndIndex };
   }
 };
