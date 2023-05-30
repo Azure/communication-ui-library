@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Fix release pipeline for switch flavor",
+  "comment": "Revert \"Fix release pipeline for switch flavor to support CCC (#3124) (#3125)\"",
   "packageName": "@azure/communication-react",
   "email": "jiangnanhello@live.com",
   "dependentChangeType": "none"
