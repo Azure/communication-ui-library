@@ -88,7 +88,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
     <MessageContentWithLiveAria
       message={props.message}
       liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
-      ariaLabel={strippedContent}
+      ariaLabel={messageContentAriaText(props)}
       content={processHtmlToReact(props)}
     />
   );
@@ -163,9 +163,9 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const regexForStrippinghtml = /<[^>]*>/g
-  const htmlStrippedContent = props.message.content?.replaceAll(regexForStrippinghtml, '')
-  
+  const regexForStrippingHtml = /<[^>]*>/g;
+  const htmlStrippedContent = props.message.content?.replaceAll(regexForStrippingHtml, '');
+
   return htmlStrippedContent
     ? props.message.mine
       ? _formatString(props.strings.messageContentMineAriaText, {
