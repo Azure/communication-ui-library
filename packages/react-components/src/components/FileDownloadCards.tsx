@@ -205,7 +205,11 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
       <_FileCardGroup>
         {fileMetadata &&
           fileMetadata
-            .filter((attachment) => attachment.attachmentType === 'fileSharing')
+            .filter((attachment) => {
+              /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+              return attachment.attachmentType === 'fileSharing';
+              return true;
+            })
             .map((file) => (
               <_FileCard
                 fileName={file.name}
