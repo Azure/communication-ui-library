@@ -193,7 +193,9 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ fileMetadata[0].attachmentType !== 'fileSharing'
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(
+      (attachment) => attachment.attachmentType === 'fileSharing'
+    )
   ) {
     return <></>;
   }
@@ -202,23 +204,25 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_FileCardGroup>
         {fileMetadata &&
-          fileMetadata.map((file) => (
-            <_FileCard
-              fileName={file.name}
-              key={file.name}
-              fileExtension={file.extension}
-              actionIcon={
-                showSpinner ? (
-                  <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                ) : (
-                  <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
-                    <DownloadIconTrampoline />
-                  </IconButton>
-                )
-              }
-              actionHandler={() => fileDownloadHandler(userId, file)}
-            />
-          ))}
+          fileMetadata
+            .filter((attachment) => attachment.attachmentType === 'fileSharing')
+            .map((file) => (
+              <_FileCard
+                fileName={file.name}
+                key={file.name}
+                fileExtension={file.extension}
+                actionIcon={
+                  showSpinner ? (
+                    <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
+                  ) : (
+                    <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                      <DownloadIconTrampoline />
+                    </IconButton>
+                  )
+                }
+                actionHandler={() => fileDownloadHandler(userId, file)}
+              />
+            ))}
       </_FileCardGroup>
     </div>
   );

@@ -10,7 +10,9 @@ import {
   ProgressIndicator,
   Stack,
   Text,
-  useTheme
+  useTheme,
+  registerIcons,
+  getIcon
 } from '@fluentui/react';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
@@ -121,6 +123,20 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
     }
   };
 
+  const iconNameProps: {
+    iconName: string;
+    'aria-label'?: string | undefined;
+  } = getFileTypeIconProps({
+    extension: fileExtension,
+    size: 24,
+    imageFileType: 'svg'
+  });
+
+  const icon = <Icon data-ui-id={'filetype-icon'} {...iconNameProps} />;
+  if (getIcon(iconNameProps.iconName) === undefined) {
+    registerIcons({ icons: { [iconNameProps.iconName]: icon } });
+  }
+
   return (
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
@@ -133,14 +149,7 @@ export const _FileCard = (props: _FileCardProps): JSX.Element => {
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={fileInfoWrapperClassName}>
           <Stack>
             {/* We are not using <ChatCompositeIcon /> here as we currently do not support customizing these filetype icons. */}
-            <Icon
-              data-ui-id={'filetype-icon'}
-              {...getFileTypeIconProps({
-                extension: fileExtension,
-                size: 24,
-                imageFileType: 'svg'
-              })}
-            />
+            {icon}
           </Stack>
           <Stack className={fileNameContainerClassName}>
             <Text className={fileNameTextClassName}>{fileName}</Text>
