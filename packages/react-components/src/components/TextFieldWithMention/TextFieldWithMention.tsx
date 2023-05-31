@@ -10,6 +10,7 @@ import { MentionLookupOptions, _MentionPopover, Mention } from './../MentionPopo
 import { useDebouncedCallback } from 'use-debounce';
 import {
   TagData,
+  findMentionTagForSelection,
   getDisplayNameForMentionSuggestion,
   getUpdatedNewValueForOnChange,
   getValidatedIndexInRange,
@@ -69,9 +70,14 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
   const [selectionStartValue, setSelectionStartValue] = useState<number | undefined>(undefined);
   // Index of the previous selection end in the text field
   const [selectionEndValue, setSelectionEndValue] = useState<number | undefined>(undefined);
-  // Boolean value to check if onMouseDown event should be handled during select as selection range for onMouseDown event is not updated yet
-  // and the selection range for mouse click/taps will be updated in onSelect event if needed.
+  // Boolean value to check if onMouseDown event should be handled during select as selection range
+  // for onMouseDown event is not updated yet and the selection range for mouse click/taps will be
+  // updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
+  // Point of start of touch/mouse selection
+  const [interactionStartPoint, setInteractionStartPoint] = useState<{ x: number; y: number } | undefined>();
+  // Target selection from mouse movement
+  const [targetSelection, setTargetSelection] = useState<{ start: number; end: number | undefined } | undefined>();
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
   // Index of where the caret is in the text field
@@ -207,7 +213,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     [onEnterKeyDown, onKeyDown, supportNewline, mentionSuggestions, activeSuggestionIndex, onSuggestionSelected]
   );
 
-  const debouncedQueryUpdate = useDebouncedCallback(async (query?: string) => {
+  const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
     if (query === undefined) {
       updateMentionSuggestions([]);
       return;
@@ -234,7 +240,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       tags: TagData[],
       shouldHandleOnMouseDownDuringSelect: boolean,
       selectionStartValue?: number,
-      selectionEndValue?: number
+      selectionEndValue?: number,
+      targetSelection?: { start: number; end: number | undefined }
     ): void => {
       // update selection if needed
       if (caretIndex !== undefined) {
@@ -245,18 +252,24 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         }
         return;
       }
-      const { updatedStartIndex, updatedEndIndex } = updateSelectionIndicesWithMentionIfNeeded(
-        event,
-        inputTextValue,
-        tags,
-        shouldHandleOnMouseDownDuringSelect,
-        selectionStartValue,
-        selectionEndValue
-      );
+      const { updatedStartIndex, updatedEndIndex, shouldSetTargetSelectionUndefined } =
+        updateSelectionIndicesWithMentionIfNeeded(
+          event,
+          inputTextValue,
+          tags,
+          shouldHandleOnMouseDownDuringSelect,
+          selectionStartValue,
+          selectionEndValue,
+          targetSelection
+        );
       setSelectionStartValue(updatedStartIndex);
       setSelectionEndValue(updatedEndIndex);
-      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange could trigger additional calls of onSelect event
-      // and they may not be handled correctly (because of setSelectionRange calls or rerender)
+      if (shouldSetTargetSelectionUndefined) {
+        setTargetSelection(undefined);
+      }
+      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange
+      // could trigger additional calls of onSelect event and they may not be handled correctly
+      // (because of setSelectionRange calls or rerender)
     },
     [caretIndex]
   );
@@ -293,7 +306,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             setCurrentTriggerStartIndex(tagIndex);
           }
           if (tagIndex === -1) {
-            await debouncedQueryUpdate(undefined);
+            updateMentionSuggestions([]);
           } else {
             // In the middle of a @mention lookup
             if (tagIndex > -1) {
@@ -306,7 +319,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         }
       }
     },
-    [debouncedQueryUpdate, mentionLookupOptions]
+    [debouncedQueryUpdate, mentionLookupOptions, updateMentionSuggestions]
   );
 
   const handleOnChange = useCallback(
@@ -368,6 +381,49 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     [mentionLookupOptions?.trigger, updateCurrentTriggerStartIndexAndQuery, onChange]
   );
 
+  // Adjust the selection range based on a mouse / touch interaction
+  const handleOnMove = useCallback(
+    (event) => {
+      let targetStart = event.currentTarget.selectionStart;
+      let targetEnd = event.currentTarget.selectionEnd;
+
+      // Should we do anything?
+      if (
+        interactionStartPoint !== undefined &&
+        // And did selection change?
+        targetStart !== null &&
+        (targetStart !== targetSelection?.start || targetEnd !== targetSelection?.end)
+      ) {
+        const direction: 'forward' | 'backward' | 'none' =
+          event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
+        const mentionTag = findMentionTagForSelection(
+          tagsValue,
+          direction === 'backward'
+            ? event.currentTarget.selectionStart
+            : event.currentTarget.selectionEnd ?? event.currentTarget.selectionStart
+        );
+        let updateCurrentTarget = false;
+
+        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+          targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
+          if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
+            targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
+          }
+          updateCurrentTarget = true;
+          setShouldHandleOnMouseDownDuringSelect(false);
+        }
+        // Update selection range
+        setTargetSelection({ start: targetStart, end: targetEnd });
+
+        if (updateCurrentTarget) {
+          // Only set the control, if the values are updated
+          event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
+        }
+      }
+    },
+    [setTargetSelection, targetSelection, setShouldHandleOnMouseDownDuringSelect, interactionStartPoint, tagsValue]
+  );
+
   return (
     <div>
       {mentionSuggestions.length > 0 && (
@@ -412,20 +468,34 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             tagsValue,
             shouldHandleOnMouseDownDuringSelect,
             selectionStartValue,
-            selectionEndValue
+            selectionEndValue,
+            targetSelection
           );
         }}
-        onMouseDown={() => {
-          // as events order is onMouseDown -> onSelect -> onClick
+        onMouseDown={(e) => {
+          setInteractionStartPoint({ x: e.clientX, y: e.clientY });
+          // as events order is onMouseDown -> onMouseMove -> onMouseUp -> onSelect -> onClick
           // onClick and onMouseDown can't handle clicking on mention event because
           // onMouseDown doesn't have correct selectionRange yet and
           // onClick already has wrong range as it's called after onSelect that updates the selection range
           // so we need to handle onMouseDown to prevent onSelect default behavior
           setShouldHandleOnMouseDownDuringSelect(true);
         }}
-        onTouchStart={() => {
+        onMouseMove={handleOnMove}
+        onMouseUp={() => {
+          setInteractionStartPoint(undefined);
+        }}
+        onTouchStart={(e) => {
+          setInteractionStartPoint({
+            x: e.targetTouches.item(0).clientX,
+            y: e.targetTouches.item(0).clientY
+          });
           // see onMouseDown for more details
           setShouldHandleOnMouseDownDuringSelect(true);
+        }}
+        onTouchMove={handleOnMove}
+        onTouchEnd={() => {
+          setInteractionStartPoint(undefined);
         }}
         onBlur={() => {
           // setup all flags to default values when text field loses focus

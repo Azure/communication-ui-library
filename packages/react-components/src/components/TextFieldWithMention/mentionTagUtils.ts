@@ -56,7 +56,7 @@ export const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): numbe
  * @param selection - Selection index.
  * @returns Mention tag if exists, otherwise undefined.
  */
-const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
+export const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
   for (const tag of tags) {
     const closingTagInfo = getClosingTagData(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
@@ -79,6 +79,49 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
     }
   }
   return undefined;
+};
+
+/**
+ * Get the range of the word in the selection.
+ *
+ * @private
+ * @param props - Props for mention update HTML function.
+ * @returns Range of the word in the selection.
+ */
+export const rangeOfWordInSelection = ({
+  textInput,
+  selectionStart,
+  selectionEnd,
+  tag
+}: {
+  textInput: string;
+  selectionStart: number;
+  selectionEnd: number | null;
+  tag: TagData;
+}): { start: number; end: number } => {
+  if (tag.plainTextBeginIndex === undefined) {
+    return { start: selectionStart, end: selectionEnd === null ? selectionStart : selectionEnd };
+  }
+
+  // Look at start word index and optionally end word index.
+  // Select combination of the two and return the range.
+  let start = selectionStart;
+  let end = selectionEnd === null ? selectionStart : selectionEnd;
+  const firstWordStartIndex = textInput.lastIndexOf(' ', selectionStart);
+  if (firstWordStartIndex === tag.plainTextBeginIndex) {
+    start = firstWordStartIndex;
+  } else {
+    start = Math.max(firstWordStartIndex + 1, tag.plainTextBeginIndex);
+  }
+
+  const firstWordEndIndex = textInput.indexOf(' ', selectionStart);
+  end = Math.max(firstWordEndIndex + 1, tag.plainTextEndIndex ?? firstWordEndIndex + 1);
+
+  if (selectionEnd !== null && tag.plainTextEndIndex !== undefined) {
+    const lastWordEndIndex = textInput.indexOf(' ', selectionEnd);
+    end = Math.max(lastWordEndIndex > -1 ? lastWordEndIndex : tag.plainTextEndIndex, selectionEnd);
+  }
+  return { start, end };
 };
 
 /**
@@ -1147,34 +1190,54 @@ const getSelectionIndicesWhenSelectionChangedByKeyboard = (
 
 const getSelectionIndicesWhenSelectionChangedByMouseDown = (
   event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+  inputTextValue: string,
   tags: TagData[],
-  currentSelectionStart: number
-): { updatedStartIndex?: number; updatedEndIndex?: number } => {
-  const currentSelectionEnd = event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
-  const mentionTag = findMentionTagForSelection(tags, currentSelectionStart);
-  if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-    // handle mention click
-    if (event.currentTarget.selectionDirection === null) {
-      event.currentTarget.setSelectionRange(
-        mentionTag.plainTextBeginIndex,
-        mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-      );
+  selectionStartValue?: number,
+  selectionEndValue?: number,
+  targetSelection?: { start: number; end: number | undefined }
+): { updatedStartIndex?: number; updatedEndIndex?: number; shouldSetTargetSelectionUndefined?: boolean } => {
+  if (targetSelection !== undefined) {
+    event.currentTarget.setSelectionRange(
+      targetSelection.start,
+      targetSelection.end === undefined ? null : targetSelection.end
+    );
+    return {
+      updatedStartIndex: targetSelection.start,
+      updatedEndIndex: targetSelection.end,
+      shouldSetTargetSelectionUndefined: true
+    };
+  } else if (event.currentTarget.selectionStart !== null) {
+    // on select was triggered by mouse down/up with no movement
+    const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
+    if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
+      // handle mention click
+      // Get range of word that was clicked on
+      const selectionRange = rangeOfWordInSelection({
+        textInput: inputTextValue,
+        selectionStart: event.currentTarget.selectionStart,
+        selectionEnd: event.currentTarget.selectionEnd,
+        tag: mentionTag
+      });
+
+      if (event.currentTarget.selectionDirection === null) {
+        event.currentTarget.setSelectionRange(selectionRange.start, selectionRange.end);
+      } else {
+        event.currentTarget.setSelectionRange(
+          selectionRange.start,
+          selectionRange.end,
+          event.currentTarget.selectionDirection
+        );
+      }
+      return { updatedStartIndex: selectionRange.start, updatedEndIndex: selectionRange.end };
     } else {
-      event.currentTarget.setSelectionRange(
-        mentionTag.plainTextBeginIndex,
-        mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex,
-        event.currentTarget.selectionDirection
-      );
+      return {
+        updatedStartIndex: event.currentTarget.selectionStart,
+        updatedEndIndex: event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd
+      };
     }
-    return {
-      updatedStartIndex: mentionTag.plainTextBeginIndex,
-      updatedEndIndex: mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex
-    };
   } else {
-    return {
-      updatedStartIndex: currentSelectionStart,
-      updatedEndIndex: currentSelectionEnd
-    };
+    // Return the original selection since the selection was not changed
+    return { updatedStartIndex: selectionStartValue, updatedEndIndex: selectionEndValue };
   }
 };
 
@@ -1194,12 +1257,18 @@ export const updateSelectionIndicesWithMentionIfNeeded = (
   tags: TagData[],
   shouldHandleOnMouseDownDuringSelect: boolean,
   selectionStartValue?: number,
-  selectionEndValue?: number
-): { updatedStartIndex?: number; updatedEndIndex?: number } => {
-  const currentSelectionStart =
-    event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
-  if (shouldHandleOnMouseDownDuringSelect && currentSelectionStart !== undefined) {
-    return getSelectionIndicesWhenSelectionChangedByMouseDown(event, tags, currentSelectionStart);
+  selectionEndValue?: number,
+  targetSelection?: { start: number; end: number | undefined }
+): { updatedStartIndex?: number; updatedEndIndex?: number; shouldSetTargetSelectionUndefined?: boolean } => {
+  if (shouldHandleOnMouseDownDuringSelect) {
+    return getSelectionIndicesWhenSelectionChangedByMouseDown(
+      event,
+      inputTextValue,
+      tags,
+      selectionStartValue,
+      selectionEndValue,
+      targetSelection
+    );
   } else {
     return getSelectionIndicesWhenSelectionChangedByKeyboard(
       event,
