@@ -865,6 +865,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     }
   }, [onLoadPreviousChatMessages]);
 
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     initializeFileTypeIcons();
   }, []);
