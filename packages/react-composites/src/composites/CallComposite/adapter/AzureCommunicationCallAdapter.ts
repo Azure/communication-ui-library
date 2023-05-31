@@ -207,7 +207,7 @@ class CallContext {
 
     /* @conditional-compile-remove(call-transfer) */
     const latestAcceptedTransfer = call?.transferFeature.acceptedTransfers
-      ? findLatestAccepterTransfer(call.transferFeature.acceptedTransfers)
+      ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
       : undefined;
     /* @conditional-compile-remove(call-transfer) */
     let transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
@@ -267,7 +267,7 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
   return latestCall;
 };
 
-const findLatestAccepterTransfer = (acceptedTransfers: {
+const findLatestAcceptedTransfer = (acceptedTransfers: {
   [key: string]: AcceptedTransfer;
 }): AcceptedTransfer | undefined => {
   const acceptedTransferValues = Object.values(acceptedTransfers);
