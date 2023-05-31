@@ -72,6 +72,8 @@ import { useTheme } from '../theming';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -862,6 +864,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       isAllChatMessagesLoadedRef.current = false;
     }
   }, [onLoadPreviousChatMessages]);
+
+  useEffect(() => {
+    initializeFileTypeIcons();
+  }, []);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
