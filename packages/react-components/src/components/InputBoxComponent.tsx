@@ -294,6 +294,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
           setActiveSuggestionIndex(newActiveIndex);
         }
+      } else if (ev.key === 'Escape') {
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0) {
+          updateMentionSuggestions([]);
+        }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
         // If we are looking up a mention, select the focused suggestion
@@ -806,6 +811,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCaretIndex(undefined);
             setSelectionStartValue(null);
             setSelectionEndValue(null);
+            // Dismiss the suggestions on blur
+            setMentionSuggestions([]);
           }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
