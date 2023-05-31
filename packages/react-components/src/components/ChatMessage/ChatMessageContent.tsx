@@ -64,6 +64,8 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
   }
 };
 
+const purify = DOMPurify(window);
+
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
     <div data-ui-status={props.message.status} role="text" aria-label={props.ariaLabel}>
@@ -164,7 +166,7 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const htmlStrippedContent = DOMPurify.sanitize(props.message.content ?? '');
+  const htmlStrippedContent = purify.sanitize(props.message.content ?? '');
 
   return htmlStrippedContent
     ? props.message.mine
