@@ -179,50 +179,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     );
   };
 
-  /* @conditional-compile-remove(mention) */
-  // Adjust the selection range based on a mouse / touch interaction
-  const handleOnMove = useCallback(
-    (event) => {
-      let targetStart = event.currentTarget.selectionStart;
-      let targetEnd = event.currentTarget.selectionEnd;
-
-      // Should we do anything?
-      if (
-        interactionStartPoint !== undefined &&
-        // And did selection change?
-        targetStart !== null &&
-        (targetStart !== targetSelection?.start || targetEnd !== targetSelection?.end)
-      ) {
-        const direction: 'forward' | 'backward' | 'none' =
-          event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
-        const mentionTag = findMentionTagForSelection(
-          tagsValue,
-          direction === 'backward'
-            ? event.currentTarget.selectionStart
-            : event.currentTarget.selectionEnd ?? event.currentTarget.selectionStart
-        );
-        let updateCurrentTarget = false;
-
-        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
-          if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
-            targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
-          }
-          updateCurrentTarget = true;
-          setShouldHandleOnMouseDownDuringSelect(false);
-        }
-        // Update selection range
-        setTargetSelection({ start: targetStart, end: targetEnd });
-
-        if (updateCurrentTarget) {
-          // Only set the control, if the values are updated
-          event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
-        }
-      }
-    },
-    [setTargetSelection, targetSelection, setShouldHandleOnMouseDownDuringSelect, interactionStartPoint, tagsValue]
-  );
-
   return (
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>{renderTextField()}</div>
