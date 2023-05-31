@@ -210,7 +210,7 @@ class CallContext {
       ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
       : undefined;
     /* @conditional-compile-remove(call-transfer) */
-    let transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
+    const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     if (this.state.page) {
       this.setState({
@@ -372,7 +372,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.callClient.onStateChange(onStateChange);
     /* @conditional-compile-remove(call-transfer) */
     if (this.callAgent.kind === 'CallAgent') {
-      const onCallsUpdated = (args: { added: Call[]; removed: Call[] }) => {
+      const onCallsUpdated = (args: { added: Call[]; removed: Call[] }): void => {
         if (this.call?.id) {
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
@@ -392,7 +392,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       };
       (this.callAgent as CallAgent).on('callsUpdated', onCallsUpdated);
     } else if (this.callAgent.kind === 'TeamsCallAgent') {
-      const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }) => {
+      const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }): void => {
         if (this.call?.id) {
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
