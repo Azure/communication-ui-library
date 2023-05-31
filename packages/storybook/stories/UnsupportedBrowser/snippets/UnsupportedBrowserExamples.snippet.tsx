@@ -1,9 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import {
+  DEFAULT_COMPONENT_ICONS,
+  UnsupportedBrowser,
+  UnsupportedBrowserVersion,
+  UnsupportedOperatingSystem
+} from '@azure/communication-react';
+import { Stack, registerIcons } from '@fluentui/react';
 import React from 'react';
+
+registerIcons({
+  icons: DEFAULT_COMPONENT_ICONS
+});
 
 export const UnsupportedBrowserExamples: () => JSX.Element = () => {
   return (

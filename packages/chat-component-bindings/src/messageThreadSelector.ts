@@ -30,9 +30,9 @@ import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
-import { FileMetadata } from '@internal/react-components';
+import { FileMetadata, FileMetadataAttachmentType } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images) */
-import { ChatAttachment } from '@azure/communication-chat';
+import { AttachmentType, ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -76,13 +76,23 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
 /* @conditional-compile-remove(teams-inline-images) */
 const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
   return attachments.map((attachment) => ({
-    attachmentType: attachment.attachmentType,
+    attachmentType: mapAttachmentType(attachment.attachmentType),
     id: attachment.id,
     name: attachment.name ?? '',
     extension: attachment.contentType ?? '',
     url: attachment.url,
     previewUrl: attachment.previewUrl
   }));
+};
+
+/* @conditional-compile-remove(teams-inline-images) */
+const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachmentType => {
+  if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
+    return 'teamsInlineImage';
+  } else if (attachmentType === 'file') {
+    return 'fileSharing';
+  }
+  return 'unknown';
 };
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
