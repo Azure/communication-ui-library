@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
+import React, { useState, ReactNode, FormEvent, useCallback, useRef, useMemo } from 'react';
 /* @conditional-compile-remove(mention) */
 import { useEffect } from 'react';
 /* @conditional-compile-remove(mention) */
@@ -166,7 +166,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
-  const mergedTextFiledStyle = mergeStyles(
+  const mergedInputFieldStyle = mergeStyles(
     inputBoxStyle,
     inputClassName,
     props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
@@ -274,9 +274,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         return;
       }
       if (ev.key === 'ArrowUp') {
-        ev.preventDefault();
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0) {
+          ev.preventDefault();
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? mentionSuggestions.length - 1
@@ -284,9 +284,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           setActiveSuggestionIndex(newActiveIndex);
         }
       } else if (ev.key === 'ArrowDown') {
-        ev.preventDefault();
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0) {
+          ev.preventDefault();
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? 0
@@ -295,11 +295,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
-        ev.preventDefault();
-
         // If we are looking up a mention, select the focused suggestion
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0 && activeSuggestionIndex !== undefined) {
+          ev.preventDefault();
           const selectedMention = mentionSuggestions[activeSuggestionIndex];
           if (selectedMention) {
             onSuggestionSelected(selectedMention);
@@ -338,6 +337,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
     } else if (activeSuggestionIndex === undefined) {
+      // Set the active to the first, if it's not already set
       setActiveSuggestionIndex(0);
     }
     updateMentionSuggestions(suggestions);
@@ -677,6 +677,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [setTargetSelection, targetSelection, setShouldHandleOnMouseDownDuringSelect, interactionStartPoint, tagsValue]
   );
 
+  /* @conditional-compile-remove(mention) */
+  const announcerText = useMemo(() => {
+    if (activeSuggestionIndex === undefined) {
+      return undefined;
+    }
+    const currentMention = mentionSuggestions[activeSuggestionIndex ?? 0];
+    return currentMention?.displayText.length > 0
+      ? currentMention?.displayText
+      : localeStrings.participantItem.displayNamePlaceholder;
+  }, [activeSuggestionIndex, mentionSuggestions, localeStrings.participantItem.displayNamePlaceholder]);
+
   return (
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
@@ -696,11 +707,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           )
         }
         {
-          /* @conditional-compile-remove(mention) */ mentionSuggestions.length > 0 && (
-            <Announcer
-              announcementString={mentionSuggestions[activeSuggestionIndex ?? 0].displayText}
-              ariaLive={'assertive'}
-            />
+          /* @conditional-compile-remove(mention) */ announcerText !== undefined && (
+            <Announcer announcementString={announcerText} ariaLive={'polite'} />
           )
         }
         <TextField
@@ -712,7 +720,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           resizable={false}
           componentRef={textFieldRef}
           id={id}
-          inputClassName={mergedTextFiledStyle}
+          inputClassName={mergedInputFieldStyle}
           placeholder={placeholderText}
           value={getInputFieldTextValue()}
           onChange={(e, newValue) => {
