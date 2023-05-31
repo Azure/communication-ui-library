@@ -325,7 +325,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       /* @conditional-compile-remove(mention) */
       activeSuggestionIndex,
       /* @conditional-compile-remove(mention) */
-      onSuggestionSelected
+      onSuggestionSelected,
+      /* @conditional-compile-remove(mention) */
+      updateMentionSuggestions
     ]
   );
 
