@@ -23,7 +23,7 @@ import { FileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
-// import DOMPurify from 'dompurify';
+import DOMPurify from 'dompurify';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -63,8 +63,6 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
       return <></>;
   }
 };
-
-// const purify = DOMPurify(window);
 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
@@ -166,16 +164,15 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const htmlStrippedContent = props.message.content ?? ''; // purify.sanitize(props.message.content ?? '', { ALLOWED_TAGS: [] });
 
-  return htmlStrippedContent
+  return props.message.content
     ? props.message.mine
       ? _formatString(props.strings.messageContentMineAriaText, {
-          message: htmlStrippedContent
+          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
         })
       : _formatString(props.strings.messageContentAriaText, {
           author: `${props.message.senderDisplayName}`,
-          message: htmlStrippedContent
+          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
         })
     : undefined;
 };

@@ -301,10 +301,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
+        ev.preventDefault();
+
         // If we are looking up a mention, select the focused suggestion
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0 && activeSuggestionIndex !== undefined) {
-          ev.preventDefault();
           const selectedMention = mentionSuggestions[activeSuggestionIndex];
           if (selectedMention) {
             onSuggestionSelected(selectedMention);
