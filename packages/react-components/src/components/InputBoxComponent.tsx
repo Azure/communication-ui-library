@@ -1,11 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState, ReactNode, FormEvent, useCallback, useRef, useMemo } from 'react';
+import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
 /* @conditional-compile-remove(mention) */
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(mention) */
 import { ComponentStrings, useLocale } from '../localization';
+/* @conditional-compile-remove(mention) */
 import { Announcer } from './Announcer';
 import {
   Stack,
