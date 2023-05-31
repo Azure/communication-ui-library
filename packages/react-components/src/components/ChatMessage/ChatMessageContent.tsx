@@ -163,7 +163,7 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const regexForStrippingHtml = /<[^>]*>/g;
+  const regexForStrippingHtml = /<[^>]*>|<script/gm;
   const htmlStrippedContent = props.message.content?.replaceAll(regexForStrippingHtml, '');
 
   return htmlStrippedContent
