@@ -23,6 +23,7 @@ import { FileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
+import DOMPurify from 'dompurify';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
@@ -163,8 +164,7 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const regexForStrippingHtml = /<[^>]*>|<script/gm;
-  const htmlStrippedContent = props.message.content?.replaceAll(regexForStrippingHtml, '');
+  const htmlStrippedContent = DOMPurify.sanitize(props.message.content ?? '');
 
   return htmlStrippedContent
     ? props.message.mine
