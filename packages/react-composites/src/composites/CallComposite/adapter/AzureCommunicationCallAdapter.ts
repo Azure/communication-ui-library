@@ -361,19 +361,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
 
       this.context.updateClientState(clientState);
-
-      /* @conditional-compile-remove(call-transfer) */
-      const _callAgent = callAgent as CallAgent;
-      /* @conditional-compile-remove(call-transfer) */
-      const transferCall = _callAgent.calls.find(
-        (call) =>
-          (call as Call).state === 'Connected' && call.id === this.context.getState().acceptedTransferCallState?.id
-      );
-      /* @conditional-compile-remove(call-transfer) */
-      if (this.call && transferCall && this.call.id !== transferCall.id && transferCall.state === 'Connected') {
-        this.processNewCall(transferCall);
-        this.context.setAcceptedTransferCall(undefined);
-      }
     };
 
     this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);
@@ -383,6 +370,48 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.subscribeDeviceManagerEvents();
 
     this.callClient.onStateChange(onStateChange);
+    /* @conditional-compile-remove(call-transfer) */
+    if (this.callAgent.kind === 'CallAgent') {
+      const onCallsUpdated = (args: { added: Call[]; removed: Call[] }) => {
+        if (this.call?.id) {
+          const removedCall = args.removed.find((call) => call.id === this.call?.id);
+          if (removedCall) {
+            const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
+            const latestAcceptedTransfer = findLatestAcceptedTransfer(
+              removedCallState.transferFeature.acceptedTransfers
+            );
+            const _callAgent = callAgent as CallAgent;
+            const transferCall = _callAgent.calls.find(
+              (call: Call) => call.state === 'Connected' && call.id === latestAcceptedTransfer?.callId
+            );
+            if (transferCall) {
+              this.processNewCall(transferCall);
+            }
+          }
+        }
+      };
+      (this.callAgent as CallAgent).on('callsUpdated', onCallsUpdated);
+    } else if (this.callAgent.kind === 'TeamsCallAgent') {
+      const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }) => {
+        if (this.call?.id) {
+          const removedCall = args.removed.find((call) => call.id === this.call?.id);
+          if (removedCall) {
+            const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
+            const latestAcceptedTransfer = findLatestAcceptedTransfer(
+              removedCallState.transferFeature.acceptedTransfers
+            );
+            const _callAgent = callAgent as TeamsCallAgent;
+            const transferCall = _callAgent.calls.find(
+              (call: TeamsCall) => call.state === 'Connected' && call.id === latestAcceptedTransfer?.callId
+            );
+            if (transferCall) {
+              this.processNewCall(transferCall);
+            }
+          }
+        }
+      };
+      (this.callAgent as TeamsCallAgent).on('callsUpdated', onTeamsCallsUpdated);
+    }
   }
 
   // TODO: update this to include the 'selectedCameraChanged' when calling adds it to the device manager
