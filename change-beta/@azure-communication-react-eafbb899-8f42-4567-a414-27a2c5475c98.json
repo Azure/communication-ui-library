@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Bump stable version to 1.13.1",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

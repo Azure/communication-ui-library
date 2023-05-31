@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix the component_examples snapshots update yml",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "none"
-}
