@@ -51,7 +51,7 @@ export interface FileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Preview URL for the file.
-   * Used in the message bubble for inline images.
+   * Only used for Teams inline images and Teams file sharing.
    */
   previewUrl?: string;
 }
@@ -168,8 +168,16 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId, file) => {
+    async (userId, file: FileMetadata) => {
       if (!props.downloadHandler) {
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        if (file.previewUrl) {
+          // Teams file sharing uses file.previewUrl (link to SharePoint)
+          window.open(file.previewUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
+
+        // ACS to ACS file sharing (not support previewUrl) will use file.url
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
         setShowSpinner(true);
@@ -218,11 +226,12 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                 actionIcon={
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                  ) : (
+                  ) : true &&
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !file.previewUrl ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
-                  )
+                  ) : undefined
                 }
                 actionHandler={() => fileDownloadHandler(userId, file)}
               />
