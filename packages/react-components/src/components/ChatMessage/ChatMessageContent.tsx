@@ -166,7 +166,7 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const htmlStrippedContent = purify.sanitize(props.message.content ?? '');
+  const htmlStrippedContent = purify.sanitize(props.message.content ?? '', { ALLOWED_TAGS: [] });
 
   return htmlStrippedContent
     ? props.message.mine
