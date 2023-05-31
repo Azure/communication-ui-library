@@ -19777,6 +19777,7 @@ packages:
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 14.0.0_react-dom@18.2.0+react@18.2.0
+      '@types/dompurify': 3.0.2
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 16.18.34
@@ -19792,6 +19793,7 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      dompurify: 3.0.3
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
@@ -19836,7 +19838,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-t3uPAp+b9AbLhLx5jGNbdwcAPh8hBEN7CSXh6GFy9dohUoJjrMKUhD6LUbJ6NbfMF/SwW4DK944Fo3cZ8tRzYQ==
+      integrity: sha512-lME+evGL/wZA8kaKSYARehZ5kMzF3tnMh5/OjS8O5yqjiCxQcqAH3Ztyx7VHQ6j5o1pclKSpTjhxG/i2lrqf1g==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
