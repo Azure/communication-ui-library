@@ -251,7 +251,6 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, active: boolean): JSX.Element => {
       return (
         <div
-          role={'menuitem'}
           data-is-focusable={true}
           /* @conditional-compile-remove(mention) */
           data-ui-id={ids.mentionSuggestionItem}
