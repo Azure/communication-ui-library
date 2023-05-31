@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix quickly delete text with mention does not dismiss MentionPopover",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
