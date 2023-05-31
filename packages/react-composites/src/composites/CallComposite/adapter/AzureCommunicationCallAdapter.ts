@@ -12,9 +12,10 @@ import {
   TeamsCall,
   TeamsCallAgent as BetaTeamsCallAgent,
   _isACSCall,
-  _isTeamsCall,
-  AcceptedTransfer
+  _isTeamsCall
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptedTransfer } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { CallCommon } from '@internal/calling-stateful-client';
@@ -267,6 +268,7 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
   return latestCall;
 };
 
+/* @conditional-compile-remove(call-transfer) */
 const findLatestAcceptedTransfer = (acceptedTransfers: {
   [key: string]: AcceptedTransfer;
 }): AcceptedTransfer | undefined => {
