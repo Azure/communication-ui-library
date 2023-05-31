@@ -64,7 +64,7 @@ export const ChatMessageContent = (props: ChatMessageContentProps): JSX.Element 
   }
 };
 
-const purify = DOMPurify(window);
+// const purify = DOMPurify(window);
 
 const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX.Element => {
   return (
@@ -166,7 +166,7 @@ const extractContent = (s: string): string => {
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
-  const htmlStrippedContent = purify.sanitize(props.message.content ?? '', { ALLOWED_TAGS: [] });
+  const htmlStrippedContent = props.message.content ?? ''; // purify.sanitize(props.message.content ?? '', { ALLOWED_TAGS: [] });
 
   return htmlStrippedContent
     ? props.message.mine
