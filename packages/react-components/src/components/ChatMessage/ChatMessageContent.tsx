@@ -23,7 +23,7 @@ import { FileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
-import DOMPurify from 'dompurify';
+// import DOMPurify from 'dompurify';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
