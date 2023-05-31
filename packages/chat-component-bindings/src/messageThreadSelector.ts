@@ -98,13 +98,12 @@ const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachme
 const processTeamsImageContent = (message: ChatMessageWithStatus): string | undefined => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
-    let teamsImageHtmlContent = '';
     const attachments: ChatAttachment[] = message.content?.attachments;
-    attachments.forEach((attachment) => {
-      if (attachment.attachmentType === 'teamsImage') {
-        teamsImageHtmlContent += `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
-      }
-    });
+    const teamsImageHtmlContent = attachments
+      .filter((attachment) => attachment.attachmentType === 'teamsImage')
+      .map((attachment) => generateImageAttachmentImgHtml(attachment))
+      .join('');
+
     if (teamsImageHtmlContent === '') {
       return message.content?.message;
     }
@@ -113,6 +112,10 @@ const processTeamsImageContent = (message: ChatMessageWithStatus): string | unde
     return content.endsWith(trialingEmptyLine) ? content.slice(0, content.lastIndexOf(trialingEmptyLine)) : content;
   }
   return message.content?.message;
+};
+
+const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
+  return `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
 };
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
