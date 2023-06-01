@@ -4,6 +4,7 @@
 import React, { useCallback } from 'react';
 import { Stack } from '@fluentui/react';
 import {
+  containerContextStyles,
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
@@ -85,7 +86,9 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
         <Stack verticalFill styles={scrollableContainer}>
           {ContentRender && (
             <Stack.Item verticalFill styles={scrollableContainerContents}>
-              <ContentRender />
+              <Stack styles={containerContextStyles}>
+                <ContentRender />
+              </Stack>
             </Stack.Item>
           )}
           {OverrideContentRender && (
@@ -97,7 +100,9 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
                   : scrollableContainerContents
               }
             >
-              <OverrideContentRender />
+              <Stack styles={containerContextStyles}>
+                <OverrideContentRender />
+              </Stack>
             </Stack.Item>
           )}
         </Stack>

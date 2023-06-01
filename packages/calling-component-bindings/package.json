@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-component-bindings",
-  "version": "1.5.1-beta.4",
+  "version": "1.5.1-beta.5",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -30,9 +30,9 @@
     "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@internal/acs-ui-common": "1.5.1-beta.4",
-    "@internal/calling-stateful-client": "1.5.1-beta.4",
-    "@internal/react-components": "1.5.1-beta.4",
+    "@internal/acs-ui-common": "1.5.1-beta.5",
+    "@internal/calling-stateful-client": "1.5.1-beta.5",
+    "@internal/react-components": "1.5.1-beta.5",
     "@azure/communication-common": "2.2.0",
     "memoize-one": "~5.2.1",
     "reselect": "~4.0.0"
