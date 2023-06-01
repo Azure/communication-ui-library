@@ -104,12 +104,9 @@ const processTeamsImageContent = (message: ChatMessageWithStatus): string | unde
       .map((attachment) => generateImageAttachmentImgHtml(attachment))
       .join('');
 
-    if (teamsImageHtmlContent === '') {
-      return message.content?.message;
+    if (teamsImageHtmlContent) {
+      return (message.content?.message ?? '') + teamsImageHtmlContent;
     }
-    const content = (message.content?.message ?? '') + teamsImageHtmlContent;
-    const trialingEmptyLine = '\r\n<p>&nbsp;</p>';
-    return content.endsWith(trialingEmptyLine) ? content.slice(0, content.lastIndexOf(trialingEmptyLine)) : content;
   }
   return message.content?.message;
 };
