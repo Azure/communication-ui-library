@@ -5202,6 +5202,12 @@ packages:
     dev: false
     resolution:
       integrity: sha512-RG8AStHlUiV5ysZQKq97copd2UmVYw3/pRMLefISZ3S1hK104Cwm7iLQ3fTKx+lsUH2CE8FlLaYeEA2LSeqYUA==
+  /@types/dompurify/3.0.2:
+    dependencies:
+      '@types/trusted-types': 2.0.3
+    dev: false
+    resolution:
+      integrity: sha512-YBL4ziFebbbfQfH5mlC+QTJsvh0oJUrWbmxKMyEdL7emlHJqGR2Qb34TEFKj+VCayBvjKy3xczMFNhugThUsfQ==
   /@types/eslint-scope/3.7.4:
     dependencies:
       '@types/eslint': 8.37.0
@@ -5532,6 +5538,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-SBwbxYoyPIvxHbeHxTZX2Pe/74F/tX2/D3mMvzabdeJ25bBojfW0TyB8BHrbq/9zaaKICJZjLP+8r6AeZMFCuQ==
+  /@types/trusted-types/2.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-NfQ4gyz38SL8sDNrSixxU2Os1a5xcdFxipAFxYEuLUlvU2uDwS4NUpsImcf1//SlWItCVMMLiylsxbmNMToV/g==
   /@types/tunnel/0.0.3:
     dependencies:
       '@types/node': 20.1.2
@@ -8819,6 +8829,10 @@ packages:
       node: '>= 4'
     resolution:
       integrity: sha512-cgwlv/1iFQiFnU96XXgROh8xTeetsnJiDsTc7TYCLFd9+/WNkIqPTxiM/8pSd8VIrhXGTf1Ny1q1hquVqDJB5w==
+  /dompurify/3.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-axQ9zieHLnAnHh0sfAamKYiqXMJAVwu+LM/alQ7WDagoWessyWvMSFyW65CqF3owufNu8HBcE4cM2Vflu7YWcQ==
   /domutils/2.8.0:
     dependencies:
       dom-serializer: 1.4.1
@@ -19763,6 +19777,7 @@ packages:
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 14.0.0_react-dom@18.2.0+react@18.2.0
+      '@types/dompurify': 3.0.2
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 16.18.34
@@ -19778,6 +19793,7 @@ packages:
       copyfiles: 2.4.1
       cpx: 1.5.0
       cross-env: 7.0.3
+      dompurify: 3.0.3
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
@@ -19822,7 +19838,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-t3uPAp+b9AbLhLx5jGNbdwcAPh8hBEN7CSXh6GFy9dohUoJjrMKUhD6LUbJ6NbfMF/SwW4DK944Fo3cZ8tRzYQ==
+      integrity: sha512-lME+evGL/wZA8kaKSYARehZ5kMzF3tnMh5/OjS8O5yqjiCxQcqAH3Ztyx7VHQ6j5o1pclKSpTjhxG/i2lrqf1g==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -19975,6 +19991,7 @@ packages:
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 14.0.0_react-dom@18.2.0+react@18.2.0
+      '@types/dompurify': 3.0.2
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 16.18.34
@@ -19994,6 +20011,7 @@ packages:
       core-js: 3.30.2
       cpx: 1.5.0
       cross-env: 7.0.3
+      dompurify: 3.0.3
       env-cmd: 10.1.0
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
@@ -20037,7 +20055,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-LclRnz8BBjEG5T5T0YGRL2L807RIzoM8ZsgWHWQ+rQsY7IzLFc0Nm2bs0C+nZOeWeDwIh9QGpmwOamGafWKp5Q==
+      integrity: sha512-Tmasp25ybo4rcnLB+SDAkcpHdMQn6PLWGc0HDLPfeLDNCiPB4PFo8OumtVSLL6MHCGivn6PxAeqnRLL2qJFmBA==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
