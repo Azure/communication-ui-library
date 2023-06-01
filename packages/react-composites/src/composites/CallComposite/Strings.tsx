@@ -516,4 +516,14 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text to indicate that local user is being transferred by the transferor
+   */
+  transferPageTransferringText?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text to indicate that local user is connecting to the transfer target
+   */
+  transferPageConnectingText?: string;
 }

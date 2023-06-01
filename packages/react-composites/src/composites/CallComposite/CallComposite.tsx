@@ -18,6 +18,8 @@ import { getPage } from './selectors/baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
+/* @conditional-compile-remove(call-transfer) */
+import { TransferPage } from './pages/TransferPage';
 import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
@@ -340,6 +342,18 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'lobby':
       pageElement = (
         <LobbyPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+        />
+      );
+      break;
+    /* @conditional-compile-remove(call-transfer) */
+    case 'transferring':
+      pageElement = (
+        <TransferPage
           mobileView={props.mobileView}
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
