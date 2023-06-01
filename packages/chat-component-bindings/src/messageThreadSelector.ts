@@ -114,6 +114,7 @@ const processTeamsImageContent = (message: ChatMessageWithStatus): string | unde
   return message.content?.message;
 };
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
   return `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
 };
