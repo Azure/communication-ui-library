@@ -353,13 +353,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, 500);
 
   /* @conditional-compile-remove(mention) */
-  useEffect(() => {
-    return () => {
-      debouncedQueryUpdate.cancel();
-    };
-  }, [debouncedQueryUpdate]);
-
-  /* @conditional-compile-remove(mention) */
   // Update selections index in mention to navigate by words
   const updateSelectionIndexesWithMentionIfNeeded = useCallback(
     (
@@ -526,6 +519,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       currentSelectionEnd?: number,
       updatedValue?: string
     ): Promise<void> => {
+      debouncedQueryUpdate.cancel();
       if (event.currentTarget === null) {
         return;
       }
