@@ -276,19 +276,7 @@ describe('Message should display Mention correctly', () => {
       }
     ];
 
-    const { container } = render(
-      <MessageThread
-        userId={user2Id}
-        messages={messages}
-        mentionOptions={{
-          displayOptions: {
-            onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
-            }
-          }
-        }}
-      />
-    );
+    const { container } = render(<MessageThread userId={user2Id} messages={messages} />);
 
     expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
@@ -328,19 +316,7 @@ describe('Message should display Mention correctly', () => {
       }
     ];
 
-    const { container, rerender } = render(
-      <MessageThread
-        userId={user2Id}
-        messages={messages}
-        mentionOptions={{
-          displayOptions: {
-            onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
-            }
-          }
-        }}
-      />
-    );
+    const { container, rerender } = render(<MessageThread userId={user2Id} messages={messages} />);
 
     expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
