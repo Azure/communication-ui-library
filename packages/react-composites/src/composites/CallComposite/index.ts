@@ -87,3 +87,6 @@ export type {
 
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './adapter';
+
+/* @conditional-compile-remove(call-transfer) */
+export type { TransferRequestedListener } from './adapter';

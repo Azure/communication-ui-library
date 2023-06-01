@@ -3,10 +3,11 @@
 
 import React, { useState, ReactNode, FormEvent, useCallback, useRef } from 'react';
 /* @conditional-compile-remove(mention) */
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(mention) */
 import { ComponentStrings, useLocale } from '../localization';
-
+/* @conditional-compile-remove(mention) */
+import { Announcer } from './Announcer';
 import {
   Stack,
   TextField,
@@ -166,7 +167,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
-  const mergedTextFiledStyle = mergeStyles(
+  const mergedInputFieldStyle = mergeStyles(
     inputBoxStyle,
     inputClassName,
     props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
@@ -274,9 +275,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         return;
       }
       if (ev.key === 'ArrowUp') {
-        ev.preventDefault();
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0) {
+          ev.preventDefault();
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? mentionSuggestions.length - 1
@@ -284,14 +285,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           setActiveSuggestionIndex(newActiveIndex);
         }
       } else if (ev.key === 'ArrowDown') {
-        ev.preventDefault();
         /* @conditional-compile-remove(mention) */
         if (mentionSuggestions.length > 0) {
+          ev.preventDefault();
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? 0
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
           setActiveSuggestionIndex(newActiveIndex);
+        }
+      } else if (ev.key === 'Escape') {
+        /* @conditional-compile-remove(mention) */
+        if (mentionSuggestions.length > 0) {
+          updateMentionSuggestions([]);
         }
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
@@ -320,7 +326,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       /* @conditional-compile-remove(mention) */
       activeSuggestionIndex,
       /* @conditional-compile-remove(mention) */
-      onSuggestionSelected
+      onSuggestionSelected,
+      /* @conditional-compile-remove(mention) */
+      updateMentionSuggestions
     ]
   );
 
@@ -338,6 +346,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
     } else if (activeSuggestionIndex === undefined) {
+      // Set the active to the first, if it's not already set
       setActiveSuggestionIndex(0);
     }
     updateMentionSuggestions(suggestions);
@@ -677,6 +686,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [setTargetSelection, targetSelection, setShouldHandleOnMouseDownDuringSelect, interactionStartPoint, tagsValue]
   );
 
+  /* @conditional-compile-remove(mention) */
+  const announcerText = useMemo(() => {
+    if (activeSuggestionIndex === undefined) {
+      return undefined;
+    }
+    const currentMention = mentionSuggestions[activeSuggestionIndex ?? 0];
+    return currentMention?.displayText.length > 0
+      ? currentMention?.displayText
+      : localeStrings.participantItem.displayNamePlaceholder;
+  }, [activeSuggestionIndex, mentionSuggestions, localeStrings.participantItem.displayNamePlaceholder]);
+
   return (
     <Stack className={mergedRootStyle}>
       <div className={mergedTextContainerStyle}>
@@ -695,6 +715,11 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             />
           )
         }
+        {
+          /* @conditional-compile-remove(mention) */ announcerText !== undefined && (
+            <Announcer announcementString={announcerText} ariaLive={'polite'} />
+          )
+        }
         <TextField
           autoFocus={props.autoFocus === 'sendBoxTextField'}
           data-ui-id={dataUiId}
@@ -704,7 +729,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           resizable={false}
           componentRef={textFieldRef}
           id={id}
-          inputClassName={mergedTextFiledStyle}
+          inputClassName={mergedInputFieldStyle}
           placeholder={placeholderText}
           value={getInputFieldTextValue()}
           onChange={(e, newValue) => {
@@ -789,6 +814,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCaretIndex(undefined);
             setSelectionStartValue(null);
             setSelectionEndValue(null);
+            // Dismiss the suggestions on blur, after enough time to select by mouse if needed
+            setTimeout(() => {
+              setMentionSuggestions([]);
+            }, 200);
           }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
@@ -1616,9 +1645,8 @@ const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
  */
 const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
-  const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
-  return '<' + MSFT_MENTION_TAG + idHTML + displayTextHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
+  return '<' + MSFT_MENTION_TAG + idHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
 };
 
 /* @conditional-compile-remove(mention) */

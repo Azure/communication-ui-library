@@ -1,6 +1,6 @@
 {
-  "type": "minor",
-  "comment": "Add northstar wrapper internal package for react 18 migration interim support",
+  "type": "prerelease",
+  "comment": "Remove displayText from msft-mention",
   "packageName": "@azure/communication-react",
   "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "patch"
