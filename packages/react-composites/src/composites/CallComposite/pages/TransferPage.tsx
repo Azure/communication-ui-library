@@ -7,7 +7,7 @@ import { useLocale } from '../../localization';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
-import { getCallId, getRemoteParticipants } from '../selectors/baseSelectors';
+import { getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-transfer) */
 import { CallState } from '@internal/calling-stateful-client';
 import { getTransferCall } from '../selectors/baseSelectors';
@@ -20,7 +20,6 @@ export const TransferPage = (props: LobbyPageProps & { onRenderAvatar?: OnRender
   const errorBarProps = usePropsFor(ErrorBar);
   const strings = useLocale().strings.call;
   const remoteParticipants = useSelector(getRemoteParticipants);
-  const callId = useSelector(getCallId);
   let transferCall: CallState | undefined;
   /* @conditional-compile-remove(call-transfer) */
   transferCall = useSelector(getTransferCall);
@@ -34,20 +33,16 @@ export const TransferPage = (props: LobbyPageProps & { onRenderAvatar?: OnRender
 
   const pageState: TransferPageState = useMemo(() => {
     if (transferCall !== undefined) {
-      if (callId !== transferCall.id) {
-        if (['Ringing', 'Connected'].includes(transferCall.state)) {
-          return 'connecting';
-        } else {
-          return 'transferring';
-        }
-      } else {
+      if (['Ringing', 'Connected'].includes(transferCall.state)) {
         return 'connecting';
+      } else {
+        return 'transferring';
       }
     }
     return 'transferring';
-  }, [callId, transferCall?.id, transferCall?.state]);
+  }, [transferCall?.id, transferCall?.state]);
 
-  const transferParticipant = pageState === 'transferring' ? transferor : transferCall?.remoteParticipants[0];
+  const transferTileParticipant = pageState === 'transferring' ? transferor : transferCall?.remoteParticipants[0];
 
   return (
     <CallArrangement
@@ -62,8 +57,8 @@ export const TransferPage = (props: LobbyPageProps & { onRenderAvatar?: OnRender
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
         <TransferTile
-          displayName={transferParticipant?.displayName}
-          initialsName={transferParticipant?.displayName}
+          displayName={transferTileParticipant?.displayName}
+          initialsName={transferTileParticipant?.displayName}
           statusString={
             pageState === 'connecting' ? strings.transferPageConnectingText : strings.transferPageConnectingText
           }
