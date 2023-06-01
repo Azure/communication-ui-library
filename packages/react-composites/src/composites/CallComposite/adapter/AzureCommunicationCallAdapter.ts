@@ -383,9 +383,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
               removedCallState.transferFeature.acceptedTransfers
             );
             const _callAgent = callAgent as CallAgent;
-            const transferCall = _callAgent.calls.find(
-              (call: Call) => call.state === 'Connected' && call.id === latestAcceptedTransfer?.callId
-            );
+            const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
               this.processNewCall(transferCall);
             }
@@ -403,9 +401,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
               removedCallState.transferFeature.acceptedTransfers
             );
             const _callAgent = callAgent as TeamsCallAgent;
-            const transferCall = _callAgent.calls.find(
-              (call: TeamsCall) => call.state === 'Connected' && call.id === latestAcceptedTransfer?.callId
-            );
+            const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
               this.processNewCall(transferCall);
             }
