@@ -207,7 +207,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   const onSuggestionSelected = useCallback(
     (suggestion: Mention) => {
-      console.log('onSuggestionSelected', suggestion);
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
