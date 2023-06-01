@@ -80,7 +80,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
     id: attachment.id,
     name: attachment.name ?? '',
     extension: attachment.contentType ?? '',
-    url: attachment.url,
+    url: attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url,
     previewUrl: attachment.previewUrl
   }));
 };
