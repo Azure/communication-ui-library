@@ -207,6 +207,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   const onSuggestionSelected = useCallback(
     (suggestion: Mention) => {
+      console.log('onSuggestionSelected', suggestion);
       let selectionEnd = textFieldRef?.current?.selectionEnd || -1;
       if (selectionEnd < 0) {
         selectionEnd = 0;
@@ -814,8 +815,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCaretIndex(undefined);
             setSelectionStartValue(null);
             setSelectionEndValue(null);
-            // Dismiss the suggestions on blur
-            setMentionSuggestions([]);
+            // Dismiss the suggestions on blur, after enough time to select by mouse if needed
+            setTimeout(() => {
+              setMentionSuggestions([]);
+            }, 200);
           }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
