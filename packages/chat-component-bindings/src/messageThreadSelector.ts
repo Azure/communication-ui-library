@@ -80,7 +80,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
     id: attachment.id,
     name: attachment.name ?? '',
     extension: attachment.contentType ?? '',
-    url: attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url,
+    url: extractAttachmentUrl(attachment),
     previewUrl: attachment.previewUrl
   }));
 };
@@ -95,7 +95,12 @@ const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachme
   return 'unknown';
 };
 
-const processTeamsImageContent = (message: ChatMessageWithStatus): string | undefined => {
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const extractAttachmentUrl = (attachment: ChatAttachment): string => {
+  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
+};
+
+const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
@@ -165,7 +170,7 @@ const convertToUiChatMessage = (
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
-    content: processTeamsImageContent(message),
+    content: processChatMessageContent(message),
     contentType: sanitizedMessageContentType(message.type),
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,

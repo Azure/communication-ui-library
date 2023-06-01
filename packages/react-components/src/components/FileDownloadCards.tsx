@@ -188,8 +188,6 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     },
     [props]
   );
-  // Its safe to assume that if the first item in the fileMetadata is not a fileSharing type we don't want to display the FileDownloadCard.
-  // Since you can't have both fileSharing and teamsInlineImage in the same message.
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
