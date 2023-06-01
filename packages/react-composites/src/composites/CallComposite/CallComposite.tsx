@@ -359,6 +359,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          onRenderAvatar={props.onRenderAvatar}
         />
       );
       break;
