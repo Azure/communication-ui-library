@@ -256,7 +256,7 @@ describe('Message should display Mention correctly', () => {
         senderId: user1Id,
         senderDisplayName: 'Kat Larsson',
         messageId: generateGUID(),
-        content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}"></msft-mention>, can you help me with my internet connection?`,
+        content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}">${user2Name}</msft-mention>, can you help me with my internet connection?`,
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
         attached: false,
@@ -308,7 +308,7 @@ describe('Message should display Mention correctly', () => {
         senderId: user1Id,
         senderDisplayName: 'Kat Larsson',
         messageId: generateGUID(),
-        content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}"></msft-mention>, can you help me with my internet connection?`,
+        content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}">${user2Name}</msft-mention>, can you help me with my internet connection?`,
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
         attached: false,
@@ -346,7 +346,7 @@ describe('Message should display Mention correctly', () => {
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
 
     // edit message
-    const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}" displayText="${user2Name}"></msft-mention> and <msft-mention id="${user3Id}" displayText="${user3Name}"></msft-mention>, can you help me with my internet connection?`;
+    const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}" displayText="${user2Name}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}" displayText="${user3Name}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
     messages[0].content = message1ContentAfterEdit;
     messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;
@@ -427,11 +427,6 @@ describe('Message should display Mention correctly', () => {
         messages={messages}
         onUpdateMessage={onUpdateMessageCallback}
         mentionOptions={{
-          displayOptions: {
-            onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
-            }
-          },
           lookupOptions: {
             onQueryUpdated: onQueryUpdated
           }
@@ -461,7 +456,7 @@ describe('Message should display Mention correctly', () => {
     // Type ' @' in edit box to show mentions popover menu
     const editBox = await screen.getByPlaceholderText('Edit your message');
     await waitFor(async () => {
-      userEvent.keyboard(' @');
+      await userEvent.keyboard(' @');
     });
 
     // Check that Everyone is an option
@@ -495,11 +490,6 @@ describe('Message should display Mention correctly', () => {
         messages={messages}
         onUpdateMessage={onUpdateMessageCallback}
         mentionOptions={{
-          displayOptions: {
-            onRenderMention: (mention, defaultOnMentionRender) => {
-              return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
-            }
-          },
           lookupOptions: {
             onQueryUpdated: onQueryUpdated
           }
