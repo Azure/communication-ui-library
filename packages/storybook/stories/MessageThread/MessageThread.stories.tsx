@@ -91,7 +91,7 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
 const mentionTag = `
-<msft-mention id="<id>" displayText="<display text>">
+<msft-mention id='<id>'>
   Displayable Text
 </msft-mention>
 `;
