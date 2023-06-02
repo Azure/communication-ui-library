@@ -10,7 +10,7 @@ import React from 'react';
  */
 export interface _FileCardGroupProps {
   children: React.ReactNode;
-  ariaLabel: string;
+  ariaLabel?: string;
 }
 
 /**
