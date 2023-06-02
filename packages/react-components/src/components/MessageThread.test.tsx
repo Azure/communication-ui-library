@@ -327,6 +327,7 @@ describe('Message should display Mention correctly', () => {
     messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;
     let onRenderMentionCount = 0;
+    const processedMentionIds: string[] = [];
 
     rerender(
       <MessageThread
@@ -336,6 +337,7 @@ describe('Message should display Mention correctly', () => {
           displayOptions: {
             onRenderMention: (mention, defaultOnMentionRender) => {
               onRenderMentionCount++;
+              processedMentionIds.push(mention.id);
               return <span key={generateGUID()}>{defaultOnMentionRender(mention)}</span>;
             }
           }
@@ -346,8 +348,10 @@ describe('Message should display Mention correctly', () => {
     expect(onRenderMentionCount).toEqual(expectedOnRenderMentionCount);
     expect(container.querySelector(`#${user2Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
+    expect(processedMentionIds[0]).toEqual(user2Id);
     expect(container.querySelector(`#${user3Id}`)?.nodeName.toLowerCase()).toEqual(MSFT_MENTION);
     expect(container.querySelector(`#${user3Id}`)?.textContent).toEqual(user3Name);
+    expect(processedMentionIds[1]).toEqual(user3Id);
   });
 
   test('Edit Message with @ will show MentionPopover and mentions in edited message', async () => {
