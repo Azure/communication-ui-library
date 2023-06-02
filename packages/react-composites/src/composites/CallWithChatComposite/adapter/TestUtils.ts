@@ -238,6 +238,10 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCountFeature: {
+      optimalVideoCount: 1
     }
   };
   return call;
