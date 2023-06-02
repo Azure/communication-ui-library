@@ -198,7 +198,7 @@ class CallContext {
       ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
       : undefined;
     /* @conditional-compile-remove(call-transfer) */
-    let transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
+    const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     const newPage = getCallCompositePage(
       call,

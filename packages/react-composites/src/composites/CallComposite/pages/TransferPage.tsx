@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import {
-  IPersonaStyles,
-  IStyleFunctionOrObject,
   IPersonaStyleProps,
   IStyle,
+  IStyleFunctionOrObject,
   Spinner,
   SpinnerSize,
   Stack,
@@ -18,36 +17,41 @@ import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipants } from '../selectors/baseSelectors';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(call-transfer) */
 import { CallState } from '@internal/calling-stateful-client';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+/* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
 import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
+/* @conditional-compile-remove(call-transfer) */
 type TransferPageState = 'transferring' | 'connecting';
 
+/**
+ * @private
+ */
 export const TransferPage = (
   props: LobbyPageProps & {
+    /** Render component function to replace the default Persona Icon representing the transferor or transfer target. */
     onRenderAvatar?: OnRenderAvatarCallback;
+    /** Callback function that can be used to provide custom data to Persona Icon rendered */
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   }
 ): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const strings = useLocale().strings.call;
   const remoteParticipants = useSelector(getRemoteParticipants);
-  let transferCall: CallState | undefined;
   /* @conditional-compile-remove(call-transfer) */
-  transferCall = useSelector(getTransferCall);
+  const transferCall = useSelector(getTransferCall);
 
   // Reduce the controls shown when mobile view is enabled.
-  let callControlOptions = props.mobileView
+  const callControlOptions = props.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
 
-  const transferor = remoteParticipants ? Object.values(remoteParticipants)[0] : undefined;
-
+  /* @conditional-compile-remove(call-transfer) */
   const pageState: TransferPageState = useMemo(() => {
     if (transferCall !== undefined) {
       if (['Ringing', 'Connected'].includes(transferCall.state)) {
@@ -59,7 +63,12 @@ export const TransferPage = (
     return 'transferring';
   }, [transferCall, transferCall?.state]);
 
-  const transferTileParticipant = pageState === 'transferring' ? transferor : transferCall?.remoteParticipants[0];
+  const transferor = remoteParticipants ? Object.values(remoteParticipants)[0] : undefined;
+  let transferTileParticipant = transferor;
+  /* @conditional-compile-remove(call-transfer) */
+  if (pageState === 'connecting') {
+    transferTileParticipant = transferCall?.remoteParticipants[0];
+  }
 
   return (
     <CallArrangement
@@ -79,10 +88,11 @@ export const TransferPage = (
           }
           displayName={transferTileParticipant?.displayName}
           initialsName={transferTileParticipant?.displayName}
+          /* @conditional-compile-remove(call-transfer) */
           statusText={
             pageState === 'connecting' ? strings.transferPageConnectingText : strings.transferPageConnectingText
           }
-          onRenderPlaceholder={props.onRenderAvatar}
+          onRenderAvatar={props.onRenderAvatar}
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
         />
       )}
@@ -98,18 +108,18 @@ interface TransferTileProps {
   children?: React.ReactNode;
   /** User id for `onFetchAvatarPersonaData` callback to provide custom data to avatars rendered */
   userId?: string;
-  /** Custom render Component function for no video is available. Render a Persona Icon if undefined. */
-  onRenderPlaceholder?: OnRenderAvatarCallback;
-  /** A callback function that can be used to provide custom data to avatars rendered */
+  /** Render component function to replace the default Persona Icon representing the transferor or transfer target. */
+  onRenderAvatar?: OnRenderAvatarCallback;
+  /** Callback function that can be used to provide custom data to Persona Icon rendered */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   /**
-   * Display Name of the Participant to be shown in the label.
+   * Display name of the transferor or transfer target to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
    */
   displayName?: string;
   /**
-   * Name of the participant used to generate initials for the avatar. For example, a name `John Doe` will display `JD`
-   * as initials.
+   * Name of the transferor or transfer target used to generate initials for the avatar. For example, a name
+   * `John Doe` will display `JD` as initials.
    * @remarks `displayName` is used if this property is not specified.
    */
   initialsName?: string;
@@ -122,7 +132,7 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
     displayName,
     initialsName,
     userId,
-    onRenderPlaceholder,
+    onRenderAvatar,
     onFetchAvatarPersonaData,
     statusText: statusString
   } = props;
@@ -154,20 +164,20 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
       styles: defaultPersonaStyles,
       hidePersonaDetails: true
     }),
-    [userId, initialsName, displayName, personaSize, defaultPersonaStyles]
+    [userId, initialsName, displayName, personaSize]
   );
 
-  const onRenderAvatar = useCallback(() => {
+  const defaultOnRenderAvatar = useCallback(() => {
     return personaSize ? <AvatarPersona {...placeholderOptions} dataProvider={onFetchAvatarPersonaData} /> : <></>;
   }, [userId, placeholderOptions, onFetchAvatarPersonaData, personaSize]);
 
-  const defaultAvatar = useMemo(() => onRenderAvatar(), [onRenderAvatar]);
+  const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);
 
   return (
     <div ref={tileRef} className={mergeStyles(videoContainerStyles)} data-is-focusable={true}>
       <Stack className={mergeStyles(tileContentStyles)} tokens={{ childrenGap: '1rem' }}>
         <Stack horizontalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
-          {onRenderPlaceholder ? onRenderPlaceholder(userId ?? '', placeholderOptions, onRenderAvatar) : defaultAvatar}
+          {onRenderAvatar ? onRenderAvatar(userId ?? '', placeholderOptions, defaultOnRenderAvatar) : defaultAvatar}
           <Text className={mergeStyles({ textAlign: 'center', fontSize: '1.5rem', fontWeight: 400 })}>
             {displayName ?? 'Unknown'}
           </Text>

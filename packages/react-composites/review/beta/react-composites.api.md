@@ -492,6 +492,8 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageConnectingText?: string;
+    transferPageTransferringText?: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
