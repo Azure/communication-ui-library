@@ -203,8 +203,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       message,
       /* @conditional-compile-remove(file-sharing) */
       props,
-      /* @conditional-compile-remove(file-sharing) */
-      locale,
       fileDownloadHandler
     ]
   );
