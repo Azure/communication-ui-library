@@ -39,6 +39,7 @@ export type VideoGallerySelector = (
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
+  /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
 };
 
@@ -56,6 +57,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getDisplayName,
     getIdentifier,
     getDominantSpeakers,
+    /* @conditional-compile-remove(optimal-video-count) */
     getOptimalVideoCount
   ],
   (
@@ -67,6 +69,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     displayName: string | undefined,
     identifier: string,
     dominantSpeakers,
+    /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount
   ) => {
     const screenShareRemoteParticipant =
@@ -95,6 +98,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),
       dominantSpeakers: dominantSpeakerIds,
+      /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount
     };
   }
