@@ -353,6 +353,34 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     updateMentionSuggestions(suggestions);
   }, 500);
 
+  const getUpdatedSelectionStartIndexOrEndIndex = useCallback(
+    (
+      inputTextValue: string,
+      tagsValue: TagData[],
+      selectionIndex: number,
+      selectionValue?: number
+    ): number | undefined => {
+      const mentionTag = findMentionTagForSelection(tagsValue, selectionIndex);
+      // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
+      if (
+        mentionTag !== undefined &&
+        mentionTag.plainTextBeginIndex !== undefined &&
+        selectionIndex > mentionTag.plainTextBeginIndex &&
+        selectionIndex < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
+      ) {
+        // get updated selection index
+        const newSelectionIndex = findNewSelectionIndexForMention({
+          tag: mentionTag,
+          textValue: inputTextValue,
+          currentSelectionIndex: selectionIndex,
+          previousSelectionIndex: selectionValue ?? inputTextValue.length
+        });
+        return newSelectionIndex;
+      }
+    },
+    []
+  );
+
   /* @conditional-compile-remove(mention) */
   // Update selections index in mention to navigate by words
   const updateSelectionIndexesWithMentionIfNeeded = useCallback(
@@ -371,61 +399,38 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         event.currentTarget.selectionStart !== -1
       ) {
         // just a caret movement/usual typing or deleting
-        const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-        // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
-        if (
-          mentionTag !== undefined &&
-          mentionTag.plainTextBeginIndex !== undefined &&
-          event.currentTarget.selectionStart > mentionTag.plainTextBeginIndex &&
-          event.currentTarget.selectionStart < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
-        ) {
-          // get updated selection index
-          const newSelectionIndex = findNewSelectionIndexForMention({
-            tag: mentionTag,
-            textValue: inputTextValue,
-            currentSelectionIndex: event.currentTarget.selectionStart,
-            previousSelectionIndex: selectionStartValue ?? inputTextValue.length
-          });
-          updatedStartIndex = newSelectionIndex;
-          updatedEndIndex = newSelectionIndex;
-        }
+        updatedStartIndex = getUpdatedSelectionStartIndexOrEndIndex(
+          inputTextValue,
+          tagsValue,
+          event.currentTarget.selectionStart,
+          selectionStartValue
+        );
+
+        updatedEndIndex = getUpdatedSelectionStartIndexOrEndIndex(
+          inputTextValue,
+          tagsValue,
+          event.currentTarget.selectionStart,
+          selectionEndValue
+        );
       } else if (event.currentTarget.selectionStart !== event.currentTarget.selectionEnd) {
         // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
         if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
           // the selection start is changed
-          const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionStart);
-          // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
-          if (
-            mentionTag !== undefined &&
-            mentionTag.plainTextBeginIndex !== undefined &&
-            event.currentTarget.selectionStart > mentionTag.plainTextBeginIndex &&
-            event.currentTarget.selectionStart < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
-          ) {
-            updatedStartIndex = findNewSelectionIndexForMention({
-              tag: mentionTag,
-              textValue: inputTextValue,
-              currentSelectionIndex: event.currentTarget.selectionStart,
-              previousSelectionIndex: selectionStartValue ?? inputTextValue.length
-            });
-          }
+          updatedStartIndex = getUpdatedSelectionStartIndexOrEndIndex(
+            inputTextValue,
+            tagsValue,
+            event.currentTarget.selectionStart,
+            selectionStartValue
+          );
         }
         if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
           // the selection end is changed
-          const mentionTag = findMentionTagForSelection(tagsValue, event.currentTarget.selectionEnd);
-          // don't include boundary cases to show correct selection, otherwise it will show selection at mention boundaries
-          if (
-            mentionTag !== undefined &&
-            mentionTag.plainTextBeginIndex !== undefined &&
-            event.currentTarget.selectionEnd > mentionTag.plainTextBeginIndex &&
-            event.currentTarget.selectionEnd < (mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex)
-          ) {
-            updatedEndIndex = findNewSelectionIndexForMention({
-              tag: mentionTag,
-              textValue: inputTextValue,
-              currentSelectionIndex: event.currentTarget.selectionEnd,
-              previousSelectionIndex: selectionEndValue ?? inputTextValue.length
-            });
-          }
+          updatedEndIndex = getUpdatedSelectionStartIndexOrEndIndex(
+            inputTextValue,
+            tagsValue,
+            event.currentTarget.selectionEnd,
+            selectionEndValue
+          );
         }
       }
       // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
@@ -441,7 +446,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       setSelectionStartValue(updatedStartIndex);
       setSelectionEndValue(updatedEndIndex);
     },
-    [setSelectionStartValue, setSelectionEndValue]
+    [getUpdatedSelectionStartIndexOrEndIndex]
   );
 
   /* @conditional-compile-remove(mention) */
