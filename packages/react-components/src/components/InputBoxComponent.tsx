@@ -518,53 +518,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     ]
   );
 
-  /* @conditional-compile-remove(mention) */
-  const handleOnChange = useCallback(
+  const updateCurrentTriggerStartIndexAndQuery = useCallback(
     async (
+      newValue: string,
+      triggerText: string,
+      currentSelectionEndValue: number,
       event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-      tagsValue: TagData[],
-      htmlTextValue: string,
-      inputTextValue: string,
-      currentTriggerStartIndex: number,
-      previousSelectionStart?: number,
-      previousSelectionEnd?: number,
-      currentSelectionStart?: number,
-      currentSelectionEnd?: number,
-      updatedValue?: string
-    ): Promise<void> => {
-      debouncedQueryUpdate.cancel();
-      if (event.currentTarget === null) {
-        return;
-      }
-      // handle backspace change
-      // onSelect is not called for backspace as selection is not changed and local caret index is outdated
-      setCaretIndex(undefined);
-      const newValue = updatedValue ?? '';
-      const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
-
-      const newTextLength = newValue.length;
-      // updating indexes to set between 0 and text length, otherwise selectionRange won't be set correctly
-      const currentSelectionEndValue = getValidatedIndexInRange({
-        min: 0,
-        max: newTextLength,
-        currentValue: currentSelectionEnd
-      });
-      const currentSelectionStartValue = getValidatedIndexInRange({
-        min: 0,
-        max: newTextLength,
-        currentValue: currentSelectionStart
-      });
-      const previousSelectionStartValue = getValidatedIndexInRange({
-        min: 0,
-        max: inputTextValue.length,
-        currentValue: previousSelectionStart
-      });
-      const previousSelectionEndValue = getValidatedIndexInRange({
-        min: 0,
-        max: inputTextValue.length,
-        currentValue: previousSelectionEnd
-      });
-
+      currentTriggerStartIndex: number
+    ) => {
       // If we are enabled for lookups,
       if (mentionLookupOptions !== undefined) {
         // Look at the range of the change for a trigger character
@@ -602,6 +563,22 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           }
         }
       }
+    },
+    [debouncedQueryUpdate, mentionLookupOptions, updateMentionSuggestions]
+  );
+
+  const getUpdatedNewValueForOnChange = useCallback(
+    (
+      newValue: string,
+      triggerText: string,
+      currentSelectionEndValue: number,
+      tagsValue: TagData[],
+      htmlTextValue: string,
+      inputTextValue: string,
+      previousSelectionStart?: number,
+      previousSelectionEnd?: number,
+      currentSelectionStart?: number
+    ): string => {
       let result = '';
       if (tagsValue.length === 0) {
         // no tags in the string and newValue should be used as a result string
@@ -609,6 +586,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       } else {
         // there are tags in the text value and htmlTextValue is html string
         // find diff between old and new text
+        const currentSelectionStartValue = getValidatedIndexInRange({
+          min: 0,
+          max: newValue.length,
+          currentValue: currentSelectionStart
+        });
+        const previousSelectionStartValue = getValidatedIndexInRange({
+          min: 0,
+          max: inputTextValue.length,
+          currentValue: previousSelectionStart
+        });
+        const previousSelectionEndValue = getValidatedIndexInRange({
+          min: 0,
+          max: inputTextValue.length,
+          currentValue: previousSelectionEnd
+        });
         const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
           oldText: inputTextValue,
           newText: newValue,
@@ -637,10 +629,71 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           setSelectionStartValue(updatedContent.updatedSelectionIndex);
         }
       }
-
-      onChange && onChange(event, result);
+      return result;
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
+    []
+  );
+
+  /* @conditional-compile-remove(mention) */
+  const handleOnChange = useCallback(
+    async (
+      event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
+      tagsValue: TagData[],
+      htmlTextValue: string,
+      inputTextValue: string,
+      currentTriggerStartIndex: number,
+      previousSelectionStart?: number,
+      previousSelectionEnd?: number,
+      currentSelectionStart?: number,
+      currentSelectionEnd?: number,
+      updatedValue?: string
+    ): Promise<void> => {
+      debouncedQueryUpdate.cancel();
+      if (event.currentTarget === null) {
+        return;
+      }
+      // handle backspace change
+      // onSelect is not called for backspace as selection is not changed and local caret index is outdated
+      setCaretIndex(undefined);
+      const newValue = updatedValue ?? '';
+      const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
+
+      // updating indexes to set between 0 and text length, otherwise selectionRange won't be set correctly
+      const currentSelectionEndValue = getValidatedIndexInRange({
+        min: 0,
+        max: newValue.length,
+        currentValue: currentSelectionEnd
+      });
+
+      await updateCurrentTriggerStartIndexAndQuery(
+        newValue,
+        triggerText,
+        currentSelectionEndValue,
+        event,
+        currentTriggerStartIndex
+      );
+
+      const updatedNewValue = getUpdatedNewValueForOnChange(
+        newValue,
+        triggerText,
+        currentSelectionEndValue,
+        tagsValue,
+        htmlTextValue,
+        inputTextValue,
+        previousSelectionStart,
+        previousSelectionEnd,
+        currentSelectionStart
+      );
+
+      onChange && onChange(event, updatedNewValue);
+    },
+    [
+      debouncedQueryUpdate,
+      mentionLookupOptions?.trigger,
+      updateCurrentTriggerStartIndexAndQuery,
+      getUpdatedNewValueForOnChange,
+      onChange
+    ]
   );
 
   const getInputFieldTextValue = (): string => {
@@ -1019,6 +1072,7 @@ const findNewSelectionIndexForMention = (props: NewSelectionIndexForMentionProps
     currentSelectionIndex === previousSelectionIndex ||
     tag.plainTextEndIndex === undefined
   ) {
+    // return the current selection since it is not a mention tag or selection is not changed
     return currentSelectionIndex;
   }
   let spaceIndex = 0;
