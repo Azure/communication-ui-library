@@ -61,7 +61,7 @@ export const TransferPage = (
       }
     }
     return 'transferring';
-  }, [transferCall, transferCall?.state]);
+  }, [transferCall]);
 
   const transferor = remoteParticipants ? Object.values(remoteParticipants)[0] : undefined;
   /* @conditional-compile-remove(call-transfer) */
@@ -176,7 +176,7 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
 
   const defaultOnRenderAvatar = useCallback(() => {
     return personaSize ? <AvatarPersona {...placeholderOptions} dataProvider={onFetchAvatarPersonaData} /> : <></>;
-  }, [userId, placeholderOptions, onFetchAvatarPersonaData, personaSize]);
+  }, [placeholderOptions, onFetchAvatarPersonaData, personaSize]);
 
   const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);
 

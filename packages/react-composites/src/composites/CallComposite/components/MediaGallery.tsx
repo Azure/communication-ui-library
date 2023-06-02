@@ -155,6 +155,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [
     videoGalleryProps,
     props.isMobile,
+    props.onRenderAvatar,
     onRenderAvatar,
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
