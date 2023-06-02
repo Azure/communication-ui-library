@@ -567,73 +567,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [debouncedQueryUpdate, mentionLookupOptions, updateMentionSuggestions]
   );
 
-  const getUpdatedNewValueForOnChange = useCallback(
-    (
-      newValue: string,
-      triggerText: string,
-      currentSelectionEndValue: number,
-      tagsValue: TagData[],
-      htmlTextValue: string,
-      inputTextValue: string,
-      previousSelectionStart?: number,
-      previousSelectionEnd?: number,
-      currentSelectionStart?: number
-    ): string => {
-      let result = '';
-      if (tagsValue.length === 0) {
-        // no tags in the string and newValue should be used as a result string
-        result = newValue;
-      } else {
-        // there are tags in the text value and htmlTextValue is html string
-        // find diff between old and new text
-        const currentSelectionStartValue = getValidatedIndexInRange({
-          min: 0,
-          max: newValue.length,
-          currentValue: currentSelectionStart
-        });
-        const previousSelectionStartValue = getValidatedIndexInRange({
-          min: 0,
-          max: inputTextValue.length,
-          currentValue: previousSelectionStart
-        });
-        const previousSelectionEndValue = getValidatedIndexInRange({
-          min: 0,
-          max: inputTextValue.length,
-          currentValue: previousSelectionEnd
-        });
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
-          oldText: inputTextValue,
-          newText: newValue,
-          previousSelectionStart: previousSelectionStartValue,
-          previousSelectionEnd: previousSelectionEndValue,
-          currentSelectionStart: currentSelectionStartValue,
-          currentSelectionEnd: currentSelectionEndValue
-        });
-        const change = newValue.substring(changeStart, newChangeEnd);
-        // get updated html string
-        const updatedContent = updateHTML({
-          htmlText: htmlTextValue,
-          oldPlainText: inputTextValue,
-          newPlainText: newValue,
-          tags: tagsValue,
-          startIndex: changeStart,
-          oldPlainTextEndIndex: oldChangeEnd,
-          change,
-          mentionTrigger: triggerText
-        });
-        result = updatedContent.updatedHTML;
-        // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== undefined) {
-          setCaretIndex(updatedContent.updatedSelectionIndex);
-          setSelectionEndValue(updatedContent.updatedSelectionIndex);
-          setSelectionStartValue(updatedContent.updatedSelectionIndex);
-        }
-      }
-      return result;
-    },
-    []
-  );
-
   /* @conditional-compile-remove(mention) */
   const handleOnChange = useCallback(
     async (
@@ -673,7 +606,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         currentTriggerStartIndex
       );
 
-      const updatedNewValue = getUpdatedNewValueForOnChange(
+      const { updatedNewValue, updatedSelectionIndex } = getUpdatedNewValueForOnChange(
         newValue,
         triggerText,
         currentSelectionEndValue,
@@ -685,15 +618,15 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         currentSelectionStart
       );
 
+      if (updatedSelectionIndex !== undefined) {
+        setCaretIndex(updatedSelectionIndex);
+        setSelectionEndValue(updatedSelectionIndex);
+        setSelectionStartValue(updatedSelectionIndex);
+      }
+
       onChange && onChange(event, updatedNewValue);
     },
-    [
-      debouncedQueryUpdate,
-      mentionLookupOptions?.trigger,
-      updateCurrentTriggerStartIndexAndQuery,
-      getUpdatedNewValueForOnChange,
-      onChange
-    ]
+    [debouncedQueryUpdate, mentionLookupOptions?.trigger, updateCurrentTriggerStartIndexAndQuery, onChange]
   );
 
   const getInputFieldTextValue = (): string => {
@@ -1909,4 +1842,68 @@ const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
       parentTag.subTags.push(tag);
     }
   }
+};
+
+const getUpdatedNewValueForOnChange = (
+  newValue: string,
+  triggerText: string,
+  currentSelectionEndValue: number,
+  tagsValue: TagData[],
+  htmlTextValue: string,
+  inputTextValue: string,
+  previousSelectionStart?: number,
+  previousSelectionEnd?: number,
+  currentSelectionStart?: number
+): { updatedNewValue: string; updatedSelectionIndex: number | undefined } => {
+  let updatedNewValue = '';
+  let updatedSelectionIndex: number | undefined = undefined;
+
+  if (tagsValue.length === 0) {
+    // no tags in the string and newValue should be used as a result string
+    updatedNewValue = newValue;
+  } else {
+    // there are tags in the text value and htmlTextValue is html string
+    // find diff between old and new text
+    const currentSelectionStartValue = getValidatedIndexInRange({
+      min: 0,
+      max: newValue.length,
+      currentValue: currentSelectionStart
+    });
+    const previousSelectionStartValue = getValidatedIndexInRange({
+      min: 0,
+      max: inputTextValue.length,
+      currentValue: previousSelectionStart
+    });
+    const previousSelectionEndValue = getValidatedIndexInRange({
+      min: 0,
+      max: inputTextValue.length,
+      currentValue: previousSelectionEnd
+    });
+    const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
+      oldText: inputTextValue,
+      newText: newValue,
+      previousSelectionStart: previousSelectionStartValue,
+      previousSelectionEnd: previousSelectionEndValue,
+      currentSelectionStart: currentSelectionStartValue,
+      currentSelectionEnd: currentSelectionEndValue
+    });
+    const change = newValue.substring(changeStart, newChangeEnd);
+    // get updated html string
+    const updatedContent = updateHTML({
+      htmlText: htmlTextValue,
+      oldPlainText: inputTextValue,
+      newPlainText: newValue,
+      tags: tagsValue,
+      startIndex: changeStart,
+      oldPlainTextEndIndex: oldChangeEnd,
+      change,
+      mentionTrigger: triggerText
+    });
+    updatedNewValue = updatedContent.updatedHTML;
+    // update caret index if needed
+    if (updatedContent.updatedSelectionIndex !== undefined) {
+      updatedSelectionIndex = updatedContent.updatedSelectionIndex;
+    }
+  }
+  return { updatedNewValue, updatedSelectionIndex };
 };
