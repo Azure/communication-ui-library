@@ -8,6 +8,7 @@ import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
+import { _formatString } from '@internal/acs-ui-common';
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -72,6 +73,7 @@ export interface AttachmentDownloadResult {
 export interface _FileDownloadCardsStrings {
   /** Aria label to notify user when focus is on file download button. */
   downloadFile: string;
+  fileCardGroupMessage: string;
 }
 
 /**
@@ -161,10 +163,16 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const downloadFileButtonString = useMemo(
     () => () => {
       return props.strings?.downloadFile ?? localeStrings.downloadFile;
-      // Return download button without aria label
-      return props.strings?.downloadFile ?? '';
     },
     [props.strings?.downloadFile, localeStrings.downloadFile]
+  );
+
+  const fileCardGroupDescription = useMemo(
+    () => () => {
+      const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
+      return _formatString(fileGroupLocaleString, { fileCount: `${fileMetadata.length}` });
+    },
+    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata.length]
   );
 
   const fileDownloadHandler = useCallback(
@@ -210,7 +218,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
 
   return (
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
-      <_FileCardGroup>
+      <_FileCardGroup ariaLabel={fileCardGroupDescription()}>
         {fileMetadata &&
           fileMetadata
             .filter((attachment) => {
@@ -254,5 +262,5 @@ const DownloadIconTrampoline = (): JSX.Element => {
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
   /* @conditional-compile-remove(file-sharing) */
   return useLocale().strings.messageThread;
-  return { downloadFile: '' };
+  return { downloadFile: '', fileCardGroupMessage: '' };
 };
