@@ -8,16 +8,16 @@ import { MessageThread } from './MessageThread';
 import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 /* @conditional-compile-remove(date-time-customization) */
 import { screen } from '@testing-library/react';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { render, waitFor } from '@testing-library/react';
-/* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(data-loss-prevention) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MessageStatus } from '@internal/acs-ui-common';
@@ -169,8 +169,17 @@ describe('Message blocked should display default blocked text correctly', () => 
   });
 });
 
-/* @conditional-compile-remove(teams-inline-images) */
-describe('Message should display inline image correctly', () => {
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+describe.only('Message should display image and attachment correctly', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        datalosspreventionprohibited: <></>,
+        downloadfile: <></>
+      }
+    });
+  });
+
   test('Message richtext/html img src should be correct', async () => {
     const imgId1 = 'SomeImageId1';
     const imgId2 = 'SomeImageId2';
@@ -224,6 +233,86 @@ describe('Message should display inline image correctly', () => {
       expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedImgSrc1);
       expect(container.querySelector(`#${imgId2}`)?.getAttribute('src')).toEqual(expectedImgSrc2);
       expect(onFetchAttachmentCount).toEqual(expectedOnFetchAttachmentCount);
+    });
+  });
+
+  test('Message richtext/html fileSharing and inline image attachment should display correctly', async () => {
+    const fildId1 = 'SomeFileId1';
+    const fildId2 = 'SomeFileId2';
+    const fildName1 = 'SomeFileId1.txt';
+    const fildName2 = 'SomeFileId2.pdf';
+    const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
+    const expectedFileSrc2 = 'http://localhost/someFileSrcUrl2';
+    const expectedFilePreviewSrc1 = 'http://localhost/someFilePreviewSrcUrl1';
+
+    const imgId1 = 'SomeImageId1';
+    const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
+    const expectedOnFetchInlineImageAttachmentCount = 1;
+    let onFetchAttachmentCount = 0;
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+      senderId: 'user3',
+      content: `<p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="${imgId1}" style="vertical-align:bottom"></p>`,
+      senderDisplayName: 'Miguel Garcia',
+      messageId: Math.random().toString(),
+      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+      mine: false,
+      attached: false,
+      contentType: 'html',
+      attachedFilesMetadata: [
+        {
+          id: imgId1,
+          name: imgId1,
+          attachmentType: 'teamsInlineImage',
+          extension: 'png',
+          url: expectedImgSrc1,
+          previewUrl: expectedImgSrc1
+        },
+        {
+          id: fildId1,
+          name: fildName1,
+          attachmentType: 'fileSharing',
+          extension: 'txt',
+          url: expectedFileSrc1,
+          previewUrl: expectedFilePreviewSrc1
+        },
+        {
+          id: fildId2,
+          name: fildName2,
+          attachmentType: 'fileSharing',
+          extension: 'pdf',
+          url: expectedFileSrc2
+        }
+      ]
+    };
+    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+      onFetchAttachmentCount++;
+      return [
+        {
+          blobUrl: attachment.previewUrl ?? ''
+        }
+      ];
+    };
+
+    const { container } = render(
+      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />
+    );
+
+    await waitFor(async () => {
+      const DownloadFileIconName = 'DownloadFile';
+      const fileDownloadCards = container.querySelector('[data-ui-id="file-download-card-group"]')?.firstElementChild;
+
+      // Frist attachment: previewUrl !== undefine, will not show DownloadFile Icon
+      expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
+      expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
+
+      // Second attachment: previewUrl === undefined, will show DownloadFile Icon
+      expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
+      expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
+
+      // Inline Image attachment
+      expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedImgSrc1);
+      expect(onFetchAttachmentCount).toEqual(expectedOnFetchInlineImageAttachmentCount);
     });
   });
 });
