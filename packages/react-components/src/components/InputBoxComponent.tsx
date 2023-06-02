@@ -353,13 +353,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   }, 500);
 
   /* @conditional-compile-remove(mention) */
-  useEffect(() => {
-    return () => {
-      debouncedQueryUpdate.cancel();
-    };
-  }, [debouncedQueryUpdate]);
-
-  /* @conditional-compile-remove(mention) */
   // Update selections index in mention to navigate by words
   const updateSelectionIndexesWithMentionIfNeeded = useCallback(
     (
@@ -526,6 +519,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       currentSelectionEnd?: number,
       updatedValue?: string
     ): Promise<void> => {
+      debouncedQueryUpdate.cancel();
       if (event.currentTarget === null) {
         return;
       }
@@ -814,8 +808,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setCaretIndex(undefined);
             setSelectionStartValue(null);
             setSelectionEndValue(null);
-            // Dismiss the suggestions on blur
-            setMentionSuggestions([]);
+            // Dismiss the suggestions on blur, after enough time to select by mouse if needed
+            setTimeout(() => {
+              setMentionSuggestions([]);
+            }, 200);
           }}
           autoComplete="off"
           onKeyDown={onTextFieldKeyDown}
@@ -1643,9 +1639,8 @@ const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
  */
 const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
-  const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
-  return '<' + MSFT_MENTION_TAG + idHTML + displayTextHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
+  return '<' + MSFT_MENTION_TAG + idHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
 };
 
 /* @conditional-compile-remove(mention) */
