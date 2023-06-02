@@ -124,10 +124,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [tagsValue, setTagsValue] = useState<TagData[]>([]);
   /* @conditional-compile-remove(mention) */
   // Index of the previous selection start in the text field
-  const [selectionStartValue, setSelectionStartValue] = useState<number | null>(null);
+  const [selectionStartValue, setSelectionStartValue] = useState<number | undefined>(undefined);
   /* @conditional-compile-remove(mention) */
   // Index of the previous selection end in the text field
-  const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
+  const [selectionEndValue, setSelectionEndValue] = useState<number | undefined>(undefined);
   /* @conditional-compile-remove(mention) */
   // Boolean value to check if onMouseDown event should be handled during select as selection range
   // for onMouseDown event is not updated yet and the selection range for mouse click/taps will be
@@ -377,6 +377,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         });
         return newSelectionIndex;
       }
+      return undefined;
     },
     []
   );
@@ -387,59 +388,63 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (
       event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
       inputTextValue: string,
-      selectionStartValue: number | null,
-      selectionEndValue: number | null,
+      selectionStartValue: number | undefined,
+      selectionEndValue: number | undefined,
       tagsValue: TagData[]
     ): void => {
-      let updatedStartIndex = event.currentTarget.selectionStart;
-      let updatedEndIndex = event.currentTarget.selectionEnd;
+      const currentSelectionStart =
+        event.currentTarget.selectionStart === null ? undefined : event.currentTarget.selectionStart;
+      const currentSelectionEnd =
+        event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd;
+      let updatedStartIndex = currentSelectionStart;
+      let updatedEndIndex = currentSelectionEnd;
       if (
-        event.currentTarget.selectionStart === event.currentTarget.selectionEnd &&
-        event.currentTarget.selectionStart !== null &&
-        event.currentTarget.selectionStart !== -1
+        currentSelectionStart === currentSelectionEnd &&
+        currentSelectionStart !== undefined &&
+        currentSelectionStart !== -1
       ) {
         // just a caret movement/usual typing or deleting
-        updatedStartIndex = getUpdatedSelectionStartIndexOrEndIndex(
+        const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
           inputTextValue,
           tagsValue,
-          event.currentTarget.selectionStart,
+          currentSelectionStart,
           selectionStartValue
         );
-
-        updatedEndIndex = getUpdatedSelectionStartIndexOrEndIndex(
-          inputTextValue,
-          tagsValue,
-          event.currentTarget.selectionStart,
-          selectionEndValue
-        );
-      } else if (event.currentTarget.selectionStart !== event.currentTarget.selectionEnd) {
+        updatedStartIndex = newIndex !== undefined ? newIndex : updatedStartIndex;
+        updatedEndIndex = newIndex !== undefined ? newIndex : updatedEndIndex;
+      } else if (currentSelectionStart !== currentSelectionEnd) {
         // Both e.currentTarget.selectionStart !== selectionStartValue and e.currentTarget.selectionEnd !== selectionEndValue can be true when a user selects a text by double click
-        if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionStart !== selectionStartValue) {
+        if (currentSelectionStart !== undefined && currentSelectionStart !== selectionStartValue) {
           // the selection start is changed
-          updatedStartIndex = getUpdatedSelectionStartIndexOrEndIndex(
+          const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
             inputTextValue,
             tagsValue,
-            event.currentTarget.selectionStart,
+            currentSelectionStart,
             selectionStartValue
           );
+          updatedStartIndex = newIndex !== undefined ? newIndex : updatedStartIndex;
         }
-        if (event.currentTarget.selectionEnd !== null && event.currentTarget.selectionEnd !== selectionEndValue) {
+        if (currentSelectionEnd !== undefined && currentSelectionEnd !== selectionEndValue) {
           // the selection end is changed
-          updatedEndIndex = getUpdatedSelectionStartIndexOrEndIndex(
+          const newIndex = getUpdatedSelectionStartIndexOrEndIndex(
             inputTextValue,
             tagsValue,
-            event.currentTarget.selectionEnd,
+            currentSelectionEnd,
             selectionEndValue
           );
+          updatedEndIndex = newIndex !== undefined ? newIndex : updatedEndIndex;
         }
       }
       // e.currentTarget.selectionDirection should be set to handle shift + arrow keys
       if (event.currentTarget.selectionDirection === null) {
-        event.currentTarget.setSelectionRange(updatedStartIndex, updatedEndIndex);
+        event.currentTarget.setSelectionRange(
+          updatedStartIndex === undefined ? null : updatedStartIndex,
+          updatedEndIndex === undefined ? null : updatedEndIndex
+        );
       } else {
         event.currentTarget.setSelectionRange(
-          updatedStartIndex,
-          updatedEndIndex,
+          updatedStartIndex === undefined ? null : updatedStartIndex,
+          updatedEndIndex === undefined ? null : updatedEndIndex,
           event.currentTarget.selectionDirection
         );
       }
@@ -456,13 +461,13 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       inputTextValue: string,
       tags: TagData[],
       shouldHandleOnMouseDownDuringSelect: boolean,
-      selectionStartValue: number | null,
-      selectionEndValue: number | null
+      selectionStartValue?: number,
+      selectionEndValue?: number
     ): void => {
       if (shouldHandleOnMouseDownDuringSelect) {
         if (targetSelection !== undefined) {
           setSelectionStartValue(targetSelection.start);
-          setSelectionEndValue(targetSelection.end);
+          setSelectionEndValue(targetSelection.end === null ? undefined : targetSelection.end);
           event.currentTarget.setSelectionRange(targetSelection.start, targetSelection.end);
           setTargetSelection(undefined);
         } else if (event.currentTarget.selectionStart !== null) {
@@ -491,7 +496,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setSelectionEndValue(selectionRange.end);
           } else {
             setSelectionStartValue(event.currentTarget.selectionStart);
-            setSelectionEndValue(event.currentTarget.selectionEnd);
+            setSelectionEndValue(
+              event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd
+            );
           }
         }
       } else {
@@ -624,7 +631,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         });
         result = updatedContent.updatedHTML;
         // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== null) {
+        if (updatedContent.updatedSelectionIndex !== undefined) {
           setCaretIndex(updatedContent.updatedSelectionIndex);
           setSelectionEndValue(updatedContent.updatedSelectionIndex);
           setSelectionStartValue(updatedContent.updatedSelectionIndex);
@@ -746,8 +753,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               textValue,
               inputTextValue,
               currentTriggerStartIndex,
-              selectionStartValue === null ? undefined : selectionStartValue,
-              selectionEndValue === null ? undefined : selectionEndValue,
+              selectionStartValue === undefined ? undefined : selectionStartValue,
+              selectionEndValue === undefined ? undefined : selectionEndValue,
               e.currentTarget.selectionStart === null ? undefined : e.currentTarget.selectionStart,
               e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
               newValue
@@ -812,8 +819,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // setup all flags to default values when text field loses focus
             setShouldHandleOnMouseDownDuringSelect(false);
             setCaretIndex(undefined);
-            setSelectionStartValue(null);
-            setSelectionEndValue(null);
+            setSelectionStartValue(undefined);
+            setSelectionEndValue(undefined);
             // Dismiss the suggestions on blur, after enough time to select by mouse if needed
             setTimeout(() => {
               setMentionSuggestions([]);
@@ -1066,7 +1073,7 @@ type MentionTagUpdateResult = {
   result: string;
   updatedChange: string;
   htmlIndex: number;
-  plainTextSelectionEndIndex: number | null;
+  plainTextSelectionEndIndex: number | undefined;
 };
 
 /* @conditional-compile-remove(mention) */
@@ -1098,11 +1105,11 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
       result: '',
       updatedChange: processedChange,
       htmlIndex: lastProcessedHTMLIndex,
-      plainTextSelectionEndIndex: null
+      plainTextSelectionEndIndex: undefined
     };
   }
   let result = '';
-  let plainTextSelectionEndIndex: number | null = null;
+  let plainTextSelectionEndIndex: number | undefined = undefined;
   let rangeStart: number;
   let rangeEnd: number;
   // check if space symbol is handled in case if string looks like '<1 2 3>'
@@ -1223,12 +1230,12 @@ type UpdateHTMLProps = {
  * @param props - Props for update HTML function.
  * @returns Updated HTML and selection index if the selection index should be set.
  */
-const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | null } => {
+const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex?: number } => {
   const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
     props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
-    return { updatedHTML: newPlainText, updatedSelectionIndex: null };
+    return { updatedHTML: newPlainText, updatedSelectionIndex: undefined };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -1242,7 +1249,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
   // as some tags/text can be removed fully, selection should be updated correctly
-  let changeNewEndIndex: number | null = null;
+  let changeNewEndIndex: number | undefined = undefined;
 
   for (const [i, tag] of tags.entries()) {
     if (tag.plainTextBeginIndex === undefined) {
