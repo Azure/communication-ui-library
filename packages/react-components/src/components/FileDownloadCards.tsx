@@ -170,9 +170,10 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
-      return _formatString(fileGroupLocaleString, { fileCount: `${fileMetadata.length}` });
+      const attachmentCount = fileMetadata.filter((file) => file.attachmentType === 'fileSharing').length;
+      return _formatString(fileGroupLocaleString, { fileCount: `${attachmentCount}` });
     },
-    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata.length]
+    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
   );
 
   const fileDownloadHandler = useCallback(
@@ -250,7 +251,7 @@ const DownloadIconTrampoline = (): JSX.Element => {
 };
 
 const useLocaleStringsTrampoline = (): _FileDownloadCardsStrings => {
-  /* @conditional-compile-remove(file-sharing) */
+  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
   return useLocale().strings.messageThread;
   return { downloadFile: '', fileCardGroupMessage: '' };
 };
