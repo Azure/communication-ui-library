@@ -152,7 +152,9 @@
     },
     "captionsBannerSpinnerText": "Starting captions...",
     "transferPageConnectingText": "Connecting...",
-    "transferPageTransferringText": "Transferring..."
+    "transferPageTransferringText": "Transferring...",
+    "transferPageUnknownTransferorDisplayName": "Unknown",
+    "transferPageUnknownTransferTargetDisplayName": "Unknown"
   },
   "chat": {
     "chatListHeader": "In this chat",

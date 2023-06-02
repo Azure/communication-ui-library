@@ -518,7 +518,7 @@ export interface CallCompositeStrings {
   captionsBannerSpinnerText?: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
-   * transfer page text to indicate that local user is being transferred by the transferor
+   * transfer page text to indicate that local user is being transferred
    */
   transferPageTransferringText?: string;
   /* @conditional-compile-remove(call-transfer) */
@@ -526,4 +526,14 @@ export interface CallCompositeStrings {
    * transfer page text to indicate that local user is connecting to the transfer target
    */
   transferPageConnectingText?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferorDisplayName?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferTargetDisplayName?: string;
 }

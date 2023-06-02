@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 import {
   IPersonaStyleProps,
+  IPersonaStyles,
   IStyle,
   IStyleFunctionOrObject,
   Spinner,
@@ -18,8 +19,6 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipants } from '../selectors/baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(call-transfer) */
-import { CallState } from '@internal/calling-stateful-client';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 /* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
@@ -57,6 +56,7 @@ export const TransferPage = (
       if (['Ringing', 'Connected'].includes(transferCall.state)) {
         return 'connecting';
       } else {
+        // If transfer call's state is connecting we want this page's state to be transferring
         return 'transferring';
       }
     }
@@ -64,10 +64,19 @@ export const TransferPage = (
   }, [transferCall, transferCall?.state]);
 
   const transferor = remoteParticipants ? Object.values(remoteParticipants)[0] : undefined;
-  let transferTileParticipant = transferor;
+  /* @conditional-compile-remove(call-transfer) */
+  const transferTarget = transferCall?.remoteParticipants[0];
+  let transferParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
   if (pageState === 'connecting') {
-    transferTileParticipant = transferCall?.remoteParticipants[0];
+    transferParticipant = transferTarget;
+  }
+
+  let transferParticipantDisplayName = transferor?.displayName ?? strings.transferPageUnknownTransferorDisplayName;
+  /* @conditional-compile-remove(call-transfer) */
+  if (pageState === 'connecting') {
+    transferParticipantDisplayName =
+      transferTarget?.displayName ?? strings.transferPageUnknownTransferTargetDisplayName;
   }
 
   return (
@@ -83,11 +92,9 @@ export const TransferPage = (
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
         <TransferTile
-          userId={
-            transferTileParticipant ? toFlatCommunicationIdentifier(transferTileParticipant?.identifier) : undefined
-          }
-          displayName={transferTileParticipant?.displayName}
-          initialsName={transferTileParticipant?.displayName}
+          userId={transferParticipant ? toFlatCommunicationIdentifier(transferParticipant?.identifier) : undefined}
+          displayName={transferParticipantDisplayName}
+          initialsName={transferParticipantDisplayName}
           /* @conditional-compile-remove(call-transfer) */
           statusText={
             pageState === 'connecting' ? strings.transferPageConnectingText : strings.transferPageConnectingText
@@ -179,7 +186,7 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
         <Stack horizontalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
           {onRenderAvatar ? onRenderAvatar(userId ?? '', placeholderOptions, defaultOnRenderAvatar) : defaultAvatar}
           <Text className={mergeStyles({ textAlign: 'center', fontSize: '1.5rem', fontWeight: 400 })}>
-            {displayName ?? 'Unknown'}
+            {displayName}
           </Text>
         </Stack>
         <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
