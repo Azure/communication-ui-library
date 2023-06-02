@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Filter the errors based on whether the side pane is currently showing the video effects side pane",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

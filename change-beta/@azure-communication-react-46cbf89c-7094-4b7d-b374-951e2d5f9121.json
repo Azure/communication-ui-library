@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[MessageThread] Remove extra arguments on CancelEditCallback",
-  "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
-  "dependentChangeType": "patch"
-}

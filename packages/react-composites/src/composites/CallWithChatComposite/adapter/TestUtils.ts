@@ -234,6 +234,10 @@ function createMockCall(mockCallId: string): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transferFeature: {
+      acceptedTransfers: {}
     }
   };
   return call;
