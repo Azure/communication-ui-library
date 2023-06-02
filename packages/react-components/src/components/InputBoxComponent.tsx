@@ -919,7 +919,7 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
 
-    const closingTagInfo = getTagClosingTagInfo(tag);
+    const closingTagInfo = getClosingTagData(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
       // no need to check further as the selection is before the tag
       break;
@@ -1164,7 +1164,7 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
  *
  * @private
  */
-type ClosingTagInfoResult = {
+type ClosingTagData = {
   plainTextEndIndex: number;
   closeTagIdx: number;
   closeTagLength: number;
@@ -1178,7 +1178,7 @@ type ClosingTagInfoResult = {
  * @param tag - Tag data.
  * @returns Closing tag information for the provided tag.
  */
-const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
+const getClosingTagData = (tag: TagData): ClosingTagData => {
   let plainTextEndIndex = 0;
   let closeTagIdx = 0;
   let closeTagLength = 0;
@@ -1276,7 +1276,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
         // proceed to the next check
       }
     }
-    const closingTagInfo = getTagClosingTagInfo(tag);
+    const closingTagInfo = getClosingTagData(tag);
     if (startIndex <= closingTagInfo.plainTextEndIndex) {
       // change started before the end tag
       if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === closingTagInfo.plainTextEndIndex) {
@@ -1509,7 +1509,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
  *
  * @private
  */
-type DiffIndexesProps = {
+type ChangeIndicesProps = {
   // the old text
   oldText: string;
   // the new text
@@ -1530,7 +1530,7 @@ type DiffIndexesProps = {
  *
  * @private
  */
-type DiffIndexesResult = {
+type ChangeIndices = {
   changeStart: number;
   oldChangeEnd: number;
   newChangeEnd: number;
@@ -1544,7 +1544,7 @@ type DiffIndexesResult = {
  * @param props - Props for finding stings diff indexes function.
  * @returns Indexes for change start and ends in new and old texts. The old and new end indexes are exclusive.
  */
-const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResult => {
+const findStringsDiffIndexes = (props: ChangeIndicesProps): ChangeIndices => {
   const { oldText, newText, previousSelectionStart, previousSelectionEnd, currentSelectionStart, currentSelectionEnd } =
     props;
   const newTextLength = newText.length;
