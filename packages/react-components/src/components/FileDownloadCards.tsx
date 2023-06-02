@@ -170,8 +170,11 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
-      const attachmentCount = fileMetadata.filter((file) => file.attachmentType === 'fileSharing').length;
-      return _formatString(fileGroupLocaleString, { fileCount: `${attachmentCount}` });
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      return _formatString(fileGroupLocaleString, {
+        fileCount: `${fileMetadata.filter((file) => file.attachmentType === 'fileSharing').length}`
+      });
+      return '';
     },
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
   );
