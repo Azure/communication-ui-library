@@ -916,14 +916,11 @@ const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
  * @returns Mention tag if exists, otherwise undefined.
  */
 const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
-  let mentionTag: TagData | undefined = undefined;
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags[i];
-
+  for (const tag of tags) {
     const closingTagInfo = getClosingTagData(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
       // no need to check further as the selection is before the tag
-      break;
+      return;
     } else if (
       tag.plainTextBeginIndex !== undefined &&
       tag.plainTextBeginIndex <= selection &&
@@ -933,16 +930,14 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
       if (tag.subTags !== undefined && tag.subTags.length !== 0) {
         const selectedTag = findMentionTagForSelection(tag.subTags, selection);
         if (selectedTag !== undefined) {
-          mentionTag = selectedTag;
-          break;
+          return selectedTag;
         }
       } else if (tag.tagType === MSFT_MENTION_TAG) {
-        mentionTag = tag;
-        break;
+        return tag;
       }
     }
   }
-  return mentionTag;
+  return undefined;
 };
 
 /* @conditional-compile-remove(mention) */
@@ -1244,8 +1239,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
   // as some tags/text can be removed fully, selection should be updated correctly
   let changeNewEndIndex: number | null = null;
 
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags[i];
+  for (const [i, tag] of tags.entries()) {
     if (tag.plainTextBeginIndex === undefined) {
       continue;
     }
