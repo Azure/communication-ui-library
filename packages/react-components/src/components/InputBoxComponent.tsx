@@ -39,6 +39,7 @@ import { useTheme } from '../theming';
 import { MentionLookupOptions, _MentionPopover, Mention } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 import { useDebouncedCallback } from 'use-debounce';
+import { isEnterKeyEventFromCompositionSession } from './utils/keyboardNavigation';
 /* @conditional-compile-remove(mention) */
 const DEFAULT_MENTION_TRIGGER = '@';
 /* @conditional-compile-remove(mention) */
@@ -271,7 +272,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       /* @conditional-compile-remove(mention) */
       setShouldHandleOnMouseDownDuringSelect(false);
       // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
+      if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
       if (ev.key === 'ArrowUp') {

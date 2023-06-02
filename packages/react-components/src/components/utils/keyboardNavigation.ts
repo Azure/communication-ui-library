@@ -14,3 +14,17 @@ export const submitWithKeyboard = (
     onSubmit(e);
   }
 };
+
+/**
+ * Determine if the press of the enter key is from a composition session or not (Safari only)
+ *
+ * @private
+ */
+export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTMLElement>): boolean => {
+  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
+  if (e.nativeEvent.isComposing || e.nativeEvent.keyCode === 229 || e.nativeEvent.which === 229) {
+    return true;
+  } else {
+    return false;
+  }
+};
