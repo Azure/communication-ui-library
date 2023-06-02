@@ -80,7 +80,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
     id: attachment.id,
     name: attachment.name ?? '',
     extension: attachment.contentType ?? '',
-    url: attachment.url,
+    url: extractAttachmentUrl(attachment),
     previewUrl: attachment.previewUrl
   }));
 };
@@ -95,24 +95,30 @@ const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachme
   return 'unknown';
 };
 
-const processTeamsImageContent = (message: ChatMessageWithStatus): string | undefined => {
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const extractAttachmentUrl = (attachment: ChatAttachment): string => {
+  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
+};
+
+const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
-    let teamsImageHtmlContent = '';
     const attachments: ChatAttachment[] = message.content?.attachments;
-    attachments.forEach((attachment) => {
-      if (attachment.attachmentType === 'teamsImage') {
-        teamsImageHtmlContent += `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
-      }
-    });
-    if (teamsImageHtmlContent === '') {
-      return message.content?.message;
+    const teamsImageHtmlContent = attachments
+      .filter((attachment) => attachment.attachmentType === 'teamsImage')
+      .map((attachment) => generateImageAttachmentImgHtml(attachment))
+      .join('');
+
+    if (teamsImageHtmlContent) {
+      return (message.content?.message ?? '') + teamsImageHtmlContent;
     }
-    const content = (message.content?.message ?? '') + teamsImageHtmlContent;
-    const trialingEmptyLine = '\r\n<p>&nbsp;</p>';
-    return content.endsWith(trialingEmptyLine) ? content.slice(0, content.lastIndexOf(trialingEmptyLine)) : content;
   }
   return message.content?.message;
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
+  return `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
 };
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -164,7 +170,7 @@ const convertToUiChatMessage = (
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
-    content: processTeamsImageContent(message),
+    content: processChatMessageContent(message),
     contentType: sanitizedMessageContentType(message.type),
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,

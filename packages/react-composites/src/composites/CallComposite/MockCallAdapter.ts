@@ -212,6 +212,10 @@ const defaultCallAdapterState: CallAdapterState = {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transferFeature: {
+      acceptedTransfers: {}
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },

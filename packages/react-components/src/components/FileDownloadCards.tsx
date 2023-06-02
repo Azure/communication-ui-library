@@ -52,7 +52,7 @@ export interface FileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Preview URL for the file.
-   * Only used for Teams inline images and Teams file sharing.
+   * Used in the message bubble for inline images.
    */
   previewUrl?: string;
 }
@@ -178,14 +178,6 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   const fileDownloadHandler = useCallback(
     async (userId, file: FileMetadata) => {
       if (!props.downloadHandler) {
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-        if (file.previewUrl) {
-          // Teams file sharing uses file.previewUrl (link to SharePoint)
-          window.open(file.previewUrl, '_blank', 'noopener,noreferrer');
-          return;
-        }
-
-        // ACS to ACS file sharing (not support previewUrl) will use file.url
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
         setShowSpinner(true);
@@ -204,8 +196,6 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     },
     [props]
   );
-  // Its safe to assume that if the first item in the fileMetadata is not a fileSharing type we don't want to display the FileDownloadCard.
-  // Since you can't have both fileSharing and teamsInlineImage in the same message.
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||

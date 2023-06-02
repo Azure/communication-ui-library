@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "disallow package-lock.json files in repo",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

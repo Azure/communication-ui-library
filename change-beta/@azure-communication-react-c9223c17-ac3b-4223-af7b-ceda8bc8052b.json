@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add AtMentionFlyout component with preliminary positioning",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
