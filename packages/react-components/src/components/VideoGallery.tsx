@@ -315,7 +315,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     onRenderAvatar,
     showMuteIndicator,
-    maxRemoteVideoStreams,
     showCameraSwitcherInLocalPreview,
     localVideoCameraCycleButtonProps,
     /* @conditional-compile-remove(pinned-participants) */
@@ -330,6 +329,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
 
+  const maxRemoteVideoStreams = props.maxRemoteVideoStreams
+    ? props.maxRemoteVideoStreams
+    : DEFAULT_MAX_REMOTE_VIDEO_STREAMS;
   const ids = useIdentifiers();
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;

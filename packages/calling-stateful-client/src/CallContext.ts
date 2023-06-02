@@ -154,6 +154,7 @@ export class CallContext {
         existingCall.localVideoStreams = call.localVideoStreams;
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
+        /* @conditional-compile-remove(optimal-video-count) */
         existingCall.optimalVideoCountFeature.optimalVideoCount = call.optimalVideoCountFeature.optimalVideoCount;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
@@ -390,6 +391,7 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(optimal-video-count) */
   public setOptimalVideoCount(callId: string, optimalVideoCount: number): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
