@@ -277,6 +277,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
+      /* @conditional-compile-remove(mention) */
       if (mentionSuggestions.length > 0) {
         ev.preventDefault();
         if (ev.key === 'ArrowUp') {
@@ -398,6 +399,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [caretIndex]
   );
 
+  /* @conditional-compile-remove(mention) */
   const updateCurrentTriggerStartIndexAndQuery = useCallback(
     async (
       newValue: string,
