@@ -1521,8 +1521,9 @@ const findStringsDiffIndices = (props: ChangeIndicesProps): ChangeIndices => {
  */
 const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const idHTML = ' id ="' + suggestion.id + '"';
+  const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
-  return '<' + MSFT_MENTION_TAG + idHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
+  return '<' + MSFT_MENTION_TAG + idHTML + displayTextHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
 };
 
 /* @conditional-compile-remove(mention) */

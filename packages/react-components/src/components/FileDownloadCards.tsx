@@ -9,13 +9,13 @@ import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
 import { iconButtonClassName } from './styles/IconButton.styles';
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @beta
  */
 export type FileMetadataAttachmentType =
   | 'fileSharing'
-  | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage'
   | 'unknown';
 
 /**
@@ -23,13 +23,13 @@ export type FileMetadataAttachmentType =
  * @beta
  */
 export interface FileMetadata {
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
   attachmentType: FileMetadataAttachmentType;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Unique ID of the file.
    */
@@ -48,7 +48,7 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Preview URL for the file.
    * Used in the message bubble for inline images.
@@ -56,7 +56,7 @@ export interface FileMetadata {
   previewUrl?: string;
 }
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @beta
  */
@@ -168,7 +168,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId, file) => {
+    async (userId, file: FileMetadata) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
@@ -188,12 +188,12 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     },
     [props]
   );
-  // Its safe to assume that if the first item in the fileMetadata is not a fileSharing type we don't want to display the FileDownloadCard.
-  // Since you can't have both fileSharing and teamsInlineImage in the same message.
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images) */ fileMetadata[0].attachmentType !== 'fileSharing'
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(
+      (attachment) => attachment.attachmentType === 'fileSharing'
+    )
   ) {
     return <></>;
   }
@@ -202,23 +202,30 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     <div style={fileDownloadCardsStyle} data-ui-id="file-download-card-group">
       <_FileCardGroup>
         {fileMetadata &&
-          fileMetadata.map((file) => (
-            <_FileCard
-              fileName={file.name}
-              key={file.name}
-              fileExtension={file.extension}
-              actionIcon={
-                showSpinner ? (
-                  <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                ) : (
-                  <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
-                    <DownloadIconTrampoline />
-                  </IconButton>
-                )
-              }
-              actionHandler={() => fileDownloadHandler(userId, file)}
-            />
-          ))}
+          fileMetadata
+            .filter((attachment) => {
+              /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+              return attachment.attachmentType === 'fileSharing';
+              return true;
+            })
+            .map((file) => (
+              <_FileCard
+                fileName={file.name}
+                key={file.name}
+                fileExtension={file.extension}
+                actionIcon={
+                  showSpinner ? (
+                    <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
+                  ) : true &&
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !file.previewUrl ? (
+                    <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                      <DownloadIconTrampoline />
+                    </IconButton>
+                  ) : undefined
+                }
+                actionHandler={() => fileDownloadHandler(userId, file)}
+              />
+            ))}
       </_FileCardGroup>
     </div>
   );

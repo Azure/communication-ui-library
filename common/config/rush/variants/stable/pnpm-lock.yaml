@@ -5115,6 +5115,17 @@ packages:
       react-dom: ^18.0.0
     resolution:
       integrity: sha512-S04gSNJbYE30TlIMLTzv6QCTzt9AqIF5y6s6SzVFILNcNvbV/jU96GeiTPillGQo+Ny64M/5PV7klNYYgv5Dfg==
+  /@testing-library/user-event/14.4.3_@testing-library+dom@9.3.0:
+    dependencies:
+      '@testing-library/dom': 9.3.0
+    dev: false
+    engines:
+      node: '>=12'
+      npm: '>=6'
+    peerDependencies:
+      '@testing-library/dom': '>=7.21.4'
+    resolution:
+      integrity: sha512-kCUc5MEwaEMakkO5x7aoD+DLi02ehmEM2QCGWvNqAS1dV/fAvORWEjnjsEIvml59M7Y5kCkWN6fCCyPOe8OL6Q==
   /@tootallnate/once/1.1.2:
     dev: false
     engines:
@@ -20007,8 +20018,10 @@ packages:
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
       '@rollup/plugin-json': 4.1.0_rollup@2.42.4
+      '@testing-library/dom': 9.3.0
       '@testing-library/jest-dom': 5.16.5
       '@testing-library/react': 14.0.0_react-dom@18.2.0+react@18.2.0
+      '@testing-library/user-event': 14.4.3_@testing-library+dom@9.3.0
       '@types/dompurify': 3.0.2
       '@types/jest': 26.0.24
       '@types/json-stringify-safe': 5.0.0
