@@ -937,13 +937,11 @@ const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
  */
 const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
   let mentionTag: TagData | undefined = undefined;
-  for (let i = 0; i < tags.length; i++) {
-    const tag = tags[i];
-
+  tags.forEach((tag) => {
     const closingTagInfo = getTagClosingTagInfo(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
       // no need to check further as the selection is before the tag
-      break;
+      return;
     } else if (
       tag.plainTextBeginIndex !== undefined &&
       tag.plainTextBeginIndex <= selection &&
@@ -954,14 +952,14 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
         const selectedTag = findMentionTagForSelection(tag.subTags, selection);
         if (selectedTag !== undefined) {
           mentionTag = selectedTag;
-          break;
+          return;
         }
       } else if (tag.tagType === MSFT_MENTION_TAG) {
         mentionTag = tag;
-        break;
+        return;
       }
     }
-  }
+  });
   return mentionTag;
 };
 
