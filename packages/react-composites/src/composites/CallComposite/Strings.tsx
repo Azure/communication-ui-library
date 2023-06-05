@@ -520,20 +520,20 @@ export interface CallCompositeStrings {
   /**
    * transfer page text to indicate that local user is being transferred
    */
-  transferPageTransferringText?: string;
+  transferPageTransferringText: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page text to indicate that local user is connecting to the transfer target
    */
-  transferPageConnectingText?: string;
+  transferPageConnectingText: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
-  transferPageUnknownTransferorDisplayName?: string;
+  transferPageUnknownTransferorDisplayName: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant
    */
-  transferPageUnknownTransferTargetDisplayName?: string;
+  transferPageUnknownTransferTargetDisplayName: string;
 }
