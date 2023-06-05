@@ -951,7 +951,6 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
     const closingTagInfo = getTagClosingTagInfo(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
       // no need to check further as the selection is before the tag
-      mentionTag = tag;
       return false;
     } else if (
       tag.plainTextBeginIndex !== undefined &&
@@ -967,9 +966,10 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
         }
       } else if (tag.tagType === MSFT_MENTION_TAG) {
         mentionTag = tag;
-        return true;
+        return false;
       }
     }
+    return true;
   });
   return mentionTag;
 };
