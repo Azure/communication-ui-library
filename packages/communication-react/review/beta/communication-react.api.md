@@ -1595,6 +1595,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 // @beta
 export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
+    onFetchProfile?: OnFetchProfileCallback;
 };
 
 // @public
@@ -1955,7 +1956,7 @@ export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: 
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: CommonCallAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @public
 export interface CreateVideoStreamViewResult {
@@ -3405,9 +3406,7 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta
-export type TeamsAdapterOptions = {
-    onFetchProfile?: OnFetchProfileCallback;
-} & CommonCallAdapterOptions;
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
