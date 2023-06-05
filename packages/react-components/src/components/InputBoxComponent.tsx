@@ -20,7 +20,9 @@ import {
   ICalloutContentStyles
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
-import { isEnterKeyEventFromCompositionSession, nullToUndefined } from './utils';
+import { isEnterKeyEventFromCompositionSession } from './utils';
+/* @conditional-compile-remove(mention) */
+import { nullToUndefined } from './utils';
 import {
   inputBoxStyle,
   inputBoxWrapperStyle,
