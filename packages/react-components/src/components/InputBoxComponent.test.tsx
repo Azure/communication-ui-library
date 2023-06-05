@@ -22,7 +22,7 @@ describe('InputBoxComponent should call onChange', () => {
         }}
         maxLength={1000}
       >
-        <div></div>
+        <div />
       </InputBoxComponent>
     );
     const value = 'Input Box test';
@@ -70,7 +70,7 @@ describe('InputBoxComponent should show mention popover', () => {
           }
         }}
       >
-        <div></div>
+        <div />
       </InputBoxComponent>
     );
   };
@@ -150,7 +150,7 @@ describe('InputBoxComponent should show mention popover for a custom trigger', (
           }
         }}
       >
-        <div></div>
+        <div />
       </InputBoxComponent>
     );
   };
@@ -213,7 +213,7 @@ describe('InputBoxComponent should not show mention popover', () => {
           }
         }}
       >
-        <div></div>
+        <div />
       </InputBoxComponent>
     );
     // Find the input field
