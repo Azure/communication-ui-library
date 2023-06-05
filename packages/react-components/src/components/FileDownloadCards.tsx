@@ -174,7 +174,9 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata.filter((file) => file.attachmentType === 'fileSharing').length}`
       });
-      return '';
+      return _formatString(fileGroupLocaleString, {
+        fileCount: `${fileMetadata.length}`
+      });
     },
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
   );
