@@ -72,7 +72,9 @@ export const TransferPage = (
     transferParticipant = transferTarget;
   }
 
-  let transferParticipantDisplayName = transferor?.displayName ?? strings.transferPageUnknownTransferorDisplayName;
+  let transferParticipantDisplayName =
+    transferor?.displayName ??
+    /* @conditional-compile-remove(call-transfer) */ strings.transferPageUnknownTransferorDisplayName;
   /* @conditional-compile-remove(call-transfer) */
   if (pageState === 'connecting') {
     transferParticipantDisplayName =
