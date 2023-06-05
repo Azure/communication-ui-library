@@ -20,7 +20,7 @@ import {
   ICalloutContentStyles
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
-import { isEnterKeyEventFromCompositionSession } from './utils';
+import { isEnterKeyEventFromCompositionSession, nullToUndefined } from './utils';
 import {
   inputBoxStyle,
   inputBoxWrapperStyle,
@@ -351,13 +351,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   /* @conditional-compile-remove(mention) */
   // Update selections index in mention to navigate by words
   const updateSelectionIndexesWithMentionIfNeeded = useCallback(
-    (
-      event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-      inputTextValue: string,
-      selectionStartValue: number | undefined,
-      selectionEndValue: number | undefined,
-      tagsValue: TagData[]
-    ): void => {
+    ({
+      event,
+      inputTextValue,
+      selectionEndValue,
+      selectionStartValue,
+      tagsValue
+    }: {
+      event: FormEvent<HTMLInputElement | HTMLTextAreaElement>;
+      inputTextValue: string;
+      selectionEndValue?: number;
+      selectionStartValue?: number;
+      tagsValue: TagData[];
+    }): void => {
       let updatedStartIndex = event.currentTarget.selectionStart;
       let updatedEndIndex = event.currentTarget.selectionEnd;
       if (
@@ -433,22 +439,29 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           event.currentTarget.selectionDirection
         );
       }
-      setSelectionStartValue(updatedStartIndex === null ? undefined : updatedStartIndex);
-      setSelectionEndValue(updatedEndIndex === null ? undefined : updatedEndIndex);
+      setSelectionStartValue(nullToUndefined(updatedStartIndex));
+      setSelectionEndValue(nullToUndefined(updatedEndIndex));
     },
     [setSelectionStartValue, setSelectionEndValue]
   );
 
   /* @conditional-compile-remove(mention) */
   const handleOnSelect = useCallback(
-    (
-      event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-      inputTextValue: string,
-      tags: TagData[],
-      shouldHandleOnMouseDownDuringSelect: boolean,
-      selectionStartValue: number | undefined,
-      selectionEndValue: number | undefined
-    ): void => {
+    ({
+      event,
+      inputTextValue,
+      tags,
+      shouldHandleOnMouseDownDuringSelect,
+      selectionStartValue,
+      selectionEndValue
+    }: {
+      event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>;
+      inputTextValue: string;
+      tags: TagData[];
+      shouldHandleOnMouseDownDuringSelect: boolean;
+      selectionStartValue?: number;
+      selectionEndValue?: number;
+    }): void => {
       if (shouldHandleOnMouseDownDuringSelect) {
         if (targetSelection !== undefined) {
           setSelectionStartValue(targetSelection.start);
@@ -467,7 +480,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             const selectionRange = rangeOfWordInSelection({
               textInput: inputTextValue,
               selectionStart: event.currentTarget.selectionStart,
-              selectionEnd: event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd,
+              selectionEnd: nullToUndefined(event.currentTarget.selectionEnd),
               tag: mentionTag
             });
 
@@ -484,14 +497,18 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setSelectionEndValue(selectionRange.end);
           } else {
             setSelectionStartValue(event.currentTarget.selectionStart);
-            setSelectionEndValue(
-              event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd
-            );
+            setSelectionEndValue(nullToUndefined(event.currentTarget.selectionEnd));
           }
         }
       } else {
         // selection was changed by keyboard
-        updateSelectionIndexesWithMentionIfNeeded(event, inputTextValue, selectionStartValue, selectionEndValue, tags);
+        updateSelectionIndexesWithMentionIfNeeded({
+          event,
+          inputTextValue,
+          selectionStartValue,
+          selectionEndValue,
+          tagsValue: tags
+        });
       }
       // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange
       // could trigger additional calls of onSelect event and they may not be handled correctly
@@ -508,16 +525,16 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
 
   /* @conditional-compile-remove(mention) */
   type HandleOnChangeProps = {
-    currentSelectionEnd: number | undefined;
-    currentSelectionStart: number | undefined;
+    currentSelectionEnd?: number;
+    currentSelectionStart?: number;
     currentTriggerStartIndex: number;
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>;
     htmlTextValue: string;
     inputTextValue: string;
-    previousSelectionEnd: number | undefined;
-    previousSelectionStart: number | undefined;
+    previousSelectionEnd?: number;
+    previousSelectionStart?: number;
     tagsValue: TagData[];
-    updatedValue: string | undefined;
+    updatedValue?: string;
   };
 
   /* @conditional-compile-remove(mention) */
@@ -755,11 +772,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               htmlTextValue: textValue,
               inputTextValue,
               currentTriggerStartIndex,
-              previousSelectionStart: selectionStartValue === null ? undefined : selectionStartValue,
-              previousSelectionEnd: selectionEndValue === null ? undefined : selectionEndValue,
-              currentSelectionStart:
-                e.currentTarget.selectionStart === null ? undefined : e.currentTarget.selectionStart,
-              currentSelectionEnd: e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
+              previousSelectionStart: nullToUndefined(selectionStartValue),
+              previousSelectionEnd: nullToUndefined(selectionEndValue),
+              currentSelectionStart: nullToUndefined(e.currentTarget.selectionStart),
+              currentSelectionEnd: nullToUndefined(e.currentTarget.selectionEnd),
               updatedValue: newValue
             });
             /* @conditional-compile-remove(mention) */
@@ -777,14 +793,14 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
               }
               return;
             }
-            handleOnSelect(
-              e,
+            handleOnSelect({
+              event: e,
               inputTextValue,
-              tagsValue,
               shouldHandleOnMouseDownDuringSelect,
+              selectionEndValue,
               selectionStartValue,
-              selectionEndValue
-            );
+              tags: tagsValue
+            });
           }}
           /* @conditional-compile-remove(mention) */
           onMouseDown={(e) => {
@@ -967,7 +983,7 @@ const rangeOfWordInSelection = ({
 }: {
   textInput: string;
   selectionStart: number;
-  selectionEnd: number | undefined;
+  selectionEnd?: number;
   tag: TagData;
 }): { start: number; end: number } => {
   if (tag.plainTextBeginIndex === undefined) {
@@ -1079,7 +1095,7 @@ type MentionTagUpdateResult = {
   result: string;
   updatedChange: string;
   htmlIndex: number;
-  plainTextSelectionEndIndex: number | undefined;
+  plainTextSelectionEndIndex?: number;
 };
 
 /* @conditional-compile-remove(mention) */
@@ -1236,7 +1252,7 @@ type UpdateHTMLProps = {
  * @param props - Props for update HTML function.
  * @returns Updated HTML and selection index if the selection index should be set.
  */
-const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | undefined } => {
+const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex?: number } => {
   const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
     props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
