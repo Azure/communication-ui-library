@@ -22,7 +22,7 @@ import {
 import { BaseCustomStyles } from '../types';
 import { isEnterKeyEventFromCompositionSession } from './utils';
 /* @conditional-compile-remove(mention) */
-import { nullToUndefined } from './utils';
+import { nullToUndefined, undefinedToNull } from './utils';
 import {
   inputBoxStyle,
   inputBoxWrapperStyle,
@@ -468,10 +468,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         if (targetSelection !== undefined) {
           setSelectionStartValue(targetSelection.start);
           setSelectionEndValue(targetSelection.end);
-          event.currentTarget.setSelectionRange(
-            targetSelection.start,
-            targetSelection.end === undefined ? null : targetSelection.end
-          );
+          event.currentTarget.setSelectionRange(targetSelection.start, undefinedToNull(targetSelection.end));
           setTargetSelection(undefined);
         } else if (event.currentTarget.selectionStart !== null) {
           // on select was triggered by mouse down/up with no movement
@@ -950,11 +947,12 @@ const getValidatedIndexInRange = (props: ValidatedIndexRangeProps): number => {
  */
 const findMentionTagForSelection = (tags: TagData[], selection: number): TagData | undefined => {
   let mentionTag: TagData | undefined = undefined;
-  tags.forEach((tag) => {
+  tags.every((tag) => {
     const closingTagInfo = getTagClosingTagInfo(tag);
     if (tag.plainTextBeginIndex !== undefined && tag.plainTextBeginIndex > selection) {
       // no need to check further as the selection is before the tag
-      return;
+      mentionTag = tag;
+      return false;
     } else if (
       tag.plainTextBeginIndex !== undefined &&
       tag.plainTextBeginIndex <= selection &&
@@ -965,11 +963,11 @@ const findMentionTagForSelection = (tags: TagData[], selection: number): TagData
         const selectedTag = findMentionTagForSelection(tag.subTags, selection);
         if (selectedTag !== undefined) {
           mentionTag = selectedTag;
-          return;
+          return false;
         }
       } else if (tag.tagType === MSFT_MENTION_TAG) {
         mentionTag = tag;
-        return;
+        return true;
       }
     }
   });
