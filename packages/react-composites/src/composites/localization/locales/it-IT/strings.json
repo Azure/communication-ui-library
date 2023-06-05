@@ -149,7 +149,8 @@
       "ro-ro": "Rumeno",
       "sk-sk": "Slovacco",
       "zh-tw": "Cinese - Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Avvio dei sottotitoli in corso..."
   },
   "chat": {
     "chatListHeader": "In questa chat",
