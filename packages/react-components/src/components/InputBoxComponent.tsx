@@ -124,10 +124,10 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [tagsValue, setTagsValue] = useState<TagData[]>([]);
   /* @conditional-compile-remove(mention) */
   // Index of the previous selection start in the text field
-  const [selectionStartValue, setSelectionStartValue] = useState<number | null>(null);
+  const [selectionStartValue, setSelectionStartValue] = useState<number | undefined>();
   /* @conditional-compile-remove(mention) */
   // Index of the previous selection end in the text field
-  const [selectionEndValue, setSelectionEndValue] = useState<number | null>(null);
+  const [selectionEndValue, setSelectionEndValue] = useState<number | undefined>();
   /* @conditional-compile-remove(mention) */
   // Boolean value to check if onMouseDown event should be handled during select as selection range
   // for onMouseDown event is not updated yet and the selection range for mouse click/taps will be
@@ -138,7 +138,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const [interactionStartPoint, setInteractionStartPoint] = useState<{ x: number; y: number } | undefined>();
   /* @conditional-compile-remove(mention) */
   // Target selection from mouse movement
-  const [targetSelection, setTargetSelection] = useState<{ start: number; end: number | null } | undefined>();
+  const [targetSelection, setTargetSelection] = useState<{ start: number; end: number | undefined } | undefined>();
   /* @conditional-compile-remove(mention) */
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
@@ -359,8 +359,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     (
       event: FormEvent<HTMLInputElement | HTMLTextAreaElement>,
       inputTextValue: string,
-      selectionStartValue: number | null,
-      selectionEndValue: number | null,
+      selectionStartValue: number | undefined,
+      selectionEndValue: number | undefined,
       tagsValue: TagData[]
     ): void => {
       let updatedStartIndex = event.currentTarget.selectionStart;
@@ -438,8 +438,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
           event.currentTarget.selectionDirection
         );
       }
-      setSelectionStartValue(updatedStartIndex);
-      setSelectionEndValue(updatedEndIndex);
+      setSelectionStartValue(updatedStartIndex === null ? undefined : updatedStartIndex);
+      setSelectionEndValue(updatedEndIndex === null ? undefined : updatedEndIndex);
     },
     [setSelectionStartValue, setSelectionEndValue]
   );
@@ -451,14 +451,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       inputTextValue: string,
       tags: TagData[],
       shouldHandleOnMouseDownDuringSelect: boolean,
-      selectionStartValue: number | null,
-      selectionEndValue: number | null
+      selectionStartValue: number | undefined,
+      selectionEndValue: number | undefined
     ): void => {
       if (shouldHandleOnMouseDownDuringSelect) {
         if (targetSelection !== undefined) {
           setSelectionStartValue(targetSelection.start);
           setSelectionEndValue(targetSelection.end);
-          event.currentTarget.setSelectionRange(targetSelection.start, targetSelection.end);
+          event.currentTarget.setSelectionRange(
+            targetSelection.start,
+            targetSelection.end === undefined ? null : targetSelection.end
+          );
           setTargetSelection(undefined);
         } else if (event.currentTarget.selectionStart !== null) {
           // on select was triggered by mouse down/up with no movement
@@ -469,7 +472,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             const selectionRange = rangeOfWordInSelection({
               textInput: inputTextValue,
               selectionStart: event.currentTarget.selectionStart,
-              selectionEnd: event.currentTarget.selectionEnd,
+              selectionEnd: event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd,
               tag: mentionTag
             });
 
@@ -486,7 +489,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             setSelectionEndValue(selectionRange.end);
           } else {
             setSelectionStartValue(event.currentTarget.selectionStart);
-            setSelectionEndValue(event.currentTarget.selectionEnd);
+            setSelectionEndValue(
+              event.currentTarget.selectionEnd === null ? undefined : event.currentTarget.selectionEnd
+            );
           }
         }
       } else {
@@ -507,19 +512,33 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   /* @conditional-compile-remove(mention) */
+  type HandleOnChangeProps = {
+    currentSelectionEnd: number | undefined;
+    currentSelectionStart: number | undefined;
+    currentTriggerStartIndex: number;
+    event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>;
+    htmlTextValue: string;
+    inputTextValue: string;
+    previousSelectionEnd: number | undefined;
+    previousSelectionStart: number | undefined;
+    tagsValue: TagData[];
+    updatedValue: string | undefined;
+  };
+
+  /* @conditional-compile-remove(mention) */
   const handleOnChange = useCallback(
-    async (
-      event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
-      tagsValue: TagData[],
-      htmlTextValue: string,
-      inputTextValue: string,
-      currentTriggerStartIndex: number,
-      previousSelectionStart?: number,
-      previousSelectionEnd?: number,
-      currentSelectionStart?: number,
-      currentSelectionEnd?: number,
-      updatedValue?: string
-    ): Promise<void> => {
+    async ({
+      currentSelectionEnd,
+      currentSelectionStart,
+      currentTriggerStartIndex,
+      event,
+      htmlTextValue,
+      inputTextValue,
+      previousSelectionEnd,
+      previousSelectionStart,
+      tagsValue,
+      updatedValue
+    }: HandleOnChangeProps): Promise<void> => {
       debouncedQueryUpdate.cancel();
       if (event.currentTarget === null) {
         return;
@@ -619,7 +638,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         });
         result = updatedContent.updatedHTML;
         // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== null) {
+        if (updatedContent.updatedSelectionIndex !== undefined) {
           setCaretIndex(updatedContent.updatedSelectionIndex);
           setSelectionEndValue(updatedContent.updatedSelectionIndex);
           setSelectionStartValue(updatedContent.updatedSelectionIndex);
@@ -735,18 +754,19 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             /* @conditional-compile-remove(mention) */
             setInputTextValue(newValue ?? '');
             /* @conditional-compile-remove(mention) */
-            handleOnChange(
-              e,
+            handleOnChange({
+              event: e,
               tagsValue,
-              textValue,
+              htmlTextValue: textValue,
               inputTextValue,
               currentTriggerStartIndex,
-              selectionStartValue === null ? undefined : selectionStartValue,
-              selectionEndValue === null ? undefined : selectionEndValue,
-              e.currentTarget.selectionStart === null ? undefined : e.currentTarget.selectionStart,
-              e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
-              newValue
-            );
+              previousSelectionStart: selectionStartValue === null ? undefined : selectionStartValue,
+              previousSelectionEnd: selectionEndValue === null ? undefined : selectionEndValue,
+              currentSelectionStart:
+                e.currentTarget.selectionStart === null ? undefined : e.currentTarget.selectionStart,
+              currentSelectionEnd: e.currentTarget.selectionEnd === null ? undefined : e.currentTarget.selectionEnd,
+              updatedValue: newValue
+            });
             /* @conditional-compile-remove(mention) */
             return;
             onChange(e, newValue);
@@ -807,8 +827,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
             // setup all flags to default values when text field loses focus
             setShouldHandleOnMouseDownDuringSelect(false);
             setCaretIndex(undefined);
-            setSelectionStartValue(null);
-            setSelectionEndValue(null);
+            setSelectionStartValue(undefined);
+            setSelectionEndValue(undefined);
             // Dismiss the suggestions on blur, after enough time to select by mouse if needed
             setTimeout(() => {
               setMentionSuggestions([]);
@@ -954,17 +974,17 @@ const rangeOfWordInSelection = ({
 }: {
   textInput: string;
   selectionStart: number;
-  selectionEnd: number | null;
+  selectionEnd: number | undefined;
   tag: TagData;
 }): { start: number; end: number } => {
   if (tag.plainTextBeginIndex === undefined) {
-    return { start: selectionStart, end: selectionEnd === null ? selectionStart : selectionEnd };
+    return { start: selectionStart, end: selectionEnd === undefined ? selectionStart : selectionEnd };
   }
 
   // Look at start word index and optionally end word index.
   // Select combination of the two and return the range.
   let start = selectionStart;
-  let end = selectionEnd === null ? selectionStart : selectionEnd;
+  let end = selectionEnd === undefined ? selectionStart : selectionEnd;
   const firstWordStartIndex = textInput.lastIndexOf(' ', selectionStart);
   if (firstWordStartIndex === tag.plainTextBeginIndex) {
     start = firstWordStartIndex;
@@ -975,7 +995,7 @@ const rangeOfWordInSelection = ({
   const firstWordEndIndex = textInput.indexOf(' ', selectionStart);
   end = Math.max(firstWordEndIndex + 1, tag.plainTextEndIndex ?? firstWordEndIndex + 1);
 
-  if (selectionEnd !== null && tag.plainTextEndIndex !== undefined) {
+  if (selectionEnd !== undefined && tag.plainTextEndIndex !== undefined) {
     const lastWordEndIndex = textInput.indexOf(' ', selectionEnd);
     end = Math.max(lastWordEndIndex > -1 ? lastWordEndIndex : tag.plainTextEndIndex, selectionEnd);
   }
@@ -1066,7 +1086,7 @@ type MentionTagUpdateResult = {
   result: string;
   updatedChange: string;
   htmlIndex: number;
-  plainTextSelectionEndIndex: number | null;
+  plainTextSelectionEndIndex: number | undefined;
 };
 
 /* @conditional-compile-remove(mention) */
@@ -1098,11 +1118,11 @@ const handleMentionTagUpdate = (props: MentionTagUpdateProps): MentionTagUpdateR
       result: '',
       updatedChange: processedChange,
       htmlIndex: lastProcessedHTMLIndex,
-      plainTextSelectionEndIndex: null
+      plainTextSelectionEndIndex: undefined
     };
   }
   let result = '';
-  let plainTextSelectionEndIndex: number | null = null;
+  let plainTextSelectionEndIndex: number | undefined;
   let rangeStart: number;
   let rangeEnd: number;
   // check if space symbol is handled in case if string looks like '<1 2 3>'
@@ -1223,12 +1243,12 @@ type UpdateHTMLProps = {
  * @param props - Props for update HTML function.
  * @returns Updated HTML and selection index if the selection index should be set.
  */
-const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | null } => {
+const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex: number | undefined } => {
   const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
     props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
-    return { updatedHTML: newPlainText, updatedSelectionIndex: null };
+    return { updatedHTML: newPlainText, updatedSelectionIndex: undefined };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -1242,7 +1262,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
   // as some tags/text can be removed fully, selection should be updated correctly
-  let changeNewEndIndex: number | null = null;
+  let changeNewEndIndex: number | undefined;
 
   for (let i = 0; i < tags.length; i++) {
     const tag = tags[i];
@@ -1282,7 +1302,7 @@ const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelec
       // change started before the end tag
       if (startIndex <= tag.plainTextBeginIndex && oldPlainTextEndIndex === closingTagInfo.plainTextEndIndex) {
         // the change is a tag or starts before the tag
-        // tag should be removed, no matter if there are subtags
+        // tag should be removed, no matter if there are sub-tags
         result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex) + processedChange;
         processedChange = '';
         lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
