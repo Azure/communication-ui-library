@@ -99,7 +99,7 @@ export const TransferPage = (
           initialsName={transferParticipantDisplayName}
           /* @conditional-compile-remove(call-transfer) */
           statusText={
-            pageState === 'connecting' ? strings.transferPageConnectingText : strings.transferPageConnectingText
+            pageState === 'connecting' ? strings.transferPageConnectingText : strings.transferPageTransferringText
           }
           onRenderAvatar={props.onRenderAvatar}
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
