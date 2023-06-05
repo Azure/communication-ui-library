@@ -73,6 +73,30 @@ export const getDocs: () => JSX.Element = () => {
         `FileMetadataAttachmentType`.
       </Description>
       <Source code={InlineImageText} />
+      <Heading>File Sharing</Heading>
+      <SingleLineBetaBanner />
+      <Description>Microsoft Teams enables file attachment sharing with the following permissions:</Description>
+      <Description>- Anyone</Description>
+      <Description>- Individuals within your organization</Description>
+      <Description>- Participants currently in this chat</Description>
+      <Description>- People who already have access</Description>
+      <Description>- Specific individuals you select</Description>
+      <Description>
+        Currently, Azure Communication Services only supports the "Anyone" and "People you choose" options. The “People
+        in your organization”, “People currently in this chat”, and “People with existing access” permissions can only
+        be supported for users in a Teams tenant. To learn more about the Sharing Permission, please refer to the [Limit
+        sharing in Microsoft
+        365](https://learn.microsoft.com/en-us/microsoft-365/solutions/microsoft-365-limit-sharing?view=o365-worldwide).
+      </Description>
+      <Subheading>Explore Teams Interop with File Sharing Capability</Subheading>
+      <Description>
+        At this time, the UI library only facilitates File Sharing in a Teams Interop chat initiated by the Teams user.
+        To utilize this feature, you can employ the `CallWithChat` composite.
+      </Description>
+      <Description>
+        Explore the `CallWithChat` composite using the [CallWithChatComposite Basic
+        Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+      </Description>
     </>
   );
 };
