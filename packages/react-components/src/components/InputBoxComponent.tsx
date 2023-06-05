@@ -275,29 +275,24 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
-      if (ev.key === 'ArrowUp') {
-        /* @conditional-compile-remove(mention) */
-        if (mentionSuggestions.length > 0) {
+
+      /* @conditional-compile-remove(mention) */
+      if (mentionSuggestions.length > 0) {
+        if (ev.key === 'ArrowUp') {
           ev.preventDefault();
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? mentionSuggestions.length - 1
               : Math.max(activeSuggestionIndex - 1, 0);
           setActiveSuggestionIndex(newActiveIndex);
-        }
-      } else if (ev.key === 'ArrowDown') {
-        /* @conditional-compile-remove(mention) */
-        if (mentionSuggestions.length > 0) {
+        } else if (ev.key === 'ArrowDown') {
           ev.preventDefault();
           const newActiveIndex =
             activeSuggestionIndex === undefined
               ? 0
               : Math.min(activeSuggestionIndex + 1, mentionSuggestions.length - 1);
           setActiveSuggestionIndex(newActiveIndex);
-        }
-      } else if (ev.key === 'Escape') {
-        /* @conditional-compile-remove(mention) */
-        if (mentionSuggestions.length > 0) {
+        } else if (ev.key === 'Escape') {
           updateMentionSuggestions([]);
         }
       }
