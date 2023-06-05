@@ -6,7 +6,7 @@ import React from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { MessageWithFile as MessageWithFileComponent } from '../../MessageThread/snippets/MessageWithFile.snippet';
-import { getDocs } from './TeamsInteropDocs';
+import { getFileSharingDocs } from './TeamsInteropDocs';
 
 const MessageWithFileStory: (args) => JSX.Element = (args) => {
   return <MessageWithFileComponent {...args} />;
@@ -21,7 +21,7 @@ export default {
   argTypes: {},
   parameters: {
     docs: {
-      page: () => getDocs()
+      page: () => getFileSharingDocs()
     }
   }
 } as Meta;

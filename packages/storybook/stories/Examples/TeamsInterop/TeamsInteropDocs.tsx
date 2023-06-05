@@ -8,7 +8,7 @@ const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
 
-export const getDocs: () => JSX.Element = () => {
+export const getComplianceBannerDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Teams Interop</Title>
@@ -26,10 +26,34 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={ComplianceBannerText} />
       <Subheading>Use Compliance Banner</Subheading>
       <Source code={CallComponentText} />
+    </>
+  );
+};
+
+export const getLobbyDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Teams Interop</Title>
+      <Description>
+        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
+        considerations when connecting to a Teams meeting.
+      </Description>
       <Heading>Lobby Component</Heading>
       <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
       <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
+    </>
+  );
+};
+
+export const getInlineImageDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Teams Interop</Title>
+      <Description>
+        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
+        considerations when connecting to a Teams meeting.
+      </Description>
       <Heading>Inline Images</Heading>
       <SingleLineBetaBanner />
       <Description>Microsoft Teams allows users to share images by:</Description>
@@ -73,6 +97,18 @@ export const getDocs: () => JSX.Element = () => {
         `FileMetadataAttachmentType`.
       </Description>
       <Source code={InlineImageText} />
+    </>
+  );
+};
+
+export const getFileSharingDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Teams Interop</Title>
+      <Description>
+        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
+        considerations when connecting to a Teams meeting.
+      </Description>
       <Heading>File Sharing</Heading>
       <SingleLineBetaBanner />
       <Description>Microsoft Teams enables file attachment sharing with the following permissions:</Description>
