@@ -169,6 +169,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       supportNewline: supportNewline,
       mentionLookupOptions: props.mentionLookupOptions
     };
+    /* @conditional-compile-remove(mention) */
     if (props.mentionLookupOptions) {
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
