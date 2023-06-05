@@ -202,6 +202,20 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code="<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />" />
 
+      <Heading>Customize Local Video Tile</Heading>
+      <SingleLineBetaBanner version={'1.5.2-beta.1'} />
+      <Description>
+        Just like customizing the control bar we have some configuration options for the local video tile. These
+        controls are to help facilitate different calling experiences like creating an audio only call.
+      </Description>
+      <Source code="<CallComposite options={localVideoTileOptions: { position: 'hidden'}} />" />
+      <Description>
+        This will hide the local video tile from the composite's video gallery. The default value is `floating` which
+        will have the local video tile follow our `floatingLocalLayout`. The other option is `grid` which will place the
+        local video tile in the grid view, see our [video
+        gallery](./?path=/docs/ui-components-videogallery--video-gallery) component docs for more information
+      </Description>
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
