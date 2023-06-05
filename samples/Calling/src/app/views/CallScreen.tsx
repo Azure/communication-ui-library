@@ -12,6 +12,8 @@ import {
   CallAdapter,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
+/* @conditional-compile-remove(teams-adhoc-call) */
+import { Profile } from '@azure/communication-react';
 
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
@@ -25,8 +27,6 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
-/* @conditional-compile-remove(teams-adhoc-call) */
-import { Profile } from '@internal/react-composites';
 
 export interface CallScreenProps {
   token: string;
