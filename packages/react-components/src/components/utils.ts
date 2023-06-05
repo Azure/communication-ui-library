@@ -225,3 +225,18 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
  * @private
  */
 export const defaultSpokenLanguage = 'en-us';
+
+/**
+ * @private
+ */
+const SAFARI_COMPOSITION_KEYCODE = 229;
+/**
+ * Determine if the press of the enter key is from a composition session or not (Safari only)
+ *
+ * @private
+ */
+export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTMLElement>): boolean =>
+  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
+  e.nativeEvent.isComposing ||
+  e.nativeEvent.keyCode === SAFARI_COMPOSITION_KEYCODE ||
+  e.nativeEvent.which === SAFARI_COMPOSITION_KEYCODE;
