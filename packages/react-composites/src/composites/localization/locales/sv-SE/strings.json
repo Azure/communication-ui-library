@@ -149,7 +149,8 @@
       "ro-ro": "Rumänska",
       "sk-sk": "Slovakiska",
       "zh-tw": "Kinesiska – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Startar undertexter ..."
   },
   "chat": {
     "chatListHeader": "I den här chatten",

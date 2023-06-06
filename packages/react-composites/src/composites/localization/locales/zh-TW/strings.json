@@ -149,7 +149,8 @@
       "ro-ro": "羅馬尼亞文",
       "sk-sk": "斯洛伐克文",
       "zh-tw": "中文 - 台灣"
-    }
+    },
+    "captionsBannerSpinnerText": "正在啟動輔助字幕..."
   },
   "chat": {
     "chatListHeader": "在此聊天中",

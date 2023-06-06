@@ -82,7 +82,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
 
       # Get datetime
       - name: Get datetime for alpha release name
