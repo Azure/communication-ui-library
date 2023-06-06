@@ -80,7 +80,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
    * this case when those components are here
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([
-    ...Array(Math.max(maxRemoteVideoStreams - activeVideoStreams, 0)).keys()
+    ...Array(Math.max(maxRemoteVideoStreams - activeVideoStreams, 1)).keys()
   ]);
 
   const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
