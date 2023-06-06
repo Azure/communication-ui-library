@@ -82,7 +82,7 @@ describe('SendBox should return correct value with a selected mention', () => {
       changedValue = message ?? '';
     });
     // Find the input field
-    const input = (await screen.findByPlaceholderText('Enter a message')) as HTMLInputElement;
+    const input = screen.getByRole('textbox') as HTMLInputElement;
     act(() => {
       // Focus on the input field
       input.focus();
@@ -109,7 +109,7 @@ describe('SendBox should return correct value with a selected mention', () => {
       changedValue = message ?? '';
     });
     // Find the input field
-    const input = (await screen.findByPlaceholderText('Enter a message')) as HTMLInputElement;
+    const input = screen.getByRole('textbox') as HTMLInputElement;
     act(() => {
       // Focus on the input field
       input.focus();
