@@ -19,7 +19,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { FileMetadata, isTeamsInteropFileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -79,7 +79,12 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     props.message.attachedFilesMetadata?.map((fileMetadata) => {
-      if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+      if (
+        props.onFetchAttachment &&
+        props.attachmentsMap &&
+        isTeamsInteropFileMetadata(fileMetadata) &&
+        props.attachmentsMap[fileMetadata.id] === undefined
+      ) {
         props.onFetchAttachment(fileMetadata);
       }
     });
@@ -184,13 +189,17 @@ const htmlToReactParser = Parser();
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
+    function isImageNode(file: FileMetadata): boolean {
+      return isTeamsInteropFileMetadata(file) && file.id === node.attribs.id;
+    }
+
     // Process img node with id in attachments list
     return (
       node.name &&
       node.name === 'img' &&
       node.attribs &&
       node.attribs.id &&
-      props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+      props.message.attachedFilesMetadata?.find(isImageNode)
     );
   },
   processNode: (node, children, index): HTMLElement => {

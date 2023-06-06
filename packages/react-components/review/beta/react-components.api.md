@@ -676,6 +676,13 @@ export type CustomAvatarOptions = {
     showUnknownPersonaCoin?: boolean;
 };
 
+// @beta (undocumented)
+export interface CustomFileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export interface CustomMessage extends MessageCommon {
     // (undocumented)
@@ -1056,17 +1063,7 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = CustomFileMetadata | TeamsInteropFileMetadata;
 
 // @beta (undocumented)
 export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
@@ -1177,6 +1174,9 @@ export interface _Identifiers {
     videoGallery: string;
     videoTile: string;
 }
+
+// @beta (undocumented)
+export const isTeamsInteropFileMetadata: (fileMetadata: FileMetadata) => fileMetadata is TeamsInteropFileMetadata;
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -1856,6 +1856,19 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
+}
+
+// @beta (undocumented)
+export interface TeamsInteropFileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    // (undocumented)
+    id: string;
+    name: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @internal (undocumented)

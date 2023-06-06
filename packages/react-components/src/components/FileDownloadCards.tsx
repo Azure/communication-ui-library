@@ -20,10 +20,30 @@ export type FileMetadataAttachmentType =
   | 'unknown';
 
 /**
- * Meta Data containing information about the uploaded file.
  * @beta
  */
-export interface FileMetadata {
+export interface CustomFileMetadata {
+  /**
+   * File name to be displayed.
+   */
+  name: string;
+  /**
+   * Extension is used for rendering the file icon.
+   * An unknown extension will be rendered as a generic icon.
+   * Example: `jpeg`
+   */
+  extension: string;
+  /**
+   * Download URL for the file.
+   */
+  url: string;
+}
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @beta
+ */
+export interface TeamsInteropFileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
@@ -57,6 +77,23 @@ export interface FileMetadata {
   previewUrl?: string;
 }
 
+/**
+ * Meta Data containing information about the uploaded file.
+ * @beta
+ */
+export type FileMetadata =
+  | CustomFileMetadata
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata;
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * @beta
+ * @param fileMetadata
+ * @returns TeamsInteropFileMetadata
+ */
+export const isTeamsInteropFileMetadata = (fileMetadata: FileMetadata): fileMetadata is TeamsInteropFileMetadata => {
+  return (fileMetadata as TeamsInteropFileMetadata).id !== undefined;
+};
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @beta
@@ -167,18 +204,26 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
+  const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    if (isTeamsInteropFileMetadata(attachment)) {
+      return attachment.attachmentType === 'fileSharing';
+    }
+    return false;
+  }, []);
+
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.filter((file) => file.attachmentType === 'fileSharing').length}`
+        fileCount: `${fileMetadata.filter(isFileSharingAttachment).length}`
       });
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata.length}`
       });
     },
-    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
+    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
   );
 
   const fileDownloadHandler = useCallback(
@@ -205,9 +250,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(
-      (attachment) => attachment.attachmentType === 'fileSharing'
-    )
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(isFileSharingAttachment)
   ) {
     return <></>;
   }
@@ -219,7 +262,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
           fileMetadata
             .filter((attachment) => {
               /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-              return attachment.attachmentType === 'fileSharing';
+              return isFileSharingAttachment(attachment);
               return true;
             })
             .map((file) => (
@@ -231,7 +274,11 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !file.previewUrl ? (
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ isTeamsInteropFileMetadata(
+                      file
+                    ) &&
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+                    !file.previewUrl ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>

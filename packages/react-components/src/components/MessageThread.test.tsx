@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
+import { AttachmentDownloadResult, FileMetadata, TeamsInteropFileMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -220,7 +220,7 @@ describe.only('Message should display image and attachment correctly', () => {
       onFetchAttachmentCount++;
       return [
         {
-          blobUrl: attachment.previewUrl ?? ''
+          blobUrl: (attachment as TeamsInteropFileMetadata).previewUrl ?? ''
         }
       ];
     };
@@ -289,7 +289,7 @@ describe.only('Message should display image and attachment correctly', () => {
       onFetchAttachmentCount++;
       return [
         {
-          blobUrl: attachment.previewUrl ?? ''
+          blobUrl: (attachment as TeamsInteropFileMetadata).previewUrl ?? ''
         }
       ];
     };

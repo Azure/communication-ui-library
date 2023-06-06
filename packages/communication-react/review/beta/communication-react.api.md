@@ -2024,6 +2024,13 @@ export interface CustomControlButtonProps {
     text?: string;
 }
 
+// @beta (undocumented)
+export interface CustomFileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export interface CustomMessage extends MessageCommon {
     // (undocumented)
@@ -2445,17 +2452,7 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = CustomFileMetadata | TeamsInteropFileMetadata;
 
 // @beta (undocumented)
 export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
@@ -2653,6 +2650,9 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
+
+// @beta (undocumented)
+export const isTeamsInteropFileMetadata: (fileMetadata: FileMetadata) => fileMetadata is TeamsInteropFileMetadata;
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -3429,6 +3429,19 @@ export type TeamsCallAdapterArgs = {
 export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
+}
+
+// @beta (undocumented)
+export interface TeamsInteropFileMetadata {
+    // (undocumented)
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    // (undocumented)
+    id: string;
+    name: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
