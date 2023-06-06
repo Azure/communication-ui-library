@@ -64,7 +64,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // a demo feature flag for those beta feature not ready for beta release
         'in-progress-beta-feature-demo',
         // Feature for call transfer
-        'call-transfer'
+        'call-transfer',
+        // Optimal Video Count
+        'optimal-video-count'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -77,8 +79,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'click-to-call',
         // Mention feature
         'mention',
-        // Feature for call transfer
-        'call-transfer'
+        // Optimal Video count feature,
+        'optimal-video-count'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
