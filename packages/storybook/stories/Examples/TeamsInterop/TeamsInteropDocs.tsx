@@ -33,7 +33,7 @@ export const getComplianceBannerDocs: () => JSX.Element = () => {
 export const getLobbyDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Lobby Component</Title>
+      <Title>Lobby</Title>
       <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
       <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
@@ -103,16 +103,20 @@ export const getFileSharingDocs: () => JSX.Element = () => {
       <Description>- People who already have access</Description>
       <Description>- Specific individuals you select</Description>
       <Description>
-        Currently, Azure Communication Services only supports the "Anyone" and "People you choose" options. The “People
-        in your organization”, “People currently in this chat”, and “People with existing access” permissions can only
-        be supported for users in a Teams tenant. To learn more about the Sharing Permission, please refer to the [Limit
-        sharing in Microsoft
-        365](https://learn.microsoft.com/en-us/microsoft-365/solutions/microsoft-365-limit-sharing?view=o365-worldwide).
+        Microsoft Teams allows users to share file attachments as part of chat messages. These files are stored in
+        SharePoint or OneDrive and require authentication to access them. Depending on the file's sharing permissions
+        (e.g., Anyone, Individuals within your Organization, People you choose, etc.), ACS users in the Teams Interop
+        Interop meeting who try to access the shared files will be redirected to a SharePoint web page and prompted to
+        authenticate in order to access the file.
+      </Description>
+      <Description>
+        To learn more about the Sharing Permission, please refer to the [Limit sharing in Microsoft
+        365](https://learn.microsoft.com/en-us/microsoft-365/solutions/microsoft-365-limit-sharing).
       </Description>
       <Subheading>Explore Teams Interop with File Sharing Capability</Subheading>
       <Description>
-        At this time, the UI library only facilitates File Sharing in a Teams Interop chat initiated by the Teams user.
-        To utilize this feature, you can employ the `CallWithChat` composite.
+        At this time, the UI library only facilitates File Sharing in a Teams Interop chat sent by the Teams user. To
+        utilize this feature, you can employ the `CallWithChat` composite.
       </Description>
       <Description>
         Explore the `CallWithChat` composite using the [CallWithChatComposite Basic
