@@ -26,7 +26,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
 
 /* @conditional-compile-remove(call-transfer) */
-type TransferPageState = 'transferring' | 'connecting';
+type TransferPageSubject = 'transferor' | 'transferTarget';
 
 /**
  * @private
@@ -51,32 +51,34 @@ export const TransferPage = (
     : props.options?.callControls;
 
   /* @conditional-compile-remove(call-transfer) */
-  const pageState: TransferPageState = useMemo(() => {
-    if (transferCall !== undefined) {
-      if (['Ringing', 'Connected'].includes(transferCall.state)) {
-        return 'connecting';
-      } else {
-        // If transfer call's state is connecting we want this page's state to be transferring
-        return 'transferring';
-      }
+  // page subject is which should be participant shown in the transfer page depending on the transfer call state
+  const pageSubject: TransferPageSubject = useMemo(() => {
+    if (transferCall && ['Ringing', 'Connected'].includes(transferCall.state)) {
+      return 'transferTarget';
     }
-    return 'transferring';
+    return 'transferor';
   }, [transferCall]);
 
-  const transferor = remoteParticipants ? Object.values(remoteParticipants)[0] : undefined;
+  const transferor = useMemo(
+    () => (remoteParticipants ? Object.values(remoteParticipants)?.[0] : undefined),
+    [remoteParticipants]
+  );
   /* @conditional-compile-remove(call-transfer) */
-  const transferTarget = transferCall?.remoteParticipants[0];
-  let transferParticipant = transferor;
+  const transferTarget = useMemo(
+    () => (transferCall?.remoteParticipants ? Object.values(transferCall.remoteParticipants)?.[0] : undefined),
+    [transferCall]
+  );
+  let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
-  if (pageState === 'connecting') {
-    transferParticipant = transferTarget;
+  if (pageSubject === 'transferTarget') {
+    transferTileParticipant = transferTarget;
   }
 
   let transferParticipantDisplayName =
     transferor?.displayName ??
     /* @conditional-compile-remove(call-transfer) */ strings.transferPageUnknownTransferorDisplayName;
   /* @conditional-compile-remove(call-transfer) */
-  if (pageState === 'connecting') {
+  if (pageSubject === 'transferTarget') {
     transferParticipantDisplayName =
       transferTarget?.displayName ?? strings.transferPageUnknownTransferTargetDisplayName;
   }
@@ -94,12 +96,16 @@ export const TransferPage = (
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
         <TransferTile
-          userId={transferParticipant ? toFlatCommunicationIdentifier(transferParticipant?.identifier) : undefined}
+          userId={
+            transferTileParticipant ? toFlatCommunicationIdentifier(transferTileParticipant?.identifier) : undefined
+          }
           displayName={transferParticipantDisplayName}
           initialsName={transferParticipantDisplayName}
           /* @conditional-compile-remove(call-transfer) */
           statusText={
-            pageState === 'connecting' ? strings.transferPageConnectingText : strings.transferPageTransferringText
+            pageSubject === 'transferTarget'
+              ? strings.transferPageTransferTargetText
+              : strings.transferPageTransferorText
           }
           onRenderAvatar={props.onRenderAvatar}
           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}

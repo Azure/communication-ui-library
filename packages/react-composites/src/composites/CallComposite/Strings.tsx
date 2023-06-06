@@ -518,14 +518,14 @@ export interface CallCompositeStrings {
   captionsBannerSpinnerText?: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
-   * transfer page text to indicate that local user is being transferred
+   * transfer page text when showing the transferor who initiated the transfer
    */
-  transferPageTransferringText: string;
+  transferPageTransferorText: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
-   * transfer page text to indicate that local user is connecting to the transfer target
+   * transfer page text when showing the transfer target
    */
-  transferPageConnectingText: string;
+  transferPageTransferTargetText: string;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * transfer page display name for unknown participant

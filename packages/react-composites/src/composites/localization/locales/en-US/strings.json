@@ -151,8 +151,8 @@
       "zh-tw": "Chinese - Taiwan"
     },
     "captionsBannerSpinnerText": "Starting captions...",
-    "transferPageConnectingText": "Connecting...",
-    "transferPageTransferringText": "Transferring...",
+    "transferPageTransferorText": "Transferring...",
+    "transferPageTransferTargetText": "Connecting...",
     "transferPageUnknownTransferorDisplayName": "Unknown",
     "transferPageUnknownTransferTargetDisplayName": "Unknown"
   },

@@ -677,8 +677,8 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
-    transferPageConnectingText: string;
-    transferPageTransferringText: string;
+    transferPageTransferorText: string;
+    transferPageTransferTargetText: string;
     transferPageUnknownTransferorDisplayName: string;
     transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
