@@ -33,12 +33,7 @@ export const getComplianceBannerDocs: () => JSX.Element = () => {
 export const getLobbyDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Teams Interop</Title>
-      <Description>
-        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
-        considerations when connecting to a Teams meeting.
-      </Description>
-      <Heading>Lobby Component</Heading>
+      <Title>Lobby Component</Title>
       <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
       <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
@@ -49,12 +44,7 @@ export const getLobbyDocs: () => JSX.Element = () => {
 export const getInlineImageDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Teams Interop</Title>
-      <Description>
-        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
-        considerations when connecting to a Teams meeting.
-      </Description>
-      <Heading>Inline Images</Heading>
+      <Title>Inline Images</Title>
       <SingleLineBetaBanner />
       <Description>Microsoft Teams allows users to share images by:</Description>
       <Description>- Copying & paste into the box at the bottom of the chat.</Description>
@@ -104,12 +94,7 @@ export const getInlineImageDocs: () => JSX.Element = () => {
 export const getFileSharingDocs: () => JSX.Element = () => {
   return (
     <>
-      <Title>Teams Interop</Title>
-      <Description>
-        Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional
-        considerations when connecting to a Teams meeting.
-      </Description>
-      <Heading>File Sharing</Heading>
+      <Title>File Sharing</Title>
       <SingleLineBetaBanner />
       <Description>Microsoft Teams enables file attachment sharing with the following permissions:</Description>
       <Description>- Anyone</Description>
@@ -132,6 +117,16 @@ export const getFileSharingDocs: () => JSX.Element = () => {
       <Description>
         Explore the `CallWithChat` composite using the [CallWithChatComposite Basic
         Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+      </Description>
+      <Subheading>Use components with File Sharing Support</Subheading>
+      <Description>
+        The
+        [MessageThread](./?path=/docs/ui-components-messagethread--message-thread#display-file-attachments-with-messages)
+        and [SendBox](./?path=/docs/ui-components-sendbox--send-box#display-file-uploads) components are designed to be
+        responsive and have built-in support for File Sharing. For more information and implementation details, please
+        refer to the documentation for the
+        [MessageThread](./?path=/docs/ui-components-messagethread--message-thread#display-file-attachments-with-messages)
+        and [SendBox](./?path=/docs/ui-components-sendbox--send-box#display-file-uploads) components.
       </Description>
     </>
   );
