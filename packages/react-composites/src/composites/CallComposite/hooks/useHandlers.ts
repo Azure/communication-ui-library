@@ -5,7 +5,9 @@ import { CommonCallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
-import { CommonCallAdapter, VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
+import { CommonCallAdapter } from '..';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
