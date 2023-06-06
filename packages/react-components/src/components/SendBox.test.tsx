@@ -37,7 +37,7 @@ describe('SendBox strings should be localizable and overridable', () => {
 });
 
 /* @conditional-compile-remove(mention) */
-describe.only('SendBox should return correct value with a selected mention', () => {
+describe('SendBox should return correct value with a selected mention', () => {
   const suggestions: Mention[] = [
     {
       id: '1',
