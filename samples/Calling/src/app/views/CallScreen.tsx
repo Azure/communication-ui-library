@@ -12,7 +12,8 @@ import {
   CallAdapter,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
-
+/* @conditional-compile-remove(call-transfer) */
+import { LocalVideoStream } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
@@ -62,7 +63,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     });
     /* @conditional-compile-remove(call-transfer) */
     adapter.on('transferRequested', (e) => {
-      e.accept();
+      const videoSource = adapter.getState().call?.localVideoStreams?.[0]?.source;
+      e.accept({
+        audioOptions: { muted: adapter.getState().call?.isMuted },
+        videoOptions: videoSource ? { localVideoStreams: [new LocalVideoStream(videoSource)] } : undefined
+      });
     });
   }, []);
 
