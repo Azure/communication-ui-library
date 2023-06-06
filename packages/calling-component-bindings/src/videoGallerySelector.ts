@@ -14,9 +14,10 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams,
   getRemoteParticipants,
-  getScreenShareRemoteParticipant,
-  getOptimalVideoCount
+  getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(optimal-video-count) */
+import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
