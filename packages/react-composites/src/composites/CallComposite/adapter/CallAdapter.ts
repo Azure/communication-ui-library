@@ -131,7 +131,7 @@ export type CallAdapterClientState = {
   /**
    * State to track the selected video background effect.
    */
-  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+  selectedVideoBackgroundEffect?: VideoBackgroundEffect;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * Call from transfer request accepted by local user
@@ -293,7 +293,7 @@ export type TransferRequestedListener = (event: TransferRequestedEventArgs) => v
  *
  * @beta
  */
-export type SelectedVideoBackgroundEffect =
+export type VideoBackgroundEffect =
   | VideoBackgroundNoEffect
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
@@ -317,7 +317,7 @@ export interface VideoBackgroundNoEffect {
  *
  * @beta
  */
-export interface VideoBackgroundBlurEffect {
+export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   /**
    * Name of effect to blur video background effect
    */
@@ -330,7 +330,7 @@ export interface VideoBackgroundBlurEffect {
  *
  * @beta
  */
-export interface VideoBackgroundReplacementEffect {
+export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
   /**
    * Name of effect to replace video background effect
    */
@@ -338,11 +338,7 @@ export interface VideoBackgroundReplacementEffect {
   /**
    * key for unique identification of the custom background
    */
-  effectKey: string;
-  /**
-   * URL of the custom background image.
-   */
-  backgroundImageUrl: string;
+  effectKey?: string;
 }
 
 /**
@@ -496,21 +492,13 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the blur video background effect.
+   * Start the video background effect.
    *
    * @beta
    */
-  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the video background replacement effect.
-   *
-   * @beta
-   */
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -533,7 +521,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
 /**

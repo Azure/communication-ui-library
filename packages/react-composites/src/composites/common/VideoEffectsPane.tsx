@@ -92,7 +92,7 @@ export const VideoEffectsPaneContent = (props: {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
-        await adapter.blurVideoBackground();
+        await adapter.startVideoBackgroundEffect(blurEffect);
       } else if (effectKey === 'none') {
         const noneEffect: VideoBackgroundNoEffect = {
           effectName: effectKey
@@ -110,7 +110,7 @@ export const VideoEffectsPaneContent = (props: {
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
           adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
-          await adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
+          await adapter.startVideoBackgroundEffect(replaceEffect);
         }
       }
     },

@@ -6,7 +6,7 @@ import * as reselect from 'reselect';
 /* @conditional-compile-remove(video-background-effects) */
 import { getSelectedVideoEffect } from './baseSelectors';
 /* @conditional-compile-remove(video-background-effects) */
-import { SelectedVideoBackgroundEffect } from '../adapter/CallAdapter';
+import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -14,7 +14,7 @@ import { SelectedVideoBackgroundEffect } from '../adapter/CallAdapter';
  */
 export const activeVideoBackgroundEffectSelector = reselect.createSelector(
   [getSelectedVideoEffect],
-  (selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect) => {
+  (selectedVideoBackgroundEffect?: VideoBackgroundEffect) => {
     if (
       selectedVideoBackgroundEffect &&
       (selectedVideoBackgroundEffect.effectName === 'blur' || selectedVideoBackgroundEffect.effectName === 'none')
