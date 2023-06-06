@@ -265,7 +265,7 @@ describe('InputBoxComponent should hide mention popover', () => {
           }
         }}
       >
-        <button> Button</button>
+        <button>Button</button>
       </InputBoxComponent>
     );
   };
