@@ -20,12 +20,14 @@ import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react
 import { TeamsAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { Profile } from '@internal/react-composites';
+/* @conditional-compile-remove(call-transfer) */
+import { DefaultButton, Dialog, Stack, Text } from '@fluentui/react';
 
 export interface CallScreenProps {
   token: string;
@@ -46,6 +48,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
 
+  /* @conditional-compile-remove(call-transfer) */
+  const [dialogOpen, setDialogOpen] = useState(false);
+  /* @conditional-compile-remove(call-transfer) */
+  const [onConfirmTransfer, setOnConfirmTransfer] = useState<() => () => void>();
+  /* @conditional-compile-remove(call-transfer) */
+  const [onCancelTransfer, setOnCancelTransfer] = useState<() => () => void>();
+
   const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
     adapter.on('error', (e) => {
       // Error is already acted upon by the Call composite, but the surrounding application could
@@ -63,7 +72,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     });
     /* @conditional-compile-remove(call-transfer) */
     adapter.on('transferRequested', (e) => {
-      e.accept();
+      setOnConfirmTransfer(() => () => {
+        setDialogOpen(false);
+        e.accept();
+      });
+      setOnCancelTransfer(() => () => {
+        setDialogOpen(false);
+        e.reject();
+      });
+      setDialogOpen(true);
     });
   }, []);
 
@@ -96,7 +113,25 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
 
-  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  return (
+    <>
+      <ConfirmationDialog hidden={!dialogOpen} onConfirm={onConfirmTransfer} onCancel={onCancelTransfer} />
+      <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
+    </>
+  );
+};
+
+/* @conditional-compile-remove(call-transfer) */
+const ConfirmationDialog = (props: { hidden: boolean; onConfirm?: () => void; onCancel?: () => void }): JSX.Element => {
+  return (
+    <Dialog hidden={props.hidden}>
+      <Text>You are being transferred</Text>
+      <Stack horizontal>
+        <DefaultButton onClick={props.onCancel}>Cancel</DefaultButton>
+        <DefaultButton onClick={props.onConfirm}>Confirm</DefaultButton>
+      </Stack>
+    </Dialog>
+  );
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
