@@ -346,7 +346,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           iconName="NoticePageLeftCall"
           title={locale.strings.call.leftCallTitle}
-          // moreDetails={locale.strings.call.leftCallMoreDetails}
+          moreDetails={locale.strings.call.leftCallMoreDetails}
           dataUiId={'left-call-page'}
         />
       );
