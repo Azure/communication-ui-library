@@ -1,0 +1,18 @@
+# File: .github/workflows/workflow.yml
+
+on: [push]
+
+name: AzureLoginSample
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    
+    - run: |
+        az webapp list --query "[?state=='Running']"
