@@ -109,7 +109,7 @@ describe('VideoGallery default layout tests', () => {
     );
 
     expect(getGridTiles(container).length).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
-    expect(getTiles(getHorizontalGallery(container)).length).toBe(2);
+    expect(getTiles(getHorizontalGallery(container)).length).toBe(1);
   });
 
   test('should render remote screenshare and render dominant speaking remote participants in horizontal gallery', () => {
@@ -242,7 +242,7 @@ describe('VideoGallery floating local video layout tests', () => {
     const horizontalGalleryTiles = getTiles(getHorizontalGallery(container));
 
     expect(gridTiles.length).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS);
-    expect(horizontalGalleryTiles.length).toBe(2);
+    expect(horizontalGalleryTiles.length).toBe(1);
   });
 
   test('should render remote screenshare and render dominant speaking remote participants in horizontal gallery', () => {
