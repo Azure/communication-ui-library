@@ -62,7 +62,7 @@ export interface MediaGalleryProps {
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
-  localVideoTileOptions?: LocalVideoTileOptions;
+  localVideoTileOptions?: boolean | LocalVideoTileOptions;
 }
 
 /**
@@ -82,7 +82,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
-    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions?.position
+    /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
   );
 
   const cameraSwitcherProps = useMemo(() => {
@@ -144,11 +144,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
-          props.localVideoTileOptions?.position === 'hidden'
-            ? 'hidden'
-            : props.isMobile
-            ? 'followDeviceOrientation'
-            : '16:9'
+          props.localVideoTileOptions === false ? 'hidden' : props.isMobile ? 'followDeviceOrientation' : '16:9'
         }
       />
     );

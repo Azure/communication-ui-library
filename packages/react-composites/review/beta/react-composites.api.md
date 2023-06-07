@@ -370,7 +370,7 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
-    localVideoTileOptions?: LocalVideoTileOptions;
+    localVideoTile?: boolean | LocalVideoTileOptions;
 };
 
 // @public
@@ -1387,7 +1387,7 @@ export type IsSpeakingChangedListener = (event: {
 
 // @beta
 export interface LocalVideoTileOptions {
-    position?: 'grid' | 'floating' | 'hidden';
+    position?: 'grid' | 'floating';
 }
 
 // @public
