@@ -51,6 +51,7 @@ export const useVideoEffectsPane = (
   }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
   const [dismissedVideoEffectsError, setDismissedVideoEffectsError] = useState<DismissedError>();
+  const [activeVideoEffect, setActiveVideoEffect] = useState<ActiveVideoEffect>();
   const onDismissVideoEffectError = useCallback((error: AdapterError) => {
     setDismissedVideoEffectsError(dismissVideoEffectsError(error));
   }, []);
@@ -60,7 +61,8 @@ export const useVideoEffectsPane = (
     /* @conditional-compile-remove(video-background-effects) */
     if (
       latestVideoEffectError &&
-      (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt)
+      (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt) &&
+      (!activeVideoEffect || latestVideoEffectError.timestamp > activeVideoEffect.timestamp)
     ) {
       return latestVideoEffectError;
     }
@@ -68,7 +70,9 @@ export const useVideoEffectsPane = (
   }, [
     dismissedVideoEffectsError,
     /* @conditional-compile-remove(video-background-effects) */
-    latestVideoEffectError
+    latestVideoEffectError,
+    /* @conditional-compile-remove(video-background-effects) */
+    activeVideoEffect
   ]);
 
   const onRenderContent = useCallback((): JSX.Element => {
@@ -76,6 +80,7 @@ export const useVideoEffectsPane = (
       <VideoEffectsPaneContent
         onDismissError={onDismissVideoEffectError}
         activeVideoEffectError={activeVideoEffectError}
+        setActiveVideoEffect={setActiveVideoEffect}
       />
     );
   }, [onDismissVideoEffectError, activeVideoEffectError]);
@@ -117,3 +122,21 @@ export const useVideoEffectsPane = (
     isVideoEffectsPaneOpen: isOpen
   };
 };
+
+/* @conditional-compile-remove(video-background-effects) */
+/**
+ * Active video effect with timestamp.
+ *
+ * @private
+ */
+export interface ActiveVideoEffect {
+  /**
+   * Type of error that is active.
+   */
+  type: 'blur' | 'replacement';
+  /**
+   * The latest timestamp when this effect was activated.
+   *
+   */
+  timestamp: Date;
+}

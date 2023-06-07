@@ -26,6 +26,7 @@ import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 import { AdapterError } from './adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
+import { ActiveVideoEffect } from '../CallComposite/components/SidePane/useVideoEffectsPane';
 
 /**
  * Pane that is used to show video effects button
@@ -35,6 +36,7 @@ import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamS
 export const VideoEffectsPaneContent = (props: {
   onDismissError: (error: AdapterError) => void;
   activeVideoEffectError: () => AdapterError | undefined;
+  setActiveVideoEffect: (effect: ActiveVideoEffect) => void;
 }): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
@@ -92,6 +94,10 @@ export const VideoEffectsPaneContent = (props: {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
+        props.setActiveVideoEffect({
+          type: 'blur',
+          timestamp: new Date(Date.now())
+        });
         await adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
         const noneEffect: VideoBackgroundNoEffect = {
@@ -110,11 +116,15 @@ export const VideoEffectsPaneContent = (props: {
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
           adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
+          props.setActiveVideoEffect({
+            type: 'replacement',
+            timestamp: new Date(Date.now())
+          });
           await adapter.replaceVideoBackground({ backgroundImageUrl: backgroundImg.backgroundProps.url });
         }
       }
     },
-    [adapter, selectableVideoEffects]
+    [adapter, props, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
     props.onDismissError,
