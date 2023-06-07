@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -254,6 +254,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+  const palette = useTheme().palette;
+  const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   /* @conditional-compile-remove(rooms) */
   const role = useSelector(getRole);
@@ -336,7 +338,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <NoticePage
           title={locale.strings.call.leavingCallTitle ?? 'Leaving...'}
           dataUiId={'leaving-page'}
-          pageStyle={leavingPageStyle}
+          pageStyle={leavePageStyle}
           disableStartCallButton={true}
         />
       );
