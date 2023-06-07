@@ -80,3 +80,19 @@ You may need an appropriate loader to handle this file type, currently no loader
 This issue will occur when using `@azure/communication-react` with a webpack version < 5.
 The best course of action is to upgrade your webpack version to 5.
 If this is not possible, take a look at [these workarounds](https://github.com/fb55/htmlparser2/issues/1237#issuecomment-1182522861).
+
+## Runtime errors
+
+### Failed to create call agent, Already exists for this ACS id
+
+```
+Uncaught (in promise) CallError: CallClient.createCallAgent: Failed to create call agent, call agent for this ACS Id already exists
+    at toCallError (CallContext.ts:739:16)
+    at CallContext.eval (CallContext.ts:704:35)
+    at Generator.throw (<anonymous>)
+    at rejected (CallContext.ts:21:65)
+```
+
+We can see this error at times when some calls to construct our `AzureCommunicationCallAdapter` or `StatefulCallClient`. This can be caused by passing the arguments to these functions more than once or too often.
+
+Another common cause for this error is using strict mode in your application. Please see [React's documentation](https://react.dev/reference/react/StrictMode) on strict mode to learn more.

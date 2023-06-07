@@ -1256,7 +1256,9 @@ const useAzureCommunicationCallAdapterGeneric = <
             throw new Error('Unreachable code, provided a options without roleHint.');
           }
           if (creatingAdapterRef.current) {
-            console.warn('Adapter is already being created, skipping creation.');
+            console.warn(
+              'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
+            );
             return;
           }
           creatingAdapterRef.current = true;
