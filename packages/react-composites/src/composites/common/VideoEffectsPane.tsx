@@ -38,6 +38,7 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectError: () => AdapterError | undefined;
   setActiveVideoEffect: (effect: ActiveVideoEffect) => void;
 }): JSX.Element => {
+  const { onDismissError, activeVideoEffectError, setActiveVideoEffect } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
@@ -94,7 +95,7 @@ export const VideoEffectsPaneContent = (props: {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
-        props.setActiveVideoEffect({
+        setActiveVideoEffect({
           type: 'blur',
           timestamp: new Date(Date.now())
         });
@@ -116,7 +117,7 @@ export const VideoEffectsPaneContent = (props: {
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
           adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
-          props.setActiveVideoEffect({
+          setActiveVideoEffect({
             type: 'replacement',
             timestamp: new Date(Date.now())
           });
@@ -124,11 +125,11 @@ export const VideoEffectsPaneContent = (props: {
         }
       }
     },
-    [adapter, props, selectableVideoEffects]
+    [adapter, setActiveVideoEffect, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
-    props.onDismissError,
-    props.activeVideoEffectError,
+    onDismissError,
+    activeVideoEffectError,
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
