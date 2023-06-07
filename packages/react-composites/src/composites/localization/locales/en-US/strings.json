@@ -151,7 +151,11 @@
       "sk-sk": "Slovak",
       "zh-tw": "Chinese - Taiwan"
     },
-    "captionsBannerSpinnerText": "Starting captions..."
+    "captionsBannerSpinnerText": "Starting captions...",
+    "transferPageTransferorText": "Transferring...",
+    "transferPageTransferTargetText": "Connecting...",
+    "transferPageUnknownTransferorDisplayName": "Unknown",
+    "transferPageUnknownTransferTargetDisplayName": "Unknown"
   },
   "chat": {
     "chatListHeader": "In this chat",

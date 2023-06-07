@@ -21,10 +21,10 @@ jobs:
           fetch-depth: 0
 
       # Ensure node version is great enough
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
@@ -37,7 +37,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
 
       # Get datetime
       - name: Get datetime for alpha release name

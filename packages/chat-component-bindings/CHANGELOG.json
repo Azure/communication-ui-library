@@ -2,6 +2,33 @@
   "name": "@internal/chat-component-bindings",
   "entries": [
     {
+      "date": "Tue, 23 May 2023 21:43:17 GMT",
+      "tag": "@internal/chat-component-bindings_v1.5.1-beta.5",
+      "version": "1.5.1-beta.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.5.1-beta.5",
+            "commit": "7a6e42c011b091d165bf02f09348ed5bab6dba47"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/chat-stateful-client to v1.5.1-beta.5",
+            "commit": "7a6e42c011b091d165bf02f09348ed5bab6dba47"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/chat-component-bindings",
+            "comment": "Bump @internal/react-components to v1.5.1-beta.5",
+            "commit": "7a6e42c011b091d165bf02f09348ed5bab6dba47"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Apr 2023 15:39:40 GMT",
       "tag": "@internal/chat-component-bindings_v1.5.1-beta.3",
       "version": "1.5.1-beta.3",

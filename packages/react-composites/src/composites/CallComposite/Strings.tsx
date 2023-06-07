@@ -520,4 +520,24 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text when showing the transferor who initiated the transfer
+   */
+  transferPageTransferorText: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text when showing the transfer target
+   */
+  transferPageTransferTargetText: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferorDisplayName: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferTargetDisplayName: string;
 }

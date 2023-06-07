@@ -21,10 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 14.x
+      - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: 14.x
+          node-version: 16.x
 
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -36,7 +36,7 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
 
       - name: Install Dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
 
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build

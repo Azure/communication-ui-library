@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "A menu item role for mention popover items and create FocusZone to ensure the first item is focused when using talk back.",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "patch"
+}

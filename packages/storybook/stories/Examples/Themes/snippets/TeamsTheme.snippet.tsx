@@ -1,6 +1,7 @@
 import {
   CameraButton,
   ControlBar,
+  DEFAULT_COMPONENT_ICONS,
   EndCallButton,
   FluentThemeProvider,
   GridLayout,
@@ -9,8 +10,12 @@ import {
   VideoTile,
   useTheme
 } from '@azure/communication-react';
-import { Stack, mergeStyles } from '@fluentui/react';
+import { Stack, mergeStyles, registerIcons } from '@fluentui/react';
 import React from 'react';
+
+registerIcons({
+  icons: DEFAULT_COMPONENT_ICONS
+});
 
 const teamsTheme = {
   palette: {
@@ -41,10 +46,9 @@ const teamsTheme = {
 
 export const TeamsTheme: () => JSX.Element = () => {
   const wrapperStyle = {
-    width: '100%',
-    height: '100%',
     maxWidth: '50rem',
-    maxHeight: '30rem'
+    maxHeight: '30rem',
+    height: '20rem'
   };
 
   return (
@@ -60,7 +64,6 @@ const App: () => JSX.Element = () => {
   const theme = useTheme();
 
   const headerContainer = mergeStyles({
-    width: '100%',
     height: '3.875rem',
     overflow: 'hidden',
     flexDirection: 'row',
@@ -88,6 +91,9 @@ const App: () => JSX.Element = () => {
       minHeight: '2rem',
       width: '6.5rem',
       borderRadius: '0.125rem'
+    },
+    textContainer: {
+      display: 'inline-block'
     }
   };
 
@@ -97,9 +103,8 @@ const App: () => JSX.Element = () => {
 
   return (
     <Stack
+      verticalFill
       style={{
-        height: '100%',
-        width: '100%',
         background: theme.palette.neutralQuaternaryAlt
       }}
     >

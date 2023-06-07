@@ -60,6 +60,7 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
+import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -232,6 +233,7 @@ export type CallAdapterClientState = {
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+    acceptedTransferCallState?: CallState;
 };
 
 // @public
@@ -267,6 +269,7 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    off(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -281,6 +284,7 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    on(event: 'transferRequested', listener: TransferRequestedListener): void;
 }
 
 // @public
@@ -370,7 +374,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -488,6 +492,10 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageTransferorText: string;
+    transferPageTransferTargetText: string;
+    transferPageUnknownTransferorDisplayName: string;
+    transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
@@ -1471,7 +1479,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator;
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
     options?: TeamsAdapterOptions;
 };
 
@@ -1479,6 +1487,9 @@ export type TeamsCallAdapterArgs = {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @beta
+export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
