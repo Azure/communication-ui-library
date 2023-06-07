@@ -144,7 +144,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     },
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCountFeature: {
-      optimalVideoCount: 1
+      optimalVideoCount: call.feature(Features.OptimalVideoCount).optimalVideoCount || 1
     }
   };
 }
