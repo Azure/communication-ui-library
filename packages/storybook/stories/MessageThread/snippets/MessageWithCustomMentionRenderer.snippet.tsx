@@ -11,7 +11,7 @@ export const MessageWithCustomMentionRenderer: () => JSX.Element = () => {
       senderId: user1Id,
       senderDisplayName: 'Kat Larsson',
       messageId: Math.random().toString(),
-      content: `Hey <msft-mention id="${user2Id}">Robert Tolbert</msft-mention>, can you help me with my internet connection?`,
+      content: `Hey <msft-mention id="${user2Id}" displayText="Robert Tolbert">Robert Tolbert</msft-mention>, can you help me with my internet connection?`,
       createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
       mine: false,
       attached: false,

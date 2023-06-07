@@ -36,7 +36,7 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
 
       - name: Install Dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
 
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
