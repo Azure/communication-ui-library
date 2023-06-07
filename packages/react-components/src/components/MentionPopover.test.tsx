@@ -8,14 +8,14 @@ import { testIds } from './utils/testIds';
 
 describe('Display mention popover in the correct position', () => {
   interface TargetRect {
-    x: 0;
-    y: 0;
-    width: 500;
-    height: 200;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    x: number;
+    y: number;
+    width: number;
+    height: number;
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
   }
   const mentionSuggestionListContainerId = testIds.mentionSuggestionListContainer;
   const suggestions: Mention[] = [
@@ -30,19 +30,29 @@ describe('Display mention popover in the correct position', () => {
   ];
 
   const renderMentionPopoverComponent = (
-    targetRect: TargetRect,
     targetPositionOffset?: { top: number; left: number },
-    location?: 'above' | 'below'
+    location?: 'above' | 'below',
+    targetRect?: TargetRect
   ): void => {
+    const rect = targetRect || {
+      x: 0,
+      y: 0,
+      width: 500,
+      height: 200,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    };
     const ref = React.createRef<HTMLDivElement>();
     render(<div ref={ref} />);
     if (ref.current) {
       jest.spyOn(ref.current, 'getBoundingClientRect').mockImplementation(() => {
         return {
-          ...targetRect,
+          ...rect,
           toJSON: () => {
             return {
-              ...targetRect
+              ...rect
             };
           }
         };
@@ -62,18 +72,7 @@ describe('Display mention popover in the correct position', () => {
   test('Show mention popover above the cursor when popover fits horizontally of the target', async () => {
     const targetPositionOffset = { top: 50, left: 100 };
 
-    const targetRect: TargetRect = {
-      x: 0,
-      y: 0,
-      width: 500,
-      height: 200,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-
-    renderMentionPopoverComponent(targetRect, targetPositionOffset, 'above');
+    renderMentionPopoverComponent(targetPositionOffset, 'above');
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
     const elements = document.getElementsByClassName(mentionPopover.className);
@@ -89,18 +88,7 @@ describe('Display mention popover in the correct position', () => {
   test('Show mention popover above the cursor when popover does not fit horizontally of the target', async () => {
     const targetPositionOffset = { top: 50, left: 350 };
 
-    const targetRect: TargetRect = {
-      x: 0,
-      y: 0,
-      width: 500,
-      height: 200,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-
-    renderMentionPopoverComponent(targetRect, targetPositionOffset);
+    renderMentionPopoverComponent(targetPositionOffset);
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
     const elements = document.getElementsByClassName(mentionPopover.className);
@@ -116,18 +104,7 @@ describe('Display mention popover in the correct position', () => {
   test('Show mention popover below the cursor when popover fits horizontally of the target', async () => {
     const targetPositionOffset = { top: 50, left: 100 };
 
-    const targetRect: TargetRect = {
-      x: 0,
-      y: 0,
-      width: 500,
-      height: 200,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-
-    renderMentionPopoverComponent(targetRect, targetPositionOffset, 'below');
+    renderMentionPopoverComponent(targetPositionOffset, 'below');
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
     const elements = document.getElementsByClassName(mentionPopover.className);
@@ -143,18 +120,7 @@ describe('Display mention popover in the correct position', () => {
   test('Show mention popover below the cursor when popover does not fit horizontally of the target', async () => {
     const targetPositionOffset = { top: 50, left: 400 };
 
-    const targetRect: TargetRect = {
-      x: 0,
-      y: 0,
-      width: 500,
-      height: 200,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-
-    renderMentionPopoverComponent(targetRect, targetPositionOffset, 'below');
+    renderMentionPopoverComponent(targetPositionOffset, 'below');
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
     const elements = document.getElementsByClassName(mentionPopover.className);
@@ -168,18 +134,7 @@ describe('Display mention popover in the correct position', () => {
   });
 
   test('Show mention popover in the correct position when optional params are not passed in', async () => {
-    const targetRect: TargetRect = {
-      x: 0,
-      y: 0,
-      width: 500,
-      height: 200,
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-
-    renderMentionPopoverComponent(targetRect);
+    renderMentionPopoverComponent();
 
     const mentionPopover = await screen.findByTestId(mentionSuggestionListContainerId);
     const elements = document.getElementsByClassName(mentionPopover.className);
