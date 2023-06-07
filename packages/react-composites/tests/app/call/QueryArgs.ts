@@ -21,7 +21,7 @@ export interface QueryArgs {
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
-  localVideoTilePosition?: boolean | ('grid' | 'floating');
+  localVideoTilePosition?: false | ('grid' | 'floating');
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
