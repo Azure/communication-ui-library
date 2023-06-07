@@ -49,7 +49,7 @@ describe('SendBox should return correct value with a selected mention', () => {
     }
   ];
   const trigger = '*@';
-  const expectedHTMLValue = '<msft-mention id ="1" displayText ="Test User1">Test User1</msft-mention>';
+  const expectedHTMLValue = '<msft-mention id="1" displayText="Test User1">Test User1</msft-mention>';
 
   const renderSendBox = (onSendMessage: (message: string) => void): void => {
     render(
