@@ -1301,6 +1301,7 @@ const useAzureCommunicationCallAdapterGeneric = <
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
     [
+      adapterKind,
       credential,
       locator,
       userId,
