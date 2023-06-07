@@ -1,27 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  IPersonaStyleProps,
-  IPersonaStyles,
-  IStyle,
-  IStyleFunctionOrObject,
-  Spinner,
-  SpinnerSize,
-  Stack,
-  Text,
-  mergeStyles
-} from '@fluentui/react';
+import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallArrangement } from '../components/CallArrangement';
 import { usePropsFor } from '../hooks/usePropsFor';
 import { useSelector } from '../hooks/useSelector';
 import { getRemoteParticipants } from '../selectors/baseSelectors';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 /* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
+import {
+  defaultPersonaStyles,
+  displayNameStyles,
+  spinnerStyles,
+  statusTextStyles,
+  tileContainerStyles,
+  tileContentStyles
+} from '../styles/TransferPage.styles';
 import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
 
@@ -143,14 +141,7 @@ interface TransferTileProps {
 }
 
 const TransferTile = (props: TransferTileProps): JSX.Element => {
-  const {
-    displayName,
-    initialsName,
-    userId,
-    onRenderAvatar,
-    onFetchAvatarPersonaData,
-    statusText: statusString
-  } = props;
+  const { displayName, initialsName, userId, onRenderAvatar, onFetchAvatarPersonaData, statusText } = props;
 
   const [personaSize, setPersonaSize] = useState<number>();
   const tileRef = useRef<HTMLDivElement>(null);
@@ -189,43 +180,17 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
   const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);
 
   return (
-    <div ref={tileRef} className={mergeStyles(videoContainerStyles)} data-is-focusable={true}>
+    <div ref={tileRef} className={mergeStyles(tileContainerStyles)} data-is-focusable={true}>
       <Stack className={mergeStyles(tileContentStyles)} tokens={{ childrenGap: '1rem' }}>
         <Stack horizontalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
           {onRenderAvatar ? onRenderAvatar(userId ?? '', placeholderOptions, defaultOnRenderAvatar) : defaultAvatar}
-          <Text className={mergeStyles({ textAlign: 'center', fontSize: '1.5rem', fontWeight: 400 })}>
-            {displayName}
-          </Text>
+          <Text className={mergeStyles(displayNameStyles)}>{displayName}</Text>
         </Stack>
         <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
-          <Spinner size={SpinnerSize.large} styles={{ circle: { borderWidth: '0.125rem' } }} />
-          <Text className={mergeStyles({ textAlign: 'center', fontSize: '1rem' })}>{statusString}</Text>
+          <Spinner size={SpinnerSize.large} className={mergeStyles(spinnerStyles)} />
+          <Text className={mergeStyles(statusTextStyles)}>{statusText}</Text>
         </Stack>
       </Stack>
     </div>
   );
 };
-
-const videoContainerStyles: IStyle = {
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  width: '100%',
-  height: '100%',
-  minWidth: '100%',
-  minHeight: '100%',
-  objectPosition: 'center',
-  objectFit: 'cover',
-  zIndex: 0
-};
-
-const tileContentStyles: IStyle = {
-  width: '100%',
-  position: 'absolute',
-  top: '50%',
-  transform: 'translate(0, -50%)',
-  display: 'flex',
-  justifyContent: 'center'
-};
-
-const defaultPersonaStyles: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles> = { root: { margin: 'auto' } };
