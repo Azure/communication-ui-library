@@ -12,6 +12,7 @@ import {
 /* @conditional-compile-remove(mention) */
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
+import { testIds } from './utils/testIds';
 
 /**
  * Props for {@link _MentionPopover}.
@@ -299,6 +300,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   return (
     <div ref={popoverRef}>
       <Stack
+        data-testid={testIds.mentionSuggestionListContainer}
         className={mergeStyles(
           {
             maxHeight: 212,
