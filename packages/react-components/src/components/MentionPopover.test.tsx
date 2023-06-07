@@ -3,12 +3,10 @@
 
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-/* @conditional-compile-remove(mention) */
 import { Mention, _MentionPopover } from './MentionPopover';
 import { testIds } from './utils/testIds';
 
-/* @conditional-compile-remove(mention) */
-describe.only('Display mention popover in the correct position', () => {
+describe('Display mention popover in the correct position', () => {
   interface TargetRect {
     x: 0;
     y: 0;
