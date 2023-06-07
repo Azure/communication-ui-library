@@ -12,5 +12,9 @@ import { Mention } from '../MentionPopover';
 export const defaultOnMentionRender = (mention: Mention): JSX.Element => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const MsftMention = 'msft-mention' as any;
-  return <MsftMention id={mention.id}>{mention.displayText}</MsftMention>;
+  return (
+    <MsftMention id={mention.id} displayText={mention.displayText}>
+      {mention.displayText}
+    </MsftMention>
+  );
 };

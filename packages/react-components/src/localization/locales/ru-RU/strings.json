@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "Дополнительные параметры",
     "downloadFile": "Скачать файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
-    "blockedWarningLinkText": "Сведения"
+    "blockedWarningLinkText": "Сведения",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",

@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "Plus d’options",
     "downloadFile": "Télécharger un fichier",
     "blockedWarningText": "Ce message a été supprimé en raison d’une stratégie de l’organisation.",
-    "blockedWarningLinkText": "Détails"
+    "blockedWarningLinkText": "Détails",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",

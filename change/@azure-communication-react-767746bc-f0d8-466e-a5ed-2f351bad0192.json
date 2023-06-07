@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Improve Accessibility for Files Sharing feature",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "patch"
+}

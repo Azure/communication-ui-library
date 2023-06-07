@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "Diğer Seçenekler",
     "downloadFile": "Dosyayı indir",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
-    "blockedWarningLinkText": "Ayrıntılar"
+    "blockedWarningLinkText": "Ayrıntılar",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",

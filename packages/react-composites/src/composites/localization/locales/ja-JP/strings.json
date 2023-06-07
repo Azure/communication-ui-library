@@ -149,7 +149,8 @@
       "ro-ro": "ルーマニア語",
       "sk-sk": "スロバキア語",
       "zh-tw": "中国語 - 台湾"
-    }
+    },
+    "captionsBannerSpinnerText": "キャプションを開始しています..."
   },
   "chat": {
     "chatListHeader": "このチャット内",
