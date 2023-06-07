@@ -77,11 +77,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
 
   useEffect(() => {
     (async () => {
-      if (!userId) {
-        setData(undefined);
-        return;
-      }
-      if (dataProvider) {
+      if (dataProvider && userId) {
         const newData = await dataProvider(userId);
         if (avatarDeepDifferenceCheck(data, newData)) {
           setData(newData);
