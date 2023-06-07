@@ -21,7 +21,7 @@ export interface QueryArgs {
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
-  localVideoTilePosition?: 'grid' | 'floating' | 'hidden';
+  localVideoTilePosition?: boolean | ('grid' | 'floating');
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -34,6 +34,13 @@ export interface QueryArgs {
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
+  const localVideoTilePosition = !params.localVideoTilePosition
+    ? undefined
+    : params.localVideoTilePosition === 'false'
+    ? false
+    : params.localVideoTilePosition === 'floating'
+    ? 'floating'
+    : 'grid';
 
   return {
     mockCallAdapterState: params.mockCallAdapterState
@@ -57,6 +64,6 @@ export function parseQueryArgs(): QueryArgs {
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined,
-    localVideoTilePosition: (params.localVideoTilePosition as 'grid' | 'floating' | 'hidden') ?? undefined
+    localVideoTilePosition
   };
 }
