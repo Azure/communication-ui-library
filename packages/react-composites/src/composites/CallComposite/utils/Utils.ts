@@ -133,18 +133,14 @@ type GetCallCompositePageFunction = ((
   call: CallState | undefined,
   previousCall: CallState | undefined
 ) => CallCompositePage) &
-  /* @conditional-compile-remove(unsupported-browser) */ ((
+  ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
-    unsupportedBrowserInfo?: {
+    /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    }
-  ) => CallCompositePage) &
-  /* @conditional-compile-remove(call-transfer) */ ((
-    call: CallState | undefined,
-    previousCall: CallState | undefined,
-    transferCall?: CallState
+    },
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
