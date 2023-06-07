@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "none",
   "comment": "Added page when a call transfer is accepted",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
