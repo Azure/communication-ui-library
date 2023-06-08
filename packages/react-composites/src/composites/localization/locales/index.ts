@@ -199,7 +199,7 @@ export const COMPOSITE_LOCALE_RU_RU: CompositeLocale = {
   strings: createCompositeStrings(ru_RU)
 };
 /**
- * Locale for wedish (Sweden)
+ * Locale for Swedish (Sweden)
  *
  * @public
  */
