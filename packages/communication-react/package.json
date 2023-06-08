@@ -79,7 +79,7 @@
     "lint:fix": "rushx lint -- --fix",
     "lint:quiet": "rushx lint -- --quiet",
     "postpack": "copyfiles -E \"./*.tgz\" release",
-    "check-breaking-change": "tsc breaking-change-check/checkBreakingChanges.ts --allowSyntheticDefaultImports --strict --noEmit",
+    "check-breaking-change": "tsc --project breaking-change-check/tsconfig.json --strict --noEmit --allowSyntheticDefaultImports",
     "copy-api-snapshot": "cpx \"./dist/communication-react.d.ts\" \"./breaking-change-check/snapshots/\"",
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
