@@ -354,6 +354,21 @@ describe('Mention logic should be robust and accurate', () => {
       'Hello <msft-mention id="1" displayText="Patricia Adams">Adams</msft-mention>!'
     );
     expect(updated.updatedSelectionIndex).toEqual(6);
+
+    // Insertion in the middle of a mention (should cause delete)
+    updated = updateHTML({
+      change: 'd',
+      htmlText: twoWordMention,
+      mentionTrigger: '@',
+      oldPlainText: twoWordMentionTextRepresentation,
+      oldPlainTextEndIndex: 15,
+      newPlainText: 'Hello @Patriciad Adams!',
+      startIndex: 15,
+      tags: [twoWordMentionTag]
+    });
+
+    expect(updated.updatedHTML).toEqual('Hello d!');
+    expect(updated.updatedSelectionIndex).toEqual(7);
   });
 
   test('findStringsDiffIndexes works correctly', () => {
