@@ -184,9 +184,6 @@ export interface VideoGalleryProps {
   dominantSpeakers?: string[];
   /** Local video view options */
   localVideoViewOptions?: VideoStreamOptions;
-  /* @conditional-compile-remove(vertical-gallery) */
-  // Test breaking change here
-  breakingChangeParameter: boolean;
   /** Remote videos view options */
   remoteVideoViewOptions?: VideoStreamOptions;
   /** Callback to create the local video stream view */

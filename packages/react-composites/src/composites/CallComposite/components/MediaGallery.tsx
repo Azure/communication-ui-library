@@ -130,8 +130,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const VideoGalleryMemoized = useMemo(() => {
     return (
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         {...videoGalleryProps}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}

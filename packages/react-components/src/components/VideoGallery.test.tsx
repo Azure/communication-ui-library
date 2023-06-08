@@ -43,13 +43,7 @@ describe('VideoGallery default layout tests', () => {
     );
 
     const { container } = render(
-      <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
-        layout="default"
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-      />
+      <VideoGallery layout="default" localParticipant={localParticipant} remoteParticipants={remoteParticipants} />
     );
 
     const tiles = getGridTiles(container);
@@ -72,13 +66,7 @@ describe('VideoGallery default layout tests', () => {
     );
 
     const { container } = render(
-      <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
-        layout="default"
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-      />
+      <VideoGallery layout="default" localParticipant={localParticipant} remoteParticipants={remoteParticipants} />
     );
 
     expect(getFloatingLocalVideoModal(container)).toBe(null);
@@ -95,13 +83,7 @@ describe('VideoGallery default layout tests', () => {
     );
 
     const { container } = render(
-      <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
-        layout="default"
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-      />
+      <VideoGallery layout="default" localParticipant={localParticipant} remoteParticipants={remoteParticipants} />
     );
 
     const allTiles = getTiles(container);
@@ -123,13 +105,7 @@ describe('VideoGallery default layout tests', () => {
     );
 
     const { container } = render(
-      <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
-        layout="default"
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-      />
+      <VideoGallery layout="default" localParticipant={localParticipant} remoteParticipants={remoteParticipants} />
     );
 
     expect(getGridTiles(container).length).toBe(DEFAULT_MAX_REMOTE_VIDEO_STREAMS + 1); // +1 for the local video stream
@@ -162,8 +138,6 @@ describe('VideoGallery default layout tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="default"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -202,8 +176,6 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -233,8 +205,6 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -262,8 +232,6 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -302,8 +270,6 @@ describe('VideoGallery floating local video layout tests', () => {
     );
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -346,8 +312,6 @@ describe('VideoGallery pinned participants tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -394,8 +358,6 @@ describe('VideoGallery pinned participants tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -433,8 +395,6 @@ describe('VideoGallery pinned participants tests', () => {
 
       const { container } = render(
         <VideoGallery
-          /* @conditional-compile-remove(vertical-gallery) */
-          breakingChangeParameter
           layout="floatingLocalVideo"
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -485,8 +445,6 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -529,8 +487,6 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
@@ -567,8 +523,6 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
 
     const { container } = render(
       <VideoGallery
-        /* @conditional-compile-remove(vertical-gallery) */
-        breakingChangeParameter
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
