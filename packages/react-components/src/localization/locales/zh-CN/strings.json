@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "更多选项",
     "downloadFile": "下载文件",
     "blockedWarningText": "由于组织策略，此消息已被删除。",
-    "blockedWarningLinkText": "详细信息"
+    "blockedWarningLinkText": "详细信息",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",

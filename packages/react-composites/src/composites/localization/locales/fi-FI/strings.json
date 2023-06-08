@@ -149,7 +149,8 @@
       "ro-ro": "romania",
       "sk-sk": "slovakki",
       "zh-tw": "kiina – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Aloitetaan tekstitystä..."
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "Weitere Optionen",
     "downloadFile": "Datei herunterladen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
-    "blockedWarningLinkText": "Details"
+    "blockedWarningLinkText": "Details",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",

@@ -149,7 +149,8 @@
       "ro-ro": "Romeno",
       "sk-sk": "Eslovaco",
       "zh-tw": "Chinês - Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Iniciando legendas..."
   },
   "chat": {
     "chatListHeader": "Neste chat",

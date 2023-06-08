@@ -149,7 +149,8 @@
       "ro-ro": "רומנית",
       "sk-sk": "סלובקית",
       "zh-tw": "סינית - טייוואן"
-    }
+    },
+    "captionsBannerSpinnerText": "מאתחל כתוביות..."
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",

@@ -149,7 +149,8 @@
       "ro-ro": "rumuński",
       "sk-sk": "słowacki",
       "zh-tw": "chiński — Tajwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Trwa uruchamianie napisów..."
   },
   "chat": {
     "chatListHeader": "W tym czacie",

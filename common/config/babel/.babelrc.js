@@ -44,8 +44,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
-        // Chat teams interop to display images in chat messages
-        'teams-inline-images',
+        // Chat teams interop to display images and file attachments in chat messages
+        'teams-inline-images-and-file-sharing',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
@@ -64,7 +64,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // a demo feature flag for those beta feature not ready for beta release
         'in-progress-beta-feature-demo',
         // Feature for call transfer
-        'call-transfer',
+        'call-transfer'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -76,7 +76,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for updates needed for Click to Call (C2C) scenarios
         'click-to-call',
         // Mention feature
-        'mention'
+        'mention',
+        // Feature for call transfer
+        'call-transfer'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
