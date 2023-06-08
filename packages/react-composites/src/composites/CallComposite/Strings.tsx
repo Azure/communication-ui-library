@@ -81,6 +81,10 @@ export interface CallCompositeStrings {
    */
   failedToJoinCallDueToNoNetworkMoreDetails?: string;
   /**
+   * Text to display on a leaving page.
+   */
+  leavingCallTitle?: string;
+  /**
    * Title text of the page shown to the user when they leave a call in the call composite.
    */
   leftCallTitle: string;

@@ -559,7 +559,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -623,6 +623,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     holdScreenLabel: string;
     learnMore: string;
+    leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
     liveCaptionsLabel?: string;
