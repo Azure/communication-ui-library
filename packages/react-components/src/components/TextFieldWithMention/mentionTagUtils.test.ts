@@ -128,6 +128,15 @@ describe('Mention logic should be robust and accurate', () => {
     expect(parsed?.plainText).toEqual(comparisonString);
   });
 
+  test('Using /> in the text does not break parsing', () => {
+    const comparisonString = 'x/>y and z';
+    let parsed: { tags: TagData[]; plainText: string } | undefined;
+    expect(() => {
+      parsed = textToTagParser(comparisonString, '@');
+    }).not.toThrow();
+    expect(parsed?.plainText).toEqual(comparisonString);
+  });
+
   test('Basic HTML generation works', () => {
     const htmlString = htmlStringForMentionSuggestion({ id: '1', displayText: 'Everyone' }, localeStrings);
     expect(htmlString).toEqual('<msft-mention id="1" displayText="Everyone">Everyone</msft-mention>');
