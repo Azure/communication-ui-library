@@ -37,10 +37,10 @@ The client-side application is a React based user interface. Alongside this fron
     rush install
     ```
 
-1. Start the calling app
+1. Start the call with chat app
 
     ```bash
-    cd samples\Calling
+    cd samples\CallWithChat
     rushx start
     ```
 
