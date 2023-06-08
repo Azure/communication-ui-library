@@ -136,7 +136,11 @@ class CallContext {
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
-    this.displayNameModifier = options?.onFetchProfile ? createProfileStateModifier(options.onFetchProfile) : undefined;
+    this.displayNameModifier = options?.onFetchProfile
+      ? createProfileStateModifier(options.onFetchProfile, () => {
+          this.setState(this.getState());
+        })
+      : undefined;
   }
 
   private bindPublicMethods(): void {
