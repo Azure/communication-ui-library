@@ -38,7 +38,12 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectError: () => AdapterError | undefined;
   setActiveVideoEffect: (effect: ActiveVideoEffect) => void;
 }): JSX.Element => {
-  const { onDismissError, activeVideoEffectError, setActiveVideoEffect } = props;
+  const {
+    onDismissError,
+    activeVideoEffectError,
+    /* @conditional-compile-remove(video-background-effects) */
+    setActiveVideoEffect
+  } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */

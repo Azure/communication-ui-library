@@ -9,9 +9,7 @@ import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { AdapterError } from '../../../common/adapters';
 import { DismissedError, dismissVideoEffectsError } from '../../utils';
-/* @conditional-compile-remove(video-background-effects) */
 import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
-/* @conditional-compile-remove(video-background-effects) */
 import { useSelector } from '../../hooks/useSelector';
 const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
 
@@ -121,7 +119,7 @@ export const useVideoEffectsPane = (
  */
 export interface ActiveVideoEffect {
   /**
-   * Type of error that is active.
+   * Type of video effect that is active.
    */
   type: 'blur' | 'replacement';
   /**
