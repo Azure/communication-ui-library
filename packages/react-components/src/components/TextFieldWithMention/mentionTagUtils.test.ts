@@ -1,80 +1,95 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-// import React from 'react';
-
 /* @conditional-compile-remove(mention) */
 import { Mention } from '../MentionPopover';
 /* @conditional-compile-remove(mention) */
 import {
   TagData,
   findMentionTagForSelection,
+  findNewSelectionIndexForMention,
+  findStringsDiffIndexes,
   getDisplayNameForMentionSuggestion,
   getValidatedIndexInRange,
   htmlStringForMentionSuggestion,
   rangeOfWordInSelection,
-  textToTagParser
+  textToTagParser,
+  updateHTML
 } from './mentionTagUtils';
 /* @conditional-compile-remove(mention) */
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 
-const localeStrings = COMPONENT_LOCALE_EN_US.strings;
-const basicMention = 'Hello <msft-mention id="1" displayText="Everyone">everyone</msft-mention>!';
-const basicMentionTextRepresentation = 'Hello @everyone!';
-const basicMentionTag: TagData = {
-  closingTagIndex: 58,
-  content: 'everyone',
-  openTagBody: '<msft-mention id="1" displayText="Everyone">',
-  openTagIndex: 6,
-  plainTextBeginIndex: 6,
-  plainTextEndIndex: 15,
-  tagType: 'msft-mention'
-};
-const nestedMention =
-  '<p><b>Hello</b> <msft-mention id="1" displayText="Everyone">everyone</msft-mention></p><em>!</em>';
-const nestedMentionTextRepresentation = 'Hello #éeveryone!';
-const nestedMentionTags: TagData[] = [
-  {
-    closingTagIndex: 83,
-    content: '<b>Hello</b> <msft-mention id="1" displayText="Everyone">everyone</msft-mention>',
-    openTagBody: '<p>',
-    openTagIndex: 0,
-    plainTextBeginIndex: 0,
-    plainTextEndIndex: 16,
-    subTags: [
-      {
-        closingTagIndex: 8,
-        content: 'Hello',
-        openTagBody: '<b>',
-        openTagIndex: 0,
-        plainTextBeginIndex: 0,
-        plainTextEndIndex: 5,
-        tagType: 'b'
-      },
-      {
-        closingTagIndex: 65,
-        content: 'everyone',
-        openTagBody: '<msft-mention id="1" displayText="Everyone">',
-        openTagIndex: 13,
-        plainTextBeginIndex: 6,
-        plainTextEndIndex: 16,
-        tagType: 'msft-mention'
-      }
-    ],
-    tagType: 'p'
-  },
-  {
-    closingTagIndex: 92,
-    content: '!',
-    openTagBody: '<em>',
-    openTagIndex: 87,
-    plainTextBeginIndex: 16,
-    plainTextEndIndex: 17,
-    tagType: 'em'
-  }
-];
 /* @conditional-compile-remove(mention) */
 describe('Mention logic should be robust and accurate', () => {
+  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
+
+  const basicMention = 'Hello <msft-mention id="1" displayText="Everyone">everyone</msft-mention>!';
+  const basicMentionTextRepresentation = 'Hello @everyone!';
+  const basicMentionTag: TagData = {
+    closingTagIndex: 58,
+    content: 'everyone',
+    openTagBody: '<msft-mention id="1" displayText="Everyone">',
+    openTagIndex: 6,
+    plainTextBeginIndex: 6,
+    plainTextEndIndex: 15,
+    tagType: 'msft-mention'
+  };
+  const nestedMention =
+    '<p><b>Hello</b> <msft-mention id="1" displayText="Everyone">everyone</msft-mention></p><em>!</em>';
+  const nestedMentionTextRepresentation = 'Hello #éeveryone!';
+  const nestedMentionTags: TagData[] = [
+    {
+      closingTagIndex: 83,
+      content: '<b>Hello</b> <msft-mention id="1" displayText="Everyone">everyone</msft-mention>',
+      openTagBody: '<p>',
+      openTagIndex: 0,
+      plainTextBeginIndex: 0,
+      plainTextEndIndex: 16,
+      subTags: [
+        {
+          closingTagIndex: 8,
+          content: 'Hello',
+          openTagBody: '<b>',
+          openTagIndex: 0,
+          plainTextBeginIndex: 0,
+          plainTextEndIndex: 5,
+          tagType: 'b'
+        },
+        {
+          closingTagIndex: 65,
+          content: 'everyone',
+          openTagBody: '<msft-mention id="1" displayText="Everyone">',
+          openTagIndex: 13,
+          plainTextBeginIndex: 6,
+          plainTextEndIndex: 16,
+          tagType: 'msft-mention'
+        }
+      ],
+      tagType: 'p'
+    },
+    {
+      closingTagIndex: 92,
+      content: '!',
+      openTagBody: '<em>',
+      openTagIndex: 87,
+      plainTextBeginIndex: 16,
+      plainTextEndIndex: 17,
+      tagType: 'em'
+    }
+  ];
+
+  const twoWordMention = 'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia Adams</msft-mention>!';
+  const twoWordMentionTextRepresentation = 'Hello @Patricia Adams!';
+  const twoWordMentionTag: TagData = {
+    closingTagIndex: 70,
+    content: 'Patricia Adams',
+    openTagBody: '<msft-mention id="1" displayText="Patricia Adams">',
+    openTagIndex: 6,
+    plainTextBeginIndex: 6,
+    plainTextEndIndex: 21,
+    tagType: 'msft-mention'
+  };
+
   test('Basic parsing works', () => {
     const parsed = textToTagParser(basicMention, '@');
 
@@ -115,22 +130,16 @@ describe('Mention logic should be robust and accurate', () => {
     }).not.toThrow();
     expect(parsed?.plainText).toEqual(comparisonString);
   });
-});
 
-/* @conditional-compile-remove(mention) */
-describe('Mention HTML generation is correct', () => {
   test('Basic HTML generation works', () => {
     const htmlString = htmlStringForMentionSuggestion({ id: '1', displayText: 'Everyone' }, localeStrings);
-    expect(htmlString).toEqual('<msft-mention id ="1" displayText ="Everyone">Everyone</msft-mention>');
+    expect(htmlString).toEqual('<msft-mention id="1" displayText="Everyone">Everyone</msft-mention>');
   });
   test('HTML generation works when the mention has no display text', () => {
     const htmlString = htmlStringForMentionSuggestion({ id: '1', displayText: '' }, localeStrings);
-    expect(htmlString).toEqual('<msft-mention id ="1" displayText ="">Unnamed participant</msft-mention>');
+    expect(htmlString).toEqual('<msft-mention id="1" displayText="">Unnamed participant</msft-mention>');
   });
-});
 
-/* @conditional-compile-remove(mention) */
-describe('Mention helpers function correctly', () => {
   test('getDisplayNameForMentionSuggestion returns the correct display name', () => {
     let mention: Mention = {
       id: '1',
@@ -187,19 +196,7 @@ describe('Mention helpers function correctly', () => {
     });
     expect(selection).toEqual({ start: 6, end: 15 });
 
-    const twoWordMention = 'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia Adams</msft-mention>!';
     const { tags, plainText } = textToTagParser(twoWordMention, '@');
-
-    const twoWordMentionTextRepresentation = 'Hello @Patricia Adams!';
-    const twoWordMentionTag: TagData = {
-      closingTagIndex: 70,
-      content: 'Patricia Adams',
-      openTagBody: '<msft-mention id="1" displayText="Patricia Adams">',
-      openTagIndex: 6,
-      plainTextBeginIndex: 6,
-      plainTextEndIndex: 21,
-      tagType: 'msft-mention'
-    };
     expect(twoWordMentionTextRepresentation).toEqual(plainText);
     expect(twoWordMentionTag).toEqual(tags[0]);
 
@@ -232,5 +229,162 @@ describe('Mention helpers function correctly', () => {
       tag: tags[0]
     });
     expect(selection).toEqual({ start: 16, end: 21 });
+  });
+
+  test('findNewSelectionIndexForMention works correctly', () => {
+    let newSelectionIndex = findNewSelectionIndexForMention({
+      tag: twoWordMentionTag,
+      textValue: twoWordMentionTextRepresentation,
+      currentSelectionIndex: 8,
+      previousSelectionIndex: 7
+    });
+    expect(newSelectionIndex).toEqual(15); // Move to the end of the word
+
+    newSelectionIndex = findNewSelectionIndexForMention({
+      tag: twoWordMentionTag,
+      textValue: twoWordMentionTextRepresentation,
+      currentSelectionIndex: 17,
+      previousSelectionIndex: 8
+    });
+    expect(newSelectionIndex).toEqual(21); // Move to the start of the mention
+
+    newSelectionIndex = findNewSelectionIndexForMention({
+      tag: twoWordMentionTag,
+      textValue: twoWordMentionTextRepresentation,
+      currentSelectionIndex: 6,
+      previousSelectionIndex: 8
+    });
+    expect(newSelectionIndex).toEqual(6); // Move to the start of the word
+
+    // "Hello @Patricia Adams!"
+    newSelectionIndex = findNewSelectionIndexForMention({
+      tag: twoWordMentionTag,
+      textValue: twoWordMentionTextRepresentation,
+      currentSelectionIndex: 18,
+      previousSelectionIndex: 20
+    });
+    expect(newSelectionIndex).toEqual(15); // Move to the start of the word
+  });
+
+  test('updateHTML works correctly', () => {
+    // Basic append
+    let updated = updateHTML({
+      change: '!',
+      htmlText: basicMention,
+      mentionTrigger: '@',
+      oldPlainText: basicMentionTextRepresentation,
+      oldPlainTextEndIndex: 15,
+      newPlainText: basicMentionTextRepresentation + '!',
+      startIndex: 15,
+      tags: [basicMentionTag]
+    });
+    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1" displayText="Everyone">everyone</msft-mention>!!');
+    expect(updated.updatedSelectionIndex).toEqual(16);
+
+    // Delete just before first word of a mention
+    updated = updateHTML({
+      change: '',
+      htmlText: twoWordMention,
+      mentionTrigger: '@',
+      oldPlainText: twoWordMentionTextRepresentation,
+      oldPlainTextEndIndex: 7,
+      newPlainText: 'Hello Patricia Adams!',
+      startIndex: 6,
+      tags: [twoWordMentionTag]
+    });
+
+    expect(updated.updatedHTML).toEqual(
+      'Hello <msft-mention id="1" displayText="Patricia Adams">Adams</msft-mention>!'
+    );
+    expect(updated.updatedSelectionIndex).toEqual(6);
+
+    // Delete just before second word of a mention
+    updated = updateHTML({
+      change: '',
+      htmlText: twoWordMention,
+      mentionTrigger: '@',
+      oldPlainText: twoWordMentionTextRepresentation,
+      oldPlainTextEndIndex: 16,
+      newPlainText: 'Hello @PatriciaAdams!',
+      startIndex: 15,
+      tags: [twoWordMentionTag]
+    });
+
+    expect(updated.updatedHTML).toEqual(
+      'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia</msft-mention>!'
+    );
+    expect(updated.updatedSelectionIndex).toEqual(15);
+
+    // Backspace at the end of a mention
+    updated = updateHTML({
+      change: '',
+      htmlText: twoWordMention,
+      mentionTrigger: '@',
+      oldPlainText: twoWordMentionTextRepresentation,
+      oldPlainTextEndIndex: 21,
+      newPlainText: 'Hello @Patricia Adam!',
+      startIndex: 20,
+      tags: [twoWordMentionTag]
+    });
+
+    expect(updated.updatedHTML).toEqual(
+      'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia</msft-mention>!'
+    );
+    expect(updated.updatedSelectionIndex).toEqual(15);
+
+    // Backspace in the middle of a mention
+    updated = updateHTML({
+      change: '',
+      htmlText: twoWordMention,
+      mentionTrigger: '@',
+      oldPlainText: twoWordMentionTextRepresentation,
+      oldPlainTextEndIndex: 15,
+      newPlainText: 'Hello @Patrici Adams!',
+      startIndex: 14,
+      tags: [twoWordMentionTag]
+    });
+
+    expect(updated.updatedHTML).toEqual(
+      'Hello <msft-mention id="1" displayText="Patricia Adams">Adams</msft-mention>!'
+    );
+    expect(updated.updatedSelectionIndex).toEqual(6);
+  });
+
+  test('findStringsDiffIndexes works correctly', () => {
+    // Backspace into first word of a mention
+    let diff = findStringsDiffIndexes({
+      currentSelectionEnd: 14,
+      currentSelectionStart: 14,
+      newText: 'Hello @Patrici Adams!',
+      oldText: 'Hello @Patricia Adams!',
+      previousSelectionEnd: 15,
+      previousSelectionStart: 16
+    });
+
+    expect(diff).toEqual({ changeStart: 14, newChangeEnd: 14, oldChangeEnd: 15 });
+
+    // Append to end of the string
+    diff = findStringsDiffIndexes({
+      currentSelectionEnd: 23,
+      currentSelectionStart: 23,
+      newText: 'Hello @Patricia Adams!!',
+      oldText: 'Hello @Patricia Adams!',
+      previousSelectionEnd: 22,
+      previousSelectionStart: 22
+    });
+
+    expect(diff).toEqual({ changeStart: 22, newChangeEnd: 23, oldChangeEnd: 22 });
+
+    // Insert mid-mention
+    diff = findStringsDiffIndexes({
+      currentSelectionEnd: 17,
+      currentSelectionStart: 17,
+      newText: 'Hello @Patricia $Adams!',
+      oldText: 'Hello @Patricia Adams!',
+      previousSelectionEnd: 16,
+      previousSelectionStart: 16
+    });
+
+    expect(diff).toEqual({ changeStart: 16, newChangeEnd: 17, oldChangeEnd: 16 });
   });
 });
