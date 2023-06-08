@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Maintain audio and video state after call transfer in calling sample",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}
