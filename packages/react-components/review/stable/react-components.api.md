@@ -649,6 +649,8 @@ export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
 // @internal
 export interface _FileCardGroupProps {
     // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
     children: React_2.ReactNode;
 }
 
@@ -677,6 +679,8 @@ export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 // @internal
 export interface _FileDownloadCardsStrings {
     downloadFile: string;
+    // (undocumented)
+    fileCardGroupMessage: string;
 }
 
 // @beta
