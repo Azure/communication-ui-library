@@ -1525,8 +1525,8 @@ export interface VideoBackgroundNoEffect {
 
 // @beta
 export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
-    effectKey?: string;
     effectName: 'replacement';
+    key?: string;
 }
 
 // (No @packageDocumentation comment for this package)

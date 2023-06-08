@@ -340,7 +340,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
   /**
    * key for unique identification of the custom background
    */
-  Key?: string;
+  key?: string;
 }
 
 /**

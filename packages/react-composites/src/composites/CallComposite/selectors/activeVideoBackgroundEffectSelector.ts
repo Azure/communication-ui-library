@@ -21,7 +21,7 @@ export const activeVideoBackgroundEffectSelector = reselect.createSelector(
     ) {
       return selectedVideoBackgroundEffect.effectName;
     } else if (selectedVideoBackgroundEffect && selectedVideoBackgroundEffect.effectName === 'replacement') {
-      return selectedVideoBackgroundEffect?.effectKey;
+      return selectedVideoBackgroundEffect?.key;
     }
     return 'none';
   }

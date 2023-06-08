@@ -106,7 +106,7 @@ export const VideoEffectsPaneContent = (props: {
         if (backgroundImg && backgroundImg.backgroundProps) {
           const replaceEffect: VideoBackgroundReplacementEffect = {
             effectName: 'replacement',
-            effectKey,
+            key: effectKey,
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
           adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
