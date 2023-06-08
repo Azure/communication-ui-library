@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "none",
   "comment": "Stateful client update to have CallState property of accepted transfer call",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
