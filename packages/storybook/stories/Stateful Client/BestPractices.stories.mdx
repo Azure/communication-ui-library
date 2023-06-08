@@ -53,14 +53,14 @@ There are three scenarios to using these APIs:
 1. _Rendering a RemoteVideoStreamState_
    You are required to call `createView` with a valid `callId`, `participantIdentifier`, and `remoteVideoStreamState`.
    The `createView` is async and if your architecture can support awaiting for it we recommend you do that.
-   Once the `createView` completes the view will be stored under `callstate.RemoteParticipants.[your remote participant].videoStream.[your videostream].view`.
+   Once the `createView` completes the view will be stored under `CallState.RemoteParticipants.[your remote participant].videoStream.[your videostream].view`.
    If you cannot await the result of `createView`, it is fine to call `createView` again, `createView` will no-op the second call. Once the view has been created, the call state will be automatically updated and you can check the state for the view.
    `CreateView` will not allow creating multiple view of the same stream.
 
 2. _Rendering a LocalVideoStreamState in a Call_
    Same as #1 except this time `createView` only requires a valid `callId` and `LocalVideoStreamState`.
    Note that this will only work if the `LocalVideoStream` is already part of the call (you’ll have to first call `Call.startVideo` to add the `LocalVideoStream` to the Call).
-   Everything else is the same as #1 after this except the view can be found in `callstate.localVideoStreams.(your videostream).view`.
+   Everything else is the same as #1 after this except the view can be found in `CallState.localVideoStreams.(your videostream).view`.
 
 3. _Rendering a LocalVideoStreamState when not in a call_
    This scenario supports the case if you want to see a video render without adding that stream to the call, for instance `LocalPreview` scenario.
@@ -73,14 +73,14 @@ To debug `createView` and `disposeView`, they emit `console.warns` when used inc
 ## Track Changes to `callId`
 
 One major gotcha with using Stateful Calling is that `callId` may change and `callId` is used to look up data in Stateful state.
-If you have an old callId and the callId changed, you will not be able to access or find `callstate` in `CallClientState`.
+If you have an old callId and the callId changed, you will not be able to access or find `CallState` in `CallClientState`.
 To work around, we recommend you do not cache the `callId` and instead cache the entire call object.
 The id in the call object will be kept up to date and when ever you access `CallClientState` use the `call.id`.
 
 ## Detecting Screenshare Participant
 
 To make Stateful Calling easier to use we added a `screenshareRemoteParticipant` property to the state of any `Call`.
-If there is a remote participant screensharing, you can easily access the participant using `callstate.screenShareRemoteParticipant`:
+If there is a remote participant screensharing, you can easily access the participant using `CallState.screenShareRemoteParticipant`:
 
 ```ts
 const remoteScreenshareParticipant = statefulCallClient.getState().calls[CALL_ID].screenShareRemoteParticipant;
@@ -92,4 +92,4 @@ Note that this only applies to remote screenshares and not local screenshares.
 ## Detecting Transcription and Recording
 
 Stateful Calling will manage transcription/recording for you.
-You only need to simply check the states under `callstate.transcription` and `callstate.recording`.
+You only need to simply check the states under `CallState.transcription` and `CallState.recording`.
