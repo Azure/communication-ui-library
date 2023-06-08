@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Stateful client update to have CallState property of accepted transfer call",
+  "comment": "Added page when a call transfer is accepted",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
