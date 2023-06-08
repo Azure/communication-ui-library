@@ -198,10 +198,18 @@ class CallContext {
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
     };
 
+    /* @conditional-compile-remove(call-transfer) */
+    const latestAcceptedTransfer = call?.transferFeature.acceptedTransfers
+      ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
+      : undefined;
+    /* @conditional-compile-remove(call-transfer) */
+    const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
+
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
+      /* @conditional-compile-remove(call-transfer) */ transferCall
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -210,13 +218,6 @@ class CallContext {
       // Make sure that the call is set to undefined in the state.
       call = undefined;
     }
-
-    /* @conditional-compile-remove(call-transfer) */
-    const latestAcceptedTransfer = call?.transferFeature.acceptedTransfers
-      ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
-      : undefined;
-    /* @conditional-compile-remove(call-transfer) */
-    const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     if (this.state.page) {
       this.setState({
