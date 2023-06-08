@@ -85,6 +85,11 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       ...options,
       localVideoTile: { position: queryArgs.localVideoTilePosition }
     };
+  } else if (!queryArgs.localVideoTilePosition) {
+    options = {
+      ...options,
+      localVideoTile: queryArgs.localVideoTilePosition
+    };
   }
 
   return (
