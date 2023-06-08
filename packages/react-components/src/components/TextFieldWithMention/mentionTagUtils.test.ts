@@ -1,9 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(mention) */
 import { Mention } from '../MentionPopover';
-/* @conditional-compile-remove(mention) */
 import {
   TagData,
   findMentionTagForSelection,
@@ -16,10 +14,9 @@ import {
   textToTagParser,
   updateHTML
 } from './mentionTagUtils';
-/* @conditional-compile-remove(mention) */
+
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 
-/* @conditional-compile-remove(mention) */
 describe('Mention logic should be robust and accurate', () => {
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
 
