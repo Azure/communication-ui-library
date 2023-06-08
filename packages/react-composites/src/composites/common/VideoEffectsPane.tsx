@@ -162,7 +162,7 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack horizontalAlign="center">
-      {videoEffectError && (
+      {videoEffectError && isCameraOn && (
         <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(videoEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}
         </MessageBar>
