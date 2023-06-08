@@ -4,7 +4,7 @@ on:
   push:
     # TODO: remove after testing
     branches:
-      - jaburnsi/add-feature-app-deployments
+      - jimchou/oidc-feature-app-deployment
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -40,11 +40,16 @@ jobs:
       - name: Package Calling App
         run: rushx package
         working-directory: ./samples/Calling
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy Calling
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-call-feature-validation
-          publish-profile: ${{ secrets.AZURE_FEATURE_GROUPCALLING_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Calling/dist
 
   chat:
@@ -72,11 +77,16 @@ jobs:
       - name: Package Chat App
         run: rushx package
         working-directory: ./samples/Chat
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy Chat
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-chat-feature-validation
-          publish-profile: ${{ secrets.AZURE_FEATURE_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Chat/dist
 
   callwithchat:
@@ -104,9 +114,14 @@ jobs:
       - name: Package CallWithChat Sample Artifact
         run: rushx package
         working-directory: ./samples/CallWithChat
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy CallWithChat
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-callwithchat-feature-validation
-          publish-profile: ${{ secrets.AZURE_FEATURE_CALLWITHCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/CallWithChat/dist
