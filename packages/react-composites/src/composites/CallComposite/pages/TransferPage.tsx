@@ -13,6 +13,7 @@ import { getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
 import {
+  avatarStyles,
   defaultPersonaStyles,
   displayNameStyles,
   spinnerStyles,
@@ -49,7 +50,7 @@ export const TransferPage = (
     : props.options?.callControls;
 
   /* @conditional-compile-remove(call-transfer) */
-  // page subject is which should be participant shown in the transfer page depending on the transfer call state
+  // page subject is which participant should be shown in the transfer page depending on the transfer call state
   const pageSubject: TransferPageSubject = useMemo(() => {
     if (transferCall && ['Ringing', 'Connected'].includes(transferCall.state)) {
       return 'transferTarget';
@@ -174,7 +175,15 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
   );
 
   const defaultOnRenderAvatar = useCallback(() => {
-    return personaSize ? <AvatarPersona {...placeholderOptions} dataProvider={onFetchAvatarPersonaData} /> : <></>;
+    return personaSize ? (
+      <AvatarPersona
+        {...placeholderOptions}
+        dataProvider={onFetchAvatarPersonaData}
+        className={mergeStyles(avatarStyles)}
+      />
+    ) : (
+      <></>
+    );
   }, [placeholderOptions, onFetchAvatarPersonaData, personaSize]);
 
   const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);
