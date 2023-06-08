@@ -58,12 +58,12 @@ describe('callUtils tests', () => {
     expect(_isInCall('Connecting')).toEqual(false);
     expect(_isInCall('Ringing')).toEqual(false);
     expect(_isInCall('EarlyMedia')).toEqual(false);
+    expect(_isInCall('Disconnecting')).toEqual(false);
 
     // true conditions
     expect(_isInCall('LocalHold')).toEqual(true);
     expect(_isInCall('Connected')).toEqual(true);
     expect(_isInCall('InLobby')).toEqual(true);
-    expect(_isInCall('Disconnecting')).toEqual(true);
     expect(_isInCall('RemoteHold')).toEqual(true);
   });
 
