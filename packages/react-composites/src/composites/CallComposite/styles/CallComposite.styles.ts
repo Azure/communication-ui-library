@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
+import { IPalette, IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
 
 const DEFAULT_Z_INDEX = 1;
 
@@ -44,4 +44,12 @@ export const drawerContainerStyles = (zIndex: number = DEFAULT_Z_INDEX): IStackS
     // positioned element in the container.
     zIndex: zIndex
   }
+});
+
+/**
+ * @private
+ * Page container style for leaving page
+ */
+export const leavingPageStyle = (palette: IPalette): IStyle => ({
+  background: palette.neutralLighterAlt
 });
