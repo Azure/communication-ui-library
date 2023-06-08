@@ -80,16 +80,6 @@ const defaultRemoteParticipants = [
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultMentionSuggestions = [
-  { id: '1', displayText: 'Harry Hopkins' },
-  { id: '2', displayText: 'Charles Macdonald' },
-  { id: '3', displayText: 'Hayden Thomson' },
-  { id: '4', displayText: 'Marc Cox' },
-  { id: '5', displayText: 'Stevie Knox' },
-  { id: '6', displayText: 'Rebecca Huff' },
-  { id: 'everyone', displayText: 'Everyone' }
-];
-
 const defaultTypingUsers = [
   {
     userId: '1',
@@ -403,13 +393,7 @@ export const controlsToAdd = {
       displayType: 'default'
     },
     name: 'Control Bar Customizations'
-  },
-  mentionSuggestions: {
-    control: 'object',
-    defaultValue: defaultMentionSuggestions,
-    name: 'Mention Suggestions'
-  },
-  title: { control: 'text', defaultValue: 'Suggestions', name: 'Title' }
+  }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };

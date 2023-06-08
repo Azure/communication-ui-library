@@ -102,6 +102,10 @@ export interface CaptionsCallFeatureState {
    */
   isCaptionsFeatureActive: boolean;
   /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsInProgress: boolean;
+  /**
    * supported caption languages
    */
   supportedCaptionLanguages: string[];
@@ -388,6 +392,41 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Transfer state of call
+   */
+  transferFeature: TransferFeatureState;
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface TransferFeatureState {
+  /**
+   * Accepted transfer requests
+   */
+  acceptedTransfers: { [key: string]: AcceptedTransfer };
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface AcceptedTransfer {
+  /**
+   * Stores call id of accepted transfer
+   */
+  callId: string;
+  /**
+   * Stores timestamp when transfer was accepted
+   */
+  timestamp: Date;
 }
 
 /**

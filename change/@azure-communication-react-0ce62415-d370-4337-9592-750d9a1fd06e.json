@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix scroll and new message prompt in sidepane chat for safari",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

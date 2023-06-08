@@ -8,6 +8,8 @@ import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-transfer) */
+import { TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -54,7 +56,8 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -130,6 +133,11 @@ export type CallAdapterClientState = {
    * State to track the selected video background effect.
    */
   selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Call from transfer request accepted by local user
+   */
+  acceptedTransferCallState?: CallState;
 };
 
 /**
@@ -272,6 +280,14 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ *
+ * @beta
+ */
+export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
+
 /* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected video background effect
@@ -279,7 +295,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
  * @beta
  */
 export type SelectedVideoBackgroundEffect =
-  | VideoBackgroundNoneEffect
+  | VideoBackgroundNoEffect
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
 
@@ -289,7 +305,7 @@ export type SelectedVideoBackgroundEffect =
  *
  * @beta
  */
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
   /**
    * Name of effect to remove video background effect
    */
@@ -676,6 +692,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Subscribe function for 'transferRequested' event.
+   */
+  on(event: 'transferRequested', listener: TransferRequestedListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -735,6 +756,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Unsubscribe function for 'transferRequested' event.
+   */
+  off(event: 'transferRequested', listener: TransferRequestedListener): void;
 }
 
 // This type remains for non-breaking change reason

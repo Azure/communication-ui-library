@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove default persona coin size in VideoTile. Changed onRenderAvatar callback not show persona until coin size is defined.",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

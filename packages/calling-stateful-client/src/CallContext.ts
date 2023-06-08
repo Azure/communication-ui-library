@@ -39,6 +39,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
@@ -739,6 +741,16 @@ export class CallContext {
       }
     });
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  setStartCaptionsInProgress(callId: string, startCaptionsInProgress: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.startCaptionsInProgress = startCaptionsInProgress;
+      }
+    });
+  }
   /* @conditional-compile-remove(close-captions) */
   setSelectedSpokenLanguage(callId: string, spokenLanguage: string): void {
     this.modifyState((draft: CallClientState) => {
@@ -772,6 +784,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.supportedSpokenLanguages = spokenLanguages;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.transferFeature.acceptedTransfers[acceptedTransfer.callId] = acceptedTransfer;
       }
     });
   }

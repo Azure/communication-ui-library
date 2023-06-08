@@ -4,7 +4,7 @@ import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useState } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsBanner } from '@internal/react-components';
+import { _CaptionsBanner, _CaptionsBannerStrings } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
@@ -19,6 +19,9 @@ import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
 import { _captionsBannerSelector } from '@internal/calling-component-bindings';
+
+/* @conditional-compile-remove(close-captions) */
+import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(close-captions) */
 const mobileViewBannerWidth = '90%';
@@ -52,6 +55,13 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
     top: 0
   });
 
+  /* @conditional-compile-remove(close-captions) */
+  const strings = useLocale().strings.call;
+
+  /* @conditional-compile-remove(close-captions) */
+  const captionsBannerStrings: _CaptionsBannerStrings = {
+    captionsBannerSpinnerText: strings.captionsBannerSpinnerText
+  };
   return (
     <>
       {
@@ -63,21 +73,19 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
         )
       }
       {
-        /* @conditional-compile-remove(close-captions) */ captionsBannerProps.captions.length > 0 &&
-          captionsBannerProps.isCaptionsOn && (
-            <div className={containerClassName}>
-              <Stack horizontalAlign="center">
-                <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
-                  <_CaptionsBanner {...captionsBannerProps} {...handlers} />
-                </Stack.Item>
-              </Stack>
-              {!props.isMobile && (
-                <div className={floatingChildClassName}>
-                  <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
-                </div>
-              )}
+        /* @conditional-compile-remove(close-captions) */
+        <div className={containerClassName}>
+          <Stack horizontalAlign="center">
+            <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
+              <_CaptionsBanner {...captionsBannerProps} {...handlers} strings={captionsBannerStrings} />
+            </Stack.Item>
+          </Stack>
+          {!props.isMobile && captionsBannerProps.isCaptionsOn && (
+            <div className={floatingChildClassName}>
+              <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
             </div>
-          )
+          )}
+        </div>
       }
     </>
   );

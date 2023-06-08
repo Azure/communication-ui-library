@@ -82,7 +82,12 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
         supportedCaptionLanguages: [],
         currentCaptionLanguage: '',
         currentSpokenLanguage: '',
-        isCaptionsFeatureActive: false
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: false
+      },
+      /* @conditional-compile-remove(call-transfer) */
+      transferFeature: {
+        acceptedTransfers: {}
       }
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },

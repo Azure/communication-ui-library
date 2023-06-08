@@ -348,6 +348,16 @@ export interface _CaptionsBannerProps {
     // (undocumented)
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    startCaptionsInProgress?: boolean;
+    // (undocumented)
+    strings?: _CaptionsBannerStrings;
+}
+
+// @internal
+export interface _CaptionsBannerStrings {
+    // (undocumented)
+    captionsBannerSpinnerText?: string;
 }
 
 // @internal
@@ -885,6 +895,7 @@ export interface _DrawerMenuItemProps {
 
 // @internal
 export interface _DrawerMenuProps {
+    disableMaxHeight?: boolean;
     heading?: string;
     // (undocumented)
     items: _DrawerMenuItemProps[];
@@ -904,6 +915,7 @@ export const _DrawerSurface: (props: _DrawerSurfaceProps) => JSX.Element;
 // @internal
 export interface _DrawerSurfaceProps {
     children: React_2.ReactNode;
+    disableMaxHeight?: boolean;
     heading?: string;
     onLightDismiss: () => void;
     styles?: _DrawerSurfaceStyles;
@@ -1001,6 +1013,8 @@ export const _FileCardGroup: (props: _FileCardGroupProps) => JSX.Element;
 // @internal
 export interface _FileCardGroupProps {
     // (undocumented)
+    ariaLabel?: string;
+    // (undocumented)
     children: React_2.ReactNode;
 }
 
@@ -1029,6 +1043,8 @@ export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 // @internal
 export interface _FileDownloadCardsStrings {
     downloadFile: string;
+    // (undocumented)
+    fileCardGroupMessage: string;
 }
 
 // @beta
@@ -1053,7 +1069,7 @@ export interface FileMetadata {
 }
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1378,6 +1394,7 @@ export interface MessageThreadStrings {
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
+    fileCardGroupMessage: string;
     friday: string;
     liveAuthorIntro: string;
     messageContentAriaText: string;

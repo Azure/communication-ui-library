@@ -40,10 +40,10 @@ jobs:
           git checkout ${{ github.event.pull_request.head.ref }}
           git merge origin/main
       # Ensure node version is great enough
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -54,7 +54,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
       # Switch flavor when necessary
       - name: Switch flavor for stable build
         if: ${{ matrix.flavor == 'stable' }}

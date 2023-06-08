@@ -6,10 +6,10 @@ import {
   Chat,
   ChatItemProps,
   Flex,
-  Ref,
   ShorthandValue,
-  mergeStyles as mergeNorthstarThemes
-} from '@fluentui/react-northstar';
+  mergeStyles as mergeNorthstarThemes,
+  Ref
+} from '@internal/northstar-wrapper';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -39,7 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -51,7 +50,8 @@ import {
   ParticipantAddedSystemMessage,
   ParticipantRemovedSystemMessage,
   Message,
-  ReadReceiptsBySenderId
+  ReadReceiptsBySenderId,
+  ComponentSlotStyle
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
@@ -64,14 +64,16 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
+import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-import { ComponentSlotStyle } from '../types';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -242,6 +244,9 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
+  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /** String for aria text in file attachment group*/
+  fileCardGroupMessage: string;
 }
 
 /**
@@ -632,7 +637,7 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional callback to retrieve the inline image in a message.
    * @param attachment - FileMetadata object we want to render
@@ -807,7 +812,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions
@@ -833,12 +838,16 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (!onFetchAttachments || attachment.id in inlineAttachments) {
+      if (
+        !onFetchAttachments ||
+        attachment.id in inlineAttachments ||
+        attachment.attachmentType !== 'teamsInlineImage'
+      ) {
         return;
       }
       setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
@@ -858,6 +867,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       isAllChatMessagesLoadedRef.current = false;
     }
   }, [onLoadPreviousChatMessages]);
+
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  useEffect(() => {
+    initializeFileTypeIcons();
+  }, []);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
@@ -1111,9 +1125,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
-            /* @conditional-compile-remove(teams-inline-images) */
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
-            /* @conditional-compile-remove(teams-inline-images) */
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
@@ -1134,9 +1148,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
-      /* @conditional-compile-remove(teams-inline-images) */
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
-      /* @conditional-compile-remove(teams-inline-images) */
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,
       /* @conditional-compile-remove(mention) */
       mentionOptions

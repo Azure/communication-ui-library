@@ -135,7 +135,12 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transferFeature: {
+      acceptedTransfers: {}
     }
   };
 }

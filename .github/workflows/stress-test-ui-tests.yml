@@ -16,10 +16,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -28,7 +28,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
       - name: Build Test
         run: |
           cd packages/react-composites

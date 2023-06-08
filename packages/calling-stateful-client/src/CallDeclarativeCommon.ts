@@ -7,6 +7,13 @@ import { CallCommon } from './BetaToStableTypes';
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsCallFeature } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-transfer) */
+import {
+  AcceptTransferOptions,
+  TransferCallFeature,
+  TransferRequestedEvent,
+  TransferRequestedEventArgs
+} from '@azure/communication-calling';
 /**
  * @private
  */
@@ -82,6 +89,12 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             const proxyFeature = new ProxyTeamsCaptionsFeature(this._context, target);
             return new Proxy(captionsFeature, proxyFeature);
           }
+          /* @conditional-compile-remove(call-transfer) */
+          if (args[0] === Features.Transfer) {
+            const transferFeature = target.feature(Features.Transfer);
+            const proxyFeature = new ProxyTransferCallFeature(this._context, target);
+            return new Proxy(transferFeature, proxyFeature);
+          }
           return target.feature(...args);
         }, 'Call.feature');
       }
@@ -109,9 +122,10 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
       case 'startCaptions':
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<TeamsCaptionsCallFeature['startCaptions']>) => {
+            this._context.setStartCaptionsInProgress(this._call.id, true);
             const ret = await target.startCaptions(...args);
-            this._context.setIsCaptionActive(this._call.id, true);
             this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+
             return ret;
           },
           'Call.feature'
@@ -122,6 +136,7 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
           async (...args: Parameters<TeamsCaptionsCallFeature['stopCaptions']>) => {
             const ret = await target.stopCaptions(...args);
             this._context.setIsCaptionActive(this._call.id, false);
+            this._context.setStartCaptionsInProgress(this._call.id, false);
             return ret;
           },
           'Call.feature'
@@ -144,6 +159,49 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptionsCallFeature
           },
           'Call.feature'
         );
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * @private
+ */
+class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
+  private _context: CallContext;
+  private _call: CallCommon;
+
+  constructor(context: CallContext, call: CallCommon) {
+    this._context = context;
+    this._call = call;
+  }
+
+  public get<P extends keyof TransferCallFeature>(target: TransferCallFeature, prop: P): any {
+    switch (prop) {
+      case 'on':
+        return (...args: Parameters<TransferCallFeature['on']>): void => {
+          const isTransferRequested = args[0] === 'transferRequested';
+          if (isTransferRequested) {
+            const listener = args[1] as TransferRequestedEvent;
+            const newListener = (args: TransferRequestedEventArgs): void => {
+              const newArgs = {
+                ...args,
+                accept: (acceptOptions?: AcceptTransferOptions) => {
+                  const acceptedTransferCall = args.accept(acceptOptions);
+                  this._context.setAcceptedTransfer(this._call.id, {
+                    callId: acceptedTransferCall.id,
+                    timestamp: new Date()
+                  });
+                  return acceptedTransferCall;
+                }
+              };
+              listener(newArgs);
+            };
+            return target.on('transferRequested', newListener);
+          }
+        };
       default:
         return Reflect.get(target, prop);
     }
