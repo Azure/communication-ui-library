@@ -1,13 +1,13 @@
 name: Deploy feature validation samples
 
 on:
-  push:
-    # TODO: remove after testing
-    branches:
-      - jimchou/oidc-feature-app-deployment
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch or tag to publish sample app from'
+        required: true
+        default: 'main'
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
 concurrency:
