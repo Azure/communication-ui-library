@@ -50,10 +50,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -83,10 +83,10 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -95,10 +95,10 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+        run: rush install --max-install-attempts 3
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Build component examples sample application
@@ -128,18 +128,23 @@ jobs:
             echo "hasChanged=true" >> $GITHUB_OUTPUT
             exit
           fi
-      - name: Create a patch file for snapshot updates
+      - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        # Before pushing changes to origin, merge any intervening changes on the upstream branch.
+        # This allows multiple snapshot update jobs in this action to run concurrently.
+        # - The only files updated locally are UI snapshots
+        # - Each job is responsible for a unique set of UI snapshots
+        # Thus we do not expect any merge conflicts due to the concurrent jobs from this workflows.
+        #
+        # If the UI snapshots are updated in the upstream branch while this job was running
+        # (e.g., due to a merge from the base_ref for a PR), this merge will fail, and the
+        # workflow will have to be triggered again. This is the desired behavior because the workflow
+        # should not silently overwrite updates to the target branch.
         run: |
           git add samples/tests/*.png
           git commit -m 'Update component examples snapshots'
-          git format-patch -1 --output=component-examples.patch
-      - name: Upload snapshot updates, if any
-        if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: component-examples.patch
-          path: component-examples.patch
+          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
+          git push
 
   html_bundle:
     needs: [precondition, get_matrix]
@@ -167,10 +172,10 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -179,10 +184,10 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+        run: rush install --max-install-attempts 3
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build Packages
         run: rush build -t @azure/communication-react
       - name: Build static HTML composite sample application
@@ -256,10 +261,10 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -268,10 +273,10 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+        run: rush install --max-install-attempts 3
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
         run: rushx build:e2e:call
@@ -346,10 +351,10 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -358,10 +363,10 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+        run: rush install --max-install-attempts 3
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
         run: rushx build:e2e:chat
@@ -436,10 +441,10 @@ jobs:
         run: |
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -448,10 +453,10 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
-      - name: Switch flavor for stable build
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush switch-flavor:stable
+        run: rush install --max-install-attempts 3
+      - name: Switch flavor for build
+        if: ${{ matrix.flavor != 'beta' }}
+        run: rush switch-flavor:${{ matrix.flavor }}
       - name: Build packages/react-composites browser tests
         working-directory: ./packages/react-composites
         run: rushx build:e2e:callwithchat

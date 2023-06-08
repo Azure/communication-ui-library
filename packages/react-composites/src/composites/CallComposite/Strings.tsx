@@ -319,9 +319,19 @@ export interface CallCompositeStrings {
   roomNotFoundDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Label for the button to open effects and title of the effects
+   * Video Effects pane title.
    */
-  effects?: string;
+  videoEffectsPaneTitle: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Video Effects pane sub section title for choosing background.
+   */
+  videoEffectsPaneBackgroundSelectionTitle: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Label for the button to open effects
+   */
+  configurationPageVideoEffectsButtonLabel?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Error message for video effect failure
@@ -501,4 +511,29 @@ export interface CallCompositeStrings {
    * list of key value pairs that pairs language code to language names
    */
   captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * captions banner loading spinner label
+   */
+  captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text when showing the transferor who initiated the transfer
+   */
+  transferPageTransferorText: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text when showing the transfer target
+   */
+  transferPageTransferTargetText: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferorDisplayName: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferTargetDisplayName: string;
 }

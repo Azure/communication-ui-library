@@ -25,6 +25,9 @@
     "uploading": "Caricamento in corso",
     "uploadCompleted": "Caricamento completato"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggerimenti"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
     "deliveredTooltipText": "Inviato",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "La videocamera è stata disattivata",
     "onSplitButtonPrimaryActionCamera": "Spegni la videocamera",
     "offSplitButtonPrimaryActionCamera": "Accendi la videocamera",
-    "cameraPrimaryActionSplitButtonTitle": "Usa la fotocamera"
+    "cameraPrimaryActionSplitButtonTitle": "Usa la fotocamera",
+    "videoEffectsMenuItemTitle": "Effetti"
   },
   "microphoneButton": {
     "onLabel": "Disattiva audio",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Altre opzioni",
     "downloadFile": "Scarica file",
     "blockedWarningText": "Questo messaggio è stato eliminato a causa dei criteri dell'organizzazione.",
-    "blockedWarningLinkText": "Dettagli"
+    "blockedWarningLinkText": "Dettagli",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Non è stato possibile partecipare alla chiamata.",
     "failedToJoinCallInvalidMeetingLink": "Impossibile partecipare alla riunione. Collegamento non valido.",
     "startScreenSharingGeneric": "Si è verificato un problema durante l'avvio della condivisione dello schermo.",
-    "cameraFrozenForRemoteParticipants": "Gli utenti della chiamata hanno problemi a visualizzare il video. Controllare i dispositivi e la rete."
+    "cameraFrozenForRemoteParticipants": "Gli utenti della chiamata hanno problemi a visualizzare il video. Controllare i dispositivi e la rete.",
+    "unableToStartVideoEffect": "Non è possibile applicare l'effetto video."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",

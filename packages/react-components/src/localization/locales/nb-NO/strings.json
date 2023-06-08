@@ -25,6 +25,9 @@
     "uploading": "Laster opp",
     "uploadCompleted": "Opplasting fullført"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Forslag"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Melding sendt",
     "deliveredTooltipText": "Sendt",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Kameraet er slått av.",
     "onSplitButtonPrimaryActionCamera": "Slå av kamera",
     "offSplitButtonPrimaryActionCamera": "Slå på kamera",
-    "cameraPrimaryActionSplitButtonTitle": "Bruk kamera"
+    "cameraPrimaryActionSplitButtonTitle": "Bruk kamera",
+    "videoEffectsMenuItemTitle": "Effekter"
   },
   "microphoneButton": {
     "onLabel": "Deaktiver varsler",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Flere alternativer",
     "downloadFile": "Last ned fil",
     "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
-    "blockedWarningLinkText": "Detaljer"
+    "blockedWarningLinkText": "Detaljer",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Kan ikke bli med i samtalen.",
     "failedToJoinCallInvalidMeetingLink": "Kan ikke bli med i møtet. Ugyldig kobling.",
     "startScreenSharingGeneric": "Det oppstod et problem under start av skjermdeling.",
-    "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket."
+    "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket.",
+    "unableToStartVideoEffect": "Kan ikke bruke videoeffekt."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du deler skjermen",

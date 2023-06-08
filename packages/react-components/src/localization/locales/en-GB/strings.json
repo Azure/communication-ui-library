@@ -25,6 +25,9 @@
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggestions"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
     "deliveredTooltipText": "Sent",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
     "onSplitButtonPrimaryActionCamera": "Turn off camera",
     "offSplitButtonPrimaryActionCamera": "Turn on camera",
-    "cameraPrimaryActionSplitButtonTitle": "Use camera"
+    "cameraPrimaryActionSplitButtonTitle": "Use camera",
+    "videoEffectsMenuItemTitle": "Effects"
   },
   "microphoneButton": {
     "onLabel": "Mute",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "More Options",
     "downloadFile": "Download file",
     "blockedWarningText": "This message was deleted due to organisational policy.",
-    "blockedWarningLinkText": "Details"
+    "blockedWarningLinkText": "Details",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
     "startScreenSharingGeneric": "There was an issue starting screen share.",
-    "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network."
+    "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
+    "unableToStartVideoEffect": "Unable to apply video effect."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",

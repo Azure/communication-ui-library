@@ -5,14 +5,13 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionDisplayOptions } from '../AtMentionFlyout';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
+/* @conditional-compile-remove(mention) */
+import { MentionOptions } from '../MentionPopover';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -79,19 +78,19 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to display suggestions in the at mention scenario.
+   * Optional props needed to lookup suggestions and display mentions in the mention scenario.
    * @beta
    */
-  atMentionDisplayOptions?: AtMentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images) */
+  mentionOptions?: MentionOptions;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional function to fetch attachments.
    * @beta
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -139,6 +138,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
           props.onCancelMessageEdit && props.onCancelMessageEdit(messageId);
           setIsEditing(false);
         }}
+        /* @conditional-compile-remove(mention) */
+        mentionLookupOptions={props.mentionOptions?.lookupOptions}
       />
     );
   } else {
@@ -152,10 +153,12 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
-        /* @conditional-compile-remove(teams-inline-images) */
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
-        /* @conditional-compile-remove(teams-inline-images) */
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}
+        /* @conditional-compile-remove(mention) */
+        mentionDisplayOptions={props.mentionOptions?.displayOptions}
       />
     );
   }

@@ -39,6 +39,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
@@ -275,19 +277,13 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public setCallLocalVideoStreamVideoEffects(
-    callId: string,
-    videoEffects: Partial<LocalVideoStreamVideoEffectsState>
-  ): void {
+  public setCallLocalVideoStreamVideoEffects(callId: string, videoEffects: LocalVideoStreamVideoEffectsState): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         const stream = call.localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
         if (stream) {
-          stream.videoEffects = {
-            isActive: videoEffects.isActive ?? stream.videoEffects?.isActive ?? false,
-            effectName: videoEffects.effectName ?? stream.videoEffects?.effectName
-          };
+          stream.videoEffects = videoEffects;
         }
       }
     });
@@ -692,11 +688,7 @@ export class CallContext {
           stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
-        const draftStream = draft.deviceManager.unparentedViews[foundIndex];
-        draftStream.videoEffects = {
-          isActive: videoEffects.isActive ?? draftStream.videoEffects?.isActive ?? false,
-          effectName: videoEffects.effectName ?? draftStream.videoEffects?.effectName
-        };
+        draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;
       }
     });
   }
@@ -749,6 +741,16 @@ export class CallContext {
       }
     });
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  setStartCaptionsInProgress(callId: string, startCaptionsInProgress: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.startCaptionsInProgress = startCaptionsInProgress;
+      }
+    });
+  }
   /* @conditional-compile-remove(close-captions) */
   setSelectedSpokenLanguage(callId: string, spokenLanguage: string): void {
     this.modifyState((draft: CallClientState) => {
@@ -782,6 +784,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.supportedSpokenLanguages = spokenLanguages;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.transferFeature.acceptedTransfers[acceptedTransfer.callId] = acceptedTransfer;
       }
     });
   }

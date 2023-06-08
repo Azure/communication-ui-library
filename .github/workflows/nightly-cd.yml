@@ -66,10 +66,10 @@ jobs:
           fetch-depth: 0
 
       # Ensure node version is great enough
-      - name: Use Node.js v14.x
+      - name: Use Node.js v16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '14.x'
+          node-version: '16.x'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
@@ -82,7 +82,7 @@ jobs:
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
-        run: rush install
+        run: rush install --max-install-attempts 3
 
       # Get datetime
       - name: Get datetime for alpha release name
@@ -166,7 +166,7 @@ jobs:
           if [ $issue_count -gt 0 ]; then
             echo "No need to create new issue, one already exists"
           else
-            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Nightly workflow to release alpha package failed", "body": "Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["NIGHTLY_CD_FAILURE"]}'
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Nightly workflow to release alpha package failed", "body": "Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["NIGHTLY_CD_FAILURE", "status:triage"]}'
           fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

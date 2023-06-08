@@ -151,12 +151,13 @@ export type {
   MicrophoneSitePermissionsProps
 } from '../../react-components/src';
 
-/* @conditional-compile-remove(at-mention) */
+/* @conditional-compile-remove(mention) */
 export type {
-  AtMentionOptions,
-  AtMentionDisplayOptions,
-  AtMentionLookupOptions,
-  AtMentionSuggestion
+  MentionOptions,
+  MentionDisplayOptions,
+  MentionLookupOptions,
+  Mention,
+  MentionPopoverStrings
 } from '../../react-components/src';
 
 export type {
@@ -272,9 +273,9 @@ export type {
   FileDownloadHandler,
   FileDownloadError
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { FileMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { FileMetadataAttachmentType, AttachmentDownloadResult } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
@@ -290,6 +291,8 @@ export type {
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
+/* @conditional-compile-remove(click-to-call) */
+export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';
 export * from '../../calling-stateful-client/src/index-public';

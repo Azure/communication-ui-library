@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove side pane control button container if no controls are present to be used",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

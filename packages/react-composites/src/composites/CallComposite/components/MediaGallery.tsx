@@ -9,7 +9,8 @@ import {
   VideoStreamOptions,
   OnRenderAvatarCallback,
   CustomAvatarOptions,
-  Announcer
+  Announcer,
+  VideoGalleryLayout
 } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
@@ -27,6 +28,8 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
+/* @conditional-compile-remove(click-to-call) */
+import { LocalVideoTileOptions } from '../CallComposite';
 
 const VideoGalleryStyles = {
   root: {
@@ -58,6 +61,8 @@ export interface MediaGalleryProps {
   drawerMenuHostId?: string;
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+  /* @conditional-compile-remove(click-to-call) */
+  localVideoTileOptions?: LocalVideoTileOptions;
 }
 
 /**
@@ -76,6 +81,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const containerHeight = _useContainerHeight(containerRef);
 
+  const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
+    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions?.position
+  );
+
   const cameraSwitcherProps = useMemo(() => {
     return {
       ...cameraSwitcherCallback,
@@ -88,7 +97,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            {options?.coinSize && (
+              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            )}
           </Stack>
         </Stack>
       );
@@ -125,23 +136,34 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
-        layout="floatingLocalVideo"
+        layout={layoutBasedOnTilePosition}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
+        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
+        /* @conditional-compile-remove(click-to-call) */
+        localVideoTileSize={
+          props.localVideoTileOptions?.position === 'hidden'
+            ? 'hidden'
+            : props.isMobile
+            ? 'followDeviceOrientation'
+            : '16:9'
+        }
       />
     );
   }, [
     videoGalleryProps,
     props.isMobile,
+    props.onRenderAvatar,
     onRenderAvatar,
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions,
+    layoutBasedOnTilePosition
   ]);
 
   return (
@@ -180,3 +202,11 @@ export const useLocalVideoStartTrigger = (isLocalVideoAvailable: boolean, should
 };
 
 const mediaGalleryContainerStyles: CSSProperties = { width: '100%', height: '100%' };
+
+const localVideoTileLayoutTrampoline = (
+  /* @conditional-compile-remove(click-to-call) */ localTileOptions?: string
+): VideoGalleryLayout => {
+  /* @conditional-compile-remove(click-to-call) */
+  return localTileOptions === 'grid' ? 'default' : 'floatingLocalVideo';
+  return 'floatingLocalVideo';
+};

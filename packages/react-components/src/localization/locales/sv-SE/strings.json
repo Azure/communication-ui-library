@@ -25,6 +25,9 @@
     "uploading": "Laddar upp",
     "uploadCompleted": "Uppladdningen har slutförts"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Förslag"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",
     "deliveredTooltipText": "Skickat",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Kameran har stängts av",
     "onSplitButtonPrimaryActionCamera": "Stäng av kameran",
     "offSplitButtonPrimaryActionCamera": "Aktivera kameran",
-    "cameraPrimaryActionSplitButtonTitle": "Använd kamera"
+    "cameraPrimaryActionSplitButtonTitle": "Använd kamera",
+    "videoEffectsMenuItemTitle": "Effekter"
   },
   "microphoneButton": {
     "onLabel": "Mikrofon av",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Fler alternativ",
     "downloadFile": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
-    "blockedWarningLinkText": "Information"
+    "blockedWarningLinkText": "Information",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Det gick inte att ansluta till samtalet.",
     "failedToJoinCallInvalidMeetingLink": "Det går inte att ansluta till mötet. Ogiltig länk.",
     "startScreenSharingGeneric": "Det uppstod ett problem när skärmdelningen skulle startas.",
-    "cameraFrozenForRemoteParticipants": "Användare i samtalet har problem med att se din video. Kontrollera dina enheter och nätverk."
+    "cameraFrozenForRemoteParticipants": "Användare i samtalet har problem med att se din video. Kontrollera dina enheter och nätverk.",
+    "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du delar din skärm",

@@ -1,5 +1,5 @@
 const plugins = [];
-process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
+process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
     {
@@ -30,8 +30,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'data-loss-prevention',
         // Ability to upload/download files in message thread.
         'file-sharing',
-        // At mention feature
-        'at-mention',
+        // Mention feature
+        'mention',
         // feature for enabling new call control bar in CallComposite
         'new-call-control-bar',
         // 1 to N Calling feature.
@@ -44,8 +44,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
-        // Chat teams interop to display images in chat messages
-        'teams-inline-images',
+        // Chat teams interop to display images and file attachments in chat messages
+        'teams-inline-images-and-file-sharing',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
@@ -58,8 +58,29 @@ process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable' &&
         // feature for blurred background and replace background effects
         'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
-        'vertical-gallery'
+        'vertical-gallery',
+        // Feature for updates needed for Click to Call (C2C) scenarios
+        'click-to-call',
+        // a demo feature flag for those beta feature not ready for beta release
+        'in-progress-beta-feature-demo',
+        // Feature for call transfer
+        'call-transfer'
+      ],      
+      // A list of in progress beta feature.
+      // These features are still beta feature but "in progress"
+      // causing a build failure, but they are ignored by the preprocessing step.
+      inProgressFeatures: [
+        // Demo feature. Used in live-documentation of conditional compilation.
+        // Do not use in production code.
+        'in-progress-beta-feature-demo',
+        // Feature for updates needed for Click to Call (C2C) scenarios
+        'click-to-call',
+        // Mention feature
+        'mention',
+        // Feature for call transfer
+        'call-transfer'
       ],
+      betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
       // These features can be listed in the conditional compilation directives without
       // causing a build failure, but they are ignored by the preprocessing step.

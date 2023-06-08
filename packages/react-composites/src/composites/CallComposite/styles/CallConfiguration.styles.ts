@@ -8,7 +8,9 @@ import {
   IStyle,
   mergeStyles,
   IButtonStyles,
-  Theme
+  Theme,
+  IPanelStyles,
+  IFocusTrapZoneProps
 } from '@fluentui/react';
 
 /**
@@ -134,6 +136,13 @@ export const startCallButtonStyleMobile = mergeStyles({
   maxWidth: 'unset'
 });
 
+/** @private */
+export const cameraAndVideoEffectsContainerStyleDesktop: IStackItemStyles = {
+  root: {
+    alignItems: 'center'
+  }
+};
+
 /**
  * @private
  */
@@ -142,15 +151,28 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
     root: {
       background: 'transparent',
       border: 'none',
-      color: theme.palette.blue,
-      width: '40%',
-      alignSelf: 'end',
+      color: theme.palette.themePrimary,
+      // Top and bottom padding needs to be 5px to match the label padding
+      padding: '5px 0.25rem',
       ':hover, :focus': {
-        color: theme.palette.blue
+        color: theme.palette.themePrimary
+      },
+      svg: {
+        height: '1rem',
+        width: '1rem'
       }
     },
     rootChecked: {
-      color: theme.palette.blue
+      color: theme.palette.themePrimary
+    },
+    rootHovered: {
+      color: theme.palette.themePrimary
+    },
+    rootPressed: {
+      color: theme.palette.themePrimary
+    },
+    rootFocused: {
+      color: theme.palette.themePrimary
     }
   };
 };
@@ -159,3 +181,21 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
 export const fillWidth = mergeStyles({
   width: '100%'
 });
+
+/** @private */
+export const panelStyles: Partial<IPanelStyles> = {
+  content: {
+    display: 'flex',
+    flexBasis: '100%'
+  },
+  scrollableContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%'
+  }
+};
+
+/** @private */
+export const panelFocusProps: IFocusTrapZoneProps = {
+  forceFocusInsideTrap: false
+};

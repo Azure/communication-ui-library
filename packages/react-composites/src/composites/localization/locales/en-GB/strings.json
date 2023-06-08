@@ -23,11 +23,15 @@
     "copyInviteLinkActionedAriaLabel": "Invite link copied",
     "defaultPlaceHolder": "Select an option",
     "dismissSidePaneButtonLabel": "Close",
-    "effects": "Effects",
+    "videoEffectsPaneTitle": "Effects",
+    "videoEffectsPaneBackgroundSelectionTitle": "Background",
+    "configurationPageVideoEffectsButtonLabel": "Effects",
+    "unableToStartVideoEffect": "Unable to apply video effect.",
     "blurBackgroundEffectButtonLabel": "Blur",
     "blurBackgroundTooltip": "Blur Background",
     "removeBackgroundEffectButtonLabel": "None",
     "removeBackgroundTooltip": "Remove Background",
+    "cameraOffBackgroundEffectWarningText": "Your camera is off. Turn on camera to see video effect.",
     "failedToJoinCallDueToNoNetworkMoreDetails": "Call was disconnected due to a network issue. Check your connection and join again.",
     "failedToJoinCallDueToNoNetworkTitle": "Call disconnected",
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "You were not granted entry in the call. If this was a mistake, re-join the call.",
@@ -145,7 +149,8 @@
       "ro-ro": "Romanian",
       "sk-sk": "Slovak",
       "zh-tw": "Chinese - Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "chat": {
     "chatListHeader": "In this chat",

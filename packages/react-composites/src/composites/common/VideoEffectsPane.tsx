@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { useState } from 'react';
-/* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
@@ -16,7 +14,7 @@ import { _VideoBackgroundEffectsPicker } from '@internal/react-components';
 import {
   VideoBackgroundImage,
   VideoBackgroundBlurEffect,
-  VideoBackgroundNoneEffect,
+  VideoBackgroundNoEffect,
   VideoBackgroundReplacementEffect
 } from '../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
@@ -25,27 +23,19 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
-/* @conditional-compile-remove(video-background-effects) */
-import { videoBackgroundErrorsSelector } from '../CallComposite/selectors/videoBackgroundErrorsSelector';
-/* @conditional-compile-remove(video-background-effects) */
 import { AdapterError } from './adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * @private
- */
-interface DismissedError {
-  dismissedAt: Date;
-  activeSince?: Date;
-}
 
 /**
  * Pane that is used to show video effects button
  * @private
  */
 /** @beta */
-export const VideoEffectsPaneContent = (): JSX.Element => {
+export const VideoEffectsPaneContent = (props: {
+  onDismissError: (error: AdapterError) => void;
+  activeVideoEffectError: () => AdapterError | undefined;
+}): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
   /* @conditional-compile-remove(video-background-effects) */
@@ -56,7 +46,7 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
     const videoEffects: _VideoEffectsItemProps[] = [
       {
-        key: 'none',
+        itemKey: 'none',
         iconProps: {
           iconName: 'RemoveVideoBackgroundEffect'
         },
@@ -66,7 +56,7 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
         }
       },
       {
-        key: 'blur',
+        itemKey: 'blur',
         iconProps: {
           iconName: 'BlurVideoBackground'
         },
@@ -81,7 +71,7 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
     if (videoEffectImages) {
       videoEffectImages.forEach((img: VideoBackgroundImage) => {
         videoEffects.push({
-          key: img.key,
+          itemKey: img.key,
           backgroundProps: {
             url: img.url
           },
@@ -104,14 +94,14 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
         adapter.updateSelectedVideoBackgroundEffect(blurEffect);
         await adapter.blurVideoBackground();
       } else if (effectKey === 'none') {
-        const noneEffect: VideoBackgroundNoneEffect = {
+        const noneEffect: VideoBackgroundNoEffect = {
           effectName: effectKey
         };
         adapter.updateSelectedVideoBackgroundEffect(noneEffect);
-        await adapter.stopVideoBackgroundEffect();
+        await adapter.stopVideoBackgroundEffects();
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
-          return effect.key === effectKey;
+          return effect.itemKey === effectKey;
         });
         if (backgroundImg && backgroundImg.backgroundProps) {
           const replaceEffect: VideoBackgroundReplacementEffect = {
@@ -127,6 +117,8 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
     [adapter, selectableVideoEffects]
   );
   return VideoEffectsPaneTrampoline(
+    props.onDismissError,
+    props.activeVideoEffectError,
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
@@ -135,15 +127,13 @@ export const VideoEffectsPaneContent = (): JSX.Element => {
 };
 
 const VideoEffectsPaneTrampoline = (
+  onDismissError: (error: AdapterError) => void,
+  activeVideoEffectError?: () => AdapterError | undefined,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
-  const [dismissedError, setDismissedError] = useState<DismissedError>();
-  /* @conditional-compile-remove(video-background-effects) */
-  const latestEffectError = useSelector(videoBackgroundErrorsSelector);
-  /* @conditional-compile-remove(video-background-effects) */
-  const showError = latestEffectError && (!dismissedError || latestEffectError.timestamp > dismissedError.dismissedAt);
+  const videoEffectError = activeVideoEffectError && activeVideoEffectError();
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
   /* @conditional-compile-remove(video-background-effects) */
@@ -156,11 +146,8 @@ const VideoEffectsPaneTrampoline = (
   /* @conditional-compile-remove(video-background-effects) */
   return (
     <Stack horizontalAlign="center">
-      {showError && latestEffectError && (
-        <MessageBar
-          messageBarType={MessageBarType.error}
-          onDismiss={() => setDismissedError(dismissError(latestEffectError))}
-        >
+      {videoEffectError && (
+        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(videoEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}
         </MessageBar>
       )}
@@ -170,7 +157,7 @@ const VideoEffectsPaneTrampoline = (
         </MessageBar>
       )}
       <_VideoBackgroundEffectsPicker
-        label="Background" // TODO [jaburnsi]: localize
+        label={locale.strings.call.videoEffectsPaneBackgroundSelectionTitle}
         styles={backgroundPickerStyles}
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
@@ -188,16 +175,4 @@ const backgroundPickerStyles = {
     lineHeight: '0.5rem',
     fontWeight: '400'
   }
-};
-
-/* @conditional-compile-remove(video-background-effects) */
-const dismissError = (toDismiss: AdapterError): DismissedError => {
-  const now = new Date(Date.now());
-  const toDismissTimestamp = toDismiss.timestamp ?? now;
-
-  // Record that this error was dismissed for the first time right now.
-  return {
-    dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
-    activeSince: toDismiss.timestamp
-  };
 };

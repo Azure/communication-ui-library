@@ -23,11 +23,15 @@
     "copyInviteLinkActionedAriaLabel": "招待用のリンクがコピーされました",
     "defaultPlaceHolder": "オプションを選択する",
     "dismissSidePaneButtonLabel": "閉じる",
-    "effects": "効果",
+    "videoEffectsPaneTitle": "効果",
+    "videoEffectsPaneBackgroundSelectionTitle": "バックグラウンド",
+    "configurationPageVideoEffectsButtonLabel": "効果",
+    "unableToStartVideoEffect": "ビデオ効果を適用できません。",
     "blurBackgroundEffectButtonLabel": "ぼかし",
     "blurBackgroundTooltip": "背景をぼかす",
     "removeBackgroundEffectButtonLabel": "なし",
     "removeBackgroundTooltip": "背景の削除",
+    "cameraOffBackgroundEffectWarningText": "カメラがオフになっています。カメラをオンにすると、ビデオ効果が表示されます。",
     "failedToJoinCallDueToNoNetworkMoreDetails": "ネットワークの問題により、通話が切断されました。接続を確認して、もう一度参加してください。",
     "failedToJoinCallDueToNoNetworkTitle": "通話が切断されました",
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "通話のエントリが許可されませんでした。これが間違いだった場合は、通話に再参加してください。",
@@ -145,7 +149,8 @@
       "ro-ro": "ルーマニア語",
       "sk-sk": "スロバキア語",
       "zh-tw": "中国語 - 台湾"
-    }
+    },
+    "captionsBannerSpinnerText": "キャプションを開始しています..."
   },
   "chat": {
     "chatListHeader": "このチャット内",

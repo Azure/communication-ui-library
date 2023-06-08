@@ -23,11 +23,15 @@
     "copyInviteLinkActionedAriaLabel": "Skopiowano link do zaproszenia",
     "defaultPlaceHolder": "Wybierz opcję",
     "dismissSidePaneButtonLabel": "Zamknij",
-    "effects": "Efekty",
+    "videoEffectsPaneTitle": "Efekty",
+    "videoEffectsPaneBackgroundSelectionTitle": "Tło",
+    "configurationPageVideoEffectsButtonLabel": "Efekty",
+    "unableToStartVideoEffect": "Nie można zastosować efektu wideo.",
     "blurBackgroundEffectButtonLabel": "Rozmycie",
     "blurBackgroundTooltip": "Rozmyj tło",
     "removeBackgroundEffectButtonLabel": "Brak",
     "removeBackgroundTooltip": "Usuń tło",
+    "cameraOffBackgroundEffectWarningText": "Kamera jest wyłączona. Włącz kamerę, aby zobaczyć efekt wideo.",
     "failedToJoinCallDueToNoNetworkMoreDetails": "Połączenie zostało rozłączone z powodu problemu z siecią. Sprawdź połączenie i dołącz ponownie.",
     "failedToJoinCallDueToNoNetworkTitle": "Rozmowa została rozłączona",
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Nie udzielono Ci dostępu do rozmowy. Jeśli to pomyłka, dołącz ponownie do rozmowy.",
@@ -145,7 +149,8 @@
       "ro-ro": "rumuński",
       "sk-sk": "słowacki",
       "zh-tw": "chiński — Tajwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Trwa uruchamianie napisów..."
   },
   "chat": {
     "chatListHeader": "W tym czacie",

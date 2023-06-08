@@ -23,11 +23,15 @@
     "copyInviteLinkActionedAriaLabel": "Gruppeneinladungslink kopiert",
     "defaultPlaceHolder": "Option auswählen",
     "dismissSidePaneButtonLabel": "Schließen",
-    "effects": "Effekte",
+    "videoEffectsPaneTitle": "Effekte",
+    "videoEffectsPaneBackgroundSelectionTitle": "Hintergrund",
+    "configurationPageVideoEffectsButtonLabel": "Effekte",
+    "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
     "blurBackgroundEffectButtonLabel": "Weichzeichnen",
     "blurBackgroundTooltip": "Hintergrund weichzeichnen",
     "removeBackgroundEffectButtonLabel": "Keine",
     "removeBackgroundTooltip": "Hintergrund entfernen",
+    "cameraOffBackgroundEffectWarningText": "Ihre Kamera ist ausgeschaltet. Aktivieren Sie die Kamera, um den Videoeffekt anzuzeigen.",
     "failedToJoinCallDueToNoNetworkMoreDetails": "Der Anruf wurde aufgrund eines Netzwerkproblems getrennt. Überprüfen Sie Ihre Verbindung, und treten Sie erneut bei.",
     "failedToJoinCallDueToNoNetworkTitle": "Anruf unterbrochen",
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Ihnen wurde keine Teilnahme am Anruf gewährt. Wenn dies ein Fehler war, treten Sie dem Anruf erneut bei.",
@@ -145,7 +149,8 @@
       "ro-ro": "Rumänisch",
       "sk-sk": "Slowakisch",
       "zh-tw": "Chinesisch – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Untertitel werden gestartet..."
   },
   "chat": {
     "chatListHeader": "In diesem Chat",

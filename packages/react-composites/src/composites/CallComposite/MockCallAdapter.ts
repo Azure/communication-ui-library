@@ -98,7 +98,7 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('createStreamView not implemented');
   }
   disposeStreamView(): Promise<void> {
-    throw Error('disposeStreamView not implemented');
+    return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   askDevicePermission(constrain: PermissionConstraints): Promise<void> {
@@ -166,8 +166,8 @@ export class MockCallAdapter implements CallAdapter {
     throw new Error('replaceVideoBackground not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
-  stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  stopVideoBackgroundEffects(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffects not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
   updateBackgroundPickerImages(): void {
@@ -210,7 +210,12 @@ const defaultCallAdapterState: CallAdapterState = {
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transferFeature: {
+      acceptedTransfers: {}
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },

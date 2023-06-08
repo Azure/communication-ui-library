@@ -23,11 +23,15 @@
     "copyInviteLinkActionedAriaLabel": "Le lien d’invitation a été copié.",
     "defaultPlaceHolder": "Sélectionnez une option",
     "dismissSidePaneButtonLabel": "Fermer",
-    "effects": "Effets",
+    "videoEffectsPaneTitle": "Effets",
+    "videoEffectsPaneBackgroundSelectionTitle": "Arrière-plan",
+    "configurationPageVideoEffectsButtonLabel": "Effets",
+    "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo.",
     "blurBackgroundEffectButtonLabel": "Flouter",
     "blurBackgroundTooltip": "Flouter l'arrière-plan",
     "removeBackgroundEffectButtonLabel": "Aucun",
     "removeBackgroundTooltip": "Supprimer l’arrière-plan",
+    "cameraOffBackgroundEffectWarningText": "Votre caméra est désactivée. Activez la caméra pour voir l’effet vidéo.",
     "failedToJoinCallDueToNoNetworkMoreDetails": "L’appel a été déconnecté en raison d’un problème réseau. Vérifiez votre connexion et rejoignez-la à nouveau.",
     "failedToJoinCallDueToNoNetworkTitle": "Appel déconnecté",
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Vous n’avez pas reçu d’entrée dans l’appel. S’il s’agissait d’une erreur, rejoignez à nouveau l’appel.",
@@ -145,7 +149,8 @@
       "ro-ro": "Roumain",
       "sk-sk": "Slovaque",
       "zh-tw": "Chinois – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Démarrage des sous-titres..."
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

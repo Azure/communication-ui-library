@@ -25,6 +25,9 @@
     "uploading": "Hochladen",
     "uploadCompleted": "Upload abgeschlossen"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Vorschläge"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Nachricht gesendet",
     "deliveredTooltipText": "Gesendet",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Ihre Kamera wurde ausgeschaltet.",
     "onSplitButtonPrimaryActionCamera": "Kamera ausschalten",
     "offSplitButtonPrimaryActionCamera": "Kamera einschalten",
-    "cameraPrimaryActionSplitButtonTitle": "Kamera verwenden"
+    "cameraPrimaryActionSplitButtonTitle": "Kamera verwenden",
+    "videoEffectsMenuItemTitle": "Effekte"
   },
   "microphoneButton": {
     "onLabel": "Stumm schalten",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Weitere Optionen",
     "downloadFile": "Datei herunterladen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
-    "blockedWarningLinkText": "Details"
+    "blockedWarningLinkText": "Details",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Fehler bei der Teilnahme am Anruf.",
     "failedToJoinCallInvalidMeetingLink": "Teilnahme an Besprechung nicht möglich. Ungültiger Link.",
     "startScreenSharingGeneric": "Beim Starten der Bildschirmfreigabe ist ein Problem aufgetreten.",
-    "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk."
+    "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk.",
+    "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",

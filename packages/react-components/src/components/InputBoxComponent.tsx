@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
+
 import {
   Stack,
   TextField,
@@ -11,25 +12,30 @@ import {
   concatStyleSets,
   IconButton,
   TooltipHost,
-  ICalloutContentStyles
+  ICalloutContentStyles,
+  ITextFieldProps
 } from '@fluentui/react';
 import { BaseCustomStyles } from '../types';
+import { isEnterKeyEventFromCompositionSession } from './utils';
+
 import {
   inputBoxStyle,
   inputBoxWrapperStyle,
   inputButtonStyle,
   textFieldStyle,
   textContainerStyle,
-  inlineButtonsContainerStyle,
   newLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
-  inputButtonTooltipStyle
+  inputButtonTooltipStyle,
+  iconWrapperStyle
 } from './styles/InputBoxComponent.style';
 
 import { isDarkThemed } from '../theming/themeUtils';
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionLookupOptions } from './AtMentionFlyout';
+/* @conditional-compile-remove(mention) */
+import { MentionLookupOptions } from './MentionPopover';
+/* @conditional-compile-remove(mention) */
+import { TextFieldWithMention, TextFieldWithMentionProps } from './TextFieldWithMention/TextFieldWithMention';
 
 /**
  * @private
@@ -53,8 +59,8 @@ type InputBoxComponentProps = {
   inlineChildren: boolean;
   'data-ui-id'?: string;
   id?: string;
-  textValue: string;
-  onChange: (event: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string | undefined) => void;
+  textValue: string; // This could be plain text or HTML.
+  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
@@ -66,8 +72,8 @@ type InputBoxComponentProps = {
   disabled?: boolean;
   styles?: InputBoxStylesProps;
   autoFocus?: 'sendBoxTextField';
-  /* @conditional-compile-remove(at-mention) */
-  atMentionLookupOptions?: AtMentionLookupOptions;
+  /* @conditional-compile-remove(mention) */
+  mentionLookupOptions?: MentionLookupOptions;
 };
 
 /**
@@ -90,9 +96,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     disabled,
     children
   } = props;
-
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
-  const mergedTextFiledStyle = mergeStyles(
+  const mergedInputFieldStyle = mergeStyles(
     inputBoxStyle,
     inputClassName,
     props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
@@ -101,13 +106,20 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
     fieldGroup: styles?.textField,
-    errorMessage: styles?.systemMessage
+    errorMessage: styles?.systemMessage,
+    suffix: {
+      backgroundColor: 'transparent',
+      // Remove empty space in the suffix area when adding newline-style buttons
+      display: props.inlineChildren ? 'flex' : 'contents',
+      padding: '0 0.25rem'
+    }
   });
 
-  const onTexFieldKeyDown = useCallback(
+  const mergedChildrenStyle = mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle);
+
+  const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-      if (ev.nativeEvent.isComposing || ev.nativeEvent.keyCode === 229 || ev.nativeEvent.which === 229) {
+      if (isEnterKeyEventFromCompositionSession(ev)) {
         return;
       }
       if (ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline)) {
@@ -119,35 +131,62 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     [onEnterKeyDown, onKeyDown, supportNewline]
   );
 
+  const onRenderChildren = (): JSX.Element => {
+    return (
+      <Stack horizontal className={mergedChildrenStyle}>
+        {children}
+      </Stack>
+    );
+  };
+
+  const renderTextField = (): JSX.Element => {
+    const textFieldProps: ITextFieldProps = {
+      autoFocus: props.autoFocus === 'sendBoxTextField',
+      multiline: true,
+      autoAdjustHeight: true,
+      multiple: false,
+      resizable: false,
+      componentRef: textFieldRef,
+      id,
+      inputClassName: mergedInputFieldStyle,
+      placeholder: placeholderText,
+      autoComplete: 'off',
+      styles: mergedTextFieldStyle,
+      disabled,
+      errorMessage,
+      onRenderSuffix: onRenderChildren
+    };
+
+    /* @conditional-compile-remove(mention) */
+    const textFieldWithMentionProps: TextFieldWithMentionProps = {
+      textFieldProps: textFieldProps,
+      dataUiId: dataUiId,
+      textValue: textValue,
+      onChange: onChange,
+      onKeyDown: onKeyDown,
+      onEnterKeyDown: onEnterKeyDown,
+      textFieldRef: textFieldRef,
+      supportNewline: supportNewline,
+      mentionLookupOptions: props.mentionLookupOptions
+    };
+    /* @conditional-compile-remove(mention) */
+    if (props.mentionLookupOptions) {
+      return <TextFieldWithMention {...textFieldWithMentionProps} />;
+    }
+    return (
+      <TextField
+        {...textFieldProps}
+        data-ui-id={dataUiId}
+        value={textValue}
+        onChange={onChange}
+        onKeyDown={onTextFieldKeyDown}
+      />
+    );
+  };
+
   return (
     <Stack className={mergedRootStyle}>
-      <div className={mergedTextContainerStyle}>
-        <TextField
-          autoFocus={props.autoFocus === 'sendBoxTextField'}
-          data-ui-id={dataUiId}
-          multiline
-          autoAdjustHeight
-          multiple={false}
-          resizable={false}
-          componentRef={textFieldRef}
-          id={id}
-          inputClassName={mergedTextFiledStyle}
-          placeholder={placeholderText}
-          value={textValue}
-          onChange={onChange}
-          autoComplete="off"
-          onKeyDown={onTexFieldKeyDown}
-          styles={mergedTextFieldStyle}
-          disabled={disabled}
-          errorMessage={errorMessage}
-        />
-        <Stack
-          horizontal
-          className={mergeStyles(props.inlineChildren ? inlineButtonsContainerStyle : newLineButtonsContainerStyle)}
-        >
-          {children}
-        </Stack>
-      </div>
+      <div className={mergedTextContainerStyle}>{renderTextField()}</div>
     </Stack>
   );
 };
@@ -196,7 +235,8 @@ export const InputBoxButton = (props: InputBoxButtonProps): JSX.Element => {
         onMouseLeave={() => {
           setIsHover(false);
         }}
-        onRenderIcon={() => onRenderIcon(isHover)}
+        // VoiceOver fix: Avoid icon from stealing focus when IconButton is double-tapped to send message by wrapping with Stack with pointerEvents style to none
+        onRenderIcon={() => <Stack className={iconWrapperStyle}>{onRenderIcon(isHover)}</Stack>}
       />
     </TooltipHost>
   );

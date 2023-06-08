@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
@@ -14,14 +14,8 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { DefaultButton } from '@fluentui/react';
-import { fillWidth } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { useTheme } from '@fluentui/react';
+import { Panel, Stack } from '@fluentui/react';
+import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -53,6 +47,8 @@ import { CallReadinessModal, CallReadinessModalFallBack } from '../components/Ca
 import { useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
 import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
@@ -61,7 +57,6 @@ export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
-  /* @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -81,7 +76,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
-    /* @conditional-compile-remove(call-readiness) */ modalLayerHostId,
+    modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
@@ -100,8 +95,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   let errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
-  const theme = useTheme();
   const deviceState = adapter.getState().devices;
   /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = adapter.getState().environmentInfo;
@@ -118,6 +111,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       activeErrorMessages: errorBarProps.activeErrorMessages.filter(
         (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
       )
+    };
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if (useIsParticularSidePaneOpen('videoeffects') && errorBarProps) {
+    errorBarProps = {
+      ...errorBarProps,
+      activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
     };
   }
   /* @conditional-compile-remove(rooms) */
@@ -206,7 +207,23 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
   /* @conditional-compile-remove(video-background-effects) */
-  const { toggleVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, mobileView);
+  const { toggleVideoEffectsPane, closeVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
+    props.updateSidePaneRenderer,
+    mobileView
+  );
+
+  const startCall = useCallback(async () => {
+    /* @conditional-compile-remove(video-background-effects) */
+    closeVideoEffectsPane();
+    startCallHandler();
+  }, [startCallHandler, /* @conditional-compile-remove(video-background-effects) */ closeVideoEffectsPane]);
+
+  const panelLayerProps = useMemo(
+    () => ({
+      hostId: modalLayerHostId
+    }),
+    [modalLayerHostId]
+  );
 
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
@@ -231,7 +248,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
         videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
           <CallReadinessModal
-            /* @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             /* @conditional-compile-remove(unsupported-browser) */
@@ -288,16 +304,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   {title}
                   {callDescription}
                 </Stack.Item>
-                {
-                  /* @conditional-compile-remove(video-background-effects) */
-                  <DefaultButton
-                    iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
-                    styles={effectsButtonStyles(theme)}
-                    onClick={toggleVideoEffectsPane}
-                  >
-                    {locale.strings.call.effects}
-                  </DefaultButton>
-                }
                 <LocalDeviceSettings
                   {...options}
                   {...localDeviceSettingsHandlers}
@@ -313,6 +319,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   onClickEnableDevicePermission={() => {
                     setIsPermissionsModalDismissed(true);
                   }}
+                  /* @conditional-compile-remove(video-background-effects) */
+                  onVideoEffectsClick={toggleVideoEffectsPane}
                 />
               </>
             )}
@@ -321,13 +329,24 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             >
               <StartCallButton
                 className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
-                onClick={startCallHandler}
+                onClick={startCall}
                 disabled={disableStartCallButton}
               />
             </Stack>
           </Stack>
         </Stack>
-        <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+        <Panel
+          /* @conditional-compile-remove(video-background-effects) */
+          isOpen={isVideoEffectsPaneOpen}
+          hasCloseButton={false}
+          isBlocking={false}
+          isHiddenOnDismiss={false}
+          styles={panelStyles}
+          focusTrapZoneProps={panelFocusProps}
+          layerProps={panelLayerProps}
+        >
+          <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+        </Panel>
       </Stack>
     </Stack>
   );

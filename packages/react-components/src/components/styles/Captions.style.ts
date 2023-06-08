@@ -27,7 +27,8 @@ export const displayNameClassName = mergeStyles({
 export const captionClassName = mergeStyles({
   fontWeight: 400,
   fontSize: _pxToRem(16),
-  lineHeight: _pxToRem(22)
+  lineHeight: _pxToRem(22),
+  width: '100%'
 });
 
 /**
@@ -60,8 +61,15 @@ export const captionsBannerClassName = mergeStyles({
 /**
  * @private
  */
+export const loadingBannerClassName = mergeStyles({
+  height: _pxToRem(100)
+});
+
+/**
+ * @private
+ */
 export const captionsContentContainerClassName = mergeStyles({
-  minWidth: 0
+  width: '100%'
 });
 
 /**

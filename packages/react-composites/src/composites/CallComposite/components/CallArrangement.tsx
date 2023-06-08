@@ -17,6 +17,8 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { useEffect } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -59,6 +61,8 @@ import { usePeoplePane } from './SidePane/usePeoplePane';
 import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { useIsParticularSidePaneOpen } from './SidePane/SidePaneProvider';
 import { ModalLocalAndRemotePIP } from '../../common/ModalLocalAndRemotePIP';
 import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles';
 import { useMinMaxDragPosition } from '../../common/utils';
@@ -104,15 +108,23 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isInLobby = _isInLobbyOrConnecting(useSelector(callStatusSelector).callStatus);
 
+  const { updateSidePaneRenderer } = props;
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const isInLocalHold = useSelector(getPage) === 'hold';
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  useEffect(() => {
+    if (isInLocalHold) {
+      // close side pane on local hold
+      updateSidePaneRenderer(undefined);
+    }
+  }, [updateSidePaneRenderer, isInLocalHold]);
 
   const adapter = useAdapter();
 
   const [drawerMenuItems, setDrawerMenuItems] = useState<_DrawerMenuItemProps[]>([]);
   const peoplePaneProps = useMemo(
     () => ({
-      updateSidePaneRenderer: props.updateSidePaneRenderer,
+      updateSidePaneRenderer,
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -121,7 +133,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       mobileView: props.mobileView
     }),
     [
-      props.updateSidePaneRenderer,
+      updateSidePaneRenderer,
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -142,12 +154,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
-  const callCompositeContainerCSS = useMemo(() => {
+  const callCompositeContainerCSS = useMemo((): React.CSSProperties => {
     return {
       display: isMobileWithActivePane ? 'none' : 'flex',
       minWidth: props.mobileView ? 'unset' : `${compositeMinWidthRem}rem`,
       width: '100%',
-      height: '100%'
+      height: '100%',
+      position: 'relative'
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
@@ -166,7 +179,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(video-background-effects) */
   const { openVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, props.mobileView);
-
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
     setShowDrawer(true);
@@ -216,6 +228,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     };
   }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if (useIsParticularSidePaneOpen('videoeffects') && props.errorBarProps) {
+    errorBarProps = {
+      ...props.errorBarProps,
+      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
+    };
+  }
+
   /* @conditional-compile-remove(close-captions) */
   const isTeamsCall = useSelector(getIsTeamsCall);
   /* @conditional-compile-remove(close-captions) */

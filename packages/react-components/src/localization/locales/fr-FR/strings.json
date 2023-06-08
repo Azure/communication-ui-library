@@ -25,6 +25,9 @@
     "uploading": "Chargement",
     "uploadCompleted": "Téléchargement terminé"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggestions"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message envoyé",
     "deliveredTooltipText": "Envoyé",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Votre caméra a été désactivée",
     "onSplitButtonPrimaryActionCamera": "Désactiver l’appareil photo",
     "offSplitButtonPrimaryActionCamera": "Activer la caméra",
-    "cameraPrimaryActionSplitButtonTitle": "Utiliser l’appareil photo"
+    "cameraPrimaryActionSplitButtonTitle": "Utiliser l’appareil photo",
+    "videoEffectsMenuItemTitle": "Effets"
   },
   "microphoneButton": {
     "onLabel": "Désactiver le son",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Plus d’options",
     "downloadFile": "Télécharger un fichier",
     "blockedWarningText": "Ce message a été supprimé en raison d’une stratégie de l’organisation.",
-    "blockedWarningLinkText": "Détails"
+    "blockedWarningLinkText": "Détails",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Vous êtes hors connexion",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Nous n’avons pas pu rejoindre l’appel.",
     "failedToJoinCallInvalidMeetingLink": "Impossible de rejoindre la réunion. Lien non valide.",
     "startScreenSharingGeneric": "Un problème est survenu durant le démarrage du partage d’écran.",
-    "cameraFrozenForRemoteParticipants": "Les utilisateurs de l’appel rencontrent des problèmes pour voir votre vidéo. Vérifiez vos appareils et votre réseau."
+    "cameraFrozenForRemoteParticipants": "Les utilisateurs de l’appel rencontrent des problèmes pour voir votre vidéo. Vérifiez vos appareils et votre réseau.",
+    "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",

@@ -178,9 +178,9 @@ describe('VideoGallery default layout tests', () => {
     expect(horizontalGalleryTiles.length).toBe(2);
     expect(horizontalGalleryTiles.filter(tileIsVideo).length).toBe(1);
 
-    expect(horizontalGalleryTiles[0].textContent).toBe('RPRemote Screensharing Participant');
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Remote Screensharing Participant');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
-    expect(horizontalGalleryTiles[1].textContent).toBe('Remote Video Participant');
+    expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Video Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
   });
 });
@@ -318,9 +318,9 @@ describe('VideoGallery floating local video layout tests', () => {
     expect(horizontalGalleryTiles.length).toBe(2);
     expect(horizontalGalleryTiles.filter(tileIsVideo).length).toBe(1);
 
-    expect(horizontalGalleryTiles[0].textContent).toBe('RPRemote Screensharing Participant');
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Remote Screensharing Participant');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
-    expect(horizontalGalleryTiles[1].textContent).toBe('Remote Video Participant');
+    expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Video Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
   });
 });
@@ -360,14 +360,14 @@ describe('VideoGallery pinned participants tests', () => {
     const horizontalGalleryTiles = getTiles(getHorizontalGallery(container));
 
     expect(gridTiles.length).toBe(2);
-    expect(gridTiles[0].textContent).toBe('R7Remote Participant 7');
+    expect(getDisplayName(gridTiles[0])).toBe('Remote Participant 7');
     expect(tileIsVideo(gridTiles[0])).toBe(false);
-    expect(gridTiles[1].textContent).toBe('R6Remote Participant 6');
+    expect(getDisplayName(gridTiles[1])).toBe('Remote Participant 6');
     expect(tileIsVideo(gridTiles[1])).toBe(false);
     expect(horizontalGalleryTiles.length).toBe(2);
-    expect(horizontalGalleryTiles[0].textContent).toBe('Remote Participant 1');
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Remote Participant 1');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(true);
-    expect(horizontalGalleryTiles[1].textContent).toBe('Remote Participant 0');
+    expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Participant 0');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
   });
 
@@ -409,9 +409,9 @@ describe('VideoGallery pinned participants tests', () => {
     const horizontalGalleryTiles = getTiles(getHorizontalGallery(container));
 
     expect(horizontalGalleryTiles.length).toBe(2);
-    expect(horizontalGalleryTiles[0].textContent).toBe('R7Remote Participant 7');
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Remote Participant 7');
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
-    expect(horizontalGalleryTiles[1].textContent).toBe('R6Remote Participant 6');
+    expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Participant 6');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(false);
   });
 
@@ -446,11 +446,11 @@ describe('VideoGallery pinned participants tests', () => {
       const gridTiles = getGridTiles(container);
 
       // verify that video tiles in the grid layout are in the same order as the pinned
-      expect(gridTiles[0].textContent).toBe('77');
-      expect(gridTiles[1].textContent).toBe('88');
-      expect(gridTiles[2].textContent).toBe('99');
-      expect(gridTiles[3].textContent).toBe('1');
-      expect(gridTiles[4].textContent).toBe('2');
+      expect(getDisplayName(gridTiles[0])).toBe('7');
+      expect(getDisplayName(gridTiles[1])).toBe('8');
+      expect(getDisplayName(gridTiles[2])).toBe('9');
+      expect(getDisplayName(gridTiles[3])).toBe('1');
+      expect(getDisplayName(gridTiles[4])).toBe('2');
 
       // verify the correct pinned remote video tiles have their video on
       expect(tileIsVideo(gridTiles[0])).toBe(false);
@@ -545,9 +545,9 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
 
     expect(verticalGalleryTiles.length).toBe(4);
     expect(verticalGalleryTiles.filter(tileIsVideo).length).toBe(1);
-    expect(verticalGalleryTiles[0].textContent).toBe('RRemote Screen Sharing Participant');
+    expect(getDisplayName(verticalGalleryTiles[0])).toBe('Remote Screen Sharing Participant');
     expect(tileIsVideo(verticalGalleryTiles[0])).toBe(false);
-    expect(verticalGalleryTiles[1].textContent).toBe('Remote Video Participant');
+    expect(getDisplayName(verticalGalleryTiles[1])).toBe('Remote Video Participant');
     expect(tileIsVideo(verticalGalleryTiles[1])).toBe(true);
   });
 
@@ -582,14 +582,14 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
     const verticalGalleryTiles = getTiles(getVerticalGallery(container));
 
     expect(gridTiles.length).toBe(2);
-    expect(gridTiles[0].textContent).toBe('R7Remote Participant 7');
+    expect(getDisplayName(gridTiles[0])).toBe('Remote Participant 7');
     expect(tileIsVideo(gridTiles[0])).toBe(false);
-    expect(gridTiles[1].textContent).toBe('R6Remote Participant 6');
+    expect(getDisplayName(gridTiles[1])).toBe('Remote Participant 6');
     expect(tileIsVideo(gridTiles[1])).toBe(false);
     expect(verticalGalleryTiles.length).toBe(4);
-    expect(verticalGalleryTiles[0].textContent).toBe('Remote Participant 1');
+    expect(getDisplayName(verticalGalleryTiles[0])).toBe('Remote Participant 1');
     expect(tileIsVideo(verticalGalleryTiles[0])).toBe(true);
-    expect(verticalGalleryTiles[1].textContent).toBe('Remote Participant 0');
+    expect(getDisplayName(verticalGalleryTiles[1])).toBe('Remote Participant 0');
     expect(tileIsVideo(verticalGalleryTiles[1])).toBe(true);
   });
 });
@@ -610,6 +610,9 @@ const getTiles = (root: Element | null): Element[] =>
 const getGridTiles = (root: Element | null): Element[] => Array.from(getTiles(getGridLayout(root)));
 const tileIsVideo = (tile: Element): boolean => !!tile.querySelector('video');
 const tileIsAudio = (tile: Element): boolean => !tile.querySelector('video');
+const getDisplayName = (root: Element): string | null | undefined => {
+  return root?.querySelector('[data-ui-id="video-tile-display-name"]')?.textContent;
+};
 
 const createLocalParticipant = (attrs?: Partial<VideoGalleryLocalParticipant>): VideoGalleryLocalParticipant => {
   return {

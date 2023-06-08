@@ -80,6 +80,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.localVideoTilePosition) {
+    options = {
+      ...options,
+      localVideoTileOptions: { position: queryArgs.localVideoTilePosition }
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}

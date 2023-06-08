@@ -60,6 +60,7 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
+import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -108,8 +109,7 @@ export type AzureCommunicationCallAdapterArgs = {
 // @beta
 export type AzureCommunicationCallAdapterOptions = {
     roleHint?: Role;
-    videoBackgroundImages?: VideoBackgroundImage[];
-};
+} & CommonCallAdapterOptions;
 
 // @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
@@ -210,7 +210,7 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -233,6 +233,7 @@ export type CallAdapterClientState = {
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+    acceptedTransferCallState?: CallState;
 };
 
 // @public
@@ -268,6 +269,7 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    off(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -282,6 +284,7 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    on(event: 'transferRequested', listener: TransferRequestedListener): void;
 }
 
 // @public
@@ -367,10 +370,11 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    localVideoTileOptions?: LocalVideoTileOptions;
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -391,6 +395,7 @@ export interface CallCompositeStrings {
     captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
+    captionsBannerSpinnerText?: string;
     captionsSettingsCancelButtonLabel?: string;
     captionsSettingsCloseModalButtonAriaLabel?: string;
     captionsSettingsConfirmButtonLabel?: string;
@@ -415,6 +420,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
     configurationPageTitle: string;
+    configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
@@ -426,7 +432,6 @@ export interface CallCompositeStrings {
     dialpadStartCallButtonLabel: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceholderText: string;
-    effects?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -487,10 +492,16 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageTransferorText: string;
+    transferPageTransferTargetText: string;
+    transferPageUnknownTransferorDisplayName: string;
+    transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    videoEffectsPaneBackgroundSelectionTitle: string;
+    videoEffectsPaneTitle: string;
 }
 
 // @public
@@ -583,7 +594,7 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     // @beta
-    stopVideoBackgroundEffect(): Promise<void>;
+    stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -973,6 +984,11 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
 }
 
+// @beta
+export type CommonCallAdapterOptions = {
+    videoBackgroundImages?: VideoBackgroundImage[];
+};
+
 // @public
 export type CommonCallControlOptions = {
     displayType?: CallControlDisplayType;
@@ -1236,7 +1252,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     VerticalGalleryLeftButton: JSX.Element;
     VerticalGalleryRightButton: JSX.Element;
-    OptionsVideoBackgroundEffect: JSX.Element;
+    ControlButtonVideoEffectsOption: JSX.Element;
+    ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
@@ -1372,6 +1389,11 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
+// @beta
+export interface LocalVideoTileOptions {
+    position?: 'grid' | 'floating' | 'hidden';
+}
+
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
@@ -1439,12 +1461,12 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoneEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+export type SelectedVideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
 // @beta
 export type TeamsAdapterOptions = {
     onFetchProfile?: OnFetchProfileCallback;
-};
+} & CommonCallAdapterOptions;
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
@@ -1457,7 +1479,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 export type TeamsCallAdapterArgs = {
     userId: MicrosoftTeamsUserIdentifier;
     credential: CommunicationTokenCredential;
-    locator: TeamsMeetingLinkLocator;
+    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
     options?: TeamsAdapterOptions;
 };
 
@@ -1465,6 +1487,9 @@ export type TeamsCallAdapterArgs = {
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
+
+// @beta
+export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs>, afterCreate?: ((adapter: CallAdapter) => Promise<CallAdapter>) | undefined, beforeDispose?: ((adapter: CallAdapter) => Promise<void>) | undefined) => CallAdapter | undefined;
@@ -1497,7 +1522,7 @@ export interface VideoBackgroundImage {
 }
 
 // @beta
-export interface VideoBackgroundNoneEffect {
+export interface VideoBackgroundNoEffect {
     effectName: 'none';
 }
 

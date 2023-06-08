@@ -25,6 +25,9 @@
     "uploading": "Ladataan palvelimeen",
     "uploadCompleted": "Ladattu palvelimeen"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Ehdotuksia"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Viesti on lähetetty",
     "deliveredTooltipText": "Lähetetty",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "Kamerasi on poistettu käytöstä",
     "onSplitButtonPrimaryActionCamera": "Poista kamera käytöstä",
     "offSplitButtonPrimaryActionCamera": "Käynnistä kamera",
-    "cameraPrimaryActionSplitButtonTitle": "Käytä kameraa"
+    "cameraPrimaryActionSplitButtonTitle": "Käytä kameraa",
+    "videoEffectsMenuItemTitle": "Tehosteet"
   },
   "microphoneButton": {
     "onLabel": "Mykistä",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Lisää vaihtoehtoja",
     "downloadFile": "Lataa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
-    "blockedWarningLinkText": "Lisätiedot"
+    "blockedWarningLinkText": "Lisätiedot",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "Puheluun liittyminen epäonnistui.",
     "failedToJoinCallInvalidMeetingLink": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
     "startScreenSharingGeneric": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
-    "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi."
+    "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi.",
+    "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",

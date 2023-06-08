@@ -25,6 +25,9 @@
     "uploading": "アップロード中",
     "uploadCompleted": "アップロードが完了しました"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "候補"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
     "deliveredTooltipText": "送信しました",
@@ -56,7 +59,8 @@
     "cameraActionTurnedOffAnnouncement": "カメラがオフになっています",
     "onSplitButtonPrimaryActionCamera": "カメラをオフにする",
     "offSplitButtonPrimaryActionCamera": "カメラをオンにする",
-    "cameraPrimaryActionSplitButtonTitle": "カメラを使用する"
+    "cameraPrimaryActionSplitButtonTitle": "カメラを使用する",
+    "videoEffectsMenuItemTitle": "効果"
   },
   "microphoneButton": {
     "onLabel": "ミュート",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "その他のオプション",
     "downloadFile": "ファイルをダウンロード",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
-    "blockedWarningLinkText": "詳細"
+    "blockedWarningLinkText": "詳細",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",
@@ -170,7 +175,8 @@
     "failedToJoinCallGeneric": "通話に参加できませんでした",
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
     "startScreenSharingGeneric": "画面共有の開始中に問題が発生しました。",
-    "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。"
+    "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
+    "unableToStartVideoEffect": "ビデオ効果を適用できません。"
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",

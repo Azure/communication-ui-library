@@ -36,7 +36,7 @@ import {
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
@@ -114,7 +114,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   private chatClient: StatefulChatClient;
   private chatThreadClient: ChatThreadClient;
   private context: ChatContext;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private credential?: CommunicationTokenCredential = undefined;
   /* @conditional-compile-remove(file-sharing) */
   private fileUploadAdapter: FileUploadAdapter;
@@ -124,7 +124,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   constructor(
     chatClient: StatefulChatClient,
     chatThreadClient: ChatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images) */ options?: {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options?: {
       credential?: CommunicationTokenCredential;
     }
   ) {
@@ -132,11 +132,11 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
     this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId);
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     if (options && options.credential) {
       this.credential = options.credential;
     }
-    /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
 
     const onStateChange = (clientState: ChatClientState): void => {
@@ -184,7 +184,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     this.downloadAttachments = this.downloadAttachments.bind(this);
   }
 
@@ -325,7 +325,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
@@ -345,7 +345,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       return this.downloadAuthenticatedFile(accessToken.token, options);
     });
   }
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private async downloadAuthenticatedFile(
     accessToken: string,
     options: { attachmentUrls: string[] }
@@ -369,6 +369,12 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
+    const isCurrentChatAdapterThread = event.threadId === this.chatThreadClient.threadId;
+
+    if (!isCurrentChatAdapterThread) {
+      return;
+    }
+
     const message = convertEventToChatMessage(event);
     this.emitter.emit('messageReceived', { message });
 
@@ -476,7 +482,7 @@ const convertEventType = (type: string): ChatMessageType => {
   }
 };
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Configuration options to include when creating AzureCommunicationChatAdapter.
  * @beta
@@ -525,12 +531,12 @@ export const createAzureCommunicationChatAdapter = async ({
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
 
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const options = { credential: credential };
   const adapter = await createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images) */ options
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
   );
 
   return adapter;
@@ -653,7 +659,7 @@ export const useAzureCommunicationChatAdapter = (
 export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   options?: {
     credential?: CommunicationTokenCredential;
   }
@@ -661,7 +667,7 @@ export async function createAzureCommunicationChatAdapterFromClient(
   return new AzureCommunicationChatAdapter(
     chatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images) */ options
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
   );
 }
 
