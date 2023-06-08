@@ -374,7 +374,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -411,6 +411,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     learnMore: string;
+    leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
     lobbyScreenConnectingToCallMoreDetails?: string;

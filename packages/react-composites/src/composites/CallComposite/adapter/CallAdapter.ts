@@ -52,11 +52,13 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
+  | 'leaving'
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 /**
  * Subset of CallCompositePages that represent an end call state.

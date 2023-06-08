@@ -137,7 +137,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout={layoutBasedOnTilePosition}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
+        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
@@ -155,6 +155,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [
     videoGalleryProps,
     props.isMobile,
+    props.onRenderAvatar,
     onRenderAvatar,
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
