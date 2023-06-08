@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Fix use cases documentation to note that composites can change icons",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
