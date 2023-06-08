@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "AzureCommunicationCallAdapter emitting transferRequested event and added acceptedTransferCallState propetry to CallAdapterClientState",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

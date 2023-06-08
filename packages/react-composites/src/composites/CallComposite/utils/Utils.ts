@@ -133,13 +133,14 @@ type GetCallCompositePageFunction = ((
   call: CallState | undefined,
   previousCall: CallState | undefined
 ) => CallCompositePage) &
-  /* @conditional-compile-remove(unsupported-browser) */ ((
+  ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
-    unsupportedBrowserInfo?: {
+    /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    }
+    },
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -157,7 +158,8 @@ type GetCallCompositePageFunction = ((
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
-  unsupportedBrowserInfo?
+  unsupportedBrowserInfo?,
+  transferCall?: CallState
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
@@ -167,6 +169,11 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     )
   ) {
     return 'unsupportedEnvironment';
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  if (transferCall !== undefined) {
+    return 'transferring';
   }
 
   if (call) {
@@ -182,6 +189,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
       return 'call';
+    } else if (call?.state === 'Disconnecting') {
+      return 'leaving';
     } else if (_isInCall(call?.state)) {
       return 'call';
     } else {
@@ -235,6 +244,7 @@ export const IsCallEndedPage = (
     | 'call'
     | 'configuration'
     | 'joinCallFailedDueToNoNetwork'
+    | 'leaving'
     | 'leftCall'
     | 'lobby'
     | 'removedFromCall'
@@ -242,6 +252,7 @@ export const IsCallEndedPage = (
     | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
     | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
     | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+    | /* @conditional-compile-remove(call-transfer) */ 'transferring'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**

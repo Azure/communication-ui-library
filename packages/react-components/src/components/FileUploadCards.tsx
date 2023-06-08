@@ -58,8 +58,6 @@ export const _FileUploadCards = (props: FileUploadCardsProps): JSX.Element => {
   const removeFileButtonString = useMemo(
     () => () => {
       return props.strings?.removeFile ?? localeStrings.removeFile;
-      // Return download button without aria label
-      return props.strings?.removeFile ?? '';
     },
     [props.strings?.removeFile, localeStrings.removeFile]
   );

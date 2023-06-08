@@ -33,7 +33,8 @@ type ParticipantConnectionState =
  * @internal
  */
 export const _isInCall = (callStatus?: CallStatus): boolean =>
-  !!callStatus && !['None', 'Disconnected', 'Connecting', 'Ringing', 'EarlyMedia'].includes(callStatus);
+  !!callStatus &&
+  !['None', 'Disconnected', 'Connecting', 'Ringing', 'EarlyMedia', 'Disconnecting'].includes(callStatus);
 
 /**
  * Check if the call state represents being in the lobby or waiting to be admitted.

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -18,7 +18,13 @@ import { getPage } from './selectors/baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+/* @conditional-compile-remove(call-transfer) */
+import { TransferPage } from './pages/TransferPage';
+import {
+  leavingPageStyle,
+  mainScreenContainerStyleDesktop,
+  mainScreenContainerStyleMobile
+} from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
@@ -250,6 +256,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+  const palette = useTheme().palette;
+  const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   /* @conditional-compile-remove(rooms) */
   const role = useSelector(getRole);
@@ -327,6 +335,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    case 'leaving':
+      pageElement = (
+        <NoticePage
+          title={locale.strings.call.leavingCallTitle ?? 'Leaving...'}
+          dataUiId={'leaving-page'}
+          pageStyle={leavePageStyle}
+          disableStartCallButton={true}
+        />
+      );
+      break;
     case 'leftCall':
       pageElement = (
         <NoticePage
@@ -345,6 +363,20 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+        />
+      );
+      break;
+    /* @conditional-compile-remove(call-transfer) */
+    case 'transferring':
+      pageElement = (
+        <TransferPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          onRenderAvatar={onRenderAvatar}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
         />
       );
       break;
