@@ -906,24 +906,45 @@ const parseOpenTag = (tag: string, startIdx: number): TagData => {
   };
 };
 
-const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined => {
-  const tagStartIndex = text.indexOf('<', startIndex);
-  if (tagStartIndex === -1) {
-    // No more tags
-    return undefined;
-  }
-  const tagEndIndex = text.indexOf('>', tagStartIndex);
-  if (tagEndIndex === -1) {
-    // No close tag
-    return undefined;
-  }
-  const tag = text.substring(tagStartIndex, tagEndIndex + 1);
+const findNextHtmlTag = (text: string, startIndex: number, tagType = MSFT_MENTION_TAG): HtmlTag | undefined => {
+  const newText = text.substring(startIndex);
   let type: HtmlTagType = 'open';
-  if (tag[1] === '/') {
-    type = 'close';
-  } else if (tag[tag.length - 2] === '/') {
+  let regexResult;
+
+  const openTagRegex = new RegExp(`<${tagType}(.*?)>`, 'i');
+  const selfClosingTagRegex = new RegExp(`<${tagType}(.*?)/>`, 'i');
+  const closeTagRegex = new RegExp(`</${tagType}>`, 'i');
+
+  if (newText.match(openTagRegex)) {
+    regexResult = newText.match(openTagRegex);
+    type = 'open';
+  }
+
+  const selfClosingResult = newText.match(selfClosingTagRegex);
+  if (
+    selfClosingResult &&
+    (regexResult === undefined ||
+      (selfClosingResult.index && regexResult?.index && selfClosingResult.index < regexResult.index))
+  ) {
+    regexResult = selfClosingResult;
     type = 'self-closing';
   }
+
+  const closeTagResult = newText.match(closeTagRegex);
+  if (
+    closeTagResult &&
+    (regexResult === undefined ||
+      (closeTagResult.index && regexResult?.index && closeTagResult.index < regexResult.index))
+  ) {
+    regexResult = closeTagResult;
+    type = 'close';
+  }
+
+  if (!regexResult || regexResult.index === undefined || regexResult.length < 0) {
+    return undefined;
+  }
+  const tagStartIndex = startIndex + regexResult.index;
+  const tag = regexResult[0];
   return {
     content: tag,
     startIdx: tagStartIndex,
