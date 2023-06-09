@@ -149,7 +149,8 @@
       "ro-ro": "루마니아어",
       "sk-sk": "슬로바키아어",
       "zh-tw": "중국어 - 대만"
-    }
+    },
+    "captionsBannerSpinnerText": "캡션을 시작하는 중..."
   },
   "chat": {
     "chatListHeader": "채팅 참가자",

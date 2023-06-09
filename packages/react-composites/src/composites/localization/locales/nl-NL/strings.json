@@ -149,7 +149,8 @@
       "ro-ro": "Roemeens",
       "sk-sk": "Slowaaks",
       "zh-tw": "Chinees - Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Ondertitels starten..."
   },
   "chat": {
     "chatListHeader": "In deze chat",

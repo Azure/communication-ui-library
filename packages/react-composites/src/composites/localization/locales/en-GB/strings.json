@@ -149,7 +149,8 @@
       "ro-ro": "Romanian",
       "sk-sk": "Slovak",
       "zh-tw": "Chinese - Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "chat": {
     "chatListHeader": "In this chat",

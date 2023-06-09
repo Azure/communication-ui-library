@@ -149,7 +149,8 @@
       "ro-ro": "Rumensk",
       "sk-sk": "Slovakisk",
       "zh-tw": "Kinesisk – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Starter teksting..."
   },
   "chat": {
     "chatListHeader": "I denne chatten",

@@ -49,6 +49,8 @@ import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * @private
@@ -103,6 +105,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton) {
@@ -115,7 +120,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  if (useIsParticularSidePaneOpen('videoeffects') && errorBarProps) {
+  if ((useIsParticularSidePaneOpen('videoeffects') || !isCameraOn) && errorBarProps) {
     errorBarProps = {
       ...errorBarProps,
       activeErrorMessages: errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')

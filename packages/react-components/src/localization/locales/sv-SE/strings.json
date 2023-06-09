@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "Fler alternativ",
     "downloadFile": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
-    "blockedWarningLinkText": "Information"
+    "blockedWarningLinkText": "Information",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",

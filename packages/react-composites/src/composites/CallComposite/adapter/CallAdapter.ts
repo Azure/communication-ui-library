@@ -8,6 +8,8 @@ import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
+/* @conditional-compile-remove(call-transfer) */
+import { TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -50,11 +52,13 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
+  | 'leaving'
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment';
+  | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -129,7 +133,12 @@ export type CallAdapterClientState = {
   /**
    * State to track the selected video background effect.
    */
-  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+  selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Call from transfer request accepted by local user
+   */
+  acceptedTransferCallState?: CallState;
 };
 
 /**
@@ -272,13 +281,21 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ *
+ * @beta
+ */
+export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
+
 /* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes of a selected video background effect
  *
  * @beta
  */
-export type SelectedVideoBackgroundEffect =
+export type VideoBackgroundEffect =
   | VideoBackgroundNoEffect
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
@@ -302,7 +319,7 @@ export interface VideoBackgroundNoEffect {
  *
  * @beta
  */
-export interface VideoBackgroundBlurEffect {
+export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   /**
    * Name of effect to blur video background effect
    */
@@ -315,7 +332,7 @@ export interface VideoBackgroundBlurEffect {
  *
  * @beta
  */
-export interface VideoBackgroundReplacementEffect {
+export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
   /**
    * Name of effect to replace video background effect
    */
@@ -323,11 +340,7 @@ export interface VideoBackgroundReplacementEffect {
   /**
    * key for unique identification of the custom background
    */
-  effectKey: string;
-  /**
-   * URL of the custom background image.
-   */
-  backgroundImageUrl: string;
+  key?: string;
 }
 
 /**
@@ -481,21 +494,13 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the blur video background effect.
+   * Start the video background effect.
    *
    * @beta
    */
-  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the video background replacement effect.
-   *
-   * @beta
-   */
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -518,7 +523,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
 /**
@@ -676,6 +681,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Subscribe function for 'transferRequested' event.
+   */
+  on(event: 'transferRequested', listener: TransferRequestedListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -735,6 +745,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Unsubscribe function for 'transferRequested' event.
+   */
+  off(event: 'transferRequested', listener: TransferRequestedListener): void;
 }
 
 // This type remains for non-breaking change reason
