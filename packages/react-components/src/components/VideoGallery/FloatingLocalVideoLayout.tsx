@@ -140,7 +140,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     }
     /* @conditional-compile-remove(vertical-gallery) */
     if (overflowGalleryTiles.length > 0 && overflowGalleryPosition === 'VerticalRight') {
-      return isNarrow || /*@conditional-compile-remove(click-to-call) */ !(localVideoTileSize === '16:9')
+      return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
