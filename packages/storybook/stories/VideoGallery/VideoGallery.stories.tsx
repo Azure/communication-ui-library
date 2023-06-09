@@ -388,7 +388,7 @@ const getDocs: () => JSX.Element = () => {
         </Stack>
         <Stack horizontalAlign="center">
           <img
-            style={{ width: '100%', maxWidth: '25rem' }}
+            style={{ width: '100%', maxWidth: '27.2rem' }}
             src="images/storybook-gallery-916.png"
             alt="Floating layout for composite video gallery"
           />
