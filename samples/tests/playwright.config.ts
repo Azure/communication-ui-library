@@ -43,11 +43,6 @@ const config: PlaywrightTestConfig = {
       }
     }
   ],
-  expect: {
-    toMatchSnapshot: {
-      threshold: 0.3
-    }
-  },
   globalSetup: require.resolve('./globalSetup')
 };
 
