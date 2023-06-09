@@ -74,8 +74,6 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     props.message.attachedFilesMetadata?.map((fileMetadata) => {
@@ -88,9 +86,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.editedOn ? props.strings.editedTag : ''} ${
-        props.message.mine ? '' : liveAuthor
-      } ${extractContent(props.message.content || '')} `}
+      liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       content={processHtmlToReact(props)}
     />
@@ -98,13 +94,10 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.editedOn ? props.strings.editedTag : ''} ${
-        props.message.mine ? '' : liveAuthor
-      } ${extractContent(props.message.content || '')} `}
+      liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       content={
         <Linkify
@@ -164,6 +157,14 @@ const extractContent = (s: string): string => {
   const span = document.createElement('span');
   span.innerHTML = s;
   return span.textContent || span.innerText;
+};
+
+const generateLiveMessage = (props: ChatMessageContentProps): string => {
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
+    props.message.mine ? '' : liveAuthor
+  } ${extractContent(props.message.content || '')} `;
 };
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
