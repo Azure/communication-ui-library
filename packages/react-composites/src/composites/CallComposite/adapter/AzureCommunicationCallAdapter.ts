@@ -199,8 +199,8 @@ class CallContext {
     };
 
     /* @conditional-compile-remove(call-transfer) */
-    const latestAcceptedTransfer = call?.transferFeature.acceptedTransfers
-      ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
+    const latestAcceptedTransfer = call?.transfer.acceptedTransfers
+      ? findLatestAcceptedTransfer(call.transfer.acceptedTransfers)
       : undefined;
     /* @conditional-compile-remove(call-transfer) */
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
@@ -385,9 +385,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
             const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(
-              removedCallState.transferFeature.acceptedTransfers
-            );
+            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
             const _callAgent = callAgent as CallAgent;
             const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
@@ -403,9 +401,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
             const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(
-              removedCallState.transferFeature.acceptedTransfers
-            );
+            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
             const _callAgent = callAgent as TeamsCallAgent;
             const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
