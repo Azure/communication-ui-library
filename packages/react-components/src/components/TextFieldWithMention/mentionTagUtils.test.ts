@@ -137,6 +137,53 @@ describe('Mention logic should be robust and accurate', () => {
     expect(parsed?.plainText).toEqual(comparisonString);
   });
 
+  test.only('Using < in the text with mention does not break parsing', () => {
+    const mentionWithAngleBracket = 'x<y and z <msft-mention id="1" displayText="User Name">User Name</msft-mention>';
+    const comparisonString = 'x<y and z @User Name';
+
+    let parsed: { tags: TagData[]; plainText: string } | undefined;
+    expect(() => {
+      parsed = textToTagParser(mentionWithAngleBracket, '@');
+    }).not.toThrow();
+    expect(parsed?.plainText).toEqual(comparisonString);
+  });
+
+  test.only('Using < in between mentions does not break parsing', () => {
+    const mentionWithAngleBracket =
+      '<msft-mention id="1" displayText="Patricia Adams">Patricia Adams</msft-mention> x<y and z <msft-mention id="1" displayText="User Name">User Name</msft-mention>';
+    const comparisonString = '@Patricia Adams x<y and z @User Name';
+
+    let parsed: { tags: TagData[]; plainText: string } | undefined;
+    expect(() => {
+      parsed = textToTagParser(mentionWithAngleBracket, '@');
+    }).not.toThrow();
+    expect(parsed?.plainText).toEqual(comparisonString);
+  });
+
+  test.only('Using > in between mentions does not break parsing', () => {
+    const mentionWithAngleBracket =
+      '<msft-mention id="1" displayText="Patricia Adams">Patricia Adams</msft-mention> >x<y> <> and z <msft-mention id="1" displayText="User Name">User Name</msft-mention>';
+    const comparisonString = '@Patricia Adams >x<y> <> and z @User Name';
+
+    let parsed: { tags: TagData[]; plainText: string } | undefined;
+    expect(() => {
+      parsed = textToTagParser(mentionWithAngleBracket, '@');
+    }).not.toThrow();
+    expect(parsed?.plainText).toEqual(comparisonString);
+  });
+
+  test.only('Using /> in between mentions does not break parsing', () => {
+    const mentionWithAngleBracket =
+      '<msft-mention id="1" displayText="Patricia Adams">Patricia Adams</msft-mention> >x<y> </> and z <msft-mention id="1" displayText="User Name">User Name</msft-mention>';
+    const comparisonString = '@Patricia Adams >x<y> </> and z @User Name';
+
+    let parsed: { tags: TagData[]; plainText: string } | undefined;
+    expect(() => {
+      parsed = textToTagParser(mentionWithAngleBracket, '@');
+    }).not.toThrow();
+    expect(parsed?.plainText).toEqual(comparisonString);
+  });
+
   test('Basic HTML generation works', () => {
     const htmlString = htmlStringForMentionSuggestion({ id: '1', displayText: 'Everyone' }, localeStrings);
     expect(htmlString).toEqual('<msft-mention id="1" displayText="Everyone">Everyone</msft-mention>');
