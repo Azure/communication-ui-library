@@ -68,6 +68,8 @@ import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles'
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * @private
@@ -218,6 +220,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   let errorBarProps = props.errorBarProps;
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton && props.errorBarProps) {
@@ -230,7 +235,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  if (useIsParticularSidePaneOpen('videoeffects') && props.errorBarProps) {
+  if ((useIsParticularSidePaneOpen('videoeffects') || !isCameraOn) && props.errorBarProps) {
     errorBarProps = {
       ...props.errorBarProps,
       activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
