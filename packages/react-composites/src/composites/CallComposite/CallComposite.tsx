@@ -126,7 +126,7 @@ export interface LocalVideoTileOptions {
    * 'hidden' - local video tile will not be rendered.
    * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
-  position?: 'grid' | 'floating' | 'hidden';
+  position?: 'grid' | 'floating';
 }
 /**
  * Optional features of the {@link CallComposite}.
@@ -208,8 +208,10 @@ export type CallCompositeOptions = {
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
+   *
+   * @remarks if 'false' the local video tile will not be rendered.
    */
-  localVideoTileOptions?: LocalVideoTileOptions;
+  localVideoTile?: boolean | LocalVideoTileOptions;
 };
 
 type MainScreenProps = {
