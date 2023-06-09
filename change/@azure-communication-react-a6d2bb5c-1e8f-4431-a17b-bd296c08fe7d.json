@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "fixing how common code deals with E.164 numbers",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

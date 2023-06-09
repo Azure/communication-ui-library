@@ -299,6 +299,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   return (
     <div ref={popoverRef}>
       <Stack
+        data-testid={'mention-suggestion-list-container'}
         className={mergeStyles(
           {
             maxHeight: 212,
