@@ -117,7 +117,7 @@ const config: PlaywrightTestConfig = {
   ],
   expect: {
     toMatchSnapshot: {
-      maxDiffPixels: 20
+      maxDiffPixels: 1
     }
   },
   reporter: process.env.CI ? CI_REPORTERS : LOCAL_REPORTERS,
