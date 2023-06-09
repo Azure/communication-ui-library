@@ -47,7 +47,7 @@ type NestedPartial<T> = {
 };
 
 // State breaking change start
-// For state, we defined adding new required properties would be breaking change,
+// For state, we defined adding new required properties would be not a breaking change,
 // so we make everything nested props optional, it will still compare if the type has being changed
 // or a property is accidentally removed
 type StateTestFunction<State extends Object> = (state: NestedPartial<State>) => State;
