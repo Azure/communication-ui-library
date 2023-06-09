@@ -88,7 +88,9 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      liveMessage={`${props.message.editedOn ? props.strings.editedTag : ''} ${
+        props.message.mine ? '' : liveAuthor
+      } ${extractContent(props.message.content || '')} `}
       ariaLabel={messageContentAriaText(props)}
       content={processHtmlToReact(props)}
     />
@@ -100,7 +102,9 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      liveMessage={`${props.message.editedOn ? props.strings.editedTag : ''} ${
+        props.message.mine ? '' : liveAuthor
+      } ${extractContent(props.message.content || '')} `}
       ariaLabel={messageContentAriaText(props)}
       content={
         <Linkify
