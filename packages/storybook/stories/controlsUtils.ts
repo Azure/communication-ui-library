@@ -379,6 +379,12 @@ export const controlsToAdd = {
     defaultValue: 'HorizontalBottom',
     name: 'Overflow Gallery Position'
   },
+  localVideoTileSize: {
+    control: 'select',
+    options: ['9:16', '16:9', 'hidden', 'followDeviceOrientation'],
+    defaultValue: 'followDeviceOrientation',
+    name: 'Local Video Tile Size'
+  },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
   callWithChatControlOptions: {
