@@ -18,7 +18,7 @@ test.describe('Call Composite E2E local video tile control tests', () => {
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        localVideoTilePosition: 'hidden'
+        localVideoTilePosition: 'false'
       })
     );
 
