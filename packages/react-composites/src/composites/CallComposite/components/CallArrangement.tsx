@@ -234,6 +234,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }
 
+  /* @conditional-compile-remove(video-background-effects) */
   const isVideoPaneOpen = useIsParticularSidePaneOpen('videoeffects');
   /* @conditional-compile-remove(video-background-effects) */
   if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
@@ -348,6 +349,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
+              /* @conditional-compile-remove(video-background-effects) */
               maxWidth={isVideoPaneOpen ? '19.5rem' : undefined}
               updateSidePaneRenderer={props.updateSidePaneRenderer}
               onPeopleButtonClicked={
