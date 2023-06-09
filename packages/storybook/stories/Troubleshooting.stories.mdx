@@ -93,6 +93,7 @@ Uncaught (in promise) CallError: CallClient.createCallAgent: Failed to create ca
     at rejected (CallContext.ts:21:65)
 ```
 
-We can see this error at times when some calls to construct our `AzureCommunicationCallAdapter` or `StatefulCallClient`. This can be caused by passing the arguments to these functions more than once or too often.
+We can see this error at times when trying to construct our `AzureCommunicationCallAdapter` or `StatefulCallClient` using some of our numerous factory functions. This can be caused by passing the arguments to these functions
+more than once or too often. We recommend passing args to these once, or disposing of the adapter or stateful client before attempting to create a new one.
 
 Another common cause for this error is using strict mode in your application. Please see [React's documentation](https://react.dev/reference/react/StrictMode) on strict mode to learn more.
