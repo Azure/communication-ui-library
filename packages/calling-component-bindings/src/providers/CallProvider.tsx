@@ -66,7 +66,7 @@ export const useCall = (): Call | undefined => {
   if (call && !_isACSCall(call)) {
     throw new Error('Incorrect call type: Must provide a Regular Call object.');
   }
-  return call as Call;
+  return call;
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -85,5 +85,5 @@ export const useTeamsCall = (): undefined | /* @conditional-compile-remove(teams
   if (call && !_isTeamsCall(call)) {
     throw new Error('Incorrect call type: Must provide a TeamsCall object.');
   }
-  return call as TeamsCall;
+  return call;
 };

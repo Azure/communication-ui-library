@@ -28,7 +28,7 @@ export interface LayoutProps {
   screenShareComponent?: JSX.Element;
   /**
    * Maximum number of participant remote video streams that is rendered.
-   * @defaultValue 9
+   * @defaultValue 4
    */
   maxRemoteVideoStreams: number;
   /**
