@@ -8,7 +8,7 @@ const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;
 
-export const getDocs: () => JSX.Element = () => {
+export const getComplianceBannerDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Teams Interop</Title>
@@ -26,11 +26,25 @@ export const getDocs: () => JSX.Element = () => {
       <Source code={ComplianceBannerText} />
       <Subheading>Use Compliance Banner</Subheading>
       <Source code={CallComponentText} />
-      <Heading>Lobby Component</Heading>
+    </>
+  );
+};
+
+export const getLobbyDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Lobby</Title>
       <Description>The Lobby component can be used for scenarios where the call is in a waiting state.</Description>
       <Subheading>Create a Lobby Component</Subheading>
       <Source code={LobbyComponentText} />
-      <Heading>Inline Images</Heading>
+    </>
+  );
+};
+
+export const getInlineImageDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Inline Images</Title>
       <SingleLineBetaBanner />
       <Description>Microsoft Teams allows users to share images by:</Description>
       <Description>- Copying & paste into the box at the bottom of the chat.</Description>
@@ -73,6 +87,51 @@ export const getDocs: () => JSX.Element = () => {
         `FileMetadataAttachmentType`.
       </Description>
       <Source code={InlineImageText} />
+    </>
+  );
+};
+
+export const getFileSharingDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>File Sharing</Title>
+      <SingleLineBetaBanner />
+      <Description>Microsoft Teams enables file attachment sharing with the following permissions:</Description>
+      <Description>- Anyone</Description>
+      <Description>- Individuals within your organization</Description>
+      <Description>- Participants currently in this chat</Description>
+      <Description>- People who already have access</Description>
+      <Description>- Specific individuals you select</Description>
+      <Description>
+        Microsoft Teams allows users to share file attachments as part of chat messages. These files are stored in
+        SharePoint or OneDrive and require authentication to access them. Depending on the file's sharing permissions
+        (e.g., Anyone, Individuals within your Organization, People you choose, etc.), ACS users in the Teams Interop
+        Interop meeting who try to access the shared files will be redirected to a SharePoint web page and prompted to
+        authenticate in order to access the file.
+      </Description>
+      <Description>
+        To learn more about the Sharing Permission, please refer to the [Limit sharing in Microsoft
+        365](https://learn.microsoft.com/en-us/microsoft-365/solutions/microsoft-365-limit-sharing).
+      </Description>
+      <Subheading>Explore Teams Interop with File Sharing Capability</Subheading>
+      <Description>
+        At this time, the UI library only facilitates File Sharing in a Teams Interop chat sent by the Teams user. To
+        utilize this feature, you can employ the `CallWithChat` composite.
+      </Description>
+      <Description>
+        Explore the `CallWithChat` composite using the [CallWithChatComposite Basic
+        Example](./?path=/story/composites-call-with-chat-basicexample--basic-example).
+      </Description>
+      <Subheading>Use components with File Sharing Support</Subheading>
+      <Description>
+        The
+        [MessageThread](./?path=/docs/ui-components-messagethread--message-thread#display-file-attachments-with-messages)
+        and [SendBox](./?path=/docs/ui-components-sendbox--send-box#display-file-uploads) components are designed to be
+        responsive and have built-in support for File Sharing. For more information and implementation details, please
+        refer to the documentation for the
+        [MessageThread](./?path=/docs/ui-components-messagethread--message-thread#display-file-attachments-with-messages)
+        and [SendBox](./?path=/docs/ui-components-sendbox--send-box#display-file-uploads) components.
+      </Description>
     </>
   );
 };
