@@ -200,12 +200,12 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install --max-install-attempts 3
-      - name: install chromium
+      - name: Install latest chromium
         run: npx playwright install --with-deps chromium
-      - name: print chromium version
+      - name: Print chromium version
         run: |
           CHROMIUM_VERSION=$(/usr/bin/chromium --version | awk '{print $2}')
-          echo "CHROMIUM_VERSION=$CHROMIUM_VERSION" >> $GITHUB_ENV
+          echo "CHROMIUM_VERSION=$CHROMIUM_VERSION"
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
@@ -352,6 +352,12 @@ jobs:
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
         run: rush install --max-install-attempts 3
+      - name: Install latest chromium
+        run: npx playwright install --with-deps chromium
+      - name: Print chromium version
+        run: |
+          CHROMIUM_VERSION=$(/usr/bin/chromium --version | awk '{print $2}')
+          echo "CHROMIUM_VERSION=$CHROMIUM_VERSION"
       - name: Switch flavor for build
         id: switch-flavor
         if: ${{ matrix.flavor != 'beta' }}
