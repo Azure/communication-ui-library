@@ -107,7 +107,7 @@ function createMockCall(mockCallId: string): CallState {
     },
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCountFeature: {
-      optimalVideoCount: 1
+      optimalVideoCount: 4
     }
   };
   return call;

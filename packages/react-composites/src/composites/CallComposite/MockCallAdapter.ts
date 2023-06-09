@@ -219,7 +219,7 @@ const defaultCallAdapterState: CallAdapterState = {
     },
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCountFeature: {
-      optimalVideoCount: 1
+      optimalVideoCount: 4
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },

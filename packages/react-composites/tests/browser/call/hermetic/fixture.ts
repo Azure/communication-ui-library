@@ -91,7 +91,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       },
       /* @conditional-compile-remove(call-transfer) */
       optimalVideoCountFeature: {
-        optimalVideoCount: 1
+        optimalVideoCount: 4
       }
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
