@@ -234,8 +234,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }
 
+  const isVideoPaneOpen = useIsParticularSidePaneOpen('videoeffects');
   /* @conditional-compile-remove(video-background-effects) */
-  if ((useIsParticularSidePaneOpen('videoeffects') || !isCameraOn) && props.errorBarProps) {
+  if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
     errorBarProps = {
       ...props.errorBarProps,
       activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
@@ -347,6 +348,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
+              maxWidth={isVideoPaneOpen ? '19.5rem' : undefined}
               updateSidePaneRenderer={props.updateSidePaneRenderer}
               onPeopleButtonClicked={
                 props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)
