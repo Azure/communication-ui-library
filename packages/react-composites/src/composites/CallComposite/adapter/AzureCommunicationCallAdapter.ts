@@ -193,10 +193,18 @@ class CallContext {
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
     };
 
+    /* @conditional-compile-remove(call-transfer) */
+    const latestAcceptedTransfer = call?.transfer.acceptedTransfers
+      ? findLatestAcceptedTransfer(call.transfer.acceptedTransfers)
+      : undefined;
+    /* @conditional-compile-remove(call-transfer) */
+    const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
+
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
+      /* @conditional-compile-remove(call-transfer) */ transferCall
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -205,13 +213,6 @@ class CallContext {
       // Make sure that the call is set to undefined in the state.
       call = undefined;
     }
-
-    /* @conditional-compile-remove(call-transfer) */
-    const latestAcceptedTransfer = call?.transferFeature.acceptedTransfers
-      ? findLatestAcceptedTransfer(call.transferFeature.acceptedTransfers)
-      : undefined;
-    /* @conditional-compile-remove(call-transfer) */
-    const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     if (this.state.page) {
       this.setState({
@@ -379,9 +380,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
             const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(
-              removedCallState.transferFeature.acceptedTransfers
-            );
+            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
             const _callAgent = callAgent as CallAgent;
             const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
@@ -397,9 +396,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           const removedCall = args.removed.find((call) => call.id === this.call?.id);
           if (removedCall) {
             const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(
-              removedCallState.transferFeature.acceptedTransfers
-            );
+            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
             const _callAgent = callAgent as TeamsCallAgent;
             const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
             if (transferCall) {
