@@ -156,8 +156,11 @@ export const findNewSelectionIndexForMention = (props: NewSelectionIndexForMenti
       spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
     }
   }
-  spaceIndex = Math.max(tag.plainTextBeginIndex, spaceIndex);
-  spaceIndex = Math.min(tag.plainTextEndIndex, spaceIndex);
+  spaceIndex = getValidatedIndexInRange({
+    min: tag.plainTextBeginIndex,
+    max: tag.plainTextEndIndex,
+    currentValue: spaceIndex
+  });
   return spaceIndex;
 };
 
