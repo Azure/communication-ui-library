@@ -86,7 +86,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
         startCaptionsInProgress: false
       },
       /* @conditional-compile-remove(call-transfer) */
-      transferFeature: {
+      transfer: {
         acceptedTransfers: {}
       }
     },

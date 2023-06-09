@@ -79,11 +79,11 @@ The id in the call object will be kept up to date and when ever you access `Call
 
 ## Detecting Screenshare Participant
 
-To make Stateful Calling easier to use we added a `screenshareRemoteParticipant` property to `CallState`.
-If there is a remote participant screensharing, this will allow you to quickly look up that participant’s state by doing something like this:
+To make Stateful Calling easier to use we added a `screenshareRemoteParticipant` property to the state of any `Call`.
+If there is a remote participant screensharing, you can easily access the participant using `CallState.screenShareRemoteParticipant`:
 
-```tsx
-CallState.remoteParticipants.get(CallState.screenshareRemoteParticipant);
+```ts
+const remoteScreenshareParticipant = statefulCallClient.getState().calls[CALL_ID].screenShareRemoteParticipant;
 ```
 
 This property will be undefined if there are no remote participants screensharing.

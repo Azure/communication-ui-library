@@ -71,6 +71,7 @@ export const findMentionTagForSelection = (tags: TagData[], selection: number): 
 
 /**
  * Get the indices of the word for the selection.
+ * Selects the whole tag by default
  * @private
  *
  */
