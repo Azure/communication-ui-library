@@ -24,7 +24,8 @@ export const toFlatCommunicationIdentifier = (identifier: CommunicationIdentifie
  */
 export const fromFlatCommunicationIdentifier = (id: string): CommunicationIdentifier => {
   // if the id passed is a phone number we need to build the rawId to pass in
-  return createIdentifierFromRawId('4:' + id);
+  const rawId = id.indexOf('+') === 0 ? '4:' + id : id;
+  return createIdentifierFromRawId(rawId);
 };
 
 /**
