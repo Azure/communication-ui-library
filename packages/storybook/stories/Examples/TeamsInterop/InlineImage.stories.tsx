@@ -6,7 +6,7 @@ import React from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { MessageThreadWithInlineImageExample as InlineImageComponent } from '../../MessageThread/snippets/WithInlineImageMessage.snippet';
-import { getDocs } from './TeamsInteropDocs';
+import { getInlineImageDocs } from './TeamsInteropDocs';
 
 const InlineImageStory: (args) => JSX.Element = (args) => {
   return <InlineImageComponent {...args} />;
@@ -21,7 +21,7 @@ export default {
   argTypes: {},
   parameters: {
     docs: {
-      page: () => getDocs()
+      page: () => getInlineImageDocs()
     }
   }
 } as Meta;
