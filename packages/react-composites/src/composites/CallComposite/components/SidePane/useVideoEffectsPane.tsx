@@ -9,11 +9,8 @@ import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { AdapterError } from '../../../common/adapters';
 import { DismissedError, dismissVideoEffectsError } from '../../utils';
-/* @conditional-compile-remove(video-background-effects) */
 import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
-/* @conditional-compile-remove(video-background-effects) */
 import { useSelector } from '../../hooks/useSelector';
-
 const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
 
 /** @private */
@@ -51,31 +48,28 @@ export const useVideoEffectsPane = (
   }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
   const [dismissedVideoEffectsError, setDismissedVideoEffectsError] = useState<DismissedError>();
+  const [activeVideoEffect, setActiveVideoEffect] = useState<ActiveVideoEffect>();
   const onDismissVideoEffectError = useCallback((error: AdapterError) => {
     setDismissedVideoEffectsError(dismissVideoEffectsError(error));
   }, []);
-  /* @conditional-compile-remove(video-background-effects) */
   const latestVideoEffectError = useSelector(videoBackgroundErrorsSelector);
   const activeVideoEffectError = useCallback(() => {
-    /* @conditional-compile-remove(video-background-effects) */
     if (
       latestVideoEffectError &&
-      (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt)
+      (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt) &&
+      (!activeVideoEffect || latestVideoEffectError.timestamp > activeVideoEffect.timestamp)
     ) {
       return latestVideoEffectError;
     }
     return undefined;
-  }, [
-    dismissedVideoEffectsError,
-    /* @conditional-compile-remove(video-background-effects) */
-    latestVideoEffectError
-  ]);
+  }, [dismissedVideoEffectsError, latestVideoEffectError, activeVideoEffect]);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <VideoEffectsPaneContent
         onDismissError={onDismissVideoEffectError}
         activeVideoEffectError={activeVideoEffectError}
+        setActiveVideoEffect={setActiveVideoEffect}
       />
     );
   }, [onDismissVideoEffectError, activeVideoEffectError]);
@@ -117,3 +111,20 @@ export const useVideoEffectsPane = (
     isVideoEffectsPaneOpen: isOpen
   };
 };
+
+/**
+ * Active video effect with timestamp.
+ *
+ * @private
+ */
+export interface ActiveVideoEffect {
+  /**
+   * Type of video effect that is active.
+   */
+  type: 'blur' | 'replacement';
+  /**
+   * The latest timestamp when this effect was activated.
+   *
+   */
+  timestamp: Date;
+}
