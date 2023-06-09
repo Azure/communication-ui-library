@@ -19,7 +19,9 @@ export const participantListItemStyle: ParticipantListItemStyles = {
   root: {
     paddingLeft: '1rem',
     paddingRight: '1rem',
-    margin: '0.125rem'
+    ':focus-visible': {
+      margin: '0.125rem'
+    }
   }
 };
 
