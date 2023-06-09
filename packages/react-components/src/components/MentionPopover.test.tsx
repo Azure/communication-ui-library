@@ -4,7 +4,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Mention, _MentionPopover } from './MentionPopover';
-import { testIds } from './utils/testIds';
 
 describe('Display mention popover in the correct position', () => {
   interface TargetRect {
@@ -17,7 +16,7 @@ describe('Display mention popover in the correct position', () => {
     bottom: number;
     left: number;
   }
-  const mentionSuggestionListContainerId = testIds.mentionSuggestionListContainer;
+  const mentionSuggestionListContainerId = 'mention-suggestion-list-container';
   const suggestions: Mention[] = [
     {
       id: '1',
