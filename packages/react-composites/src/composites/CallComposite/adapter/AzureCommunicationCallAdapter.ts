@@ -1208,6 +1208,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   const [adapter, setAdapter] = useState<Adapter | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
   const adapterRef = useRef<Adapter | undefined>(undefined);
+  const creatingAdapterRef = useRef<boolean>(false);
 
   const afterCreateRef = useRef<((adapter: Adapter) => Promise<Adapter>) | undefined>(undefined);
   const beforeDisposeRef = useRef<((adapter: Adapter) => Promise<void>) | undefined>(undefined);
@@ -1240,7 +1241,6 @@ const useAzureCommunicationCallAdapterGeneric = <
           adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
-
         let newAdapter: Adapter | undefined = undefined;
         if (adapterKind === 'AzureCommunication') {
           // This is just the type check to ensure that displayName is defined.
@@ -1252,6 +1252,13 @@ const useAzureCommunicationCallAdapterGeneric = <
           if (options && !('roleHint' in options)) {
             throw new Error('Unreachable code, provided a options without roleHint.');
           }
+          if (creatingAdapterRef.current) {
+            console.warn(
+              'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
+            );
+            return;
+          }
+          creatingAdapterRef.current = true;
           newAdapter = (await createAzureCommunicationCallAdapter({
             credential,
             displayName: displayName,
@@ -1261,6 +1268,11 @@ const useAzureCommunicationCallAdapterGeneric = <
             /* @conditional-compile-remove(rooms) */ options
           })) as Adapter;
         } else if (adapterKind === 'Teams') {
+          if (creatingAdapterRef.current) {
+            console.warn('Adapter is already being created, skipping creation.');
+            return;
+          }
+          creatingAdapterRef.current = true;
           /* @conditional-compile-remove(teams-identity-support) */
           newAdapter = (await createTeamsCallAdapter({
             credential,
@@ -1280,6 +1292,7 @@ const useAzureCommunicationCallAdapterGeneric = <
           newAdapter = await afterCreateRef.current(newAdapter);
         }
         adapterRef.current = newAdapter;
+        creatingAdapterRef.current = false;
         setAdapter(newAdapter);
       })();
     },
@@ -1288,9 +1301,9 @@ const useAzureCommunicationCallAdapterGeneric = <
       adapterRef,
       afterCreateRef,
       beforeDisposeRef,
+      adapterKind,
       credential,
       locator,
-      adapterKind,
       userId,
       displayName,
       /* @conditional-compile-remove(PSTN-calls) */
