@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add `Edited` for live message speak out",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "patch"
-}
