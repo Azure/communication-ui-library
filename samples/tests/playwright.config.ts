@@ -45,7 +45,7 @@ const config: PlaywrightTestConfig = {
   ],
   expect: {
     toMatchSnapshot: {
-      maxDiffPixels: 20
+      threshold: 0.3
     }
   },
   globalSetup: require.resolve('./globalSetup')
