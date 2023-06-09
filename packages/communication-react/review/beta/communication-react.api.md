@@ -807,7 +807,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
-    transferFeature: TransferFeature;
+    transfer: TransferFeature;
 }
 
 // @public
