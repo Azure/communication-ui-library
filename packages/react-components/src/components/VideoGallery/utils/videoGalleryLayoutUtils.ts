@@ -51,7 +51,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           participants: videoParticipants,
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
-          maxDominantSpeakers: maxRemoteVideoStreams || 1
+          maxDominantSpeakers: maxRemoteVideoStreams || 4
         }).slice(0, maxRemoteVideoStreams);
 
   const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));
