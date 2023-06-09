@@ -236,7 +236,7 @@ function createMockCall(mockCallId: string): CallState {
       startCaptionsInProgress: false
     },
     /* @conditional-compile-remove(call-transfer) */
-    transferFeature: {
+    transfer: {
       acceptedTransfers: {}
     },
     /* @conditional-compile-remove(optimal-video-count) */

@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Change playwright config maxDiffPixels to 1",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
