@@ -15,16 +15,16 @@ import { CallIdRef } from './CallIdRef';
  * @private
  */
 export class OptimalVideoCountSubscriber {
-  private _parent: CallIdRef | 'unparented';
+  private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _localOptimalVideoCountFeature: OptimalVideoCountCallFeature;
 
   constructor(args: {
-    parent: CallIdRef | 'unparented';
+    callIdRef: CallIdRef;
     context: CallContext;
     localOptimalVideoCountFeature: OptimalVideoCountCallFeature;
   }) {
-    this._parent = args.parent;
+    this._callIdRef = args.callIdRef;
     this._context = args.context;
     this._localOptimalVideoCountFeature = args.localOptimalVideoCountFeature;
 
@@ -44,9 +44,7 @@ export class OptimalVideoCountSubscriber {
   };
 
   private updateOptimalVideoCountState = (newOptimalVideoCountState: OptimalVideoCountFeatureState): void => {
-    if (this._parent !== 'unparented') {
-      this._context.setOptimalVideoCount(this._parent.callId, newOptimalVideoCountState.optimalVideoCount);
-    }
+    this._context.setOptimalVideoCount(this._callIdRef.callId, newOptimalVideoCountState.optimalVideoCount);
   };
 }
 
