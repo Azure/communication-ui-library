@@ -69,7 +69,12 @@ import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from './CallAdapter';
+import {
+  VideoBackgroundImage,
+  VideoBackgroundEffect,
+  VideoBackgroundBlurEffect,
+  VideoBackgroundReplacementEffect
+} from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
@@ -245,7 +250,7 @@ class CallContext {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public setSelectedVideoBackgroundEffect(selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect): void {
+  public setSelectedVideoBackgroundEffect(selectedVideoBackgroundEffect?: VideoBackgroundEffect): void {
     this.setState({ ...this.state, selectedVideoBackgroundEffect });
   }
 
@@ -464,9 +469,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.setCaptionLanguage.bind(this);
     }
     /* @conditional-compile-remove(video-background-effects) */
-    this.blurVideoBackground.bind(this);
-    /* @conditional-compile-remove(video-background-effects) */
-    this.replaceVideoBackground.bind(this);
+    this.startVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
@@ -687,14 +690,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.handlers.onBlurVideoBackground(backgroundBlurConfig);
+  public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
+    if (this.isBlurEffect(videoBackgroundEffect)) {
+      const blurConfig = videoBackgroundEffect as BackgroundBlurConfig;
+      await this.handlers.onBlurVideoBackground(blurConfig);
+    } else if (this.isReplacementEffect(videoBackgroundEffect)) {
+      const replaceConfig = videoBackgroundEffect as BackgroundReplacementConfig;
+      await this.handlers.onReplaceVideoBackground(replaceConfig);
+    }
   }
-  /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.handlers.onReplaceVideoBackground(backgroundReplacementConfig);
-  }
-
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffects(): Promise<void> {
     await this.handlers.onRemoveVideoBackgroundEffects();
@@ -704,7 +708,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.context.setBackroundPickerImages(backgroundImages);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     this.context.setSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
@@ -751,6 +755,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.context.updateClientState(this.callClient.getState());
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
     this.subscribeCallEvents();
+  }
+  /* @conditional-compile-remove(video-background-effects) */
+  private isBlurEffect(effect: VideoBackgroundEffect): effect is VideoBackgroundBlurEffect {
+    return effect.effectName === 'blur';
+  }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  private isReplacementEffect(effect: VideoBackgroundEffect): effect is VideoBackgroundReplacementEffect {
+    return effect.effectName === 'replacement';
   }
 
   public async removeParticipant(
