@@ -132,7 +132,7 @@ describe('SendBox should return correct value with a selected mention', () => {
 });
 
 /* @conditional-compile-remove(mention) */
-describe.only('Clicks should select mentions by words', () => {
+describe('Clicks should select mentions by words', () => {
   const suggestions: Mention[] = [
     {
       id: '1',
@@ -259,7 +259,7 @@ describe.only('Clicks should select mentions by words', () => {
     expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
   });
 
-  test.only('Mouse triple click on mention should select the text in the input field', async () => {
+  test('Mouse triple click on mention should select the text in the input field', async () => {
     renderSendBox();
     // Find the input field
     const input = screen.getByRole('textbox') as HTMLInputElement;
