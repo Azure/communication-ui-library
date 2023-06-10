@@ -130,3 +130,170 @@ describe('SendBox should return correct value with a selected mention', () => {
     expect(changedValue).toEqual(expectedHTMLValue);
   });
 });
+
+/* @conditional-compile-remove(mention) */
+describe.only('Clicks should select mentions by words', () => {
+  const suggestions: Mention[] = [
+    {
+      id: '1',
+      displayText: 'Test User1'
+    },
+    {
+      id: 'everyone',
+      displayText: 'Everyone'
+    }
+  ];
+  const trigger = '*@';
+
+  const renderSendBox = (): void => {
+    render(
+      <SendBox
+        mentionLookupOptions={{
+          trigger,
+          onQueryUpdated: async (query: string) => {
+            const filtered = suggestions.filter((suggestion) => {
+              return suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
+            });
+            return Promise.resolve(filtered);
+          }
+        }}
+      />
+    );
+  };
+  const selectFirstMention = async (): Promise<void> => {
+    const contextMenuItem = await screen.findByText(suggestions[0].displayText);
+    expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    fireEvent.click(contextMenuItem);
+  };
+
+  test('Mouse click on first word in mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    act(() => {
+      // Focus on the input field
+      input.focus();
+    });
+    const initialValue = 'Hi ';
+    const value = initialValue + trigger;
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard(value);
+    });
+    // Select the suggestion
+    await selectFirstMention();
+    expect(input.value).toBe(value + suggestions[0].displayText);
+    // Fix for mousedown issue in userEvent
+    await act(async () => {
+      triggerMouseEvent(input, 'mousedown');
+    });
+    // Click a letter at 6-th index
+    await userEvent.pointer({
+      keys: '[MouseLeft]',
+      target: input,
+      offset: 6
+    });
+    expect(input.selectionStart).toBe(initialValue.length);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  test('Mouse click on second word in mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    act(() => {
+      // Focus on the input field
+      input.focus();
+    });
+    const initialValue = 'Hi ';
+    const value = initialValue + trigger;
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard(value);
+    });
+    // Select the suggestion
+    await selectFirstMention();
+    expect(input.value).toBe(value + suggestions[0].displayText);
+    // Fix for mousedown issue in userEvent
+    await act(async () => {
+      triggerMouseEvent(input, 'mousedown');
+    });
+    // Click a letter at 12-th index
+    await userEvent.pointer({
+      keys: '[MouseLeft]',
+      target: input,
+      offset: 12
+    });
+    expect(input.selectionStart).toBe(initialValue.length);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  test('Mouse double click on mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    act(() => {
+      // Focus on the input field
+      input.focus();
+    });
+    const initialValue = 'Hi ';
+    const value = initialValue + trigger;
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard(value);
+    });
+    // Select the suggestion
+    await selectFirstMention();
+    expect(input.value).toBe(value + suggestions[0].displayText);
+    // Fix for mousedown issue in userEvent
+    await act(async () => {
+      triggerMouseEvent(input, 'mousedown');
+    });
+    // Double click a letter at 12-th index
+    await userEvent.pointer({
+      keys: '[MouseLeft][MouseLeft]',
+      target: input,
+      offset: 12
+    });
+    expect(input.selectionStart).toBe(initialValue.length);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  test.only('Mouse triple click on mention should select the text in the input field', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    act(() => {
+      // Focus on the input field
+      input.focus();
+    });
+    const initialValue = 'Hi ';
+    const value = initialValue + trigger;
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard(value);
+    });
+    // Select the suggestion
+    await selectFirstMention();
+    expect(input.value).toBe(value + suggestions[0].displayText);
+    // Fix for mousedown issue in userEvent
+    await act(async () => {
+      triggerMouseEvent(input, 'mousedown');
+    });
+    // Double click a letter at 12-th index
+    await userEvent.pointer({
+      keys: '[MouseLeft][MouseLeft][MouseLeft]',
+      target: input,
+      offset: 12
+    });
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  function triggerMouseEvent(node, eventType): void {
+    const clickEvent = new MouseEvent(eventType, {
+      view: window
+    });
+    node.dispatchEvent(clickEvent);
+  }
+});

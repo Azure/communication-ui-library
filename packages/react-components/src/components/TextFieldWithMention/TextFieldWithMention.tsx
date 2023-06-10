@@ -16,7 +16,7 @@ import {
   ITextFieldProps
 } from '@fluentui/react';
 
-import { isEnterKeyEventFromCompositionSession, nullToUndefined, undefinedToNull } from '../utils';
+import { isEnterKeyEventFromCompositionSession, nullToUndefined } from '../utils';
 import {
   TagData,
   findMentionTagForSelection,
@@ -25,7 +25,6 @@ import {
   getDisplayNameForMentionSuggestion,
   getValidatedIndexInRange,
   htmlStringForMentionSuggestion,
-  rangeOfWordInSelection,
   textToTagParser,
   updateHTML
 } from './mentionTagUtils';
