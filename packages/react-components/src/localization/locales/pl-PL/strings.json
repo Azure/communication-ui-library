@@ -139,7 +139,7 @@
     "downloadFile": "Pobierz plik",
     "blockedWarningText": "Ta wiadomość została usunięta ze względu na zasady organizacyjne.",
     "blockedWarningLinkText": "Szczegóły",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Wiadomość ma następującą liczbę załączników: {fileCount}"
   },
   "errorBar": {
     "unableToReachChatService": "Jesteś w trybie offline",

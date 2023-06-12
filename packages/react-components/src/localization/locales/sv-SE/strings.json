@@ -139,7 +139,7 @@
     "downloadFile": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Meddelandet har {fileCount} bifogad fil"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",

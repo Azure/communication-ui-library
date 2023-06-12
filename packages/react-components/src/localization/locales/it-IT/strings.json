@@ -139,7 +139,7 @@
     "downloadFile": "Scarica file",
     "blockedWarningText": "Questo messaggio è stato eliminato a causa dei criteri dell'organizzazione.",
     "blockedWarningLinkText": "Dettagli",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Il messaggio contiene {fileCount} allegato"
   },
   "errorBar": {
     "unableToReachChatService": "Sei offline",
