@@ -1,0 +1,10 @@
+{
+  "extends": "../../../common/config/tsc/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noUnusedLocals": false
+  },
+  "files": ["checkBreakingChanges.ts"],
+  "typeRoots": ["./node_modules/@types"],
+  "exclude": ["node_modules/**/*"]
+}
