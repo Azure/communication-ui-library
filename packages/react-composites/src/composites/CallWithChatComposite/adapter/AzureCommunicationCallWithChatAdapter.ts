@@ -87,11 +87,8 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
-
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -231,9 +228,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.setCaptionLanguage.bind(this);
     }
     /* @conditional-compile-remove(video-background-effects) */
-    this.blurVideoBackground.bind(this);
-    /* @conditional-compile-remove(video-background-effects) */
-    this.replaceVideoBackground.bind(this);
+    this.startVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
@@ -470,12 +465,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.callAdapter.blurVideoBackground(backgroundBlurConfig);
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.callAdapter.replaceVideoBackground(backgroundReplacementConfig);
+  public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
+    await this.callAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
@@ -489,7 +480,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 

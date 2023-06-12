@@ -79,6 +79,8 @@
     "lint:fix": "rushx lint -- --fix",
     "lint:quiet": "rushx lint -- --quiet",
     "postpack": "copyfiles -E \"./*.tgz\" release",
+    "check-breaking-change": "tsc --project breaking-change-check/tsconfig.json --strict --noEmit --allowSyntheticDefaultImports",
+    "copy-api-snapshot": "cpx \"./dist/communication-react.d.ts\" \"./breaking-change-check/snapshots/\"",
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_if-beta": "if-env COMMUNICATION_REACT_FLAVOR=beta || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
     "_api-extractor:by-flavor": "if-env COMMUNICATION_REACT_FLAVOR=stable && api-extractor run -c api-extractor.stable.json --local || (rushx _if-beta && api-extractor run --local)",

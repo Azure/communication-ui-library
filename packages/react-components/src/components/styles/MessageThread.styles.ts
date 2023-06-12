@@ -204,7 +204,7 @@ export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlot
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
-  width: `${AVATAR_WIDTH_REM}`,
+  width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
   display: 'block',

@@ -396,7 +396,7 @@ export interface CallState {
   /**
    * Transfer state of call
    */
-  transferFeature: TransferFeatureState;
+  transfer: TransferFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */
