@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "לא הוענקה לך כניסה בשיחה. אם זו היתה טעות, הצטרף מחדש לשיחה.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "הוצא מחדר הכניסה",
     "learnMore": "למידע נוסף",
+    "leavingCallTitle": "עוזב...",
     "leftCallMoreDetails": "אם זו היתה טעות, הצטרף מחדש לשיחה.",
     "leftCallTitle": "עזבת את הצ'אט",
     "lobbyScreenConnectingToCallTitle": "מצטרף לשיחה",
@@ -150,7 +151,11 @@
       "sk-sk": "סלובקית",
       "zh-tw": "סינית - טייוואן"
     },
-    "captionsBannerSpinnerText": "מאתחל כתוביות..."
+    "captionsBannerSpinnerText": "מאתחל כתוביות...",
+    "transferPageTransferorText": "מעביר...",
+    "transferPageTransferTargetText": "מתחבר...",
+    "transferPageUnknownTransferorDisplayName": "לא ידוע",
+    "transferPageUnknownTransferTargetDisplayName": "לא ידוע"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
