@@ -144,6 +144,8 @@ describe('Clicks should select mentions by words', () => {
     }
   ];
   const trigger = '*@';
+  const initialValue = 'Hi ';
+  const value = initialValue + trigger;
 
   const renderSendBox = (): void => {
     render(
@@ -166,16 +168,11 @@ describe('Clicks should select mentions by words', () => {
     fireEvent.click(contextMenuItem);
   };
 
-  test('Mouse click on first word in mention should select mention', async () => {
-    renderSendBox();
-    // Find the input field
-    const input = screen.getByRole('textbox') as HTMLInputElement;
+  const inputSetup = async (input: HTMLInputElement): Promise<void> => {
     act(() => {
       // Focus on the input field
       input.focus();
     });
-    const initialValue = 'Hi ';
-    const value = initialValue + trigger;
     await waitFor(async () => {
       // Type into the input field
       await userEvent.keyboard(value);
@@ -187,6 +184,13 @@ describe('Clicks should select mentions by words', () => {
     await act(async () => {
       triggerMouseEvent(input, 'mousedown');
     });
+  };
+
+  test('Mouse click on first word in mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
     // Click a letter at 6-th index
     await userEvent.pointer({
       keys: '[MouseLeft]',
@@ -201,23 +205,7 @@ describe('Clicks should select mentions by words', () => {
     renderSendBox();
     // Find the input field
     const input = screen.getByRole('textbox') as HTMLInputElement;
-    act(() => {
-      // Focus on the input field
-      input.focus();
-    });
-    const initialValue = 'Hi ';
-    const value = initialValue + trigger;
-    await waitFor(async () => {
-      // Type into the input field
-      await userEvent.keyboard(value);
-    });
-    // Select the suggestion
-    await selectFirstMention();
-    expect(input.value).toBe(value + suggestions[0].displayText);
-    // Fix for mousedown issue in userEvent
-    await act(async () => {
-      triggerMouseEvent(input, 'mousedown');
-    });
+    await inputSetup(input);
     // Click a letter at 12-th index
     await userEvent.pointer({
       keys: '[MouseLeft]',
@@ -232,23 +220,7 @@ describe('Clicks should select mentions by words', () => {
     renderSendBox();
     // Find the input field
     const input = screen.getByRole('textbox') as HTMLInputElement;
-    act(() => {
-      // Focus on the input field
-      input.focus();
-    });
-    const initialValue = 'Hi ';
-    const value = initialValue + trigger;
-    await waitFor(async () => {
-      // Type into the input field
-      await userEvent.keyboard(value);
-    });
-    // Select the suggestion
-    await selectFirstMention();
-    expect(input.value).toBe(value + suggestions[0].displayText);
-    // Fix for mousedown issue in userEvent
-    await act(async () => {
-      triggerMouseEvent(input, 'mousedown');
-    });
+    await inputSetup(input);
     // Double click a letter at 12-th index
     await userEvent.pointer({
       keys: '[MouseLeft][MouseLeft]',
@@ -263,24 +235,8 @@ describe('Clicks should select mentions by words', () => {
     renderSendBox();
     // Find the input field
     const input = screen.getByRole('textbox') as HTMLInputElement;
-    act(() => {
-      // Focus on the input field
-      input.focus();
-    });
-    const initialValue = 'Hi ';
-    const value = initialValue + trigger;
-    await waitFor(async () => {
-      // Type into the input field
-      await userEvent.keyboard(value);
-    });
-    // Select the suggestion
-    await selectFirstMention();
-    expect(input.value).toBe(value + suggestions[0].displayText);
-    // Fix for mousedown issue in userEvent
-    await act(async () => {
-      triggerMouseEvent(input, 'mousedown');
-    });
-    // Double click a letter at 12-th index
+    await inputSetup(input);
+    // Triple click a letter at 12-th index
     await userEvent.pointer({
       keys: '[MouseLeft][MouseLeft][MouseLeft]',
       target: input,
@@ -290,7 +246,67 @@ describe('Clicks should select mentions by words', () => {
     expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
   });
 
-  function triggerMouseEvent(node, eventType): void {
+  test('Tap on first word in mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
+    // Click a letter at 6-th index
+    await userEvent.pointer({
+      keys: '[TouchA]',
+      target: input,
+      offset: 6
+    });
+    expect(input.selectionStart).toBe(initialValue.length);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  test('Tap on second word in mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
+    // Tap a letter at 12-th index
+    await userEvent.pointer({
+      keys: '[TouchA]',
+      target: input,
+      offset: 12
+    });
+    expect(input.selectionStart).toBe(initialValue.length);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  test('Double tap on mention should select mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
+    // Double tap a letter at 12-th index
+    await userEvent.pointer({
+      keys: '[TouchA][TouchA]',
+      target: input,
+      offset: 12
+    });
+    expect(input.selectionStart).toBe(initialValue.length);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  test('Triple tap on mention should select the text in the input field', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
+    // Triple tap a letter at 12-th index
+    await userEvent.pointer({
+      keys: '[TouchA][TouchA][TouchA]',
+      target: input,
+      offset: 12
+    });
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
+  });
+
+  function triggerMouseEvent(node: HTMLInputElement, eventType: string): void {
     const clickEvent = new MouseEvent(eventType, {
       view: window
     });
