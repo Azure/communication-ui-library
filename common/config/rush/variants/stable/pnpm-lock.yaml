@@ -155,15 +155,6 @@ packages:
       node: '>=8.0.0'
     resolution:
       integrity: sha512-hxW6w8pgVNpRZkAx0LMQYgpbV3Qk6UdCQtXNqJjEkOjxc1OR6F1/6zTJJfyldild6+aiNhpOkXUNJii9Ya75BQ==
-  /@azure/core-auth/1.3.2:
-    dependencies:
-      '@azure/abort-controller': 1.1.0
-      tslib: 2.5.2
-    dev: false
-    engines:
-      node: '>=12.0.0'
-    resolution:
-      integrity: sha512-7CU6DmCHIZp5ZPiZ9r3J17lTKMmYsm/zGvNkjArQwPkrLlZ1TZ+EUYfGgh2X31OLMVAQCTJZW4cXHJi02EbJnA==
   /@azure/core-auth/1.4.0:
     dependencies:
       '@azure/abort-controller': 1.1.0
@@ -19409,7 +19400,7 @@ packages:
     dependencies:
       '@azure/communication-calling': 1.13.1
       '@azure/communication-common': 2.2.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
@@ -19442,7 +19433,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-stateful-client'
     resolution:
-      integrity: sha512-NPNBf0KxvRwkasPoBXSERMy8PTbX8kd/HkqcG7Hlol9V/IG3fhsYcBsCI5C6e/HsmyBbvlSyyFEG2Iwu1fHE5Q==
+      integrity: sha512-lB4uvof2CnLRh0qaLsHN92sDNRCOqwBLQqnSaG53yCIKUtnt1Q/6C87YAV3QJNJh2KqM6nlwtOi1Fh3bt2rmkQ==
       tarball: file:projects/calling-stateful-client.tgz
     version: 0.0.0
   file:projects/calling.tgz:
@@ -19774,7 +19765,7 @@ packages:
       '@azure/communication-calling-effects': 1.0.0-beta.2
       '@azure/communication-chat': 1.3.1
       '@azure/communication-common': 2.2.0
-      '@azure/core-auth': 1.3.2
+      '@azure/core-auth': 1.4.0
       '@azure/core-client': 1.7.3
       '@azure/core-paging': 1.5.0
       '@azure/core-rest-pipeline': 1.11.0
@@ -19853,7 +19844,7 @@ packages:
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-N9DvPairNzLuQXm79WOBXqMojNnSGywpGsUWr0Vmn328FJoV5uts8ZO3CiNInSuhOMzYsnz0dFtLdOxnkroU7g==
+      integrity: sha512-U3yz3fbQZciWNmUcYB7SEIJvFKuVTJlFPuupfN1w1N6CwCNGcfhLSfyG+ELlI0KsJGK0k+aX1v1SVhM+mvVGTA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
