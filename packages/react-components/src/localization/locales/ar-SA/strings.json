@@ -139,7 +139,7 @@
     "downloadFile": "تنزيل ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
     "blockedWarningLinkText": "تفاصيل",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",

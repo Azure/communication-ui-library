@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Non ti è stato concesso l’accesso alla chiamata. Se si è trattato di un errore, partecipa di nuovo alla chiamata.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Ignorato dalla sala di attesa",
     "learnMore": "Ulteriori informazioni",
+    "leavingCallTitle": "In uscita...",
     "leftCallMoreDetails": "Se si è trattato di un errore, partecipa di nuovo alla chiamata.",
     "leftCallTitle": "Hai abbandonato la chiamata",
     "lobbyScreenConnectingToCallTitle": "Partecipazione alla chiamata",
@@ -150,7 +151,11 @@
       "sk-sk": "Slovacco",
       "zh-tw": "Cinese - Taiwan"
     },
-    "captionsBannerSpinnerText": "Avvio dei sottotitoli in corso..."
+    "captionsBannerSpinnerText": "Avvio dei sottotitoli in corso...",
+    "transferPageTransferorText": "Trasferimento in corso...",
+    "transferPageTransferTargetText": "Connessione in corso...",
+    "transferPageUnknownTransferorDisplayName": "Sconosciuto",
+    "transferPageUnknownTransferTargetDisplayName": "Sconosciuto"
   },
   "chat": {
     "chatListHeader": "In questa chat",
