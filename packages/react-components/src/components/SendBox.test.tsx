@@ -12,6 +12,8 @@ import { render, waitFor, act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 /* @conditional-compile-remove(mention) */
 import { Mention } from './MentionPopover';
+/* @conditional-compile-remove(mention) */
+import { triggerMouseEvent } from './utils/testUtils';
 
 describe('SendBox strings should be localizable and overridable', () => {
   beforeAll(() => {
@@ -305,11 +307,4 @@ describe('Clicks should select mentions by words', () => {
     expect(input.selectionStart).toBe(0);
     expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
   });
-
-  function triggerMouseEvent(node: HTMLInputElement, eventType: string): void {
-    const clickEvent = new MouseEvent(eventType, {
-      view: window
-    });
-    node.dispatchEvent(clickEvent);
-  }
 });

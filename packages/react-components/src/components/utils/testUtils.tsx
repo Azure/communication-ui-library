@@ -74,3 +74,12 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Co
   });
   return { strings };
 };
+
+/** @private */
+// Trigger a mouse event manually to fix mouseDown event in userEvent
+export const triggerMouseEvent = (node: HTMLElement, eventType: string): void => {
+  const clickEvent = new MouseEvent(eventType, {
+    view: window
+  });
+  node.dispatchEvent(clickEvent);
+};
