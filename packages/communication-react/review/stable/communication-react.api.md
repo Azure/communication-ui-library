@@ -374,7 +374,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -411,6 +411,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     learnMore: string;
+    leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
     lobbyScreenConnectingToCallMoreDetails?: string;
@@ -1152,6 +1153,9 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -1164,7 +1168,13 @@ export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_FI_FI: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_HE_IL: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_IT_IT: ComponentLocale;
@@ -1176,13 +1186,22 @@ export const COMPONENT_LOCALE_JA_JP: ComponentLocale;
 export const COMPONENT_LOCALE_KO_KR: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_NB_NO: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_NL_NL: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_PL_PL: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_PT_BR: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_RU_RU: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_SV_SE: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_TR_TR: ComponentLocale;
@@ -1225,6 +1244,9 @@ export interface ComponentStrings {
 }
 
 // @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -1237,7 +1259,13 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 export const COMPOSITE_LOCALE_ES_ES: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_FI_FI: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_HE_IL: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_IT_IT: CompositeLocale;
@@ -1249,13 +1277,22 @@ export const COMPOSITE_LOCALE_JA_JP: CompositeLocale;
 export const COMPOSITE_LOCALE_KO_KR: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_NB_NO: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_NL_NL: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_PL_PL: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_PT_BR: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_RU_RU: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_SV_SE: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_TR_TR: CompositeLocale;
