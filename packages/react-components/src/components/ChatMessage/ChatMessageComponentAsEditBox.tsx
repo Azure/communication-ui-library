@@ -134,6 +134,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           placeholderText={strings.editBoxPlaceholderText}
           textValue={textValue}
           onChange={setText}
+          onKeyDown={(ev) => {
+            if (ev.key === 'ArrowUp' || ev.key === 'ArrowDown') {
+              ev.stopPropagation();
+            }
+          }}
           onEnterKeyDown={() => {
             submitEnabled &&
               onSubmit(textValue, message.metadata, {
