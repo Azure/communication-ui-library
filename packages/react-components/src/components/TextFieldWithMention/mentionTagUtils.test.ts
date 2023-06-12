@@ -20,24 +20,23 @@ import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 describe('Mention logic should be robust and accurate', () => {
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
 
-  const basicMention = 'Hello <msft-mention id="1" displayText="Everyone">everyone</msft-mention>!';
+  const basicMention = 'Hello <msft-mention id="1">everyone</msft-mention>!';
   const basicMentionTextRepresentation = 'Hello @everyone!';
   const basicMentionTag: TagData = {
-    closingTagIndex: 58,
+    closingTagIndex: 35,
     content: 'everyone',
-    openTagBody: '<msft-mention id="1" displayText="Everyone">',
+    openTagBody: '<msft-mention id="1">',
     openTagIndex: 6,
     plainTextBeginIndex: 6,
     plainTextEndIndex: 15,
     tagType: 'msft-mention'
   };
-  const nestedMention =
-    '<p><b>Hello</b> <msft-mention id="1" displayText="Everyone">everyone</msft-mention></p><em>!</em>';
+  const nestedMention = '<p><b>Hello</b> <msft-mention id="1">everyone</msft-mention></p><em>!</em>';
   const nestedMentionTextRepresentation = 'Hello #éeveryone!';
   const nestedMentionTags: TagData[] = [
     {
-      closingTagIndex: 83,
-      content: '<b>Hello</b> <msft-mention id="1" displayText="Everyone">everyone</msft-mention>',
+      closingTagIndex: 60,
+      content: '<b>Hello</b> <msft-mention id="1">everyone</msft-mention>',
       openTagBody: '<p>',
       openTagIndex: 0,
       plainTextBeginIndex: 0,
@@ -53,9 +52,9 @@ describe('Mention logic should be robust and accurate', () => {
           tagType: 'b'
         },
         {
-          closingTagIndex: 65,
+          closingTagIndex: 42,
           content: 'everyone',
-          openTagBody: '<msft-mention id="1" displayText="Everyone">',
+          openTagBody: '<msft-mention id="1">',
           openTagIndex: 13,
           plainTextBeginIndex: 6,
           plainTextEndIndex: 16,
@@ -65,22 +64,22 @@ describe('Mention logic should be robust and accurate', () => {
       tagType: 'p'
     },
     {
-      closingTagIndex: 92,
+      closingTagIndex: 69,
       content: '!',
       openTagBody: '<em>',
-      openTagIndex: 87,
+      openTagIndex: 64,
       plainTextBeginIndex: 16,
       plainTextEndIndex: 17,
       tagType: 'em'
     }
   ];
 
-  const twoWordMention = 'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia Adams</msft-mention>!';
+  const twoWordMention = 'Hello <msft-mention id="1">Patricia Adams</msft-mention>!';
   const twoWordMentionTextRepresentation = 'Hello @Patricia Adams!';
   const twoWordMentionTag: TagData = {
-    closingTagIndex: 70,
+    closingTagIndex: 41,
     content: 'Patricia Adams',
-    openTagBody: '<msft-mention id="1" displayText="Patricia Adams">',
+    openTagBody: '<msft-mention id="1">',
     openTagIndex: 6,
     plainTextBeginIndex: 6,
     plainTextEndIndex: 21,
@@ -139,11 +138,11 @@ describe('Mention logic should be robust and accurate', () => {
 
   test('Basic HTML generation works', () => {
     const htmlString = htmlStringForMentionSuggestion({ id: '1', displayText: 'Everyone' }, localeStrings);
-    expect(htmlString).toEqual('<msft-mention id="1" displayText="Everyone">Everyone</msft-mention>');
+    expect(htmlString).toEqual('<msft-mention id="1">Everyone</msft-mention>');
   });
   test('HTML generation works when the mention has no display text', () => {
     const htmlString = htmlStringForMentionSuggestion({ id: '1', displayText: '' }, localeStrings);
-    expect(htmlString).toEqual('<msft-mention id="1" displayText="">Unnamed participant</msft-mention>');
+    expect(htmlString).toEqual('<msft-mention id="1">Unnamed participant</msft-mention>');
   });
 
   test('getDisplayNameForMentionSuggestion returns the correct display name', () => {
@@ -284,7 +283,7 @@ describe('Mention logic should be robust and accurate', () => {
       startIndex: 15,
       tags: [basicMentionTag]
     });
-    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1" displayText="Everyone">everyone</msft-mention>!!');
+    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1">everyone</msft-mention>!!');
     expect(updated.updatedSelectionIndex).toEqual(16);
 
     // Delete just before first word of a mention
@@ -299,9 +298,7 @@ describe('Mention logic should be robust and accurate', () => {
       tags: [twoWordMentionTag]
     });
 
-    expect(updated.updatedHTML).toEqual(
-      'Hello <msft-mention id="1" displayText="Patricia Adams">Adams</msft-mention>!'
-    );
+    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1">Adams</msft-mention>!');
     expect(updated.updatedSelectionIndex).toEqual(6);
 
     // Delete just before second word of a mention
@@ -316,9 +313,7 @@ describe('Mention logic should be robust and accurate', () => {
       tags: [twoWordMentionTag]
     });
 
-    expect(updated.updatedHTML).toEqual(
-      'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia</msft-mention>!'
-    );
+    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1">Patricia</msft-mention>!');
     expect(updated.updatedSelectionIndex).toEqual(15);
 
     // Backspace at the end of a mention
@@ -333,9 +328,7 @@ describe('Mention logic should be robust and accurate', () => {
       tags: [twoWordMentionTag]
     });
 
-    expect(updated.updatedHTML).toEqual(
-      'Hello <msft-mention id="1" displayText="Patricia Adams">Patricia</msft-mention>!'
-    );
+    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1">Patricia</msft-mention>!');
     expect(updated.updatedSelectionIndex).toEqual(15);
 
     // Backspace in the middle of a mention
@@ -350,9 +343,7 @@ describe('Mention logic should be robust and accurate', () => {
       tags: [twoWordMentionTag]
     });
 
-    expect(updated.updatedHTML).toEqual(
-      'Hello <msft-mention id="1" displayText="Patricia Adams">Adams</msft-mention>!'
-    );
+    expect(updated.updatedHTML).toEqual('Hello <msft-mention id="1">Adams</msft-mention>!');
     expect(updated.updatedSelectionIndex).toEqual(6);
 
     // Insertion in the middle of a mention (should cause delete)
