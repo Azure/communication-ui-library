@@ -320,8 +320,6 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
-    // @beta
-    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
@@ -332,8 +330,6 @@ export interface CallAdapterCallOperations {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
-    // @beta
     resumeCall(): Promise<void>;
     // @beta
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
@@ -342,6 +338,8 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -351,7 +349,7 @@ export interface CallAdapterCallOperations {
     // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta
-    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
 // @public
@@ -368,7 +366,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
-    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+    selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
 
@@ -555,11 +553,11 @@ export type CallCompositeOptions = {
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
-    localVideoTileOptions?: LocalVideoTileOptions;
+    localVideoTile?: boolean | LocalVideoTileOptions;
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -623,6 +621,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     holdScreenLabel: string;
     learnMore: string;
+    leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
     liveCaptionsLabel?: string;
@@ -806,7 +805,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
-    transferFeature: TransferFeature;
+    transfer: TransferFeature;
 }
 
 // @public
@@ -821,8 +820,6 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // @beta
-    blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
     // @beta (undocumented)
     cancelFileUpload: (id: string) => void;
     // @beta (undocumented)
@@ -852,8 +849,6 @@ export interface CallWithChatAdapterManagement {
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     // @beta
-    replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
-    // @beta
     resumeCall: () => Promise<void>;
     // @beta
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
@@ -871,6 +866,8 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
+    // @beta
+    startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
@@ -887,7 +884,7 @@ export interface CallWithChatAdapterManagement {
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
     // @beta
-    updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+    updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
 // @public
@@ -995,7 +992,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
-    selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+    selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
 }
@@ -1714,6 +1711,9 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -1726,7 +1726,13 @@ export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_FI_FI: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_HE_IL: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_IT_IT: ComponentLocale;
@@ -1738,13 +1744,22 @@ export const COMPONENT_LOCALE_JA_JP: ComponentLocale;
 export const COMPONENT_LOCALE_KO_KR: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_NB_NO: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_NL_NL: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_PL_PL: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_PT_BR: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_RU_RU: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_SV_SE: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_TR_TR: ComponentLocale;
@@ -1811,6 +1826,9 @@ export interface ComponentStrings {
 }
 
 // @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -1823,7 +1841,13 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 export const COMPOSITE_LOCALE_ES_ES: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_FI_FI: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_HE_IL: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_IT_IT: CompositeLocale;
@@ -1835,13 +1859,22 @@ export const COMPOSITE_LOCALE_JA_JP: CompositeLocale;
 export const COMPOSITE_LOCALE_KO_KR: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_NB_NO: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_NL_NL: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_PL_PL: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_PT_BR: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_RU_RU: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_SV_SE: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_TR_TR: CompositeLocale;
@@ -2704,7 +2737,7 @@ export interface LocalVideoStreamVideoEffectsState {
 
 // @beta
 export interface LocalVideoTileOptions {
-    position?: 'grid' | 'floating' | 'hidden';
+    position?: 'grid' | 'floating';
 }
 
 // @beta
@@ -3259,9 +3292,6 @@ export interface ScreenShareButtonStrings {
     tooltipOnContent?: string;
 }
 
-// @beta
-export type SelectedVideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
-
 // @public
 export type Selector = (state: ClientState, props: any) => any;
 
@@ -3617,9 +3647,12 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 }
 
 // @beta
-export interface VideoBackgroundBlurEffect {
+export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
     effectName: 'blur';
 }
+
+// @beta
+export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
 // @beta
 export interface VideoBackgroundImage {
@@ -3634,10 +3667,9 @@ export interface VideoBackgroundNoEffect {
 }
 
 // @beta
-export interface VideoBackgroundReplacementEffect {
-    backgroundImageUrl: string;
-    effectKey: string;
+export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
     effectName: 'replacement';
+    key?: string;
 }
 
 // @public
