@@ -139,7 +139,7 @@
     "downloadFile": "Скачать файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
     "blockedWarningLinkText": "Сведения",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",

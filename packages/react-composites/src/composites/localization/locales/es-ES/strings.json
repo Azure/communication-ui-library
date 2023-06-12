@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "No se te concedió la entrada a la llamada. Si se trata de un error, vuelve a unirte.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Rechazado de la sala de espera",
     "learnMore": "Más información",
+    "leavingCallTitle": "Saliendo...",
     "leftCallMoreDetails": "Si se trata de un error, vuelve a unirte a la llamada.",
     "leftCallTitle": "Has abandonado la llamada",
     "lobbyScreenConnectingToCallTitle": "Uniéndose a la llamada",
@@ -150,7 +151,11 @@
       "sk-sk": "Eslovaco",
       "zh-tw": "Chino - Taiwán"
     },
-    "captionsBannerSpinnerText": "Iniciando subtítulos..."
+    "captionsBannerSpinnerText": "Iniciando subtítulos...",
+    "transferPageTransferorText": "Transfiriendo...",
+    "transferPageTransferTargetText": "Conectando...",
+    "transferPageUnknownTransferorDisplayName": "Desconocido",
+    "transferPageUnknownTransferTargetDisplayName": "Desconocido"
   },
   "chat": {
     "chatListHeader": "En este chat",

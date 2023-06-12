@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "لم يتم منحك إدخالا في المكالمة. إذا كان هذا خطأ، فعاود الانضمام إلى المكالمة.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "تم التجاهل من ساحة الانتظار",
     "learnMore": "تعرّف على المزيد",
+    "leavingCallTitle": "تتم الآن المغادرة...",
     "leftCallMoreDetails": "إذا كان هذا خطأ، فعاود الانضمام إلى المكالمة.",
     "leftCallTitle": "قمت بمغادرة المكالمة",
     "lobbyScreenConnectingToCallTitle": "جارٍ الانضمام إلى مكالمة",
@@ -150,7 +151,11 @@
       "sk-sk": "السلوفاكية",
       "zh-tw": "الصينية - تايوان"
     },
-    "captionsBannerSpinnerText": "يتم الآن بدء التسميات التوضيحية..."
+    "captionsBannerSpinnerText": "يتم الآن بدء التسميات التوضيحية...",
+    "transferPageTransferorText": "يتم الآن التحويل...",
+    "transferPageTransferTargetText": "جارٍ الاتصال...",
+    "transferPageUnknownTransferorDisplayName": "غير معروف",
+    "transferPageUnknownTransferTargetDisplayName": "غير معروف"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
