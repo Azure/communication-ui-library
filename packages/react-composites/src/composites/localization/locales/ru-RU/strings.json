@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Вам не предоставили доступ к беседе. Если это произошло по ошибке, заново присоединитесь к беседе.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Вы были удалены из \"зала ожидания\"",
     "learnMore": "Подробнее",
+    "leavingCallTitle": "Выход...",
     "leftCallMoreDetails": "Если это произошло по ошибке, заново присоединитесь к беседе.",
     "leftCallTitle": "Вы покинули беседу",
     "lobbyScreenConnectingToCallTitle": "Подключение к звонку",
@@ -150,7 +151,11 @@
       "sk-sk": "Словацкий",
       "zh-tw": "Китайский (Тайвань)"
     },
-    "captionsBannerSpinnerText": "Запуск субтитров..."
+    "captionsBannerSpinnerText": "Запуск субтитров...",
+    "transferPageTransferorText": "Идет переключение...",
+    "transferPageTransferTargetText": "Подключение...",
+    "transferPageUnknownTransferorDisplayName": "Неизвестно",
+    "transferPageUnknownTransferTargetDisplayName": "Неизвестно"
   },
   "chat": {
     "chatListHeader": "В этом чате",
