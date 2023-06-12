@@ -42,7 +42,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     [props.userId, credential, props.microsoftTeamsUserId]
   );
 
-  const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
+  const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
     adapter.on('transferRequested', (e) => {
       e.accept();
     });
