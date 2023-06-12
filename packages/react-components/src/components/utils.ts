@@ -245,8 +245,3 @@ export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTM
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
-
-/**
- * @private
- */
-export const undefinedToNull = <T>(value: T | undefined): T | null => (value === undefined ? null : value);
