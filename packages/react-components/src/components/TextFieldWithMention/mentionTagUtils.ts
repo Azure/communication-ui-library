@@ -70,48 +70,6 @@ export const findMentionTagForSelection = (tags: TagData[], selection: number): 
 };
 
 /**
- * Get the indices of the word for the selection.
- * Selects the whole tag by default
- * @private
- *
- */
-export const rangeOfWordInSelection = ({
-  textInput,
-  selectionStart,
-  selectionEnd,
-  tag
-}: {
-  textInput: string;
-  selectionStart: number;
-  selectionEnd?: number;
-  tag: TagData;
-}): { start: number; end: number } => {
-  if (tag.plainTextBeginIndex === undefined) {
-    return { start: selectionStart, end: selectionEnd === undefined ? selectionStart : selectionEnd };
-  }
-
-  // Look at start word index and optionally end word index.
-  // Select combination of the two and return the range.
-  let start = selectionStart;
-  let end = selectionEnd === undefined ? selectionStart : selectionEnd;
-  const firstWordStartIndex = textInput.lastIndexOf(' ', selectionStart);
-  if (firstWordStartIndex === tag.plainTextBeginIndex) {
-    start = firstWordStartIndex;
-  } else {
-    start = Math.max(firstWordStartIndex + 1, tag.plainTextBeginIndex);
-  }
-
-  const firstWordEndIndex = textInput.indexOf(' ', selectionStart);
-  end = Math.max(firstWordEndIndex + 1, tag.plainTextEndIndex ?? firstWordEndIndex + 1);
-
-  if (selectionEnd !== undefined && tag.plainTextEndIndex !== undefined) {
-    const lastWordEndIndex = textInput.indexOf(' ', selectionEnd);
-    end = Math.max(lastWordEndIndex > -1 ? lastWordEndIndex : tag.plainTextEndIndex, selectionEnd);
-  }
-  return { start, end };
-};
-
-/**
  * Props for finding new selection index for mention
  *
  * @private
@@ -157,8 +115,11 @@ export const findNewSelectionIndexForMention = (props: NewSelectionIndexForMenti
       spaceIndex = tag.plainTextEndIndex ?? tag.plainTextBeginIndex;
     }
   }
-  spaceIndex = Math.max(tag.plainTextBeginIndex, spaceIndex);
-  spaceIndex = Math.min(tag.plainTextEndIndex, spaceIndex);
+  spaceIndex = getValidatedIndexInRange({
+    min: tag.plainTextBeginIndex,
+    max: tag.plainTextEndIndex,
+    currentValue: spaceIndex
+  });
   return spaceIndex;
 };
 
