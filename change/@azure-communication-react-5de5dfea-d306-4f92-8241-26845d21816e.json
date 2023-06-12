@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add missing 'rem' from width of avatar. This caused formatting issues when embedding inside a Teams Toolkit App.",
-  "packageName": "@azure/communication-react",
-  "email": "palatter@microsoft.com",
-  "dependentChangeType": "patch"
-}
