@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-stateful-client",
-  "version": "1.6.0",
+  "version": "1.6.1-beta.0",
   "description": "Stateful proxy over the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -32,7 +32,7 @@
   "dependencies": {
     "@azure/communication-common": "2.2.0",
     "@azure/logger": "1.0.3",
-    "@internal/acs-ui-common": "1.6.0",
+    "@internal/acs-ui-common": "1.6.1-beta.0",
     "events": "~3.3.0",
     "immer": "9.0.6"
   },
