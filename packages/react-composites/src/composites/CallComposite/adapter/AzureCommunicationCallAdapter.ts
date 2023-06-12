@@ -486,40 +486,40 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
-    const startTime = performance.now();
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const cameras = await this.deviceManager.getCameras();
-      const endTime = performance.now();
+      const endTime = new Date().getTime();
       this._logger.verbose('time to query cameras (ms)', endTime - startTime);
       return cameras;
     });
   }
 
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
-    const startTime = performance.now();
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const microphones = await this.deviceManager.getMicrophones();
-      const endTime = performance.now();
+      const endTime = new Date().getTime();
       this._logger.info('time to query microphones (ms)', endTime - startTime);
       return microphones;
     });
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
-    const startTime = performance.now();
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
-      const endTime = performance.now();
+      const endTime = new Date().getTime();
       this._logger.info('time to query speakers (ms)', endTime - startTime);
       return speakers;
     });
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
-    const startTime = performance.now();
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
-      const endTime = performance.now();
+      const endTime = new Date().getTime();
       this._logger.info('time to query askDevicePermissions (ms)', endTime - startTime);
     });
   }
