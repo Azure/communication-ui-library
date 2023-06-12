@@ -182,7 +182,7 @@ describe('Clicks should select mentions by words', () => {
     // Select the suggestion
     await selectFirstMention();
     expect(input.value).toBe(value + suggestions[0].displayText);
-    // Fix for mousedown issue in userEvent
+    // Fix for mousedown issue in userEvent when `document` become null unexpectedly
     await act(async () => {
       triggerMouseEvent(input, 'mousedown');
     });

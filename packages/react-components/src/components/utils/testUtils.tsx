@@ -77,6 +77,8 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Co
 
 /** @private */
 // Trigger a mouse event manually to fix mouseDown event in userEvent
+// when `document` become null unexpectedly
+// https://github.com/jestjs/jest/issues/12670
 export const triggerMouseEvent = (node: HTMLElement, eventType: string): void => {
   const clickEvent = new MouseEvent(eventType, {
     view: window
