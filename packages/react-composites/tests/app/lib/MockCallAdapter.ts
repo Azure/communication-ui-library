@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import {
-  AudioDeviceInfo,
-  BackgroundReplacementConfig,
-  Call,
-  EnvironmentInfo,
-  VideoDeviceInfo
-} from '@azure/communication-calling';
-import type { CallAdapter, CallAdapterState, SelectedVideoBackgroundEffect } from '../../../src';
+import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
 import { produce } from 'immer';
 import EventEmitter from 'events';
@@ -157,41 +151,40 @@ export class MockCallAdapter implements CallAdapter {
     }
   }
 
-  blurVideoBackground(): Promise<void> {
-    this.modifyState((draft: CallAdapterState) => {
-      if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
-        draft.devices.unparentedViews[0].view = {
-          scalingMode: 'Crop',
-          isMirrored: false,
-          target: createMockHTMLElement('blur background')
-        };
-      } else if (draft.call && draft.call.localVideoStreams.length > 0) {
-        draft.call.localVideoStreams[0].view = {
-          scalingMode: 'Crop',
-          isMirrored: false,
-          target: createMockHTMLElement('blur background')
-        };
-      }
-    });
-    return Promise.resolve();
-  }
-
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    this.modifyState((draft: CallAdapterState) => {
-      if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
-        draft.devices.unparentedViews[0].view = {
-          scalingMode: 'Crop',
-          isMirrored: false,
-          target: createMockHTMLElementWithCustomBackground(backgroundReplacementConfig.backgroundImageUrl)
-        };
-      } else if (draft.call && draft.call.localVideoStreams.length > 0) {
-        draft.call.localVideoStreams[0].view = {
-          scalingMode: 'Crop',
-          isMirrored: false,
-          target: createMockHTMLElementWithCustomBackground(backgroundReplacementConfig.backgroundImageUrl)
-        };
-      }
-    });
+  startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
+    if (videoBackgroundEffect.effectName === 'blur') {
+      this.modifyState((draft: CallAdapterState) => {
+        if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+          draft.devices.unparentedViews[0].view = {
+            scalingMode: 'Crop',
+            isMirrored: false,
+            target: createMockHTMLElement('blur background')
+          };
+        } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+          draft.call.localVideoStreams[0].view = {
+            scalingMode: 'Crop',
+            isMirrored: false,
+            target: createMockHTMLElement('blur background')
+          };
+        }
+      });
+    } else if (videoBackgroundEffect.effectName === 'replacement') {
+      this.modifyState((draft: CallAdapterState) => {
+        if (!draft.call && draft.devices?.unparentedViews?.length > 0) {
+          draft.devices.unparentedViews[0].view = {
+            scalingMode: 'Crop',
+            isMirrored: false,
+            target: createMockHTMLElementWithCustomBackground(videoBackgroundEffect.backgroundImageUrl)
+          };
+        } else if (draft.call && draft.call.localVideoStreams.length > 0) {
+          draft.call.localVideoStreams[0].view = {
+            scalingMode: 'Crop',
+            isMirrored: false,
+            target: createMockHTMLElementWithCustomBackground(videoBackgroundEffect.backgroundImageUrl)
+          };
+        }
+      });
+    }
     return Promise.resolve();
   }
 
@@ -203,7 +196,7 @@ export class MockCallAdapter implements CallAdapter {
     throw new Error('updateBackgroundPickerImages not implemented.');
   }
 
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     this.modifyState((draft: CallAdapterState) => {
       draft.selectedVideoBackgroundEffect = selectedVideoBackground;
     });
