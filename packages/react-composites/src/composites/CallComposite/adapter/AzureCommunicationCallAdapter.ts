@@ -748,9 +748,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
-        if (backendId.phoneNumber[0] !== '+') {
-          backendId.phoneNumber = '+' + backendId.phoneNumber;
-        }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
         return backendId as CommunicationUserIdentifier;
