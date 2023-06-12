@@ -26,9 +26,9 @@
     "_typecheck": "rushx _by-flavor \"rushx _if-preprocess && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
-    "@azure/abort-controller": "^1.0.0",
+    "@azure/abort-controller": "^1.1.0",
     "@azure/communication-identity": "^1.2.0",
-    "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
+    "@azure/communication-calling": "1.14.1-beta.1 || >=1.13.1",
     "@azure/communication-react": "1.5.1-beta.5",
     "@azure/communication-common": "^2.2.0",
     "@azure/logger": "^1.0.4",
