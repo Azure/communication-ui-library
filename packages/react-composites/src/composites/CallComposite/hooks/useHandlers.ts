@@ -6,6 +6,8 @@ import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-u
 import { ReactElement } from 'react';
 import memoizeOne from 'memoize-one';
 import { CommonCallAdapter } from '..';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -101,11 +103,19 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(video-background-effects) */
     onBlurVideoBackground: async (backgroundBlurConfig?: BackgroundBlurConfig) => {
-      return await adapter.blurVideoBackground(backgroundBlurConfig);
+      const blurConfig: VideoBackgroundBlurEffect = {
+        effectName: 'blur',
+        ...backgroundBlurConfig
+      };
+      return await adapter.startVideoBackgroundEffect(blurConfig);
     },
     /* @conditional-compile-remove(video-background-effects) */
     onReplaceVideoBackground: async (backgroundReplacementConfig: BackgroundReplacementConfig) => {
-      return await adapter.replaceVideoBackground(backgroundReplacementConfig);
+      const replacementConfig: VideoBackgroundReplacementEffect = {
+        effectName: 'replacement',
+        ...backgroundReplacementConfig
+      };
+      return await adapter.startVideoBackgroundEffect(replacementConfig);
     },
     /* @conditional-compile-remove(close-captions) */
     onStartCaptions: async (options) => {

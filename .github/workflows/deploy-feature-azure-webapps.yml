@@ -1,0 +1,125 @@
+name: Deploy feature validation samples
+
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# cancel workflow when a newer version of the workflow is triggered on the same github ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  id-token: write
+
+jobs:
+  calling:
+    name: Build and Deploy Calling App
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for beta release build
+        run: rush switch-flavor:beta-release
+      - name: Build Server
+        run: rush build -o server
+      - name: Build Calling
+        run: rush build -o calling
+      - name: Package Calling App
+        run: rushx package
+        working-directory: ./samples/Calling
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Deploy Calling
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-call-feature-validation
+          package: ./samples/Calling/dist
+
+  chat:
+    name: Build and Deploy Chat App
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for beta release build
+        run: rush switch-flavor:beta-release
+      - name: Build Server
+        run: rush build -o server
+      - name: Build Chat
+        run: rush build -o chat
+      - name: Package Chat App
+        run: rushx package
+        working-directory: ./samples/Chat
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Deploy Chat
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-chat-feature-validation
+          package: ./samples/Chat/dist
+
+  callwithchat:
+    name: Build and Deploy CallWithChat App
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Use Node.js v16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.47.0
+      - name: Install dependencies
+        run: rush install
+      - name: Switch flavor for beta release build
+        run: rush switch-flavor:beta-release
+      - name: Build Server
+        run: rush build -o server
+      - name: Build CallWithChat
+        run: rush build -o callwithchat
+      - name: Package CallWithChat Sample Artifact
+        run: rushx package
+        working-directory: ./samples/CallWithChat
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Deploy CallWithChat
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: acs-ui-dev-web-callwithchat-feature-validation
+          package: ./samples/CallWithChat/dist

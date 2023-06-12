@@ -71,6 +71,7 @@ export const findMentionTagForSelection = (tags: TagData[], selection: number): 
 
 /**
  * Get the indices of the word for the selection.
+ * Selects the whole tag by default
  * @private
  *
  */
@@ -754,8 +755,8 @@ export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResu
  * @returns The html string for the mention suggestion.
  */
 export const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
-  const idHTML = ' id ="' + suggestion.id + '"';
-  const displayTextHTML = ' displayText ="' + suggestion.displayText + '"';
+  const idHTML = ' id="' + suggestion.id + '"';
+  const displayTextHTML = ' displayText="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
   return '<' + MSFT_MENTION_TAG + idHTML + displayTextHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
 };

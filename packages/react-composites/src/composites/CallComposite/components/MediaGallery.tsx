@@ -62,7 +62,7 @@ export interface MediaGalleryProps {
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
-  localVideoTileOptions?: LocalVideoTileOptions;
+  localVideoTileOptions?: boolean | LocalVideoTileOptions;
 }
 
 /**
@@ -82,7 +82,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerHeight = _useContainerHeight(containerRef);
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
-    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions?.position
+    /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
   );
 
   const cameraSwitcherProps = useMemo(() => {
@@ -137,24 +137,21 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout={layoutBasedOnTilePosition}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
+        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
-          props.localVideoTileOptions?.position === 'hidden'
-            ? 'hidden'
-            : props.isMobile
-            ? 'followDeviceOrientation'
-            : '16:9'
+          props.localVideoTileOptions === false ? 'hidden' : props.isMobile ? 'followDeviceOrientation' : '16:9'
         }
       />
     );
   }, [
     videoGalleryProps,
     props.isMobile,
+    props.onRenderAvatar,
     onRenderAvatar,
     cameraSwitcherProps,
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
