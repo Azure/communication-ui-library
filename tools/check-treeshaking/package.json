@@ -18,12 +18,12 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    "@internal/acs-ui-common": "1.5.1-beta.5",
-    "@internal/react-components": "1.5.1-beta.5",
-    "@internal/chat-stateful-client": "1.5.1-beta.5",
-    "@internal/calling-stateful-client": "1.5.1-beta.5",
-    "@internal/chat-component-bindings": "1.5.1-beta.5",
-    "@internal/calling-component-bindings": "1.5.1-beta.5"
+    "@internal/acs-ui-common": "1.6.0",
+    "@internal/react-components": "1.6.0",
+    "@internal/chat-stateful-client": "1.6.0",
+    "@internal/calling-stateful-client": "1.6.0",
+    "@internal/chat-component-bindings": "1.6.0",
+    "@internal/calling-component-bindings": "1.6.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
