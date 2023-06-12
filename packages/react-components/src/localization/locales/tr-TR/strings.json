@@ -139,7 +139,7 @@
     "downloadFile": "Dosyayı indir",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "İletide {fileCount} ek var"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
