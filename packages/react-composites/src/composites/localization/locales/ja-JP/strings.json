@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "通話のエントリが許可されませんでした。これが間違いだった場合は、通話に再参加してください。",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "ロビーから消去しました",
     "learnMore": "詳細情報",
+    "leavingCallTitle": "退出中...",
     "leftCallMoreDetails": "これが間違いだった場合は、通話に再度参加してください。",
     "leftCallTitle": "通話を終了しました",
     "lobbyScreenConnectingToCallTitle": "通話に参加中",
@@ -150,7 +151,11 @@
       "sk-sk": "スロバキア語",
       "zh-tw": "中国語 - 台湾"
     },
-    "captionsBannerSpinnerText": "キャプションを開始しています..."
+    "captionsBannerSpinnerText": "キャプションを開始しています...",
+    "transferPageTransferorText": "転送しています...",
+    "transferPageTransferTargetText": "接続中...",
+    "transferPageUnknownTransferorDisplayName": "不明",
+    "transferPageUnknownTransferTargetDisplayName": "不明"
   },
   "chat": {
     "chatListHeader": "このチャット内",
