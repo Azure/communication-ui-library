@@ -10,7 +10,6 @@ import {
   getDisplayNameForMentionSuggestion,
   getValidatedIndexInRange,
   htmlStringForMentionSuggestion,
-  rangeOfWordInSelection,
   textToTagParser,
   updateHTML
 } from './mentionTagUtils';
@@ -185,56 +184,6 @@ describe('Mention logic should be robust and accurate', () => {
 
     tag = findMentionTagForSelection(nestedMentionTags, 3);
     expect(tag).toEqual(undefined);
-  });
-
-  test('rangeOfWordInSelection works correctly', () => {
-    let selection = rangeOfWordInSelection({
-      selectionStart: 9,
-      textInput: basicMentionTextRepresentation,
-      tag: basicMentionTag
-    });
-    expect(selection).toEqual({ start: 6, end: 15 });
-    selection = rangeOfWordInSelection({
-      selectionStart: 7,
-      selectionEnd: 9,
-      textInput: basicMentionTextRepresentation,
-      tag: basicMentionTag
-    });
-    expect(selection).toEqual({ start: 6, end: 15 });
-
-    const { tags, plainText } = textToTagParser(twoWordMention, '@');
-    expect(twoWordMentionTextRepresentation).toEqual(plainText);
-    expect(twoWordMentionTag).toEqual(tags[0]);
-
-    selection = rangeOfWordInSelection({
-      selectionStart: 7,
-      selectionEnd: 9,
-      textInput: plainText,
-      tag: tags[0]
-    });
-    expect(selection).toEqual({ start: 6, end: 15 });
-
-    selection = rangeOfWordInSelection({
-      selectionStart: 7,
-      textInput: plainText,
-      tag: tags[0]
-    });
-    expect(selection).toEqual({ start: 6, end: 21 });
-
-    selection = rangeOfWordInSelection({
-      selectionStart: 16,
-      textInput: plainText,
-      tag: tags[0]
-    });
-    expect(selection).toEqual({ start: 16, end: 21 });
-
-    selection = rangeOfWordInSelection({
-      selectionStart: 16,
-      selectionEnd: 18,
-      textInput: plainText,
-      tag: tags[0]
-    });
-    expect(selection).toEqual({ start: 16, end: 21 });
   });
 
   test('findNewSelectionIndexForMention works correctly', () => {
