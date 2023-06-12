@@ -31,7 +31,7 @@
     "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
     "@azure/communication-react": "1.5.1-beta.5",
     "@azure/communication-common": "2.2.0",
-    "@azure/logger": "1.0.3",
+    "@azure/logger": "^1.0.4",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "~8.98.3",
     "@fluentui/react-hooks": "~8.6.12",
@@ -50,7 +50,8 @@
     "react-dom": "18.2.0",
     "react-router-dom": "^5.1.2",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0"
+    "uuid": "^8.1.0",
+    "file-loader": "~6.2.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",

@@ -31,7 +31,7 @@
     "@azure/communication-common": "2.2.0",
     "@azure/communication-identity": "~1.1.0",
     "@azure/communication-react": "1.5.1-beta.5",
-    "@azure/logger": "1.0.3",
+    "@azure/logger": "^1.0.4",
     "@fluentui/react": "~8.98.3",
     "@fluentui/react-file-type-icons": "8.8.13",
     "@fluentui/react-icons": "~2.0.194",

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { AzureLogger, createClientLogger } from '@azure/logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CallClientState,
@@ -297,6 +298,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   implements CommonCallAdapter
 {
   private callClient: StatefulCallClient;
+  private _logger: AzureLogger;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
   private localStream: SDKLocalVideoStream | undefined;
@@ -332,6 +334,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
+    this._logger = createClientLogger('communication-react:composite');
 
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = 'roomId' in this.locator;
@@ -483,26 +486,41 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getCameras();
+      const cameras = await this.deviceManager.getCameras();
+      const endTime = new Date().getTime();
+      this._logger.verbose('time to query cameras (ms)', endTime - startTime);
+      return cameras;
     });
   }
 
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getMicrophones();
+      const microphones = await this.deviceManager.getMicrophones();
+      const endTime = new Date().getTime();
+      this._logger.info('time to query microphones (ms)', endTime - startTime);
+      return microphones;
     });
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
+      const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
+      const endTime = new Date().getTime();
+      this._logger.info('time to query speakers (ms)', endTime - startTime);
+      return speakers;
     });
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
+      const endTime = new Date().getTime();
+      this._logger.info('time to query askDevicePermissions (ms)', endTime - startTime);
     });
   }
 
@@ -729,6 +747,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
+        }
+        if (backendId.phoneNumber[0] !== '+') {
+          backendId.phoneNumber = '+' + backendId.phoneNumber;
         }
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
