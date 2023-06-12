@@ -139,7 +139,7 @@
     "downloadFile": "Lataa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
     "blockedWarningLinkText": "Lisätiedot",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Viestissä on {fileCount} liite"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",

@@ -139,7 +139,7 @@
     "downloadFile": "파일 다운로드",
     "blockedWarningText": "조직 정책으로 인해 이 메시지가 삭제되었습니다.",
     "blockedWarningLinkText": "세부 정보",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "메시지에 {fileCount}개의 첨부 파일이 있습니다"
   },
   "errorBar": {
     "unableToReachChatService": "오프라인 상태입니다.",

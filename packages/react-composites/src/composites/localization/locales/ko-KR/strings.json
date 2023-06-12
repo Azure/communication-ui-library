@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "통화에 참가할 수 있는 권한이 없습니다. 실수라면 통화에 다시 참가하세요.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "대기실에서 해제됐습니다.",
     "learnMore": "자세한 정보",
+    "leavingCallTitle": "종료 중...",
     "leftCallMoreDetails": "실수라면 통화에 다시 참가하세요.",
     "leftCallTitle": "통화를 종료했습니다.",
     "lobbyScreenConnectingToCallTitle": "통화에 참가",
@@ -150,7 +151,11 @@
       "sk-sk": "슬로바키아어",
       "zh-tw": "중국어 - 대만"
     },
-    "captionsBannerSpinnerText": "캡션을 시작하는 중..."
+    "captionsBannerSpinnerText": "캡션을 시작하는 중...",
+    "transferPageTransferorText": "전송 중...",
+    "transferPageTransferTargetText": "연결 중...",
+    "transferPageUnknownTransferorDisplayName": "알 수 없음",
+    "transferPageUnknownTransferTargetDisplayName": "알 수 없음"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
