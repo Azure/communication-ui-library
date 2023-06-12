@@ -502,8 +502,12 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       if (mentionLookupOptions !== undefined) {
         // Look at the range of the change for a trigger character
         const triggerPriorIndex = newValue.lastIndexOf(triggerText, currentSelectionEndValue - 1);
-        // Update the caret position, if not doing a lookup
-        setCaretPosition(Caret.getRelativePosition(event.currentTarget));
+        // Update the caret position, used for positioning the suggestions popover
+        const textField = event.currentTarget;
+        const relativePosition = Caret.getRelativePosition(textField);
+        const adjustOffset = Math.max(0, textField.scrollHeight - textField.clientHeight);
+        relativePosition.top -= adjustOffset;
+        setCaretPosition(relativePosition);
 
         if (triggerPriorIndex !== undefined) {
           // trigger is found
