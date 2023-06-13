@@ -1,6 +1,6 @@
 # This is an official recommended way to skip a check when it is not necessary
 # https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/troubleshooting-required-status-checks#handling-skipped-but-required-checks
-name: Breaking Change SKip
+name: Breaking Change Check
 
 on:
   # Postsubmit CI on main.
