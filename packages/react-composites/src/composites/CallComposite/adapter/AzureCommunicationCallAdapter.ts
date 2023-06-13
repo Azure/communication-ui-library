@@ -488,7 +488,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const cameras = await this.deviceManager.getCameras();
       const endTime = new Date().getTime();
-      compositeLogger.info('time to query cameras (ms)', endTime - startTime);
+      compositeLogger.info('time to query cameras', endTime - startTime, 'ms');
       return cameras;
     });
   }
@@ -498,7 +498,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const microphones = await this.deviceManager.getMicrophones();
       const endTime = new Date().getTime();
-      compositeLogger.info('time to query microphones (ms)', endTime - startTime);
+      compositeLogger.info('time to query microphones', endTime - startTime, 'ms');
       return microphones;
     });
   }
@@ -508,7 +508,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
       const endTime = new Date().getTime();
-      compositeLogger.info('time to query speakers (ms)', endTime - startTime);
+      compositeLogger.info('time to query speakers', endTime - startTime, 'ms');
       return speakers;
     });
   }
@@ -518,7 +518,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
       const endTime = new Date().getTime();
-      compositeLogger.info('time to query askDevicePermissions (ms)', endTime - startTime);
+      compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
     });
   }
 
