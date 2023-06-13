@@ -436,10 +436,15 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
                   event.currentTarget.selectionDirection
                 );
               }
+              setSelectionStartValue(mentionTag.plainTextBeginIndex);
+              setSelectionEndValue(mentionEndIndex);
+            } else {
+              // bounds of the mention were selected
+              setSelectionStartValue(event.currentTarget.selectionStart);
+              setSelectionEndValue(event.currentTarget.selectionEnd);
             }
-            setSelectionStartValue(mentionTag.plainTextBeginIndex);
-            setSelectionEndValue(mentionEndIndex);
           } else {
+            // not a mention tag
             setSelectionStartValue(event.currentTarget.selectionStart);
             setSelectionEndValue(nullToUndefined(event.currentTarget.selectionEnd));
           }
