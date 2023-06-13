@@ -25,6 +25,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
 
 /* @conditional-compile-remove(call-transfer) */
+// Which should be participant shown in the transfer page
 type TransferPageSubject = 'transferor' | 'transferTarget';
 
 /**
@@ -49,15 +50,6 @@ export const TransferPage = (
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
 
-  /* @conditional-compile-remove(call-transfer) */
-  // page subject is which participant should be shown in the transfer page depending on the transfer call state
-  const pageSubject: TransferPageSubject = useMemo(() => {
-    if (transferCall && ['Ringing', 'Connected'].includes(transferCall.state)) {
-      return 'transferTarget';
-    }
-    return 'transferor';
-  }, [transferCall]);
-
   const transferor = useMemo(
     () => (remoteParticipants ? Object.values(remoteParticipants)?.[0] : undefined),
     [remoteParticipants]
@@ -67,6 +59,15 @@ export const TransferPage = (
     () => (transferCall?.remoteParticipants ? Object.values(transferCall.remoteParticipants)?.[0] : undefined),
     [transferCall]
   );
+
+  /* @conditional-compile-remove(call-transfer) */
+  const pageSubject: TransferPageSubject = useMemo(() => {
+    if (transferCall && transferTarget?.displayName) {
+      return 'transferTarget';
+    }
+    return 'transferor';
+  }, [transferCall]);
+
   let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
   if (pageSubject === 'transferTarget') {
