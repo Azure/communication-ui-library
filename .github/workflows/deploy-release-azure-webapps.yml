@@ -21,7 +21,7 @@ jobs:
   calling:
     name: Build and Deploy Calling App
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
       - uses: actions/checkout@v3
         with:
@@ -64,7 +64,7 @@ jobs:
   chat:
     name: Build and Deploy Chat App
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
       - uses: actions/checkout@v3
         with:
@@ -107,7 +107,7 @@ jobs:
   callwithchat:
     name: Build and Deploy CallWithChat App
     runs-on: ubuntu-latest
-    environment: staging
+    environment: production
     steps:
       - uses: actions/checkout@v3
         with:
