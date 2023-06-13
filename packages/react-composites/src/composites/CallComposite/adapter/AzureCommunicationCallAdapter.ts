@@ -303,7 +303,6 @@ export type AdapterStateModifier = (state: CallAdapterState) => CallAdapterState
 export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTeamsCallAgent = CallAgent>
   implements CommonCallAdapter
 {
-  private _logger: AzureLogger;
   private callClient: StatefulCallClient;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
