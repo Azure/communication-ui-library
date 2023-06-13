@@ -4,14 +4,6 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chat } from '@fluentui-contrib/react-chat';
 import {
-  // Chat,
-  // ChatItemProps,
-  Flex,
-  // ShorthandValue,
-  // mergeStyles as mergeNorthstarThemes,
-  Ref
-} from '@internal/northstar-wrapper';
-import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
@@ -29,17 +21,8 @@ import {
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
-import {
-  Icon,
-  IStyle,
-  mergeStyles,
-  Persona,
-  PersonaSize,
-  PrimaryButton,
-  Stack,
-  IPersona,
-  Theme
-} from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, PersonaSize, PrimaryButton, IPersona, Theme } from '@fluentui/react';
+import { Flex } from '@fluentui/react-migration-v0-v9';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -419,7 +402,7 @@ const memoizeAllMessages = memoizeFnAll(
         // message: {
         //   styles: chatItemMessageStyle,
         //   content: (
-        <Flex key={_messageKey} hAlign={message.mine ? 'end' : undefined} vAlign="end">
+        <Flex key={_messageKey} hAlign={message.mine ? 'end' : 'start'} vAlign="end">
           {chatMessageComponent}
           <div
             className={mergeStyles(
@@ -774,7 +757,7 @@ export type MessageProps = {
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
  * Users can also customize `MessageThread` by passing in their own Avatar, `MessageStatusIndicator` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
- * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+ * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
  *
  * @public
  */
@@ -867,8 +850,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const messageIdSeenByMeRef = useRef<string>('');
 
-  const chatScrollDivRef = useRef<HTMLElement>(null);
-  const chatThreadRef = useRef<HTMLElement>(null);
+  const chatScrollDivRef = useRef<HTMLDivElement>(null);
+  const chatThreadRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
   // When the chat thread is narrow, we perform space optimizations such as overlapping
@@ -1289,8 +1272,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     return (
       <LiveAnnouncer>
         <Chat
-        // styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
-        // items={messagesToDisplay}
+          ref={chatScrollDivRef}
+          // styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
+          // items={messagesToDisplay}
         >
           {messagesToDisplay}
         </Chat>
@@ -1299,24 +1283,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [messagesToDisplay]);
 
   return (
-    <Ref innerRef={chatThreadRef}>
-      <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
-        {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
-            tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
-            thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
-        {existsNewChatMessage && !disableJumpToNewMessageButton && (
-          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
-            {onRenderJumpToNewMessageButton ? (
-              onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
-            ) : (
-              <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
-            )}
-          </div>
-        )}
-
-        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
-      </Stack>
-    </Ref>
+    <div ref={chatThreadRef} className={mergeStyles(messageThreadContainerStyle, styles?.root)}>
+      {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
+          tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
+          thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
+      {existsNewChatMessage && !disableJumpToNewMessageButton && (
+        <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
+          {onRenderJumpToNewMessageButton ? (
+            onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
+          ) : (
+            <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
+          )}
+        </div>
+      )}
+      {chatBody}
+    </div>
   );
 };
 

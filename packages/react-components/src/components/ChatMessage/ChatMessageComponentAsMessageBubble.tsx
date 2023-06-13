@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { Text } from '@fluentui/react';
-// import { Chat, Text } from '@internal/northstar-wrapper';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
