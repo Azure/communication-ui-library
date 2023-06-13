@@ -4,7 +4,7 @@
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -32,6 +32,7 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
+import { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -245,7 +246,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   /* @conditional-compile-remove(pinned-participants) */
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [personaSize, setPersonaSize] = useState<number>();
+  // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
+  const [personaSize, setPersonaSize] = useState<number>(1);
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -256,8 +258,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const observer = useRef(
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
-      const personaSize = Math.min(width, height) / 3;
-      setPersonaSize(Math.max(Math.min(personaSize, personaMaxSize), personaMinSize));
+      const personaCalcSize = Math.min(width, height) / 3;
+      // we only want to set the persona size if it has changed
+      if (personaCalcSize !== personaSize) {
+        setPersonaSize(Math.max(Math.min(personaCalcSize, personaMaxSize), personaMinSize));
+      }
     })
   );
 
