@@ -68,9 +68,8 @@ jobs:
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for stable build
-        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         id: switch-flavor
-        if: ${{ matrix.flavor == 'stable' }}
+        if: ${{ matrix.flavor == 'stable' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: |
           rush switch-flavor:stable
       - name: Check result of flavor switch
