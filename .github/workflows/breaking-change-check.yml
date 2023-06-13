@@ -20,6 +20,7 @@ jobs:
   get_matrix:
     name: Set CI flavors
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
