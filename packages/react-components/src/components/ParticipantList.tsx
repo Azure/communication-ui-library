@@ -8,7 +8,8 @@ import {
   merge,
   mergeStyles,
   PersonaPresence,
-  Stack
+  Stack,
+  Text
 } from '@fluentui/react';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -77,6 +78,9 @@ export type ParticipantListProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onRemoveParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(raise-hands) */
+  /** Optional callback to render the context menu for each participant  */
+  onLowerHands?: (userIds: string[]) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
@@ -111,7 +115,7 @@ const onRenderParticipantDefault = (
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted
+    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.isScreenSharing && (
@@ -123,6 +127,20 @@ const onRenderParticipantDefault = (
             )}
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+            )}
+            {callingParticipant.raisedHand && (
+              <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
+                <Stack.Item>
+                  <Text>{callingParticipant.raisedHand?.order}</Text>
+                </Stack.Item>
+                <Stack.Item>
+                  <Icon
+                    iconName="ParticipantItemRaisedHand"
+                    className={iconStyles}
+                    ariaLabel={strings.raisedHandIconLabel}
+                  />
+                </Stack.Item>
+              </Stack>
             )}
           </Stack>
         )

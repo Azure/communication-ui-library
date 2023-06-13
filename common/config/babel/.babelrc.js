@@ -39,6 +39,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // PSTN calls 
         'PSTN-calls',
         // rooms
+        'raise-hands',
+        // rooms
         'rooms',
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',

@@ -16,6 +16,8 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(raise-hands) */
+import { RaisedHand } from '@internal/react-components';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -71,6 +73,14 @@ export const getRemoteParticipants = (
  */
 export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
   state.calls[props.callId]?.isScreenSharingOn;
+
+/* @conditional-compile-remove(raise-hands) */
+/**
+ * @private
+ */
+export const getUserRaisedHand = (state: CallClientState, props: CallingBaseSelectorProps): RaisedHand | undefined => {
+  return state.calls[props.callId]?.raiseHand?.userRaisedHand;
+};
 
 /**
  * @private

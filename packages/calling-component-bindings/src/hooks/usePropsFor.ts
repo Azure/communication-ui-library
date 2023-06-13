@@ -11,6 +11,8 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandButton } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -25,6 +27,8 @@ import {
   ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandButtonSelector, raiseHandButtonSelector } from '../callControlSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { holdButtonSelector, HoldButtonSelector } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
@@ -99,6 +103,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? CameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? ScreenShareButtonSelector
+  : AreEqual<Component, typeof RaiseHandButton> extends true
+  ? /* @conditional-compile-remove(raise-hands) */ RaiseHandButtonSelector
   : AreEqual<Component, typeof ParticipantList> extends true
   ? ParticipantListSelector
   : AreEqual<Component, typeof ParticipantsButton> extends true

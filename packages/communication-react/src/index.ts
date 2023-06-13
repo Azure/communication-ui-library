@@ -85,6 +85,8 @@ export type {
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
+/* @conditional-compile-remove(raise-hands) */
+export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
 
 export {
   ChatClientProvider,
@@ -128,6 +130,8 @@ export {
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
+/* @conditional-compile-remove(raise-hands) */
+export { RaiseHandButton } from '../../react-components/src';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
@@ -262,6 +266,8 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
+/* @conditional-compile-remove(raise-hands) */
+export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
 export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */

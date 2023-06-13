@@ -5,6 +5,8 @@ import { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hands) */
+import { RaisedHand } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
 
@@ -18,7 +20,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean
+    isSpeaking: boolean,
+    raisedHand: RaisedHand | undefined
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -26,7 +29,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      raisedHand
     );
   }
 );
@@ -37,7 +41,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean
+  isSpeaking: boolean,
+  raisedHand: RaisedHand | undefined
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -47,6 +52,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
     isMuted,
     isScreenSharing,
     isSpeaking,
+    raisedHand,
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
@@ -66,6 +72,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
+    raisedHand: RaisedHand | undefined,
     role: Role
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
@@ -75,6 +82,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
+      raisedHand,
       role
     );
   }
@@ -88,6 +96,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
+  raisedHand: RaisedHand | undefined,
   role: Role
 ): CallParticipantListParticipant => {
   return {
@@ -97,7 +106,8 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      raisedHand
     ),
     role
   };
