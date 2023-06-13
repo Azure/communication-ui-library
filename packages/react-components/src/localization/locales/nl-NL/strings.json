@@ -139,7 +139,7 @@
     "downloadFile": "Bestand downloaden",
     "blockedWarningText": "Dit bericht is verwijderd vanwege organisatiebeleid.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Het bericht heeft {fileCount} bijlage"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",

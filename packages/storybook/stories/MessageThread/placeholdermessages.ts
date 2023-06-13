@@ -92,7 +92,7 @@ export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
     ...UserThree,
     messageId: Math.random().toString(),
     content:
-      "<p>Hi <msft-mention id='everyone' displayText='Everyone'>Everyone</msft-mention>, please welcome <msft-mention id='3'>Jeffrey Mathews</msft-mention> to the team</p>",
+      "<p>Hi <msft-mention id='everyone'>Everyone</msft-mention>, please welcome <msft-mention id='3'>Jeffrey Mathews</msft-mention> to the team</p>",
     createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
     mine: false,
     attached: false,
