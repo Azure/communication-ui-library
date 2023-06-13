@@ -984,6 +984,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 // @beta
 export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
+    onFetchProfile?: OnFetchProfileCallback;
 };
 
 // @public
@@ -1121,7 +1122,7 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: CommonCallAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @beta
 type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
@@ -1476,9 +1477,7 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type TeamsAdapterOptions = {
-    onFetchProfile?: OnFetchProfileCallback;
-} & CommonCallAdapterOptions;
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {

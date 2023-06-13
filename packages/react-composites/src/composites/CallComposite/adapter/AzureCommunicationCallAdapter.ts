@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { compositeLogger } from '../../../Logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CallClientState,
@@ -483,26 +484,41 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getCameras();
+      const cameras = await this.deviceManager.getCameras();
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query cameras', endTime - startTime, 'ms');
+      return cameras;
     });
   }
 
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getMicrophones();
+      const microphones = await this.deviceManager.getMicrophones();
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query microphones', endTime - startTime, 'ms');
+      return microphones;
     });
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
+      const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query speakers', endTime - startTime, 'ms');
+      return speakers;
     });
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
     });
   }
 
@@ -1060,6 +1076,12 @@ export type CommonCallAdapterOptions = {
    * Default set of background images for background image picker.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /**
+   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
+   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
+   * and would not be updated again within the lifecycle of adapter.
+   */
+  onFetchProfile?: OnFetchProfileCallback;
 };
 
 /**
@@ -1107,14 +1129,7 @@ export type AzureCommunicationCallAdapterArgs = {
  *
  * @beta
  */
-export type TeamsAdapterOptions = {
-  /**
-   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
-   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
-   * and would not be updated again within the lifecycle of adapter.
-   */
-  onFetchProfile?: OnFetchProfileCallback;
-} & CommonCallAdapterOptions;
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
