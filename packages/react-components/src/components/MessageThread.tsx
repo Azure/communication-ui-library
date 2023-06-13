@@ -2,28 +2,29 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { Chat } from '@fluentui-contrib/react-chat';
 import {
-  Chat,
-  ChatItemProps,
+  // Chat,
+  // ChatItemProps,
   Flex,
-  ShorthandValue,
-  mergeStyles as mergeNorthstarThemes,
+  // ShorthandValue,
+  // mergeStyles as mergeNorthstarThemes,
   Ref
 } from '@internal/northstar-wrapper';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
-  chatStyle,
+  // chatStyle,
   buttonWithIconStyles,
   newMessageButtonStyle,
   messageStatusContainerStyle,
   noMessageStatusStyle,
-  defaultChatItemMessageContainer,
+  // defaultChatItemMessageContainer,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
-  gutterWithAvatar,
-  gutterWithHiddenAvatar,
+  // gutterWithAvatar,
+  // gutterWithHiddenAvatar,
   FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -375,7 +376,7 @@ const memoizeAllMessages = memoizeFnAll(
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
-  ): ShorthandValue<ChatItemProps> => {
+  ): JSX.Element => {
     const messageProps: MessageProps = {
       message,
       strings,
@@ -387,68 +388,62 @@ const memoizeAllMessages = memoizeFnAll(
       disableEditing
     };
 
-    const chatMessageItemProps = (
+    const chatMessage = (
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
-    ): ShorthandValue<ChatItemProps> => {
+    ): JSX.Element => {
       const chatMessageComponent =
         onRenderMessage === undefined
           ? defaultChatMessageRenderer(messageProps)
           : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
-      const personaOptions: IPersona = {
-        hidePersonaDetails: true,
-        size: PersonaSize.size32,
-        text: message.senderDisplayName,
-        showOverflowTooltip: false
-      };
+      // const chatItemMessageStyle =
+      //   (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
+      //   defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
 
-      const chatItemMessageStyle =
-        (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
-        defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
+      // const chatGutterStyles =
+      //   message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
-      const chatGutterStyles =
-        message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
-      return {
-        gutter: {
-          styles: chatGutterStyles,
-          content: message.mine ? (
-            ''
-          ) : onRenderAvatar ? (
-            onRenderAvatar(message.senderId ?? '', personaOptions)
-          ) : (
-            <Persona {...personaOptions} />
-          )
-        },
-        contentPosition: message.mine ? 'end' : 'start',
-        message: {
-          styles: chatItemMessageStyle,
-          content: (
-            <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
-              {chatMessageComponent}
-              <div
-                className={mergeStyles(
-                  messageStatusContainerStyle(message.mine ?? false),
-                  styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-                )}
-              >
-                {showMessageStatus && statusToRender ? (
-                  onRenderMessageStatus ? (
-                    onRenderMessageStatus({ status: statusToRender })
-                  ) : (
-                    defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
-                  )
-                ) : (
-                  <div className={mergeStyles(noMessageStatusStyle)} />
-                )}
-              </div>
-            </Flex>
-          )
-        },
-        attached: message.attached,
-        key: _messageKey
-      };
+      return (
+        // gutter: {
+        //   styles: chatGutterStyles,
+        //   content: message.mine ? (
+        //     ''
+        //   ) : onRenderAvatar ? (
+        //     onRenderAvatar(message.senderId ?? '', personaOptions)
+        //   ) : (
+        //     <Persona {...personaOptions} />
+        //   )
+        // },
+        // contentPosition: message.mine ? 'end' : 'start',
+        // message: {
+        //   styles: chatItemMessageStyle,
+        //   content: (
+        <Flex key={_messageKey} hAlign={message.mine ? 'end' : undefined} vAlign="end">
+          {chatMessageComponent}
+          <div
+            className={mergeStyles(
+              messageStatusContainerStyle(message.mine ?? false),
+              styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
+            )}
+          >
+            {showMessageStatus && statusToRender ? (
+              onRenderMessageStatus ? (
+                onRenderMessageStatus({ status: statusToRender })
+              ) : (
+                defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
+              )
+            ) : (
+              <div className={mergeStyles(noMessageStatusStyle)} />
+            )}
+          </div>
+        </Flex>
+        //     )
+        //   },
+        //   attached: message.attached,
+        //   key: _messageKey
+        // };
+      );
     };
 
     /* @conditional-compile-remove(data-loss-prevention) */
@@ -460,7 +455,7 @@ const memoizeAllMessages = memoizeFnAll(
           : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
-      return chatMessageItemProps(message, messageProps);
+      return chatMessage(message, messageProps);
     }
 
     switch (message.messageType) {
@@ -472,7 +467,7 @@ const memoizeAllMessages = memoizeFnAll(
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
-        return chatMessageItemProps(message, messageProps);
+        return chatMessage(message, messageProps);
       }
 
       case 'system': {
@@ -483,19 +478,13 @@ const memoizeAllMessages = memoizeFnAll(
           ) : (
             onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
           );
-        return {
-          children: systemMessageComponent,
-          key: _messageKey
-        };
+        return <div key={_messageKey}>{systemMessageComponent}</div>;
       }
 
       default: {
         // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
         const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
-        return {
-          children: customMessageComponent,
-          key: _messageKey
-        };
+        return <div key={_messageKey}>{customMessageComponent}</div>;
       }
     }
   }
@@ -1109,6 +1098,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         messageProps.message.messageType === 'chat' ||
         /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
       ) {
+        const defaultAvatarRenderer = (): JSX.Element => {
+          if (messageProps.message.messageType === 'chat') {
+            const personaOptions: IPersona = {
+              hidePersonaDetails: true,
+              size: PersonaSize.size32,
+              text: messageProps.message.senderDisplayName,
+              showOverflowTooltip: false
+            };
+            return (
+              <div>
+                <Persona {...personaOptions} />
+              </div>
+            );
+          }
+          return <div />;
+        };
         return (
           <ChatMessageComponent
             {...messageProps}
@@ -1119,7 +1124,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
-            onRenderAvatar={onRenderAvatar}
+            onRenderAvatar={onRenderAvatar ?? defaultAvatarRenderer}
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
@@ -1191,7 +1196,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
-        return messages.map((message: Message, index: number): ShorthandValue<ChatItemProps> => {
+        return messages.map((message: Message, index: number): JSX.Element => {
           let key: string | undefined = message.messageId;
           let statusToRender: MessageStatus | undefined = undefined;
 
@@ -1284,12 +1289,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     return (
       <LiveAnnouncer>
         <Chat
-          styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
-          items={messagesToDisplay}
-        />
+        // styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
+        // items={messagesToDisplay}
+        >
+          {messagesToDisplay}
+        </Chat>
       </LiveAnnouncer>
     );
-  }, [theme, styles?.chatContainer, messagesToDisplay]);
+  }, [messagesToDisplay]);
 
   return (
     <Ref innerRef={chatThreadRef}>
@@ -1321,19 +1328,19 @@ const onRenderFileDownloadsTrampoline = (
   return undefined;
 };
 
-const linkStyles = (theme: Theme): ComponentSlotStyle => {
-  return {
-    '& a:link': {
-      color: theme.palette.themePrimary
-    },
-    '& a:visited': {
-      color: theme.palette.themeDarker
-    },
-    '& a:hover': {
-      color: theme.palette.themeDarker
-    },
-    '& a:selected': {
-      color: theme.palette.themeDarker
-    }
-  };
-};
+// const linkStyles = (theme: Theme): ComponentSlotStyle => {
+//   return {
+//     '& a:link': {
+//       color: theme.palette.themePrimary
+//     },
+//     '& a:visited': {
+//       color: theme.palette.themeDarker
+//     },
+//     '& a:hover': {
+//       color: theme.palette.themeDarker
+//     },
+//     '& a:selected': {
+//       color: theme.palette.themeDarker
+//     }
+//   };
+// };

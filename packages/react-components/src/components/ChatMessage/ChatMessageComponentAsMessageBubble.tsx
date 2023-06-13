@@ -249,6 +249,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       <div ref={messageRef}>
         {message.mine ? (
           <ChatMyMessage
+            attached="top"
             data-ui-id="chat-composite-message"
             // className={mergeStyles(messageContainerStyle as IStyle)}
             // styles={messageContainerStyle}
@@ -279,6 +280,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           />
         ) : (
           <FluentChatMessage
+            avatar={onRenderAvatar?.()}
+            attached="top"
             data-ui-id="chat-composite-message"
             body={getContent()}
             // className={mergeStyles(messageContainerStyle as IStyle)}
