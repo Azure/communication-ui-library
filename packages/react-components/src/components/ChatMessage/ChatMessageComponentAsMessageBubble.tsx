@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
-import { Chat, Text } from '@internal/northstar-wrapper';
+import { Text } from '@fluentui/react';
+// import { Chat, Text } from '@internal/northstar-wrapper';
+import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
 import {
@@ -23,7 +24,7 @@ import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
-import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
+// import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
@@ -128,7 +129,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onResendClick,
     disableEditing,
     showDate,
-    messageContainerStyle,
+    // messageContainerStyle,
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
@@ -153,7 +154,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   // or target the chat message if opened via touch press.
   // Undefined indicates the flyout menu should not be being shown.
   const messageRef = useRef<HTMLDivElement | null>(null);
-  const messageActionButtonRef = useRef<HTMLElement | null>(null);
+  // const messageActionButtonRef = useRef<HTMLElement | null>(null);
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
@@ -165,22 +166,22 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     /* @conditional-compile-remove(data-loss-prevention) */ message.messageType !== 'blocked';
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
-  const actionMenuProps = wasInteractionByTouch
-    ? undefined
-    : chatMessageActionMenuProps({
-        ariaLabel: strings.actionMenuMoreOptions ?? '',
-        enabled: chatActionsEnabled,
-        menuButtonRef: messageActionButtonRef,
-        // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
-        forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
-        onActionButtonClick: () => {
-          if (message.messageType === 'chat') {
-            props.onActionButtonClick(message, setMessageReadBy);
-            setChatMessageActionFlyoutTarget(messageActionButtonRef);
-          }
-        },
-        theme
-      });
+  // const actionMenuProps = wasInteractionByTouch
+  //   ? undefined
+  //   : chatMessageActionMenuProps({
+  //       ariaLabel: strings.actionMenuMoreOptions ?? '',
+  //       enabled: chatActionsEnabled,
+  //       menuButtonRef: messageActionButtonRef,
+  //       // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
+  //       forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
+  //       onActionButtonClick: () => {
+  //         if (message.messageType === 'chat') {
+  //           props.onActionButtonClick(message, setMessageReadBy);
+  //           setChatMessageActionFlyoutTarget(messageActionButtonRef);
+  //         }
+  //       },
+  //       theme
+  //     });
 
   const onActionFlyoutDismiss = useCallback((): void => {
     // When the flyout dismiss is called, since we control if the action flyout is visible
@@ -246,36 +247,62 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatMessage = (
     <>
       <div ref={messageRef}>
-        <Chat.Message
-          data-ui-id="chat-composite-message"
-          className={mergeStyles(messageContainerStyle as IStyle)}
-          styles={messageContainerStyle}
-          content={getContent()}
-          author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
-          mine={message.mine}
-          timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
-          details={getMessageDetails()}
-          positionActionMenu={false}
-          actionMenu={actionMenuProps}
-          onTouchStart={() => setWasInteractionByTouch(true)}
-          onPointerDown={() => setWasInteractionByTouch(false)}
-          onKeyDown={() => setWasInteractionByTouch(false)}
-          onBlur={() => setWasInteractionByTouch(false)}
-          onClick={() => {
-            if (!wasInteractionByTouch) {
-              return;
-            }
-            // If the message was touched via touch we immediately open the menu
-            // flyout (when using mouse the 3-dot menu that appears on hover
-            // must be clicked to open the flyout).
-            // In doing so here we set the target of the flyout to be the message and
-            // not the 3-dot menu button to position the flyout correctly.
-            setChatMessageActionFlyoutTarget(messageRef);
-            if (message.messageType === 'chat') {
-              props.onActionButtonClick(message, setMessageReadBy);
-            }
-          }}
-        />
+        {message.mine ? (
+          <ChatMyMessage
+            data-ui-id="chat-composite-message"
+            // className={mergeStyles(messageContainerStyle as IStyle)}
+            // styles={messageContainerStyle}
+            body={getContent()}
+            author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+            timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
+            details={getMessageDetails()}
+            // positionActionMenu={false}
+            // actionMenu={actionMenuProps}
+            onTouchStart={() => setWasInteractionByTouch(true)}
+            onPointerDown={() => setWasInteractionByTouch(false)}
+            onKeyDown={() => setWasInteractionByTouch(false)}
+            onBlur={() => setWasInteractionByTouch(false)}
+            onClick={() => {
+              if (!wasInteractionByTouch) {
+                return;
+              }
+              // If the message was touched via touch we immediately open the menu
+              // flyout (when using mouse the 3-dot menu that appears on hover
+              // must be clicked to open the flyout).
+              // In doing so here we set the target of the flyout to be the message and
+              // not the 3-dot menu button to position the flyout correctly.
+              setChatMessageActionFlyoutTarget(messageRef);
+              if (message.messageType === 'chat') {
+                props.onActionButtonClick(message, setMessageReadBy);
+              }
+            }}
+          />
+        ) : (
+          <FluentChatMessage
+            data-ui-id="chat-composite-message"
+            body={getContent()}
+            // className={mergeStyles(messageContainerStyle as IStyle)}
+            // styles={messageContainerStyle}
+            onTouchStart={() => setWasInteractionByTouch(true)}
+            onPointerDown={() => setWasInteractionByTouch(false)}
+            onKeyDown={() => setWasInteractionByTouch(false)}
+            onBlur={() => setWasInteractionByTouch(false)}
+            onClick={() => {
+              if (!wasInteractionByTouch) {
+                return;
+              }
+              // If the message was touched via touch we immediately open the menu
+              // flyout (when using mouse the 3-dot menu that appears on hover
+              // must be clicked to open the flyout).
+              // In doing so here we set the target of the flyout to be the message and
+              // not the 3-dot menu button to position the flyout correctly.
+              setChatMessageActionFlyoutTarget(messageRef);
+              if (message.messageType === 'chat') {
+                props.onActionButtonClick(message, setMessageReadBy);
+              }
+            }}
+          />
+        )}
       </div>
       {chatActionsEnabled && (
         <ChatMessageActionFlyout

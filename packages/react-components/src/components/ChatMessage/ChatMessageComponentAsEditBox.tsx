@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
-import { Chat } from '@internal/northstar-wrapper';
+import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -14,7 +14,7 @@ import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, chatMessageEditContainerStyle } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -186,8 +186,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       </Stack>
     );
   };
-
-  return <Chat.Message styles={chatMessageEditContainerStyle} content={getContent()} />;
+  // chatMessageEditContainerStyle removed for now as pending style solution for fluent 9
+  return <ChatMyMessage body={getContent()} />;
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
