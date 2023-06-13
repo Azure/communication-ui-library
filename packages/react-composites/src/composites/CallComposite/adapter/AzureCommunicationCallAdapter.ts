@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AzureLogger, createClientLogger } from '@azure/logger';
+import { compositeLogger } from '../../../Logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CallClientState,
@@ -340,7 +340,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.locator = locator;
     this.deviceManager = deviceManager;
     const isTeamsMeeting = 'meetingLink' in this.locator;
-    this._logger = createClientLogger('communication-react:composite');
 
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = 'roomId' in this.locator;
@@ -490,7 +489,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const cameras = await this.deviceManager.getCameras();
       const endTime = new Date().getTime();
-      this._logger.verbose('time to query cameras (ms)', endTime - startTime);
+      compositeLogger.info('time to query cameras (ms)', endTime - startTime);
       return cameras;
     });
   }
@@ -500,7 +499,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const microphones = await this.deviceManager.getMicrophones();
       const endTime = new Date().getTime();
-      this._logger.info('time to query microphones (ms)', endTime - startTime);
+      compositeLogger.info('time to query microphones (ms)', endTime - startTime);
       return microphones;
     });
   }
@@ -510,7 +509,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
       const endTime = new Date().getTime();
-      this._logger.info('time to query speakers (ms)', endTime - startTime);
+      compositeLogger.info('time to query speakers (ms)', endTime - startTime);
       return speakers;
     });
   }
@@ -520,7 +519,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
       const endTime = new Date().getTime();
-      this._logger.info('time to query askDevicePermissions (ms)', endTime - startTime);
+      compositeLogger.info('time to query askDevicePermissions (ms)', endTime - startTime);
     });
   }
 
