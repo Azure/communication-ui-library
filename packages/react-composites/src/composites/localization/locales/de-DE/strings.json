@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Ihnen wurde keine Teilnahme am Anruf gewährt. Wenn dies ein Fehler war, treten Sie dem Anruf erneut bei.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Aus Wartebereich entlassen",
     "learnMore": "Weitere Informationen",
+    "leavingCallTitle": "Verlässt Besprechung...",
     "leftCallMoreDetails": "Wenn dies ein Fehler war, nehmen Sie erneut am Anruf teil.",
     "leftCallTitle": "Sie haben den Anruf verlassen",
     "lobbyScreenConnectingToCallTitle": "Teilnehmen am Anruf",
@@ -150,7 +151,11 @@
       "sk-sk": "Slowakisch",
       "zh-tw": "Chinesisch – Taiwan"
     },
-    "captionsBannerSpinnerText": "Untertitel werden gestartet..."
+    "captionsBannerSpinnerText": "Untertitel werden gestartet...",
+    "transferPageTransferorText": "Übertragung...",
+    "transferPageTransferTargetText": "Verbindung wird hergestellt...",
+    "transferPageUnknownTransferorDisplayName": "Unbekannt",
+    "transferPageUnknownTransferTargetDisplayName": "Unbekannt"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",
