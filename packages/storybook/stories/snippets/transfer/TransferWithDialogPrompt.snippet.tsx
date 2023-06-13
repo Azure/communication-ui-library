@@ -47,14 +47,14 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   );
 
   const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
-    adapter.on('transferRequested', (e) => {
+    adapter.on('transferRequested', (transferArgs) => {
       setOnConfirmTransfer(() => () => {
         setDialogOpen(false);
-        e.accept();
+        transferArgs.accept();
       });
       setOnCancelTransfer(() => () => {
         setDialogOpen(false);
-        e.reject();
+        transferArgs.reject();
       });
       setDialogOpen(true);
     });

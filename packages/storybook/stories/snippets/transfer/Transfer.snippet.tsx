@@ -43,8 +43,8 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   );
 
   const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
-    adapter.on('transferRequested', (e) => {
-      e.accept();
+    adapter.on('transferRequested', (transferArgs) => {
+      transferArgs.accept();
     });
     return adapter;
   }, []);
