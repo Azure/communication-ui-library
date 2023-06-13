@@ -29,6 +29,7 @@ import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
+import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -153,7 +154,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   // or target the chat message if opened via touch press.
   // Undefined indicates the flyout menu should not be being shown.
   const messageRef = useRef<HTMLDivElement | null>(null);
-  // const messageActionButtonRef = useRef<HTMLElement | null>(null);
+  const messageActionButtonRef = useRef<HTMLDivElement | null>(null);
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
@@ -165,22 +166,22 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     /* @conditional-compile-remove(data-loss-prevention) */ message.messageType !== 'blocked';
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
-  // const actionMenuProps = wasInteractionByTouch
-  //   ? undefined
-  //   : chatMessageActionMenuProps({
-  //       ariaLabel: strings.actionMenuMoreOptions ?? '',
-  //       enabled: chatActionsEnabled,
-  //       menuButtonRef: messageActionButtonRef,
-  //       // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
-  //       forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
-  //       onActionButtonClick: () => {
-  //         if (message.messageType === 'chat') {
-  //           props.onActionButtonClick(message, setMessageReadBy);
-  //           setChatMessageActionFlyoutTarget(messageActionButtonRef);
-  //         }
-  //       },
-  //       theme
-  //     });
+  const actionMenuProps = wasInteractionByTouch
+    ? undefined
+    : chatMessageActionMenuProps({
+        ariaLabel: strings.actionMenuMoreOptions ?? '',
+        enabled: chatActionsEnabled,
+        menuButtonRef: messageActionButtonRef,
+        // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
+        forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
+        onActionButtonClick: () => {
+          if (message.messageType === 'chat') {
+            props.onActionButtonClick(message, setMessageReadBy);
+            setChatMessageActionFlyoutTarget(messageActionButtonRef);
+          }
+        },
+        theme
+      });
 
   const onActionFlyoutDismiss = useCallback((): void => {
     // When the flyout dismiss is called, since we control if the action flyout is visible
@@ -257,7 +258,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
             details={getMessageDetails()}
             // positionActionMenu={false}
-            // actionMenu={actionMenuProps}
+            actions={actionMenuProps}
             onTouchStart={() => setWasInteractionByTouch(true)}
             onPointerDown={() => setWasInteractionByTouch(false)}
             onKeyDown={() => setWasInteractionByTouch(false)}
