@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixes resizeObserver infinite loop error in older versions of react",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
