@@ -10,6 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 permissions:
+  # Needed for Azure login
   id-token: write
 
 jobs:
