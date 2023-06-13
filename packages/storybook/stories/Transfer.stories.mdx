@@ -1,3 +1,4 @@
+import { MessageBar } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
 
@@ -31,6 +32,11 @@ when using the
 [useAzureCommunicationCallAdapter](./?path=/docs/composite-adapters--page#useazurecommunicationcalladapter)
 function to create your [CallAdapter](path=/docs/composite-adapters--page#call-adapter).
 In the current beta version, only one Teams user can be called.
+
+<MessageBar>
+  Note: Teams user ids need to have prefix '8:orgid:' when used in the CallParticipantsLocator. For example,
+  '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'.
+</MessageBar>
 
 The id of a Teams user can be obtained by using
 [Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).

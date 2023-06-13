@@ -16,6 +16,7 @@ export type ContainerProps = {
   fluentTheme?: PartialTheme | Theme;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
+  // Teams user ids need to have prefix '8:orgid:'. For example, '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
   microsoftTeamsUserId?: string;
 };
 
