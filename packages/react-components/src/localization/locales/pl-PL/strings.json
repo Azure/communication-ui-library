@@ -153,7 +153,7 @@
     "muteGeneric": "Nie można wyciszyć mikrofonu",
     "unmuteGeneric": "Nie można wyłączyć wyciszenia mikrofonu",
     "speakingWhileMuted": "Mikrofon jest wyciszony",
-    "startScreenShareGeneric": "Nie można uruchomić udostępniania ekranu",
+    "startScreenShareGeneric": "Wystąpił problem podczas uruchamiania udostępniania ekranu.",
     "stopScreenShareGeneric": "Nie można zatrzymać udostępniania ekranu",
     "callNetworkQualityLow": "Niska jakość sieci.",
     "callNoSpeakerFound": "Nie znaleziono głośników ani słuchawek. Podłącz urządzenie audio, aby słyszeć rozmowę.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Zamknij",
     "failedToJoinCallGeneric": "Nie można dołączyć do rozmowy.",
     "failedToJoinCallInvalidMeetingLink": "Nie można dołączyć do spotkania. Nieprawidłowy link.",
-    "startScreenSharingGeneric": "Wystąpił problem podczas uruchamiania udostępniania ekranu.",
     "cameraFrozenForRemoteParticipants": "Użytkownicy w trakcie rozmowy mają problemy z wyświetleniem Twojego wideo. Sprawdź urządzenia i sieć.",
     "unableToStartVideoEffect": "Nie można zastosować efektu wideo."
   },

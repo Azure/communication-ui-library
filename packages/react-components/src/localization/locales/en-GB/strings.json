@@ -154,7 +154,7 @@
     "unmuteGeneric": "Failed to unmute microphone",
     "speakingWhileMuted": "Your microphone is muted",
     "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "Failed to stop screen sharing",
+    "stopScreenShareGeneric": "There was an issue starting screen share.",
     "callNetworkQualityLow": "Network quality is low.",
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Close",
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
-    "startScreenSharingGeneric": "There was an issue starting screen share.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
     "unableToStartVideoEffect": "Unable to apply video effect."
   },
