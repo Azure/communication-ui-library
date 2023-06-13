@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { compositeLogger } from '../../../Logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CallClientState,
@@ -483,26 +484,41 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getCameras();
+      const cameras = await this.deviceManager.getCameras();
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query cameras', endTime - startTime, 'ms');
+      return cameras;
     });
   }
 
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getMicrophones();
+      const microphones = await this.deviceManager.getMicrophones();
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query microphones', endTime - startTime, 'ms');
+      return microphones;
     });
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
+      const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query speakers', endTime - startTime, 'ms');
+      return speakers;
     });
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
     });
   }
 
