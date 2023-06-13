@@ -262,6 +262,7 @@ const MessageThreadStory = (args): JSX.Element => {
   const [chatMessages, setChatMessages] = useState<(SystemMessage | CustomMessage | ChatMessage)[]>(
     GenerateMockChatMessages()
   );
+  const [allMessagesLoaded, setAllMessagesLoaded] = useState<boolean>(false);
   const dropdownMenuOptions = [
     { key: 'newMessage', text: 'New Message' },
     { key: 'newMessageOthers', text: 'New Message from others' },
@@ -298,7 +299,10 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onLoadPreviousMessages = async (): Promise<boolean> => {
     return new Promise((resolve) => {
-      setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
+      if (!allMessagesLoaded) {
+        setAllMessagesLoaded(true);
+        setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
+      }
       resolve(true);
     });
   };

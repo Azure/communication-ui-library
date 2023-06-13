@@ -986,7 +986,13 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         }
       }
     }
-  }, [numberOfChatMessagesToReload, onLoadPreviousChatMessages]);
+  }, [
+    numberOfChatMessagesToReload,
+    onLoadPreviousChatMessages,
+    isLoadingChatMessagesRef,
+    isAllChatMessagesLoadedRef,
+    chatScrollDivRef
+  ]);
 
   // The below 2 of useEffects are design for fixing infinite scrolling problem
   // Scrolling element will behave differently when scrollTop = 0(it sticks at the top)
