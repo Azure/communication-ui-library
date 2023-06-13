@@ -403,7 +403,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           initialsName={initialsName}
           localVideoViewOptions={localVideoViewOptions}
           onRenderAvatar={onRenderAvatar}
-          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          showLabel={
+            !(
+              (shouldFloatLocalVideo && isNarrow) ||
+              /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16'
+            )
+          }
           showMuteIndicator={showMuteIndicator}
           showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
           localVideoCameraCycleButtonProps={localVideoCameraCycleButtonProps}

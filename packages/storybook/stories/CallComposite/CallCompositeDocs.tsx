@@ -202,6 +202,49 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code="<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />" />
 
+      <Heading>Customize Local Video Tile</Heading>
+      <SingleLineBetaBanner version={'1.5.2-beta.1'} />
+      <Description>
+        Just like customizing the control bar we have some configuration options for the local video tile. These
+        controls are to help facilitate different calling experiences like creating an audio only call.
+      </Description>
+      <Description>
+        These options allow for you to decide which part of the gallery that the composite shows the local video tile.
+        We currently support controls to show the local video tile in either the `grid view` of the gallery or in the
+        `floating` position we see today.
+      </Description>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-grid-layout.png"
+            alt="Grid layout for composite video gallery"
+          />
+          <Description>Call Composite with `grid` layout.</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-floating-layout.png"
+            alt="Floating layout for composite video gallery"
+          />
+          <Description>Call Composite with `floating` layout.</Description>
+        </Stack>
+      </Stack>
+      <Source code="<CallComposite options={localVideoTileOptions: {position: 'grid'}} />" />
+      <Source code="<CallComposite options={localVideoTileOptions: {position: 'floating'}} />" />
+      <Description>
+        Just like the `CallControlOptions` we can also disable the local video tile from the gallery by providing false
+        instead of the options object.
+      </Description>
+      <Source code="<CallComposite options={localVideoTileOptions: false />" />
+      <Description>
+        This will hide the local video tile from the composite's video gallery. The default value is `floating` which
+        will have the local video tile follow our `floatingLocalLayout`. See our [video
+        gallery](./?path=/docs/ui-components-videogallery--video-gallery) component docs for more information on our
+        local video tile and some of the other options we have for the local video tile when just using the components.
+      </Description>
+
       <Heading>Joining an existing Call</Heading>
       <Description>
         The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy

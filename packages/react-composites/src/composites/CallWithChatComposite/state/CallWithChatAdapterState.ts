@@ -6,7 +6,7 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
@@ -85,7 +85,7 @@ export interface CallWithChatClientState {
   videoBackgroundImages?: VideoBackgroundImage[];
   /* @conditional-compile-remove(video-background-effects) */
   /** State to track the selected video background effect */
-  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+  selectedVideoBackgroundEffect?: VideoBackgroundEffect;
 }
 
 /**

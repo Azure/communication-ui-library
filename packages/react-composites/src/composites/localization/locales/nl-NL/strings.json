@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "U hebt geen toegang gekregen in het gesprek. Als dit een fout is, neemt u opnieuw deel aan het gesprek.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Verwijderd uit lobby",
     "learnMore": "Meer informatie",
+    "leavingCallTitle": "Verlaten...",
     "leftCallMoreDetails": "Als dit een vergissing was, neemt u opnieuw deel aan het gesprek.",
     "leftCallTitle": "U hebt het gesprek verlaten",
     "lobbyScreenConnectingToCallTitle": "Deelnemen aan oproep",
@@ -150,7 +151,11 @@
       "sk-sk": "Slowaaks",
       "zh-tw": "Chinees - Taiwan"
     },
-    "captionsBannerSpinnerText": "Ondertitels starten..."
+    "captionsBannerSpinnerText": "Ondertitels starten...",
+    "transferPageTransferorText": "Doorverbinden...",
+    "transferPageTransferTargetText": "Verbinding maken...",
+    "transferPageUnknownTransferorDisplayName": "Onbekend",
+    "transferPageUnknownTransferTargetDisplayName": "Onbekend"
   },
   "chat": {
     "chatListHeader": "In deze chat",

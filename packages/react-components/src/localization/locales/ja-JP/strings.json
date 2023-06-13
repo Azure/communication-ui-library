@@ -139,7 +139,7 @@
     "downloadFile": "ファイルをダウンロード",
     "blockedWarningText": "組織のポリシーにより、このメッセージは削除されました。",
     "blockedWarningLinkText": "詳細",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "メッセージには {fileCount} 個の添付ファイルがあります"
   },
   "errorBar": {
     "unableToReachChatService": "オフラインです",

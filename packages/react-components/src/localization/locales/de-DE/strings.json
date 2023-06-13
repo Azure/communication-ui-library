@@ -139,7 +139,7 @@
     "downloadFile": "Datei herunterladen",
     "blockedWarningText": "Diese Nachricht wurde aufgrund einer Organisationsrichtlinie gelöscht.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Die Nachricht weist eine {fileCount}-Anlage auf"
   },
   "errorBar": {
     "unableToReachChatService": "Sie sind offline.",
