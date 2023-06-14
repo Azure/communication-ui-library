@@ -173,6 +173,17 @@ export interface CallWithChatAdapterManagement {
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
   /**
+   * Dispose the html view for a screen share stream
+   *
+   * @remarks
+   * this method is implemented for composite
+   *
+   * @param remoteUserId - Id of the participant to dispose the screen share stream view for.
+   *
+   * @public
+   */
+  disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+  /**
    * Ask for permissions of devices.
    *
    * @remarks

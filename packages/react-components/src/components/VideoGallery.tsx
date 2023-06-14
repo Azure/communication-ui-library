@@ -201,6 +201,8 @@ export interface VideoGalleryProps {
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
   /** Callback to dispose a remote video stream view */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+  /** Callback to dispose a remote screen share stream view */
+  onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -311,6 +313,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteStreamView,
+    onDisposeRemoteScreenShareStreamView,
     styles,
     layout,
     onRenderAvatar,
@@ -552,7 +555,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       {...screenShareParticipant}
       renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
-      onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+      onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
     />
   );

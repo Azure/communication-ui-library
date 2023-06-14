@@ -93,6 +93,9 @@ const createCompositeHandlers = memoizeOne(
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
     },
+    onDisposeRemoteScreenShareStreamView: async (userId) => {
+      return adapter.disposeScreenShareStreamView(userId);
+    },
     /* @conditional-compile-remove(call-readiness) */
     askDevicePermission: async (constrain) => {
       return adapter.askDevicePermission(constrain);
