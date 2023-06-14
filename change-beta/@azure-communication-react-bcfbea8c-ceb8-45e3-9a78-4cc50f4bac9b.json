@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Workaround for handle angle brackets for mention messages",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
