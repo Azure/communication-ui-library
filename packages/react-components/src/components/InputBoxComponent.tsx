@@ -109,7 +109,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     errorMessage: styles?.systemMessage,
     suffix: {
       backgroundColor: 'transparent',
-      padding: props.inlineChildren ? '0 0.25rem' : '0 0'
+      padding: '0 0'
     }
   });
 
