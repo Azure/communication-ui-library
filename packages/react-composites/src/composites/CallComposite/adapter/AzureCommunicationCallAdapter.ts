@@ -911,12 +911,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
+
     /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    if (this.getState().call?.captionsFeature.isCaptionsFeatureActive) {
+      /* @conditional-compile-remove(close-captions) */
+      this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
+      /* @conditional-compile-remove(close-captions) */
+      this._call
+        ?.feature(Features.TeamsCaptions)
+        .off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      /* @conditional-compile-remove(close-captions) */
+      this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    }
   }
 
   private isMyMutedChanged = (): void => {
