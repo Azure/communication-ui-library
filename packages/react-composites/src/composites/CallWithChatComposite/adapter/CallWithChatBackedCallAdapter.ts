@@ -134,6 +134,12 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
     return this.callWithChatAdapter.disposeScreenShareStreamView(remoteUserId);
   }
+  public disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    return this.callWithChatAdapter.disposeRemoteVideoStreamView(remoteUserId);
+  }
+  public disposeLocalVideoStreamView(): Promise<void> {
+    return this.callWithChatAdapter.disposeLocalVideoStreamView();
+  }
   /* @conditional-compile-remove(PSTN-calls) */
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();

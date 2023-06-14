@@ -184,6 +184,20 @@ export interface CallWithChatAdapterManagement {
    */
   disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
   /**
+   * Dispose the html view for a remote video stream
+   *
+   * @param remoteUserId - Id of the participant to dispose
+   *
+   * @public
+   */
+  disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a local video stream
+   *
+   * @public
+   */
+  disposeLocalVideoStreamView(): Promise<void>;
+  /**
    * Ask for permissions of devices.
    *
    * @remarks

@@ -88,13 +88,16 @@ const createCompositeHandlers = memoizeOne(
       }
     },
     onDisposeLocalStreamView: async () => {
-      return adapter.disposeStreamView();
+      return adapter.disposeLocalVideoStreamView();
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
     },
     onDisposeRemoteScreenShareStreamView: async (userId) => {
       return adapter.disposeScreenShareStreamView(userId);
+    },
+    onDisposeRemoteVideoStreamView: async (userId) => {
+      return adapter.disposeRemoteVideoStreamView(userId);
     },
     /* @conditional-compile-remove(call-readiness) */
     askDevicePermission: async (constrain) => {
