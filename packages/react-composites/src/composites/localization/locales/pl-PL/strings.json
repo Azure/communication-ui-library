@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Nie udzielono Ci dostępu do rozmowy. Jeśli to pomyłka, dołącz ponownie do rozmowy.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Odrzucono z poczekalni",
     "learnMore": "Dowiedz się więcej",
+    "leavingCallTitle": "Opuszczanie…",
     "leftCallMoreDetails": "Jeśli to pomyłka, dołącz ponownie do rozmowy.",
     "leftCallTitle": "Opuszczono rozmowę",
     "lobbyScreenConnectingToCallTitle": "Dołączanie do rozmowy",
@@ -150,7 +151,11 @@
       "sk-sk": "słowacki",
       "zh-tw": "chiński — Tajwan"
     },
-    "captionsBannerSpinnerText": "Trwa uruchamianie napisów..."
+    "captionsBannerSpinnerText": "Trwa uruchamianie napisów...",
+    "transferPageTransferorText": "Trwa przełączanie...",
+    "transferPageTransferTargetText": "Trwa łączenie...",
+    "transferPageUnknownTransferorDisplayName": "Nieznany",
+    "transferPageUnknownTransferTargetDisplayName": "Nieznany"
   },
   "chat": {
     "chatListHeader": "W tym czacie",

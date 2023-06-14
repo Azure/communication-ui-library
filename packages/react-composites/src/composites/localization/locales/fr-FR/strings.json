@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Vous n’avez pas reçu d’entrée dans l’appel. S’il s’agissait d’une erreur, rejoignez à nouveau l’appel.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Rejeté de la salle d’attente",
     "learnMore": "En savoir plus",
+    "leavingCallTitle": "Quitter...",
     "leftCallMoreDetails": "S’il s’agissait d’une erreur, rejoignez à nouveau l’appel.",
     "leftCallTitle": "Vous avez quitté l’appel.",
     "lobbyScreenConnectingToCallTitle": "Connexion à l'appel",
@@ -150,7 +151,11 @@
       "sk-sk": "Slovaque",
       "zh-tw": "Chinois – Taiwan"
     },
-    "captionsBannerSpinnerText": "Démarrage des sous-titres..."
+    "captionsBannerSpinnerText": "Démarrage des sous-titres...",
+    "transferPageTransferorText": "Transfert en cours...",
+    "transferPageTransferTargetText": "Connexion en cours...",
+    "transferPageUnknownTransferorDisplayName": "Inconnu",
+    "transferPageUnknownTransferTargetDisplayName": "Inconnu"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

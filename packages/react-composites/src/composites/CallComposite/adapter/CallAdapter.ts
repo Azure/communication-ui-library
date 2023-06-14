@@ -283,7 +283,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
 
 /* @conditional-compile-remove(call-transfer) */
 /**
- * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
  *
  * @beta
  */

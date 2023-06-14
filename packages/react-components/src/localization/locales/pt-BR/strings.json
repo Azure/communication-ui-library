@@ -139,7 +139,7 @@
     "downloadFile": "Baixar arquivo",
     "blockedWarningText": "Esta mensagem foi excluída devido à política organizacional.",
     "blockedWarningLinkText": "Detalhes",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "A mensagem tem {fileCount} anexo"
   },
   "errorBar": {
     "unableToReachChatService": "Você está offline",
