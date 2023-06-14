@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Opacity of transfer page avatar change to 40%",
+  "comment": "Maintain audio and video state by default after accepting transfer. Only showing transfer target in transfer page when their display name is known. Opacity of transfer page avatar change to 40%",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "none"
