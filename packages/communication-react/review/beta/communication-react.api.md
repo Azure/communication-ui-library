@@ -792,7 +792,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
-    optimalVideoCountFeature: OptimalVideoCountFeatureState;
+    optimalVideoCount: OptimalVideoCountFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -3043,7 +3043,7 @@ defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @beta
 export interface OptimalVideoCountFeatureState {
-    optimalVideoCount: number;
+    maxRemoteVideoStreams: number;
 }
 
 // @public

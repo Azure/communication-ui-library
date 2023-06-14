@@ -40,11 +40,11 @@ export class OptimalVideoCountSubscriber {
   };
 
   private optimalVideoCountChanged = (): void => {
-    this.updateOptimalVideoCountState({ optimalVideoCount: this._localOptimalVideoCountFeature.optimalVideoCount });
+    this.updateOptimalVideoCountState({ maxRemoteVideoStreams: this._localOptimalVideoCountFeature.optimalVideoCount });
   };
 
   private updateOptimalVideoCountState = (newOptimalVideoCountState: OptimalVideoCountFeatureState): void => {
-    this._context.setOptimalVideoCount(this._callIdRef.callId, newOptimalVideoCountState.optimalVideoCount);
+    this._context.setOptimalVideoCount(this._callIdRef.callId, newOptimalVideoCountState.maxRemoteVideoStreams);
   };
 }
 

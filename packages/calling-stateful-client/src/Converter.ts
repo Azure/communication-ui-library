@@ -143,8 +143,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       acceptedTransfers: {}
     },
     /* @conditional-compile-remove(optimal-video-count) */
-    optimalVideoCountFeature: {
-      optimalVideoCount: call.feature(Features.OptimalVideoCount).optimalVideoCount || 4
+    optimalVideoCount: {
+      maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     }
   };
 }

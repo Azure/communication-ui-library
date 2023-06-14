@@ -214,8 +214,8 @@ const defaultCallAdapterState: CallAdapterState = {
       acceptedTransfers: {}
     },
     /* @conditional-compile-remove(optimal-video-count) */
-    optimalVideoCountFeature: {
-      optimalVideoCount: 4
+    optimalVideoCount: {
+      maxRemoteVideoStreams: 4
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },

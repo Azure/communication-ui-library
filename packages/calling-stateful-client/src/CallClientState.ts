@@ -196,7 +196,7 @@ export interface OptimalVideoCountFeatureState {
   /**
    * State of the current optimal video count.
    */
-  optimalVideoCount: number;
+  maxRemoteVideoStreams: number;
 }
 
 /**
@@ -369,7 +369,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
    */
-  optimalVideoCountFeature: OptimalVideoCountFeatureState;
+  optimalVideoCount: OptimalVideoCountFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */

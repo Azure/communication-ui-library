@@ -115,7 +115,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
-    optimalVideoCountFeature: OptimalVideoCountFeatureState;
+    optimalVideoCount: OptimalVideoCountFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -248,7 +248,7 @@ export interface NetworkDiagnosticsState {
 
 // @beta
 export interface OptimalVideoCountFeatureState {
-    optimalVideoCount: number;
+    maxRemoteVideoStreams: number;
 }
 
 // @public

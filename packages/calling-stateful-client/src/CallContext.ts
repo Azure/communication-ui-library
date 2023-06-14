@@ -155,7 +155,7 @@ export class CallContext {
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
         /* @conditional-compile-remove(optimal-video-count) */
-        existingCall.optimalVideoCountFeature.optimalVideoCount = call.optimalVideoCountFeature.optimalVideoCount;
+        existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
@@ -396,7 +396,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.optimalVideoCountFeature.optimalVideoCount = optimalVideoCount;
+        call.optimalVideoCount.maxRemoteVideoStreams = optimalVideoCount;
       }
     });
   }

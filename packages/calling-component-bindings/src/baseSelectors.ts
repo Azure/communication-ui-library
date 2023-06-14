@@ -83,7 +83,7 @@ export const getIsMuted = (state: CallClientState, props: CallingBaseSelectorPro
  * @private
  */
 export const getOptimalVideoCount = (state: CallClientState, props: CallingBaseSelectorProps): number | undefined =>
-  state.calls[props.callId]?.optimalVideoCountFeature.optimalVideoCount;
+  state.calls[props.callId]?.optimalVideoCount.maxRemoteVideoStreams;
 
 /**
  * @private
