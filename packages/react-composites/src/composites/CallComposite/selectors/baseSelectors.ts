@@ -17,9 +17,8 @@ import {
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { SelectedVideoBackgroundEffect } from '../adapter/CallAdapter';
+import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(video-background-effects) */
 import { AdapterErrors } from '../../common/adapters';
 
 /**
@@ -129,7 +128,7 @@ export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | u
 /**
  * @private
  */
-export const getSelectedVideoEffect = (state: CallAdapterState): SelectedVideoBackgroundEffect | undefined =>
+export const getSelectedVideoEffect = (state: CallAdapterState): VideoBackgroundEffect | undefined =>
   state.selectedVideoBackgroundEffect;
 
 /* @conditional-compile-remove(close-captions) */
@@ -174,7 +173,6 @@ export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] |
  */
 export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeamsCall;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */

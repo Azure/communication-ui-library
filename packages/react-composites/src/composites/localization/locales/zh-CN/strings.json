@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "未在通话中向你授予条目。如果这是一个错误，请重新加入呼叫。",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "已从大厅中关闭",
     "learnMore": "了解详细信息",
+    "leavingCallTitle": "正在退出...",
     "leftCallMoreDetails": "如果这是一个错误，请重新加入呼叫。",
     "leftCallTitle": "你已离开通话",
     "lobbyScreenConnectingToCallTitle": "加入通话",
@@ -150,7 +151,11 @@
       "sk-sk": "斯洛伐克语",
       "zh-tw": "中文 – 台湾"
     },
-    "captionsBannerSpinnerText": "正在启动字幕..."
+    "captionsBannerSpinnerText": "正在启动字幕...",
+    "transferPageTransferorText": "正在转接...",
+    "transferPageTransferTargetText": "正在连接...",
+    "transferPageUnknownTransferorDisplayName": "未知",
+    "transferPageUnknownTransferTargetDisplayName": "未知"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

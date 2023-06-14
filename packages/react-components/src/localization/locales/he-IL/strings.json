@@ -139,7 +139,7 @@
     "downloadFile": "הורד קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "ההודעה כוללת קובץ מצורף {fileCount}"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",

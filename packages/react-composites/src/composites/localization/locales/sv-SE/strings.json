@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Du har inte beviljats något bidrag i samtalet. Om det var ett misstag ansluter du till samtalet igen.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Avvisad från lobbyn",
     "learnMore": "Mer information",
+    "leavingCallTitle": "Lämnar…",
     "leftCallMoreDetails": "Anslut till samtalet igen om det var ett misstag.",
     "leftCallTitle": "Du lämnade samtalet",
     "lobbyScreenConnectingToCallTitle": "Ansluter till samtalet",
@@ -150,7 +151,11 @@
       "sk-sk": "Slovakiska",
       "zh-tw": "Kinesiska – Taiwan"
     },
-    "captionsBannerSpinnerText": "Startar undertexter ..."
+    "captionsBannerSpinnerText": "Startar undertexter ...",
+    "transferPageTransferorText": "Överför...",
+    "transferPageTransferTargetText": "Ansluter...",
+    "transferPageUnknownTransferorDisplayName": "Okänd",
+    "transferPageUnknownTransferTargetDisplayName": "Okänd"
   },
   "chat": {
     "chatListHeader": "I den här chatten",
