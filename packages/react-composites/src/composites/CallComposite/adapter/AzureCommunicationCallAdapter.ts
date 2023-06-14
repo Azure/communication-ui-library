@@ -977,10 +977,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       accept: (options: AcceptTransferOptions) => {
         const videoSource = this.context.getState().call?.localVideoStreams?.[0]?.source;
         args.accept({
-          audioOptions:
-            options?.audioOptions ?? /* maintain audio state should if options.audioOptions is not defined */ {
-              muted: !!this.context.getState().call?.isMuted
-            },
+          audioOptions: options?.audioOptions ?? /* maintain audio state if options.audioOptions is not defined */ {
+            muted: !!this.context.getState().call?.isMuted
+          },
           videoOptions:
             options?.videoOptions ??
             /* maintain video state if options.videoOptions is not defined */
