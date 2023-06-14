@@ -61,16 +61,17 @@ shows an example of a `TransferRequestedListener` that accepts all `transferRequ
 
 <Source code={TransferSnippetText} />
 
-The `afterCallAdapterCreate` callback in the above snippet can be modified to handle the transfer request such that
-audio and video states from the original call are maintained after transfer.
+When a transfer request is accepted with no `AcceptTransferOptions`, the microphone state and camera state are
+maintained from the original call to the transferred call. But you can provide `AcceptTransferOptions` to the `accept`
+function so that the user's microphone is muted and their camera turned off in the transferred call. This is done by
+changing the `afterCallAdapterCreate` callback from the code snippet above to the code snippet below.
 
 ```typescript
 const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
   adapter.on('transferRequested', (e) => {
-    const videoSource = adapter.getState().call?.localVideoStreams?.[0]?.source;
     e.accept({
-      audioOptions: { muted: adapter.getState().call?.isMuted },
-      videoOptions: videoSource ? { localVideoStreams: [new LocalVideoStream(videoSource)] } : undefined
+      audioOptions: { muted: false },
+      videoOptions: { localVideoStreams: undefined }
     });
   });
   return adapter;
