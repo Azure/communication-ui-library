@@ -64,7 +64,7 @@ shows an example of a `TransferRequestedListener` that accepts all `transferRequ
 When a transfer request is accepted with no `AcceptTransferOptions`, the microphone state and camera state are
 maintained from the original call to the transferred call. But you can provide `AcceptTransferOptions` to the `accept`
 function so that the user's microphone is muted and their camera turned off in the transferred call. This is done by
-changing `afterCallAdapterCreate` callback from the above snippet to the code snippet below.
+changing the `afterCallAdapterCreate` callback from the code snippet above to the code snippet below.
 
 ```typescript
 const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
