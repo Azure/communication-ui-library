@@ -771,18 +771,25 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
   const tags: TagData[] = []; // Tags passed back to the caller
   const tagParseStack: TagData[] = []; // Local stack to use while parsing
 
+  const textToParse = text
+    .replace(/</g, '&lt;')
+    .replace(/&lt;msft-mention/g, '<msft-mention')
+    .replace(/&lt;\/msft-mention/g, '</msft-mention');
   let plainTextRepresentation = '';
 
   let parseIndex = 0;
-  while (parseIndex < text.length) {
-    const foundHtmlTag = findNextHtmlTag(text, parseIndex);
+  while (parseIndex < textToParse.length) {
+    const foundHtmlTag = findNextHtmlTag(textToParse, parseIndex);
 
+    const originalText = textToParse.replace(/&lt;/g, '<');
     if (!foundHtmlTag) {
       if (parseIndex !== 0) {
         // Add the remaining text to the plain text representation
-        plainTextRepresentation += text.substring(parseIndex);
+        plainTextRepresentation += originalText.substring(parseIndex);
+        // .replace(/&lt;/g, '<');
       } else {
-        plainTextRepresentation = text;
+        plainTextRepresentation = originalText;
+        // .replace(/&lt;/g, '<');
       }
       break;
     }
@@ -790,7 +797,7 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
     if (foundHtmlTag.type === 'open' || foundHtmlTag.type === 'self-closing') {
       const nextTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
       // Add the plain text between the last tag and this one found
-      plainTextRepresentation += text.substring(parseIndex, foundHtmlTag.startIdx);
+      plainTextRepresentation += originalText.substring(parseIndex, foundHtmlTag.startIdx);
       nextTag.plainTextBeginIndex = plainTextRepresentation.length;
 
       if (foundHtmlTag.type === 'open') {
@@ -809,7 +816,7 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
 
       if (currentOpenTag && currentOpenTag.tagType === closeTagType) {
         // Tag startIdx is absolute to the text. This is updated later to be relative to the parent tag
-        currentOpenTag.content = text.substring(
+        currentOpenTag.content = originalText.substring(
           currentOpenTag.openTagIndex + currentOpenTag.openTagBody.length,
           foundHtmlTag.startIdx
         );
@@ -877,6 +884,12 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
     // No close tag
     return undefined;
   }
+
+  const textBeforeTagStart = text.substring(0, tagStartIndex + 1);
+  const skippedAngleBrackets = textBeforeTagStart?.match(/&lt;/g);
+  const skippedAngleBracketsLength = skippedAngleBrackets?.reduce((acc, curr) => acc + curr.length - 1, 0) || 0;
+  const startIdx = tagStartIndex - skippedAngleBracketsLength;
+
   const tag = text.substring(tagStartIndex, tagEndIndex + 1);
   let type: HtmlTagType = 'open';
   if (tag[1] === '/') {
@@ -886,7 +899,7 @@ const findNextHtmlTag = (text: string, startIndex: number): HtmlTag | undefined 
   }
   return {
     content: tag,
-    startIdx: tagStartIndex,
+    startIdx,
     type
   };
 };
