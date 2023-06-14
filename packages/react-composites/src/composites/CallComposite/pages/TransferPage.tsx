@@ -66,7 +66,7 @@ export const TransferPage = (
       return 'transferTarget';
     }
     return 'transferor';
-  }, [transferCall]);
+  }, [transferCall, transferTarget?.displayName]);
 
   let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
