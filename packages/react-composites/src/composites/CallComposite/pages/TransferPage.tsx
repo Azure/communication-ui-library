@@ -13,6 +13,7 @@ import { getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
 import {
+  avatarStyles,
   defaultPersonaStyles,
   displayNameStyles,
   spinnerStyles,
@@ -24,6 +25,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
 
 /* @conditional-compile-remove(call-transfer) */
+// Which should be participant shown in the transfer page
 type TransferPageSubject = 'transferor' | 'transferTarget';
 
 /**
@@ -48,15 +50,6 @@ export const TransferPage = (
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
 
-  /* @conditional-compile-remove(call-transfer) */
-  // page subject is which should be participant shown in the transfer page depending on the transfer call state
-  const pageSubject: TransferPageSubject = useMemo(() => {
-    if (transferCall && ['Ringing', 'Connected'].includes(transferCall.state)) {
-      return 'transferTarget';
-    }
-    return 'transferor';
-  }, [transferCall]);
-
   const transferor = useMemo(
     () => (remoteParticipants ? Object.values(remoteParticipants)?.[0] : undefined),
     [remoteParticipants]
@@ -66,6 +59,15 @@ export const TransferPage = (
     () => (transferCall?.remoteParticipants ? Object.values(transferCall.remoteParticipants)?.[0] : undefined),
     [transferCall]
   );
+
+  /* @conditional-compile-remove(call-transfer) */
+  const pageSubject: TransferPageSubject = useMemo(() => {
+    if (transferCall && transferTarget?.displayName) {
+      return 'transferTarget';
+    }
+    return 'transferor';
+  }, [transferCall, transferTarget?.displayName]);
+
   let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
   if (pageSubject === 'transferTarget') {
@@ -174,7 +176,15 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
   );
 
   const defaultOnRenderAvatar = useCallback(() => {
-    return personaSize ? <AvatarPersona {...placeholderOptions} dataProvider={onFetchAvatarPersonaData} /> : <></>;
+    return personaSize ? (
+      <AvatarPersona
+        {...placeholderOptions}
+        dataProvider={onFetchAvatarPersonaData}
+        className={mergeStyles(avatarStyles)}
+      />
+    ) : (
+      <></>
+    );
   }, [placeholderOptions, onFetchAvatarPersonaData, personaSize]);
 
   const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);
