@@ -3,10 +3,10 @@ import {
   MessageThread,
   Message,
   FileMetadata,
-  AttachmentDownloadResult
+  AttachmentDownloadResult,
+  TeamsInteropFileMetadata
 } from '@azure/communication-react';
 import React from 'react';
-import { TeamsInteropFileMetadata } from '../../../../react-components/src/components';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
