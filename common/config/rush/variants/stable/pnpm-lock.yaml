@@ -19361,6 +19361,7 @@ packages:
       '@azure/communication-calling': 1.13.1
       '@azure/communication-calling-effects': 1.0.0-beta.2
       '@azure/communication-common': 2.2.0
+      '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
@@ -19393,7 +19394,7 @@ packages:
     dev: false
     name: '@rush-temp/calling-component-bindings'
     resolution:
-      integrity: sha512-R2fvAizaNftIgIg58sy58G4nBWi8qJpbMQYmLHdWoj/Ba1XRazNSVaRjl3ogZL1SN+OSZOXWUSMXpo4zhqTz/Q==
+      integrity: sha512-2O02xoVFrSkP/9sU1BnZh7I8+ktsmtHCRSvk2RRNGnb26CP5qAJiqi1EyAqHDB5DShnpB8TsvPwuqEtzKFnS6g==
       tarball: file:projects/calling-component-bindings.tgz
     version: 0.0.0
   file:projects/calling-stateful-client.tgz:
@@ -19585,6 +19586,7 @@ packages:
       '@azure/communication-chat': 1.3.1
       '@azure/communication-common': 2.2.0
       '@azure/core-paging': 1.5.0
+      '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@microsoft/api-documenter': 7.12.22
@@ -19614,7 +19616,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-component-bindings'
     resolution:
-      integrity: sha512-gXMCDta4IVgJzJFL0/fF7bp+v7CudyDyNQrWN3YI3di4Wrxyh7fOknL2rs2VERhlxHE1XBPQOgu/NdKWbJFQwA==
+      integrity: sha512-NqezOlMiDLThHCCipJ+bbB72sjFPP1f5AIxcUBpbCqW0uw+92SARmTZpjbM+enxedcVf74oGj+LS/JxvwxhBbg==
       tarball: file:projects/chat-component-bindings.tgz
     version: 0.0.0
   file:projects/chat-stateful-client.tgz:
@@ -19725,6 +19727,7 @@ packages:
     version: 0.0.0
   file:projects/check-treeshaking.tgz:
     dependencies:
+      '@azure/logger': 1.0.4
       '@babel/core': 7.16.12
       '@babel/plugin-proposal-export-namespace-from': 7.16.7_@babel+core@7.16.12
       babel-loader: 8.1.0_8bcfeef0f56d64c638f22554b76b7b9d
@@ -19740,11 +19743,12 @@ packages:
     dev: false
     name: '@rush-temp/check-treeshaking'
     resolution:
-      integrity: sha512-klvwrrdEPOnuk44DYcPyTb7Sm2/yB9MwMCQjsKcYLPhEjkToHr04JdFt/m/8RAltAvq0i9V9bmdOViTEjtlGHQ==
+      integrity: sha512-Evy5YoGo5+nEu4G4tLV+477XfRC8ppdm+vLdJGfTge813lfAWdNVZhNF68Y/XkeRQrnfPhLkWJ1e25Agi42lMA==
       tarball: file:projects/check-treeshaking.tgz
     version: 0.0.0
   file:projects/check-typescript-regression.tgz:
     dependencies:
+      '@azure/logger': 1.0.4
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0_eslint@7.32.0
       eslint-plugin-header: 3.1.1_eslint@7.32.0
@@ -19756,7 +19760,7 @@ packages:
     dev: false
     name: '@rush-temp/check-typescript-regression'
     resolution:
-      integrity: sha512-xHnnnRKkp39SlSyccxYvuo8rMSDN0SWBDmo19d7FdnP/LjmQp4Ff5tXshSuY9Ouyyd3nl/bCItd9yGtwhLHyMQ==
+      integrity: sha512-HDGTfsKIm8f09DS5y7xIrVTMErq6wVZuGnLujyPkMpLKHDIOS5yhOjG8uC9pbnRDpYHCm43UZRQOOh9uvQG/HQ==
       tarball: file:projects/check-typescript-regression.tgz
     version: 0.0.0
   file:projects/communication-react.tgz:
@@ -19853,6 +19857,7 @@ packages:
       '@azure/communication-chat': 1.3.1
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.2.0
+      '@azure/logger': 1.0.4
       '@babel/core': 7.16.12
       '@fluentui/react': 8.98.8_220a29cdfba4674701d95554891e0a33
       '@types/react': 18.2.0
@@ -19894,11 +19899,12 @@ packages:
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-XigvPgpomEsh63qP1Us0dMJln50ptqWV8lk8x5FsZt+yJ4auXJbUzI+9mme1l7IXDDjYQWknYXTWcU21e1kn7w==
+      integrity: sha512-C2G1UaLF2b46nhErQKJNwyOK0b3AYcUkh84Urq8UlLMC68u8v9KNrWa52cvN2HIwYnUaNwK+w/sXhE8mjfOx3A==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
     dependencies:
+      '@azure/logger': 1.0.4
       '@octokit/rest': 19.0.11
       '@rollup/plugin-commonjs': 17.1.0_rollup@2.42.4
       '@types/node': 16.18.34
@@ -19911,7 +19917,7 @@ packages:
     dev: false
     name: '@rush-temp/config'
     resolution:
-      integrity: sha512-637e3aKSgfcpBsI3RCLGLa1J40Yx8Kuo3ZA4jeq7J9lCDmGSwaBZaaJiSM7xDyRH2pQ+R97uzqyASM/HOCYzWg==
+      integrity: sha512-wH7Kg0jSdisvq0LdJ+UFdmotNM9cy18QdTfwPocgL0G5gRTzXnZ/T+JhEOm3dumHg9+B7f2HVl1C2yMdcQSGqg==
       tarball: file:projects/config.tgz
     version: 0.0.0
   file:projects/fake-backends.tgz:
@@ -19920,6 +19926,7 @@ packages:
       '@azure/communication-common': 2.2.0
       '@azure/communication-signaling': 1.0.0-beta.18
       '@azure/core-paging': 1.5.0
+      '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
@@ -19953,11 +19960,12 @@ packages:
     dev: false
     name: '@rush-temp/fake-backends'
     resolution:
-      integrity: sha512-wb6JFk6xDnZLjFBqgWmn7iPju0SZY4axcA4B7bWBJBYgZGzb9FRUcWrD3YaPHeTRKH/U7670bA/tYHjT4Mmx0Q==
+      integrity: sha512-YjKR4M+zPBpXyBgq+rj8Cdfqa/2Km0/92G3A2oE7CheAM1n4ls0YGmQ3m/QOVg7Q/68g84kAd1Fz2rsOPaHcAg==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/northstar-wrapper.tgz:
     dependencies:
+      '@azure/logger': 1.0.4
       '@fluentui/react-northstar': 0.61.0_9cc9121cc728018c19aa8f210d93bcbf
       '@microsoft/api-extractor': 7.18.21
       '@types/react': 18.2.0
@@ -19979,11 +19987,12 @@ packages:
     dev: false
     name: '@rush-temp/northstar-wrapper'
     resolution:
-      integrity: sha512-T2DDFiL5NAmxQhNYdkn77IV4HbGU2RGA7pWaALpTmQNnmEysB4AmpHuxsX4xdaJtXk9rTnV/esRZykVmhe1R4A==
+      integrity: sha512-5CFZe1/JEJhOHcedyGZmtoSlhqoKp84tjuRyvoj8vLcaVzGNjpqfEbyHT+5qdrUbHLgmJoIv6rnD2MeRBDa2HA==
       tarball: file:projects/northstar-wrapper.tgz
     version: 0.0.0
   file:projects/react-components.tgz:
     dependencies:
+      '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
@@ -20063,7 +20072,7 @@ packages:
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-CRiPmHtJycRMISJaFZZT5BxTrQ+eVwhraWOyTkgXblcVd7TmeI5P6uMjP9MIvUR5ug9WSF7ruO4l1UtJ3qVejA==
+      integrity: sha512-D6peonbW5bosDYUg9p5199CsI68Lk0PhhfbwSg60u2RidC3QNCO3saSHe4ZGWnUMaAi8EjxxvMHGKl4kXXaXTw==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -20076,6 +20085,7 @@ packages:
       '@azure/communication-signaling': 1.0.0-beta.18
       '@azure/core-paging': 1.5.0
       '@azure/core-rest-pipeline': 1.11.0
+      '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
@@ -20168,7 +20178,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-hVmULk4Sbuw0P3I2DuOJCORpyIV2hbuzzhPNyUB6FDs7rX/5++nt+ErMN6joUVG8nt+0jyC+jgPgg0IvFw7uxA==
+      integrity: sha512-CdJBVz7pfuaSbAcF8pnR7lBwn08/CB/YHVyGiDf/RnDcsH5awlKdkdf1frV/uhUcmbBl5H8NOBb7+NYmSBnMxQ==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -20177,6 +20187,7 @@ packages:
       '@azure/communication-chat': 1.3.1
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.2.0
+      '@azure/logger': 1.0.4
       '@playwright/test': 1.22.2
       '@types/node': 16.18.34
       '@types/node-static': 0.7.7
@@ -20192,7 +20203,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-8mw2piFPWQ9tfxgxqI+t8QJzICjjOjLd0eJC6QKD9YXA2fTi9t5x9VZhCcqUzmO/0l4X8oZ90i2DWGkJR3+VXA==
+      integrity: sha512-aytAa1tmv9cmC1hj1TTknuBh50iyGXbTp3efRTW63wfhSDUM8vUzG9N79VyDTdmDHA8cZ5zGh+O5T6Ebb5KC9g==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -20201,6 +20212,7 @@ packages:
       '@azure/communication-chat': 1.3.1
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.2.0
+      '@azure/logger': 1.0.4
       '@babel/cli': 7.16.8_@babel+core@7.16.12
       '@babel/core': 7.16.12
       '@fluentui/react': 8.98.8_react-dom@18.2.0+react@18.2.0
@@ -20232,7 +20244,7 @@ packages:
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-t2hATkwomBjD8w1zwTvgVBm2PDe2RBEdQei/i7jVWUDUdwLPaqlHt0NqdneFF55ssQZWsm09oDeluKB594nRyQ==
+      integrity: sha512-SD9LhxgXkHcVfhDaXAukf48SV/7is4KIgKoe/wJgw17Mzb5fK7ag5dP5bGe2kM5U6zdQ3k7gPro6L3HgX/e4lQ==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -20241,6 +20253,7 @@ packages:
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.2.0
       '@azure/communication-rooms': 1.0.0-beta.1
+      '@azure/logger': 1.0.4
       '@types/cookie-parser': 1.4.3
       '@types/copy-webpack-plugin': 6.4.3
       '@types/cors': 2.8.13
@@ -20285,7 +20298,7 @@ packages:
     dev: false
     name: '@rush-temp/server'
     resolution:
-      integrity: sha512-18LQYaED0sdh8mgcD+bXbdIFLn5t9wp6rbbU4BiiGZKYkNb2OSsya73Bu6Zdxm2rBO7KIdvvDdEDw7oDscKruQ==
+      integrity: sha512-3h1nC5qAS/n4N+tJrNxMsAo4wlwxVKw7dkIhB4QvoDQZI06r88HUqR/9G+IlK4FmlgRzaJp0rhh/H9uhfN3Xug==
       tarball: file:projects/server.tgz
     version: 0.0.0
   file:projects/storybook.tgz:
@@ -20294,6 +20307,7 @@ packages:
       '@azure/communication-chat': 1.3.1
       '@azure/communication-common': 2.2.0
       '@azure/communication-identity': 1.2.0
+      '@azure/logger': 1.0.4
       '@babel/core': 7.16.12
       '@babel/preset-env': 7.13.10_@babel+core@7.16.12
       '@fluentui/react': 8.98.8_220a29cdfba4674701d95554891e0a33
@@ -20383,7 +20397,7 @@ packages:
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-ONw46/CuTvRnkg8rzfcQFFUu60r6u/ZRpFVOhT93njhrDXzxS557Itykw7z1iFU8UC7by+UE8Lfch+p0ED5LJg==
+      integrity: sha512-wzQsqhNdg8DTHXi7jbVX9NKwbaQwaGXpUck6CH6Tr1aLG/torNA0l1oXzqVT0AapALF+DqwvXqORqOGm3rjRHw==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:
