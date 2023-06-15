@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "マイクがオフになっています",
     "offSplitButtonMicrophonePrimaryAction": "マイクのミュートを解除する",
     "onSplitButtonMicrophonePrimaryAction": "マイクをミュートにする",
-    "micPrimaryActionSplitButtonTitle": "マイクを使用する"
+    "microphonePrimaryActionSplitButtonTitle": "マイクを使用する"
   },
   "devicesButton": {
     "label": "デバイス",

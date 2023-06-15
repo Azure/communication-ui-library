@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Ваш микрофон отключен",
     "offSplitButtonMicrophonePrimaryAction": "Включить микрофон",
     "onSplitButtonMicrophonePrimaryAction": "Отключить микрофон",
-    "micPrimaryActionSplitButtonTitle": "Использовать микрофон"
+    "microphonePrimaryActionSplitButtonTitle": "Использовать микрофон"
   },
   "devicesButton": {
     "label": "Устройства",

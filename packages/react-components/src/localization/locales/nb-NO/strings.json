@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonen er slått av",
     "offSplitButtonMicrophonePrimaryAction": "Opphev demping av mikrofon",
     "onSplitButtonMicrophonePrimaryAction": "Demp mikrofon",
-    "micPrimaryActionSplitButtonTitle": "Bruk mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Bruk mikrofon"
   },
   "devicesButton": {
     "label": "Enheter",

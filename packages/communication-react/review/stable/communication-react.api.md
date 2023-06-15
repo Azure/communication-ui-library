@@ -2069,12 +2069,12 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
-    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
+    microphonePrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
     offSplitButtonMicrophonePrimaryAction?: string;
