@@ -6,6 +6,7 @@ import {
   AttachmentDownloadResult
 } from '@azure/communication-react';
 import React from 'react';
+import { TeamsInteropFileMetadata } from '../../../../react-components/src/components';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
@@ -17,7 +18,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     return [
       {
         // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachment.previewUrl ?? ''
+        blobUrl: (attachment as TeamsInteropFileMetadata).previewUrl ?? ''
       }
     ];
   };
