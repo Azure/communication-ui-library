@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Cursor icon remains as default cursor on inactionable participantItems",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
