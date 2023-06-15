@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Uw microfoon is uitgeschakeld",
     "offSplitButtonMicrophonePrimaryAction": "Microfoon inschakelen",
     "onSplitButtonMicrophonePrimaryAction": "Microfoon uitschakelen",
-    "micPrimaryActionSplitButtonTitle": "Microfoon gebruiken"
+    "microphonePrimaryActionSplitButtonTitle": "Microfoon gebruiken"
   },
   "devicesButton": {
     "label": "Apparaten",

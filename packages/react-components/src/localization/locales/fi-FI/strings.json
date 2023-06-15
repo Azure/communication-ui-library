@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonisi on poistettu käytöstä",
     "offSplitButtonMicrophonePrimaryAction": "Poista mikrofonin mykistys",
     "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
-    "micPrimaryActionSplitButtonTitle": "Käytä mikrofonia"
+    "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia"
   },
   "devicesButton": {
     "label": "Laitteet",

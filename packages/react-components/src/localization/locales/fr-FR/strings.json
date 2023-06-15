@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Votre micro a été désactivé",
     "offSplitButtonMicrophonePrimaryAction": "Activer le son du microphone",
     "onSplitButtonMicrophonePrimaryAction": "Désactiver le microphone",
-    "micPrimaryActionSplitButtonTitle": "Utiliser le microphone"
+    "microphonePrimaryActionSplitButtonTitle": "Utiliser le microphone"
   },
   "devicesButton": {
     "label": "Appareils",

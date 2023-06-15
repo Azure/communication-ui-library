@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "O microfone foi desligado",
     "offSplitButtonMicrophonePrimaryAction": "Desativar mudo do microfone",
     "onSplitButtonMicrophonePrimaryAction": "Ativar mudo do microfone",
-    "micPrimaryActionSplitButtonTitle": "Usar o microfone"
+    "microphonePrimaryActionSplitButtonTitle": "Usar o microfone"
   },
   "devicesButton": {
     "label": "Dispositivos",

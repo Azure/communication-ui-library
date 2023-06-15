@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "마이크가 꺼져 있습니다.",
     "offSplitButtonMicrophonePrimaryAction": "마이크 음소거 해제",
     "onSplitButtonMicrophonePrimaryAction": "마이크 음소거",
-    "micPrimaryActionSplitButtonTitle": "마이크 사용"
+    "microphonePrimaryActionSplitButtonTitle": "마이크 사용"
   },
   "devicesButton": {
     "label": "장치",

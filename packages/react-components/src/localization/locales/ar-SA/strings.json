@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "تم إيقاف الميكروفون",
     "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم صوت الميكروفون",
     "onSplitButtonMicrophonePrimaryAction": "كتم صوت الميكروفون",
-    "micPrimaryActionSplitButtonTitle": "استخدام الميكروفون"
+    "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون"
   },
   "devicesButton": {
     "label": "الأجهزة",

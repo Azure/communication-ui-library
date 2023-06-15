@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "您的麥克風已關閉",
     "offSplitButtonMicrophonePrimaryAction": "取消麥克風靜音",
     "onSplitButtonMicrophonePrimaryAction": "將麥克風設為靜音",
-    "micPrimaryActionSplitButtonTitle": "使用麥克風"
+    "microphonePrimaryActionSplitButtonTitle": "使用麥克風"
   },
   "devicesButton": {
     "label": "裝置",
