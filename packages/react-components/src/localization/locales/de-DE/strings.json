@@ -153,7 +153,7 @@
     "muteGeneric": "Mikrofon konnte nicht stummgeschaltet werden",
     "unmuteGeneric": "Stummschaltung des Mikrofons konnte nicht beendet werden",
     "speakingWhileMuted": "Ihr Mikrofon ist stummgeschaltet",
-    "startScreenShareGeneric": "Bildschirmfreigabe konnte nicht gestartet werden",
+    "startScreenShareGeneric": "Beim Starten der Bildschirmfreigabe ist ein Problem aufgetreten.",
     "stopScreenShareGeneric": "Bildschirmfreigabe konnte nicht beendet werden",
     "callNetworkQualityLow": "Die Netzwerkqualität ist niedrig.",
     "callNoSpeakerFound": "Keine Lautsprecher oder Kopfhörer gefunden. Schließen Sie ein Audiogerät an, um den Anruf zu hören.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Schließen",
     "failedToJoinCallGeneric": "Fehler bei der Teilnahme am Anruf.",
     "failedToJoinCallInvalidMeetingLink": "Teilnahme an Besprechung nicht möglich. Ungültiger Link.",
-    "startScreenSharingGeneric": "Beim Starten der Bildschirmfreigabe ist ein Problem aufgetreten.",
     "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk.",
     "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden."
   },
