@@ -430,12 +430,39 @@ export interface CallAdapterCallOperations {
    * @remarks
    * This method is implemented for composite
    *
+   * @deprecated Use {@link disposeRemoteVideoStreamView}, {@link disposeLocalVideoStreamView} and {@link disposeRemoteVideoStreamView} instead.
+   *
    * @param remoteUserId - Id of the participant to render, leave it undefined to dispose the local camera view
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /**
+   * Dispose the html view for a screen share stream
+   *
+   * @remarks
+   * this method is implemented for composite
+   *
+   * @param remoteUserId - Id of the participant to dispose the screen share stream view for.
+   *
+   * @public
+   */
+  disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a remote video stream
+   *
+   * @param remoteUserId - Id of the participant to dispose
+   *
+   * @public
+   */
+  disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a local video stream
+   *
+   * @public
+   */
+  disposeLocalVideoStreamView(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Holds the call.
