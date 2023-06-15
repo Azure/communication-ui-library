@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "המיקרופון שלך כובה",
     "offSplitButtonMicrophonePrimaryAction": "בטל את ההשתקה של המיקרופון",
     "onSplitButtonMicrophonePrimaryAction": "השתק את המיקרופון",
-    "micPrimaryActionSplitButtonTitle": "השתמש במיקרופון"
+    "microphonePrimaryActionSplitButtonTitle": "השתמש במיקרופון"
   },
   "devicesButton": {
     "label": "מכשירים",

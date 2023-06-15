@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
     "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
     "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
-    "micPrimaryActionSplitButtonTitle": "Use microphone"
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone"
   },
   "devicesButton": {
     "label": "Devices",

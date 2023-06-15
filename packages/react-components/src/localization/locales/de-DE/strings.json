@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Ihr Mikrofon wurde ausgeschaltet.",
     "offSplitButtonMicrophonePrimaryAction": "Mikrofonstummschaltung aufheben",
     "onSplitButtonMicrophonePrimaryAction": "Mikrofon stummschalten",
-    "micPrimaryActionSplitButtonTitle": "Mikrofon verwenden"
+    "microphonePrimaryActionSplitButtonTitle": "Mikrofon verwenden"
   },
   "devicesButton": {
     "label": "Geräte",

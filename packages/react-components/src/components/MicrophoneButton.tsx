@@ -79,7 +79,7 @@ export interface MicrophoneButtonStrings {
   /**
    * Title for primary action section of split button
    */
-  micPrimaryActionSplitButtonTitle?: string;
+  microphonePrimaryActionSplitButtonTitle?: string;
 }
 
 /**

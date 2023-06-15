@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofon został wyłączony",
     "offSplitButtonMicrophonePrimaryAction": "Wyłącz wyciszenie mikrofonu",
     "onSplitButtonMicrophonePrimaryAction": "Wycisz mikrofon",
-    "micPrimaryActionSplitButtonTitle": "Użyj mikrofonu"
+    "microphonePrimaryActionSplitButtonTitle": "Użyj mikrofonu"
   },
   "devicesButton": {
     "label": "Urządzenia",

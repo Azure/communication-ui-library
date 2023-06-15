@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonunuz kapatıldı",
     "offSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini aç",
     "onSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini kapat",
-    "micPrimaryActionSplitButtonTitle": "Mikrofonu kullan"
+    "microphonePrimaryActionSplitButtonTitle": "Mikrofonu kullan"
   },
   "devicesButton": {
     "label": "Cihazlar",

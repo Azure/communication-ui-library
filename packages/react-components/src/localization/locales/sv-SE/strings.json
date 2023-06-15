@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonen har inaktiverats",
     "offSplitButtonMicrophonePrimaryAction": "Slå på mikrofonen",
     "onSplitButtonMicrophonePrimaryAction": "Stäng av mikrofonen",
-    "micPrimaryActionSplitButtonTitle": "Använd mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Använd mikrofon"
   },
   "devicesButton": {
     "label": "Enheter",
