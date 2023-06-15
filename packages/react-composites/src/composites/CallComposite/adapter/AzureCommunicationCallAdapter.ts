@@ -906,6 +906,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
   }
 
+  /* @conditional-compile-remove(close-captions) */
+  private unsubscribeFromCaptionEvents(): void {
+    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
+      this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
+      this._call
+        ?.feature(Features.TeamsCaptions)
+        .off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    }
+  }
+
   private subscribeCallEvents(): void {
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
@@ -926,12 +937,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
+
     /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    this.unsubscribeFromCaptionEvents();
   }
 
   private isMyMutedChanged = (): void => {
