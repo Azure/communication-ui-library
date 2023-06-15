@@ -448,6 +448,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    this.disposeScreenShareStreamView.bind(this);
+    this.disposeRemoteVideoStreamView.bind(this);
+    this.disposeLocalVideoStreamView.bind(this);
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
@@ -584,6 +587,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     } else {
       await this.handlers.onDisposeRemoteStreamView(remoteUserId);
     }
+  }
+
+  public async disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
+    await this.handlers.onDisposeRemoteScreenShareStreamView(remoteUserId);
+  }
+
+  public async disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    await this.handlers.onDisposeRemoteVideoStreamView(remoteUserId);
+  }
+
+  public async disposeLocalVideoStreamView(): Promise<void> {
+    await this.handlers.onDisposeLocalStreamView();
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {
