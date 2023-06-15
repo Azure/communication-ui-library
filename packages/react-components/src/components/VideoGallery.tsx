@@ -199,8 +199,16 @@ export interface VideoGalleryProps {
   ) => Promise<void | CreateVideoStreamViewResult>;
   /** Callback to render a remote video tile */
   onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
-  /** Callback to dispose a remote video stream view */
+  /**
+   * @deprecated use {@link onDisposeRemoteVideoStreamView} and {@link onDisposeRemoteScreenShareStreamView} instead
+   *
+   * Callback to dispose a remote video stream view
+   */
   onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+  /** Callback to dispose a remote video stream view */
+  onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+  /** Callback to dispose a remote screen share stream view */
+  onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -310,7 +318,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onCreateLocalStreamView,
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
-    onDisposeRemoteStreamView,
+    onDisposeRemoteScreenShareStreamView,
+    onDisposeRemoteVideoStreamView,
     styles,
     layout,
     onRenderAvatar,
@@ -403,7 +412,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           initialsName={initialsName}
           localVideoViewOptions={localVideoViewOptions}
           onRenderAvatar={onRenderAvatar}
-          showLabel={!(shouldFloatLocalVideo && isNarrow)}
+          showLabel={
+            !(
+              (shouldFloatLocalVideo && isNarrow) ||
+              /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16'
+            )
+          }
           showMuteIndicator={showMuteIndicator}
           showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
           localVideoCameraCycleButtonProps={localVideoCameraCycleButtonProps}
@@ -489,7 +503,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           userId={participant.userId}
           remoteParticipant={participant}
           onCreateRemoteStreamView={isVideoParticipant ? onCreateRemoteStreamView : undefined}
-          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteStreamView : undefined}
+          onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteVideoStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
@@ -524,7 +538,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     },
     [
       onCreateRemoteStreamView,
-      onDisposeRemoteStreamView,
+      onDisposeRemoteVideoStreamView,
       remoteVideoViewOptions,
       onRenderAvatar,
       showMuteIndicator,
@@ -547,7 +561,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       {...screenShareParticipant}
       renderElement={screenShareParticipant.screenShareStream?.renderElement}
       onCreateRemoteStreamView={onCreateRemoteStreamView}
-      onDisposeRemoteStreamView={onDisposeRemoteStreamView}
+      onDisposeRemoteStreamView={onDisposeRemoteScreenShareStreamView}
       isReceiving={screenShareParticipant.screenShareStream?.isReceiving}
     />
   );

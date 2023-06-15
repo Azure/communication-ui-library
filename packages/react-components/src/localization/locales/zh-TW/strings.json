@@ -139,7 +139,7 @@
     "downloadFile": "下載檔案",
     "blockedWarningText": "由於組織原則，已刪除此訊息。",
     "blockedWarningLinkText": "詳細資料",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "郵件有 {fileCount} 個附件"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",

@@ -85,7 +85,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
-      modalLayerHostId={drawerMenuHostId}
+      modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
@@ -99,7 +99,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
               drawerMenuHostId={drawerMenuHostId}
               /* @conditional-compile-remove(click-to-call) */
-              localVideoTileOptions={options?.localVideoTileOptions}
+              localVideoTileOptions={options?.localVideoTile}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />

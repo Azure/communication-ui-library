@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -20,14 +20,16 @@ import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
-import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+import {
+  leavingPageStyle,
+  mainScreenContainerStyleDesktop,
+  mainScreenContainerStyleMobile
+} from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
 import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { LayerHost, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -122,7 +124,7 @@ export interface LocalVideoTileOptions {
    * 'hidden' - local video tile will not be rendered.
    * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
-  position?: 'grid' | 'floating' | 'hidden';
+  position?: 'grid' | 'floating';
 }
 /**
  * Optional features of the {@link CallComposite}.
@@ -204,8 +206,10 @@ export type CallCompositeOptions = {
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
+   *
+   * @remarks if 'false' the local video tile will not be rendered.
    */
-  localVideoTileOptions?: LocalVideoTileOptions;
+  localVideoTile?: boolean | LocalVideoTileOptions;
 };
 
 type MainScreenProps = {
@@ -252,6 +256,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   const adapter = useAdapter();
   const locale = useLocale();
+  const palette = useTheme().palette;
+  const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   /* @conditional-compile-remove(rooms) */
   const role = useSelector(getRole);
@@ -326,6 +332,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.failedToJoinCallDueToNoNetworkTitle}
           moreDetails={locale.strings.call.failedToJoinCallDueToNoNetworkMoreDetails}
           dataUiId={'join-call-failed-due-to-no-network-page'}
+        />
+      );
+      break;
+    case 'leaving':
+      pageElement = (
+        <NoticePage
+          title={locale.strings.call.leavingCallTitle ?? 'Leaving...'}
+          dataUiId={'leaving-page'}
+          pageStyle={leavePageStyle}
+          disableStartCallButton={true}
         />
       );
       break;
@@ -484,7 +500,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   const mobileView = formFactor === 'mobile';
 
   const modalLayerHostId = useId('modalLayerhost');
-
   const mainScreenContainerClassName = useMemo(() => {
     return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
   }, [mobileView]);
@@ -515,7 +530,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
             // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
             // before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
             <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>

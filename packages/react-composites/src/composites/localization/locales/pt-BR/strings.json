@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Você não recebeu entrada na chamada. Se isso foi um erro, ingresse novamente na chamada.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Ignorado do lobby",
     "learnMore": "Saber mais",
+    "leavingCallTitle": "Saindo...",
     "leftCallMoreDetails": "Se isso foi um erro, ingresse novamente na chamada.",
     "leftCallTitle": "Você saiu da chamada",
     "lobbyScreenConnectingToCallTitle": "Ingressando na chamada",
@@ -150,7 +151,11 @@
       "sk-sk": "Eslovaco",
       "zh-tw": "Chinês - Taiwan"
     },
-    "captionsBannerSpinnerText": "Iniciando legendas..."
+    "captionsBannerSpinnerText": "Iniciando legendas...",
+    "transferPageTransferorText": "Transferindo...",
+    "transferPageTransferTargetText": "Conectando...",
+    "transferPageUnknownTransferorDisplayName": "Desconhecido",
+    "transferPageUnknownTransferTargetDisplayName": "Desconhecido"
   },
   "chat": {
     "chatListHeader": "Neste chat",

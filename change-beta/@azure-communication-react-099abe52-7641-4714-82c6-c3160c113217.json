@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add the leaving page",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "patch"
+}

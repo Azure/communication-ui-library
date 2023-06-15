@@ -52,6 +52,7 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
+  | 'leaving'
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
@@ -132,7 +133,7 @@ export type CallAdapterClientState = {
   /**
    * State to track the selected video background effect.
    */
-  selectedVideoBackgroundEffect?: SelectedVideoBackgroundEffect;
+  selectedVideoBackgroundEffect?: VideoBackgroundEffect;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * Call from transfer request accepted by local user
@@ -282,7 +283,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
 
 /* @conditional-compile-remove(call-transfer) */
 /**
- * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
  *
  * @beta
  */
@@ -294,7 +295,7 @@ export type TransferRequestedListener = (event: TransferRequestedEventArgs) => v
  *
  * @beta
  */
-export type SelectedVideoBackgroundEffect =
+export type VideoBackgroundEffect =
   | VideoBackgroundNoEffect
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
@@ -318,7 +319,7 @@ export interface VideoBackgroundNoEffect {
  *
  * @beta
  */
-export interface VideoBackgroundBlurEffect {
+export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   /**
    * Name of effect to blur video background effect
    */
@@ -331,7 +332,7 @@ export interface VideoBackgroundBlurEffect {
  *
  * @beta
  */
-export interface VideoBackgroundReplacementEffect {
+export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
   /**
    * Name of effect to replace video background effect
    */
@@ -339,11 +340,7 @@ export interface VideoBackgroundReplacementEffect {
   /**
    * key for unique identification of the custom background
    */
-  effectKey: string;
-  /**
-   * URL of the custom background image.
-   */
-  backgroundImageUrl: string;
+  key?: string;
 }
 
 /**
@@ -433,12 +430,39 @@ export interface CallAdapterCallOperations {
    * @remarks
    * This method is implemented for composite
    *
+   * @deprecated Use {@link disposeRemoteVideoStreamView}, {@link disposeLocalVideoStreamView} and {@link disposeRemoteVideoStreamView} instead.
+   *
    * @param remoteUserId - Id of the participant to render, leave it undefined to dispose the local camera view
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /**
+   * Dispose the html view for a screen share stream
+   *
+   * @remarks
+   * this method is implemented for composite
+   *
+   * @param remoteUserId - Id of the participant to dispose the screen share stream view for.
+   *
+   * @public
+   */
+  disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a remote video stream
+   *
+   * @param remoteUserId - Id of the participant to dispose
+   *
+   * @public
+   */
+  disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a local video stream
+   *
+   * @public
+   */
+  disposeLocalVideoStreamView(): Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Holds the call.
@@ -497,21 +521,13 @@ export interface CallAdapterCallOperations {
    * Funtion to stop captions
    */
   stopCaptions(): Promise<void>;
-
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the blur video background effect.
+   * Start the video background effect.
    *
    * @beta
    */
-  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the video background replacement effect.
-   *
-   * @beta
-   */
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -534,7 +550,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
 /**

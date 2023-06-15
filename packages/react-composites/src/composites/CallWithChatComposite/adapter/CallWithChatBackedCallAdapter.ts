@@ -4,7 +4,7 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,
@@ -26,8 +26,6 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -133,6 +131,15 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
+  public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
+    return this.callWithChatAdapter.disposeScreenShareStreamView(remoteUserId);
+  }
+  public disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    return this.callWithChatAdapter.disposeRemoteVideoStreamView(remoteUserId);
+  }
+  public disposeLocalVideoStreamView(): Promise<void> {
+    return this.callWithChatAdapter.disposeLocalVideoStreamView();
+  }
   /* @conditional-compile-remove(PSTN-calls) */
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
@@ -188,12 +195,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.callWithChatAdapter.blurVideoBackground(backgroundBlurConfig);
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.callWithChatAdapter.replaceVideoBackground(backgroundReplacementConfig);
+  public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
+    await this.callWithChatAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
   }
   /* @conditional-compile-remove(video-background-effects) */
   public async stopVideoBackgroundEffects(): Promise<void> {
@@ -204,7 +207,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.updateBackgroundPickerImages(backgroundImages);
   }
   /* @conditional-compile-remove(video-background-effects) */
-  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 }

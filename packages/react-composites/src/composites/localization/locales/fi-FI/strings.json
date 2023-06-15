@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Sinulle ei myönnetty puheluun merkintää. Jos tämä oli virhe, liity puheluun uudelleen.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Poistettu odotustilasta",
     "learnMore": "Lisätietoja",
+    "leavingCallTitle": "Poistumassa...",
     "leftCallMoreDetails": "Jos tämä oli virhe, liity puheluun uudelleen.",
     "leftCallTitle": "Poistuit puhelusta",
     "lobbyScreenConnectingToCallTitle": "Liitytään puheluun",
@@ -150,7 +151,11 @@
       "sk-sk": "slovakki",
       "zh-tw": "kiina – Taiwan"
     },
-    "captionsBannerSpinnerText": "Aloitetaan tekstitystä..."
+    "captionsBannerSpinnerText": "Aloitetaan tekstitystä...",
+    "transferPageTransferorText": "Siirretään...",
+    "transferPageTransferTargetText": "Yhdistetään...",
+    "transferPageUnknownTransferorDisplayName": "Tuntematon",
+    "transferPageUnknownTransferTargetDisplayName": "Tuntematon"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
