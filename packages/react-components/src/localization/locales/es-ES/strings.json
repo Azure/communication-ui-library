@@ -153,7 +153,7 @@
     "muteGeneric": "No se pudo silenciar el micrófono",
     "unmuteGeneric": "No se pudo reactivar el micrófono",
     "speakingWhileMuted": "El micrófono está desactivado",
-    "startScreenShareGeneric": "No se pudo iniciar la pantalla compartida",
+    "startScreenShareGeneric": "Hubo un problema al iniciar la pantalla compartida.",
     "stopScreenShareGeneric": "No se pudo detener la pantalla compartida",
     "callNetworkQualityLow": "La calidad de la red es baja.",
     "callNoSpeakerFound": "No se encontraron altavoces ni auriculares. Conecta un dispositivo de audio para escuchar la llamada.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Cerrar",
     "failedToJoinCallGeneric": "No se pudo unir a la llamada.",
     "failedToJoinCallInvalidMeetingLink": "No se puede unir a la reunión. Vínculo no válido.",
-    "startScreenSharingGeneric": "Hubo un problema al iniciar la pantalla compartida.",
     "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el vídeo. Compruebe los dispositivos y la red.",
     "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo."
   },

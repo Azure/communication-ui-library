@@ -153,7 +153,7 @@
     "muteGeneric": "Не удалось отключить микрофон",
     "unmuteGeneric": "Не удалось включить микрофон",
     "speakingWhileMuted": "Микрофон отключен",
-    "startScreenShareGeneric": "Не удалось начать демонстрацию экрана",
+    "startScreenShareGeneric": "Возникла проблема с запуском демонстрации экрана.",
     "stopScreenShareGeneric": "Не удалось остановить демонстрацию экрана",
     "callNetworkQualityLow": "Качество работы сети: низкое.",
     "callNoSpeakerFound": "Динамики и наушники не найдены. Подключите звуковое устройство, чтобы услышать звонок.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Закрыть",
     "failedToJoinCallGeneric": "Не удалось присоединиться к звонку.",
     "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
-    "startScreenSharingGeneric": "Возникла проблема с запуском демонстрации экрана.",
     "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть.",
     "unableToStartVideoEffect": "Не удалось применить эффект видео."
   },
