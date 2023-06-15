@@ -153,7 +153,7 @@
     "muteGeneric": "Échec de la désactivation du son du microphone",
     "unmuteGeneric": "Échec de l’activation du son du microphone",
     "speakingWhileMuted": "Votre micro est désactivé",
-    "startScreenShareGeneric": "Échec du démarrage du partage d’écran",
+    "startScreenShareGeneric": "Un problème est survenu durant le démarrage du partage d’écran.",
     "stopScreenShareGeneric": "Échec de l’arrêt du partage d’écran",
     "callNetworkQualityLow": "La qualité de réseau est faible.",
     "callNoSpeakerFound": "Aucun haut-parleur ou casque n’a été trouvé. Connectez un périphérique audio pour entendre l’appel.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Fermer",
     "failedToJoinCallGeneric": "Nous n’avons pas pu rejoindre l’appel.",
     "failedToJoinCallInvalidMeetingLink": "Impossible de rejoindre la réunion. Lien non valide.",
-    "startScreenSharingGeneric": "Un problème est survenu durant le démarrage du partage d’écran.",
     "cameraFrozenForRemoteParticipants": "Les utilisateurs de l’appel rencontrent des problèmes pour voir votre vidéo. Vérifiez vos appareils et votre réseau.",
     "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo."
   },
