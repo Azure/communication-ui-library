@@ -20,7 +20,7 @@ import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react
 import { TeamsAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
@@ -43,12 +43,15 @@ export interface CallScreenProps {
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
-
+  const [callEnded, setCallEnded] = useState(false);
   const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
     adapter.on('error', (e) => {
       // Error is already acted upon by the Call composite, but the surrounding application could
       // add top-level error handling logic here (e.g. reporting telemetry).
       console.log('Adapter error event:', e);
+    });
+    adapter.on('callEnded', () => {
+      setCallEnded(true);
     });
     adapter.onStateChange((state: CallAdapterState) => {
       const pageTitle = convertPageStateToString(state);
@@ -68,7 +71,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const afterCallAdapterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       subscribeAdapterEvents(adapter);
-      return adapter;
+      return new Promise((resolve, reject) => resolve(adapter));
     },
     [subscribeAdapterEvents]
   );
@@ -94,7 +97,14 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
 
-  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  return (
+    <AzureCommunicationCallScreen
+      afterCreate={afterCallAdapterCreate}
+      credential={credential}
+      {...props}
+      callend={callEnded}
+    />
+  );
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -137,6 +147,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
 type AzureCommunicationCallScreenProps = CallScreenProps & {
   afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>;
   credential: AzureCommunicationTokenCredential;
+  callend: boolean;
 };
 
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
@@ -169,7 +180,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     afterCreate
   );
 
-  return <CallCompositeContainer {...props} adapter={adapter} />;
+  return <CallCompositeContainer {...props} adapter={adapter} callended={props.callend} />;
 };
 
 const convertPageStateToString = (state: CallAdapterState): string => {

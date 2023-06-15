@@ -12,7 +12,7 @@ import React, { useEffect } from 'react';
 import { useMemo } from 'react';
 import { CallScreenProps } from './CallScreen';
 
-export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
+export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter; callended?: boolean };
 
 export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.Element => {
   const { /* @conditional-compile-remove(rooms) */ roleHint, adapter } = props;
@@ -49,6 +49,10 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
   // If roleHint is defined then the call is a Rooms call so we should not make call invitation link available
   if (roleHint) {
     callInvitationUrl = undefined;
+  }
+
+  if (props.callended) {
+    return <div>ended</div>;
   }
 
   return (

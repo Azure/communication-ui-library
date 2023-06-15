@@ -12,7 +12,7 @@ import {
   CallWithChatAdapter
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
@@ -93,6 +93,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
+  const [callEnded, setCallEnded] = useState(false);
 
   const credential = useMemo(
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
@@ -111,6 +112,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         // add top-level error handling logic here (e.g. reporting telemetry).
         console.log('Adapter error event:', e);
       });
+      adapter.on('callEnded', () => {
+        setCallEnded(true);
+      });
       adapter.onStateChange((state: CallWithChatAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
@@ -119,8 +123,23 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
+        // if (state.call?.state === 'Connecting'){
+
+        //   adapter.startCamera({scalingMode: 'Crop',
+        //   isMirrored: true})
+        // }
+        // if (state.call?.state === 'Connected' ) {
+        //   if (state.devices.cameras.length >=0) {
+        //     adapter.setCamera(state.devices.cameras[0])
+        //   }
+        //   if (state.devices.microphones.length >= 0){
+        //     adapter.setMicrophone(state.devices.microphones[1])
+        //   }
+        // }
       });
-      return adapter;
+      adapter.joinCall();
+
+      return new Promise((resolve, reject) => resolve(adapter));
     },
     [callIdRef]
   );
@@ -149,6 +168,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
+  }
+
+  if (callEnded) {
+    return <div>ended</div>;
   }
 
   return (
