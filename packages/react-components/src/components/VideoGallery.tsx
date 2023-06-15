@@ -506,7 +506,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
           menuKind={
-            remoteVideoTileMenuOptions
+            participant.userId === localParticipant.userId
+              ? undefined
+              : remoteVideoTileMenuOptions
               ? remoteVideoTileMenuOptions.kind === 'drawer'
                 ? 'drawer'
                 : 'contextual'
@@ -531,6 +533,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
       remoteVideoViewOptions,
+      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
@@ -566,6 +569,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const layoutProps = useMemo(
     () => ({
       remoteParticipants,
+      localParticipant,
       screenShareComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
@@ -581,6 +585,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }),
     [
       remoteParticipants,
+      localParticipant,
       screenShareComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,

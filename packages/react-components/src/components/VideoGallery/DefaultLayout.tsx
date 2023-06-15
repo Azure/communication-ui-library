@@ -29,6 +29,7 @@ export type DefaultLayoutProps = LayoutProps;
 export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   const {
     remoteParticipants = [],
+    localParticipant,
     dominantSpeakers,
     localVideoComponent,
     screenShareComponent,
@@ -52,6 +53,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   const childrenPerPage = useRef(4);
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
+    localParticipant,
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
