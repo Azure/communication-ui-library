@@ -2456,7 +2456,7 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = CustomFileMetadata | TeamsInteropFileMetadata;
+export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata;
 
 // @beta (undocumented)
 export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
@@ -2654,9 +2654,6 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
-
-// @beta (undocumented)
-export const isTeamsInteropFileMetadata: (fileMetadata: FileMetadata) => fileMetadata is TeamsInteropFileMetadata;
 
 // @public
 export interface JumpToNewMessageButtonProps {

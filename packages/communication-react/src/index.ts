@@ -280,8 +280,7 @@ export type {
   FileMetadataAttachmentType,
   AttachmentDownloadResult,
   TeamsInteropFileMetadata,
-  CustomFileMetadata,
-  isTeamsInteropFileMetadata
+  CustomFileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';

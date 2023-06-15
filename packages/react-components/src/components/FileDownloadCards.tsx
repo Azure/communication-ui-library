@@ -92,7 +92,10 @@ export type FileMetadata =
  * @returns TeamsInteropFileMetadata
  */
 export const isTeamsInteropFileMetadata = (fileMetadata: FileMetadata): fileMetadata is TeamsInteropFileMetadata => {
-  return (fileMetadata as TeamsInteropFileMetadata).id !== undefined;
+  return (
+    (fileMetadata as TeamsInteropFileMetadata).attachmentType === 'fileSharing' ||
+    (fileMetadata as TeamsInteropFileMetadata).attachmentType === 'teamsInlineImage'
+  );
 };
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
