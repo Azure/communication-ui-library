@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, FileMetadata, TeamsInteropFileMetadata } from './FileDownloadCards';
+import { AttachmentDownloadResult, FileMetadata, isTeamsInteropFileMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -218,9 +218,10 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
+      const url = isTeamsInteropFileMetadata(attachment) ? attachment.previewUrl ?? '' : '';
       return [
         {
-          blobUrl: (attachment as TeamsInteropFileMetadata).previewUrl ?? ''
+          blobUrl: url
         }
       ];
     };
@@ -287,9 +288,10 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
+      const url = isTeamsInteropFileMetadata(attachment) ? attachment.previewUrl ?? '' : '';
       return [
         {
-          blobUrl: (attachment as TeamsInteropFileMetadata).previewUrl ?? ''
+          blobUrl: url
         }
       ];
     };

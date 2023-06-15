@@ -1193,7 +1193,7 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta (undocumented)
+// @beta
 export const isTeamsInteropFileMetadata: (fileMetadata: FileMetadata) => fileMetadata is TeamsInteropFileMetadata;
 
 // @public

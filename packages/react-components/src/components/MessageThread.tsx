@@ -63,7 +63,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, TeamsInteropFileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler, isTeamsInteropFileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -843,19 +843,24 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
+      if (!isTeamsInteropFileMetadata(attachment)) {
+        // Break out early if the attachment is not a TeamsInteropFileMetadata
+        return;
+      }
+
       if (
         !onFetchAttachments ||
-        (attachment as TeamsInteropFileMetadata).id in inlineAttachments ||
-        (attachment as TeamsInteropFileMetadata).attachmentType !== 'teamsInlineImage'
+        attachment.id in inlineAttachments ||
+        attachment.attachmentType !== 'teamsInlineImage'
       ) {
         return;
       }
-      setInlineAttachments((prev) => ({ ...prev, [(attachment as TeamsInteropFileMetadata).id]: '' }));
+      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
       const attachmentDownloadResult = await onFetchAttachments(attachment);
       if (attachmentDownloadResult[0]) {
         setInlineAttachments((prev) => ({
           ...prev,
-          [(attachment as TeamsInteropFileMetadata).id]: attachmentDownloadResult[0].blobUrl
+          [attachment.id]: attachmentDownloadResult[0].blobUrl
         }));
       }
     },

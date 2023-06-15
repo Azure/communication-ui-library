@@ -87,6 +87,7 @@ export type FileMetadata =
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
+ * Returns true if the file metadata is of type {@link TeamsInteropFileMetadata}.
  * @beta
  * @param fileMetadata
  * @returns TeamsInteropFileMetadata
