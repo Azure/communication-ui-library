@@ -44,7 +44,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const videoBackgroundImages = [
       {
         key: 'ab1',
-        url: '/backgrounds/abstract1.jpg',
+        url: '/backgrounds/contoso.png',
         tooltipText: 'Custom Background'
       },
       {
