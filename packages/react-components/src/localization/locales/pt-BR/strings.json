@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "O microfone foi desligado",
     "offSplitButtonMicrophonePrimaryAction": "Desativar mudo do microfone",
     "onSplitButtonMicrophonePrimaryAction": "Ativar mudo do microfone",
-    "micPrimaryActionSplitButtonTitle": "Usar o microfone"
+    "microphonePrimaryActionSplitButtonTitle": "Usar o microfone"
   },
   "devicesButton": {
     "label": "Dispositivos",
@@ -153,7 +153,7 @@
     "muteGeneric": "Falha ao ativar mudo do microfone",
     "unmuteGeneric": "Falha ao desativar mudo do microfone",
     "speakingWhileMuted": "O microfone está com o mudo ativado",
-    "startScreenShareGeneric": "Falha ao iniciar o compartilhamento de tela",
+    "startScreenShareGeneric": "Ocorreu um problema ao iniciar o compartilhamento de tela.",
     "stopScreenShareGeneric": "Falha ao interromper o compartilhamento de tela",
     "callNetworkQualityLow": "A qualidade da rede é baixa.",
     "callNoSpeakerFound": "Nenhum alto-falante ou fone de ouvido encontrado. Conecte um dispositivo de áudio para ouvir a chamada.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Fechar",
     "failedToJoinCallGeneric": "Ocorreu um erro ao ingressar na chamada.",
     "failedToJoinCallInvalidMeetingLink": "Não é possível ingressar na Reunião. Link Inválido.",
-    "startScreenSharingGeneric": "Ocorreu um problema ao iniciar o compartilhamento de tela.",
     "cameraFrozenForRemoteParticipants": "Os usuários na chamada estão enfrentando problemas para ver seu vídeo. Verifique seus dispositivos e a rede.",
     "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo."
   },

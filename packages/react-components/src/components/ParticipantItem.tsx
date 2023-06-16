@@ -239,7 +239,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       className={mergeStyles(
         participantItemContainerStyle({
           localparticipant: me,
-          clickable: !!menuItems
+          clickable: !!menuItems && menuItems.length > 0
         }),
         styles?.root
       )}

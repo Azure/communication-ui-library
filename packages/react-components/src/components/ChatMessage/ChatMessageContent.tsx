@@ -218,10 +218,10 @@ const processMention = (props: ChatMessageContentProps): ProcessingInstructionTy
   },
   processNode: (node) => {
     if (props.mentionDisplayOptions?.onRenderMention) {
-      const { id, displaytext } = node.attribs;
+      const { id } = node.attribs;
       const mention: Mention = {
         id: id,
-        displayText: displaytext
+        displayText: node.children[0]?.data ?? ''
       };
       return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
     }

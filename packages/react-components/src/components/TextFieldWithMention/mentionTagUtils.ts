@@ -652,7 +652,7 @@ export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResu
       newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
     } else {
-      for (let i = 1; i < newTextLength && oldTextLength - i >= changeStart; i++) {
+      for (let i = 0; i < newTextLength && oldTextLength - i >= changeStart; i++) {
         newChangeEnd = newTextLength - i - 1;
         oldChangeEnd = oldTextLength - i - 1;
 
@@ -673,7 +673,7 @@ export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResu
       newChangeEnd = newTextLength;
       oldChangeEnd = oldTextLength;
     } else {
-      for (let i = 1; i < oldTextLength && newTextLength - i >= changeStart; i++) {
+      for (let i = 0; i < oldTextLength && newTextLength - i >= changeStart; i++) {
         newChangeEnd = newTextLength - i - 1;
         oldChangeEnd = oldTextLength - i - 1;
         if (newText[newChangeEnd] !== oldText[oldChangeEnd]) {
@@ -687,7 +687,7 @@ export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResu
     }
   } else {
     // replacement
-    for (let i = 1; i < oldTextLength && oldTextLength - i >= changeStart; i++) {
+    for (let i = 0; i < oldTextLength && oldTextLength - i >= changeStart; i++) {
       newChangeEnd = newTextLength - i - 1;
       oldChangeEnd = oldTextLength - i - 1;
 
@@ -717,9 +717,8 @@ export const findStringsDiffIndexes = (props: DiffIndexesProps): DiffIndexesResu
  */
 export const htmlStringForMentionSuggestion = (suggestion: Mention, localeStrings: ComponentStrings): string => {
   const idHTML = ' id="' + suggestion.id + '"';
-  const displayTextHTML = ' displayText="' + suggestion.displayText + '"';
   const displayText = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
-  return '<' + MSFT_MENTION_TAG + idHTML + displayTextHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
+  return '<' + MSFT_MENTION_TAG + idHTML + '>' + displayText + '</' + MSFT_MENTION_TAG + '>';
 };
 
 /**

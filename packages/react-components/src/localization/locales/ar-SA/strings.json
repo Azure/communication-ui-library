@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "تم إيقاف الميكروفون",
     "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم صوت الميكروفون",
     "onSplitButtonMicrophonePrimaryAction": "كتم صوت الميكروفون",
-    "micPrimaryActionSplitButtonTitle": "استخدام الميكروفون"
+    "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون"
   },
   "devicesButton": {
     "label": "الأجهزة",
@@ -153,7 +153,7 @@
     "muteGeneric": "فشل كتم صوت الميكروفون",
     "unmuteGeneric": "فشل إلغاء كتم صوت الميكروفون",
     "speakingWhileMuted": "تم كتم صوت الميكروفون",
-    "startScreenShareGeneric": "فشل تشغيل مشاركة الشاشة",
+    "startScreenShareGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
     "stopScreenShareGeneric": "فشل إيقاف مشاركة الشاشة",
     "callNetworkQualityLow": "جودة الشبكة مقبولة.",
     "callNoSpeakerFound": "لم يتم العثور على سماعات أو سماعات رأس. قم بتوصيل جهاز صوت لسماع المكالمة.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "إغلاق",
     "failedToJoinCallGeneric": "فشل في الانضمام إلى المكالمة.",
     "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
-    "startScreenSharingGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
     "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
     "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو."
   },

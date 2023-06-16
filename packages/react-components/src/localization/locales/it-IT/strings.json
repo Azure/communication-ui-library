@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Il microfono è stato disattivato",
     "offSplitButtonMicrophonePrimaryAction": "Riattiva microfono",
     "onSplitButtonMicrophonePrimaryAction": "Disattiva microfono",
-    "micPrimaryActionSplitButtonTitle": "Usa il microfono"
+    "microphonePrimaryActionSplitButtonTitle": "Usa il microfono"
   },
   "devicesButton": {
     "label": "Dispositivi",
@@ -153,7 +153,7 @@
     "muteGeneric": "Non è stato possibile disattivare l'audio del microfono",
     "unmuteGeneric": "Non è stato possibile riattivare l'audio del microfono",
     "speakingWhileMuted": "Il microfono è disattivato",
-    "startScreenShareGeneric": "Non è stato possibile avviare la condivisione dello schermo",
+    "startScreenShareGeneric": "Si è verificato un problema durante l'avvio della condivisione dello schermo.",
     "stopScreenShareGeneric": "Non è stato possibile arrestare la condivisione dello schermo",
     "callNetworkQualityLow": "La qualità della rete è bassa.",
     "callNoSpeakerFound": "Non sono stati trovati altoparlanti o cuffie. Connetti un dispositivo audio per ascoltare la chiamata.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Chiudi",
     "failedToJoinCallGeneric": "Non è stato possibile partecipare alla chiamata.",
     "failedToJoinCallInvalidMeetingLink": "Impossibile partecipare alla riunione. Collegamento non valido.",
-    "startScreenSharingGeneric": "Si è verificato un problema durante l'avvio della condivisione dello schermo.",
     "cameraFrozenForRemoteParticipants": "Gli utenti della chiamata hanno problemi a visualizzare il video. Controllare i dispositivi e la rete.",
     "unableToStartVideoEffect": "Non è possibile applicare l'effetto video."
   },
