@@ -6,7 +6,7 @@ export {
   fromFlatCommunicationIdentifier,
   toFlatCommunicationIdentifier,
   _toCommunicationIdentifier,
-  isValidIdentifier
+  _isValidIdentifier
 } from './identifier';
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';

@@ -36,7 +36,7 @@ import {
   convertFileUploadsUiStateToMessageMetadata
 } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
-import { isValidIdentifier } from '@internal/acs-ui-common';
+import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { FileMetadata } from '@internal/react-components';
@@ -518,7 +518,7 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
-  if (!isValidIdentifier(userId)) {
+  if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
 

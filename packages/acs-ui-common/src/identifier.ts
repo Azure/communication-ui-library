@@ -50,9 +50,9 @@ export const _toCommunicationIdentifier = (id: string | CommunicationIdentifier)
 /**
  * Check if an object is identifier.
  *
- * @public
+ * @internal
  */
-export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean => {
+export const _isValidIdentifier = (identifier: CommunicationIdentifier): boolean => {
   return (
     isCommunicationUserIdentifier(identifier) ||
     isPhoneNumberIdentifier(identifier) ||
