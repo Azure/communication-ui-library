@@ -14,7 +14,7 @@ import {
   Stack,
   Text
 } from '@fluentui/react';
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useId, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -125,6 +125,11 @@ export interface ParticipantItemProps {
    * For example, `strings.participantStateConnecting` will be used if `participantState` is `Connecting`.
    */
   participantState?: ParticipantState;
+  /**
+   * Optional aria property that prefixes the ParticipantItems aria content
+   * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
+   */
+  ariaLabelledBy?: string;
 }
 
 /**
@@ -154,6 +159,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
+  const uniqueId = useId();
 
   const strings = { ...localeStrings, ...props.strings };
 
@@ -258,6 +264,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           })`,
           alignItems: 'center'
         })}
+        id={uniqueId}
+        aria-labelledby={`${props.ariaLabelledBy} ${uniqueId}`}
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
