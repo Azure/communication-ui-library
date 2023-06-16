@@ -100,6 +100,15 @@ export class MockCallAdapter implements CallAdapter {
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
+  disposeScreenShareStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  disposeLocalVideoStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  disposeRemoteVideoStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   askDevicePermission(constrain: PermissionConstraints): Promise<void> {
     throw Error('askDevicePermission not implemented');
