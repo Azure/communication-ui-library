@@ -134,7 +134,7 @@ describe('SendBox should return correct value with a selected mention', () => {
 });
 
 /* @conditional-compile-remove(mention) */
-describe('Clicks should select mentions by words', () => {
+describe('Clicks/Touch should select mention', () => {
   const suggestions: Mention[] = [
     {
       id: '1',
@@ -168,6 +168,30 @@ describe('Clicks should select mentions by words', () => {
     const contextMenuItem = await screen.findByText(suggestions[0].displayText);
     expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
     fireEvent.click(contextMenuItem);
+  };
+
+  const triggerSelectionEvent = async (
+    pointer: string,
+    target: HTMLInputElement,
+    selectionStartIndex: number,
+    selectionEndIndex: number
+  ): Promise<void> => {
+    await userEvent.pointer([
+      // Set initial position, start selection
+      {
+        keys: '[' + pointer + '>]',
+        target: target,
+        offset: selectionStartIndex
+      },
+      // Set a new position
+      {
+        offset: selectionEndIndex
+      },
+      // Release a mouse button
+      {
+        keys: '[/' + pointer + ']'
+      }
+    ]);
   };
 
   const inputSetup = async (input: HTMLInputElement): Promise<void> => {
@@ -247,6 +271,32 @@ describe('Clicks should select mentions by words', () => {
     expect(input.selectionStart).toBe(0);
     expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
   });
+
+  test('Mouse selection of first word in a mention should select only first word in the mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
+    // Select indexes 6-8
+    await triggerSelectionEvent('MouseLeft', input, 6, 8);
+    // Text is 'Hi *@Test User1', indexes of '*@Test' are 3-9
+    expect(input.selectionStart).toBe(3);
+    expect(input.selectionEnd).toBe(9);
+  });
+
+  test('Mouse selection of second word in a mention should select only second word in the mention', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await inputSetup(input);
+    // Select indexes 6-8
+    await triggerSelectionEvent('MouseLeft', input, 11, 13);
+    // Text is 'Hi *@Test User1', indexes of 'User1' are 9-159
+    expect(input.selectionStart).toBe(9);
+    expect(input.selectionEnd).toBe(15);
+  });
+
+  //Touch selection should be added when https://github.com/testing-library/user-event/issues/880 is solved
 
   test('Tap on first word in mention should select mention', async () => {
     renderSendBox();
