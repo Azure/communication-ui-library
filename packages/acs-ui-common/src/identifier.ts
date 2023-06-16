@@ -1,7 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CommunicationIdentifier, createIdentifierFromRawId, getIdentifierRawId } from '@azure/communication-common';
+import {
+  CommunicationIdentifier,
+  createIdentifierFromRawId,
+  getIdentifierRawId,
+  isCommunicationUserIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier,
+  isUnknownIdentifier
+} from '@azure/communication-common';
 
 /**
  * A string representation of a {@link @azure/communication-common#CommunicationIdentifier}.
@@ -37,4 +45,18 @@ export const _toCommunicationIdentifier = (id: string | CommunicationIdentifier)
     return fromFlatCommunicationIdentifier(id);
   }
   return id;
+};
+
+/**
+ * Check if an object is identifier.
+ *
+ * @public
+ */
+export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean => {
+  return (
+    isCommunicationUserIdentifier(identifier) ||
+    isPhoneNumberIdentifier(identifier) ||
+    isMicrosoftTeamsUserIdentifier(identifier) ||
+    isUnknownIdentifier(identifier)
+  );
 };
