@@ -78,11 +78,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
    * For some components which do not strictly follow the order of the array, we might
    * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
    * this case when those components are here
-   * Note: If for some reason the current number of videos rendered is more than the maximum allowed, 4 videos will be rendered
    */
-  const [indexesToRender, setIndexesToRender] = useState<number[]>([
-    ...Array(Math.max(maxRemoteVideoStreams - activeVideoStreams, 4)).keys()
-  ]);
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
   const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
