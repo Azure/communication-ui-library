@@ -63,8 +63,8 @@ export const localVideoTileContainerStyle = (
   localVideoTileSizeRem: { width: number; height: number }
 ): IStyle => {
   return {
-    minWidth: `${localVideoTileSizeRem.width}rem`,
-    minHeight: `${localVideoTileSizeRem.height}rem`,
+    width: `${localVideoTileSizeRem.width}rem`,
+    height: `${localVideoTileSizeRem.height}rem`,
     position: 'absolute',
     bottom: `${localVideoTileOuterPaddingRem}rem`,
     borderRadius: theme.effects.roundedCorner4,

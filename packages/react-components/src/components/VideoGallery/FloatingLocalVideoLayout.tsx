@@ -139,7 +139,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryTiles.length > 0 && overflowGalleryPosition === 'VerticalRight') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'VerticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
@@ -147,20 +147,21 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     /*@conditional-compile-remove(click-to-call) */
-    if (overflowGalleryTiles.length > 0 && overflowGalleryPosition === 'HorizontalBottom') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'HorizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
     return LARGE_FLOATING_MODAL_SIZE_REM;
   }, [
     overflowGalleryTiles.length,
     isNarrow,
+    screenShareComponent,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   ]);
 
   const wrappedLocalVideoComponent =
-    localVideoComponent && shouldFloatLocalVideo ? (
+    (localVideoComponent && shouldFloatLocalVideo) || (screenShareComponent && localVideoComponent) ? (
       // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
       showCameraSwitcherInLocalPreview ? (
         <Stack
@@ -171,7 +172,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         >
           {localVideoComponent}
         </Stack>
-      ) : overflowGalleryTiles.length > 0 ? (
+      ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
         <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem))}>
           {localVideoComponent}
         </Stack>
@@ -187,7 +188,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
-    if (overflowGalleryTiles.length === 0) {
+    if (overflowGalleryTiles.length === 0 && !screenShareComponent) {
       return null;
     }
     return (
@@ -211,6 +212,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   }, [
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
+    screenShareComponent,
     overflowGalleryTiles,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,

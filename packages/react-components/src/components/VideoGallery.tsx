@@ -391,7 +391,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     return (
-      <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
+      <Stack
+        style={{ width: '100%', height: '100%' }}
+        key="local-video-tile-key"
+        tabIndex={0}
+        aria-label={strings.localVideoMovementLabel}
+        role={'dialog'}
+      >
         <_LocalVideoTile
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
