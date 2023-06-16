@@ -127,7 +127,10 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && indexesToRender.includes(i) && activeVideoStreams++ < maxRemoteVideoStreams
+        ? p.videoStream?.isAvailable &&
+            indexesToRender &&
+            indexesToRender.includes(i) &&
+            activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
   });
