@@ -140,7 +140,9 @@ type GetCallCompositePageFunction = ((
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
     },
-    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState,
+    incomingCallToAccept?: string,
+    incomingWaitingMode?: boolean
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -156,16 +158,21 @@ type GetCallCompositePageFunction = ((
  * @private
  */
 export const getCallCompositePage: GetCallCompositePageFunction = (
-  call,
-  previousCall?,
-  unsupportedBrowserInfo?,
-  transferCall?: CallState
+  call: CallState | undefined,
+  previousCall: CallState | undefined,
+  unsupportedBrowserInfo?: {
+    environmentInfo?: EnvironmentInfo;
+    unsupportedBrowserVersionOptedIn?: boolean;
+  },
+  transferCall?: CallState,
+  incomingCallToAccept?: string,
+  incomingWaitingMode?: string
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
     isUnsupportedEnvironment(
-      unsupportedBrowserInfo.environmentInfo,
-      unsupportedBrowserInfo.unsupportedBrowserVersionOptedIn
+      unsupportedBrowserInfo?.environmentInfo,
+      unsupportedBrowserInfo?.unsupportedBrowserVersionOptedIn
     )
   ) {
     return 'unsupportedEnvironment';
@@ -174,6 +181,10 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   /* @conditional-compile-remove(call-transfer) */
   if (transferCall !== undefined) {
     return 'transferring';
+  }
+
+  if (incomingCallToAccept) {
+    return 'configuration';
   }
 
   if (call) {
@@ -223,6 +234,10 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
         }
         return 'leftCall';
     }
+  }
+
+  if (incomingWaitingMode) {
+    return 'waitingForCall';
   }
 
   // No call state - show starting page (configuration)

@@ -1,8 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
+import { _isInCall, _incomingCallPopupSelector } from '@internal/calling-component-bindings';
+import {
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  useTheme,
+  IncomingCallPopup
+} from '@internal/react-components';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -41,6 +46,9 @@ import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
+import { useAdaptedSelector } from './hooks/useAdaptedSelector';
+import { useHandlers } from './hooks/useHandlers';
+import { CommunicationIdentifier, CommunicationUserIdentifier } from '@azure/communication-common';
 
 /**
  * Props for {@link CallComposite}.
@@ -236,6 +244,14 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+  const inboundCallingProps = useAdaptedSelector(_incomingCallPopupSelector);
+  const inboundCallingHandlers = useHandlers(IncomingCallPopup);
+  const callIdToAccept = useSelector((state) => state.incomingCallIdToJoin);
+  const incomingCallsToShow = inboundCallingProps.incomingCalls?.filter((call) => call.id !== callIdToAccept);
+
+  const userId = useSelector((state) => state.userId);
+
+  console.log('current userId is:' + (userId as CommunicationUserIdentifier).communicationUserId);
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
@@ -267,10 +283,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */
   switch (page) {
-    case 'roomNotFound':
+    case 'waitingForCall':
       pageElement = (
         <NoticePage
           iconName="NoticePageInvalidRoom"
+          title={'Waiting for incoming calls'}
+          dataUiId="waiting-for-call"
+          disableStartCallButton={true}
+        />
+      );
+      break;
+    case 'roomNotFound':
+      pageElement = (
+        <NoticePage
           title={locale.strings.call.roomNotFoundTitle}
           moreDetails={locale.strings.call.roomNotFoundDetails}
           dataUiId={'room-not-found-page'}
@@ -447,6 +472,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   return (
     <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
       {retElement}
+      <IncomingCallPopup incomingCalls={incomingCallsToShow} {...inboundCallingHandlers} />
     </SidePaneProvider>
   );
 };

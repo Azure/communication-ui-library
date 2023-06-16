@@ -3,10 +3,14 @@
 
 import {
   AudioDeviceInfo,
+  AudioOptions,
   Call,
+  IncomingCall,
   LocalVideoStream,
   StartCallOptions,
-  VideoDeviceInfo
+  TeamsIncomingCall,
+  VideoDeviceInfo,
+  VideoOptions
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -15,7 +19,14 @@ import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
+import {
+  CallAgentCommon,
+  CallCommon,
+  CreateViewResult,
+  DeclarativeCallAgent,
+  StatefulCallClient,
+  StatefulDeviceManager
+} from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
@@ -89,6 +100,7 @@ export interface CommonCallingHandlers {
   onSetSpokenLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(close-captions) */
   onSetCaptionLanguage: (language: string) => Promise<void>;
+  onAcceptIncomingCall: (incomingCallId: string) => Promise<CallCommon | undefined>;
 }
 
 /**
@@ -115,6 +127,7 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
+    callAgent: CallAgentCommon | undefined,
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined
   ): CommonCallingHandlers => {
@@ -384,6 +397,17 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
 
+    const onAcceptIncomingCall = async (
+      incomingCallId: string,
+      options?: { audioOptions: AudioOptions; videoOptions: VideoOptions }
+    ): Promise<CallCommon | undefined> => {
+      const statefulCallAgent = callAgent as DeclarativeCallAgent;
+      const callToAccept = statefulCallAgent.incomingCalls.find((call) => call.id === incomingCallId) as
+        | TeamsIncomingCall
+        | IncomingCall;
+      return await callToAccept?.accept(options);
+    };
+
     const notImplemented = (): any => {
       throw new Error('Not implemented, cannot call a method from an abstract object');
     };
@@ -482,7 +506,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(close-captions) */
       onSetCaptionLanguage,
       /* @conditional-compile-remove(close-captions) */
-      onSetSpokenLanguage
+      onSetSpokenLanguage,
+      onAcceptIncomingCall
     };
   }
 );

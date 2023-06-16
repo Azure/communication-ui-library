@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
+import { CallCommon, CallState, DeviceManagerState, IncomingCallState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
@@ -58,7 +58,8 @@ export type CallCompositePage =
   | 'removedFromCall'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+  | /* @conditional-compile-remove(call-transfer) */ 'transferring'
+  | 'waitingForCall';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -84,6 +85,7 @@ export type CallAdapterUiState = {
   page: CallCompositePage;
   /* @conditional-compile-remove(unsupported-browser) */
   unsupportedBrowserVersionsAllowed?: boolean;
+  incomingCallIdToJoin?: string;
 };
 
 /**
@@ -96,6 +98,9 @@ export type CallAdapterClientState = {
   displayName?: string;
   call?: CallState;
   devices: DeviceManagerState;
+  incomingCalls: {
+    [key: string]: IncomingCallState;
+  };
   endedCall?: CallState;
   isTeamsCall: boolean;
   /**
@@ -819,6 +824,7 @@ export interface CommonCallAdapter
    * @beta
    */
   startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
+  acceptIncomingCall(id: string): Promise<undefined>;
 }
 
 /**

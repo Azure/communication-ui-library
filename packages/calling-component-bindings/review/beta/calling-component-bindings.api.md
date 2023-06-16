@@ -15,6 +15,7 @@ import { BackgroundReplacementConfig } from '@azure/communication-calling-effect
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
+import { CallCommon } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
@@ -137,6 +138,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
     // (undocumented)
+    onAcceptIncomingCall: (incomingCallId: string) => Promise<CallCommon | undefined>;
+    // (undocumented)
     onAddParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     // (undocumented)
     onAddParticipant(participant: PhoneNumberIdentifier, options: AddPhoneNumberOptions): Promise<void>;
@@ -240,6 +243,22 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
 
 // @public
 export const holdButtonSelector: HoldButtonSelector;
+
+// @internal (undocumented)
+export type _IncomingCallPopupSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    incomingCalls?: {
+        id: string;
+        callInfo: {
+            id?: string;
+            displayName?: string;
+        };
+        startTime: Date;
+        endTime?: Date;
+    }[];
+};
+
+// @internal
+export const _incomingCallPopupSelector: _IncomingCallPopupSelector;
 
 // @internal
 export const _isInCall: (callStatus?: CallState | undefined) => boolean;

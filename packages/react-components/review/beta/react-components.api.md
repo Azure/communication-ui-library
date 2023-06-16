@@ -1196,6 +1196,27 @@ export interface _Identifiers {
     videoTile: string;
 }
 
+// Warning: (ae-internal-missing-underscore) The name "IncomingCallPopup" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export const IncomingCallPopup: (props: IncomingCallPopupProps) => JSX.Element;
+
+// Warning: (ae-internal-missing-underscore) The name "IncomingCallPopupProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export type IncomingCallPopupProps = {
+    incomingCalls?: {
+        id: string;
+        callInfo: {
+            id?: string;
+            displayName?: string;
+        };
+        startTime: Date;
+        endTime?: Date;
+    }[];
+    onAcceptIncomingCall: (incomingCallId: string) => Promise<void>;
+};
+
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;

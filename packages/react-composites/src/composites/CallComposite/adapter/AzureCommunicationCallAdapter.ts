@@ -111,10 +111,12 @@ class CallContext {
   private state: CallAdapterState;
   private callId: string | undefined;
   private displayNameModifier: AdapterStateModifier | undefined;
+  private callWaitingMode: boolean | undefined;
 
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
+    callWaitingMode: boolean,
     options?: {
       /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
@@ -128,7 +130,7 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
-      page: 'configuration',
+      page: callWaitingMode ? 'waitingForCall' : 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
@@ -146,6 +148,7 @@ class CallContext {
           this.setState(this.getState());
         })
       : undefined;
+    this.callWaitingMode = callWaitingMode;
   }
 
   private bindPublicMethods(): void {
@@ -179,6 +182,10 @@ class CallContext {
     this.callId = callId;
   }
 
+  public setIncomingCallIdToJoin(callId?: string): void {
+    this.setState({ ...this.state, incomingCallIdToJoin: callId });
+  }
+
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.on('callEnded', handler);
   }
@@ -209,7 +216,9 @@ class CallContext {
       call,
       latestEndedCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      /* @conditional-compile-remove(call-transfer) */ transferCall
+      /* @conditional-compile-remove(call-transfer) */ transferCall,
+      this.state.incomingCallIdToJoin,
+      this.callWaitingMode
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -226,6 +235,7 @@ class CallContext {
         displayName: clientState.callAgent?.displayName,
         call,
         page: newPage,
+        incomingCalls: clientState.incomingCalls,
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors,
@@ -348,7 +358,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       options = { ...options, roleHint: 'Consumer' };
     }
 
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
+    this.context = new CallContext(
+      callClient.getState(),
+      isTeamsMeeting,
+      'kind' in this.locator && this.locator.kind === 'IncomingCallLocator',
+      options
+    );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -494,6 +509,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
+  public async acceptIncomingCall(id: string): Promise<undefined> {
+    return await this.asyncTeeErrorToEventEmitter(async () => {
+      this.call && _isInCall(this.call.state) && this.call?.hold();
+      this.context.setIncomingCallIdToJoin(id);
+      this.call = undefined;
+      this.context.setCurrentCallId(undefined);
+      // Sync client state to make sure correct state being set
+      this.context.updateClientState(this.callClient.getState());
+      return undefined;
+    });
+  }
+
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
@@ -511,7 +538,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       throw new Error('You are already in the call!');
     }
 
-    return this.teeErrorToEventEmitter(() => {
+    return this.teeErrorToEventEmitter(async () => {
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
@@ -525,11 +552,27 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           videoOptions
         });
       }
-      const call = this._joinCall(audioOptions, videoOptions);
+      const incomingCallId = this.context.getState().incomingCallIdToJoin;
+      const call = incomingCallId
+        ? await this._joinIncomingCall(incomingCallId, audioOptions, videoOptions)
+        : this._joinCall(audioOptions, videoOptions);
 
       this.processNewCall(call);
       return call;
     });
+  }
+
+  private async _joinIncomingCall(
+    incomingCallId: string,
+    audioOptions: AudioOptions,
+    videoOptions: VideoOptions
+  ): Promise<CallCommon> {
+    const ret = await this.handlers.onAcceptIncomingCall(incomingCallId, { audioOptions, videoOptions });
+    this.context.setIncomingCallIdToJoin(undefined);
+    if (!ret) {
+      throw new Error('Cannot join the incomingCall, please check the call id is still there!');
+    }
+    return ret;
   }
 
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
@@ -1039,6 +1082,14 @@ export type CallParticipantsLocator = {
 };
 
 /**
+ * @beta
+ */
+export type IncomingCallLocator = {
+  kind: 'IncomingCallLocator';
+  incomingCallIdToAccept?: string;
+};
+
+/**
  * Locator used by {@link createAzureCommunicationCallAdapter} to locate the call to join
  *
  * @public
@@ -1046,6 +1097,7 @@ export type CallParticipantsLocator = {
 export type CallAdapterLocator =
   | TeamsMeetingLinkLocator
   | GroupCallLocator
+  | IncomingCallLocator
   | /* @conditional-compile-remove(rooms) */ RoomCallLocator
   | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
 

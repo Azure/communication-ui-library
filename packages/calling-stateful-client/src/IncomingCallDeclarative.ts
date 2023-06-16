@@ -24,8 +24,10 @@ export class ProxyIncomingCall implements ProxyHandler<DeclarativeIncomingCall> 
   public get<P extends keyof IncomingCall>(target: IncomingCall, prop: P): any {
     switch (prop) {
       case 'accept': {
-        return this._context.withAsyncErrorTeedToState(async function (...args: Parameters<IncomingCall['accept']>) {
-          return await target.accept(...args);
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<IncomingCall['accept']>) => {
+          const ret = await target.accept(...args);
+          this._context.removeIncomingCall(target.id);
+          return ret;
         }, 'IncomingCall.accept');
       }
       case 'reject': {

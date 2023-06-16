@@ -27,6 +27,9 @@ export {
   _changeSpokenLanguageSelector
 } from './captionsSelector';
 
+export { _incomingCallPopupSelector } from './incomingCallPopupSelector';
+export type { _IncomingCallPopupSelector } from './incomingCallPopupSelector';
+
 export type { CallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';

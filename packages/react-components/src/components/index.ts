@@ -239,3 +239,5 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 /* @conditional-compile-remove(close-captions) */
 export * from './CaptionsSettingsModal';
+
+export * from './IncomingCallPopup';

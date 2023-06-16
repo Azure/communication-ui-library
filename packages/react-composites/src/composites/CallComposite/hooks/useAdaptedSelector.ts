@@ -8,7 +8,13 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
-import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
+import {
+  CallErrors,
+  CallState,
+  CallClientState,
+  DeviceManagerState,
+  IncomingCallState
+} from '@internal/calling-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -81,13 +87,16 @@ const memoizeState = memoizeOne(
     userId: CommunicationIdentifierKind,
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
+    incomingCalls: {
+      [key: string]: IncomingCallState;
+    },
     latestErrors: CallErrors,
     displayName?: string,
     alternateCallerId?: string,
     environmentInfo?: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
   ): CallClientState => ({
     userId,
-    incomingCalls: {},
+    incomingCalls: incomingCalls,
     incomingCallsEnded: {},
     callsEnded: {},
     deviceManager,
@@ -108,6 +117,7 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
     compositeState.userId,
     compositeState.devices,
     memoizeCalls(compositeState.call),
+    compositeState.incomingCalls,
     // This is an unsafe type expansion.
     // compositeState.latestErrors can contain properties that are not valid in CallErrors.
     //

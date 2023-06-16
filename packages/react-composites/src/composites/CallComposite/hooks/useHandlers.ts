@@ -132,6 +132,9 @@ const createCompositeHandlers = memoizeOne(
     /* @conditional-compile-remove(close-captions) */
     onSetCaptionLanguage: async (language) => {
       await adapter.setCaptionLanguage(language);
+    },
+    onAcceptIncomingCall: async (incomingCallId) => {
+      return await adapter.acceptIncomingCall(incomingCallId);
     }
   })
 );

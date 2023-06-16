@@ -12,7 +12,8 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState
+  DiagnosticsCallFeatureState,
+  IncomingCallState
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
@@ -197,4 +198,9 @@ export const getSupportedSpokenLanguages = (
   props: CallingBaseSelectorProps
 ): string[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages;
+};
+
+/** @private */
+export const getIncomingCalls = (state: CallClientState): IncomingCallState[] | undefined => {
+  return Object.values(state.incomingCalls ?? {});
 };
