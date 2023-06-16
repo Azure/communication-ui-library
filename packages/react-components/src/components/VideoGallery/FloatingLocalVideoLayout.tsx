@@ -176,7 +176,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           {localVideoComponent}
         </Stack>
       ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem))}>
+        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent))}>
           {localVideoComponent}
         </Stack>
       ) : (
