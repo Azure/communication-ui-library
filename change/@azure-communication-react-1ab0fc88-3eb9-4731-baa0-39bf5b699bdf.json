@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding OVC to stateful client and adding selectors",
+  "packageName": "@azure/communication-react",
+  "email": "vriosrada@microsoft.com",
+  "dependentChangeType": "patch"
+}
