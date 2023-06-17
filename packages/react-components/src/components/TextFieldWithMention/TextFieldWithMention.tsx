@@ -159,8 +159,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       const mention = htmlStringForMentionSuggestion(suggestion, localeStrings);
 
       // update plain text with the mention html text
-      const newPlainText =
-        inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
+      const newPlainText = inputTextValue.substring(0, currentTriggerStartIndex);
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
       const updatedContent = updateHTML({
@@ -565,43 +564,36 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           }
         }
       }
-      let result = '';
-      if (tagsValue.length === 0) {
-        // no tags in the string and newValue should be used as a result string
-        result = newValue;
-      } else {
-        // there are tags in the text value and htmlTextValue is html string
-        // find diff between old and new text
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
-          oldText: inputTextValue,
-          newText: newValue,
-          previousSelectionStart: previousSelectionStartValue,
-          previousSelectionEnd: previousSelectionEndValue,
-          currentSelectionStart: currentSelectionStartValue,
-          currentSelectionEnd: currentSelectionEndValue
-        });
-        const change = newValue.substring(changeStart, newChangeEnd);
-        // get updated html string
-        const updatedContent = updateHTML({
-          htmlText: htmlTextValue,
-          oldPlainText: inputTextValue,
-          newPlainText: newValue,
-          tags: tagsValue,
-          startIndex: changeStart,
-          oldPlainTextEndIndex: oldChangeEnd,
-          change,
-          mentionTrigger: triggerText
-        });
-        result = updatedContent.updatedHTML;
-        // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== undefined) {
-          setCaretIndex(updatedContent.updatedSelectionIndex);
-          setSelectionEndValue(updatedContent.updatedSelectionIndex);
-          setSelectionStartValue(updatedContent.updatedSelectionIndex);
-        }
+
+      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
+        oldText: inputTextValue,
+        newText: newValue,
+        previousSelectionStart: previousSelectionStartValue,
+        previousSelectionEnd: previousSelectionEndValue,
+        currentSelectionStart: currentSelectionStartValue,
+        currentSelectionEnd: currentSelectionEndValue
+      });
+
+      const change = newValue.substring(changeStart, newChangeEnd);
+      const updatedContent = updateHTML({
+        htmlText: htmlTextValue,
+        oldPlainText: inputTextValue,
+        newPlainText: newValue,
+        tags: tagsValue,
+        startIndex: changeStart,
+        oldPlainTextEndIndex: oldChangeEnd,
+        change,
+        mentionTrigger: triggerText
+      });
+
+      // update caret index if needed
+      if (updatedContent.updatedSelectionIndex !== undefined) {
+        setCaretIndex(updatedContent.updatedSelectionIndex);
+        setSelectionEndValue(updatedContent.updatedSelectionIndex);
+        setSelectionStartValue(updatedContent.updatedSelectionIndex);
       }
 
-      onChange && onChange(event, result);
+      onChange && onChange(event, updatedContent.updatedHTML);
     },
     [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
   );
