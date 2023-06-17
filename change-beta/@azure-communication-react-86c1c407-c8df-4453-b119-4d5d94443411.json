@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Complete @azure/communication-calling upgrade to 1.14.1-beta.1",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
