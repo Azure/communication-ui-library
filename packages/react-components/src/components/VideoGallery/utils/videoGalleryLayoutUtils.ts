@@ -28,8 +28,6 @@ export interface OrganizedParticipantsResult {
   overflowGalleryParticipants: VideoGalleryParticipant[];
 }
 
-const DEFAULT_MAX_REMOTE_VIDEOSTREAMS = 4;
-
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
@@ -40,7 +38,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     remoteParticipants = [],
     localParticipant,
     dominantSpeakers = [],
-    maxRemoteVideoStreams = DEFAULT_MAX_REMOTE_VIDEOSTREAMS,
+    maxRemoteVideoStreams,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = []
@@ -55,7 +53,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           participants: videoParticipants,
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
-          maxDominantSpeakers: maxRemoteVideoStreams
+          maxDominantSpeakers: maxRemoteVideoStreams as number
         }).slice(0, maxRemoteVideoStreams);
 
   const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));

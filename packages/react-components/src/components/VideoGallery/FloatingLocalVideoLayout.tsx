@@ -119,9 +119,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
    * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
    * this case when those components are here
    */
-  const [indexesToRender, setIndexesToRender] = useState<number[]>([
-    ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
-  ]);
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
   const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(

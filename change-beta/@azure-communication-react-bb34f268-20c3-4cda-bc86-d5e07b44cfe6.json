@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Get treeshaked build in production mode",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "none"
+}
