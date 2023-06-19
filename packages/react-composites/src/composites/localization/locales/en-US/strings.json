@@ -155,7 +155,8 @@
     "transferPageTransferorText": "Transferring...",
     "transferPageTransferTargetText": "Connecting...",
     "transferPageUnknownTransferorDisplayName": "Unknown",
-    "transferPageUnknownTransferTargetDisplayName": "Unknown"
+    "transferPageUnknownTransferTargetDisplayName": "Unknown",
+    "transferPageNoticeString": "You are being transferred"
   },
   "chat": {
     "chatListHeader": "In this chat",

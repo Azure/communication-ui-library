@@ -3,7 +3,11 @@
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
+/* @conditional-compile-remove(call-transfer) */
+import { Announcer } from '@internal/react-components';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(call-transfer) */
+import { useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallArrangement } from '../components/CallArrangement';
@@ -16,6 +20,7 @@ import {
   avatarStyles,
   defaultPersonaStyles,
   displayNameStyles,
+  pageContainer,
   spinnerStyles,
   statusTextStyles,
   tileContainerStyles,
@@ -45,6 +50,9 @@ export const TransferPage = (
   /* @conditional-compile-remove(call-transfer) */
   const transferCall = useSelector(getTransferCall);
 
+  /* @conditional-compile-remove(call-transfer) */
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = props.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
@@ -68,6 +76,11 @@ export const TransferPage = (
     return 'transferor';
   }, [transferCall, transferTarget?.displayName]);
 
+  /* @conditional-compile-remove(call-transfer) */
+  useEffect(() => {
+    setAnnouncerString(strings.transferPageNoticeString);
+  }, [strings.transferPageNoticeString]);
+
   let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
   if (pageSubject === 'transferTarget') {
@@ -84,37 +97,43 @@ export const TransferPage = (
   }
 
   return (
-    <CallArrangement
-      complianceBannerProps={{ strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={props.options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
-      callControlProps={{
-        options: callControlOptions,
-        increaseFlyoutItemSize: props.mobileView
-      }}
-      mobileView={props.mobileView}
-      modalLayerHostId={props.modalLayerHostId}
-      onRenderGalleryContent={() => (
-        <TransferTile
-          userId={
-            transferTileParticipant ? toFlatCommunicationIdentifier(transferTileParticipant?.identifier) : undefined
-          }
-          displayName={transferParticipantDisplayName}
-          initialsName={transferParticipantDisplayName}
-          /* @conditional-compile-remove(call-transfer) */
-          statusText={
-            pageSubject === 'transferTarget'
-              ? strings.transferPageTransferTargetText
-              : strings.transferPageTransferorText
-          }
-          onRenderAvatar={props.onRenderAvatar}
-          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-        />
-      )}
-      dataUiId={'transfer-page'}
-      updateSidePaneRenderer={props.updateSidePaneRenderer}
-      mobileChatTabHeader={props.mobileChatTabHeader}
-    />
+    <Stack className={mergeStyles(pageContainer)}>
+      {
+        /* @conditional-compile-remove(call-transfer) */
+        <Announcer announcementString={announcerString} ariaLive="polite" />
+      }
+      <CallArrangement
+        complianceBannerProps={{ strings }}
+        // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
+        errorBarProps={props.options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+        callControlProps={{
+          options: callControlOptions,
+          increaseFlyoutItemSize: props.mobileView
+        }}
+        mobileView={props.mobileView}
+        modalLayerHostId={props.modalLayerHostId}
+        onRenderGalleryContent={() => (
+          <TransferTile
+            userId={
+              transferTileParticipant ? toFlatCommunicationIdentifier(transferTileParticipant?.identifier) : undefined
+            }
+            displayName={transferParticipantDisplayName}
+            initialsName={transferParticipantDisplayName}
+            /* @conditional-compile-remove(call-transfer) */
+            statusText={
+              pageSubject === 'transferTarget'
+                ? strings.transferPageTransferTargetText
+                : strings.transferPageTransferorText
+            }
+            onRenderAvatar={props.onRenderAvatar}
+            onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+          />
+        )}
+        dataUiId={'transfer-page'}
+        updateSidePaneRenderer={props.updateSidePaneRenderer}
+        mobileChatTabHeader={props.mobileChatTabHeader}
+      />
+    </Stack>
   );
 };
 
