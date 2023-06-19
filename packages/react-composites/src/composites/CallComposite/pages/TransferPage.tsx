@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Announcer, ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
+import { ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
+/* @conditional-compile-remove(call-transfer) */
+import { Announcer } from '@internal/react-components';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(call-transfer) */
 import { useEffect } from 'react';
@@ -96,7 +98,10 @@ export const TransferPage = (
 
   return (
     <Stack className={mergeStyles(pageContainer)}>
-      <Announcer announcementString={announcerString} ariaLive="polite" />
+      {
+        /* @conditional-compile-remove(call-transfer) */
+        <Announcer announcementString={announcerString} ariaLive="polite" />
+      }
       <CallArrangement
         complianceBannerProps={{ strings }}
         // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
