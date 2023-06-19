@@ -133,7 +133,7 @@ describe('VideoGallery default layout tests', () => {
         layout="default"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        dominantSpeakers={['remoteScreenSharingParticipant', 'remoteVideoParticipant']}
+        dominantSpeakers={['remoteScreenSharingParticipant']}
       />
     );
 

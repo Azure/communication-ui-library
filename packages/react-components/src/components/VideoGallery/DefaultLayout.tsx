@@ -50,6 +50,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
 
   // This is for tracking the number of children in the first page of overflow gallery.
   // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
+  // We need to add the local participant to the pinned participant count so we are placing the speakers correctly.
   const childrenPerPage = useRef(4);
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
@@ -58,7 +59,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
-      ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
+      ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
   });
