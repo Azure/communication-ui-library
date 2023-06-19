@@ -32,7 +32,7 @@ import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 import { useIdentifiers } from '../identifiers';
-import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
+import { localVideoTileContainerStyles, videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
@@ -401,7 +401,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     return (
       <Stack
-        style={{ width: '100%', height: '100%' }}
+        styles={localVideoTileContainerStyles}
         key="local-video-tile-key"
         tabIndex={0}
         aria-label={strings.localVideoMovementLabel}
