@@ -3,7 +3,9 @@
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { Announcer, ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
-import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(call-transfer) */
+import { useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallArrangement } from '../components/CallArrangement';
@@ -46,6 +48,7 @@ export const TransferPage = (
   /* @conditional-compile-remove(call-transfer) */
   const transferCall = useSelector(getTransferCall);
 
+  /* @conditional-compile-remove(call-transfer) */
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
 
   // Reduce the controls shown when mobile view is enabled.
