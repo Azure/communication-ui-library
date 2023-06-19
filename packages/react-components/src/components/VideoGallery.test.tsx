@@ -112,20 +112,12 @@ describe('VideoGallery default layout tests', () => {
     expect(getTiles(getHorizontalGallery(container)).length).toBe(2);
   });
 
-  test('should render remote screenshare and render dominant speaking remote participants in horizontal gallery', () => {
+  test('should render remote screenshare and local participant in overflow gallery', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
     });
     // 8 remote audio participants
     const remoteParticipants = Array.from({ length: 8 }, () => createRemoteParticipant());
-    // 1 remote video participant
-    remoteParticipants.push(
-      createRemoteParticipant({
-        userId: 'remoteVideoParticipant',
-        displayName: 'Remote Video Participant',
-        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
-      })
-    );
     // 1 remote screen sharing participants
     remoteParticipants.push(
       createRemoteParticipant({
@@ -152,10 +144,10 @@ describe('VideoGallery default layout tests', () => {
     expect(horizontalGalleryTiles.length).toBe(2);
     expect(horizontalGalleryTiles.filter(tileIsVideo).length).toBe(1);
 
-    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Remote Screensharing Participant');
-    expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
-    expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Video Participant');
-    expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
+    expect(getDisplayName(horizontalGalleryTiles[0])).toBe('Local Participant');
+    expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(true);
+    expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Screensharing Participant');
+    expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(false);
   });
 });
 
