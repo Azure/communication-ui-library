@@ -455,6 +455,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -499,6 +501,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -543,6 +547,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
