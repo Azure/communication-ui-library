@@ -2,7 +2,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { getBuildFlavor, exec } from './common.mjs';
+import { getBuildFlavor, exec, getExtraEnv } from './common.mjs';
 import { quote } from 'shell-quote';
 
 async function main() {
@@ -11,7 +11,10 @@ async function main() {
       'Can not start storybook in stable flavor environment. Please run `rush switch-flavor:beta` first.'
     );
   }
-  await exec(quote(['npx', 'start-storybook', '-p', '6006', '--no-manager-cache', '--quiet', '--loglevel', 'warn']));
+  await exec(
+    quote(['npx', 'start-storybook', '-p', '6006', '--no-manager-cache', '--quiet', '--loglevel', 'warn']),
+    await getExtraEnv()
+  );
 }
 
 await main();
