@@ -159,15 +159,14 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       const mention = htmlStringForMentionSuggestion(suggestion, localeStrings);
 
       // update plain text with the mention html text
-      const newPlainText = inputTextValue.substring(0, currentTriggerStartIndex);
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
       const updatedContent = updateHTML({
         htmlText: textValue,
         oldPlainText,
-        newPlainText,
         tags: tagsValue,
         startIndex: currentTriggerStartIndex,
+        endIndex: selectionEnd,
         oldPlainTextEndIndex: selectionEnd,
         change: mention,
         mentionTrigger: triggerText
@@ -578,9 +577,9 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       const updatedContent = updateHTML({
         htmlText: htmlTextValue,
         oldPlainText: inputTextValue,
-        newPlainText: newValue,
         tags: tagsValue,
         startIndex: changeStart,
+        endIndex: oldChangeEnd,
         oldPlainTextEndIndex: oldChangeEnd,
         change,
         mentionTrigger: triggerText
@@ -595,7 +594,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
 
       onChange && onChange(event, updatedContent.updatedHTML);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
+    [debouncedQueryUpdate, mentionLookupOptions, onChange, updateMentionSuggestions]
   );
 
   // Adjust the selection range based on a mouse / touch interaction

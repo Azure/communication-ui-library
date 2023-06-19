@@ -289,9 +289,9 @@ const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
 type UpdateHTMLProps = {
   htmlText: string;
   oldPlainText: string;
-  newPlainText: string;
   tags: TagData[];
   startIndex: number;
+  endIndex: number;
   oldPlainTextEndIndex: number;
   change: string;
   mentionTrigger: string;
@@ -305,15 +305,15 @@ type UpdateHTMLProps = {
  * @returns Updated HTML and selection index if the selection index should be set.
  */
 export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex?: number } => {
-  const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
-    props;
+  const { htmlText, oldPlainText, tags, startIndex, endIndex, oldPlainTextEndIndex, change, mentionTrigger } = props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
     const changeWithSkippedChars = escapeHTMLChars(change);
-    if (changeWithSkippedChars) {
-      return { updatedHTML: htmlText + changeWithSkippedChars, updatedSelectionIndex: undefined };
-    }
-    return { updatedHTML: escapeHTMLChars(newPlainText) + change, updatedSelectionIndex: undefined };
+    const updatedHTML =
+      escapeHTMLChars(oldPlainText.substring(0, startIndex)) +
+      changeWithSkippedChars +
+      oldPlainText.substring(endIndex);
+    return { updatedHTML, updatedSelectionIndex: endIndex + change.length };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -323,7 +323,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
   // e.g.: change is after and partially in tag => change will be added after the tag and outdated text in the tag will be removed
   // e.g.: change is on the beginning of the tag => change will be added before the tag
   // e.g.: change is on the end of the tag => change will be added to the tag if it's not mention and after the tag if it's mention
-  let processedChange = escapeHTMLChars(change) || change;
+  let processedChange = escapeHTMLChars(change);
 
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
@@ -386,20 +386,19 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             if (startIndex !== tag.plainTextBeginIndex && startIndex !== closingTagInfo.plainTextEndIndex) {
               // mention tag should be deleted when user tries to edit it in the middle
               result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex) + processedChange;
-              changeNewEndIndex = tag.plainTextBeginIndex + revertEscapedHtmlCharacters(processedChange).length;
+              changeNewEndIndex = tag.plainTextBeginIndex + unEscapeHtmlCharacters(processedChange).length;
               lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
             } else if (startIndex === tag.plainTextBeginIndex) {
               // non empty change at the beginning of the mention tag to be added before the mention tag
               result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex) + processedChange;
-              changeNewEndIndex = tag.plainTextBeginIndex + revertEscapedHtmlCharacters(processedChange).length;
+              changeNewEndIndex = tag.plainTextBeginIndex + unEscapeHtmlCharacters(processedChange).length;
               lastProcessedHTMLIndex = tag.openTagIndex;
             } else if (startIndex === closingTagInfo.plainTextEndIndex) {
               // non empty change at the end of the mention tag to be added after the mention tag
               result +=
                 htmlText.substring(lastProcessedHTMLIndex, closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength) +
                 processedChange;
-              changeNewEndIndex =
-                closingTagInfo.plainTextEndIndex + revertEscapedHtmlCharacters(processedChange).length;
+              changeNewEndIndex = closingTagInfo.plainTextEndIndex + unEscapeHtmlCharacters(processedChange).length;
               lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
             }
             processedChange = '';
@@ -431,9 +430,9 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           const updatedContent = updateHTML({
             htmlText: tag.content,
             oldPlainText,
-            newPlainText,
             tags: tag.subTags,
             startIndex,
+            endIndex,
             oldPlainTextEndIndex,
             change: processedChange,
             mentionTrigger
@@ -484,9 +483,9 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           const updatedContent = updateHTML({
             htmlText: tag.content,
             oldPlainText,
-            newPlainText,
             tags: tag.subTags,
             startIndex,
+            endIndex,
             oldPlainTextEndIndex,
             change: '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
@@ -542,9 +541,9 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           const updatedContent = updateHTML({
             htmlText: tag.content,
             oldPlainText,
-            newPlainText,
             tags: tag.subTags,
             startIndex,
+            endIndex,
             oldPlainTextEndIndex,
             change: processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
             mentionTrigger
@@ -793,9 +792,9 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
       if (parseIndex !== 0) {
         // Add the remaining text to the plain text representation
         const newText = text.substring(parseIndex);
-        plainTextRepresentation += revertEscapedHtmlCharacters(newText) || newText;
+        plainTextRepresentation += unEscapeHtmlCharacters(newText);
       } else {
-        plainTextRepresentation = revertEscapedHtmlCharacters(text) || text;
+        plainTextRepresentation = unEscapeHtmlCharacters(text);
       }
       break;
     }
@@ -803,7 +802,7 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
     if (foundHtmlTag.type === 'open' || foundHtmlTag.type === 'self-closing') {
       const nextTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
       // Add the plain text between the last tag and this one found
-      plainTextRepresentation += revertEscapedHtmlCharacters(text.substring(parseIndex, foundHtmlTag.startIdx));
+      plainTextRepresentation += unEscapeHtmlCharacters(text.substring(parseIndex, foundHtmlTag.startIdx));
       nextTag.plainTextBeginIndex = plainTextRepresentation.length;
 
       if (foundHtmlTag.type === 'open') {
@@ -836,14 +835,14 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
         }
 
         if (!currentOpenTag.subTags) {
-          plainTextRepresentation += revertEscapedHtmlCharacters(currentOpenTag.content);
+          plainTextRepresentation += unEscapeHtmlCharacters(currentOpenTag.content);
         } else if (currentOpenTag.subTags.length > 0) {
           // Add text after the last tag
           const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1];
           const startOfRemainingText =
             (lastSubTag.closingTagIndex ?? lastSubTag.openTagIndex) + lastSubTag.tagType.length + 3;
           const trailingText = currentOpenTag.content.substring(startOfRemainingText);
-          plainTextRepresentation += revertEscapedHtmlCharacters(trailingText);
+          plainTextRepresentation += unEscapeHtmlCharacters(trailingText);
         }
 
         currentOpenTag.plainTextEndIndex = plainTextRepresentation.length;
@@ -937,7 +936,7 @@ const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   }
 };
 
-const escapeHTMLChars = (text: string): string | undefined => {
+const escapeHTMLChars = (text: string): string => {
   const mentionRegex = new RegExp(`<${MSFT_MENTION_TAG}(.*?)>(.*?)</${MSFT_MENTION_TAG}>`, 'i');
   if (!text.match(mentionRegex)) {
     return text
@@ -945,7 +944,7 @@ const escapeHTMLChars = (text: string): string | undefined => {
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
   }
-  return;
+  return text;
 };
 
 const getChangeDiff = (plainText: string, startIndex: number, endIndex: number): number => {
@@ -961,6 +960,6 @@ const getLengthDiffForEscapedHtmlChars = (text: string, startIndex: number, endI
   return escapedCharLength;
 };
 
-const revertEscapedHtmlCharacters = (text: string): string => {
+const unEscapeHtmlCharacters = (text: string): string => {
   return text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };
