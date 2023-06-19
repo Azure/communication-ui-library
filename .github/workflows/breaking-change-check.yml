@@ -28,10 +28,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
