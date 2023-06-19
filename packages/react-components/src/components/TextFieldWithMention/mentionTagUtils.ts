@@ -311,7 +311,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
     const updatedHTML =
       escapeHTMLChars(oldPlainText.substring(0, startIndex)) +
       changeWithSkippedChars +
-      oldPlainText.substring(oldPlainTextEndIndex);
+      escapeHTMLChars(oldPlainText.substring(oldPlainTextEndIndex));
     return { updatedHTML, updatedSelectionIndex: oldPlainTextEndIndex + change.length };
   }
   let result = '';
