@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useMemo } from 'react';
+import React, { useId, useMemo } from 'react';
 import {
   participantListContainerStyle,
   participantListMobileStyle,
@@ -51,6 +51,7 @@ export const ParticipantListWithHeading = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
+  const subheadingUniqueId = useId();
   const theme = useTheme();
   const subheadingStyleThemed = useMemo(
     () => ({
@@ -65,7 +66,7 @@ export const ParticipantListWithHeading = (props: {
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed} aria-label={title}>
+      <Stack.Item styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
         {title}
       </Stack.Item>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
@@ -90,6 +91,7 @@ export const ParticipantListWithHeading = (props: {
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           showParticipantOverflowTooltip={!props.isMobile}
+          participantAriaLabelledBy={subheadingUniqueId}
         />
       </FocusZone>
     </Stack>
