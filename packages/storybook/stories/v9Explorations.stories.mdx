@@ -1,0 +1,373 @@
+import { Meta } from '@storybook/addon-docs';
+import {
+  darkTheme,
+  FluentThemeProvider,
+  ControlBarButton,
+  ControlBarButtonV9,
+  ControlBarSplitButtonV9,
+  CameraButton
+} from '@internal/react-components';
+import { initializeIcons, getTheme, Stack, ContextualMenuItemType } from '@fluentui/react';
+import { Airplane20Filled, VehicleShip20Filled } from '@fluentui/react-icons';
+import { FluentProvider, webLightTheme } from '@fluentui/react-components';
+
+<Meta
+  id="v9exploration"
+  title="Fluent v9 Exploration"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Fluent v9 Exploration
+
+## ControlBarButton Analysis
+
+<table>
+  <tr>
+    <td></td>
+    <td>
+      <b>v8</b>
+    </td>
+    <td>
+      <b>v9</b>
+    </td>
+  </tr>
+  <tr>
+    <td>ControlBarButton</td>
+    <td>
+      <div style={{ width: 'fit-content' }}>
+        <FluentThemeProvider theme={darkTheme}>
+          <ControlBarButton
+            showLabel={true}
+            strings={{ label: 'airplane' }}
+            onRenderIcon={() => <Airplane20Filled primaryFill="currentColor" />}
+          />
+        </FluentThemeProvider>
+      </div>
+    </td>
+    <td>
+      <div style={{ width: 'fit-content' }}>
+        <FluentProvider theme={webLightTheme}>
+          <ControlBarButtonV9
+            showLabel={true}
+            strings={{ label: 'airplane' }}
+            onIcon={<VehicleShip20Filled primaryFill="currentColor" />}
+            offIcon={<Airplane20Filled primaryFill="currentColor" />}
+          />
+        </FluentProvider>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>ControlBarButton (split)</td>
+    <td>
+      <ControlBarButton
+        onClick={() => {}}
+        split={true}
+        menuProps={{ items: [{ text: 'Item a' }, { text: 'Item b' }] }}
+        showLabel={true}
+        strings={{ label: 'airplane' }}
+        onRenderIcon={() => <Airplane20Filled primaryFill="currentColor" />}
+        styles={{
+          root: {
+            border: 'solid 1px ' + getTheme().palette.neutralQuaternaryAlt,
+            borderRadius: getTheme().effects.roundedCorner4,
+            minHeight: '2.5rem',
+            maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
+          },
+          flexContainer: {
+            display: 'flex',
+            flexFlow: 'row nowrap'
+          },
+          textContainer: {
+            // Override the default so that label doesn't introduce a new block.
+            display: 'inline',
+            // Ensure width is set to permit child to show ellipsis when there is a label that is too long
+            maxWidth: '100%'
+          },
+          label: {
+            fontSize: getTheme().fonts.medium.fontSize,
+            // Ensure there is enough space between the icon and text to allow for the unread messages badge in the chat button
+            marginLeft: '0.625rem',
+            // Ensure letters that go above and below the standard text line like 'g', 'y', 'j' are not clipped
+            lineHeight: '1.5rem',
+            // Do not allow very long button texts to ruin the control bar experience, instead ensure long text is truncated and shows ellipsis
+            display: 'block',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden'
+          },
+          splitButtonMenuButton: {
+            border: 'solid 1px ' + getTheme().palette.neutralQuaternaryAlt,
+            borderTopRightRadius: getTheme().effects.roundedCorner4,
+            borderBottomRightRadius: getTheme().effects.roundedCorner4,
+            borderTopLeftRadius: '0',
+            borderBottomLeftRadius: '0'
+          },
+          splitButtonMenuButtonChecked: {
+            // Default colors the menu half similarly for :hover and when button is checked.
+            // To align with how the left-half is styled, override the checked style.
+            background: 'none'
+          }
+        }}
+      />
+    </td>
+    <td>
+      <FluentProvider theme={webLightTheme}>
+        <ControlBarSplitButtonV9
+          showLabel={true}
+          strings={{ label: 'airplane' }}
+          onIcon={<VehicleShip20Filled primaryFill="currentColor" />}
+          offIcon={<Airplane20Filled primaryFill="currentColor" />}
+        />
+      </FluentProvider>
+    </td>
+  </tr>
+</table>
+
+### Code Difference
+
+```tsx
+/// v8 - everything passed in as top level props
+<ControlBarButton
+  onClick={() => {}}
+  split={true}
+  menuProps={{items:
+    [
+      {itemType: ContextualMenuItemType.Section, sectionProps: { title: 'item A'}},
+      {itemType: ContextualMenuItemType.Section, sectionProps: { title: 'item B'}}
+    ]
+  }}
+  showLabel={true}
+  strings={{ label: 'airplane' }}
+  onRenderIcon={() => (<Airplane20Filled primaryFill="currentColor"/>)}
+/>
+
+/// v9 - everything is slotted in, in fact the button is slotted into the menu:
+<Menu positioning="below-end">
+  <MenuTrigger>
+    {(triggerProps: MenuButtonProps) => (
+      <ControlBarSplitButtonV9 menuButton={triggerProps} icon={<Airplane20Filled />} />
+    )}
+  </MenuTrigger>
+
+  <MenuPopover>
+    <MenuList>
+      <MenuItem>Item a</MenuItem>
+      <MenuItem>Item b</MenuItem>
+    </MenuList>
+  </MenuPopover>
+</Menu>
+```
+
+### Change Icon
+
+Overriding renders is much the same. Instead of an onRender callback we instead expose a `slot`:
+
+```tsx
+/// v8
+<ControlBarButton onRenderIcon={() => <MyIcon />} />
+
+/// v9
+<ControlBarButton icon={<MyIcon />} />
+```
+
+### Style Icon
+
+To style the icon in v9, we can no longer just style the icon and leave the remainder unchanged.
+Instead a developer must pass in the appropriate icon and style themself:
+
+```tsx
+/// v8 - simply set the style of the icon via an exposed icon styles prop:
+<ControlBarButton styles={{ icon: { background: 'red' } }} />;
+
+/// v9 - override the icon slot and pass styles to the icon:
+const styles = makeStyles({ icon: { background: 'red' } });
+<ControlBarButton icon={<MyIcon className={styles.icon} />} />;
+```
+
+The implication of this being, **we must export every component we want to be customizable**.
+You can see the impact of this in a breakdown in VideoGallery example later.
+
+### Apply theming
+
+Almost no difference here:
+
+```tsx
+/// v8
+<ThemeProvider theme={myTheme}>
+  <ControlBarButton />
+</ThemeProvider>
+
+///
+<FluentProvider theme={myTheme}>
+  <ControlBarButton icon={<MyIcon className={styles.icon} />} />
+</FluentProvider>
+```
+
+But instead of `useTheme()` hook, fluent exposes `tokens`:
+
+```tsx
+/// v8
+const styles = {
+  background: useTheme().palette.neutralQuaternaryAlt
+};
+
+///
+const styles = {
+  background: tokens.colorNeutralForeground4
+};
+```
+
+### Add custom menu item to the default set
+
+```tsx
+/// v8 - use callback that contains defaults:
+<ControlBarButton onFetchSplitButtonMenuItems={(defaultMenuItems) => [...defaultMenuItems, customItem]} />
+
+/// v9 - TODO: THIS IS AN OPEN QUESTION FOR FLUENT
+///      Do we export something like toggleCameraMenuItem, microphoneSelectionMenu, microphoneSelectionMenuItem
+<Menu positioning="below-end">
+  <MenuTrigger>
+    {(triggerProps: MenuButtonProps) => (
+      <ControlBarSplitButtonV9 menuButton={triggerProps} icon={<Airplane20Filled />} />
+    )}
+  </MenuTrigger>
+
+  <MenuPopover>
+    <MenuList>
+      <MenuItem>Item a</MenuItem>
+      <MenuItem>Item b</MenuItem>
+    </MenuList>
+  </MenuPopover>
+</Menu>
+
+/// Alternative?
+
+<ControlBarSplitButtonv9 menuItems={() => JSX.Element[]} />
+```
+
+### Connecting to stateful
+
+In v8, we would use usePropsFor to connect to stateful components. In order to do so the components would have the appropriate props exposed that exactly match the usePropsFor interface:
+
+```tsx
+/// v8 usePropsFor example
+const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
+  [],
+  () => {
+    ...
+    return {
+      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length,
+      checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
+      cameras: deviceManager.cameras,
+      selectedCamera: deviceManager.selectedCamera
+    };
+  }
+);
+
+const cameraButtonHandlers: CameraButtonHandlers = {
+  onToggleCamera: () => { ... }
+  onSelectCamera: (camera) => { ... }
+};
+
+interface CameraButtonProps {
+  disabled: boolean;
+  checked: boolean;
+  cameras: Camera[];
+  selectedCamera: Camera;
+  onToggleCamera: () => void;
+  onSelectCamera: (camera: Camera) => void;
+}
+
+// Notice the return value of the selector matches the interface of the props
+```
+
+However in v9, we pass in components instead of data. Therefore, we must expose the components we use with appropriate usePropsFor for each component:
+
+```tsx
+/// v9 usePropsFor example
+const cameraButtonSelector = reselect.createSelector(
+  return {
+    disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length,
+    checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
+  };
+);
+
+const cameraButtonHandlers = {
+  onToggleCamera: () => { ... }
+};
+
+const cameraSelectionMenuItemSelector = reselect.createSelector(
+  return {
+    cameras: deviceManager.cameras,
+    selectedCamera: deviceManager.selectedCamera
+  };
+);
+
+const cameraSelectionMenuItemHandlers = {
+  onSelectCamera: (camera) => { ... }
+};
+
+const cameraSelectionMenuItemHandlers = {
+  onSelectCamera: (camera) => { ... }
+};
+
+const toggleCameraMenuItemSelector = reselect.createSelector(
+  return {
+    checked: deviceManager.cameras
+  };
+);
+
+const toggleCameraMenuItemHandlers = {
+  onToggleCamera: () => { ... }
+};
+```
+
+Comparing the Contoso usage of both:
+
+```tsx
+/// v8
+const cameraProps = usePropsFor(CameraButton);
+<CameraButton {...cameraProps} />;
+
+/// v9
+const cameraButtonProps = usePropsFor(CameraButton);
+const cameraSelectionMenuItemProps = usePropsFor(CameraSelectionMenu);
+const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
+<Menu positioning="below-end">
+  <MenuTrigger>
+    {(triggerProps: MenuButtonProps) => <CameraButton menuButton={triggerProps} {...cameraButtonProps} />}
+  </MenuTrigger>
+
+  <MenuPopover>
+    <MenuList>
+      <CameraSelectionMenuItem {...cameraSelectionMenuProps} />
+      <ToggleCameraMenuItem {...toggleCameraMenuItemProps} />
+    </MenuList>
+  </MenuPopover>
+</Menu>;
+```
+
+## Video Gallery Analysis
+
+## Items of investigation (todos)
+
+- What is use props for interface now like with components as slots?
+  - E.g. if I override the camera button split menu how do I get the handler that switches the chosen camera
+
+## Open Questions
+
+- Best way to allow defaults + custom items (e.g. in a split button menu)
+- Will dialog be getting drag functionality
+- Splitbutton touch behavior has changed
+- Is animation being worked on or is this a design change? (e.g. split button context menu)
+- Should we restructure our localization?
+- If babel or webpack doesn't transpile styles ahead of time, do they still work just less optimized? (i.e. what happens if I dont have the webpack plugin or babel translator installed?)
+
+## Key Takeaways
+
+- Instead of passing data (as top level props), you pass components (via slots)
+  - Therefore, instead of exposing data APIs we must expose the components we use
+- Instead of nested styles prop, we use className (and styles are built at build time, not interpreted at runtime)
+  - Therefore runtime variables _cannot_ be used in styles calculations
+- ...

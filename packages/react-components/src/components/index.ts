@@ -239,3 +239,6 @@ export * from './Caption';
 export * from './StartCaptionsButton';
 /* @conditional-compile-remove(close-captions) */
 export * from './CaptionsSettingsModal';
+
+export { ControlBarButtonV9, ControlBarSplitButtonV9 } from './ControlBarButtonV9';
+export type { ControlBarButtonPropsV9, ControlBarButtonStringsV9 } from './ControlBarButtonV9';
