@@ -11,7 +11,7 @@ async function main() {
     return;
   }
   await exec(quote(['npx', 'build-storybook', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]), {
-    NODE_OPTIONS: '--openssl-legacy-provider'
+    NODE_OPTIONS: '--openssl-legacy-provider' // Storybook needs this for use with node 18; resolved in storybook v7
   });
 }
 
