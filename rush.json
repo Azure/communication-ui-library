@@ -6,7 +6,7 @@
     // Setting this to false for the react northstar-wrapper package
     "strictPeerDependencies": false
   },
-  "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0 || >=16.19.0 <17.0.0",
+  "nodeSupportedVersionRange": ">=12.13.0 <13.0.0 || >=14.15.0 <15.0.0 || >=16.19.0 <19.0.0",
   "ensureConsistentVersions": true,
   "gitPolicy": {
     "versionBumpCommitMessage": "Applying package updates. [skip-ci]",
