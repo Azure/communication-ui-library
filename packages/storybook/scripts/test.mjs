@@ -11,7 +11,7 @@ async function main() {
     return;
   }
   await exec('rushx test:snippets');
-  await exec(quote(['npx', 'jest', ...process.argv.slice(2)]), getExtraEnv());
+  await exec(quote(['npx', 'jest', ...process.argv.slice(2)]), await getExtraEnv());
 }
 
 await main();

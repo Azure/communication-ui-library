@@ -12,7 +12,7 @@ async function main() {
   }
   await exec(
     quote(['npx', 'eslint', '--max-warnings', '0', '*/**/*.{ts,tsx,mdx}', ...process.argv.slice(2)]),
-    getExtraEnv()
+    await getExtraEnv()
   );
 }
 

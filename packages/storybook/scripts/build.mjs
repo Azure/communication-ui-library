@@ -12,7 +12,7 @@ async function main() {
   }
   await exec(
     quote(['npx', 'build-storybook', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]),
-    getExtraEnv()
+    await getExtraEnv()
   );
 }
 
