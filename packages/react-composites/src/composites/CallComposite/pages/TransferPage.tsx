@@ -73,7 +73,7 @@ export const TransferPage = (
 
   useEffect(() => {
     setAnnouncerString(strings.transferPageNoticeString);
-  }, []);
+  }, [strings.transferPageNoticeString]);
 
   let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
