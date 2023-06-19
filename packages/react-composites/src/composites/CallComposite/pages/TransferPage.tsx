@@ -71,6 +71,7 @@ export const TransferPage = (
     return 'transferor';
   }, [transferCall, transferTarget?.displayName]);
 
+  /* @conditional-compile-remove(call-transfer) */
   useEffect(() => {
     setAnnouncerString(strings.transferPageNoticeString);
   }, [strings.transferPageNoticeString]);
