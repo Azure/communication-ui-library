@@ -5,7 +5,8 @@ import {
   ControlBarButton,
   ControlBarButtonV9,
   ControlBarSplitButtonV9,
-  CameraButton
+  CameraButton,
+  VideoGallery
 } from '@internal/react-components';
 import { initializeIcons, getTheme, Stack, ContextualMenuItemType } from '@fluentui/react';
 import { Airplane20Filled, VehicleShip20Filled } from '@fluentui/react-icons';
@@ -349,6 +350,38 @@ const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
 ```
 
 ## Video Gallery Analysis
+
+<FluentThemeProvider>
+  <div style={{ height: '500px' }}>
+    <VideoGallery
+      layout="floatingLocalVideo"
+      localParticipant={{
+        userId: 'user1',
+        displayName: 'You',
+        state: 'Connected',
+        isMuted: true
+      }}
+      remoteParticipants={[
+        {
+          userId: 'user2',
+          displayName: 'Peter Parker'
+        },
+        {
+          userId: 'user3',
+          displayName: 'Thor'
+        },
+        {
+          userId: 'user4',
+          displayName: 'Matthew Murdock'
+        },
+        {
+          userId: 'user5',
+          displayName: 'Bruce Wayne'
+        }
+      ]}
+    />
+  </div>
+</FluentThemeProvider>
 
 ## Items of investigation (todos)
 
