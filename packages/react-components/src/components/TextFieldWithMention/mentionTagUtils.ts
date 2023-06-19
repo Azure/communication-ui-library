@@ -408,7 +408,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
               oldPlainText,
               lastProcessedHTMLIndex,
               processedChange,
-              change: change,
+              change,
               tag,
               closeTagIdx: closingTagInfo.closeTagIdx,
               closeTagLength: closingTagInfo.closeTagLength,
