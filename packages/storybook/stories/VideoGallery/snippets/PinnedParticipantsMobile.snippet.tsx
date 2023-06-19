@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery } from '@azure/communication-react';
+import { FluentThemeProvider, VideoGallery } from '@azure/communication-react';
 import React from 'react';
 
 const MockLocalParticipant = {
@@ -67,13 +67,15 @@ const MockRemoteParticipants = [
 export const PinnedParticipantsMobileExample: () => JSX.Element = () => {
   const containerStyle = { height: '60vh', width: '30vh' };
   return (
-    <div style={containerStyle}>
-      <VideoGallery
-        layout="floatingLocalVideo"
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-        remoteVideoTileMenuOptions={{ kind: 'drawer' }}
-      />
-    </div>
+    <FluentThemeProvider>
+      <div style={containerStyle}>
+        <VideoGallery
+          layout="floatingLocalVideo"
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+          remoteVideoTileMenuOptions={{ kind: 'drawer' }}
+        />
+      </div>
+    </FluentThemeProvider>
   );
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery } from '@azure/communication-react';
+import { FluentThemeProvider, VideoGallery } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -48,12 +48,14 @@ const MockRemoteParticipants = [
 export const WithHorizontalGalleryExample: () => JSX.Element = () => {
   const containerStyle = { height: '50vh' };
   return (
-    <Stack style={containerStyle}>
-      <VideoGallery
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-        overflowGalleryPosition={'HorizontalBottom'}
-      />
-    </Stack>
+    <FluentThemeProvider>
+      <Stack style={containerStyle}>
+        <VideoGallery
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+          overflowGalleryPosition={'HorizontalBottom'}
+        />
+      </Stack>
+    </FluentThemeProvider>
   );
 };

@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  FluentThemeProvider,
   OnRenderAvatarCallback,
   VideoGallery,
   VideoGalleryParticipant,
@@ -89,12 +90,14 @@ export const CustomAvatarVideoGalleryExample: () => JSX.Element = () => {
   const containerStyle = { height: '50vh' };
 
   return (
-    <Stack style={containerStyle}>
-      <VideoGallery
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-        onRenderAvatar={onRenderAvatar}
-      />
-    </Stack>
+    <FluentThemeProvider>
+      <Stack style={containerStyle}>
+        <VideoGallery
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+          onRenderAvatar={onRenderAvatar}
+        />
+      </Stack>
+    </FluentThemeProvider>
   );
 };

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery, VideoGalleryStyles } from '@azure/communication-react';
+import { FluentThemeProvider, VideoGallery, VideoGalleryStyles } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -75,12 +75,14 @@ export const CustomStyleVideoGalleryExample: () => JSX.Element = () => {
     }
   };
   return (
-    <Stack style={containerStyles}>
-      <VideoGallery
-        styles={customStyles}
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-      />
-    </Stack>
+    <FluentThemeProvider>
+      <Stack style={containerStyles}>
+        <VideoGallery
+          styles={customStyles}
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+        />
+      </Stack>
+    </FluentThemeProvider>
   );
 };

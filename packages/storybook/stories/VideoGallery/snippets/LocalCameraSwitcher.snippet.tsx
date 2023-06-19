@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery } from '@azure/communication-react';
+import { FluentThemeProvider, VideoGallery } from '@azure/communication-react';
 import { registerIcons, Stack } from '@fluentui/react';
 import { CameraSwitch24Regular } from '@fluentui/react-icons';
 import React, { useState } from 'react';
@@ -87,14 +87,16 @@ export const LocalCameraSwitcherExample: () => JSX.Element = () => {
   const containerStyle = { height: '50vh' };
 
   return (
-    <Stack style={containerStyle}>
-      <VideoGallery
-        layout="floatingLocalVideo"
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-        showCameraSwitcherInLocalPreview={true}
-        localVideoCameraCycleButtonProps={cameraButtonProps}
-      />
-    </Stack>
+    <FluentThemeProvider>
+      <Stack style={containerStyle}>
+        <VideoGallery
+          layout="floatingLocalVideo"
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+          showCameraSwitcherInLocalPreview={true}
+          localVideoCameraCycleButtonProps={cameraButtonProps}
+        />
+      </Stack>
+    </FluentThemeProvider>
   );
 };

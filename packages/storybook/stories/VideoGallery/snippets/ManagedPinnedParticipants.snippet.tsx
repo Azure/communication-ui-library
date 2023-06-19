@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery } from '@azure/communication-react';
+import { FluentThemeProvider, VideoGallery } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
@@ -69,21 +69,23 @@ export const ManagedPinnedParticipantsExample: () => JSX.Element = () => {
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>(['user3']);
   const containerStyle = { height: '50vh' };
   return (
-    <Stack style={containerStyle}>
-      <Stack>
-        Pinned participants:{' '}
-        {pinnedParticipants
-          .map((userId) => MockRemoteParticipants.find((p) => p.userId === userId)?.displayName)
-          .join(', ')}
+    <FluentThemeProvider>
+      <Stack style={containerStyle}>
+        <Stack>
+          Pinned participants:{' '}
+          {pinnedParticipants
+            .map((userId) => MockRemoteParticipants.find((p) => p.userId === userId)?.displayName)
+            .join(', ')}
+        </Stack>
+        <VideoGallery
+          layout="floatingLocalVideo"
+          pinnedParticipants={pinnedParticipants}
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+          onPinParticipant={(userId: string) => setPinnedParticipants(pinnedParticipants.concat(userId))}
+          onUnpinParticipant={(userId: string) => setPinnedParticipants(pinnedParticipants.filter((u) => u !== userId))}
+        />
       </Stack>
-      <VideoGallery
-        layout="floatingLocalVideo"
-        pinnedParticipants={pinnedParticipants}
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-        onPinParticipant={(userId: string) => setPinnedParticipants(pinnedParticipants.concat(userId))}
-        onUnpinParticipant={(userId: string) => setPinnedParticipants(pinnedParticipants.filter((u) => u !== userId))}
-      />
-    </Stack>
+    </FluentThemeProvider>
   );
 };

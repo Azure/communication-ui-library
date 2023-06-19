@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGallery } from '@azure/communication-react';
+import { FluentThemeProvider, VideoGallery } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import React from 'react';
 
@@ -36,12 +36,14 @@ const MockRemoteParticipants = [
 export const FloatingLocalVideoExample: () => JSX.Element = () => {
   const containerStyle = { height: '50vh' };
   return (
-    <Stack style={containerStyle}>
-      <VideoGallery
-        layout="floatingLocalVideo"
-        localParticipant={MockLocalParticipant}
-        remoteParticipants={MockRemoteParticipants}
-      />
-    </Stack>
+    <FluentThemeProvider>
+      <Stack style={containerStyle}>
+        <VideoGallery
+          layout="floatingLocalVideo"
+          localParticipant={MockLocalParticipant}
+          remoteParticipants={MockRemoteParticipants}
+        />
+      </Stack>
+    </FluentThemeProvider>
   );
 };

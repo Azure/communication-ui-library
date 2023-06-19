@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -32,6 +32,7 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
+import { AvatarSize, Caption1Strong, Persona } from '@fluentui/react-components';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -160,17 +161,54 @@ const DEFAULT_PERSONA_MIN_SIZE_PX = 32;
 const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   const { text, noVideoAvailableAriaLabel, coinSize, hidePersonaDetails } = props;
 
+  let avatarSize: AvatarSize = 16;
+  if (!coinSize) {
+    avatarSize = 48;
+  } else if (coinSize < 24) {
+    avatarSize = 20;
+  } else if (coinSize < 28) {
+    avatarSize = 24;
+  } else if (coinSize < 32) {
+    avatarSize = 28;
+  } else if (coinSize < 36) {
+    avatarSize = 32;
+  } else if (coinSize < 40) {
+    avatarSize = 36;
+  } else if (coinSize < 48) {
+    avatarSize = 40;
+  } else if (coinSize < 56) {
+    avatarSize = 48;
+  } else if (coinSize < 64) {
+    avatarSize = 56;
+  } else if (coinSize < 72) {
+    avatarSize = 64;
+  } else if (coinSize < 96) {
+    avatarSize = 72;
+  } else if (coinSize < 120) {
+    avatarSize = 96;
+  } else if (coinSize < 128) {
+    avatarSize = 120;
+  } else {
+    avatarSize = 128;
+  }
+
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
       <Stack styles={defaultPersonaStyles}>
         {coinSize && (
           <Persona
-            coinSize={coinSize}
-            hidePersonaDetails={hidePersonaDetails}
-            text={text ?? ''}
-            initialsTextColor="white"
+            size="extra-large"
+            avatar={{
+              name: text,
+              color: 'colorful',
+              size: avatarSize
+            }}
+            // avatar={<Avatar name={text} size={avatarSize} color="colorful" />}
+            // hidePersonaDetails={hidePersonaDetails}
+            // text={text ?? ''}
+            // initialsTextColor="white"
             aria-label={noVideoAvailableAriaLabel ?? ''}
-            showOverflowTooltip={false}
+            // showOverflowTooltip={false}
           />
         )}
       </Stack>
@@ -389,19 +427,19 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>
               {canShowLabel && (
-                <Text
+                <Caption1Strong
                   className={mergeStyles(displayNameStyle)}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                   data-ui-id="video-tile-display-name"
                 >
                   {displayName}
-                </Text>
+                </Caption1Strong>
               )}
               {participantStateString && (
-                <Text className={mergeStyles(participantStateStringStyles(theme))}>
+                <Caption1Strong className={mergeStyles(participantStateStringStyles(theme))}>
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
-                </Text>
+                </Caption1Strong>
               )}
               {showMuteIndicator && isMuted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>

@@ -5,6 +5,7 @@ import React, { createContext, useContext } from 'react';
 import { ThemeProvider, Theme, PartialTheme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
 import { mergeThemes as mergeNorthstarThemes, Provider, teamsTheme } from '@internal/northstar-wrapper';
 import { lightTheme } from './themes';
+import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 
 /**
  * Props for {@link FluentThemeProvider}.
@@ -94,11 +95,13 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 
   return (
     <ThemeContext.Provider value={fluentUITheme}>
-      <ThemeProvider theme={fluentUITheme} className={wrapper}>
-        <Provider theme={fluentNorthstarTheme} className={wrapper} rtl={rtl}>
-          {children}
-        </Provider>
-      </ThemeProvider>
+      <FluentProvider theme={webLightTheme}>
+        <ThemeProvider theme={fluentUITheme} className={wrapper}>
+          <Provider theme={fluentNorthstarTheme} className={wrapper} rtl={rtl}>
+            {children}
+          </Provider>
+        </ThemeProvider>
+      </FluentProvider>
     </ThemeContext.Provider>
   );
 };

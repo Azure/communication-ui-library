@@ -38,6 +38,7 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
+import { FluentProvider } from '@fluentui/react-components';
 
 /**
  * @private

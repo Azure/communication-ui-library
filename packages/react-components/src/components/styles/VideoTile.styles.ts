@@ -75,10 +75,10 @@ export const videoHint = mergeStyles(disabledVideoHint, {
  */
 export const displayNameStyle: IStyle = {
   padding: '0.1rem',
-  fontSize: '0.75rem',
-  fontWeight: 600,
+  // fontSize: '0.75rem',
+  // fontWeight: 600,
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
-  color: 'inherit',
+  // color: 'inherit',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   maxWidth: '100%'
