@@ -375,8 +375,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const acceptedTransferCallState = this.context.getState().acceptedTransferCallState;
 
       /* @conditional-compile-remove(call-transfer) */
-      // If there has been an accepted transfer call that is now in the connected state we should ensure we leave the current call.
-      // There is a possibility we accepted a transfer which the transferor thinks failed.
+      // If there has been an accepted transfer call that is now in the connected state, we should ensure we leave the
+      // current call. There is a possibility we accepted a transfer which the transferor thinks failed.
       if (
         acceptedTransferCallState &&
         acceptedTransferCallState.state === 'Connected' &&
@@ -385,12 +385,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         const cAgent = callAgent as CallAgent;
         const transferCall = cAgent.calls.find((call) => (call as Call).id === acceptedTransferCallState.id);
         if (transferCall) {
-          const currentCall = this.call;
+          const oldCall = this.call;
           this.processNewCall(transferCall);
-          // Wait 2 seconds and then ensure we hang up the old call if it is still connected
+          // Wait 2 seconds to allow transferor to recognize the transfer is complete and end the call. But if the old
+          // call is not ended, ensure we hang up.
           setTimeout(() => {
-            if (currentCall?.state === 'Connected') {
-              currentCall.hangUp();
+            if (oldCall?.state === 'Connected') {
+              oldCall.hangUp();
             }
           }, 2000);
         }
