@@ -10,7 +10,9 @@ async function main() {
     console.log('Skipping storybook build for stable build');
     return;
   }
-  await exec(quote(['npx', 'build-storybook', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]));
+  await exec(quote(['npx', 'build-storybook', '--quiet', '--loglevel', 'warn', ...process.argv.slice(2)]), {
+    NODE_OPTIONS: '--openssl-legacy-provider'
+  });
 }
 
 await main();
