@@ -11,7 +11,9 @@ async function main() {
       'Can not deploy storybook from stable flavor environment. Please run `rush switch-flavor:beta` first.'
     );
   }
-  await exec(quote(['npx', 'storybook-to-ghpages', '--script', 'build', ...process.argv.slice(2)]));
+  await exec(quote(['npx', 'storybook-to-ghpages', '--script', 'build', ...process.argv.slice(2)]), {
+    NODE_OPTIONS: '--openssl-legacy-provider'
+  });
 }
 
 await main();
