@@ -438,7 +438,7 @@ const ViewOptionsDefault = (): JSX.Element => {
 `;
 
 const MockLocalParticipant = {
-  userId: 'user1',
+  userId: 'userLocal',
   displayName: 'You',
   state: 'Connected',
   isMuted: true,

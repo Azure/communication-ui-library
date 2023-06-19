@@ -14,14 +14,14 @@ import { calculateVerticalChildrenPerPage } from './VideoGallery/utils/OverflowG
  * @beta
  */
 export interface ResponsiveVerticalGalleryProps {
-  /** Video tiles to be rendered in the Vertical Gallery */
-  children: React.ReactNode;
   /** Styles for the Children space container */
   containerStyles: IStyle;
   /** Styles for the VerticalGallery component */
   verticalGalleryStyles: VerticalGalleryStyles;
   /** Height of the gap in between the video tiles */
   gapHeightRem: number;
+  /** Video tiles to be rendered in the Vertical Gallery */
+  children?: React.ReactNode;
   /** Height of the control bar for navigating pages */
   controlBarHeightRem?: number;
   /** container is shorter than 480 px. */
@@ -57,7 +57,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
   const bottomPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingBottom) : 0;
 
   const childrenPerPage = calculateVerticalChildrenPerPage({
-    numberOfChildren: React.Children.count(children),
+    numberOfChildren: React.Children.count(children) ?? 0,
     containerHeight: (containerHeight ?? 0) - topPadding - bottomPadding,
     gapHeightRem,
     controlBarHeight: controlBarHeightRem ?? 2,
