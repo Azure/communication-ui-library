@@ -291,7 +291,6 @@ type UpdateHTMLProps = {
   oldPlainText: string;
   tags: TagData[];
   startIndex: number;
-  endIndex: number;
   oldPlainTextEndIndex: number;
   change: string;
   mentionTrigger: string;
@@ -305,15 +304,15 @@ type UpdateHTMLProps = {
  * @returns Updated HTML and selection index if the selection index should be set.
  */
 export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex?: number } => {
-  const { htmlText, oldPlainText, tags, startIndex, endIndex, oldPlainTextEndIndex, change, mentionTrigger } = props;
+  const { htmlText, oldPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } = props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
     const changeWithSkippedChars = escapeHTMLChars(change);
     const updatedHTML =
       escapeHTMLChars(oldPlainText.substring(0, startIndex)) +
       changeWithSkippedChars +
-      oldPlainText.substring(endIndex);
-    return { updatedHTML, updatedSelectionIndex: endIndex + change.length };
+      oldPlainText.substring(oldPlainTextEndIndex);
+    return { updatedHTML, updatedSelectionIndex: oldPlainTextEndIndex + change.length };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -432,7 +431,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             oldPlainText,
             tags: tag.subTags,
             startIndex,
-            endIndex,
             oldPlainTextEndIndex,
             change: processedChange,
             mentionTrigger
@@ -485,7 +483,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             oldPlainText,
             tags: tag.subTags,
             startIndex,
-            endIndex,
             oldPlainTextEndIndex,
             change: '', // the part of the tag should be just deleted without processedChange update and change will be added after this tag
             mentionTrigger
@@ -543,7 +540,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             oldPlainText,
             tags: tag.subTags,
             startIndex,
-            endIndex,
             oldPlainTextEndIndex,
             change: processedChange, // processedChange should be equal '' and the part of the tag should be deleted as the change was handled before this tag
             mentionTrigger
@@ -936,6 +932,7 @@ const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
   }
 };
 
+// We should revisit this in the future when we support other text such as rich text editing.
 const escapeHTMLChars = (text: string): string => {
   const mentionRegex = new RegExp(`<${MSFT_MENTION_TAG}(.*?)>(.*?)</${MSFT_MENTION_TAG}>`, 'i');
   if (!text.match(mentionRegex)) {

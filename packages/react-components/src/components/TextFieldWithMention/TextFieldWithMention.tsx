@@ -166,7 +166,6 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         oldPlainText,
         tags: tagsValue,
         startIndex: currentTriggerStartIndex,
-        endIndex: selectionEnd,
         oldPlainTextEndIndex: selectionEnd,
         change: mention,
         mentionTrigger: triggerText
@@ -579,7 +578,6 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         oldPlainText: inputTextValue,
         tags: tagsValue,
         startIndex: changeStart,
-        endIndex: oldChangeEnd,
         oldPlainTextEndIndex: oldChangeEnd,
         change,
         mentionTrigger: triggerText
