@@ -3,7 +3,7 @@
 
 import { Icon, IStyle, mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
-import { IconButton } from '@fluentui/react';
+// import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
@@ -32,7 +32,18 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
-import { AvatarSize, Caption1Strong, Persona } from '@fluentui/react-components';
+import {
+  AvatarSize,
+  Caption1Strong,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
+  Persona
+} from '@fluentui/react-components';
+import { Pin16Regular, MoreHorizontal20Filled } from '@fluentui/react-icons';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -236,16 +247,39 @@ const VideoTileMoreOptionsButton = (props: {
     return <></>;
   }
 
-  const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : undefined;
+  const optionsIcon = canShowContextMenuButton ? <MoreHorizontal20Filled /> : <></>;
 
   return (
-    <IconButton
-      data-ui-id="video-tile-more-options-button"
-      styles={moreButtonStyles}
-      menuIconProps={videoTileMoreMenuIconProps}
-      menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
-      iconProps={{ iconName: optionsIcon }}
-    />
+    <Menu>
+      <MenuTrigger disableButtonEnhancement>
+        <MenuButton appearance="transparent" icon={optionsIcon}></MenuButton>
+      </MenuTrigger>
+
+      <MenuPopover>
+        <MenuList>
+          {contextualMenu.items?.map((item, index) => {
+            return (
+              <MenuItem
+                key={index}
+                onClick={() => {
+                  item.onClick?.();
+                }}
+                icon={<Pin16Regular />}
+              >
+                {item.text}
+              </MenuItem>
+            );
+          })}
+        </MenuList>
+      </MenuPopover>
+    </Menu>
+    // <IconButton
+    //   data-ui-id="video-tile-more-options-button"
+    //   styles={moreButtonStyles}
+    //   menuIconProps={videoTileMoreMenuIconProps}
+    //   menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
+    //   iconProps={{ iconName: optionsIcon }}
+    // />
   );
 };
 
