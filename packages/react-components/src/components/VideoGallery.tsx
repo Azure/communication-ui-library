@@ -32,7 +32,7 @@ import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 import { useIdentifiers } from '../identifiers';
-import { videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
+import { localVideoTileContainerStyles, videoGalleryOuterDivStyle } from './styles/VideoGallery.styles';
 import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(pinned-participants) */
 import { useId } from '@fluentui/react-hooks';
@@ -400,7 +400,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     return (
-      <Stack key="local-video-tile-key" tabIndex={0} aria-label={strings.localVideoMovementLabel} role={'dialog'}>
+      <Stack
+        styles={localVideoTileContainerStyles}
+        key="local-video-tile-key"
+        tabIndex={0}
+        aria-label={strings.localVideoMovementLabel}
+        role={'dialog'}
+      >
         <_LocalVideoTile
           userId={localParticipant.userId}
           onCreateLocalStreamView={onCreateLocalStreamView}
@@ -515,7 +521,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           participantState={participant.state}
           /* @conditional-compile-remove(pinned-participants) */
           menuKind={
-            remoteVideoTileMenuOptions
+            participant.userId === localParticipant.userId
+              ? undefined
+              : remoteVideoTileMenuOptions
               ? remoteVideoTileMenuOptions.kind === 'drawer'
                 ? 'drawer'
                 : 'contextual'
@@ -540,6 +548,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
       remoteVideoViewOptions,
+      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
@@ -575,6 +584,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const layoutProps = useMemo(
     () => ({
       remoteParticipants,
+      localParticipant,
       screenShareComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
@@ -590,6 +600,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }),
     [
       remoteParticipants,
+      localParticipant,
       screenShareComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,

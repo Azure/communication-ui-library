@@ -27,10 +27,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -46,10 +46,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -134,10 +134,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -187,10 +187,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -260,10 +260,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -333,10 +333,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -403,10 +403,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -432,10 +432,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -455,6 +455,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -476,10 +478,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -499,6 +501,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -520,10 +524,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -543,6 +547,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
@@ -564,10 +570,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -620,10 +626,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -689,10 +695,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Calculate size change
         id: bundles
         run: |

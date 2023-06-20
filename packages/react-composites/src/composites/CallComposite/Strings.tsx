@@ -540,4 +540,9 @@ export interface CallCompositeStrings {
    * transfer page display name for unknown participant
    */
   transferPageUnknownTransferTargetDisplayName: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * notice to be announced by narrator the transfer page is showing
+   */
+  transferPageNoticeString: string;
 }
