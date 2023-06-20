@@ -172,6 +172,21 @@ Overriding renders is much the same. Instead of an onRender callback we instead 
 <ControlBarButton icon={<MyIcon />} />
 ```
 
+#### Icon Provider
+
+Currently in v8 we use `registerIcons` then refer to icons by name. This does not exist in v9 and instead we use a provider:
+
+```tsx
+/// v8
+registerIcons({ icons: { 'my-icon': <MyIcon /> } });
+<ControlBarButton iconProps={{ iconName: 'my-icon' }} />;
+
+/// v9
+<IconProvider icons={{ 'my-icon': <MyIcon /> }}>
+  <ControlBarButton icon={icons['my-icon']} />
+</IconProvider>;
+```
+
 ### Style Icon
 
 To style the icon in v9, we can no longer just style the icon and leave the remainder unchanged.
@@ -201,7 +216,7 @@ Almost no difference here:
 
 ///
 <FluentProvider theme={myTheme}>
-  <ControlBarButton icon={<MyIcon className={styles.icon} />} />
+  <ControlBarButton />
 </FluentProvider>
 ```
 
@@ -213,10 +228,33 @@ const styles = {
   background: useTheme().palette.neutralQuaternaryAlt
 };
 
-///
+/// v9
 const styles = {
   background: tokens.colorNeutralForeground4
 };
+```
+
+and do not use variables inside styles:
+
+```tsx
+/// v8
+const styles = { background: isActive ? 'red' : 'blue' };
+
+/// v9
+const activeStyles = makeStyles({ background: 'red' });
+const inactiveStyles = makeStyles({ background: 'blue' });
+const className = isActive ? activeStyles : inactiveStyles;
+```
+
+### Localization
+
+Currently we expose a LocalizationProvider that wraps the entire app, no need to change this.
+
+```tsx
+/// Localization in both v8 and v9
+<LocalizationProvider locale={locale}>
+  <App />
+</LocalizationProvider>
 ```
 
 ### Add custom menu item to the default set
