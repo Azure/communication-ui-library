@@ -26,7 +26,7 @@ const suggestions: Mention[] = [
 const trigger = '@';
 
 export const MentionsExample: () => JSX.Element = () => {
-  const timeoutRef = React.useRef<any>();
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
   return (
     <FluentThemeProvider>

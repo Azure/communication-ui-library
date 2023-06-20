@@ -98,7 +98,7 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const SendBoxStory = (args): JSX.Element => {
-  const timeoutRef = React.useRef<any>();
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
   return (
     <div style={{ width: '31.25rem' }}>
