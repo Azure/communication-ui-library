@@ -34,5 +34,5 @@ export const _preventDismissOnEvent = (
  * TODO: Replace with useId() once React 18 becomes a required dependency.
  */
 export const _generateUniqueId = (): string => {
-  return 'acr-' + Math.floor(Math.random() * Date.now()).toString(16);
+  return 'acr-' + self.crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
 };
