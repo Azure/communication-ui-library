@@ -32,6 +32,8 @@ jobs:
         run: rush install
       - name: Switch flavor for beta release build
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build Calling
@@ -69,6 +71,8 @@ jobs:
         run: rush install
       - name: Switch flavor for beta release build
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build Chat
@@ -106,6 +110,8 @@ jobs:
         run: rush install
       - name: Switch flavor for beta release build
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build CallWithChat
