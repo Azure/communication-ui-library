@@ -9,8 +9,3 @@ export const delay = (delay: number): Promise<void> => {
     setTimeout(resolve, delay);
   });
 };
-
-/**
- * @private
- */
-export const delayForStorybookSendBoxSendButton = 300;

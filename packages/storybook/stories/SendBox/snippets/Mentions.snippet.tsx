@@ -1,6 +1,5 @@
 import { Mention, SendBox, FluentThemeProvider } from '@azure/communication-react';
 import React from 'react';
-import { delayForStorybookSendBoxSendButton } from '../../../../react-components/src/components/utils/delay';
 
 const suggestions: Mention[] = [
   {
@@ -28,6 +27,7 @@ const trigger = '@';
 
 export const MentionsExample: () => JSX.Element = () => {
   const timeoutRef = React.useRef<any>();
+  const delayForSendButton = 300;
   return (
     <FluentThemeProvider>
       <div style={{ width: '31.25rem', marginTop: '12rem' }}>
@@ -35,7 +35,7 @@ export const MentionsExample: () => JSX.Element = () => {
           onSendMessage={async (message) => {
             timeoutRef.current = setTimeout(() => {
               alert(`sent message: ${message} `);
-            }, delayForStorybookSendBoxSendButton);
+            }, delayForSendButton);
           }}
           onTyping={async () => {
             return;
