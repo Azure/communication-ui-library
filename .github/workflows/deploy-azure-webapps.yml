@@ -15,6 +15,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  # Needed for Azure login
+  id-token: write
+
 jobs:
   build-and-deploy-samples:
     name: Build and Deploy samples
@@ -23,10 +27,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -43,6 +47,13 @@ jobs:
       - name: Build Projects
         run: rush build
 
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: Package Calling Sample Artifact
         run: rushx package
         working-directory: ./samples/Calling
@@ -51,7 +62,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-calling-hero
-          publish-profile: ${{ secrets.AZURE_GROUPCALLING_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Calling/dist
 
       - name: Package Chat Sample Artifact
@@ -62,7 +72,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-chat-hero
-          publish-profile: ${{ secrets.AZURE_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Chat/dist
 
       - name: Package CallWithChat Sample Artifact
@@ -73,5 +82,4 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-meeting-hero
-          publish-profile: ${{ secrets.AZURE_MEETING_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/CallWithChat/dist

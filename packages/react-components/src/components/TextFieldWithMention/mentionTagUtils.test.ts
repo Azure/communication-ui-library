@@ -228,7 +228,6 @@ describe('Mention logic should be robust and accurate', () => {
       mentionTrigger: '@',
       oldPlainText: basicMentionTextRepresentation,
       oldPlainTextEndIndex: 15,
-      newPlainText: basicMentionTextRepresentation + '!',
       startIndex: 15,
       tags: [basicMentionTag]
     });
@@ -242,7 +241,6 @@ describe('Mention logic should be robust and accurate', () => {
       mentionTrigger: '@',
       oldPlainText: twoWordMentionTextRepresentation,
       oldPlainTextEndIndex: 7,
-      newPlainText: 'Hello Patricia Adams!',
       startIndex: 6,
       tags: [twoWordMentionTag]
     });
@@ -257,7 +255,6 @@ describe('Mention logic should be robust and accurate', () => {
       mentionTrigger: '@',
       oldPlainText: twoWordMentionTextRepresentation,
       oldPlainTextEndIndex: 16,
-      newPlainText: 'Hello @PatriciaAdams!',
       startIndex: 15,
       tags: [twoWordMentionTag]
     });
@@ -272,7 +269,6 @@ describe('Mention logic should be robust and accurate', () => {
       mentionTrigger: '@',
       oldPlainText: twoWordMentionTextRepresentation,
       oldPlainTextEndIndex: 21,
-      newPlainText: 'Hello @Patricia Adam!',
       startIndex: 20,
       tags: [twoWordMentionTag]
     });
@@ -287,7 +283,6 @@ describe('Mention logic should be robust and accurate', () => {
       mentionTrigger: '@',
       oldPlainText: twoWordMentionTextRepresentation,
       oldPlainTextEndIndex: 15,
-      newPlainText: 'Hello @Patrici Adams!',
       startIndex: 14,
       tags: [twoWordMentionTag]
     });
@@ -302,7 +297,6 @@ describe('Mention logic should be robust and accurate', () => {
       mentionTrigger: '@',
       oldPlainText: twoWordMentionTextRepresentation,
       oldPlainTextEndIndex: 15,
-      newPlainText: 'Hello @Patriciad Adams!',
       startIndex: 15,
       tags: [twoWordMentionTag]
     });
