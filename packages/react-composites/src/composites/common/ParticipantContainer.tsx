@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import React, { useId, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import {
   participantListContainerStyle,
   participantListMobileStyle,
@@ -17,6 +17,7 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { generateUniqueId } from './utils';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -51,7 +52,7 @@ export const ParticipantListWithHeading = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
-  const subheadingUniqueId = useId();
+  const subheadingUniqueId = generateUniqueId();
   const theme = useTheme();
   const subheadingStyleThemed = useMemo(
     () => ({

@@ -14,7 +14,7 @@ import {
   Stack,
   Text
 } from '@fluentui/react';
-import React, { useId, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
 import { useTheme } from '../theming';
@@ -32,6 +32,7 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
+import { generateUniqueId } from './utils/common';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -159,7 +160,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
-  const uniqueId = useId();
+  const uniqueId = generateUniqueId();
 
   const strings = { ...localeStrings, ...props.strings };
 
