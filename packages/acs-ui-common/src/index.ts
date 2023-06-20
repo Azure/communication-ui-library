@@ -5,7 +5,8 @@ export { memoizeFnAll } from './memoizeFnAll';
 export {
   fromFlatCommunicationIdentifier,
   toFlatCommunicationIdentifier,
-  _toCommunicationIdentifier
+  _toCommunicationIdentifier,
+  _isValidIdentifier
 } from './identifier';
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
