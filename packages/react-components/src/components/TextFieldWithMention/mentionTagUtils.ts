@@ -312,7 +312,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
       escapeHTMLChars(oldPlainText.substring(0, startIndex)) +
       changeWithSkippedChars +
       escapeHTMLChars(oldPlainText.substring(oldPlainTextEndIndex));
-    return { updatedHTML, updatedSelectionIndex: oldPlainTextEndIndex + change.length };
+    return { updatedHTML, updatedSelectionIndex: undefined };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -471,6 +471,8 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             oldPlainTextEndIndex,
             mentionTagLength
           });
+          console.log('Leah updateMentionTagResult', updateMentionTagResult);
+
           result += updateMentionTagResult.result;
           lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
           // no need to handle plainTextSelectionEndIndex as the change will be added later
