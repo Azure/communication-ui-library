@@ -471,8 +471,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             oldPlainTextEndIndex,
             mentionTagLength
           });
-          console.log('Leah updateMentionTagResult', updateMentionTagResult);
-
           result += updateMentionTagResult.result;
           lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
           // no need to handle plainTextSelectionEndIndex as the change will be added later
