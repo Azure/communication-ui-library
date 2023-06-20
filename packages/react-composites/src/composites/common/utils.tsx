@@ -53,12 +53,3 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
  * @private
  */
 export const defaultSpokenLanguage = 'en-us';
-
-/**
- * @private
- *  * Generate a unique id
- * TODO: Replace with useId() once React 18 becomes a required dependency.
- */
-export const generateUniqueId = (): string => {
-  return 'acr-' + Math.floor(Math.random() * Date.now()).toString(16);
-};

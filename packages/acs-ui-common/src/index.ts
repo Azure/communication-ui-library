@@ -11,7 +11,7 @@ export {
 export { _getApplicationId } from './telemetry';
 export { _formatString } from './localizationUtils';
 export { _safeJSONStringify } from './safeStringify';
-export { _convertRemToPx, _preventDismissOnEvent } from './common';
+export { _convertRemToPx, _preventDismissOnEvent, _generateUniqueId } from './common';
 
 export type { Common, CommonProperties } from './commonProperties';
 export type { CallbackType, FunctionWithKey } from './memoizeFnAll';

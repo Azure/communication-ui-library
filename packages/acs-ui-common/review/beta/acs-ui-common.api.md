@@ -43,6 +43,9 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @internal
+export const _generateUniqueId: () => string;
+
+// @internal
 export const _getApplicationId: () => string;
 
 // @internal (undocumented)

@@ -26,12 +26,3 @@ export const useLocaleFileCardStringsTrampoline = (): _FileUploadCardsStrings =>
 export const _isParticipantStateCallingOrHold = (participantState?: ParticipantState): boolean => {
   return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
 };
-
-/**
- * @private
- * Generate a unique id
- * TODO: Replace with useId() once React 18 becomes a required dependency.
- */
-export const generateUniqueId = (): string => {
-  return 'acr-' + Math.floor(Math.random() * Date.now()).toString(16);
-};

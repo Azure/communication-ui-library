@@ -32,7 +32,7 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
-import { generateUniqueId } from './utils/common';
+import { _generateUniqueId } from '@internal/acs-ui-common';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -160,7 +160,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
-  const uniqueId = generateUniqueId();
+  const uniqueId = _generateUniqueId();
 
   const strings = { ...localeStrings, ...props.strings };
 
