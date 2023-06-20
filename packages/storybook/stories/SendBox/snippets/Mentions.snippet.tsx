@@ -1,5 +1,5 @@
 import { Mention, SendBox, FluentThemeProvider } from '@azure/communication-react';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const suggestions: Mention[] = [
   {
@@ -28,6 +28,13 @@ const trigger = '@';
 export const MentionsExample: () => JSX.Element = () => {
   const timeoutRef = React.useRef<NodeJS.Timeout>();
   const delayForSendButton = 300;
+
+  useEffect(() => {
+    return () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <FluentThemeProvider>
       <div style={{ width: '31.25rem', marginTop: '12rem' }}>
