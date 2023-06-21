@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install
       - name: Switch flavor for beta release build
@@ -66,7 +66,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install
       - name: Switch flavor for beta release build
@@ -105,7 +105,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install
       - name: Switch flavor for beta release build

@@ -27,7 +27,7 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
-  onCancelMessageEdit?: (messageId: string) => void;
+  onCancelEditMessage?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
    * @param messageId ID of the message to delete
@@ -135,7 +135,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
-          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId);
+          props.onCancelEditMessage && props.onCancelEditMessage(messageId);
           setIsEditing(false);
         }}
         /* @conditional-compile-remove(mention) */
