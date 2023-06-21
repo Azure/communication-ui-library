@@ -29,17 +29,17 @@
     "@fluentui/react": "~8.110.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "uuid": "^8.1.0"
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@azure/communication-identity": "^1.2.0",
     "@babel/core": "~7.22.5",
     "@playwright/test": "~1.22.2",
     "@types/copy-webpack-plugin": "^6.4.0",
-    "@types/node": "^16.11.7",
+    "@types/node": "^20.3.1",
     "@types/node-static": "~0.7.7",
-    "babel-loader": "8.1.0",
-    "concurrently": "^5.3.0",
+    "babel-loader": "9.1.2",
+    "concurrently": "^8.2.0",
     "copy-webpack-plugin": "^6.4.0",
     "dotenv": "~10.0.0",
     "ecstatic": ">=4.1.3",

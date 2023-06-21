@@ -20,13 +20,13 @@
     "@azure/communication-react": "1.5.1-beta.5"
   },
   "devDependencies": {
-    "eslint": "^7.7.0",
-    "eslint-config-prettier": "^6.12.0",
-    "eslint-plugin-prettier": "^3.1.4",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "~2.27.5",
     "prettier": "2.8.8",
     "rimraf": "^2.6.2",
-    "typescript": "3.8.3"
+    "typescript": "4.3.5"
   }
 }
