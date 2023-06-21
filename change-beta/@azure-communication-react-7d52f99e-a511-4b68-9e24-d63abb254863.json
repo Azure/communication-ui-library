@@ -1,6 +1,6 @@
 {
   "type": "none",
-  "comment": "Added adhoc calling conceptual docs page in storybook",
+  "comment": "Add adhoc calling conceptual docs page to storybook",
   "packageName": "@azure/communication-react",
   "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "none"
