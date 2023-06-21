@@ -347,8 +347,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case 'leftCall':
-      let { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
+    case 'leftCall': {
+      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
       pageElement = (
         <NoticePage
           iconName="NoticePageLeftCall"
@@ -359,6 +359,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    }
     case 'lobby':
       pageElement = (
         <LobbyPage
