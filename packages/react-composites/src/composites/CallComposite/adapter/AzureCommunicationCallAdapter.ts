@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { compositeLogger } from '../../../Logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   CallClientState,
@@ -35,7 +36,7 @@ import {
   Call
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
-import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -77,13 +78,13 @@ import {
 } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
-import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -448,6 +449,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    this.disposeScreenShareStreamView.bind(this);
+    this.disposeRemoteVideoStreamView.bind(this);
+    this.disposeLocalVideoStreamView.bind(this);
     this.on.bind(this);
     this.off.bind(this);
     this.processNewCall.bind(this);
@@ -483,26 +487,41 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getCameras();
+      const cameras = await this.deviceManager.getCameras();
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query cameras', endTime - startTime, 'ms');
+      return cameras;
     });
   }
 
   public async queryMicrophones(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.getMicrophones();
+      const microphones = await this.deviceManager.getMicrophones();
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query microphones', endTime - startTime, 'ms');
+      return microphones;
     });
   }
 
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
+      const speakers = (await this.deviceManager.isSpeakerSelectionAvailable) ? this.deviceManager.getSpeakers() : [];
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query speakers', endTime - startTime, 'ms');
+      return speakers;
     });
   }
 
   public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+    const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.deviceManager.askDevicePermission(constrain);
+      const endTime = new Date().getTime();
+      compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
     });
   }
 
@@ -584,6 +603,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     } else {
       await this.handlers.onDisposeRemoteStreamView(remoteUserId);
     }
+  }
+
+  public async disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
+    await this.handlers.onDisposeRemoteScreenShareStreamView(remoteUserId);
+  }
+
+  public async disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    await this.handlers.onDisposeRemoteVideoStreamView(remoteUserId);
+  }
+
+  public async disposeLocalVideoStreamView(): Promise<void> {
+    await this.handlers.onDisposeLocalStreamView();
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {
@@ -875,6 +906,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
   }
 
+  /* @conditional-compile-remove(close-captions) */
+  private unsubscribeFromCaptionEvents(): void {
+    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
+      this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
+      this._call
+        ?.feature(Features.TeamsCaptions)
+        .off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    }
+  }
+
   private subscribeCallEvents(): void {
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
@@ -895,12 +937,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
+
     /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this._call?.feature(Features.TeamsCaptions).off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-    /* @conditional-compile-remove(close-captions) */
-    this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    this.unsubscribeFromCaptionEvents();
   }
 
   private isMyMutedChanged = (): void => {
@@ -956,7 +995,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(call-transfer) */
   private transferRequested(args: TransferRequestedEventArgs): void {
-    this.emitter.emit('transferRequested', args);
+    const newArgs = {
+      ...args,
+      accept: (options: AcceptTransferOptions) => {
+        const videoSource = this.context.getState().call?.localVideoStreams?.[0]?.source;
+        args.accept({
+          audioOptions: options?.audioOptions ?? /* maintain audio state if options.audioOptions is not defined */ {
+            muted: !!this.context.getState().call?.isMuted
+          },
+          videoOptions:
+            options?.videoOptions ??
+            /* maintain video state if options.videoOptions is not defined */
+            (videoSource ? { localVideoStreams: [new LocalVideoStream(videoSource)] } : undefined)
+        });
+      }
+    };
+    this.emitter.emit('transferRequested', newArgs);
   }
 
   private callIdChanged(): void {
@@ -1060,6 +1114,12 @@ export type CommonCallAdapterOptions = {
    * Default set of background images for background image picker.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /**
+   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
+   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
+   * and would not be updated again within the lifecycle of adapter.
+   */
+  onFetchProfile?: OnFetchProfileCallback;
 };
 
 /**
@@ -1107,14 +1167,7 @@ export type AzureCommunicationCallAdapterArgs = {
  *
  * @beta
  */
-export type TeamsAdapterOptions = {
-  /**
-   * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
-   * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
-   * and would not be updated again within the lifecycle of adapter.
-   */
-  onFetchProfile?: OnFetchProfileCallback;
-} & CommonCallAdapterOptions;
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link TeamsCallAdapter}.
@@ -1150,7 +1203,7 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  if (!isValidIdentifier(userId)) {
+  if (!_isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
   }
 

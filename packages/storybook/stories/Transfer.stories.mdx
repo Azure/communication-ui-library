@@ -1,0 +1,60 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
+
+import TransferSnippetText from '!!raw-loader!./snippets/transfer/Transfer.snippet.tsx';
+import TransferWithDialogPromptSnippetText from '!!raw-loader!./snippets/transfer/TransferWithDialogPrompt.snippet.tsx';
+
+<Meta
+  id="transfer"
+  title="Concepts/Transfer"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Transfer
+
+<DetailedBetaBanner version={'1.6.1-beta.1'} />
+
+## Overview
+
+During an active call, a participant can transfer another participant to another user or call. The transfer process
+starts when a participant (the transferor) requests to transfer another participant (the transferee) to another
+participant (the transfer target.) The transferee receives a transfer requested event which they can accept or reject.
+If the request is accepted, then the transferee makes an outgoing call to transfer target. Finally, the call is ended
+by the transferor.
+
+In the current beta version, ACS users cannot request to transfer other participants yet but they can receive transfer
+requests. Currently, only Teams users can request to transfer other participants. To make a call to a Teams user, refer
+to the [Adhoc calling page](path=/docs/adhoc-calling--page).
+
+## Handling transfer requests
+
+The [CallAdapter](path=/docs/composite-adapters--page#call-adapter) is able to receive `transferRequested` events and
+allows you to handle these events by defining your own `TransferRequestedListener` callback. The following code snippet
+shows an example of a `TransferRequestedListener` that accepts all `transferRequested` events.
+
+<Source code={TransferSnippetText} />
+
+When a transfer request is accepted with no `AcceptTransferOptions`, the microphone state and camera state are
+maintained from the original call to the transferred call. But you can provide `AcceptTransferOptions` to the `accept`
+function so that the user's microphone is muted and their camera turned off in the transferred call. This is done by
+changing the `afterCallAdapterCreate` callback from the code snippet above to the code snippet below.
+
+```typescript
+const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
+  adapter.on('transferRequested', (e) => {
+    e.accept({
+      audioOptions: { muted: true },
+      videoOptions: { localVideoStreams: undefined }
+    });
+  });
+  return adapter;
+}, []);
+```
+
+Here is another example of using a dialog to prompt the user to accept or reject transfer requests.
+
+<Source code={TransferWithDialogPromptSnippetText} />
+
+## Requesting transfers
+
+ACS users cannot request transfers yet.

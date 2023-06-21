@@ -16,7 +16,7 @@ import {
   ITextFieldProps
 } from '@fluentui/react';
 
-import { isEnterKeyEventFromCompositionSession, nullToUndefined, undefinedToNull } from '../utils';
+import { isEnterKeyEventFromCompositionSession, nullToUndefined } from '../utils';
 import {
   TagData,
   findMentionTagForSelection,
@@ -25,7 +25,6 @@ import {
   getDisplayNameForMentionSuggestion,
   getValidatedIndexInRange,
   htmlStringForMentionSuggestion,
-  rangeOfWordInSelection,
   textToTagParser,
   updateHTML
 } from './mentionTagUtils';
@@ -99,11 +98,13 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
   // updated in onSelect event if needed.
   const [shouldHandleOnMouseDownDuringSelect, setShouldHandleOnMouseDownDuringSelect] = useState<boolean>(true);
 
-  // Point of start of touch/mouse selection
-  const [interactionStartPoint, setInteractionStartPoint] = useState<{ x: number; y: number } | undefined>();
+  // Boolean flag to check if mouse/touch move event should be handled
+  const [shouldHandleMoveEvent, setShouldHandleMoveEvent] = useState<boolean>(false);
 
-  // Target selection from mouse movement
-  const [targetSelection, setTargetSelection] = useState<{ start: number; end: number | undefined } | undefined>();
+  // Indexes of start of touch/mouse selection
+  const [interactionStartSelection, setInteractionStartSelection] = useState<
+    { start: number | undefined; end: number | undefined } | undefined
+  >();
 
   // Caret position in the text field
   const [caretPosition, setCaretPosition] = useState<Caret.Position | undefined>(undefined);
@@ -158,14 +159,11 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       const mention = htmlStringForMentionSuggestion(suggestion, localeStrings);
 
       // update plain text with the mention html text
-      const newPlainText =
-        inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
       const updatedContent = updateHTML({
         htmlText: textValue,
         oldPlainText,
-        newPlainText,
         tags: tagsValue,
         startIndex: currentTriggerStartIndex,
         oldPlainTextEndIndex: selectionEnd,
@@ -372,7 +370,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       tags,
       shouldHandleOnMouseDownDuringSelect,
       selectionStartValue,
-      selectionEndValue
+      selectionEndValue,
+      interactionStartSelection
     }: {
       event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>;
       inputTextValue: string;
@@ -380,41 +379,74 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       shouldHandleOnMouseDownDuringSelect: boolean;
       selectionStartValue?: number;
       selectionEndValue?: number;
+      interactionStartSelection?: { start: number | undefined; end: number | undefined };
     }): void => {
       if (shouldHandleOnMouseDownDuringSelect) {
-        if (targetSelection !== undefined) {
-          setSelectionStartValue(targetSelection.start);
-          setSelectionEndValue(targetSelection.end);
-          event.currentTarget.setSelectionRange(targetSelection.start, undefinedToNull(targetSelection.end));
-          setTargetSelection(undefined);
+        if (
+          interactionStartSelection !== undefined &&
+          (interactionStartSelection.start !== event.currentTarget.selectionStart ||
+            interactionStartSelection.end !== event.currentTarget.selectionEnd)
+        ) {
+          // selection was changed by mouse
+          // for mouse selection only, it's possible to start selection in the middle of a word in a mention
+          // because of this when event.currentTarget.selectionStart === mouseMoveStartPoint.start
+          // selectionStartValue for updateSelectionIndexesWithMentionIfNeeded should be set
+          // to the end of the input to mimic selection from right to left for the left selection index
+          const updatedSelectionStartValue =
+            event.currentTarget.selectionStart === interactionStartSelection.start
+              ? inputTextValue.length
+              : interactionStartSelection.start;
+          // selectionStart is always less than selectionEnd so sometimes selectionEnd is user's start of the selection
+          // so when event.currentTarget.selectionEnd === mouseMoveStartPoint.end
+          // selectionEndValue for updateSelectionIndexesWithMentionIfNeeded should be set
+          // to the beginning of the input to mimic selection from left to right for the right selection index
+          const updatedSelectionEndValue =
+            event.currentTarget.selectionEnd === interactionStartSelection.end ? 0 : interactionStartSelection.end;
+          updateSelectionIndexesWithMentionIfNeeded({
+            event,
+            inputTextValue,
+            selectionStartValue: updatedSelectionStartValue,
+            selectionEndValue: updatedSelectionEndValue,
+            tagsValue: tags
+          });
+          setInteractionStartSelection(undefined);
+          setShouldHandleOnMouseDownDuringSelect(false);
         } else if (event.currentTarget.selectionStart !== null) {
           // on select was triggered by mouse down/up with no movement
           const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-            // handle mention click
-            // Get range of word that was clicked on
-            const selectionRange = rangeOfWordInSelection({
-              textInput: inputTextValue,
-              selectionStart: event.currentTarget.selectionStart,
-              selectionEnd: nullToUndefined(event.currentTarget.selectionEnd),
-              tag: mentionTag
-            });
-
-            if (event.currentTarget.selectionDirection === null) {
-              event.currentTarget.setSelectionRange(selectionRange.start, selectionRange.end);
+            // handle mention click by selecting the whole mention
+            // if the selection is not on the bounds of the mention
+            const mentionEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
+            // disable selection for clicks on mention bounds
+            if (
+              event.currentTarget.selectionStart !== event.currentTarget.selectionEnd ||
+              (event.currentTarget.selectionStart !== mentionTag.plainTextBeginIndex &&
+                event.currentTarget.selectionStart !== mentionEndIndex)
+            ) {
+              if (event.currentTarget.selectionDirection === null) {
+                event.currentTarget.setSelectionRange(mentionTag.plainTextBeginIndex, mentionEndIndex);
+              } else {
+                event.currentTarget.setSelectionRange(
+                  mentionTag.plainTextBeginIndex,
+                  mentionEndIndex,
+                  event.currentTarget.selectionDirection
+                );
+              }
+              setSelectionStartValue(mentionTag.plainTextBeginIndex);
+              setSelectionEndValue(mentionEndIndex);
             } else {
-              event.currentTarget.setSelectionRange(
-                selectionRange.start,
-                selectionRange.end,
-                event.currentTarget.selectionDirection
-              );
+              // bounds of the mention were selected
+              setSelectionStartValue(event.currentTarget.selectionStart);
+              setSelectionEndValue(event.currentTarget.selectionEnd);
             }
-            setSelectionStartValue(selectionRange.start);
-            setSelectionEndValue(selectionRange.end);
           } else {
+            // not a mention tag
             setSelectionStartValue(event.currentTarget.selectionStart);
             setSelectionEndValue(nullToUndefined(event.currentTarget.selectionEnd));
           }
+          setInteractionStartSelection(undefined);
+          setShouldHandleOnMouseDownDuringSelect(false);
         }
       } else {
         // selection was changed by keyboard
@@ -426,17 +458,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           tagsValue: tags
         });
       }
-      // don't set setShouldHandleOnMouseDownDuringSelect(false) here as setSelectionRange
-      // could trigger additional calls of onSelect event and they may not be handled correctly
-      // (because of setSelectionRange calls or rerender)
     },
-    [
-      updateSelectionIndexesWithMentionIfNeeded,
-      targetSelection,
-      setTargetSelection,
-      setSelectionStartValue,
-      setSelectionEndValue
-    ]
+    [updateSelectionIndexesWithMentionIfNeeded, setSelectionStartValue, setSelectionEndValue]
   );
 
   type HandleOnChangeProps = {
@@ -502,8 +525,12 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       if (mentionLookupOptions !== undefined) {
         // Look at the range of the change for a trigger character
         const triggerPriorIndex = newValue.lastIndexOf(triggerText, currentSelectionEndValue - 1);
-        // Update the caret position, if not doing a lookup
-        setCaretPosition(Caret.getRelativePosition(event.currentTarget));
+        // Update the caret position, used for positioning the suggestions popover
+        const textField = event.currentTarget;
+        const relativePosition = Caret.getRelativePosition(textField);
+        const adjustOffset = Math.max(0, textField.scrollHeight - textField.clientHeight);
+        relativePosition.top -= adjustOffset;
+        setCaretPosition(relativePosition);
 
         if (triggerPriorIndex !== undefined) {
           // trigger is found
@@ -535,89 +562,82 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           }
         }
       }
-      let result = '';
-      if (tagsValue.length === 0) {
-        // no tags in the string and newValue should be used as a result string
-        result = newValue;
-      } else {
-        // there are tags in the text value and htmlTextValue is html string
-        // find diff between old and new text
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
-          oldText: inputTextValue,
-          newText: newValue,
-          previousSelectionStart: previousSelectionStartValue,
-          previousSelectionEnd: previousSelectionEndValue,
-          currentSelectionStart: currentSelectionStartValue,
-          currentSelectionEnd: currentSelectionEndValue
-        });
-        const change = newValue.substring(changeStart, newChangeEnd);
-        // get updated html string
-        const updatedContent = updateHTML({
-          htmlText: htmlTextValue,
-          oldPlainText: inputTextValue,
-          newPlainText: newValue,
-          tags: tagsValue,
-          startIndex: changeStart,
-          oldPlainTextEndIndex: oldChangeEnd,
-          change,
-          mentionTrigger: triggerText
-        });
-        result = updatedContent.updatedHTML;
-        // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== undefined) {
-          setCaretIndex(updatedContent.updatedSelectionIndex);
-          setSelectionEndValue(updatedContent.updatedSelectionIndex);
-          setSelectionStartValue(updatedContent.updatedSelectionIndex);
-        }
+
+      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
+        oldText: inputTextValue,
+        newText: newValue,
+        previousSelectionStart: previousSelectionStartValue,
+        previousSelectionEnd: previousSelectionEndValue,
+        currentSelectionStart: currentSelectionStartValue,
+        currentSelectionEnd: currentSelectionEndValue
+      });
+
+      const change = newValue.substring(changeStart, newChangeEnd);
+      const updatedContent = updateHTML({
+        htmlText: htmlTextValue,
+        oldPlainText: inputTextValue,
+        tags: tagsValue,
+        startIndex: changeStart,
+        oldPlainTextEndIndex: oldChangeEnd,
+        change,
+        mentionTrigger: triggerText
+      });
+
+      // update caret index if needed
+      if (updatedContent.updatedSelectionIndex !== undefined) {
+        setCaretIndex(updatedContent.updatedSelectionIndex);
+        setSelectionEndValue(updatedContent.updatedSelectionIndex);
+        setSelectionStartValue(updatedContent.updatedSelectionIndex);
       }
 
-      onChange && onChange(event, result);
+      onChange && onChange(event, updatedContent.updatedHTML);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
+    [debouncedQueryUpdate, mentionLookupOptions, onChange, updateMentionSuggestions]
   );
 
   // Adjust the selection range based on a mouse / touch interaction
   const handleOnMove = useCallback(
-    (event) => {
-      let targetStart = event.currentTarget.selectionStart;
-      let targetEnd = event.currentTarget.selectionEnd;
-
-      // Should we do anything?
+    ({
+      event,
+      selectionStartValue,
+      selectionEndValue,
+      interactionStartSelection,
+      shouldHandleMoveEvent
+    }: {
+      event: React.UIEvent<HTMLInputElement | HTMLTextAreaElement>;
+      selectionStartValue: number | undefined;
+      selectionEndValue: number | undefined;
+      interactionStartSelection: { start: number | undefined; end: number | undefined } | undefined;
+      shouldHandleMoveEvent: boolean;
+    }) => {
       if (
-        interactionStartPoint !== undefined &&
-        // And did selection change?
-        targetStart !== null &&
-        (targetStart !== targetSelection?.start || targetEnd !== targetSelection?.end)
+        shouldHandleMoveEvent &&
+        interactionStartSelection === undefined &&
+        (event.currentTarget.selectionStart !== selectionStartValue ||
+          event.currentTarget.selectionEnd !== selectionEndValue)
       ) {
-        const direction: 'forward' | 'backward' | 'none' =
-          event.clientX > interactionStartPoint.x ? 'forward' : 'backward';
-        const mentionTag = findMentionTagForSelection(
-          tagsValue,
-          direction === 'backward'
-            ? event.currentTarget.selectionStart
-            : event.currentTarget.selectionEnd ?? event.currentTarget.selectionStart
-        );
-        let updateCurrentTarget = false;
-
-        if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
-          targetStart = Math.min(mentionTag.plainTextBeginIndex, targetStart);
-          if (mentionTag.plainTextEndIndex !== undefined && targetEnd !== null) {
-            targetEnd = Math.max(mentionTag.plainTextEndIndex, targetEnd);
-          }
-          updateCurrentTarget = true;
-          setShouldHandleOnMouseDownDuringSelect(false);
-        }
-        // Update selection range
-        setTargetSelection({ start: targetStart, end: targetEnd });
-
-        if (updateCurrentTarget) {
-          // Only set the control, if the values are updated
-          event.currentTarget.setSelectionRange(targetStart, targetEnd, direction);
-        }
+        setInteractionStartSelection({
+          start: nullToUndefined(event.currentTarget.selectionStart),
+          end: nullToUndefined(event.currentTarget.selectionEnd)
+        });
       }
     },
-    [setTargetSelection, targetSelection, setShouldHandleOnMouseDownDuringSelect, interactionStartPoint, tagsValue]
+    []
   );
+
+  // Adjust the selection range based on a mouse / touch interaction
+  const handleOnInteractionStarted = useCallback(() => {
+    // reset caret index as a new selection is started or cursor position will be changed
+    setCaretIndex(undefined);
+    setInteractionStartSelection(undefined);
+    setShouldHandleMoveEvent(true);
+    setShouldHandleOnMouseDownDuringSelect(true);
+  }, []);
+
+  // Adjust the selection range based on a mouse / touch interaction
+  const handleOnInteractionCompleted = useCallback(() => {
+    setShouldHandleMoveEvent(false);
+  }, []);
 
   const announcerText = useMemo(() => {
     if (activeSuggestionIndex === undefined) {
@@ -668,39 +688,61 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           });
         }}
         onSelect={(e) => {
+          // update selection if needed
+          if (caretIndex !== undefined) {
+            // sometimes setting selectionRage in effect for updating caretIndex doesn't work as expected and
+            // onSelect still returns outdated value for cursor position
+            // e.g. when user select some text and a first name in a mention then delete or type something else
+            if (caretIndex !== e.currentTarget.selectionStart || caretIndex !== e.currentTarget.selectionEnd) {
+              e.currentTarget.setSelectionRange(caretIndex, caretIndex);
+            }
+            setCaretIndex(undefined);
+            return;
+          }
           handleOnSelect({
             event: e,
             inputTextValue,
             shouldHandleOnMouseDownDuringSelect,
             selectionEndValue,
             selectionStartValue,
-            tags: tagsValue
+            tags: tagsValue,
+            interactionStartSelection
           });
         }}
-        onMouseDown={(e) => {
-          setInteractionStartPoint({ x: e.clientX, y: e.clientY });
+        onMouseDown={() => {
           // as events order is onMouseDown -> onMouseMove -> onMouseUp -> onSelect -> onClick
           // onClick and onMouseDown can't handle clicking on mention event because
           // onMouseDown doesn't have correct selectionRange yet and
           // onClick already has wrong range as it's called after onSelect that updates the selection range
           // so we need to handle onMouseDown to prevent onSelect default behavior
-          setShouldHandleOnMouseDownDuringSelect(true);
+          handleOnInteractionStarted();
         }}
-        onMouseMove={handleOnMove}
-        onMouseUp={() => {
-          setInteractionStartPoint(undefined);
-        }}
-        onTouchStart={(e) => {
-          setInteractionStartPoint({
-            x: e.targetTouches.item(0).clientX,
-            y: e.targetTouches.item(0).clientY
+        onMouseMove={(event) => {
+          handleOnMove({
+            event,
+            selectionStartValue,
+            selectionEndValue,
+            interactionStartSelection,
+            shouldHandleMoveEvent
           });
-          // see onMouseDown for more details
-          setShouldHandleOnMouseDownDuringSelect(true);
         }}
-        onTouchMove={handleOnMove}
+        onMouseUp={() => {
+          handleOnInteractionCompleted();
+        }}
+        onTouchStart={() => {
+          handleOnInteractionStarted();
+        }}
+        onTouchMove={(event) => {
+          handleOnMove({
+            event,
+            selectionStartValue,
+            selectionEndValue,
+            interactionStartSelection,
+            shouldHandleMoveEvent
+          });
+        }}
         onTouchEnd={() => {
-          setInteractionStartPoint(undefined);
+          handleOnInteractionCompleted;
         }}
         onBlur={() => {
           // setup all flags to default values when text field loses focus

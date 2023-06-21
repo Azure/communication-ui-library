@@ -19,7 +19,7 @@ export const DefaultMessageThreadExample: () => JSX.Element = () => {
           setMessages(updated);
           return Promise.reject('Failed to update');
         }}
-        onCancelMessageEdit={(id) => {
+        onCancelEditMessage={(id) => {
           const updated = messages.map((m) =>
             m.messageId === id ? { ...m, failureReason: undefined, status: undefined } : m
           );

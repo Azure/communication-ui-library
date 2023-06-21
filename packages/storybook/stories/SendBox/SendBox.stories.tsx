@@ -4,7 +4,7 @@
 import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
@@ -98,11 +98,24 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const SendBoxStory = (args): JSX.Element => {
+  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  const delayForSendButton = 300;
+
+  useEffect(() => {
+    return () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
   return (
     <div style={{ width: '31.25rem' }}>
       <SendBoxComponent
         disabled={args.disabled}
-        onSendMessage={async (message) => alert(`sent message: ${message} `)}
+        onSendMessage={async (message) => {
+          timeoutRef.current = setTimeout(() => {
+            alert(`sent message: ${message} `);
+          }, delayForSendButton);
+        }}
         onTyping={(): Promise<void> => {
           console.log(`sending typing notifications`);
           return Promise.resolve();

@@ -26,12 +26,12 @@
     "_typecheck": "rushx _by-flavor \"rushx _if-preprocess && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
-    "@azure/abort-controller": "^1.0.0",
-    "@azure/communication-identity": "~1.1.0",
-    "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
+    "@azure/abort-controller": "^1.1.0",
+    "@azure/communication-identity": "^1.2.0",
+    "@azure/communication-calling": "1.14.1-beta.1 || >=1.13.1",
     "@azure/communication-react": "1.6.1-beta.0",
-    "@azure/communication-common": "2.2.0",
-    "@azure/logger": "1.0.3",
+    "@azure/communication-common": "^2.2.0",
+    "@azure/logger": "^1.0.4",
     "@babel/preset-react": "^7.12.7",
     "@fluentui/react": "~8.98.3",
     "@fluentui/react-hooks": "~8.6.12",
