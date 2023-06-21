@@ -38,35 +38,39 @@ jobs:
   check_breaking_changes:
     needs: get_matrix
     name: Check Breaking Changes
-    if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         with:
           fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js v14.x
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         uses: actions/setup-node@v3
         with:
           node-version: '14.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
       - name: Switch flavor for stable build
         id: switch-flavor
-        if: ${{ matrix.flavor == 'stable' }}
+        if: ${{ matrix.flavor == 'stable' && github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: |
           rush switch-flavor:stable
       - name: Check result of flavor switch
@@ -74,20 +78,26 @@ jobs:
         run: echo "Failed to switch to stable flavor, please make sure you run 'rush update:stable' if dependencies were updated." && exit 1
       # Checkout the branch to be merged into in PR
       - name: Checkout base branch
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: git checkout ${{ github.event.pull_request.base.ref }}
       - name: Build base api file
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush build -t @azure/communication-react
       - name: Copy api file
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         working-directory: packages/communication-react/
         run: |
           mkdir -p breaking-change-check/snapshots/
           cp dist/communication-react.d.ts breaking-change-check/snapshots/
       - name: Checkout current branch
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: git checkout ${{ github.event.pull_request.head.ref }}
       # Builds
       - name: Build current api file
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         run: rush build -t @azure/communication-react
       - name: Check breaking changes
+        if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
         working-directory: packages/communication-react/
         id: breaking-changes
         run: rushx check-breaking-change
