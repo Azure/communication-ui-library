@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@azure/communication-common": "^2.2.0",
-    "@azure/core-paging": "^1.5.3",
+    "@azure/core-paging": "^1.5.0",
     "@azure/logger": "^1.0.4",
     "@internal/acs-ui-common": "1.6.1-beta.0",
     "events": "~3.3.0",
