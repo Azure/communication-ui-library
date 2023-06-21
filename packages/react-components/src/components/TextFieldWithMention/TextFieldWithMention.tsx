@@ -627,6 +627,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
 
   // Adjust the selection range based on a mouse / touch interaction
   const handleOnInteractionStarted = useCallback(() => {
+    // reset caret index as a new selection is started or cursor position will be changed
+    setCaretIndex(undefined);
     setInteractionStartSelection(undefined);
     setShouldHandleMoveEvent(true);
     setShouldHandleOnMouseDownDuringSelect(true);
