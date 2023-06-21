@@ -271,7 +271,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     }
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
-  }, [observer, videoTileRef]);
+  }, [videoTileRef]);
 
   /* @conditional-compile-remove(pinned-participants) */
   const useLongPressProps = useMemo(() => {

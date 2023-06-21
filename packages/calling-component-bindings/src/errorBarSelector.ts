@@ -136,7 +136,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     if (diagnostics?.media.latest.screenshareRecordingDisabled?.value === true && isMacOS()) {
       activeErrorMessages.push({ type: 'callMacOsScreenShareAccessDenied' });
     } else if (diagnostics?.media.latest.screenshareRecordingDisabled?.value === true) {
-      activeErrorMessages.push({ type: 'startScreenSharingGeneric' });
+      activeErrorMessages.push({ type: 'startScreenShareGeneric' });
     }
 
     // Prefer to show errors with privacy implications.

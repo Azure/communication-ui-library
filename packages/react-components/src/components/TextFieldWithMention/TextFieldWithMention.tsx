@@ -159,14 +159,11 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       const mention = htmlStringForMentionSuggestion(suggestion, localeStrings);
 
       // update plain text with the mention html text
-      const newPlainText =
-        inputTextValue.substring(0, currentTriggerStartIndex) + mention + inputTextValue.substring(selectionEnd);
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
       const updatedContent = updateHTML({
         htmlText: textValue,
         oldPlainText,
-        newPlainText,
         tags: tagsValue,
         startIndex: currentTriggerStartIndex,
         oldPlainTextEndIndex: selectionEnd,
@@ -565,45 +562,37 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           }
         }
       }
-      let result = '';
-      if (tagsValue.length === 0) {
-        // no tags in the string and newValue should be used as a result string
-        result = newValue;
-      } else {
-        // there are tags in the text value and htmlTextValue is html string
-        // find diff between old and new text
-        const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
-          oldText: inputTextValue,
-          newText: newValue,
-          previousSelectionStart: previousSelectionStartValue,
-          previousSelectionEnd: previousSelectionEndValue,
-          currentSelectionStart: currentSelectionStartValue,
-          currentSelectionEnd: currentSelectionEndValue
-        });
-        const change = newValue.substring(changeStart, newChangeEnd);
-        // get updated html string
-        const updatedContent = updateHTML({
-          htmlText: htmlTextValue,
-          oldPlainText: inputTextValue,
-          newPlainText: newValue,
-          tags: tagsValue,
-          startIndex: changeStart,
-          oldPlainTextEndIndex: oldChangeEnd,
-          change,
-          mentionTrigger: triggerText
-        });
-        result = updatedContent.updatedHTML;
-        // update caret index if needed
-        if (updatedContent.updatedSelectionIndex !== undefined) {
-          setCaretIndex(updatedContent.updatedSelectionIndex);
-          setSelectionEndValue(updatedContent.updatedSelectionIndex);
-          setSelectionStartValue(updatedContent.updatedSelectionIndex);
-        }
+
+      const { changeStart, oldChangeEnd, newChangeEnd } = findStringsDiffIndexes({
+        oldText: inputTextValue,
+        newText: newValue,
+        previousSelectionStart: previousSelectionStartValue,
+        previousSelectionEnd: previousSelectionEndValue,
+        currentSelectionStart: currentSelectionStartValue,
+        currentSelectionEnd: currentSelectionEndValue
+      });
+
+      const change = newValue.substring(changeStart, newChangeEnd);
+      const updatedContent = updateHTML({
+        htmlText: htmlTextValue,
+        oldPlainText: inputTextValue,
+        tags: tagsValue,
+        startIndex: changeStart,
+        oldPlainTextEndIndex: oldChangeEnd,
+        change,
+        mentionTrigger: triggerText
+      });
+
+      // update caret index if needed
+      if (updatedContent.updatedSelectionIndex !== undefined) {
+        setCaretIndex(updatedContent.updatedSelectionIndex);
+        setSelectionEndValue(updatedContent.updatedSelectionIndex);
+        setSelectionStartValue(updatedContent.updatedSelectionIndex);
       }
 
-      onChange && onChange(event, result);
+      onChange && onChange(event, updatedContent.updatedHTML);
     },
-    [onChange, mentionLookupOptions, setCaretIndex, setCaretPosition, updateMentionSuggestions, debouncedQueryUpdate]
+    [debouncedQueryUpdate, mentionLookupOptions, onChange, updateMentionSuggestions]
   );
 
   // Adjust the selection range based on a mouse / touch interaction
@@ -638,6 +627,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
 
   // Adjust the selection range based on a mouse / touch interaction
   const handleOnInteractionStarted = useCallback(() => {
+    // reset caret index as a new selection is started or cursor position will be changed
+    setCaretIndex(undefined);
     setInteractionStartSelection(undefined);
     setShouldHandleMoveEvent(true);
     setShouldHandleOnMouseDownDuringSelect(true);
@@ -697,6 +688,17 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           });
         }}
         onSelect={(e) => {
+          // update selection if needed
+          if (caretIndex !== undefined) {
+            // sometimes setting selectionRage in effect for updating caretIndex doesn't work as expected and
+            // onSelect still returns outdated value for cursor position
+            // e.g. when user select some text and a first name in a mention then delete or type something else
+            if (caretIndex !== e.currentTarget.selectionStart || caretIndex !== e.currentTarget.selectionEnd) {
+              e.currentTarget.setSelectionRange(caretIndex, caretIndex);
+            }
+            setCaretIndex(undefined);
+            return;
+          }
           handleOnSelect({
             event: e,
             inputTextValue,

@@ -26,10 +26,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -42,6 +42,8 @@ jobs:
       - name: Switch flavor for beta release build
         if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build Calling
@@ -69,10 +71,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -85,6 +87,8 @@ jobs:
       - name: Switch flavor for beta release build
         if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build Chat
@@ -112,10 +116,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.47.0
       - name: Install dependencies
@@ -128,6 +132,8 @@ jobs:
       - name: Switch flavor for beta release build
         if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build CallWithChat
