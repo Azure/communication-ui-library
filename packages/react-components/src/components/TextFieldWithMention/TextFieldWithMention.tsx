@@ -627,6 +627,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
 
   // Adjust the selection range based on a mouse / touch interaction
   const handleOnInteractionStarted = useCallback(() => {
+    // reset caret index as a new selection is started or cursor position will be changed
+    setCaretIndex(undefined);
     setInteractionStartSelection(undefined);
     setShouldHandleMoveEvent(true);
     setShouldHandleOnMouseDownDuringSelect(true);
@@ -686,6 +688,17 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           });
         }}
         onSelect={(e) => {
+          // update selection if needed
+          if (caretIndex !== undefined) {
+            // sometimes setting selectionRage in effect for updating caretIndex doesn't work as expected and
+            // onSelect still returns outdated value for cursor position
+            // e.g. when user select some text and a first name in a mention then delete or type something else
+            if (caretIndex !== e.currentTarget.selectionStart || caretIndex !== e.currentTarget.selectionEnd) {
+              e.currentTarget.setSelectionRange(caretIndex, caretIndex);
+            }
+            setCaretIndex(undefined);
+            return;
+          }
           handleOnSelect({
             event: e,
             inputTextValue,
