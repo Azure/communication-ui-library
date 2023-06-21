@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce responsive wrapper component for VerticalGallery.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

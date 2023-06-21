@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove flakey snapshots to regenerate them",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}

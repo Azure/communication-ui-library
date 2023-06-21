@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update sample applications to provide more information on phone numbers, their formats, and what they are for.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
