@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Mark call transfer to in progress feature",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update internal dispose view logic to be under one utility function for remote and local streams.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
