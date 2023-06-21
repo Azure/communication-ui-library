@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update video gallery behavior to show local tile when screen sharing alone in a call",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

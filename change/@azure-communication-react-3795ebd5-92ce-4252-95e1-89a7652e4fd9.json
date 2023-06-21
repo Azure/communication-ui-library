@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "update Poll time limit and interval for NPM package release check.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

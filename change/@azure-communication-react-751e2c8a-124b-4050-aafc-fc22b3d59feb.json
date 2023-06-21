@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Enable ArrowUp and ArrowDown key inside EditBox",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "patch"
-}

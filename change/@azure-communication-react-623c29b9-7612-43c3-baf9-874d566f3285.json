@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update stateful client video effects API to use activeEffect naming.",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
