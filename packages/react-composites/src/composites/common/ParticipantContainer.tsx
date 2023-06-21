@@ -17,7 +17,7 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
-import { _generateUniqueId } from '@internal/acs-ui-common';
+import { useId } from '@fluentui/react-hooks';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -52,7 +52,7 @@ export const ParticipantListWithHeading = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
-  const subheadingUniqueId = _generateUniqueId();
+  const subheadingUniqueId = useId();
   const theme = useTheme();
   const subheadingStyleThemed = useMemo(
     () => ({

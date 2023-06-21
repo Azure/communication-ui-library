@@ -27,12 +27,3 @@ export const _preventDismissOnEvent = (
 ): boolean => {
   return ev.type === 'resize' || ev.type === 'scroll';
 };
-
-/**
- * @internal
- *  * Generate a unique id
- * TODO: Replace with useId() once React 18 becomes a required dependency.
- */
-export const _generateUniqueId = (): string => {
-  return 'acr-' + self.crypto.getRandomValues(new Uint32Array(1))[0].toString(16);
-};

@@ -32,7 +32,7 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
-import { _generateUniqueId } from '@internal/acs-ui-common';
+import { useId } from '@fluentui/react-hooks';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -160,7 +160,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
-  const uniqueId = _generateUniqueId();
+  const uniqueId = useId();
 
   const strings = { ...localeStrings, ...props.strings };
 
