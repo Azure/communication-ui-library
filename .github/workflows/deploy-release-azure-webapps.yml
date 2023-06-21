@@ -42,6 +42,8 @@ jobs:
       - name: Switch flavor for beta release build
         if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build Calling
@@ -85,6 +87,8 @@ jobs:
       - name: Switch flavor for beta release build
         if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build Chat
@@ -128,6 +132,8 @@ jobs:
       - name: Switch flavor for beta release build
         if: ${{ contains(github.ref, 'beta') }}
         run: rush switch-flavor:beta-release
+      - name: Build Communication-react
+        run: rush build -t @azure/communication-react
       - name: Build Server
         run: rush build -o server
       - name: Build CallWithChat
