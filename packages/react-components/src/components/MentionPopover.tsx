@@ -248,9 +248,6 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
 
   const defaultOnRenderSuggestionItem = useCallback(
     (suggestion: Mention, onSuggestionSelected: (suggestion: Mention) => void, active: boolean): JSX.Element => {
-      if (suggestion.displayText === undefined || suggestion.displayText.trim() === '') {
-        return <></>;
-      }
       return (
         <div
           data-is-focusable={true}
