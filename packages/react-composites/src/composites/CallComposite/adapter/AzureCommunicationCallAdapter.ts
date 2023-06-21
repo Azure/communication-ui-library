@@ -375,8 +375,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const acceptedTransferCallState = this.context.getState().acceptedTransferCallState;
 
       /* @conditional-compile-remove(call-transfer) */
-      // If there has been an accepted transfer call that is now in the connected state, we should ensure we leave the
-      // current call. There is a possibility we accepted a transfer which the transferor thinks failed.
+      // TODO: Remove this if statement when Calling SDK prevents accepting transfer requests that have timed out
+      // This is to handle the case when there has been an accepted transfer call that is now in the connected state
+      // AND is not the current call. Ensure we leave the current call.
       if (
         acceptedTransferCallState &&
         acceptedTransferCallState.state === 'Connected' &&
@@ -387,8 +388,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         if (transferCall) {
           const oldCall = this.call;
           this.processNewCall(transferCall);
-          // Wait 2 seconds to allow transferor to recognize the transfer is complete and end the call. But if the old
-          // call is not ended, ensure we hang up.
+          // Do not hang up right away because we want the Transfer API to remove the call on a successful transfer. If
+          // we hang up right away the Transfer API will recognize the transfer as a failure even though we are now in
+          // the transfer call
           setTimeout(() => {
             if (oldCall?.state === 'Connected') {
               oldCall.hangUp();
