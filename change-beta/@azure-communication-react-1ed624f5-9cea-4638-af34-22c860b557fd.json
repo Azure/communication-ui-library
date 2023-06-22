@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Prevent timeout of transfer request by enforcing 5 second limit to accept and rejecting otherwise",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
