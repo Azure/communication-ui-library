@@ -1,0 +1,84 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta
+  id="v9migration"
+  title="Fluent v9 Migration"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Fluent v9 Migration Path
+
+## Work Needed to Migrate
+
+| Work Item                                         | Breakdown                                                            |
+| ------------------------------------------------- | -------------------------------------------------------------------- |
+| Bump to Fluent v9                                 | See [component migration steps](#component-migration-steps) below    |
+| Release v9 alpha/beta and finally stable packages |                                                                      |
+| Major change sign off                             | <ul><li>Assess other breaking changes</li><li>ARB Sign off</li></ul> |
+| Create customer migration plan                    |                                                                      |
+| Create v8 --> v9 devX transition documentation    |                                                                      |
+
+## Why we want to upgrade
+
+tbd.
+
+## Component Migration Steps
+
+As v9 work will take some time, we will need to be able to work on v9 components in parallel with v8 components. To do this we will need to create new packlets for v9 components, and create a new dev inner loop for v9 components.
+
+### 0. Git Strategy
+
+All work will be checked into main in small PRs as normal.
+
+### v9 packlets
+
+To facilitate both v8 and v9 work in parallel, we will create new packlets that will contain all the new v9 components, along with all the other breaking changes we wish to make:
+
+- `@internal/react-components-next`
+- `@internal/react-composites-next`
+
+Any new stateful client work, or new handlers and selectors required will be added to their regular respective packages. We expect low churn in these areas and mostly code reuse, and hence exporting new functionality as `@internal` will be sufficient.
+
+### Create Dev Inner Loop
+
+| Inner loop item | v9 Migration                                                                                                                                                               |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Unit Tests      | Live alongside new v9 code in new packlets                                                                                                                                 |
+| E2E Snapshots   | Live alongside new v9 code in new packlet `@internal/react-composites-next` packlet. Infrastructure will be cloned for this.                                               |
+| Storybook       | New pages will be added to storybook for v9 components. These will live in a v9 folder that will be filtered out for release the same as we do with the `internal` folder. |
+| Sample Apps     | Existing sample apps will be cloned and internals will be replaced with v9 composites.                                                                                     |
+
+### Releasing v9 alpha/beta packages
+
+1. ~~Create v9 metapacklet~~ -- **Open Question: new packlet with only v9 exports, or existing packlet with v9 exports and v8 exports?**
+1. Create v9 alpha/beta section in storybook
+1. Add custom github actions to bump packages to `2.0.0-<alpha|beta>.#`
+
+### Releasing v9 stable package
+
+When we release 2.0.0 we want to ensure our documentation matches the new version. We will also want to ensure we have a migration guide for customers.
+
+1. ~~Remove v8 storybook pages~~ -- **Open Question: How do we handle v1.x docs?**
+1. Add Customer Migration Guide to Storybook
+1. Ensure release version is 2.0.0
+
+### Post-stable release cleanup
+
+After release we will remove our v8 code
+
+1. Remove v8 packlets, sample apps and v8 legacy code
+1. Cleanup any custom github actions for v9 releases
+1. Rename v9 packlets to remove `-next` suffix
+
+## Estimated Customer Impact
+
+tbd.
+
+## Estimated Timeline
+
+tbd.
+
+## Open Questions
+
+- How do we handle v1.x docs?
+- Should v9 alpha/beta exports be isolated to just v8/v9 things, or have v8 exports as well?
