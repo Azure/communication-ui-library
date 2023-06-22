@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(raise-hands) */
 import React from 'react';
+/* @conditional-compile-remove(raise-hands) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(raise-hands) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+/* @conditional-compile-remove(raise-hands) */
 import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hands) */
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
+/* @conditional-compile-remove(raise-hands) */
 /**
  * Strings of {@link RaiseHandButton} that can be overridden.
  *
@@ -25,6 +31,7 @@ export interface RaiseHandButtonStrings {
   tooltipOffContent?: string;
 }
 
+/* @conditional-compile-remove(raise-hands) */
 /**
  * Props for {@link RaiseHandButton}.
  *
@@ -43,6 +50,7 @@ export interface RaiseHandButtonProps extends ControlBarButtonProps {
   strings?: Partial<RaiseHandButtonStrings>;
 }
 
+/* @conditional-compile-remove(raise-hands) */
 /**
  * A button to start / stop screen sharing.
  *
@@ -78,6 +86,7 @@ export const RaiseHandButton = (props: RaiseHandButtonProps): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(raise-hands) */
 const raiseHandButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,

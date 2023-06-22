@@ -20,9 +20,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean,
-    /* @conditional-compile-remove(raise-hands) */
-    raisedHand: RaisedHand | undefined
+    isSpeaking: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -30,9 +28,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking,
-      /* @conditional-compile-remove(raise-hands) */
-      raisedHand
+      isSpeaking
     );
   }
 );
@@ -43,9 +39,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean,
-  /* @conditional-compile-remove(raise-hands) */
-  raisedHand: RaisedHand | undefined
+  isSpeaking: boolean
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -55,8 +49,6 @@ const convertRemoteParticipantToParticipantListParticipant = (
     isMuted,
     isScreenSharing,
     isSpeaking,
-    /* @conditional-compile-remove(raise-hands) */
-    raisedHand,
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
@@ -65,6 +57,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
 };
 
 /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(raise-hands) */
 /**
  * @private
  */
@@ -76,7 +69,6 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
-    /* @conditional-compile-remove(raise-hands) */
     raisedHand: RaisedHand | undefined,
     role: Role
   ): CallParticipantListParticipant => {
@@ -87,7 +79,6 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
-      /* @conditional-compile-remove(raise-hands) */
       raisedHand,
       role
     );
@@ -95,6 +86,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(raise-hands) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (
   userId: string,
   displayName: string | undefined,
@@ -102,7 +94,6 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
-  /* @conditional-compile-remove(raise-hands) */
   raisedHand: RaisedHand | undefined,
   role: Role
 ): CallParticipantListParticipant => {
@@ -113,10 +104,9 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking,
-      /* @conditional-compile-remove(raise-hands) */
-      raisedHand
+      isSpeaking
     ),
+    raisedHand,
     role
   };
 };

@@ -345,7 +345,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        (isSpeaking || raisedHand) && {
+        (isSpeaking || /* @conditional-compile-remove(pinned-participants) */ raisedHand) && {
           '&::after': {
             content: `''`,
             position: 'absolute',

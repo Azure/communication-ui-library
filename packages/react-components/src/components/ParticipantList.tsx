@@ -116,7 +116,9 @@ const onRenderParticipantDefault = (
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
+    callingParticipant?.isScreenSharing ||
+    callingParticipant?.isMuted ||
+    /* @conditional-compile-remove(raise-hands) */ callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.isScreenSharing && (
@@ -129,20 +131,22 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
-            {callingParticipant.raisedHand && (
-              <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
-                <Stack.Item>
-                  <Text>{callingParticipant.raisedHand?.order}</Text>
-                </Stack.Item>
-                <Stack.Item>
-                  <Icon
-                    iconName="ParticipantItemRaisedHand"
-                    className={iconStyles}
-                    ariaLabel={strings.raisedHandIconLabel}
-                  />
-                </Stack.Item>
-              </Stack>
-            )}
+            {
+              /* @conditional-compile-remove(raise-hands) */ callingParticipant.raisedHand && (
+                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
+                  <Stack.Item>
+                    <Text>{callingParticipant.raisedHand?.order}</Text>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Icon
+                      iconName="ParticipantItemRaisedHand"
+                      className={iconStyles}
+                      ariaLabel={strings.raisedHandIconLabel}
+                    />
+                  </Stack.Item>
+                </Stack>
+              )
+            }
           </Stack>
         )
       : () => null;
@@ -234,7 +238,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         });
       }
 
+      /* @conditional-compile-remove(raise-hands) */
       const callingParticipant = participant as CallParticipantListParticipant;
+      /* @conditional-compile-remove(raise-hands) */
       if (callingParticipant.raisedHand && onLowerHands) {
         menuItems.push({
           key: 'lowerHand',

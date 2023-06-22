@@ -17,6 +17,7 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(raise-hands) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
@@ -71,6 +72,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
     );
   };
   /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(raise-hands) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };

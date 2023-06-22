@@ -10,10 +10,10 @@ import {
   TranscriptionCallFeature,
   VideoStreamRendererView,
   CallFeatureFactory,
-  CallFeature,
-  /* @conditional-compile-remove(raise-hands) */
-  RaiseHandCallFeature
+  CallFeature
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandCallFeature } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallError } from './CallClientState';
@@ -41,13 +41,13 @@ import {
   StateChangeListener,
   stubCommunicationTokenCredential,
   StubDiagnosticsCallFeatureImpl,
-  waitWithBreakCondition,
-  /* @conditional-compile-remove(raise-hands) */
-  MockRaiseHandCallFeatureImpl
+  waitWithBreakCondition
 } from './TestUtils';
+/* @conditional-compile-remove(raise-hands) */
+import { MockRaiseHandCallFeatureImpl } from './TestUtils';
 
 jest.mock('@azure/communication-calling', () => {
-  return {
+  const mock = {
     VideoStreamRenderer: jest.fn().mockImplementation(() => {
       return {
         createView: () => {
@@ -67,13 +67,12 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };
-      },
-      /* @conditional-compile-remove(raise-hands) */
-      get RaiseHand(): CallFeatureFactory<RaiseHandCallFeature> {
-        return { callApiCtor: MockRaiseHandCallFeatureImpl };
       }
     }
   };
+  /* @conditional-compile-remove(raise-hands) */
+  mock.Features['RaiseHand'] = { callApiCtor: MockRaiseHandCallFeatureImpl };
+  return mock;
 });
 
 describe('Stateful call client', () => {

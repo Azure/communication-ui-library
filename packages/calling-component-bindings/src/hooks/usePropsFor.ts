@@ -164,16 +164,17 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
-    case RaiseHandButton:
-      return raiseHandButtonSelector;
   }
   return undefined;
 };
 
+/* @conditional-compile-remove(raise-hands) */
 /* @conditional-compile-remove(PSTN-calls) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     case HoldButton:
       return holdButtonSelector;
+    case RaiseHandButton:
+      return raiseHandButtonSelector;
   }
 };

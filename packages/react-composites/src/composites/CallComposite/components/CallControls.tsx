@@ -223,7 +223,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             occluding some of its content.
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
-          {raiseHandButtonIsEnabled && <RaiseHand displayType={options?.displayType} />}
+          {
+            /* @conditional-compile-remove(raise-hands) */ raiseHandButtonIsEnabled && (
+              <RaiseHand displayType={options?.displayType} />
+            )
+          }
           {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}

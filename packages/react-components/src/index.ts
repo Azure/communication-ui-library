@@ -40,8 +40,6 @@ export type {
   ParticipantRemovedSystemMessage,
   ParticipantState,
   ReadReceiptsBySenderId,
-  /* @conditional-compile-remove(raise-hands) */
-  RaisedHand,
   SystemMessage,
   SystemMessageCommon,
   TopicUpdatedSystemMessage,
@@ -52,6 +50,9 @@ export type {
   VideoStreamOptions,
   ViewScalingMode
 } from './types';
+
+/* @conditional-compile-remove(raise-hands) */
+export type { RaisedHand } from './types';
 
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsAvailableLanguageStrings } from './types';

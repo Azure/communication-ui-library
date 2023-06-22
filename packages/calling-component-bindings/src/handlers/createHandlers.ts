@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Call, CallAgent, StartCallOptions, Features } from '@azure/communication-calling';
+import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hands) */
+import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';

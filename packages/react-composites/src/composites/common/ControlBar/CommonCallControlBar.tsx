@@ -265,14 +265,16 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout="horizontal" styles={centerContainerStyles}>
-                    {isEnabled(options.raiseHandButton) && (
-                      <RaiseHand
-                        displayType={options.displayType}
-                        styles={commonButtonStyles}
-                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                      />
-                    )}
+                    {
+                      /* @conditional-compile-remove(raise-hands) */ isEnabled(options.raiseHandButton) && (
+                        <RaiseHand
+                          displayType={options.displayType}
+                          styles={commonButtonStyles}
+                          /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                          disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                        />
+                      )
+                    }
                     {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}

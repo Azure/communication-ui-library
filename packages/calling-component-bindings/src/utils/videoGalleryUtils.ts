@@ -26,7 +26,12 @@ export const _videoGalleryRemoteParticipantsMemo = (
   if (!remoteParticipants) {
     return [];
   }
-  return memoizedAllConvertRemoteParticipant((memoizedFn) => {
+
+  let callFunction = memoizedAllConvertRemoteParticipant;
+  /* @conditional-compile-remove(raise-hands) */
+  callFunction = memoizedAllConvertRemoteParticipantBeta;
+
+  return callFunction((memoizedFn) => {
     return (
       Object.values(remoteParticipants)
         /**
@@ -61,8 +66,6 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     userId: string,
     isMuted: boolean,
     isSpeaking: boolean,
-    /* @conditional-compile-remove(raise-hands) */
-    raisedHand: RaisedHand | undefined,
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string
@@ -71,7 +74,28 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       userId,
       isMuted,
       isSpeaking,
-      /* @conditional-compile-remove(raise-hands) */
+      videoStreams,
+      state,
+      displayName
+    );
+  }
+);
+
+/* @conditional-compile-remove(raise-hands) */
+const memoizedAllConvertRemoteParticipantBeta = memoizeFnAll(
+  (
+    userId: string,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    raisedHand: RaisedHand | undefined,
+    videoStreams: { [key: number]: RemoteVideoStreamState },
+    state: RemoteParticipantConnectionState,
+    displayName?: string
+  ): VideoGalleryRemoteParticipant => {
+    return convertRemoteParticipantToVideoGalleryRemoteParticipantBeta(
+      userId,
+      isMuted,
+      isSpeaking,
       raisedHand,
       videoStreams,
       state,
@@ -85,7 +109,49 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   userId: string,
   isMuted: boolean,
   isSpeaking: boolean,
-  /* @conditional-compile-remove(raise-hands) */
+  videoStreams: { [key: number]: RemoteVideoStreamState },
+  state: RemoteParticipantConnectionState,
+  displayName?: string
+): VideoGalleryRemoteParticipant => {
+  const rawVideoStreamsArray = Object.values(videoStreams);
+  let videoStream: VideoGalleryStream | undefined = undefined;
+  let screenShareStream: VideoGalleryStream | undefined = undefined;
+
+  const sdkRemoteVideoStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
+
+  const sdkScreenShareStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+
+  if (sdkRemoteVideoStream) {
+    videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
+  }
+  if (sdkScreenShareStream) {
+    screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
+  }
+
+  return {
+    userId,
+    displayName,
+    isMuted,
+    isSpeaking,
+    videoStream,
+    screenShareStream,
+    isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
+    /* @conditional-compile-remove(one-to-n-calling) */
+    /* @conditional-compile-remove(PSTN-calls) */
+    state
+  };
+};
+
+/* @conditional-compile-remove(raise-hands) */
+/** @private */
+export const convertRemoteParticipantToVideoGalleryRemoteParticipantBeta = (
+  userId: string,
+  isMuted: boolean,
+  isSpeaking: boolean,
   raisedHand: RaisedHand | undefined,
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,

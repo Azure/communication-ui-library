@@ -1,12 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(raise-hands) */
 import { ControlBarButtonStyles, RaiseHandButton } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hands) */
 import React, { useMemo } from 'react';
+/* @conditional-compile-remove(raise-hands) */
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
+/* @conditional-compile-remove(raise-hands) */
 import { usePropsFor } from '../../hooks/usePropsFor';
+/* @conditional-compile-remove(raise-hands) */
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
+/* @conditional-compile-remove(raise-hands) */
 /** @private */
 export const RaiseHand = (props: {
   // The value of `CallControlOptions.raiseHandButton`.
@@ -35,6 +40,7 @@ export const RaiseHand = (props: {
   );
 };
 
+/* @conditional-compile-remove(raise-hands) */
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   if (option === undefined || option === true || option === false) {
     return false;

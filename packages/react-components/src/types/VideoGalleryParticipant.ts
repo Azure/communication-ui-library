@@ -5,7 +5,7 @@
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from './ParticipantListParticipant';
 
-/* conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hands) */
 import { RaisedHand } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
