@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Use more specific messages for endcall page when adhoc calling fails",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
