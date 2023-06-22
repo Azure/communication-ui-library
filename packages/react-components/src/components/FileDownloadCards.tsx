@@ -17,7 +17,7 @@ import { _formatString } from '@internal/acs-ui-common';
 export type FileMetadataAttachmentType =
   | 'fileSharing'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
-  // | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage'
   | 'unknown';
 
 /**
@@ -47,6 +47,7 @@ export interface CustomFileMetadata extends BaseFileMetadata {
   /**
    * Attachment Type
    */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentType: 'fileSharing';
 }
 
@@ -78,7 +79,7 @@ export interface TeamsInteropImageFileMetadata extends BaseFileMetadata {
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
-  attachmentType: 'inlineImage';
+  attachmentType: 'inlineImage' | 'attachedImage';
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Unique ID of the file.

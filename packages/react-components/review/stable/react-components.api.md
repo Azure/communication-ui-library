@@ -58,6 +58,13 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
+// @beta (undocumented)
+export interface BaseFileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export interface CallingTheme {
     // (undocumented)
@@ -361,10 +368,7 @@ export type CustomAvatarOptions = {
 };
 
 // @beta (undocumented)
-export interface CustomFileMetadata {
-    extension: string;
-    name: string;
-    url: string;
+export interface CustomFileMetadata extends BaseFileMetadata {
 }
 
 // @public
