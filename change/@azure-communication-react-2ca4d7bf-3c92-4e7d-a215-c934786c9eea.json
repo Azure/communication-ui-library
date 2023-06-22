@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Filter out remote participants with Disconnected state in participant list selector",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}

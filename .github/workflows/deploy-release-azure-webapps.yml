@@ -31,7 +31,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install
       # Switch flavor to stable when it is release branch
@@ -76,7 +76,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install
       # Switch flavor to stable when it is release branch
@@ -121,7 +121,7 @@ jobs:
         with:
           node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install
       # Switch flavor to stable when it is release branch

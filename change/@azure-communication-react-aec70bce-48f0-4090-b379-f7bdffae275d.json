@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "`react-aria-live` react 18 support",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

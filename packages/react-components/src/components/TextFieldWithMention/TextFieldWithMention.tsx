@@ -257,7 +257,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
   );
 
   const debouncedQueryUpdate = useDebouncedCallback(async (query: string) => {
-    const suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
+    let suggestions = (await mentionLookupOptions?.onQueryUpdated(query)) ?? [];
+    suggestions = suggestions.filter((suggestion) => suggestion.displayText.trim() !== '');
     if (suggestions.length === 0) {
       setActiveSuggestionIndex(undefined);
     } else if (activeSuggestionIndex === undefined) {

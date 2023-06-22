@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Replace useId with a communication react specific id generator for React 16",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
