@@ -225,6 +225,13 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
+// @beta (undocumented)
+export interface BaseFileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
@@ -2076,10 +2083,8 @@ export interface CustomControlButtonProps {
 }
 
 // @beta (undocumented)
-export interface CustomFileMetadata {
-    extension: string;
-    name: string;
-    url: string;
+export interface CustomFileMetadata extends BaseFileMetadata {
+    attachmentType: 'fileSharing';
 }
 
 // @public
@@ -2502,10 +2507,10 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata;
+export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingOptions {
@@ -3481,16 +3486,21 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
 }
 
 // @beta (undocumented)
-export interface TeamsInteropFileMetadata {
+export interface TeamsInteropFileMetadata extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
+    attachmentType: 'fileSharing';
     // (undocumented)
     id: string;
-    name: string;
+}
+
+// @beta (undocumented)
+export interface TeamsInteropImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    id: string;
     // (undocumented)
     previewUrl?: string;
-    url: string;
 }
 
 // @public

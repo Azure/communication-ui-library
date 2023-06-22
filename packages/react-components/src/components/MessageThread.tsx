@@ -63,7 +63,7 @@ import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
-import { FileDownloadHandler, isTeamsInteropFileMetadata } from './FileDownloadCards';
+import { FileDownloadHandler } from './FileDownloadCards';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -843,18 +843,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (!isTeamsInteropFileMetadata(attachment)) {
+      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage') {
         // Break out early if the attachment is not a TeamsInteropFileMetadata
         return;
       }
 
-      if (
-        !onFetchAttachments ||
-        attachment.id in inlineAttachments ||
-        attachment.attachmentType !== 'teamsInlineImage'
-      ) {
-        return;
-      }
       setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
       const attachmentDownloadResult = await onFetchAttachments(attachment);
       if (attachmentDownloadResult[0]) {
