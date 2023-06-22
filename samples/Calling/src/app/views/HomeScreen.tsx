@@ -40,6 +40,8 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { RoomLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { getRoomIdFromUrl } from '../utils/AppUtils';
+/* @conditional-compile-remove(teams-identity-support) */
+import { getIsCTE } from '../utils/AppUtils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -204,7 +206,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
-              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+              /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
+                getIsCTE()) && (
                 <Stack>
                   <TextField
                     className={teamsItemStyle}
@@ -216,7 +219,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
             {
-              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+              /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
+                getIsCTE()) && (
                 <Stack>
                   <TextField
                     className={teamsItemStyle}
