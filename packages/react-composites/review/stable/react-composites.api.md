@@ -917,6 +917,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
 };
 
 // @public

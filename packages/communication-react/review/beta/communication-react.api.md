@@ -2180,6 +2180,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
 };
 
 // @public
@@ -2292,6 +2294,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
 };
 
 // @beta

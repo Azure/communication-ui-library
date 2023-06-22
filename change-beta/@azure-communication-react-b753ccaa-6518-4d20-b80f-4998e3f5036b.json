@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "minor",
   "comment": "Update control bar ui",
   "packageName": "@azure/communication-react",
   "email": "carolinecao@microsoft.com",
