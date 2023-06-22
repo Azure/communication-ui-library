@@ -87,6 +87,14 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
+/**
+ * Get teams meeting link from the url's query params.
+ */
+export const getIsCTE = (): boolean | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return !!urlParams.get('isCTE');
+};
+
 /* @conditional-compile-remove(rooms) */
 /**
  * Get room id from the url's query params.
