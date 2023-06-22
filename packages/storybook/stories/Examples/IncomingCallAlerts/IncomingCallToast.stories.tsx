@@ -7,7 +7,7 @@ import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { IncomingCallToast as IncomingCallToastComponent } from './components';
-import { getDocs } from './IncomingCallAlertsDocs';
+import { getToastDocs } from './IncomingCallAlertsDocs';
 
 const IncomingCallToastStory: (args) => JSX.Element = (args) => {
   return (
@@ -40,7 +40,7 @@ export default {
   },
   parameters: {
     docs: {
-      page: () => getDocs()
+      page: () => getToastDocs()
     }
   }
 } as Meta;

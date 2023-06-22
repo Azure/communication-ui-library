@@ -7,7 +7,7 @@ import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { useVideoStreams } from '../../utils';
 import { IncomingCallModal as IncomingCallModalComponent } from './components';
-import { getDocs } from './IncomingCallAlertsDocs';
+import { getModalDocs } from './IncomingCallAlertsDocs';
 
 const IncomingCallModalStory = (args): JSX.Element => {
   const videoStreamElements = useVideoStreams(args.localVideoStreamEnabled ? 1 : 0);
@@ -54,7 +54,7 @@ export default {
   },
   parameters: {
     docs: {
-      page: () => getDocs()
+      page: () => getModalDocs()
     }
   }
 } as Meta;
