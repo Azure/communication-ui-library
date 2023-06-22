@@ -155,7 +155,16 @@
     "transferPageTransferorText": "전송 중...",
     "transferPageTransferTargetText": "연결 중...",
     "transferPageUnknownTransferorDisplayName": "알 수 없음",
-    "transferPageUnknownTransferTargetDisplayName": "알 수 없음"
+    "transferPageUnknownTransferTargetDisplayName": "알 수 없음",
+    "transferPageNoticeString": "통화가 전달되고 있습니다.",
+    "participantCouldNotBeReachedTitle": "Target participant is currently not available",
+    "participantCouldNotBeReachedMoreDetails": "Please contact participant when they are available",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
+    "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
+    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
+    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
+    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",

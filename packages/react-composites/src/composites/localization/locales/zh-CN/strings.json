@@ -155,7 +155,16 @@
     "transferPageTransferorText": "正在转接...",
     "transferPageTransferTargetText": "正在连接...",
     "transferPageUnknownTransferorDisplayName": "未知",
-    "transferPageUnknownTransferTargetDisplayName": "未知"
+    "transferPageUnknownTransferTargetDisplayName": "未知",
+    "transferPageNoticeString": "正在转接中",
+    "participantCouldNotBeReachedTitle": "Target participant is currently not available",
+    "participantCouldNotBeReachedMoreDetails": "Please contact participant when they are available",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
+    "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
+    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
+    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
+    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
