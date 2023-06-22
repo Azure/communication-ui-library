@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Bug fix",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "patch"
-}

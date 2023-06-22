@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce storybook updates for CallComposite configurations for Click to Call.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
