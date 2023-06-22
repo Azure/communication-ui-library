@@ -52,7 +52,7 @@
     "@azure/core-paging": "^1.5.0",
     "@azure/core-rest-pipeline": "^1.11.0",
     "@azure/logger": "^1.0.4",
-    "@fluentui/react-file-type-icons": "8.8.13",
+    "@fluentui/react-file-type-icons": "8.9.2",
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react": "~8.110.4",
@@ -69,7 +69,7 @@
     "nanoid": "3.1.32",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "uuid": "^8.1.0"
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.14.1-beta.1 || >=1.13.1",
@@ -160,7 +160,7 @@
     "ts-node": "^9.1.1",
     "type-fest": "~2.5.4",
     "typescript": "4.3.5",
-    "uuid": "^8.1.0",
+    "uuid": "^9.0.0",
     "webpack-cli": "~4.10.0",
     "webpack-dev-server": "4.8.1",
     "webpack": "5.88.0",
