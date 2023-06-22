@@ -7,7 +7,9 @@
     "mutedIconLabel": "Dempet",
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
-    "participantStateHold": "På vent"
+    "participantStateHold": "På vent",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} skriver ...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "Presentasjon er deaktivert",
     "tooltipOnContent": "Presenterer skjermen din",
     "tooltipOffContent": "Presenter skjermen din"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "I går",

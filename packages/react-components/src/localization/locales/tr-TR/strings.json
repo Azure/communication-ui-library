@@ -7,7 +7,9 @@
     "mutedIconLabel": "Ses kapatıldı",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
-    "participantStateHold": "Beklemede"
+    "participantStateHold": "Beklemede",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "Sunu devre dışı bırakıldı.",
     "tooltipOnContent": "Ekranınızı sunuluyor",
     "tooltipOffContent": "Ekranınızı sunun"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "Dün",

@@ -150,6 +150,27 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   stopScreenShare(): Promise<void>;
+  /* @conditional-compile-remove(raise-hands) */
+  /**
+   * Raise hand for local user.
+   *
+   * @public
+   */
+  raiseHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hands) */
+  /**
+   * Lower hand for local user.
+   *
+   * @public
+   */
+  lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hands) */
+  /**
+   * Lower hands for remote users.
+   *
+   * @public
+   */
+  lowerHands(userIds: string[]): Promise<void>;
   /**
    * Create the html view for a stream.
    *

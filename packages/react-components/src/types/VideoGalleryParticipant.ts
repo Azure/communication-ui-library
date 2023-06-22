@@ -5,6 +5,8 @@
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from './ParticipantListParticipant';
 
+/* conditional-compile-remove(raise-hands) */
+import { RaisedHand } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
  *
@@ -106,4 +108,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
   state?: ParticipantState;
+  /* @conditional-compile-remove(raise-hands) */
+  /** Whether participant is raised a hand */
+  raisedHand?: RaisedHand;
 }

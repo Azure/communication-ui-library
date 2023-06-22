@@ -22,6 +22,19 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   /* @conditional-compile-remove(rooms) */
   /** Role of participant in Rooms call */
   role?: Role;
+  /* @conditional-compile-remove(raise-hands) */
+  /** Whether calling participant is raised hand */
+  raisedHand?: RaisedHand;
+};
+
+/* @conditional-compile-remove(raise-hands) */
+/**
+ * Raised hand state with order
+ *
+ * @public
+ */
+export type RaisedHand = {
+  order: number;
 };
 
 /**

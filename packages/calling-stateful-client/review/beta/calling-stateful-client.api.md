@@ -36,6 +36,7 @@ import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PhoneNumberKind } from '@azure/communication-common';
+import { RaisedHand } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
@@ -115,6 +116,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
+    raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -246,6 +248,13 @@ export interface NetworkDiagnosticsState {
 }
 
 // @public
+export interface RaiseHandCallFeature {
+    allRaisedHands: RaisedHand[];
+    // (undocumented)
+    userRaisedHand?: RaisedHand;
+}
+
+// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }
@@ -257,6 +266,8 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    // (undocumented)
+    raisedHand?: RaisedHand;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {

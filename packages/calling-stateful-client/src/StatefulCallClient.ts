@@ -49,6 +49,8 @@ import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDec
  *   - RemoteVideoStream 'isAvailableChanged'
  *   - TranscriptionCallFeature 'isTranscriptionActiveChanged'
  *   - RecordingCallFeature 'isRecordingActiveChanged'
+ *   - RaiseHandCallFeature 'raisedHandEvent'
+ *   - RaiseHandCallFeature 'loweredHandEvent'
  *
  * @public
  */

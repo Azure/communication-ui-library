@@ -71,6 +71,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
+import { RaisedHand as RaisedHand_2 } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -327,7 +328,10 @@ export interface CallAdapterCallOperations {
     // @beta
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
+    lowerHand(): Promise<void>;
+    lowerHands(userIds: string[]): Promise<void>;
     mute(): Promise<void>;
+    raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -500,6 +504,10 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonRaiseHand?: JSX.Element;
+    ControlButtonLowerHand?: JSX.Element;
+    ParticipantItemRaisedHand?: JSX.Element;
+    ParticipantIteRaisedHand?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -761,6 +769,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     role?: Role;
+    raisedHand?: RaisedHand;
 };
 
 // @beta
@@ -793,6 +802,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
+    raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -840,10 +850,13 @@ export interface CallWithChatAdapterManagement {
     joinCall(microphoneOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    lowerHand(): Promise<void>;
+    lowerHands(userIds: string[]): Promise<void>;
     mute(): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
+    raiseHand(): Promise<void>;
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
@@ -1620,6 +1633,9 @@ export type CommonCallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    raiseHandButton?: boolean | {
+        disabled: boolean;
+    };
     moreButton?: boolean;
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     holdButton?: boolean | {
@@ -1650,6 +1666,12 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onLowerHands: (userId: string[]) => Promise<void>;
+    // (undocumented)
+    onRaiseHand: () => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -1688,6 +1710,8 @@ export interface CommonCallingHandlers {
     onToggleHold: () => Promise<void>;
     // (undocumented)
     onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleRaiseHand: () => Promise<void>;
     // (undocumented)
     onToggleScreenShare: () => Promise<void>;
 }
@@ -1799,6 +1823,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2058,6 +2083,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -2093,6 +2120,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemRaisedHand: JSX.Element;
     HoldCallContextualMenuItem: JSX.Element;
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
@@ -2152,6 +2180,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    ParticipantItemRaisedHand: JSX.Element;
+    ParticipantIteRaisedHand?: JSX.Element | undefined;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -2534,7 +2566,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3047,10 +3079,12 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     displayNamePlaceholder?: string;
     isMeText: string;
+    lowerParticipantHandButtonLabel: string;
     menuTitle: string;
     mutedIconLabel: string;
     participantStateHold?: string;
     participantStateRinging?: string;
+    raisedHandIconLabel: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
@@ -3084,6 +3118,7 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
+    onLowerHands?: (userIds: string[]) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
@@ -3133,6 +3168,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     excludeMe?: boolean;
     myUserId?: string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    onLowerHands?: (userId: string[]) => void;
     onMuteAll?: () => void;
     onRemoveParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -3191,6 +3227,42 @@ export type Profile = {
 };
 
 // @public
+export type RaisedHand = {
+    order: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
+
+// @public
+export interface RaiseHandCallFeature {
+    allRaisedHands: RaisedHand_2[];
+    // (undocumented)
+    userRaisedHand?: RaisedHand_2;
+}
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -3210,6 +3282,8 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    // (undocumented)
+    raisedHand?: RaisedHand_2;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -3690,6 +3764,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -3783,6 +3858,7 @@ export interface VideoTileProps {
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

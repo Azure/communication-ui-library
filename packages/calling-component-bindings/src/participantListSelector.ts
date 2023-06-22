@@ -109,7 +109,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isScreenSharingOn,
     isMuted,
     /* @conditional-compile-remove(raise-hands) */
-    getUserRaisedHand
+    userRaisedHand
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;

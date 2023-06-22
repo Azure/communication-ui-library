@@ -7,7 +7,9 @@
     "mutedIconLabel": "Ljudet är avstängt",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
-    "participantStateHold": "Parkerat"
+    "participantStateHold": "Parkerat",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} skriver...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "Presentationen är inaktiverad",
     "tooltipOnContent": "Visar din skärm",
     "tooltipOffContent": "Dela skärmen"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "I går",

@@ -7,7 +7,9 @@
     "mutedIconLabel": "Mykistetty",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
-    "participantStateHold": "Pidossa"
+    "participantStateHold": "Pidossa",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} käyttäjä kirjoittaa parhaillaan...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "Näytön jakaminen on poissa käytöstä",
     "tooltipOnContent": "Näyttösi näytetään muille osallistujille",
     "tooltipOffContent": "Näytä oma näyttösi"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "eilen",

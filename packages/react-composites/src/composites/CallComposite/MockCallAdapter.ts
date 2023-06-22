@@ -91,6 +91,19 @@ export class MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
+  /* @conditional-compile-remove(raise-hands) */
+  raiseHand(): Promise<void> {
+    throw Error('raiseHand not implemented');
+  }
+  /* @conditional-compile-remove(raise-hands) */
+  lowerHand(): Promise<void> {
+    throw Error('lowerHand not implemented');
+  }
+  /* @conditional-compile-remove(raise-hands) */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  lowerHands(userIds: string[]): Promise<void> {
+    throw Error('lowerHand not implemented');
+  }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
   }
@@ -203,6 +216,8 @@ const defaultCallAdapterState: CallAdapterState = {
     isScreenSharingOn: false,
     remoteParticipants: {},
     remoteParticipantsEnded: {},
+    /* @conditional-compile-remove(raise-hands) */
+    raiseHand: { allRaisedHands: [] },
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],

@@ -166,6 +166,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     role?: Role;
+    raisedHand?: RaisedHand;
 };
 
 // @beta
@@ -590,6 +591,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -700,6 +702,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -735,6 +739,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ParticipantItemOptions: JSX.Element;
     ParticipantItemOptionsHovered: JSX.Element;
     ParticipantItemScreenShareStart: JSX.Element;
+    ParticipantItemRaisedHand: JSX.Element;
     HoldCallContextualMenuItem: JSX.Element;
     HoldCallButton: JSX.Element;
     ResumeCall: JSX.Element;
@@ -1538,10 +1543,12 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     displayNamePlaceholder?: string;
     isMeText: string;
+    lowerParticipantHandButtonLabel: string;
     menuTitle: string;
     mutedIconLabel: string;
     participantStateHold?: string;
     participantStateRinging?: string;
+    raisedHandIconLabel: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
@@ -1575,6 +1582,7 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
+    onLowerHands?: (userIds: string[]) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
@@ -1612,6 +1620,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     excludeMe?: boolean;
     myUserId?: string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    onLowerHands?: (userId: string[]) => void;
     onMuteAll?: () => void;
     onRemoveParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -1694,6 +1703,29 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 //
 // @internal (undocumented)
 export const presenterPermissions: _Permissions;
+
+// @public
+export type RaisedHand = {
+    order: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -2117,6 +2149,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -2195,6 +2228,7 @@ export interface VideoTileProps {
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

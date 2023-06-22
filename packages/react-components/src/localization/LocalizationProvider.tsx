@@ -17,6 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -80,6 +82,9 @@ export interface ComponentStrings {
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */
   screenShareButton: ScreenShareButtonStrings;
+  /* @conditional-compile-remove(raise-hands) */
+  /** Strings for RaiseHandButton */
+  raiseHandButton: RaiseHandButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */

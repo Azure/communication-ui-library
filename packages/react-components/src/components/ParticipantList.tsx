@@ -8,9 +8,10 @@ import {
   merge,
   mergeStyles,
   PersonaPresence,
-  Stack,
-  Text
+  Stack
 } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hands) */
+import { Text } from '@fluentui/react';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -200,6 +201,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     myUserId,
     participants,
     onRemoveParticipant,
+    /* @conditional-compile-remove(raise-hands) */
+    onLowerHands,
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
@@ -231,6 +234,18 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         });
       }
 
+      const callingParticipant = participant as CallParticipantListParticipant;
+      if (callingParticipant.raisedHand && onLowerHands) {
+        menuItems.push({
+          key: 'lowerHand',
+          text: strings.lowerParticipantHandButtonLabel,
+          onClick: () => onLowerHands([participant.userId]),
+          itemProps: {
+            styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
+          }
+        });
+      }
+
       if (onFetchParticipantMenuItems) {
         menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
       }
@@ -242,8 +257,13 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       myUserId,
       onFetchParticipantMenuItems,
       onRemoveParticipant,
+      /* @conditional-compile-remove(raise-hands) */
+      onLowerHands,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
-      strings.removeButtonLabel
+      /* @conditional-compile-remove(raise-hands) */
+      strings.removeButtonLabel,
+      /* @conditional-compile-remove(raise-hands) */
+      strings.lowerParticipantHandButtonLabel
     ]
   );
 

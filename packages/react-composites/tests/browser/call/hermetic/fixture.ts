@@ -76,6 +76,8 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
+      /* @conditional-compile-remove(raise-hands) */
+      raiseHand: { allRaisedHands: [] },
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],

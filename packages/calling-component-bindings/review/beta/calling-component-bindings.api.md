@@ -37,6 +37,7 @@ import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
+import { RaiseHandButton } from '@internal/react-components';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
@@ -153,6 +154,12 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
+    onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onLowerHands: (userId: string[]) => Promise<void>;
+    // (undocumented)
+    onRaiseHand: () => Promise<void>;
+    // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -191,6 +198,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onToggleMicrophone: () => Promise<void>;
     // (undocumented)
+    onToggleRaiseHand: () => Promise<void>;
+    // (undocumented)
     onToggleScreenShare: () => Promise<void>;
 }
 
@@ -225,7 +234,7 @@ export type ErrorBarSelector = (state: CallClientState, props: CallingBaseSelect
 };
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? ErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -274,6 +283,15 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
     participants: CallParticipantListParticipant[];
     myUserId: string;
 };
+
+// @public
+export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export const raiseHandButtonSelector: RaiseHandButtonSelector;
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

@@ -7,7 +7,9 @@
     "mutedIconLabel": "Silenciado",
     "displayNamePlaceholder": "Participante sem nome",
     "participantStateRinging": "Chamando...",
-    "participantStateHold": "Em espera"
+    "participantStateHold": "Em espera",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} está digitando ...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "A apresentação está desabilitada.",
     "tooltipOnContent": "Apresentando sua tela",
     "tooltipOffContent": "Apresentar sua tela"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "Ontem",

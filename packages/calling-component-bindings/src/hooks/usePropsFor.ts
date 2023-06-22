@@ -164,6 +164,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
+    case RaiseHandButton:
+      return raiseHandButtonSelector;
   }
   return undefined;
 };

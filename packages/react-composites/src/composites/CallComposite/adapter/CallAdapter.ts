@@ -400,6 +400,29 @@ export interface CallAdapterCallOperations {
    * @public
    */
   stopScreenShare(): Promise<void>;
+  /* @conditional-compile-remove(raise-hands) */
+  /**
+   * Raise hand for current user
+   *
+   * @public
+   */
+  raiseHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hands) */
+  /**
+   * lower hand for current user
+   *
+   * @public
+   */
+  lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hands) */
+  /**
+   * Lower hand for participants from the call.
+   *
+   * @param userId - List of Ids of the participant
+   *
+   * @public
+   */
+  lowerHands(userIds: string[]): Promise<void>;
   /**
    * Remove a participant from the call.
    *

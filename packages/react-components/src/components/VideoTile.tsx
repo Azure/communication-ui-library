@@ -9,6 +9,8 @@ import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(raise-hands) */
+import { RaisedHand } from '../types';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
@@ -128,6 +130,10 @@ export interface VideoTileProps {
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
 
+  /* @conditional-compile-remove(raise-hands) */
+  /** Whether the participant is raised hand. Show a indicator (border) and order icon */
+  raisedHand?: RaisedHand;
+
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -235,6 +241,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
+    /* @conditional-compile-remove(raise-hands) */
+    raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(pinned-participants) */
@@ -337,11 +345,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        isSpeaking && {
+        (isSpeaking || raisedHand) && {
           '&::after': {
             content: `''`,
             position: 'absolute',
-            border: `0.25rem solid ${theme.palette.themePrimary}`,
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : theme.palette.orangeLighter}`,
             borderRadius: theme.effects.roundedCorner4,
             width: '100%',
             height: '100%',

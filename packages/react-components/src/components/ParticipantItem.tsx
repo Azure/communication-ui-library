@@ -61,12 +61,6 @@ export interface ParticipantItemStrings {
   menuTitle: string;
   /** Label for the remove button in participant menu  */
   removeButtonLabel: string;
-  /* @conditional-compile-remove(raise-hands) */
-  /** Label for the raised hand icon in participant state stack  */
-  raisedHandIconLabel: string;
-  /* @conditional-compile-remove(raise-hands) */
-  /** Label for the lower hand button in participant menu  */
-  lowerParticipantHandButtonLabel: string;
   /** Label for the sharing icon in participant state stack  */
   sharingIconLabel: string;
   /** Label for the muted icon in participant state stack  */
@@ -81,6 +75,12 @@ export interface ParticipantItemStrings {
   /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Hold` */
   participantStateHold?: string;
+  /* @conditional-compile-remove(raise-hands) */
+  /** Label for the remove button in participant menu  */
+  lowerParticipantHandButtonLabel: string;
+  /* @conditional-compile-remove(raise-hands) */
+  /** Label for the raised hand icon in participant state stack  */
+  raisedHandIconLabel: string;
 }
 
 /**

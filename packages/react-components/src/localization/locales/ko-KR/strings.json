@@ -7,7 +7,9 @@
     "mutedIconLabel": "음소거됨",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
-    "participantStateHold": "대기 중"
+    "participantStateHold": "대기 중",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} 님이 입력 중...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "프레젠테이션 사용 안 함",
     "tooltipOnContent": "화면을 프레젠테이션하는 중",
     "tooltipOffContent": "화면 프레젠테이션"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "어제",

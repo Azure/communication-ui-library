@@ -40,6 +40,8 @@ export type {
   ParticipantRemovedSystemMessage,
   ParticipantState,
   ReadReceiptsBySenderId,
+  /* @conditional-compile-remove(raise-hands) */
+  RaisedHand,
   SystemMessage,
   SystemMessageCommon,
   TopicUpdatedSystemMessage,

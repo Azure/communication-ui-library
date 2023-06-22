@@ -21,6 +21,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
+    /* @conditional-compile-remove(raise-hands) */
     raisedHand: RaisedHand | undefined
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
@@ -30,6 +31,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
+      /* @conditional-compile-remove(raise-hands) */
       raisedHand
     );
   }
@@ -42,6 +44,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
+  /* @conditional-compile-remove(raise-hands) */
   raisedHand: RaisedHand | undefined
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
@@ -52,6 +55,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
     isMuted,
     isScreenSharing,
     isSpeaking,
+    /* @conditional-compile-remove(raise-hands) */
     raisedHand,
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
@@ -72,6 +76,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
+    /* @conditional-compile-remove(raise-hands) */
     raisedHand: RaisedHand | undefined,
     role: Role
   ): CallParticipantListParticipant => {
@@ -82,6 +87,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
+      /* @conditional-compile-remove(raise-hands) */
       raisedHand,
       role
     );
@@ -96,6 +102,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
+  /* @conditional-compile-remove(raise-hands) */
   raisedHand: RaisedHand | undefined,
   role: Role
 ): CallParticipantListParticipant => {
@@ -107,6 +114,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       isMuted,
       isScreenSharing,
       isSpeaking,
+      /* @conditional-compile-remove(raise-hands) */
       raisedHand
     ),
     role
