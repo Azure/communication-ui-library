@@ -9,7 +9,7 @@ import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './ChatCompositeDocs';
+import { GetDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer } from './snippets/Container.snippet';
 import {
   ChatCompositeSetupProps,
@@ -104,7 +104,8 @@ export default {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
     docs: {
-      page: () => getDocs()
+      container: null,
+      page: () => <GetDocs scrollToHeading="custom-date-time-format" />
     }
   }
 } as Meta;

@@ -4,9 +4,10 @@
 import { ChatComposite } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source, Props } from '@storybook/addon-docs';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
+import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
@@ -37,7 +38,34 @@ options={{
 }} />
 `;
 
-export const getDocs: () => JSX.Element = () => {
+export const GetDocs: (string) => JSX.Element = ({ scrollToHeading }) => {
+  const refBasicUsage = useRef(null);
+  const refCustomBehavior = useRef(null);
+  const refCustomDataModel = useRef(null);
+  const refCustomDateTimeFormat = useRef(null);
+  const refJoinChat = useRef(null);
+  const refTheme = useRef(null);
+
+  const scrollToRef = (ref) => {
+    ref.current.scrollIntoView({ behavior: 'auto' });
+  };
+  useEffect(() => {
+    if (scrollToHeading === 'basic-usage' && refBasicUsage.current) {
+      scrollToRef(refBasicUsage);
+    } else if (scrollToHeading === 'custom-behavior' && refCustomBehavior.current) {
+      scrollToRef(refCustomBehavior);
+    } else if (scrollToHeading === 'custom-data-model' && refCustomDataModel.current) {
+      scrollToRef(refCustomDataModel);
+    } else if (scrollToHeading === 'custom-date-time-format' && refCustomDateTimeFormat.current) {
+      scrollToRef(refCustomDateTimeFormat);
+    } else if (scrollToHeading === 'theme' && refTheme.current) {
+      console.log('scrollTo theme:::');
+      scrollToRef(refTheme);
+    } else if (scrollToHeading === 'join-chat' && refJoinChat.current) {
+      scrollToRef(refJoinChat);
+    }
+  }, [scrollToHeading]);
+
   return (
     <>
       <Title>ChatComposite</Title>
@@ -60,16 +88,18 @@ export const getDocs: () => JSX.Element = () => {
         Note that ChatComposite has a min width and height of respectively 17.5rem and 20rem (280px x 320px, with
         default rem at 16px).
       </Description>
-      <Heading>Basic usage</Heading>
-      <Description>
-        There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
-        react component to the backend APIs.
-      </Description>
-      <Description>
-        The key thing to note is that initialization of `ChatAdapter` is asynchronous. Thus, the initialization step
-        requires special handling, as the example code below shows.
-      </Description>
-      <Source code={containerText} />
+      <div ref={refBasicUsage}>
+        <Heading>Basic usage</Heading>
+        <Description>
+          There are two parts to the composite - a `ChatComposite` react component and a `ChatAdapter` that connects the
+          react component to the backend APIs.
+        </Description>
+        <Description>
+          The key thing to note is that initialization of `ChatAdapter` is asynchronous. Thus, the initialization step
+          requires special handling, as the example code below shows.
+        </Description>
+        <Source code={containerText} />
+      </div>
 
       <Heading>Prerequisites</Heading>
       <Description>
@@ -78,23 +108,23 @@ export const getDocs: () => JSX.Element = () => {
         tokens are served to the client application that then passes it to the ChatComposite.
       </Description>
 
-      <Heading>Theming</Heading>
-      <Description>
-        ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
-        themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see theming in action or the
-        [overall theming example](./?path=/story/theming--page) to see how theming works for all the components in this
-        UI library.
-      </Description>
-
-      <Heading>Fonts</Heading>
-      <Description>
-        Custom fonts can be applied to the ChatComposite using the in built theming mechanism. Look at the
-        [ChatComposite themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see custom fonts in
-        action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
-        components in this UI library. Read more about fonts in [Fluent UI Typography
-        here](https://developer.microsoft.com/fluentui#/styles/web/typography).
-      </Description>
-
+      <div ref={refTheme}>
+        <Heading>Theming</Heading>
+        <Description>
+          ChatComposite can be themed with Fluent UI themes, just like the base components. Look at the [ChatComposite
+          themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see theming in action or the
+          [overall theming example](./?path=/story/theming--page) to see how theming works for all the components in
+          this UI library.
+        </Description>
+        <Heading>Fonts</Heading>
+        <Description>
+          Custom fonts can be applied to the ChatComposite using the in built theming mechanism. Look at the
+          [ChatComposite themes canvas](./?path=/story/composites-chat-themeexample--theme-example) to see custom fonts
+          in action or the [overall theming example](./?path=/story/theming--page) to see how theming works for all the
+          components in this UI library. Read more about fonts in [Fluent UI Typography
+          here](https://developer.microsoft.com/fluentui#/styles/web/typography).
+        </Description>
+      </div>
       <Heading>Icons</Heading>
       <Description>
         Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
@@ -128,23 +158,25 @@ export const getDocs: () => JSX.Element = () => {
         chat. A simple and effective way to disable the pull-down to refresh feature is to set an `overflow='hidden'` OR
         `touch-action='none'` style on the body element for your app.
       </Description>
+      <div ref={refCustomDataModel}>
+        <Heading>Custom Data Model</Heading>
+        <Description>
+          It is a primary tenet of Azure Communication Services that customers bring their own user identities.
+          Customers then use the Azure Communication Services identity service to create corresponding authentication
+          tokens for their users. The ChatComposite allows developers to easily inject custom data associated with these
+          user identities. Look at the [example
+          canvas](./?path=/story/composites-chat-customdatamodelexample--custom-data-model-example) to see how the name
+          and avatar displayed for users can be provided by Contoso.
+        </Description>
+        <Description>Note that, by default, the initials text color is setup to `white`</Description>
+        <Source code={customDataModelExampleContainerText} />
+        <Description>
+          See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+          custom data model can be injected for all the components in this UI library.
+        </Description>
+      </div>
 
-      <Heading>Custom Data Model</Heading>
-      <Description>
-        It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
-        then use the Azure Communication Services identity service to create corresponding authentication tokens for
-        their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example
-        canvas](./?path=/story/composites-chat-customdatamodelexample--custom-data-model-example) to see how the name
-        and avatar displayed for users can be provided by Contoso.
-      </Description>
-      <Description>Note that, by default, the initials text color is setup to `white`</Description>
-      <Source code={customDataModelExampleContainerText} />
-      <Description>
-        See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
-        custom data model can be injected for all the components in this UI library.
-      </Description>
-
+      <div ref={refCustomBehavior} />
       <Heading>Customize Behavior</Heading>
       <Description>
         The `ChatAdapter` makes it possible to arbitrarily modify the communication between the `ChatComposite`
@@ -153,22 +185,24 @@ export const getDocs: () => JSX.Element = () => {
         shows a way to intercept messages entered by the user and modify them before sending them on to the backend.
       </Description>
       <Source code={customBehaviorExampleText} />
+      <div ref={refJoinChat}>
+        <Heading>Joining existing Chat</Heading>
+        <Description>
+          The [join existing chat
+          thread](./?path=/story/composites-chat-joinexistingchatthread--join-existing-chat-thread) provides an easy
+          playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
+          the composite with multiple users.
+        </Description>
+      </div>
 
-      <Heading>Joining existing Chat</Heading>
-      <Description>
-        The [join existing chat
-        thread](./?path=/story/composites-chat-joinexistingchatthread--join-existing-chat-thread) provides an easy
-        playground to join an existing Azure Communication Services chat thread. This is useful if you want to explore
-        the composite with multiple users.
-      </Description>
-
-      <Heading>Custom DateTime Format using Locale</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        You can pass in a function that formats the datetime displayed in chat messages through Locale
-      </Description>
-      <Source code={customDateTimeFormatExampleText} />
-
+      <div ref={refCustomDateTimeFormat}>
+        <Heading>Custom DateTime Format using Locale</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          You can pass in a function that formats the datetime displayed in chat messages through Locale
+        </Description>
+        <Source code={customDateTimeFormatExampleText} />
+      </div>
       <Heading>Adding file sharing</Heading>
       <SingleLineBetaBanner />
       <Description>

@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './ChatCompositeDocs';
+import { GetDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './CustomBehaviorExampleContainer';
 import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
 
@@ -66,6 +66,7 @@ const CustomBehaviorStory = (args: ArgsFrom<typeof storyControls>, context): JSX
 };
 
 export const CustomBehaviorExample = CustomBehaviorStory.bind({});
+CustomBehaviorExample.id = `${COMPOSITE_FOLDER_PREFIX}-chat-custombehaviorexample1`;
 
 export default {
   id: `${COMPOSITE_FOLDER_PREFIX}-chat-custombehaviorexample`,
@@ -80,7 +81,8 @@ export default {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
     docs: {
-      page: () => getDocs()
+      container: null,
+      page: () => <GetDocs scrollToHeading="custom-behavior" />
     }
   }
 } as Meta;

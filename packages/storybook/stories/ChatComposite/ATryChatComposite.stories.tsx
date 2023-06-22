@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './ChatCompositeDocs';
+import { GetDocs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/ATryChatCompositeContainer.snippet';
 
 const messageArray = [
@@ -74,7 +74,7 @@ export default {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
     docs: {
-      page: () => getDocs()
+      page: () => <GetDocs />
     }
   }
 } as Meta;
