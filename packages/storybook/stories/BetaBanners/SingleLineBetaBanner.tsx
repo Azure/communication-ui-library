@@ -41,6 +41,37 @@ export const SingleLineBetaBanner = (props: { version?: string; topOfPage?: bool
   );
 };
 
+export const SingleLineBetaListBanner = (props: { version?: string; topOfPage?: boolean }): JSX.Element => {
+  const palette = blueBannerPalette;
+  return (
+    <Stack styles={props.topOfPage ? { root: { paddingTop: '1rem' } } : {}}>
+      <StorybookBanner>
+        <Stack style={{ display: 'inline-block' }}>
+          <Text>
+            The following features are currently in public preview {props.version ? 'version' : ''}{' '}
+            {props.version ? (
+              <b>
+                {'>'}={props.version}
+              </b>
+            ) : (
+              ''
+            )}{' '}
+            and not recommended for production use.{' '}
+          </Text>
+          <Link
+            className={mergeStyles({ color: palette.link })}
+            underline={true}
+            href={MICROSOFT_AZURE_PREVIEWS_URL}
+            target="_blank"
+          >
+            More info.
+          </Link>
+        </Stack>
+      </StorybookBanner>
+    </Stack>
+  );
+};
+
 /** @private */
 export const FloatingSingleLineBetaBanner = (props: StorybookBannerProps): JSX.Element => (
   <Stack className={floatingStyles}>
