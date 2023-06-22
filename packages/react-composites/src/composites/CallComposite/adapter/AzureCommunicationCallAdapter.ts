@@ -995,19 +995,26 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(call-transfer) */
   private transferRequested(args: TransferRequestedEventArgs): void {
+    const acceptanceDeadline = new Date(new Date().getTime() + 5000).getTime();
     const newArgs = {
       ...args,
       accept: (options: AcceptTransferOptions) => {
-        const videoSource = this.context.getState().call?.localVideoStreams?.[0]?.source;
-        args.accept({
-          audioOptions: options?.audioOptions ?? /* maintain audio state if options.audioOptions is not defined */ {
-            muted: !!this.context.getState().call?.isMuted
-          },
-          videoOptions:
-            options?.videoOptions ??
-            /* maintain video state if options.videoOptions is not defined */
-            (videoSource ? { localVideoStreams: [new LocalVideoStream(videoSource)] } : undefined)
-        });
+        // TODO: Remove this condition when Calling SDK fixes transfer request timeout acceptance
+        if (new Date().getTime() <= acceptanceDeadline) {
+          const videoSource = this.context.getState().call?.localVideoStreams?.[0]?.source;
+          args.accept({
+            audioOptions: options?.audioOptions ?? /* maintain audio state if options.audioOptions is not defined */ {
+              muted: !!this.context.getState().call?.isMuted
+            },
+            videoOptions:
+              options?.videoOptions ??
+              /* maintain video state if options.videoOptions is not defined */
+              (videoSource ? { localVideoStreams: [new LocalVideoStream(videoSource)] } : undefined)
+          });
+        } else {
+          console.error('Transfer request was not accepted within 5 seconds.');
+          args.reject();
+        }
       }
     };
     this.emitter.emit('transferRequested', newArgs);
