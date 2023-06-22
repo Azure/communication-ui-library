@@ -55,7 +55,7 @@ export const suggestionListStyle = mergeStyles({
  */
 export const suggestionItemWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    margin: '0.05rem 0.1rem',
+    margin: '0.05rem 0',
     '&:focus-visible': {
       outline: `${theme.palette.black} solid 0.1rem`
     }

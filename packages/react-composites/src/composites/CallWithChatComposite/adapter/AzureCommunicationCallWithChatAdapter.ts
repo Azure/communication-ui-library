@@ -186,6 +186,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
     this.sendReadReceipt.bind(this);
@@ -349,6 +350,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
+  }
+  /** Dispose of a remote screen share */
+  public async disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
+    await this.callAdapter.disposeScreenShareStreamView(remoteUserId);
+  }
+  /** Dispose of a remote video stream */
+  public async disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    await this.callAdapter.disposeRemoteVideoStreamView(remoteUserId);
+  }
+  /** Dispose of the local video stream */
+  public async disposeLocalVideoStreamView(): Promise<void> {
+    await this.callAdapter.disposeLocalVideoStreamView();
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {

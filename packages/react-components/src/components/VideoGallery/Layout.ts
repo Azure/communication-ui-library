@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { VideoGalleryRemoteParticipant } from '../../types';
+import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
 import { VideoGalleryStyles } from '../VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
@@ -18,6 +18,8 @@ export interface LayoutProps {
   styles?: Omit<VideoGalleryStyles, 'root'>;
   /** List of remote video particpants */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+  /** Local participant information */
+  localParticipant?: VideoGalleryParticipant;
   /** Callback to render each remote participant */
   onRenderRemoteParticipant: (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => JSX.Element;
   /** List of dominant speaker userIds in the order of their dominance. 0th index is the most dominant. */

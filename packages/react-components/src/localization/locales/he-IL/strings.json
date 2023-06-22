@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "המיקרופון שלך כובה",
     "offSplitButtonMicrophonePrimaryAction": "בטל את ההשתקה של המיקרופון",
     "onSplitButtonMicrophonePrimaryAction": "השתק את המיקרופון",
-    "micPrimaryActionSplitButtonTitle": "השתמש במיקרופון"
+    "microphonePrimaryActionSplitButtonTitle": "השתמש במיקרופון"
   },
   "devicesButton": {
     "label": "מכשירים",
@@ -139,7 +139,7 @@
     "downloadFile": "הורד קובץ",
     "blockedWarningText": "הודעה זו נמחקה עקב מדיניות ארגונית.",
     "blockedWarningLinkText": "פרטים",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "ההודעה כוללת קובץ מצורף {fileCount}"
   },
   "errorBar": {
     "unableToReachChatService": "אתה נמצא במצב לא מקוון",
@@ -153,7 +153,7 @@
     "muteGeneric": "השתקת המיקרופון נכשלה",
     "unmuteGeneric": "ביטול השתקת המיקרופון נכשל",
     "speakingWhileMuted": "המיקרופון שלך מושתק",
-    "startScreenShareGeneric": "הפעלת שיתוף המסך נכשלה",
+    "startScreenShareGeneric": "הייתה בעיה בהפעלת שיתוף מסך.",
     "stopScreenShareGeneric": "הפסקת שיתוף המסכים נכשלה",
     "callNetworkQualityLow": "איכות הרשת נמוכה.",
     "callNoSpeakerFound": "לא נמצאו רמקולים או אוזניות. חבר התקן שמע כדי לשמוע את השיחה.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "סגור",
     "failedToJoinCallGeneric": "הצטרפות לשיחה נכשלה.",
     "failedToJoinCallInvalidMeetingLink": "לא ניתן להצטרף לפגישה. קישור לא חוקי.",
-    "startScreenSharingGeneric": "הייתה בעיה בהפעלת שיתוף מסך.",
     "cameraFrozenForRemoteParticipants": "משתמשים בשיחה נתקלים בבעיות בהצגת הווידאו שלך. בדוק את המכשירים ואת הרשת שלך.",
     "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו."
   },

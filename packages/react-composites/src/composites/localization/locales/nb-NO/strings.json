@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Du ble ikke gitt adgang i samtalen. Hvis dette var en feil, må du bli med i samtalen på nytt.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Avvist fra lobbyen",
     "learnMore": "Mer informasjon",
+    "leavingCallTitle": "Forlater...",
     "leftCallMoreDetails": "Hvis dette var en feil, må du bli med i samtalen på nytt.",
     "leftCallTitle": "Du forlot samtalen",
     "lobbyScreenConnectingToCallTitle": "Blir med i samtalen",
@@ -150,7 +151,11 @@
       "sk-sk": "Slovakisk",
       "zh-tw": "Kinesisk – Taiwan"
     },
-    "captionsBannerSpinnerText": "Starter teksting..."
+    "captionsBannerSpinnerText": "Starter teksting...",
+    "transferPageTransferorText": "Overfører...",
+    "transferPageTransferTargetText": "Kobler til...",
+    "transferPageUnknownTransferorDisplayName": "Ukjent",
+    "transferPageUnknownTransferTargetDisplayName": "Ukjent"
   },
   "chat": {
     "chatListHeader": "I denne chatten",

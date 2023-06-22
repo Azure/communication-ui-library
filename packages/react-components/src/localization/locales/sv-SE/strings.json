@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonen har inaktiverats",
     "offSplitButtonMicrophonePrimaryAction": "Slå på mikrofonen",
     "onSplitButtonMicrophonePrimaryAction": "Stäng av mikrofonen",
-    "micPrimaryActionSplitButtonTitle": "Använd mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Använd mikrofon"
   },
   "devicesButton": {
     "label": "Enheter",
@@ -139,7 +139,7 @@
     "downloadFile": "Ladda ner fil",
     "blockedWarningText": "Det här meddelandet har tagits bort på grund av en organisationsprincip.",
     "blockedWarningLinkText": "Information",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Meddelandet har {fileCount} bifogad fil"
   },
   "errorBar": {
     "unableToReachChatService": "Du är offline",
@@ -153,7 +153,7 @@
     "muteGeneric": "Det gick inte att stänga av mikrofonen",
     "unmuteGeneric": "Det gick inte att slå på mikrofonen",
     "speakingWhileMuted": "Mikrofonens ljud har stängts av",
-    "startScreenShareGeneric": "Det gick inte att starta skärmdelning",
+    "startScreenShareGeneric": "Det uppstod ett problem när skärmdelningen skulle startas.",
     "stopScreenShareGeneric": "Det gick inte att stoppa skärmdelning",
     "callNetworkQualityLow": "Nätverkskvaliteten är låg.",
     "callNoSpeakerFound": "Inga högtalare eller hörlurar hittades. Anslut en ljudenhet för att höra samtalet.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Stäng",
     "failedToJoinCallGeneric": "Det gick inte att ansluta till samtalet.",
     "failedToJoinCallInvalidMeetingLink": "Det går inte att ansluta till mötet. Ogiltig länk.",
-    "startScreenSharingGeneric": "Det uppstod ett problem när skärmdelningen skulle startas.",
     "cameraFrozenForRemoteParticipants": "Användare i samtalet har problem med att se din video. Kontrollera dina enheter och nätverk.",
     "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten."
   },

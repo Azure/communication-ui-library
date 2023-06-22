@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
     "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
     "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
-    "micPrimaryActionSplitButtonTitle": "Use microphone"
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone"
   },
   "devicesButton": {
     "label": "Devices",
@@ -153,7 +153,7 @@
     "muteGeneric": "Failed to mute microphone",
     "unmuteGeneric": "Failed to unmute microphone",
     "speakingWhileMuted": "Your microphone is muted",
-    "startScreenShareGeneric": "Failed to start screen sharing",
+    "startScreenShareGeneric": "There was an issue starting screen share.",
     "stopScreenShareGeneric": "Failed to stop screen sharing",
     "callNetworkQualityLow": "Network quality is low.",
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Close",
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
-    "startScreenSharingGeneric": "There was an issue starting screen share.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
     "unableToStartVideoEffect": "Unable to apply video effect."
   },

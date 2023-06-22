@@ -23,7 +23,7 @@ import {
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -91,7 +91,7 @@ import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 `;
 
 const mentionTag = `
-<msft-mention id="<id>" displayText="<display text>">
+<msft-mention id="<id>">
   Displayable Text
 </msft-mention>
 `;
@@ -240,12 +240,12 @@ const getDocs: () => JSX.Element = () => {
         <MessageWithFile />
       </Canvas>
 
-      <Heading>Display Mentions of Users within Messages</Heading>
+      <Heading>Mention of Users with a custom renderer within Messages</Heading>
       <SingleLineBetaBanner />
       <Description>
-        When a user is mentioned in a message, a custom HTML tag can be used to represent the element in the
-        MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
-        further customization. The HTML Tag is defined:
+        When a user is mentioned in a message, a custom HTML tag is used to represent the element in the MessageThread.
+        This element can be styled using the standard methods and the renderer can be overridden for further
+        customization. The HTML Tag is defined:
       </Description>
       <Source code={mentionTag} />
       <Canvas mdxSource={MessageWithCustomMentionRendererText}>
@@ -272,6 +272,8 @@ const MessageThreadStory = (args): JSX.Element => {
   ];
 
   const [selectedMessageType, setSelectedMessageType] = useState<IDropdownOption>(dropdownMenuOptions[0]);
+  // Property for checking if the history messages are loaded
+  const loadedHistoryMessages = useRef(false);
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
@@ -297,10 +299,11 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onLoadPreviousMessages = async (): Promise<boolean> => {
-    return new Promise((resolve) => {
+    if (!loadedHistoryMessages.current) {
+      loadedHistoryMessages.current = true;
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
-      resolve(true);
-    });
+    }
+    return Promise.resolve(true);
   };
 
   const onSendNewSystemMessage = (): void => {

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add parameter to hint displayName from SDK",
-  "packageName": "@azure/communication-react",
-  "email": "jinan@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -6,6 +6,16 @@ import { IPersonaStyleProps, IPersonaStyles, IStyle, IStyleFunctionOrObject } fr
 /**
  * @private
  */
+export const pageContainer = { width: '100%', height: '100%' };
+
+/**
+ * @private
+ */
+export const avatarStyles: IStyle = { opacity: 0.4 };
+
+/**
+ * @private
+ */
 export const tileContainerStyles: IStyle = {
   position: 'absolute',
   top: '0',
