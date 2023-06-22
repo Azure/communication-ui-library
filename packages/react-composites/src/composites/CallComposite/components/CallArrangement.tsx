@@ -58,7 +58,11 @@ import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(video-background-effects) */
-import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
+import {
+  useVideoEffectsPane,
+  VIDEO_EFFECTS_SIDE_PANE_ID,
+  VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM
+} from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
@@ -235,7 +239,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  const isVideoPaneOpen = useIsParticularSidePaneOpen('videoeffects');
+  const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
   /* @conditional-compile-remove(video-background-effects) */
   if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
     errorBarProps = {
@@ -350,7 +354,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <SidePane
               mobileView={props.mobileView}
               /* @conditional-compile-remove(video-background-effects) */
-              maxWidth={isVideoPaneOpen ? '19.5rem' : undefined}
+              maxWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
               updateSidePaneRenderer={props.updateSidePaneRenderer}
               onPeopleButtonClicked={
                 props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)

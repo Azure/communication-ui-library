@@ -40,7 +40,7 @@ export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
     lineHeight: '1.5rem',
     fontSize: '1.125rem',
-    padding: '0.75rem',
+    padding: '0.75rem 0.75rem 0.75rem 0.25rem',
     fontWeight: '600'
   }
 };
