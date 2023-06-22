@@ -20,12 +20,10 @@ import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react
 import { TeamsAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
-/* @conditional-compile-remove(call-transfer) */
-import { DefaultButton, Dialog, Stack, Text } from '@fluentui/react';
 
 export interface CallScreenProps {
   token: string;
@@ -46,13 +44,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
 
-  /* @conditional-compile-remove(call-transfer) */
-  const [dialogOpen, setDialogOpen] = useState(false);
-  /* @conditional-compile-remove(call-transfer) */
-  const [onConfirmTransfer, setOnConfirmTransfer] = useState<() => () => void>();
-  /* @conditional-compile-remove(call-transfer) */
-  const [onCancelTransfer, setOnCancelTransfer] = useState<() => () => void>();
-
   const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
     adapter.on('error', (e) => {
       // Error is already acted upon by the Call composite, but the surrounding application could
@@ -70,20 +61,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     });
     /* @conditional-compile-remove(call-transfer) */
     adapter.on('transferRequested', (e) => {
-      console.log('transferRequested event received');
-      setOnConfirmTransfer(() => () => {
-        setDialogOpen(false);
-        e.accept();
-      });
-      setOnCancelTransfer(() => () => {
-        setDialogOpen(false);
-        e.reject();
-      });
-      setDialogOpen(true);
-    });
-    /* @conditional-compile-remove(call-transfer) */
-    adapter.on('callEnded', (e) => {
-      setDialogOpen(false);
+      e.accept();
     });
   }, []);
 
@@ -113,33 +91,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }, [token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall]);
   /* @conditional-compile-remove(teams-identity-support) */
   if (isTeamsIdentityCall) {
-    return (
-      <>
-        <ConfirmationDialog hidden={!dialogOpen} onConfirm={onConfirmTransfer} onCancel={onCancelTransfer} />
-        <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
-      </>
-    );
+    return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
 
-  return (
-    <>
-      <ConfirmationDialog hidden={!dialogOpen} onConfirm={onConfirmTransfer} onCancel={onCancelTransfer} />
-      <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
-    </>
-  );
-};
-
-/* @conditional-compile-remove(call-transfer) */
-const ConfirmationDialog = (props: { hidden: boolean; onConfirm?: () => void; onCancel?: () => void }): JSX.Element => {
-  return (
-    <Dialog hidden={props.hidden} styles={{ root: { display: 'flex', justifyContent: 'center' } }}>
-      <Text>Do you want to accept transfer request?</Text>
-      <Stack horizontal horizontalAlign="center">
-        <DefaultButton onClick={props.onConfirm}>Accept</DefaultButton>
-        <DefaultButton onClick={props.onCancel}>Reject</DefaultButton>
-      </Stack>
-    </Dialog>
-  );
+  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
 };
 
 /* @conditional-compile-remove(teams-identity-support) */
@@ -151,7 +106,7 @@ type TeamsCallScreenProps = CallScreenProps & {
 /* @conditional-compile-remove(teams-identity-support) */
 const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  if (!('meetingLink' in locator || 'participantIds' in locator)) {
+  if (!('meetingLink' in locator)) {
     throw new Error('A teams meeting locator must be provided for Teams Identity Call.');
   }
 
