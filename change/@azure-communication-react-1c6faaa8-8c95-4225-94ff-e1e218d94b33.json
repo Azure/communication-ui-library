@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Remove empty space to the right of participant displayName when tile is not being interacted with.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

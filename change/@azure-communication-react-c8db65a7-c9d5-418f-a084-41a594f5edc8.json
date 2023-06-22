@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fixes error bar messaging for when camera is in use.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

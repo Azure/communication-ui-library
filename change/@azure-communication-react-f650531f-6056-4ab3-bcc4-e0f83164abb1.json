@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Block release if api not match",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}
