@@ -212,19 +212,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     }
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
 
-  const splitButtonMenuItems: IContextualMenuItem[] = [
-    {
-      key: 'cameraPrimaryAction',
-      text: props.checked ? strings.onSplitButtonPrimaryActionCamera : strings.offSplitButtonPrimaryActionCamera,
-      onClick: () => {
-        onToggleClick();
-      },
-      iconProps: {
-        iconName: props.checked ? 'SplitButtonPrimaryActionCameraOn' : 'SplitButtonPrimaryActionCameraOff',
-        styles: { root: { lineHeight: 0 } }
-      }
-    }
-  ];
+  const splitButtonMenuItems: IContextualMenuItem[] = [];
   /* @conditional-compile-remove(video-background-effects) */
   if (props.onShowVideoEffectsPicker) {
     splitButtonMenuItems.push({
@@ -239,6 +227,18 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       }
     });
   }
+
+  splitButtonMenuItems.push({
+    key: 'cameraPrimaryAction',
+    text: props.checked ? strings.onSplitButtonPrimaryActionCamera : strings.offSplitButtonPrimaryActionCamera,
+    onClick: () => {
+      onToggleClick();
+    },
+    iconProps: {
+      iconName: props.checked ? 'SplitButtonPrimaryActionCameraOn' : 'SplitButtonPrimaryActionCameraOff',
+      styles: { root: { lineHeight: 0 } }
+    }
+  });
 
   const splitButtonPrimaryAction: IContextualMenuItem = {
     key: 'primaryAction',
