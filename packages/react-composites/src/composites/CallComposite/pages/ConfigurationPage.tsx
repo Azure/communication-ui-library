@@ -14,7 +14,7 @@ import { DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Panel, Stack } from '@fluentui/react';
+import { Panel, PanelType, Stack } from '@fluentui/react';
 import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
 import { LocalPreview } from '../components/LocalPreview';
 import {
@@ -44,7 +44,7 @@ import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 /* @conditional-compile-remove(video-background-effects) */
-import { useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
+import { VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM, useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
 import { SidePane } from '../components/SidePane/SidePane';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
@@ -349,6 +349,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           styles={panelStyles}
           focusTrapZoneProps={panelFocusProps}
           layerProps={panelLayerProps}
+          type={PanelType.custom}
+          /* @conditional-compile-remove(video-background-effects) */
+          customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
           <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
         </Panel>
