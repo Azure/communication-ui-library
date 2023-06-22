@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Ensure force-build-versions is run in CI",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

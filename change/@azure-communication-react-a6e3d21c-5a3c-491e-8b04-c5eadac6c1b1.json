@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Add height to FocuzTrapZone in SpokenLanguageDrawer",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

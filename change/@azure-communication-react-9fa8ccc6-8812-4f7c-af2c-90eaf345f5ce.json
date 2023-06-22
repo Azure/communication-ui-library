@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "reverting storybook update to the vanillajs page",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "none"
-}
