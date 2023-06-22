@@ -350,6 +350,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           focusTrapZoneProps={panelFocusProps}
           layerProps={panelLayerProps}
           type={PanelType.custom}
+          /* @conditional-compile-remove(video-background-effects) */
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
           <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
