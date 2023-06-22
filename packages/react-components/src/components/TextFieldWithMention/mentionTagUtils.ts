@@ -289,7 +289,6 @@ const getTagClosingTagInfo = (tag: TagData): ClosingTagInfoResult => {
 type UpdateHTMLProps = {
   htmlText: string;
   oldPlainText: string;
-  newPlainText: string;
   tags: TagData[];
   startIndex: number;
   oldPlainTextEndIndex: number;
@@ -305,11 +304,15 @@ type UpdateHTMLProps = {
  * @returns Updated HTML and selection index if the selection index should be set.
  */
 export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updatedSelectionIndex?: number } => {
-  const { htmlText, oldPlainText, newPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } =
-    props;
+  const { htmlText, oldPlainText, tags, startIndex, oldPlainTextEndIndex, change, mentionTrigger } = props;
   if (tags.length === 0 || (startIndex === 0 && oldPlainTextEndIndex === oldPlainText.length - 1)) {
     // no tags added yet or the whole text is changed
-    return { updatedHTML: newPlainText, updatedSelectionIndex: undefined };
+    const changeWithSkippedChars = escapeHTMLChars(change);
+    const updatedHTML =
+      escapeHTMLChars(oldPlainText.substring(0, startIndex)) +
+      changeWithSkippedChars +
+      escapeHTMLChars(oldPlainText.substring(oldPlainTextEndIndex));
+    return { updatedHTML, updatedSelectionIndex: undefined };
   }
   let result = '';
   let lastProcessedHTMLIndex = 0;
@@ -319,7 +322,8 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
   // e.g.: change is after and partially in tag => change will be added after the tag and outdated text in the tag will be removed
   // e.g.: change is on the beginning of the tag => change will be added before the tag
   // e.g.: change is on the end of the tag => change will be added to the tag if it's not mention and after the tag if it's mention
-  let processedChange = change;
+  let processedChange = escapeHTMLChars(change);
+
   // end tag plain text index of the last processed tag
   let lastProcessedPlainTextTagEndIndex = 0;
   // as some tags/text can be removed fully, selection should be updated correctly
@@ -342,13 +346,18 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
     if (startIndex <= tag.plainTextBeginIndex) {
       // change start is before the open tag
       // Math.max(lastProcessedPlainTextTagEndIndex, startIndex) is used as startIndex may not be in [[previous tag].plainTextEndIndex - tag.plainTextBeginIndex] range
-      const startChangeDiff = tag.plainTextBeginIndex - Math.max(lastProcessedPlainTextTagEndIndex, startIndex);
+      const startChangeDiff = getChangeDiff(
+        oldPlainText,
+        Math.max(lastProcessedPlainTextTagEndIndex, startIndex),
+        tag.plainTextBeginIndex
+      );
+
       result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex - startChangeDiff) + processedChange;
       processedChange = '';
       if (oldPlainTextEndIndex <= tag.plainTextBeginIndex) {
         // the whole change is before tag start
         // mentionTag length can be ignored here as the change is before the tag
-        const endChangeDiff = tag.plainTextBeginIndex - oldPlainTextEndIndex;
+        const endChangeDiff = getChangeDiff(oldPlainText, oldPlainTextEndIndex, tag.plainTextBeginIndex);
         lastProcessedHTMLIndex = tag.openTagIndex - endChangeDiff;
         // the change is handled; exit
         break;
@@ -376,23 +385,24 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             if (startIndex !== tag.plainTextBeginIndex && startIndex !== closingTagInfo.plainTextEndIndex) {
               // mention tag should be deleted when user tries to edit it in the middle
               result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex) + processedChange;
-              changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
+              changeNewEndIndex = tag.plainTextBeginIndex + unEscapeHtmlCharacters(processedChange).length;
               lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
             } else if (startIndex === tag.plainTextBeginIndex) {
               // non empty change at the beginning of the mention tag to be added before the mention tag
               result += htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex) + processedChange;
-              changeNewEndIndex = tag.plainTextBeginIndex + processedChange.length;
+              changeNewEndIndex = tag.plainTextBeginIndex + unEscapeHtmlCharacters(processedChange).length;
               lastProcessedHTMLIndex = tag.openTagIndex;
             } else if (startIndex === closingTagInfo.plainTextEndIndex) {
               // non empty change at the end of the mention tag to be added after the mention tag
               result +=
                 htmlText.substring(lastProcessedHTMLIndex, closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength) +
                 processedChange;
-              changeNewEndIndex = closingTagInfo.plainTextEndIndex + processedChange.length;
+              changeNewEndIndex = closingTagInfo.plainTextEndIndex + unEscapeHtmlCharacters(processedChange).length;
               lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
             }
             processedChange = '';
           } else {
+            // When change is empty, it means that this change is a deletion
             const updateMentionTagResult = handleMentionTagUpdate({
               htmlText,
               oldPlainText,
@@ -419,7 +429,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           const updatedContent = updateHTML({
             htmlText: tag.content,
             oldPlainText,
-            newPlainText,
             tags: tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
@@ -430,13 +439,13 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           changeNewEndIndex = updatedContent.updatedSelectionIndex;
         } else {
           // no subtags
-          const startChangeDiff = startIndex - tag.plainTextBeginIndex;
+          const startChangeDiff = getChangeDiff(oldPlainText, tag.plainTextBeginIndex, startIndex);
           result +=
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex + tag.openTagBody.length + startChangeDiff) +
             processedChange;
           processedChange = '';
           if (oldPlainTextEndIndex < closingTagInfo.plainTextEndIndex) {
-            const endChangeDiff = oldPlainTextEndIndex - tag.plainTextBeginIndex;
+            const endChangeDiff = getChangeDiff(oldPlainText, tag.plainTextBeginIndex, oldPlainTextEndIndex);
             lastProcessedHTMLIndex = tag.openTagIndex + tag.openTagBody.length + endChangeDiff;
           } else if (oldPlainTextEndIndex === closingTagInfo.plainTextEndIndex) {
             lastProcessedHTMLIndex = closingTagInfo.closeTagIdx;
@@ -446,25 +455,36 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
         break;
       } else if (startIndex > tag.plainTextBeginIndex && oldPlainTextEndIndex > closingTagInfo.plainTextEndIndex) {
         // the change started in the tag but finishes somewhere further
-        const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
         if (isMentionTag) {
-          const updateMentionTagResult = handleMentionTagUpdate({
-            htmlText,
-            oldPlainText,
-            lastProcessedHTMLIndex,
-            processedChange: '',
-            change,
-            tag,
-            closeTagIdx: closingTagInfo.closeTagIdx,
-            closeTagLength: closingTagInfo.closeTagLength,
-            plainTextEndIndex: closingTagInfo.plainTextEndIndex,
-            startIndex,
-            oldPlainTextEndIndex,
-            mentionTagLength
-          });
-          result += updateMentionTagResult.result;
-          lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
-          // no need to handle plainTextSelectionEndIndex as the change will be added later
+          if (startIndex === closingTagInfo.plainTextEndIndex) {
+            // the change should be handled out of mention tag
+            // as startIndex === closingTagInfo.plainTextEndIndex and oldPlainTextEndIndex > closingTagInfo.plainTextEndIndex
+            result += htmlText.substring(
+              lastProcessedHTMLIndex,
+              closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength
+            );
+            // no need to handle plainTextSelectionEndIndex as the change will be added later
+            lastProcessedHTMLIndex = closingTagInfo.closeTagIdx + closingTagInfo.closeTagLength;
+          } else {
+            // part of the mention tag was changed/deleted
+            const updateMentionTagResult = handleMentionTagUpdate({
+              htmlText,
+              oldPlainText,
+              lastProcessedHTMLIndex,
+              processedChange: '',
+              change,
+              tag,
+              closeTagIdx: closingTagInfo.closeTagIdx,
+              closeTagLength: closingTagInfo.closeTagLength,
+              plainTextEndIndex: closingTagInfo.plainTextEndIndex,
+              startIndex,
+              oldPlainTextEndIndex,
+              mentionTagLength
+            });
+            result += updateMentionTagResult.result;
+            lastProcessedHTMLIndex = updateMentionTagResult.htmlIndex;
+            // no need to handle plainTextSelectionEndIndex as the change will be added later
+          }
         } else if (tag.subTags !== undefined && tag.subTags.length !== 0 && tag.content !== undefined) {
           // with subtags
           const stringBefore = htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex + tag.openTagBody.length);
@@ -472,7 +492,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           const updatedContent = updateHTML({
             htmlText: tag.content,
             oldPlainText,
-            newPlainText,
             tags: tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
@@ -482,6 +501,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           result += stringBefore + updatedContent.updatedHTML;
         } else {
           // no subtags
+          const startChangeDiff = startIndex - tag.plainTextBeginIndex - mentionTagLength;
           result += htmlText.substring(
             lastProcessedHTMLIndex,
             tag.openTagIndex + tag.openTagBody.length + startChangeDiff
@@ -530,7 +550,6 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
           const updatedContent = updateHTML({
             htmlText: tag.content,
             oldPlainText,
-            newPlainText,
             tags: tag.subTags,
             startIndex,
             oldPlainTextEndIndex,
@@ -545,7 +564,7 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
             htmlText.substring(lastProcessedHTMLIndex, tag.openTagIndex + tag.openTagBody.length) + processedChange;
           processedChange = '';
           // oldPlainTextEndIndex already includes mentionTag length
-          const endChangeDiff = closingTagInfo.plainTextEndIndex - oldPlainTextEndIndex;
+          const endChangeDiff = getChangeDiff(oldPlainText, oldPlainTextEndIndex, closingTagInfo.plainTextEndIndex);
           // as change may be before the end of the tag, we need to add the rest of the tag
           lastProcessedHTMLIndex = closingTagInfo.closeTagIdx - endChangeDiff;
         }
@@ -558,9 +577,9 @@ export const updateHTML = (props: UpdateHTMLProps): { updatedHTML: string; updat
     if (i === tags.length - 1 && oldPlainTextEndIndex >= closingTagInfo.plainTextEndIndex) {
       // the last tag should handle the end of the change if needed
       // oldPlainTextEndIndex already includes mentionTag length
-      const endChangeDiff = oldPlainTextEndIndex - closingTagInfo.plainTextEndIndex;
+      const endChangeDiff = getChangeDiff(oldPlainText, closingTagInfo.plainTextEndIndex, oldPlainTextEndIndex);
       if (startIndex >= closingTagInfo.plainTextEndIndex) {
-        const startChangeDiff = startIndex - closingTagInfo.plainTextEndIndex;
+        const startChangeDiff = getChangeDiff(oldPlainText, closingTagInfo.plainTextEndIndex, startIndex);
         result +=
           htmlText.substring(
             lastProcessedHTMLIndex,
@@ -780,9 +799,10 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
     if (!foundHtmlTag) {
       if (parseIndex !== 0) {
         // Add the remaining text to the plain text representation
-        plainTextRepresentation += text.substring(parseIndex);
+        const newText = text.substring(parseIndex);
+        plainTextRepresentation += unEscapeHtmlCharacters(newText);
       } else {
-        plainTextRepresentation = text;
+        plainTextRepresentation = unEscapeHtmlCharacters(text);
       }
       break;
     }
@@ -790,7 +810,7 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
     if (foundHtmlTag.type === 'open' || foundHtmlTag.type === 'self-closing') {
       const nextTag = parseOpenTag(foundHtmlTag.content, foundHtmlTag.startIdx);
       // Add the plain text between the last tag and this one found
-      plainTextRepresentation += text.substring(parseIndex, foundHtmlTag.startIdx);
+      plainTextRepresentation += unEscapeHtmlCharacters(text.substring(parseIndex, foundHtmlTag.startIdx));
       nextTag.plainTextBeginIndex = plainTextRepresentation.length;
 
       if (foundHtmlTag.type === 'open') {
@@ -823,14 +843,14 @@ export const textToTagParser = (text: string, trigger: string): { tags: TagData[
         }
 
         if (!currentOpenTag.subTags) {
-          plainTextRepresentation += currentOpenTag.content;
+          plainTextRepresentation += unEscapeHtmlCharacters(currentOpenTag.content);
         } else if (currentOpenTag.subTags.length > 0) {
           // Add text after the last tag
           const lastSubTag = currentOpenTag.subTags[currentOpenTag.subTags.length - 1];
           const startOfRemainingText =
             (lastSubTag.closingTagIndex ?? lastSubTag.openTagIndex) + lastSubTag.tagType.length + 3;
           const trailingText = currentOpenTag.content.substring(startOfRemainingText);
-          plainTextRepresentation += trailingText;
+          plainTextRepresentation += unEscapeHtmlCharacters(trailingText);
         }
 
         currentOpenTag.plainTextEndIndex = plainTextRepresentation.length;
@@ -922,4 +942,33 @@ const addTag = (tag: TagData, parseStack: TagData[], tags: TagData[]): void => {
       parentTag.subTags.push(tag);
     }
   }
+};
+
+// We should revisit this in the future when we support other text such as rich text editing.
+const escapeHTMLChars = (text: string): string => {
+  const mentionRegex = new RegExp(`<${MSFT_MENTION_TAG}(.*?)>(.*?)</${MSFT_MENTION_TAG}>`, 'i');
+  if (!text.match(mentionRegex)) {
+    return text
+      .replace(/&(?![A-Z]+;)/gi, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+  return text;
+};
+
+const getChangeDiff = (plainText: string, startIndex: number, endIndex: number): number => {
+  return endIndex - startIndex + getLengthDiffForEscapedHtmlChars(plainText, startIndex, endIndex);
+};
+
+const getLengthDiffForEscapedHtmlChars = (text: string, startIndex: number, endIndex: number): number => {
+  const subText = text.substring(startIndex, endIndex);
+  const escapedAngleBracketCount = subText.match(/(<)|(>)/g)?.length || 0;
+  let escapedCharLength = escapedAngleBracketCount * ('&lt;'.length - '<'.length);
+  const escapedAmpersandCount = subText.match(/&/g)?.length || 0;
+  escapedCharLength += escapedAmpersandCount * ('&amp;'.length - '&'.length);
+  return escapedCharLength;
+};
+
+const unEscapeHtmlCharacters = (text: string): string => {
+  return text.replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
 };

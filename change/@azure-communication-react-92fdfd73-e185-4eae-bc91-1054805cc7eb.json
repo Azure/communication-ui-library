@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Addressed the issue where local participant label's luminosity ratio does not meet MAS guidelines",
-  "packageName": "@azure/communication-react",
-  "email": "109105353+jpeng-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

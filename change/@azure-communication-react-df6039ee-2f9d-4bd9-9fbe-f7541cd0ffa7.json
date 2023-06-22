@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update useAzureCommunicationCallAdapter hook to protect against multiple client creations",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -52,10 +52,10 @@ jobs:
         run: git checkout ${{ github.event.inputs.branch }}
 
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
@@ -66,7 +66,7 @@ jobs:
 
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
 

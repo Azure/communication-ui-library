@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Updates streamUtils to handle multiple Calls from components.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

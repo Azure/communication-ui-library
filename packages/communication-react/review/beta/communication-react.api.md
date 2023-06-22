@@ -649,6 +649,10 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
+    participantCouldNotBeReachedMoreDetails?: string;
+    participantCouldNotBeReachedTitle?: string;
+    participantIdIsMalformedMoreDetails?: string;
+    participantIdIsMalformedTitle?: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
@@ -657,6 +661,8 @@ export interface CallCompositeStrings {
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
+    permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
+    permissionToReachTargetParticipantNotAllowedTitle?: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -680,12 +686,15 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageNoticeString: string;
     transferPageTransferorText: string;
     transferPageTransferTargetText: string;
     transferPageUnknownTransferorDisplayName: string;
     transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
+    unableToResolveTenantMoreDetails?: string;
+    unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
@@ -2821,7 +2830,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -2897,7 +2906,7 @@ export type MessageThreadProps = {
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
