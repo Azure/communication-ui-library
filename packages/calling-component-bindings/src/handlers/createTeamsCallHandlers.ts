@@ -6,7 +6,9 @@ import { StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall, TeamsCallAgent, Features } from '@azure/communication-calling';
+import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hands) */
+import { Features } from '@azure/communication-calling';
 import { CommunicationIdentifier, isCommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';

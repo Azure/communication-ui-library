@@ -12,8 +12,6 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hands) */
-import { RaiseHandCallFeature } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallError } from './CallClientState';

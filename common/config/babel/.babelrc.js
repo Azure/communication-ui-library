@@ -38,7 +38,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
-        // rooms
+        // raise hands feature
         'raise-hands',
         // rooms
         'rooms',
@@ -80,7 +80,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Mention feature
         'mention',
         // Feature for call transfer
-        'call-transfer'
+        'call-transfer',
+        // raise hands feature
+        'raise-hands',
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

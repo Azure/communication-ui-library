@@ -27,7 +27,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
     return [];
   }
 
-  let callFunction = memoizedAllConvertRemoteParticipant;
+  let callFunction = memoizedAllConvertRemoteParticipant as any;
   /* @conditional-compile-remove(raise-hands) */
   callFunction = memoizedAllConvertRemoteParticipantBeta;
 

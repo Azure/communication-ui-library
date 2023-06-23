@@ -56,7 +56,6 @@ const convertRemoteParticipantToParticipantListParticipant = (
   };
 };
 
-/* @conditional-compile-remove(rooms) */
 /* @conditional-compile-remove(raise-hands) */
 /**
  * @private
@@ -86,6 +85,31 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
 );
 
 /* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
+  (
+    userId: string,
+    displayName: string | undefined,
+    state: RemoteParticipantState,
+    isMuted: boolean,
+    isScreenSharing: boolean,
+    isSpeaking: boolean,
+    role: Role
+  ): CallParticipantListParticipant => {
+    return convertRemoteParticipantToParticipantListParticipantBetaRelease(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      role
+    );
+  }
+);
+
 /* @conditional-compile-remove(raise-hands) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (
   userId: string,
@@ -107,6 +131,29 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       isSpeaking
     ),
     raisedHand,
+    role
+  };
+};
+
+/* @conditional-compile-remove(rooms) */
+const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
+  userId: string,
+  displayName: string | undefined,
+  state: RemoteParticipantState,
+  isMuted: boolean,
+  isScreenSharing: boolean,
+  isSpeaking: boolean,
+  role: Role
+): CallParticipantListParticipant => {
+  return {
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking
+    ),
     role
   };
 };

@@ -25,6 +25,9 @@ import {
   memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
 
+/* @conditional-compile-remove(raise-hands) */
+import { convertRemoteParticipantToVideoGalleryRemoteParticipantBeta } from './utils/videoGalleryUtils';
+
 /**
  * Selector type for {@link VideoGallery} component.
  *
@@ -75,9 +78,12 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants = [];
+    let convertFunction = convertRemoteParticipantToVideoGalleryRemoteParticipant as any;
+    /* @conditional-compile-remove(raise-hands) */
+    convertFunction = convertRemoteParticipantToVideoGalleryRemoteParticipantBeta;
     return {
       screenShareParticipant: screenShareRemoteParticipant
-        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
+        ? convertFunction(
             toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
             checkIsSpeaking(screenShareRemoteParticipant),

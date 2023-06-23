@@ -168,13 +168,14 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   return undefined;
 };
 
-/* @conditional-compile-remove(raise-hands) */
 /* @conditional-compile-remove(PSTN-calls) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     case HoldButton:
       return holdButtonSelector;
-    case RaiseHandButton:
-      return raiseHandButtonSelector;
+  }
+  /* @conditional-compile-remove(raise-hands) */
+  if (component === RaiseHandButton) {
+    return raiseHandButtonSelector;
   }
 };

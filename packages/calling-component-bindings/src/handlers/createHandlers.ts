@@ -11,12 +11,11 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier,
-  CommunicationUserIdentifier,
-  MicrosoftTeamsUserIdentifier
+  isPhoneNumberIdentifier
 } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-
+/* @conditional-compile-remove(raise-hands) */
+import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
