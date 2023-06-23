@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 const path = require('path');
-const webpack = require('webpack4');
+const webpack = require('webpack');
 
 const DEVELOPMENT_BUILD = process.env.NODE_ENV === 'development';
 console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}`);
