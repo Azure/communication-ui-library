@@ -61,10 +61,6 @@
 
       // Typescript check project's dependency -- this is our minimum supported typescript version of our npm package.
       "3.8.3"
-    ],
-    "webpack": [
-      // All projects should use this version by default
-      "5.38.1"
     ]
   }
 }
