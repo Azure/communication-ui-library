@@ -1,6 +1,6 @@
 {
-  "type": "prerelease",
-  "comment": "move commits to separate branch",
+  "type": "none",
+  "comment": "move client commits to separate branch",
   "packageName": "@azure/communication-react",
   "email": "ruslanzdor@microsoft.com",
   "dependentChangeType": "patch"
