@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Announce that you are being transferred when transfer page is showing when screenreader is on",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}

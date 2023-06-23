@@ -50,9 +50,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 /**
  * Functionality for managing the current call with chat.
@@ -174,6 +172,31 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /**
+   * Dispose the html view for a screen share stream
+   *
+   * @remarks
+   * this method is implemented for composite
+   *
+   * @param remoteUserId - Id of the participant to dispose the screen share stream view for.
+   *
+   * @public
+   */
+  disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a remote video stream
+   *
+   * @param remoteUserId - Id of the participant to dispose
+   *
+   * @public
+   */
+  disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a local video stream
+   *
+   * @public
+   */
+  disposeLocalVideoStreamView(): Promise<void>;
   /**
    * Ask for permissions of devices.
    *
@@ -376,18 +399,11 @@ export interface CallWithChatAdapterManagement {
 
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Start the blur video background effect.
+   * Start the video background effect.
    *
    * @beta
    */
-  blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void>;
-  /* @conditional-compile-remove(video-background-effects) */
-  /**
-   * Start the video background replacement effect.
-   *
-   * @beta
-   */
-  replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void>;
+  startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
@@ -410,7 +426,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void;
+  updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
 /**

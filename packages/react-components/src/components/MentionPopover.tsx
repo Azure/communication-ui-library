@@ -231,20 +231,19 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   );
 
   const personaRenderer = useCallback(
-    (displayName?: string): JSX.Element => {
-      const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
+    (displayName: string): JSX.Element => {
       const avatarOptions = {
-        text: displayName?.trim() || displayNamePlaceholder,
+        text: displayName.trim(),
         size: PersonaSize.size24,
         initialsColor: theme.palette.neutralLight,
         initialsTextColor: theme.palette.neutralSecondary,
         showOverflowTooltip: false,
-        showUnknownPersonaCoin: !displayName?.trim() || displayName === displayNamePlaceholder
+        showUnknownPersonaCoin: false
       };
 
       return <Persona {...avatarOptions} />;
     },
-    [localeStrings, theme]
+    [theme]
   );
 
   const defaultOnRenderSuggestionItem = useCallback(
@@ -299,6 +298,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   return (
     <div ref={popoverRef}>
       <Stack
+        data-testid={'mention-suggestion-list-container'}
         className={mergeStyles(
           {
             maxHeight: 212,

@@ -58,7 +58,11 @@ import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
 /* @conditional-compile-remove(video-background-effects) */
-import { useVideoEffectsPane } from './SidePane/useVideoEffectsPane';
+import {
+  useVideoEffectsPane,
+  VIDEO_EFFECTS_SIDE_PANE_ID,
+  VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM
+} from './SidePane/useVideoEffectsPane';
 import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
@@ -68,6 +72,8 @@ import { getPipStyles } from '../../common/styles/ModalLocalAndRemotePIP.styles'
 import { useMinMaxDragPosition } from '../../common/utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * @private
@@ -218,6 +224,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   let errorBarProps = props.errorBarProps;
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton && props.errorBarProps) {
@@ -230,7 +239,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  if (useIsParticularSidePaneOpen('videoeffects') && props.errorBarProps) {
+  const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
+  /* @conditional-compile-remove(video-background-effects) */
+  if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
     errorBarProps = {
       ...props.errorBarProps,
       activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
@@ -342,6 +353,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             </Stack.Item>
             <SidePane
               mobileView={props.mobileView}
+              /* @conditional-compile-remove(video-background-effects) */
+              maxWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
               updateSidePaneRenderer={props.updateSidePaneRenderer}
               onPeopleButtonClicked={
                 props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)

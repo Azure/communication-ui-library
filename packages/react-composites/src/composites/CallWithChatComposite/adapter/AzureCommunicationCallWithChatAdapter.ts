@@ -87,11 +87,8 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
-
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -189,6 +186,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
     this.sendReadReceipt.bind(this);
@@ -231,9 +229,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.setCaptionLanguage.bind(this);
     }
     /* @conditional-compile-remove(video-background-effects) */
-    this.blurVideoBackground.bind(this);
-    /* @conditional-compile-remove(video-background-effects) */
-    this.replaceVideoBackground.bind(this);
+    this.startVideoBackgroundEffect.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
@@ -355,6 +351,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
   }
+  /** Dispose of a remote screen share */
+  public async disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
+    await this.callAdapter.disposeScreenShareStreamView(remoteUserId);
+  }
+  /** Dispose of a remote video stream */
+  public async disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    await this.callAdapter.disposeRemoteVideoStreamView(remoteUserId);
+  }
+  /** Dispose of the local video stream */
+  public async disposeLocalVideoStreamView(): Promise<void> {
+    await this.callAdapter.disposeLocalVideoStreamView();
+  }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
     await this.chatAdapter.fetchInitialData();
@@ -470,12 +478,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public async blurVideoBackground(backgroundBlurConfig?: BackgroundBlurConfig): Promise<void> {
-    await this.callAdapter.blurVideoBackground(backgroundBlurConfig);
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  public async replaceVideoBackground(backgroundReplacementConfig: BackgroundReplacementConfig): Promise<void> {
-    await this.callAdapter.replaceVideoBackground(backgroundReplacementConfig);
+  public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
+    await this.callAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
   }
 
   /* @conditional-compile-remove(video-background-effects) */
@@ -489,7 +493,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 

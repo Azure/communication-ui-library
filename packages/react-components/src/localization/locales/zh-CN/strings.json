@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "你的麦克风已关闭",
     "offSplitButtonMicrophonePrimaryAction": "取消麦克风静音",
     "onSplitButtonMicrophonePrimaryAction": "将麦克风静音",
-    "micPrimaryActionSplitButtonTitle": "使用麦克风"
+    "microphonePrimaryActionSplitButtonTitle": "使用麦克风"
   },
   "devicesButton": {
     "label": "设备",
@@ -139,7 +139,7 @@
     "downloadFile": "下载文件",
     "blockedWarningText": "由于组织策略，此消息已被删除。",
     "blockedWarningLinkText": "详细信息",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "该邮件包含 {fileCount} 个附件"
   },
   "errorBar": {
     "unableToReachChatService": "你已脱机",
@@ -153,7 +153,7 @@
     "muteGeneric": "无法静音麦克风",
     "unmuteGeneric": "无法取消麦克风静音",
     "speakingWhileMuted": "你的麦克风已静音",
-    "startScreenShareGeneric": "无法启动屏幕共享",
+    "startScreenShareGeneric": "启动屏幕共享时出现问题。",
     "stopScreenShareGeneric": "无法停止屏幕共享",
     "callNetworkQualityLow": "网络质量低。",
     "callNoSpeakerFound": "找不到扬声器或耳机。连接音频设备以收听呼叫。",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "关闭",
     "failedToJoinCallGeneric": "未能加入通话。",
     "failedToJoinCallInvalidMeetingLink": "无法加入会议。无效的链接。",
-    "startScreenSharingGeneric": "启动屏幕共享时出现问题。",
     "cameraFrozenForRemoteParticipants": "通话中的用户在查看视频时遇到问题。请检查你的设备和网络。",
     "unableToStartVideoEffect": "无法应用视频效果。"
   },

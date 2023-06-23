@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonunuz kapatıldı",
     "offSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini aç",
     "onSplitButtonMicrophonePrimaryAction": "Mikrofonun sesini kapat",
-    "micPrimaryActionSplitButtonTitle": "Mikrofonu kullan"
+    "microphonePrimaryActionSplitButtonTitle": "Mikrofonu kullan"
   },
   "devicesButton": {
     "label": "Cihazlar",
@@ -139,7 +139,7 @@
     "downloadFile": "Dosyayı indir",
     "blockedWarningText": "Bu ileti kuruluş ilkesi nedeniyle silindi.",
     "blockedWarningLinkText": "Ayrıntılar",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "İletide {fileCount} ek var"
   },
   "errorBar": {
     "unableToReachChatService": "Çevrimdışısınız",
@@ -153,7 +153,7 @@
     "muteGeneric": "Mikrofonun sesi kapatılamadı",
     "unmuteGeneric": "Mikrofonun sesi açılamadı",
     "speakingWhileMuted": "Mikrofonunuzun sesi kapalı",
-    "startScreenShareGeneric": "Ekran paylaşımı başlatılamadı",
+    "startScreenShareGeneric": "Ekran paylaşımı başlatılırken bir sorun oluştu.",
     "stopScreenShareGeneric": "Ekran paylaşımı durdurulamadı",
     "callNetworkQualityLow": "Ağ kalitesi düşük.",
     "callNoSpeakerFound": "Hoparlör veya kulaklık bulunamadı. Aramayı dinlemek için bir ses aygıtı bağlayın.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Kapat",
     "failedToJoinCallGeneric": "Aramaya katılınamadı.",
     "failedToJoinCallInvalidMeetingLink": "Toplantıya katılınamıyor. Geçersiz Bağlantı.",
-    "startScreenSharingGeneric": "Ekran paylaşımı başlatılırken bir sorun oluştu.",
     "cameraFrozenForRemoteParticipants": "Aramadaki kullanıcılar videonuzu görmekte sorun yaşıyor. Lütfen cihazlarınızı ve ağlarınızı kontrol edin.",
     "unableToStartVideoEffect": "Video efekti uygulanamıyor."
   },

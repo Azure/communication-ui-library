@@ -76,9 +76,12 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
 
   const childrenOnCurrentPage = useMemo(() => {
-    return indexesArray[clippedPage].map((index) => {
-      return React.Children.toArray(children)[index];
-    });
+    if (indexesArray[0] !== undefined) {
+      return indexesArray[clippedPage].map((index) => {
+        return React.Children.toArray(children)[index];
+      });
+    }
+    return [];
   }, [indexesArray, clippedPage, children]);
 
   const showButtons = numberOfChildren > childrenPerPage;

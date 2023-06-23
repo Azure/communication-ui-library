@@ -100,6 +100,15 @@ export class MockCallAdapter implements CallAdapter {
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
+  disposeScreenShareStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  disposeLocalVideoStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  disposeRemoteVideoStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   askDevicePermission(constrain: PermissionConstraints): Promise<void> {
     throw Error('askDevicePermission not implemented');
@@ -156,15 +165,11 @@ export class MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
+  /* @conditional-compile-remove(video-background-effects) */
+  startVideoBackgroundEffect(): Promise<void> {
+    throw new Error('startVideoBackgroundEffect not implemented.');
+  }
 
-  /* @conditional-compile-remove(video-background-effects) */
-  blurVideoBackground(): Promise<void> {
-    throw new Error('blurVideoBackground not implemented.');
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  replaceVideoBackground(): Promise<void> {
-    throw new Error('replaceVideoBackground not implemented.');
-  }
   /* @conditional-compile-remove(video-background-effects) */
   stopVideoBackgroundEffects(): Promise<void> {
     throw new Error('stopVideoBackgroundEffects not implemented.');
@@ -214,8 +219,12 @@ const defaultCallAdapterState: CallAdapterState = {
       startCaptionsInProgress: false
     },
     /* @conditional-compile-remove(call-transfer) */
-    transferFeature: {
+    transfer: {
       acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount: {
+      maxRemoteVideoStreams: 4
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },

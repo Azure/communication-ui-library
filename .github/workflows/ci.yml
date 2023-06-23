@@ -27,10 +27,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -46,10 +46,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -134,10 +134,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -146,7 +146,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -187,17 +187,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Switch flavor for build
@@ -260,17 +260,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Switch flavor for build
@@ -333,17 +333,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Switch flavor for build
@@ -403,17 +403,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       - name: Build
@@ -432,17 +432,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -455,6 +455,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o calling
       - name: Tests
@@ -476,17 +478,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -499,6 +501,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o chat
       - name: Tests
@@ -520,17 +524,17 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -543,6 +547,8 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
       - name: Build
         run: rush build -o callwithchat
       - name: Tests
@@ -564,12 +570,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -620,12 +626,12 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor when necessary
@@ -689,10 +695,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
       - name: Calculate size change
         id: bundles
         run: |

@@ -72,14 +72,14 @@ export const hiddenStyles: IStackStyles = {
 /**
  * @private
  */
-export const sidePaneStyles: IStackStyles = {
+export const sidePaneStyles = (maxWidth?: string): IStackStyles => ({
   root: {
     height: 'auto',
     width: '100%',
     padding: '0.5rem 0.25rem',
-    maxWidth: '21.5rem'
+    maxWidth: maxWidth ?? '21.5rem'
   }
-};
+});
 
 /**
  * @private

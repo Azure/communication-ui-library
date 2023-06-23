@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Aramaya katılmanıza izin verilmedi. Bu işlem yanlışlıkla yapıldıysa aramaya yeniden katılın.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Lobiden çıkarıldı",
     "learnMore": "Daha fazla bilgi edinin",
+    "leavingCallTitle": "Ayrılıyor...",
     "leftCallMoreDetails": "Bu bir hataysa aramaya yeniden katılın.",
     "leftCallTitle": "Aramadan ayrıldınız",
     "lobbyScreenConnectingToCallTitle": "Aramaya katılıyorsunuz",
@@ -150,7 +151,11 @@
       "sk-sk": "Slovakça",
       "zh-tw": "Çince - Tayvan"
     },
-    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor..."
+    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor...",
+    "transferPageTransferorText": "Aktarılıyor...",
+    "transferPageTransferTargetText": "Bağlanıyor...",
+    "transferPageUnknownTransferorDisplayName": "Bilinmiyor",
+    "transferPageUnknownTransferTargetDisplayName": "Bilinmiyor"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",

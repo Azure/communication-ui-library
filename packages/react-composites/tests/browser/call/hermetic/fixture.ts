@@ -86,8 +86,12 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
         startCaptionsInProgress: false
       },
       /* @conditional-compile-remove(call-transfer) */
-      transferFeature: {
+      transfer: {
         acceptedTransfers: {}
+      },
+      /* @conditional-compile-remove(call-transfer) */
+      optimalVideoCount: {
+        maxRemoteVideoStreams: 4
       }
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },

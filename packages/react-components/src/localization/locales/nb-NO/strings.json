@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonen er slått av",
     "offSplitButtonMicrophonePrimaryAction": "Opphev demping av mikrofon",
     "onSplitButtonMicrophonePrimaryAction": "Demp mikrofon",
-    "micPrimaryActionSplitButtonTitle": "Bruk mikrofon"
+    "microphonePrimaryActionSplitButtonTitle": "Bruk mikrofon"
   },
   "devicesButton": {
     "label": "Enheter",
@@ -139,7 +139,7 @@
     "downloadFile": "Last ned fil",
     "blockedWarningText": "Denne meldingen ble slettet på grunn av en organisasjonspolicy.",
     "blockedWarningLinkText": "Detaljer",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Meldingen har {fileCount} vedlegg"
   },
   "errorBar": {
     "unableToReachChatService": "Du er frakoblet",
@@ -153,7 +153,7 @@
     "muteGeneric": "Kan ikke dempe mikrofonen",
     "unmuteGeneric": "Kan ikke oppheve demping av mikrofon",
     "speakingWhileMuted": "Mikrofonen er dempet",
-    "startScreenShareGeneric": "Kan ikke starte skjermdeling",
+    "startScreenShareGeneric": "Det oppstod et problem under start av skjermdeling.",
     "stopScreenShareGeneric": "Kan ikke stoppe skjermdeling",
     "callNetworkQualityLow": "Nettverkskvaliteten er lav.",
     "callNoSpeakerFound": "Finner ingen høyttalere eller hodetelefoner. Koble til en lydenhet for å høre samtalen.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Lukk",
     "failedToJoinCallGeneric": "Kan ikke bli med i samtalen.",
     "failedToJoinCallInvalidMeetingLink": "Kan ikke bli med i møtet. Ugyldig kobling.",
-    "startScreenSharingGeneric": "Det oppstod et problem under start av skjermdeling.",
     "cameraFrozenForRemoteParticipants": "Brukere i samtalen har problemer med å se videoen. Kontroller enhetene og nettverket.",
     "unableToStartVideoEffect": "Kan ikke bruke videoeffekt."
   },

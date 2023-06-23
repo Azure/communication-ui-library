@@ -186,7 +186,12 @@ export const fillWidth = mergeStyles({
 export const panelStyles: Partial<IPanelStyles> = {
   content: {
     display: 'flex',
-    flexBasis: '100%'
+    flexBasis: '100%',
+    paddingLeft: '0rem', // remove default padding
+    paddingRight: '0rem' // remove default padding
+  },
+  commands: {
+    paddingTop: '0rem' // remove default padding
   },
   scrollableContent: {
     display: 'flex',

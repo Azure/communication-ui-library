@@ -12,7 +12,6 @@ import {
   CallAdapter,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
-
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */

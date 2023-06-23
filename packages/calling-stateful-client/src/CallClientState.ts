@@ -204,6 +204,19 @@ export interface LocalVideoStreamVideoEffectsState {
   activeEffects?: VideoEffectName[];
 }
 
+/* @conditional-compile-remove(optimal-video-count) */
+/**
+ * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+ *
+ * @beta
+ */
+export interface OptimalVideoCountFeatureState {
+  /**
+   * State of the current optimal video count.
+   */
+  maxRemoteVideoStreams: number;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RemoteVideoStream}.
  *
@@ -373,6 +386,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(optimal-video-count) */
+  /**
+   * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+   */
+  optimalVideoCount: OptimalVideoCountFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
@@ -422,7 +440,7 @@ export interface CallState {
   /**
    * Transfer state of call
    */
-  transferFeature: TransferFeatureState;
+  transfer: TransferFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */

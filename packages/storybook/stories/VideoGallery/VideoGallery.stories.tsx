@@ -8,6 +8,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { yellowBannerPalette } from '../BetaBanners/BannerPalettes';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { StorybookBanner } from '../BetaBanners/StorybookBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -369,6 +370,40 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={renderingOptionsDefault} />
 
+      <Heading>Local video tile aspect ratio options</Heading>
+      <SingleLineBetaBanner version={'1.5.2-beta.1'} />
+      <Description>
+        The local video tile can have its aspect ratio controlled to ensure the expected behavior for the device
+        formfactor and orientation. If left unset it will follow the default of `followDeviceOrientation` which will
+        have the tile follow the responsive behaviors that the gallery laredy provides.
+      </Description>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-gallery-169.png"
+            alt="Grid layout for composite video gallery"
+          />
+          <Description>Local tile size `16:9` aspect ratio.</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '27.2rem' }}
+            src="images/storybook-gallery-916.png"
+            alt="Floating layout for composite video gallery"
+          />
+          <Description>Local tile size `9:16` aspect ratio.</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-gallery-hidden.png"
+            alt="Floating layout for composite video gallery"
+          />
+          <Description>Local tile size `hidden` removes the local tile</Description>
+        </Stack>
+      </Stack>
+
       <Heading>Props</Heading>
       <ArgsTable of={VideoGalleryComponent} />
     </>
@@ -403,7 +438,7 @@ const ViewOptionsDefault = (): JSX.Element => {
 `;
 
 const MockLocalParticipant = {
-  userId: 'user1',
+  userId: 'userLocal',
   displayName: 'You',
   state: 'Connected',
   isMuted: true,
@@ -453,6 +488,7 @@ const VideoGalleryStory = (args): JSX.Element => {
       overflowGalleryPosition={args.overflowGalleryPosition}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
+      localVideoTileSize={args.localVideoTileSize}
     />
   );
 };
@@ -469,6 +505,7 @@ export default {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
     videoGalleryLayout: controlsToAdd.videoGallerylayout,
     overflowGalleryPosition: controlsToAdd.overflowGalleryPosition,
+    localVideoTileSize: controlsToAdd.localVideoTileSize,
     screenShareExperience: controlsToAdd.screenShareExperience,
     // Hiding auto-generated controls
     styles: hiddenControl,

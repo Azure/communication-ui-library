@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Draft API for video background effects",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

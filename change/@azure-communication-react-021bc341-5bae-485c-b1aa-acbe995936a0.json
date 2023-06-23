@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Calling stable to 1.14.1",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

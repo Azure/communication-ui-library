@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "您的麥克風已關閉",
     "offSplitButtonMicrophonePrimaryAction": "取消麥克風靜音",
     "onSplitButtonMicrophonePrimaryAction": "將麥克風設為靜音",
-    "micPrimaryActionSplitButtonTitle": "使用麥克風"
+    "microphonePrimaryActionSplitButtonTitle": "使用麥克風"
   },
   "devicesButton": {
     "label": "裝置",
@@ -139,7 +139,7 @@
     "downloadFile": "下載檔案",
     "blockedWarningText": "由於組織原則，已刪除此訊息。",
     "blockedWarningLinkText": "詳細資料",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "郵件有 {fileCount} 個附件"
   },
   "errorBar": {
     "unableToReachChatService": "您處於離線狀態",
@@ -153,7 +153,7 @@
     "muteGeneric": "無法將麥克風設為靜音",
     "unmuteGeneric": "無法將麥克風取消靜音",
     "speakingWhileMuted": "您的麥克風已設為靜音",
-    "startScreenShareGeneric": "無法開始螢幕畫面分享",
+    "startScreenShareGeneric": "啟動畫面分享時發生問題。",
     "stopScreenShareGeneric": "無法停止螢幕畫面分享",
     "callNetworkQualityLow": "您的網路品質不佳。",
     "callNoSpeakerFound": "找不到喇叭或耳機。請連接音訊裝置以聆聽通話。",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "關閉",
     "failedToJoinCallGeneric": "無法加入通話。",
     "failedToJoinCallInvalidMeetingLink": "無法加入會議。連結無效。",
-    "startScreenSharingGeneric": "啟動畫面分享時發生問題。",
     "cameraFrozenForRemoteParticipants": "通話中的使用者在觀看您的視訊時發生問題。請檢查您的裝置和網路。",
     "unableToStartVideoEffect": "無法套用視訊效果。"
   },
