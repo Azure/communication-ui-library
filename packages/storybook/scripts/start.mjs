@@ -12,7 +12,7 @@ async function main() {
     );
   }
   await exec(
-    quote(['npx', 'start-storybook', '-p', '6006', '--no-manager-cache', '--quiet', '--loglevel', 'warn']),
+    quote(['npx', 'storybook', 'dev', '-p', '6006', '--no-manager-cache', '--quiet', '--loglevel', 'warn']),
     await getExtraEnv()
   );
 }
