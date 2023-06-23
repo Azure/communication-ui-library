@@ -1,14 +1,16 @@
 import { Meta } from '@storybook/addon-docs';
 import {
-  darkTheme,
+  lightTheme,
   FluentThemeProvider,
   ControlBarButton,
   ControlBarButtonV9,
   ControlBarSplitButtonV9,
   CameraButton,
+  ParticipantItem,
+  ParticipantItemV9,
   VideoGallery
 } from '@internal/react-components';
-import { initializeIcons, getTheme, Stack, ContextualMenuItemType } from '@fluentui/react';
+import { initializeIcons, getTheme, PersonaPresence, Stack, ContextualMenuItemType } from '@fluentui/react';
 import { Airplane20Filled, VehicleShip20Filled } from '@fluentui/react-icons';
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 
@@ -59,7 +61,173 @@ import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 | useTheme                                        | token                                                                                                                                   | Various                                                                                                                                    |
 | useWarnings                                     | ⚠️ **No v9 equivalent**                                                                                                                 | BackgroundEffects Picker                                                                                                                   |
 
-## ControlBarButton Analysis
+## v8 to v9 comparison
+
+### Apply theming
+
+Almost no difference here:
+
+```tsx
+/// v8
+<ThemeProvider theme={myTheme}>
+  <ControlBarButton />
+</ThemeProvider>
+
+///
+<FluentProvider theme={myTheme}>
+  <ControlBarButton />
+</FluentProvider>
+```
+
+But instead of `useTheme()` hook, fluent exposes `tokens`:
+
+```tsx
+/// v8
+const styles = {
+  background: useTheme().palette.neutralQuaternaryAlt
+};
+
+/// v9
+const styles = {
+  background: tokens.colorNeutralForeground4
+};
+```
+
+and do not use variables inside styles:
+
+```tsx
+/// v8
+const styles = { background: isActive ? 'red' : 'blue' };
+
+/// v9
+const activeStyles = makeStyles({ background: 'red' });
+const inactiveStyles = makeStyles({ background: 'blue' });
+const className = isActive ? activeStyles : inactiveStyles;
+```
+
+### Localization
+
+Currently we expose a LocalizationProvider that wraps the entire app, no need to change this.
+
+```tsx
+/// Localization in both v8 and v9
+<LocalizationProvider locale={locale}>
+  <App />
+</LocalizationProvider>
+```
+
+### Change Icon
+
+Overriding renders is much the same. Instead of an onRender callback we instead expose a `slot`:
+
+```tsx
+/// v8
+<ControlBarButton onRenderIcon={() => <MyIcon />} />
+
+/// v9
+<ControlBarButton icon={<MyIcon />} />
+```
+
+#### Icon Provider
+
+Currently in v8 we use `registerIcons` then refer to icons by name. This does not exist in v9 and instead we use a provider:
+
+```tsx
+/// v8
+registerIcons({ icons: { 'my-icon': <MyIcon /> } });
+<ControlBarButton iconProps={{ iconName: 'my-icon' }} />;
+
+/// v9
+<IconProvider icons={{ 'my-icon': <MyIcon /> }}>
+  <ControlBarButton icon={icons['my-icon']} />
+</IconProvider>;
+```
+
+### Style Icon
+
+To style the icon in v9, we can no longer just style the icon and leave the remainder unchanged.
+Instead a developer must pass in the appropriate icon and style themself:
+
+```tsx
+/// v8 - simply set the style of the icon via an exposed icon styles prop:
+<ControlBarButton styles={{ icon: { background: 'red' } }} />;
+
+/// v9 - override the icon slot and pass styles to the icon:
+const styles = makeStyles({ icon: { background: 'red' } });
+<ControlBarButton icon={<MyIcon className={styles.icon} />} />;
+```
+
+The implication of this being, **we must export every component we want to be customizable**.
+You can see the impact of this in a breakdown in VideoGallery example later.
+
+## Component Analysis
+
+### ParticipantList Analysis
+
+<table>
+  <tr>
+    <td></td>
+    <td>
+      <b>v8</b>
+    </td>
+    <td>
+      <b>v9</b>
+    </td>
+  </tr>
+  <tr>
+    <td>ParticipantItem</td>
+    <td>
+      <div style={{ width: '200px' }}>
+        <FluentThemeProvider theme={lightTheme}>
+          <ParticipantItem
+            displayName="Ivo Graham"
+            menuItems={[
+              {
+                key: 'Mute',
+                text: 'Mute',
+                onClick: () => alert('Mute')
+              },
+              {
+                key: 'Remove',
+                text: 'Remove',
+                onClick: () => alert('Remove')
+              }
+            ]}
+            presence={PersonaPresence.online}
+          />
+        </FluentThemeProvider>
+      </div>
+    </td>
+    <td>
+      <div style={{ width: '200px' }}>
+        <FluentProvider theme={webLightTheme}>
+          <ParticipantItemV9
+            displayName="Ivo Graham"
+            menuItems={[
+              {
+                key: 'Mute',
+                text: 'Mute',
+                onClick: () => alert('Mute')
+              },
+              {
+                key: 'Remove',
+                text: 'Remove',
+                onClick: () => alert('Remove')
+              }
+            ]}
+          />
+        </FluentProvider>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td>ParticipantList</td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+### ControlBarButton Analysis
 
 <table>
   <tr>
@@ -75,7 +243,7 @@ import { FluentProvider, webLightTheme } from '@fluentui/react-components';
     <td>ControlBarButton</td>
     <td>
       <div style={{ width: 'fit-content' }}>
-        <FluentThemeProvider theme={darkTheme}>
+        <FluentThemeProvider theme={lightTheme}>
           <ControlBarButton
             showLabel={true}
             strings={{ label: 'airplane' }}
@@ -164,7 +332,7 @@ import { FluentProvider, webLightTheme } from '@fluentui/react-components';
   </tr>
 </table>
 
-### Code Difference
+#### Code Difference
 
 ```tsx
 /// v8 - everything passed in as top level props
@@ -199,104 +367,7 @@ import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 </Menu>
 ```
 
-### Change Icon
-
-Overriding renders is much the same. Instead of an onRender callback we instead expose a `slot`:
-
-```tsx
-/// v8
-<ControlBarButton onRenderIcon={() => <MyIcon />} />
-
-/// v9
-<ControlBarButton icon={<MyIcon />} />
-```
-
-#### Icon Provider
-
-Currently in v8 we use `registerIcons` then refer to icons by name. This does not exist in v9 and instead we use a provider:
-
-```tsx
-/// v8
-registerIcons({ icons: { 'my-icon': <MyIcon /> } });
-<ControlBarButton iconProps={{ iconName: 'my-icon' }} />;
-
-/// v9
-<IconProvider icons={{ 'my-icon': <MyIcon /> }}>
-  <ControlBarButton icon={icons['my-icon']} />
-</IconProvider>;
-```
-
-### Style Icon
-
-To style the icon in v9, we can no longer just style the icon and leave the remainder unchanged.
-Instead a developer must pass in the appropriate icon and style themself:
-
-```tsx
-/// v8 - simply set the style of the icon via an exposed icon styles prop:
-<ControlBarButton styles={{ icon: { background: 'red' } }} />;
-
-/// v9 - override the icon slot and pass styles to the icon:
-const styles = makeStyles({ icon: { background: 'red' } });
-<ControlBarButton icon={<MyIcon className={styles.icon} />} />;
-```
-
-The implication of this being, **we must export every component we want to be customizable**.
-You can see the impact of this in a breakdown in VideoGallery example later.
-
-### Apply theming
-
-Almost no difference here:
-
-```tsx
-/// v8
-<ThemeProvider theme={myTheme}>
-  <ControlBarButton />
-</ThemeProvider>
-
-///
-<FluentProvider theme={myTheme}>
-  <ControlBarButton />
-</FluentProvider>
-```
-
-But instead of `useTheme()` hook, fluent exposes `tokens`:
-
-```tsx
-/// v8
-const styles = {
-  background: useTheme().palette.neutralQuaternaryAlt
-};
-
-/// v9
-const styles = {
-  background: tokens.colorNeutralForeground4
-};
-```
-
-and do not use variables inside styles:
-
-```tsx
-/// v8
-const styles = { background: isActive ? 'red' : 'blue' };
-
-/// v9
-const activeStyles = makeStyles({ background: 'red' });
-const inactiveStyles = makeStyles({ background: 'blue' });
-const className = isActive ? activeStyles : inactiveStyles;
-```
-
-### Localization
-
-Currently we expose a LocalizationProvider that wraps the entire app, no need to change this.
-
-```tsx
-/// Localization in both v8 and v9
-<LocalizationProvider locale={locale}>
-  <App />
-</LocalizationProvider>
-```
-
-### Add custom menu item to the default set
+#### Add custom menu item to the default set
 
 ```tsx
 /// v8 - use callback that contains defaults:
@@ -324,7 +395,7 @@ Currently we expose a LocalizationProvider that wraps the entire app, no need to
 <ControlBarSplitButtonv9 menuItems={() => JSX.Element[]} />
 ```
 
-### Connecting to stateful
+#### Connecting to stateful
 
 In v8, we would use usePropsFor to connect to stateful components. In order to do so the components would have the appropriate props exposed that exactly match the usePropsFor interface:
 
@@ -426,7 +497,7 @@ const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
 </Menu>;
 ```
 
-## Video Gallery Analysis
+### Video Gallery Analysis
 
 <FluentThemeProvider>
   <div style={{ height: '500px' }}>
@@ -471,9 +542,9 @@ const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
 - Why does persona's avatar take avatar props instead of an avatar component slot?
 - Will dialog be getting drag functionality - is there a intake form for requests?
 - Splitbutton touch behavior has changed
-- Is animation for context menus being worked on or is this a design change?
 - No more `registerIcons` - how should we handle customizing icons? (Icon Provider?)
 - If babel or webpack doesn't transpile styles ahead of time, do they still work just less optimized? (i.e. what happens if I dont have the webpack plugin or babel translator installed?)
+- ~~Is animation for context menus being worked on or is this a design change?~~ Fixed: [https://github.com/microsoft/fluentui/pull/28119](https://github.com/microsoft/fluentui/pull/28119)
 
 ## Key Takeaways
 

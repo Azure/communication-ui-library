@@ -117,6 +117,7 @@ export {
   MessageThread,
   MicrophoneButton,
   ParticipantItem,
+  ParticipantItemV9,
   ParticipantList,
   ParticipantsButton,
   ScreenShareButton,

@@ -49,6 +49,7 @@ export type { StreamMediaProps } from './StreamMedia';
 export type { LoadingState } from './StreamMedia';
 
 export { ParticipantItem } from './ParticipantItem';
+export { ParticipantItemV9 } from './ParticipantItemV9';
 export type { ParticipantItemProps, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 
 export { ParticipantList } from './ParticipantList';
