@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "bump @azure/communication-react to v1.5.1-beta.4",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

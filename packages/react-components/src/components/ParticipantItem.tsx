@@ -32,6 +32,7 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
+import { useId } from '@fluentui/react-hooks';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -125,6 +126,11 @@ export interface ParticipantItemProps {
    * For example, `strings.participantStateConnecting` will be used if `participantState` is `Connecting`.
    */
   participantState?: ParticipantState;
+  /**
+   * Optional aria property that prefixes the ParticipantItems aria content
+   * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
+   */
+  ariaLabelledBy?: string;
 }
 
 /**
@@ -154,6 +160,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
+  const uniqueId = useId();
 
   const strings = { ...localeStrings, ...props.strings };
 
@@ -233,7 +240,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       className={mergeStyles(
         participantItemContainerStyle({
           localparticipant: me,
-          clickable: !!menuItems
+          clickable: !!menuItems && menuItems.length > 0
         }),
         styles?.root
       )}
@@ -258,6 +265,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           })`,
           alignItems: 'center'
         })}
+        id={uniqueId}
+        aria-labelledby={`${props.ariaLabelledBy} ${uniqueId}`}
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}

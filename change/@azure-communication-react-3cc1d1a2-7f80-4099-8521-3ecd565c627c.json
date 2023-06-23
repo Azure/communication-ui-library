@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce mechanism to control local video tile styling for different formfactors.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

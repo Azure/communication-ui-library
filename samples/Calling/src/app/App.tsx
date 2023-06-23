@@ -158,7 +158,13 @@ const App = (): JSX.Element => {
 
             // Update window URL to have a joinable link
             if (!joiningExistingCall) {
-              window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
+              window.history.pushState(
+                {},
+                document.title,
+                window.location.origin +
+                  getJoinParams(callLocator) +
+                  getIsCTEParam(/* @conditional-compile-remove(teams-identity-support) */ !!callDetails.teamsToken)
+              );
             }
             /* @conditional-compile-remove(teams-identity-support) */
             setIsTeamsCall(!!callDetails.teamsToken);
@@ -216,6 +222,10 @@ const App = (): JSX.Element => {
       document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
   }
+};
+
+const getIsCTEParam = (isCTE?: boolean): string => {
+  return `&isCTE=${!!isCTE}`;
 };
 
 const getJoinParams = (locator: CallAdapterLocator): string => {

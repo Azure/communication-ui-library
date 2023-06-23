@@ -23,7 +23,7 @@ import {
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -272,6 +272,8 @@ const MessageThreadStory = (args): JSX.Element => {
   ];
 
   const [selectedMessageType, setSelectedMessageType] = useState<IDropdownOption>(dropdownMenuOptions[0]);
+  // Property for checking if the history messages are loaded
+  const loadedHistoryMessages = useRef(false);
 
   const onSendNewMessage = (): void => {
     const existingChatMessages = chatMessages;
@@ -297,10 +299,11 @@ const MessageThreadStory = (args): JSX.Element => {
   };
 
   const onLoadPreviousMessages = async (): Promise<boolean> => {
-    return new Promise((resolve) => {
+    if (!loadedHistoryMessages.current) {
+      loadedHistoryMessages.current = true;
       setChatMessages([...GenerateMockHistoryChatMessages(), ...chatMessages]);
-      resolve(true);
-    });
+    }
+    return Promise.resolve(true);
   };
 
   const onSendNewSystemMessage = (): void => {

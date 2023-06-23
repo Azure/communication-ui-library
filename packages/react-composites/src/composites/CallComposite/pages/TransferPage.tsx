@@ -3,7 +3,11 @@
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
+/* @conditional-compile-remove(call-transfer) */
+import { Announcer } from '@internal/react-components';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(call-transfer) */
+import { useEffect } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallArrangement } from '../components/CallArrangement';
@@ -13,8 +17,10 @@ import { getRemoteParticipants } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-transfer) */
 import { getTransferCall } from '../selectors/baseSelectors';
 import {
+  avatarStyles,
   defaultPersonaStyles,
   displayNameStyles,
+  pageContainer,
   spinnerStyles,
   statusTextStyles,
   tileContainerStyles,
@@ -24,6 +30,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
 
 /* @conditional-compile-remove(call-transfer) */
+// Which should be participant shown in the transfer page
 type TransferPageSubject = 'transferor' | 'transferTarget';
 
 /**
@@ -43,19 +50,13 @@ export const TransferPage = (
   /* @conditional-compile-remove(call-transfer) */
   const transferCall = useSelector(getTransferCall);
 
+  /* @conditional-compile-remove(call-transfer) */
+  const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+
   // Reduce the controls shown when mobile view is enabled.
   const callControlOptions = props.mobileView
     ? reduceCallControlsForMobile(props.options?.callControls)
     : props.options?.callControls;
-
-  /* @conditional-compile-remove(call-transfer) */
-  // page subject is which should be participant shown in the transfer page depending on the transfer call state
-  const pageSubject: TransferPageSubject = useMemo(() => {
-    if (transferCall && ['Ringing', 'Connected'].includes(transferCall.state)) {
-      return 'transferTarget';
-    }
-    return 'transferor';
-  }, [transferCall]);
 
   const transferor = useMemo(
     () => (remoteParticipants ? Object.values(remoteParticipants)?.[0] : undefined),
@@ -66,6 +67,20 @@ export const TransferPage = (
     () => (transferCall?.remoteParticipants ? Object.values(transferCall.remoteParticipants)?.[0] : undefined),
     [transferCall]
   );
+
+  /* @conditional-compile-remove(call-transfer) */
+  const pageSubject: TransferPageSubject = useMemo(() => {
+    if (transferCall && transferTarget?.displayName) {
+      return 'transferTarget';
+    }
+    return 'transferor';
+  }, [transferCall, transferTarget?.displayName]);
+
+  /* @conditional-compile-remove(call-transfer) */
+  useEffect(() => {
+    setAnnouncerString(strings.transferPageNoticeString);
+  }, [strings.transferPageNoticeString]);
+
   let transferTileParticipant = transferor;
   /* @conditional-compile-remove(call-transfer) */
   if (pageSubject === 'transferTarget') {
@@ -82,37 +97,43 @@ export const TransferPage = (
   }
 
   return (
-    <CallArrangement
-      complianceBannerProps={{ strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={props.options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
-      callControlProps={{
-        options: callControlOptions,
-        increaseFlyoutItemSize: props.mobileView
-      }}
-      mobileView={props.mobileView}
-      modalLayerHostId={props.modalLayerHostId}
-      onRenderGalleryContent={() => (
-        <TransferTile
-          userId={
-            transferTileParticipant ? toFlatCommunicationIdentifier(transferTileParticipant?.identifier) : undefined
-          }
-          displayName={transferParticipantDisplayName}
-          initialsName={transferParticipantDisplayName}
-          /* @conditional-compile-remove(call-transfer) */
-          statusText={
-            pageSubject === 'transferTarget'
-              ? strings.transferPageTransferTargetText
-              : strings.transferPageTransferorText
-          }
-          onRenderAvatar={props.onRenderAvatar}
-          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-        />
-      )}
-      dataUiId={'transfer-page'}
-      updateSidePaneRenderer={props.updateSidePaneRenderer}
-      mobileChatTabHeader={props.mobileChatTabHeader}
-    />
+    <Stack className={mergeStyles(pageContainer)}>
+      {
+        /* @conditional-compile-remove(call-transfer) */
+        <Announcer announcementString={announcerString} ariaLive="polite" />
+      }
+      <CallArrangement
+        complianceBannerProps={{ strings }}
+        // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
+        errorBarProps={props.options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+        callControlProps={{
+          options: callControlOptions,
+          increaseFlyoutItemSize: props.mobileView
+        }}
+        mobileView={props.mobileView}
+        modalLayerHostId={props.modalLayerHostId}
+        onRenderGalleryContent={() => (
+          <TransferTile
+            userId={
+              transferTileParticipant ? toFlatCommunicationIdentifier(transferTileParticipant?.identifier) : undefined
+            }
+            displayName={transferParticipantDisplayName}
+            initialsName={transferParticipantDisplayName}
+            /* @conditional-compile-remove(call-transfer) */
+            statusText={
+              pageSubject === 'transferTarget'
+                ? strings.transferPageTransferTargetText
+                : strings.transferPageTransferorText
+            }
+            onRenderAvatar={props.onRenderAvatar}
+            onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+          />
+        )}
+        dataUiId={'transfer-page'}
+        updateSidePaneRenderer={props.updateSidePaneRenderer}
+        mobileChatTabHeader={props.mobileChatTabHeader}
+      />
+    </Stack>
   );
 };
 
@@ -174,7 +195,15 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
   );
 
   const defaultOnRenderAvatar = useCallback(() => {
-    return personaSize ? <AvatarPersona {...placeholderOptions} dataProvider={onFetchAvatarPersonaData} /> : <></>;
+    return personaSize ? (
+      <AvatarPersona
+        {...placeholderOptions}
+        dataProvider={onFetchAvatarPersonaData}
+        className={mergeStyles(avatarStyles)}
+      />
+    ) : (
+      <></>
+    );
   }, [placeholderOptions, onFetchAvatarPersonaData, personaSize]);
 
   const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);

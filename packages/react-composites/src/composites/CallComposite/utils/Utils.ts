@@ -5,13 +5,7 @@ import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import {
-  CommunicationIdentifier,
-  isCommunicationUserIdentifier,
-  isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier,
-  isUnknownIdentifier
-} from '@azure/communication-common';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
@@ -360,22 +354,6 @@ const isUnsupportedEnvironment = (
     environmentInfo?.isSupportedBrowser === false ||
     (environmentInfo?.isSupportedBrowserVersion === false && !unsupportedBrowserVersionOptedIn) ||
     environmentInfo?.isSupportedPlatform === false
-  );
-};
-
-/**
- * Check if an object is identifier.
- *
- * @param identifier
- * @returns whether an identifier is one of identifier types (for runtime validation)
- * @private
- */
-export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean => {
-  return (
-    isCommunicationUserIdentifier(identifier) ||
-    isPhoneNumberIdentifier(identifier) ||
-    isMicrosoftTeamsUserIdentifier(identifier) ||
-    isUnknownIdentifier(identifier)
   );
 };
 

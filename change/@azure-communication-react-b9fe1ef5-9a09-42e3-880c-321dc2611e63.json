@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Add isCameraOn state to help track camera state in the CallAdapter.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

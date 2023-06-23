@@ -85,7 +85,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
-      modalLayerHostId={drawerMenuHostId}
+      modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (

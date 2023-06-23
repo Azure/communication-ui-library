@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "moving isValidIdentifier to common",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}

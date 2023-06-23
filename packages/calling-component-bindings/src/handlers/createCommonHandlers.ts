@@ -62,8 +62,13 @@ export interface CommonCallingHandlers {
     userId: string,
     options?: VideoStreamOptions
   ) => Promise<void | CreateVideoStreamViewResult>;
+  /**
+   * @deprecated use {@link onDisposeRemoteVideoStreamView} and {@link onDisposeRemoteScreenShareStreamView} instead.
+   */
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
   onDisposeLocalStreamView: () => Promise<void>;
+  onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
+  onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
@@ -367,6 +372,54 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
+    const onDisposeRemoteVideoStreamView = async (userId: string): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+
+      const participant = Object.values(callState.remoteParticipants).find(
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
+      );
+
+      if (!participant || !participant.videoStreams) {
+        return;
+      }
+
+      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+
+      if (remoteVideoStream && remoteVideoStream.view) {
+        callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
+      }
+    };
+
+    const onDisposeRemoteScreenShareStreamView = async (userId: string): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+      const participant = Object.values(callState.remoteParticipants).find(
+        (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
+      );
+
+      if (!participant || !participant.videoStreams) {
+        return;
+      }
+      const screenShareStream = Object.values(participant.videoStreams).find(
+        (i) => i.mediaStreamType === 'ScreenSharing'
+      );
+
+      if (screenShareStream && screenShareStream.view) {
+        callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      }
+    };
+
     const onDisposeLocalStreamView = async (): Promise<void> => {
       // If the user is currently in a call, dispose of the local stream view attached to that call.
       const callState = call && callClient.getState().calls[call.id];
@@ -462,6 +515,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
+      onDisposeRemoteScreenShareStreamView,
+      onDisposeRemoteVideoStreamView,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,

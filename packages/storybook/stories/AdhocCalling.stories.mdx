@@ -1,0 +1,64 @@
+import { MessageBar, MessageBarType } from '@fluentui/react';
+import { Meta, Source } from '@storybook/addon-docs';
+import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
+
+import AdhocCallingSnippetText from '!!raw-loader!./snippets/AdhocCalling.snippet.tsx';
+
+<Meta
+  id="adhoc calling"
+  title="Concepts/Adhoc calling"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Adhoc calling
+
+<DetailedBetaBanner version={'1.6.1-beta.1'} />
+
+## Overview
+
+A call can be started with a Teams user or a call queue by using their id. The id of the Teams user or call queue is
+added to the `CallParticipantsLocator` which is used as the locator in the
+[AzureCommunicationCallAdapterArgs](./?path=/docs/composite-adapters--page#azurecommunicationcalladapterargs)
+when creating your [CallAdapter](path=/docs/composite-adapters--page#call-adapter).
+In the current beta version, only one Teams user can be called. A Teams call queue can also be called. For more
+information on call queues, refer to this
+[Learn documentation](https://learn.microsoft.com/en-us/microsoftteams/create-a-phone-system-call-queue)
+
+<MessageBar messageBarType={MessageBarType.warning}>
+  Note: Teams user ids need to be in format '8:orgid:UUID' when used in the CallParticipantsLocator. For example,
+  '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'.
+</MessageBar>
+<br />
+<MessageBar messageBarType={MessageBarType.warning}>
+  Note: Teams resource account ids linked to a call queue need to be in format '28:orgid:UUID' when used in the
+  CallParticipantsLocator. For example, '28:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'.
+</MessageBar>
+
+## Sample code
+
+The code snippet below is an example of setting up your CallComposite for adhoc calling.
+
+<Source code={AdhocCallingSnippetText} />
+
+The two callback functions `onFetchProfile` and `onFetchAvatarPersonaData` provided at the bottom of the snippet are
+for customizing display names and avatars of users, respectively.
+
+## Obtaining the id of a Teams user or call queue
+
+The id of a Teams user or a call queue can be obtained by using
+[Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
+From there, sign in by clicking the circled button as shown below with a Microsoft account in the same tenant as the
+Teams user or call queue you want to call.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/graph-api-sign-in.png" />
+
+Then create a
+[GET request](https://learn.microsoft.com/en-us/graph/api/user-get?view=graph-rest-1.0&tabs=http#http-request) for
+v1.0 of the users endpoint using the Teams user's `userPrincipalName` like shown below:
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/graph-api-get-user-id-api-request.png" />
+
+If you want to obtain the id for a call queue, use the `userPrincipalName` of Teams resource account linked to the call
+queue instead for the GET request above. The id should be in the API response as seen in the example below:
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/graph-api-id-highlighted.png" />

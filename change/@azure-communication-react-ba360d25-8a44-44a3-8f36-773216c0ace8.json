@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create styles for verticalGallery controls and position.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

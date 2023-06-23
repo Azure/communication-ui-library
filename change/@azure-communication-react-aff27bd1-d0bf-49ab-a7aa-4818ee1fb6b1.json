@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Introduce default strings to modals for different unsupported environment situations.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

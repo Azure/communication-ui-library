@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Refactor internal code to better reuse side pane and control bar across composites",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
