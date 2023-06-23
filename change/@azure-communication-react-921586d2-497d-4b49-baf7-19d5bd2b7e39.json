@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Ensure user switches to newly accepted transfer call when it is in the connected state and hang up the old call",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
