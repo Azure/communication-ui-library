@@ -22,6 +22,8 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 
@@ -44,6 +46,8 @@ export class CallSubscriber {
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
   private _captionsSubscriber?: CaptionsSubscriber;
+  /* @conditional-compile-remove(raise-hands) */
+  private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
@@ -69,7 +73,12 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-
+    /* @conditional-compile-remove(raise-hands) */
+    this._raiseHandSubscriber = new RaiseHandSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RaiseHand)
+    );
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,
@@ -160,6 +169,8 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(raise-hands) */
+    this._raiseHandSubscriber?.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
