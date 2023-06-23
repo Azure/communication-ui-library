@@ -71,6 +71,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
+import { RaisedHand } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -806,6 +807,7 @@ export interface CallState {
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -3256,6 +3258,13 @@ export type Profile = {
 };
 
 // @public
+export interface RaiseHandCallFeature {
+    allRaisedHands: RaisedHand[];
+    // (undocumented)
+    userRaisedHand?: RaisedHand;
+}
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -3275,6 +3284,8 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    // (undocumented)
+    raisedHand?: RaisedHand;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
