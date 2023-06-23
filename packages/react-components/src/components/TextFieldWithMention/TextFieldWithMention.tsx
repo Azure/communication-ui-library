@@ -530,7 +530,9 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         const textField = event.currentTarget;
         const relativePosition = Caret.getRelativePosition(textField);
         const adjustOffset = Math.max(0, textField.scrollHeight - textField.clientHeight);
-        relativePosition.top -= adjustOffset;
+        if (relativePosition.top > adjustOffset) {
+          relativePosition.top -= adjustOffset;
+        }
         setCaretPosition(relativePosition);
 
         if (triggerPriorIndex !== undefined) {
