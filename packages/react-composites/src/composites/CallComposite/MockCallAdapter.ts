@@ -208,6 +208,8 @@ const defaultCallAdapterState: CallAdapterState = {
     isScreenSharingOn: false,
     remoteParticipants: {},
     remoteParticipantsEnded: {},
+    /* @conditional-compile-remove(raise-hands) */
+    raiseHand: { allRaisedHands: [] },
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],

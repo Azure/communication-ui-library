@@ -38,6 +38,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
+        // raise hands feature
+        'raise-hands',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -74,7 +76,17 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
       inProgressFeatures: [
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
-        'in-progress-beta-feature-demo'
+        'in-progress-beta-feature-demo',
+        // Feature for updates needed for Click to Call (C2C) scenarios
+        'click-to-call',
+        // Mention feature
+        'mention',
+        // Feature for call transfer
+        'call-transfer',
+        // Optimal Video count feature,
+        'optimal-video-count',
+        // raise hands feature
+        'raise-hands'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

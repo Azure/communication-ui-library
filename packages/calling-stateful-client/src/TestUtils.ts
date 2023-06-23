@@ -19,6 +19,8 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -103,6 +105,60 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   }
   off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  off(event: any, listener: any): void {
+    this.emitter.on(event, listener);
+  }
+  dispose(): void {
+    /* No state to clean up */
+  }
+}
+
+/* @conditional-compile-remove(raise-hands) */
+/**
+ * @private
+ */
+export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
+  private raisedHands: RaisedHand[] = [];
+
+  // add a local user to the raised hands list
+  raiseHand(): Promise<void> {
+    const raisedHands = [{ identifier: { communicationUserId: 'localUserMRI' }, order: 1 } as RaisedHand];
+    this.raisedHands = raisedHands;
+    this.emitter.emit('raisedHandEvent');
+    return Promise.resolve();
+  }
+
+  //remove a local user from the raised hands list
+  lowerHand(): Promise<void> {
+    this.raisedHands = [];
+    this.emitter.emit('loweredHandEvent');
+    return Promise.resolve();
+  }
+
+  lowerHands(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+
+  //remove all users from the raised hands list
+  lowerAllHands(): Promise<void> {
+    this.raisedHands = [];
+    this.emitter.emit('loweredHandEvent');
+    return Promise.resolve();
+  }
+  getRaisedHands(): RaisedHand[] {
+    return this.raisedHands;
+  }
+  public name = 'RaiseHand';
+  public emitter = new EventEmitter();
+  on(event: 'raisedHandEvent', listener: RaisedHandListener): void;
+  on(event: 'loweredHandEvent', listener: RaisedHandListener): void;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  on(event: any, listener: any): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'raisedHandEvent', listener: RaisedHandListener): void;
+  off(event: 'loweredHandEvent', listener: RaisedHandListener): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
