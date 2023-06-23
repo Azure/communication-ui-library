@@ -24,10 +24,11 @@ import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 
 | v8                                              | v9                                                                                                                                      | Usage                                                                                                                                      |
 | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| AnimationStyles                                 | ⚠️ **No v9 equivalent**                                                                                                                 | Drawer, MutedNotification                                                                                                                  |
+| AnimationStyles                                 | ⚠️ **No v9 equivalent**                                                                                                                 | Drawer (SlideUp), MutedNotification (FadeIn & FadeOut)                                                                                     |
 | CalloutProps                                    | Popover                                                                                                                                 | PreventDismissOnEvent                                                                                                                      |
+| Chat                                            | Chat (`@fluentui/contrib`)                                                                                                              | MessageThread                                                                                                                              |
 | CommandBarButton                                | MenuButton                                                                                                                              | Close side pane button                                                                                                                     |
-| concatStyleSets & mergeStyle                    | makeStyles, useStyles, mergeClassNames                                                                                                  | Various                                                                                                                                    |
+| concatStyleSets / mergeStyle / \*IStyle         | makeStyles, useStyles, mergeClassNames                                                                                                  | Various                                                                                                                                    |
 | DefaultButton & PrimaryButton                   | Button and MenuButton                                                                                                                   | CallControls, Invite button, Close side pane, Dialpad, Overflow Gallery Navigation, Call Readiness modals, Captions Settings, Start Button |
 | Drawer (Bottom Sheet)                           | No v8 or v9 component                                                                                                                   | Device Selection, Captions settings, Invite button                                                                                         |
 | Dropdown                                        | Dropdown                                                                                                                                | Device Selection, Captions settings, Invite button                                                                                         |
@@ -467,12 +468,12 @@ const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
 ## Open Questions
 
 - Best way to allow defaults + custom items (e.g. in a split button menu)
-- Will dialog be getting drag functionality
+- Why does persona's avatar take avatar props instead of an avatar component slot?
+- Will dialog be getting drag functionality - is there a intake form for requests?
 - Splitbutton touch behavior has changed
-- Is animation being worked on or is this a design change? (e.g. split button context menu)
-- Should we restructure our localization?
+- Is animation for context menus being worked on or is this a design change?
+- No more `registerIcons` - how should we handle customizing icons? (Icon Provider?)
 - If babel or webpack doesn't transpile styles ahead of time, do they still work just less optimized? (i.e. what happens if I dont have the webpack plugin or babel translator installed?)
-- No more `registerIcons` - how do we handle customizing icons?
 
 ## Key Takeaways
 
