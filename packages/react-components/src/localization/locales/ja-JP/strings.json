@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "マイクがオフになっています",
     "offSplitButtonMicrophonePrimaryAction": "マイクのミュートを解除する",
     "onSplitButtonMicrophonePrimaryAction": "マイクをミュートにする",
-    "micPrimaryActionSplitButtonTitle": "マイクを使用する"
+    "microphonePrimaryActionSplitButtonTitle": "マイクを使用する"
   },
   "devicesButton": {
     "label": "デバイス",
@@ -153,7 +153,7 @@
     "muteGeneric": "マイクをミュートできませんでした",
     "unmuteGeneric": "マイクのミュートを解除できませんでした",
     "speakingWhileMuted": "マイクがミュートになっています",
-    "startScreenShareGeneric": "画面の共有を開始できませんでした",
+    "startScreenShareGeneric": "画面共有の開始中に問題が発生しました。",
     "stopScreenShareGeneric": "画面の共有を停止できませんでした",
     "callNetworkQualityLow": "ネットワークの品質が低くなっています。",
     "callNoSpeakerFound": "スピーカーまたはヘッドフォンが見つかりません。音声デバイスを接続して通話を聞きます。",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "閉じる",
     "failedToJoinCallGeneric": "通話に参加できませんでした",
     "failedToJoinCallInvalidMeetingLink": "会議に参加できません。リンクが無効です。",
-    "startScreenSharingGeneric": "画面共有の開始中に問題が発生しました。",
     "cameraFrozenForRemoteParticipants": "通話のユーザーにビデオの表示で問題が発生しています。デバイスとネットワークを確認してください。",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。"
   },

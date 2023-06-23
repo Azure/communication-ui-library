@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix lint command issue of \"No files matching the pattern \"/*/**/*.tsx\" were found\" on Mac OS ",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

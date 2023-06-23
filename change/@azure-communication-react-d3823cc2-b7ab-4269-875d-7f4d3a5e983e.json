@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "update onCancelMessageEdit to onCancelEditMessage for 1.6.0 release",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Transferring...",
     "transferPageTransferTargetText": "Connecting...",
     "transferPageUnknownTransferorDisplayName": "Unknown",
-    "transferPageUnknownTransferTargetDisplayName": "Unknown"
+    "transferPageUnknownTransferTargetDisplayName": "Unknown",
+    "transferPageNoticeString": "You are being transferred",
+    "participantCouldNotBeReachedTitle": "Target participant is currently not available",
+    "participantCouldNotBeReachedMoreDetails": "Please contact participant when they are available",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
+    "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
+    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
+    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
+    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
   },
   "chat": {
     "chatListHeader": "In this chat",

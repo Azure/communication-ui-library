@@ -1,4 +1,3 @@
-import { MessageBar } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
 import { DetailedBetaBanner } from './BetaBanners/DetailedBetaBanner';
 
@@ -15,49 +14,23 @@ import TransferWithDialogPromptSnippetText from '!!raw-loader!./snippets/transfe
 
 <DetailedBetaBanner version={'1.6.1-beta.1'} />
 
+## Overview
+
 During an active call, a participant can transfer another participant to another user or call. The transfer process
-starts when one participant (the transferor) requests to transfer another participant (the transferee) to
-another participant (the transfer target.) The transferee can accept or reject the request. If the request is
-accepted, then the transfer target receives an incoming call from the transferee. If incoming call is accepted,
-then the original call with the transferor ends.
+starts when a participant (the transferor) requests to transfer another participant (the transferee) to another
+participant (the transfer target.) The transferee receives a transfer requested event which they can accept or reject.
+If the request is accepted, then the transferee makes an outgoing call to transfer target. Finally, the call is ended
+by the transferor.
 
 In the current beta version, ACS users cannot request to transfer other participants yet but they can receive transfer
-requests. Currently, only Teams users can request to transfer other participants.
-
-A call with a Teams user can be made by using the `CallParticipantsLocator` as the locator
-in the [AzureCommunicationCallAdapterArgs](./?path=/docs/composite-adapters--page#azurecommunicationcalladapterargs)
-when using the
-[useAzureCommunicationCallAdapter](./?path=/docs/composite-adapters--page#useazurecommunicationcalladapter)
-function to create your [CallAdapter](path=/docs/composite-adapters--page#call-adapter).
-In the current beta version, only one Teams user can be called.
-
-<MessageBar>
-  Note: Teams user ids need to have prefix '8:orgid:' when used in the CallParticipantsLocator. For example,
-  '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'.
-</MessageBar>
-
-The id of a Teams user can be obtained by using
-[Microsoft Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer).
-From there, sign in by clicking the circled button as shown below with a Microsoft account in the same tenant as the
-Teams user you want to call.
-
-<img style={{ width: 'auto', height: 'auto' }} src="images/graph-api-sign-in.png" />
-
-Then create a
-[GET request](https://learn.microsoft.com/en-us/graph/api/user-get?view=graph-rest-1.0&tabs=http#http-request) for
-v1.0 of the users endpoint using the Teams user's userPrincipalName like shown below:
-
-<img style={{ width: 'auto', height: 'auto' }} src="images/graph-api-get-user-id-api-request.png" />
-
-The id should be in the API response as seen in the example below:
-
-<img style={{ width: 'auto', height: 'auto' }} src="images/graph-api-id-highlighted.png" />
+requests. Currently, only Teams users can request to transfer other participants. To make a call to a Teams user, refer
+to the [Adhoc calling page](path=/docs/adhoc-calling--page).
 
 ## Handling transfer requests
 
-The [CallAdapter](path=/docs/composite-adapters--page#call-adapter) is able to receive `transferRequest` events and
+The [CallAdapter](path=/docs/composite-adapters--page#call-adapter) is able to receive `transferRequested` events and
 allows you to handle these events by defining your own `TransferRequestedListener` callback. The following code snippet
-shows an example of a `TransferRequestedListener` that accepts all `transferRequest` events.
+shows an example of a `TransferRequestedListener` that accepts all `transferRequested` events.
 
 <Source code={TransferSnippetText} />
 
@@ -70,7 +43,7 @@ changing the `afterCallAdapterCreate` callback from the code snippet above to th
 const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
   adapter.on('transferRequested', (e) => {
     e.accept({
-      audioOptions: { muted: false },
+      audioOptions: { muted: true },
       videoOptions: { localVideoStreams: undefined }
     });
   });

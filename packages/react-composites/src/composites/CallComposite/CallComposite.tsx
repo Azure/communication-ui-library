@@ -7,14 +7,14 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { useLocale } from '../localization';
+import { CompositeLocale, useLocale } from '../localization';
 import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getPage } from './selectors/baseSelectors';
+import { getEndedCall, getPage } from './selectors/baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
@@ -39,6 +39,7 @@ import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
+import { CallState } from '@internal/calling-stateful-client';
 
 /**
  * Props for {@link CallComposite}.
@@ -234,6 +235,7 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+  const endedCall = useSelector(getEndedCall);
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
@@ -345,16 +347,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case 'leftCall':
+    case 'leftCall': {
+      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
       pageElement = (
         <NoticePage
           iconName="NoticePageLeftCall"
-          title={locale.strings.call.leftCallTitle}
-          moreDetails={locale.strings.call.leftCallMoreDetails}
+          title={title}
+          moreDetails={moreDetails}
           dataUiId={'left-call-page'}
+          disableStartCallButton={disableStartCallButton}
         />
       );
       break;
+    }
     case 'lobby':
       pageElement = (
         <LobbyPage
@@ -547,4 +552,45 @@ const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ rol
     };
   }
   return { video: true, audio: true };
+};
+
+const getEndedCallStrings = (
+  locale: CompositeLocale,
+  endedCall?: CallState
+): { title: string; moreDetails?: string; disableStartCallButton: boolean } => {
+  let title = locale.strings.call.leftCallTitle;
+  let moreDetails = locale.strings.call.leftCallMoreDetails;
+  let disableStartCallButton = false;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case 10037:
+      if (locale.strings.call.participantCouldNotBeReachedTitle) {
+        title = locale.strings.call.participantCouldNotBeReachedTitle;
+        moreDetails = locale.strings.call.participantCouldNotBeReachedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10124:
+      if (locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle) {
+        title = locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle;
+        moreDetails = locale.strings.call.permissionToReachTargetParticipantNotAllowedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10119:
+      if (locale.strings.call.unableToResolveTenantTitle) {
+        title = locale.strings.call.unableToResolveTenantTitle;
+        moreDetails = locale.strings.call.unableToResolveTenantMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10044:
+      if (locale.strings.call.participantIdIsMalformedTitle) {
+        title = locale.strings.call.participantIdIsMalformedTitle;
+        moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+  }
+  return { title, moreDetails, disableStartCallButton };
 };

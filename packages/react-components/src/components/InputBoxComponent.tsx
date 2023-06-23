@@ -178,6 +178,12 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
         value={textValue}
         onChange={onChange}
         onKeyDown={onTextFieldKeyDown}
+        onFocus={(e) => {
+          // Fix for setting the cursor to the correct position when multiline is true
+          // This approach should be reviewed during migration to FluentUI v9
+          e.currentTarget.value = '';
+          e.currentTarget.value = textValue;
+        }}
       />
     );
   };

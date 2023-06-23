@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "마이크가 꺼져 있습니다.",
     "offSplitButtonMicrophonePrimaryAction": "마이크 음소거 해제",
     "onSplitButtonMicrophonePrimaryAction": "마이크 음소거",
-    "micPrimaryActionSplitButtonTitle": "마이크 사용"
+    "microphonePrimaryActionSplitButtonTitle": "마이크 사용"
   },
   "devicesButton": {
     "label": "장치",
@@ -153,7 +153,7 @@
     "muteGeneric": "마이크를 음소거하지 못함",
     "unmuteGeneric": "마이크 음소거를 해제하지 못함",
     "speakingWhileMuted": "마이크가 음소거됨",
-    "startScreenShareGeneric": "화면 공유를 시작하지 못함",
+    "startScreenShareGeneric": "화면 공유를 시작하는 동안 문제가 발생했습니다.",
     "stopScreenShareGeneric": "화면 공유를 중지하지 못함",
     "callNetworkQualityLow": "네트워크 품질이 낮습니다.",
     "callNoSpeakerFound": "스피커 또는 헤드폰을 찾을 수 없습니다. 오디오 장치를 연결하여 통화를 들을 수 있습니다.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "닫기",
     "failedToJoinCallGeneric": "통화에 참가하지 못했습니다.",
     "failedToJoinCallInvalidMeetingLink": "모임에 참가할 수 없습니다. 잘못된 링크입니다.",
-    "startScreenSharingGeneric": "화면 공유를 시작하는 동안 문제가 발생했습니다.",
     "cameraFrozenForRemoteParticipants": "통화 중인 사용자에게 영상이 표시되는 데 문제가 있습니다. 장치와 네트워크를 확인하세요.",
     "unableToStartVideoEffect": "비디오 효과를 적용할 수 없습니다."
   },

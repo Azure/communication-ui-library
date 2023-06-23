@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Set min height to control bar to fix issue where control bar contrainer would collapse when side pane buttons are disabled in Composites",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

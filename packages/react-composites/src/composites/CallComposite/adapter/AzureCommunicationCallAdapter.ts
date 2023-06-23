@@ -78,13 +78,13 @@ import {
 } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, IsCallEndedPage, isCameraOn, isValidIdentifier } from '../utils';
+import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
-import { toFlatCommunicationIdentifier, _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
@@ -370,6 +370,35 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
 
       this.context.updateClientState(clientState);
+
+      /* @conditional-compile-remove(call-transfer) */
+      const acceptedTransferCallState = this.context.getState().acceptedTransferCallState;
+
+      /* @conditional-compile-remove(call-transfer) */
+      // TODO: Remove this if statement when Calling SDK prevents accepting transfer requests that have timed out
+      // This is to handle the case when there has been an accepted transfer call that is now in the connected state
+      // AND is not the current call. Ensure we leave the current call.
+      if (
+        acceptedTransferCallState &&
+        acceptedTransferCallState.state === 'Connected' &&
+        this.call?.id &&
+        acceptedTransferCallState.id !== this.call.id
+      ) {
+        const cAgent = callAgent as CallAgent;
+        const transferCall = cAgent.calls.find((call) => (call as Call).id === acceptedTransferCallState.id);
+        if (transferCall) {
+          const oldCall = this.call;
+          this.processNewCall(transferCall);
+          // Arbitrary wait time before hanging up. 2 seconds is derived from manual testing. This is to allow
+          // transferor to hang up themselves. If the transferor has not hung up, we hang up because we are now
+          // in the transfer call
+          setTimeout(() => {
+            if (oldCall?.state === 'Connected') {
+              oldCall.hangUp();
+            }
+          }, 2000);
+        }
+      }
     };
 
     this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);
@@ -1203,7 +1232,7 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  if (!isValidIdentifier(userId)) {
+  if (!_isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
   }
 

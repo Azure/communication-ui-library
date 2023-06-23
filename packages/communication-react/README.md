@@ -22,10 +22,9 @@ npm i @azure/communication-react
 `@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
 you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
 
-
 ```bash
-npm i @azure/communication-calling@1.4.4
-npm i @azure/communication-chat@1.3.2-beta.1
+npm i @azure/communication-calling
+npm i @azure/communication-chat
 ```
 
 ## Storybook
