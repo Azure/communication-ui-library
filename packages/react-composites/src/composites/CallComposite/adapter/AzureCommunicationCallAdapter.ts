@@ -381,16 +381,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       if (
         acceptedTransferCallState &&
         acceptedTransferCallState.state === 'Connected' &&
-        acceptedTransferCallState.id !== this.call?.id
+        this.call?.id &&
+        acceptedTransferCallState.id !== this.call.id
       ) {
         const cAgent = callAgent as CallAgent;
         const transferCall = cAgent.calls.find((call) => (call as Call).id === acceptedTransferCallState.id);
         if (transferCall) {
           const oldCall = this.call;
           this.processNewCall(transferCall);
-          // Do not hang up right away because we want the Transfer API to remove the call on a successful transfer. If
-          // we hang up right away the Transfer API will recognize the transfer as a failure even though we are now in
-          // the transfer call
+          // Arbitrary wait time before hanging up. 2 seconds is derived from manual testing. This is to allow
+          // transferor to hang up themselves. If the transferor has not hung up, we hang up because we are now
+          // in the transfer call
           setTimeout(() => {
             if (oldCall?.state === 'Connected') {
               oldCall.hangUp();
