@@ -79,7 +79,7 @@ Almost no difference here:
 </FluentProvider>
 ```
 
-But instead of `useTheme()` hook, fluent exposes `tokens`:
+When developing, instead of `useTheme()` hook, fluent exposes `tokens`:
 
 ```tsx
 /// v8
@@ -93,7 +93,7 @@ const styles = {
 };
 ```
 
-and do not use variables inside styles:
+and as styles are computed at _build time_, do not use variables inside styles:
 
 ```tsx
 /// v8
@@ -116,7 +116,7 @@ Currently we expose a LocalizationProvider that wraps the entire app, no need to
 </LocalizationProvider>
 ```
 
-### Change Icon
+### Overriding renders
 
 Overriding renders is much the same. Instead of an onRender callback we instead expose a `slot`:
 
@@ -128,9 +128,9 @@ Overriding renders is much the same. Instead of an onRender callback we instead 
 <ControlBarButton icon={<MyIcon />} />
 ```
 
-#### Icon Provider
+### Icon Provider
 
-Currently in v8 we use `registerIcons` then refer to icons by name. This does not exist in v9 and instead we use a provider:
+Currently in v8 we use `registerIcons` then refer to icons by name. This does not exist in v9 and instead we will create a provider:
 
 ```tsx
 /// v8
@@ -143,10 +143,10 @@ registerIcons({ icons: { 'my-icon': <MyIcon /> } });
 </IconProvider>;
 ```
 
-### Style Icon
+### Styling nested components
 
-To style the icon in v9, we can no longer just style the icon and leave the remainder unchanged.
-Instead a developer must pass in the appropriate icon and style themself:
+To style the icon in v9, we can no longer just style the nested component and leave the remainder unchanged.
+Instead a developer must pass in the appropriate slotted component and apply styles to that slotted component:
 
 ```tsx
 /// v8 - simply set the style of the icon via an exposed icon styles prop:
@@ -226,6 +226,56 @@ You can see the impact of this in a breakdown in VideoGallery example later.
     <td></td>
   </tr>
 </table>
+
+#### data-driven (v8) vs component driven (v9)
+
+```tsx
+// Data driven
+<ParticipantList
+  participants={[{
+    userId: string,
+    displayName: string,
+    isScreensharing: boolean,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    isRemovable: boolean,
+  }]}
+  myUserId={string}
+  excludeMe={boolean}
+  onFetchParticipantMenuItems={(userId: string, defaultMenuItems) => IContextualMenuItem[]}
+  onParticipantClick={(userId: string) => void}
+  styles={IParticipantListStyles}
+/>
+```
+
+```tsx
+// Component driven
+<ParticipantList>
+  {/** participants.map => */}
+  <Menu>
+    <MenuTrigger>
+      <ParticipantListItem
+        participantId={string}
+        displayName={string}
+        isScreensharing={boolean}
+        isMuted={boolean}
+        isSpeaking={boolean}
+        onParticipantClick={(userId: string) => void}
+      />
+    </MenuTrigger>
+    <MenuPopover>
+      <MenuList>
+        {createDefaultParticipantListMenuItems().map(item => <MenuItem {...item} />)}
+        <MenuItem>{useLocale().strings.components.correct_string_usage_here}</MenuItem>
+      </MenuList>
+    </MenuPopover>
+  </Menu>
+
+  <ParticipantListMeItem>...</ParticipantListMeItem>
+</ParticipantList>
+```
+
+#### usePropsFor options
 
 ### ControlBarButton Analysis
 
