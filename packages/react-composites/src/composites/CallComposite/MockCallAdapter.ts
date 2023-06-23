@@ -218,6 +218,8 @@ const defaultCallAdapterState: CallAdapterState = {
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false
     },
+    /* @conditional-compile-remove(raise-hands) */
+    raiseHand: { allRaisedHands: [] },
     /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
