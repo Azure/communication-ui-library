@@ -9,6 +9,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hands) */
+import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -155,6 +157,10 @@ export class CallContext {
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
+        /* @conditional-compile-remove(raise-hands) */
+        existingCall.raiseHand.allRaisedHands = call.raiseHand.allRaisedHands;
+        /* @conditional-compile-remove(raise-hands) */
+        existingCall.raiseHand.userRaisedHand = call.raiseHand.userRaisedHand;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
         /* @conditional-compile-remove(total-participant-count) */
@@ -332,6 +338,33 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.recording.isRecordingActive = isRecordingActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(raise-hands) */
+  public setCallRaisedHands(callId: string, raisedHands: RaisedHand[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.raiseHand.allRaisedHands = raisedHands;
+        call.raiseHand.userRaisedHand = raisedHands.find(
+          (raisedHand) =>
+            toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)
+        );
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(raise-hands) */
+  public setParticipantIsRaisedHand(callId: string, participantKey: string, raisedHand: RaisedHand | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.raisedHand = raisedHand;
+        }
       }
     });
   }

@@ -85,7 +85,9 @@ export function convertSdkParticipantToDeclarativeParticipant(
     callEndReason: participant.callEndReason,
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
-    isSpeaking: participant.isSpeaking
+    isSpeaking: participant.isSpeaking,
+    /* @conditional-compile-remove(raise-hands) */
+    raisedHand: undefined // TODO: [raise-hand] add raise hand state
   };
 }
 
@@ -122,6 +124,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(raise-hands) */
+    raiseHand: { allRaisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
