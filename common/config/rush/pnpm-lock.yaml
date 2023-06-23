@@ -14089,13 +14089,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==
-  /nanoid/3.1.32:
-    dev: false
-    engines:
-      node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
-    hasBin: true
-    resolution:
-      integrity: sha512-F8mf7R3iT9bvThBoW4tGXhXFHCctyCiUUPrWF8WaTqa3h96d9QybkSeba43XVOOE3oiLfkVDe4bT8MeGmkrTxw==
   /nanoid/3.3.6:
     dev: false
     engines:
@@ -14103,6 +14096,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==
+  /nanoid/4.0.2:
+    dev: false
+    engines:
+      node: ^14 || ^16 || >=18
+    hasBin: true
+    resolution:
+      integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==
   /nanomatch/1.2.13:
     dependencies:
       arr-diff: 4.0.0
@@ -19851,7 +19851,7 @@ packages:
       jest-junit: 16.0.0
       merge: 2.1.1
       mobile-detect: 1.4.5
-      nanoid: 3.1.32
+      nanoid: 4.0.2
       node-fetch: 2.6.7
       prettier: 2.3.1
       pretty-quick: 3.1.3_prettier@2.3.1
@@ -19865,7 +19865,7 @@ packages:
       ts-loader: 8.4.0_typescript@4.3.5+webpack@5.76.0
       typescript: 4.3.5
       url-loader: 4.1.1_webpack@5.76.0
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0_webpack-cli@4.10.0
       webpack-bundle-analyzer: 4.5.0
       webpack-cli: 4.10.0_707afcc96ce50f7976e7aa5d9304a79c
@@ -19873,7 +19873,7 @@ packages:
     dev: false
     name: '@rush-temp/calling'
     resolution:
-      integrity: sha512-Dr09j7dgxYaeIrhJbMkQg/AcLS4NV6bmKtzcqO0VfLQX/I/0i7DeRO9fn8UMWspEO4glcLMTqziqLlvXvUV5RA==
+      integrity: sha512-tQAFw9j8cAKyAAsJ5sz1GzBpxZr5hi7XI4YO1dr/FmzeaKIqIQbtWbx5ApEgXKUjOvR94LgUU/HBN0Y9uu228A==
       tarball: file:projects/calling.tgz
     version: 0.0.0
   file:projects/callwithchat.tgz:
@@ -19936,7 +19936,7 @@ packages:
       ts-loader: 8.4.0_typescript@4.3.5+webpack@5.76.0
       typescript: 4.3.5
       url-loader: 4.1.1_webpack@5.76.0
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0_webpack-cli@4.10.0
       webpack-bundle-analyzer: 4.5.0
       webpack-cli: 4.10.0_707afcc96ce50f7976e7aa5d9304a79c
@@ -19944,7 +19944,7 @@ packages:
     dev: false
     name: '@rush-temp/callwithchat'
     resolution:
-      integrity: sha512-pXWekA5vhoZ/g3AuPQ2Hz8mXDcdMof5aNv/d6DHTDDa4aFoWaBUj069o4z7bbXR7n4uYZV1iFJJYuOySDQq+8w==
+      integrity: sha512-XMAu2TbXiubR1QS4gmyoqLtckHVX/AxgF9MLWhK0LLcIqIeNZPMwLJ62WARQS94/MqWiSa8COZJxKLmigaVWaQ==
       tarball: file:projects/callwithchat.tgz
     version: 0.0.0
   file:projects/chat-component-bindings.tgz:
@@ -20014,7 +20014,7 @@ packages:
       if-env: 1.0.4
       immer: 9.0.6
       jest: 29.5.0
-      nanoid: 3.1.32
+      nanoid: 4.0.2
       prettier: 2.3.1
       rimraf: 2.7.1
       rollup: 2.42.4
@@ -20023,7 +20023,7 @@ packages:
     dev: false
     name: '@rush-temp/chat-stateful-client'
     resolution:
-      integrity: sha512-NJevdWFaXD2E4DWonsp3Ok4GGyxE7ZDqML5aE7tPtVgcQDyMXA5LX/0o+MN3P7dzClMU2PgrnLC5/MoPDspZzg==
+      integrity: sha512-hJKfzx1ipb0McxoKiQ57QVzrtDS1JQKw7lovqZQv6wve1Yk0uaM2YxFKK0R05obVIrrQfDjANRp6CflsYCtswQ==
       tarball: file:projects/chat-stateful-client.tgz
     version: 0.0.0
   file:projects/chat.tgz:
@@ -20183,7 +20183,7 @@ packages:
       jest: 29.5.0_6a449e089a236d43135a288b1c7c9741
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
-      nanoid: 3.1.32
+      nanoid: 4.0.2
       node-forge: 1.3.1
       prettier: 2.3.1
       pretty-quick: 3.1.3_prettier@2.3.1
@@ -20207,11 +20207,11 @@ packages:
       type-fest: 2.5.4
       typescript: 4.3.5
       use-debounce: 9.0.4_react@18.2.0
-      uuid: 8.3.2
+      uuid: 9.0.0
     dev: false
     name: '@rush-temp/communication-react'
     resolution:
-      integrity: sha512-DZPHUMOukTJnCNhmXIfB2rpv8EV/AeaWZleauvHnMw9ACnV9AdyPKqGwZ1uOCFthR0AgySf8Trbp+yCabkeSBQ==
+      integrity: sha512-rdN0fAZ2Xdkhjgk+IYxNKBaj5u5dSH/Ge06RGNptLQy39go4A2wUjJaMeDuqYWukZJGFRp6I+1TnuJmM8arXbA==
       tarball: file:projects/communication-react.tgz
     version: 0.0.0
   file:projects/component-examples.tgz:
@@ -20254,14 +20254,14 @@ packages:
       style-loader: 2.0.0_webpack@5.76.0
       ts-loader: 8.4.0_typescript@4.3.5+webpack@5.76.0
       typescript: 4.3.5
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0_webpack-cli@4.10.0
       webpack-cli: 4.10.0_855ce3cb6ed9fe24bbc619a724797328
       webpack-dev-server: 4.8.1_7be34525cf57c6942fea12cc50480bcb
     dev: false
     name: '@rush-temp/component-examples'
     resolution:
-      integrity: sha512-f5NivQ0CVNbQiwG/5i2CY3IlnHwZDMbshmq8Zdke3PD6t1szvBFwYAA3Nq5+DxZXsLQBZki8Bh2QVtpGiHb0mA==
+      integrity: sha512-ePZnWetJqw64gDEUhVyy2l8ctAc9McFA3ZPmkRxb7H9xVioMN9dPYK0E/6cylY93t5Rw0EkgdkslJCbOfE6EXQ==
       tarball: file:projects/component-examples.tgz
     version: 0.0.0
   file:projects/config.tgz:
@@ -20310,7 +20310,7 @@ packages:
       if-env: 1.0.4
       immer: 9.0.6
       jest: 29.5.0
-      nanoid: 3.1.32
+      nanoid: 4.0.2
       prettier: 2.3.1
       rimraf: 2.7.1
       rollup: 2.42.4
@@ -20320,7 +20320,7 @@ packages:
     dev: false
     name: '@rush-temp/fake-backends'
     resolution:
-      integrity: sha512-09Uto8DJOKZ9mw6dd56zYn59j9izkaQFUwQTWmE4XGrIYUCLAK6YInOip718zB9ohSp2vEQl3R/sr91pUAqeFw==
+      integrity: sha512-SeZquMcON9FmfxeXUsp/b68aQB5YwHwNMbx5pxsMud0CoAEIUYoSQMpg9q6BspwX6fTGZmEUmjIeSmhebkuEnQ==
       tarball: file:projects/fake-backends.tgz
     version: 0.0.0
   file:projects/northstar-wrapper.tgz:
@@ -20426,12 +20426,12 @@ packages:
       type-fest: 2.5.4
       typescript: 4.3.5
       use-debounce: 9.0.4_react@18.2.0
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0
     dev: false
     name: '@rush-temp/react-components'
     resolution:
-      integrity: sha512-a7Vn3xcHKdlplqj4kM+34xZedhIjTXiAi9yZ/4hIN3MMGBvWt2xeiA8AwzlbBdMMQ/cP2bP5yGCAVB8ITGggZw==
+      integrity: sha512-RYOGcHLKy8WyToJQReBasxYsER348BE5wnxxxtCGPjxcfuhqMHJplpbdVXiiB4QY4rp9Ce+mrTrHgi2L72AeXQ==
       tarball: file:projects/react-components.tgz
     version: 0.0.0
   file:projects/react-composites.tgz:
@@ -20506,7 +20506,7 @@ packages:
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nan: 2.17.0
-      nanoid: 3.1.32
+      nanoid: 4.0.2
       node-forge: 1.3.1
       playwright: 1.22.2
       prettier: 2.3.1
@@ -20529,7 +20529,7 @@ packages:
       ts-node: 9.1.1_typescript@4.3.5
       type-fest: 2.5.4
       typescript: 4.3.5
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0_webpack-cli@4.10.0
       webpack-cli: 4.10.0_855ce3cb6ed9fe24bbc619a724797328
       webpack-dev-server: 4.8.1_7be34525cf57c6942fea12cc50480bcb
@@ -20537,7 +20537,7 @@ packages:
     dev: false
     name: '@rush-temp/react-composites'
     resolution:
-      integrity: sha512-7jECLyq9eUAQ/kQLdovPIMCjoRGt3rAIvvI6RTH44pRPzx+l8hEQ4MHXo0UcBqeV5xnqoTdgQnj28ei+VDdYBg==
+      integrity: sha512-81FbG6gAFweyWMeyfYrpRe9wyyjxSVdbIEQJ9kCfWSNlM6XZw7UAx0L0GdpNJbLvzgm81TmWH6j3VKXuru2okg==
       tarball: file:projects/react-composites.tgz
     version: 0.0.0
   file:projects/sample-automation-tests.tgz:
@@ -20557,11 +20557,11 @@ packages:
       playwright: 1.22.2
       rimraf: 2.7.1
       typescript: 4.3.5
-      uuid: 8.3.2
+      uuid: 9.0.0
     dev: false
     name: '@rush-temp/sample-automation-tests'
     resolution:
-      integrity: sha512-8mw2piFPWQ9tfxgxqI+t8QJzICjjOjLd0eJC6QKD9YXA2fTi9t5x9VZhCcqUzmO/0l4X8oZ90i2DWGkJR3+VXA==
+      integrity: sha512-Z7j6GeGMgrT9zZ5mtaqIK6v8kTfCp5RnoBCnqMywg5rOoV/20SzDzxcTsN3aH9xAMspjQy8oPCsV8RQVhqmEEg==
       tarball: file:projects/sample-automation-tests.tgz
     version: 0.0.0
   file:projects/sample-static-html-composites.tgz:
@@ -20594,14 +20594,14 @@ packages:
       react-dom: 18.2.0_react@18.2.0
       rimraf: 2.7.1
       typescript: 4.3.5
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0_webpack-cli@4.10.0
       webpack-bundle-analyzer: 4.5.0
       webpack-cli: 4.10.0_d35982e30620fe42544d77a377002d50
     dev: false
     name: '@rush-temp/sample-static-html-composites'
     resolution:
-      integrity: sha512-jlK9XEdulSJxEx9AQqCAhgW1inCThFbnVeV7Keyu7SbA6Pu4aKLMMuwxnsd/vdSNaVD/aJHsgLTS5LijRj+CKw==
+      integrity: sha512-adFCbu0ZtB55m9kvRkdo2eoifwn2dNtPLjaNsOfX8bhTXE3+Y45yQfwK5kN8o5ni/Fqfw16gfY7iBPmbZZvkmw==
       tarball: file:projects/sample-static-html-composites.tgz
     version: 0.0.0
   file:projects/server.tgz:
@@ -20746,13 +20746,13 @@ packages:
       ts-node: 9.1.1_typescript@4.3.5
       tslib: 2.5.3
       typescript: 4.3.5
-      uuid: 8.3.2
+      uuid: 9.0.0
       webpack: 5.76.0
       webpack4: /webpack/4.46.0
     dev: false
     name: '@rush-temp/storybook'
     resolution:
-      integrity: sha512-T5DAgdFveCDU/CbcA99I9f7S81840ftVNRcmNnMvZpDYR+Rd53bVliQoVZZ1CsnbRZJY9oCTGV2GepKAEN583A==
+      integrity: sha512-Qw2df7ko8m27Q0WYf0fIGKHBIR857iFkOD/m14qtHDRTMOo9KN5tRCiPR4q+SS8QuZlfXztp/p645Ophv+mPnQ==
       tarball: file:projects/storybook.tgz
     version: 0.0.0
 specifiers:

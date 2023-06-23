@@ -39,13 +39,13 @@
     "html-to-react": "~1.5.0",
     "immer": "9.0.6",
     "memoize-one": "~5.2.1",
-    "nanoid": "3.1.32",
+    "nanoid": "4.0.2",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "~0.4.7",
     "reselect": "~4.0.0",
     "textarea-caret-ts": "^4.1.1",
     "use-debounce": "^9.0.4",
-    "uuid": "^8.1.0"
+    "uuid": "^9.0.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.13.2-beta.1 || >=1.13.1",
@@ -152,8 +152,7 @@
     "ts-node": "^9.1.1",
     "ttypescript": "~1.5.12",
     "type-fest": "~2.5.4",
-    "typescript": "4.3.5",
-    "uuid": "^8.1.0"
+    "typescript": "4.3.5"
   },
   "beachball": {
     "shouldPublish": false

@@ -35,8 +35,8 @@
     "copy-to-clipboard": "~3.3.1",
     "resize-observer-polyfill": "~1.5.1",
     "tslib": "~2.5.0",
-    "uuid": "^8.1.0",
-    "browserslist": "~4.20.4"
+    "browserslist": "~4.20.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",
@@ -110,7 +110,6 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^9.1.1",
     "typescript": "4.3.5",
-    "uuid": "^8.1.0",
     "webpack": "5.76.0",
     "webpack4": "npm:webpack@^4.44.2"
   }
