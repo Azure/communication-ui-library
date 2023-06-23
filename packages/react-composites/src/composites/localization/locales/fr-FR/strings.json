@@ -157,14 +157,14 @@
     "transferPageUnknownTransferorDisplayName": "Inconnu",
     "transferPageUnknownTransferTargetDisplayName": "Inconnu",
     "transferPageNoticeString": "Vous êtes en cours de transfert",
-    "participantCouldNotBeReachedTitle": "Target participant is currently not available",
-    "participantCouldNotBeReachedMoreDetails": "Please contact participant when they are available",
-    "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
-    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
-    "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
-    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
-    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
-    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
+    "participantCouldNotBeReachedTitle": "Le participant cible n’est pas disponible actuellement",
+    "participantCouldNotBeReachedMoreDetails": "Contactez le participant lorsqu’il est disponible",
+    "permissionToReachTargetParticipantNotAllowedTitle": "L’autorisation d’atteindre le participant cible n’est pas autorisée",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Veuillez case activée que le participant cible se trouve dans le même client",
+    "unableToResolveTenantTitle": "Impossible de résoudre l’ID de locataire pour le participant cible",
+    "unableToResolveTenantMoreDetails": "Veuillez case activée l’ID de participant est entré correctement",
+    "participantIdIsMalformedTitle": "Le format de l’ID de participant n’est pas correct",
+    "participantIdIsMalformedMoreDetails": "Veuillez case activée que le format de l’ID de participant est correct"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

@@ -162,9 +162,9 @@
     "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
     "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
     "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
-    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
-    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
-    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
+    "unableToResolveTenantMoreDetails": "Kontroller at deltaker-ID-en er riktig angitt",
+    "participantIdIsMalformedTitle": "Deltaker-ID-en har ikke riktig format",
+    "participantIdIsMalformedMoreDetails": "Kontroller at deltaker-ID-en har riktig format"
   },
   "chat": {
     "chatListHeader": "I denne chatten",

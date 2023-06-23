@@ -162,9 +162,9 @@
     "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
     "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
     "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
-    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
-    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
-    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
+    "unableToResolveTenantMoreDetails": "請檢查已正確輸入參與者識別碼",
+    "participantIdIsMalformedTitle": "參與者識別碼的格式不正確",
+    "participantIdIsMalformedMoreDetails": "請檢查參與者識別碼的格式是否正確"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

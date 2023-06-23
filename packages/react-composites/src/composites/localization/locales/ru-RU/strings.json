@@ -157,14 +157,14 @@
     "transferPageUnknownTransferorDisplayName": "Неизвестно",
     "transferPageUnknownTransferTargetDisplayName": "Неизвестно",
     "transferPageNoticeString": "Для вас выполняется передача",
-    "participantCouldNotBeReachedTitle": "Target participant is currently not available",
-    "participantCouldNotBeReachedMoreDetails": "Please contact participant when they are available",
-    "permissionToReachTargetParticipantNotAllowedTitle": "Permission to reach target participant is not allowed",
-    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Please check that the target participant is in the same tenant",
-    "unableToResolveTenantTitle": "Unable to resolve tenant id for the target participant",
-    "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
-    "participantIdIsMalformedTitle": "Participant id is not in the correct format",
-    "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format"
+    "participantCouldNotBeReachedTitle": "Целевой участник сейчас недоступен",
+    "participantCouldNotBeReachedMoreDetails": "Обратитесь к участнику, когда он будет доступен",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Разрешение на связь с целевым участником отсутствует",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Проверьте, что целевой участник находится в том же клиенте",
+    "unableToResolveTenantTitle": "Не удалось разрешить идентификатор клиента для целевого участника",
+    "unableToResolveTenantMoreDetails": "Проверьте, что идентификатор участника введен правильно",
+    "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
+    "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате"
   },
   "chat": {
     "chatListHeader": "В этом чате",
