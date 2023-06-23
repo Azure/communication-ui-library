@@ -257,22 +257,129 @@ You can see the impact of this in a breakdown in VideoGallery example later.
       <ParticipantListItem
         participantId={string}
         displayName={string}
-        isScreensharing={boolean}
-        isMuted={boolean}
-        isSpeaking={boolean}
-        onParticipantClick={(userId: string) => void}
+        screensharingIconSlot={slot<Icon>}
+        mutedIconSlot={slot<Icon>}
+        speakingIconSlot={slot<Icon>}
       />
     </MenuTrigger>
     <MenuPopover>
       <MenuList>
-        {createDefaultParticipantListMenuItems().map(item => <MenuItem {...item} />)}
-        <MenuItem>{useLocale().strings.components.correct_string_usage_here}</MenuItem>
+        // {createDefaultParticipantListMenuItems().map(item => <MenuItem {...item} />)}
+        // <MenuItem>{useLocale().strings.components.correct_string_usage_here}</MenuItem>
+        <ParticipantItemMuteItem />
+        <ParticipantItemRemoveItem />
       </MenuList>
     </MenuPopover>
   </Menu>
 
   <ParticipantListMeItem>...</ParticipantListMeItem>
 </ParticipantList>
+```
+
+```tsx
+// Can we do template components? (So in the middle of data and component driven?)
+<ParticipantList
+  participants={[{
+    userId: string,
+    displayName: string,
+    isScreensharing: boolean,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    isRemovable: boolean,
+  }]}
+  myUserId={string}
+  excludeMe={boolean}
+
+  // Replacing the following with a slot alternative:
+  // onFetchParticipantMenuItems={(userId: string, defaultMenuItems) => IContextualMenuItem[]}
+  // onParticipantClick={(userId: string) => void}
+  // styles={IParticipantListStyles}
+
+  root={Slot<div>}
+  className={"rootStyling"}
+  participantItemSlot={(participantProps) => (
+    <ParticipantListItem
+      {...props}
+      onParticipantClick={(userId: string) => void}
+      className="<per-item-styling>"
+      menuItems={[]}
+      menuListItemSlot={(menuItemProps) => (
+        <MenuItem {...menuItemProps} />
+      )}
+      menuListSlot={(menuListProps) => (
+        <MenuList {...menuListProps} />
+      )}
+    />
+  )}
+/>
+
+<ParticipantList<Item>
+  participants={[{
+    userId: string,
+    displayName: string,
+    isScreensharing: boolean,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    isRemovable: boolean,
+  }]}
+  myUserId={string}
+  excludeMe={boolean}
+>
+  {(props: {
+    userId: string,
+    displayName: string,
+    isScreensharing: boolean,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    isRemovable: boolean,
+    menuItems: ParticipantItemMenu[],
+  }) =>
+    <ParticipantItem {...props} className="some-styling">
+      <ParticipantItemMenuList>
+        {(props: MenuItemProps) => (
+          <ParticipantListMenuItem {...props} />
+        }
+      </ParticipantItemMenuList>
+    </ParticipantItem>
+  }
+</ParticipantList>
+
+const props = usePropsFor(ParticipantList);
+const a =
+  <ParticipantList {...props}>
+    {(props: ParticipantListProps) => (
+      <ParticipantItem {...props}>
+        {(props: ParticipantItemProps) => (
+          <ParticipantItemMenuList {...props}>
+            {props.menuItems.map((menuItemProps) => (
+              <ParticipantItemMenuItem {...menuItemProps} />
+            ))}
+            <CUSTOM_MENU_ITEM />
+          </ParticipantItemMenuList>
+        )}
+      </ParticipantItem>
+    )}
+  </ParticipantList>
+
+
+// or in the parent...
+
+<ParticipantList<Item>
+  participants={[{
+    userId: string,
+    displayName: string,
+    isScreensharing: boolean,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    isRemovable: boolean,
+  }]}
+  myUserId={string}
+  excludeMe={boolean}
+>
+  <ParticipantMenuList />
+  <ParticipantListMenuItemsPerParticipant>
+</ParticipantList>
+
 ```
 
 #### usePropsFor options
@@ -595,6 +702,7 @@ const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
 - No more `registerIcons` - how should we handle customizing icons? (Icon Provider?)
 - If babel or webpack doesn't transpile styles ahead of time, do they still work just less optimized? (i.e. what happens if I dont have the webpack plugin or babel translator installed?)
 - ~~Is animation for context menus being worked on or is this a design change?~~ Fixed: [https://github.com/microsoft/fluentui/pull/28119](https://github.com/microsoft/fluentui/pull/28119)
+- Should we `.` for associating like-components (e.g. Stack and Stack.Item)
 
 ## Key Takeaways
 
