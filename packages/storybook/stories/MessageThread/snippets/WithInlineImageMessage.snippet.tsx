@@ -3,8 +3,7 @@ import {
   MessageThread,
   Message,
   FileMetadata,
-  AttachmentDownloadResult,
-  TeamsInteropFileMetadata
+  AttachmentDownloadResult
 } from '@azure/communication-react';
 import React from 'react';
 
@@ -18,7 +17,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     return [
       {
         // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl : ''
+        blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : ''
       }
     ];
   };
