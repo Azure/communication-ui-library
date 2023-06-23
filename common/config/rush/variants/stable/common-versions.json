@@ -66,11 +66,7 @@
     ],
     "webpack": [
       // All projects should use this version by default
-      "5.38.1",
-
-      // Check-treeshaking project does not work with webpack5
-      // More information: https://github.com/webpack/webpack/issues/2090#issuecomment-634301000
-      "^4.44.0"
+      "5.38.1"
     ]
   }
 }
