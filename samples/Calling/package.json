@@ -81,7 +81,7 @@
     "eslint-plugin-react": "^7.18.3",
     "eslint": "^7.7.0",
     "html-webpack-plugin": "~5.3.1",
-    "husky": "^4.3.0",
+    "husky": "^8.0.3",
     "if-env": "~1.0.4",
     "jest-junit": "~13.0.0",
     "jest": "26.6.0",
