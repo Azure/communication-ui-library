@@ -283,7 +283,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ file.attachmentType ===
                       'fileSharing' &&
                     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                    !('id' in file) ? (
+                    'id' in file ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>

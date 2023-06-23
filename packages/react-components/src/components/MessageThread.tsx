@@ -843,8 +843,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage') {
-        // Break out early if the attachment is not a TeamsInteropFileMetadata
+      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage' || attachment.id in inlineAttachments) {
         return;
       }
 
