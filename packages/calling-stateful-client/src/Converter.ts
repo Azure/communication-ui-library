@@ -125,7 +125,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(raise-hands) */
-    raiseHand: { allRaisedHands: [] },
+    raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
