@@ -209,7 +209,7 @@ const defaultCallAdapterState: CallAdapterState = {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     /* @conditional-compile-remove(raise-hands) */
-    raiseHand: { allRaisedHands: [] },
+    raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],

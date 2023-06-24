@@ -160,7 +160,7 @@ export class CallContext {
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(raise-hands) */
-        existingCall.raiseHand.allRaisedHands = call.raiseHand.allRaisedHands;
+        existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(raise-hands) */
         existingCall.raiseHand.userRaisedHand = call.raiseHand.userRaisedHand;
         /* @conditional-compile-remove(rooms) */
@@ -349,7 +349,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.raiseHand.allRaisedHands = raisedHands;
+        call.raiseHand.raisedHands = raisedHands;
         call.raiseHand.userRaisedHand = raisedHands.find(
           (raisedHand) =>
             toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)

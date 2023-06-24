@@ -3259,7 +3259,7 @@ export type Profile = {
 
 // @public
 export interface RaiseHandCallFeature {
-    allRaisedHands: RaisedHand[];
+    raisedHands: RaisedHand[];
     // (undocumented)
     userRaisedHand?: RaisedHand;
 }

@@ -159,7 +159,7 @@ export interface RaiseHandCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  allRaisedHands: RaisedHand[];
+  raisedHands: RaisedHand[];
   userRaisedHand?: RaisedHand;
 }
 ``;
