@@ -24,7 +24,7 @@ export type {
   VideoStreamRendererViewState
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';

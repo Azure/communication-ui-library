@@ -19,7 +19,7 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -114,7 +114,7 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   }
 }
 
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

@@ -39,7 +39,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // PSTN calls 
         'PSTN-calls',
         // raise hands feature
-        'raise-hands',
+        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -86,7 +86,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Optimal Video count feature,
         'optimal-video-count',
         // raise hands feature
-        'raise-hands'
+        'raise-hand'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
