@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add abiltiy to accept or reject transfer requests through CallAdapter event subscription. Call composite shows transfer page when a transfer request is accepted followed by seamless transition to new call.",
+  "comment": "Add ability to accept or reject transfer requests through CallAdapter event subscription. Call composite shows transfer page when a transfer request is accepted followed by seamless transition to new call.",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
   "dependentChangeType": "patch"
