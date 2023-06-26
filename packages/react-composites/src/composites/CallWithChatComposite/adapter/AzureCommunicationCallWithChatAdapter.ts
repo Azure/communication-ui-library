@@ -184,11 +184,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.unmute.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
-    /* @conditional-compile-remove(raise-hands) */
+    /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hands) */
+    /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
-    /* @conditional-compile-remove(raise-hands) */
+    /* @conditional-compile-remove(raise-hand) */
     this.lowerHands.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -352,17 +352,17 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async stopScreenShare(): Promise<void> {
     await this.callAdapter.stopScreenShare();
   }
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   /** Raise hand for local user. */
   public async raiseHand(): Promise<void> {
     await this.callAdapter.raiseHand();
   }
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   /** Lower hand for local user. */
   public async lowerHand(): Promise<void> {
     await this.callAdapter.lowerHand();
   }
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   /** Lower hands for remote users. */
   public async lowerHands(userIds: string[]): Promise<void> {
     await this.callAdapter.lowerHands(userIds);

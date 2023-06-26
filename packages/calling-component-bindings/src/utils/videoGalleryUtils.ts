@@ -8,7 +8,7 @@ import {
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
@@ -29,7 +29,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
   }
 
   let callFunction = memoizedAllConvertRemoteParticipant as any;
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   callFunction = memoizedAllConvertRemoteParticipantBeta;
 
   return callFunction((memoizedFn) => {
@@ -51,7 +51,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
             checkIsSpeaking(participant),
-            /* @conditional-compile-remove(raise-hands) */
+            /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             participant.videoStreams,
             state,
@@ -82,7 +82,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
   }
 );
 
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 const memoizedAllConvertRemoteParticipantBeta = memoizeFnAll(
   (
     userId: string,
@@ -147,7 +147,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   };
 };
 
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 /** @private */
 export const convertRemoteParticipantToVideoGalleryRemoteParticipantBeta = (
   userId: string,
@@ -182,7 +182,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipantBeta = (
     displayName,
     isMuted,
     isSpeaking,
-    /* @conditional-compile-remove(raise-hands) */
+    /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     videoStream,
     screenShareStream,

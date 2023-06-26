@@ -477,9 +477,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.startCall.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
-    /* @conditional-compile-remove(raise-hands) */
+    /* @conditional-compile-remove(raise-hand) */
     this.raiseHand.bind(this);
-    /* @conditional-compile-remove(raise-hands) */
+    /* @conditional-compile-remove(raise-hand) */
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
@@ -781,21 +781,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   public async raiseHand(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onToggleRaiseHand();
     });
   }
 
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   public async lowerHand(): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onToggleRaiseHand();
     });
   }
 
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   public async lowerHands(userIds: string[]): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       await this.handlers.onLowerHands(userIds);

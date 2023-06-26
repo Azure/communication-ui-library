@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -14,7 +14,7 @@ import {
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -78,7 +78,7 @@ export const createDefaultCallingHandlers = memoizeOne(
         const participant = _toCommunicationIdentifier(userId);
         await call?.removeParticipant(participant);
       },
-      /* @conditional-compile-remove(raise-hands) */
+      /* @conditional-compile-remove(raise-hand) */
       onLowerHands: async (userIds: string[]): Promise<void> => {
         const participants = userIds.map((userId) => {
           return _toCommunicationIdentifier(userId) as CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
