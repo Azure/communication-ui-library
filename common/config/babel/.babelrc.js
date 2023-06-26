@@ -74,9 +74,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
       inProgressFeatures: [
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
-        'in-progress-beta-feature-demo',
-        // Feature for call transfer
-        'call-transfer'
+        'in-progress-beta-feature-demo'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
