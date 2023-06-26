@@ -6,12 +6,19 @@ import {
   ControlBarButtonV9,
   ControlBarSplitButtonV9,
   CameraButton,
+  ParticipantList,
   ParticipantItem,
   ParticipantItemV9,
   VideoGallery
 } from '@internal/react-components';
 import { initializeIcons, getTheme, PersonaPresence, Stack, ContextualMenuItemType } from '@fluentui/react';
-import { Airplane20Filled, VehicleShip20Filled } from '@fluentui/react-icons';
+import {
+  VideoOff20Filled,
+  Airplane20Filled,
+  VehicleShip20Filled,
+  Video20Filled,
+  VideoBackgroundEffect20Regular
+} from '@fluentui/react-icons';
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 
 <Meta
@@ -61,6 +68,76 @@ import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 | useTheme                                        | token                                                                                                                                   | Various                                                                                                                                    |
 | useWarnings                                     | ⚠️ **No v9 equivalent**                                                                                                                 | BackgroundEffects Picker                                                                                                                   |
 
+### UI Library components to migrate
+
+##### Public Components
+
+| Component              | Migration Notes |
+| ---------------------- | --------------- |
+| VideoTile              |                 |
+| VideoGallery           |                 |
+| GridLayout             |                 |
+| ControlBar             |                 |
+| CameraButton           |                 |
+| DefaultButton          |                 |
+| DevicesButton          |                 |
+| EndCallButton          |                 |
+| MicrophoneButton       |                 |
+| ParticipantsButton     |                 |
+| ScreenShareButton      |                 |
+| MessageThread          |                 |
+| SendBox                |                 |
+| MessageStatusIndicator |                 |
+| Typing Indicator       |                 |
+| ParticipantItem        |                 |
+| ParticipantList        |                 |
+| Dialpad                |                 |
+| ErrorBar               |                 |
+| SitePermissions        |                 |
+| StreamMedia            |                 |
+| UnsupportedBrowser     |                 |
+
+##### Internal Components
+
+| Component                                  | Migration Notes |
+| ------------------------------------------ | --------------- |
+| ChatMessage                                |                 |
+| ChatMessageActions                         |                 |
+| ChatMessageEditting                        |                 |
+| ChatMentionFlyout                          |                 |
+| ChatMentionTextField                       |                 |
+| Compliance Banner                          |                 |
+| Bottom Sheet / Drawer                      |                 |
+| File Card (Card, Groups, Upload, Download) |                 |
+| Hold Button                                |                 |
+| LocalVideoCameraButton                     |                 |
+| PictureInPictureInPicture                  |                 |
+| Video Effects Picker                       |                 |
+| CallWithChatComposite Chat Button          |                 |
+| CallComposite CallPage                     |                 |
+| CallComposite ConfigurationPage            |                 |
+| CallComposite HoldPage                     |                 |
+| CallComposite LobbyPage                    |                 |
+| CallComposite NoticePage                   |                 |
+| CallComposite TransferPage                 |                 |
+| CallComposite UnsupportedBrowser           |                 |
+| ChatComposite file upload button           |                 |
+| ChatComposite ChatScreen                   |                 |
+| ChatComposite file download errors         |                 |
+
+##### Public Samples
+
+| Component              | Migration Notes |
+| ---------------------- | --------------- |
+| Device Settings        |                 |
+| Local Preview Controls |                 |
+| Applying Teams Theme   |                 |
+| Compliance Banner      |                 |
+| Lobby Page             |                 |
+| Inline Chat Images     |                 |
+| Incomging Call Modal   |                 |
+| Incoming Call Toast    |                 |
+
 ## v8 to v9 comparison
 
 ### Apply theming
@@ -73,7 +150,7 @@ Almost no difference here:
   <ControlBarButton />
 </ThemeProvider>
 
-///
+/// v9
 <FluentProvider theme={myTheme}>
   <ControlBarButton />
 </FluentProvider>
@@ -157,8 +234,7 @@ const styles = makeStyles({ icon: { background: 'red' } });
 <ControlBarButton icon={<MyIcon className={styles.icon} />} />;
 ```
 
-The implication of this being, **we must export every component we want to be customizable**.
-You can see the impact of this in a breakdown in VideoGallery example later.
+~~The implication of this being, **we must export every component we want to be customizable**. You can see the impact of this in a breakdown in VideoGallery example later.~~ **tbd**
 
 ## Component Analysis
 
@@ -222,7 +298,40 @@ You can see the impact of this in a breakdown in VideoGallery example later.
   </tr>
   <tr>
     <td>ParticipantList</td>
-    <td></td>
+    <td>
+      <ParticipantList
+        onFetchParticipantMenuItems={(_pId, _uId, defaults) => [
+          { key: 'Mute', text: 'Mute', onClick: () => alert('Mute') },
+          ...defaults
+        ]}
+        onRemoveParticipant={() => {}}
+        participants={[
+          {
+            userId: 'user 1',
+            displayName: 'You',
+            isScreenSharing: true
+          },
+          {
+            userId: 'user 2',
+            displayName: 'Hal Jordan',
+            isRemovable: true,
+            isMuted: true,
+            isScreenSharing: true,
+            isSpeaking: true
+          },
+          {
+            userId: 'user 3',
+            displayName: 'Barry Allen',
+            isRemovable: true
+          },
+          {
+            userId: 'user 4',
+            displayName: 'Bruce Wayne',
+            isRemovable: true
+          }
+        ]}
+      />
+    </td>
     <td></td>
   </tr>
 </table>
@@ -244,8 +353,14 @@ You can see the impact of this in a breakdown in VideoGallery example later.
   excludeMe={boolean}
   onFetchParticipantMenuItems={(userId: string, defaultMenuItems) => IContextualMenuItem[]}
   onParticipantClick={(userId: string) => void}
+  onRemoveParticipantClick={(userId: string) => void}
+  onMuteParticipantClick={(userId: string) => void}
   styles={IParticipantListStyles}
 />
+
+// Developer Usage:
+const participantListProps = usePropsFor(ParticipantList);
+<ParticipantList {...participantListProps} styles={{ participantItem: { root: { background: 'red'} } }} />
 ```
 
 ```tsx
@@ -257,6 +372,7 @@ You can see the impact of this in a breakdown in VideoGallery example later.
       <ParticipantListItem
         participantId={string}
         displayName={string}
+        // Icons as individual slots or array of icons?
         screensharingIconSlot={slot<Icon>}
         mutedIconSlot={slot<Icon>}
         speakingIconSlot={slot<Icon>}
@@ -264,10 +380,9 @@ You can see the impact of this in a breakdown in VideoGallery example later.
     </MenuTrigger>
     <MenuPopover>
       <MenuList>
-        // {createDefaultParticipantListMenuItems().map(item => <MenuItem {...item} />)}
-        // <MenuItem>{useLocale().strings.components.correct_string_usage_here}</MenuItem>
-        <ParticipantItemMuteItem />
-        <ParticipantItemRemoveItem />
+        <ParticipantItemMuteItem onClick={} />
+        <ParticipantItemRemoveItem onClick={} />
+        <MenuItem>Custom Item...</MenuItem>
       </MenuList>
     </MenuPopover>
   </Menu>
@@ -293,10 +408,13 @@ You can see the impact of this in a breakdown in VideoGallery example later.
   // Replacing the following with a slot alternative:
   // onFetchParticipantMenuItems={(userId: string, defaultMenuItems) => IContextualMenuItem[]}
   // onParticipantClick={(userId: string) => void}
+  // onRemoveParticipantClick={(userId: string) => void}
+  // onMuteParticipantClick={(userId: string) => void}
   // styles={IParticipantListStyles}
 
-  root={Slot<div>}
+  root={Slot<>}
   className={"rootStyling"}
+  // Render function or just a set of ParticipantItem props similar to persona's avatar?
   participantItemSlot={(participantProps) => (
     <ParticipantListItem
       {...props}
@@ -313,6 +431,7 @@ You can see the impact of this in a breakdown in VideoGallery example later.
   )}
 />
 
+ // Or render slots as children:
 <ParticipantList<Item>
   participants={[{
     userId: string,
@@ -336,7 +455,7 @@ You can see the impact of this in a breakdown in VideoGallery example later.
   }) =>
     <ParticipantItem {...props} className="some-styling">
       <ParticipantItemMenuList>
-        {(props: MenuItemProps) => (
+        {(props: MenuItemProps) =>
           <ParticipantListMenuItem {...props} />
         }
       </ParticipantItemMenuList>
@@ -347,7 +466,7 @@ You can see the impact of this in a breakdown in VideoGallery example later.
 const props = usePropsFor(ParticipantList);
 const a =
   <ParticipantList {...props}>
-    {(props: ParticipantListProps) => (
+    {(props: ParticipantItemProps) => (
       <ParticipantItem {...props}>
         {(props: ParticipantItemProps) => (
           <ParticipantItemMenuList {...props}>
@@ -360,26 +479,6 @@ const a =
       </ParticipantItem>
     )}
   </ParticipantList>
-
-
-// or in the parent...
-
-<ParticipantList<Item>
-  participants={[{
-    userId: string,
-    displayName: string,
-    isScreensharing: boolean,
-    isMuted: boolean,
-    isSpeaking: boolean,
-    isRemovable: boolean,
-  }]}
-  myUserId={string}
-  excludeMe={boolean}
->
-  <ParticipantMenuList />
-  <ParticipantListMenuItemsPerParticipant>
-</ParticipantList>
-
 ```
 
 #### usePropsFor options
@@ -403,8 +502,8 @@ const a =
         <FluentThemeProvider theme={lightTheme}>
           <ControlBarButton
             showLabel={true}
-            strings={{ label: 'airplane' }}
-            onRenderIcon={() => <Airplane20Filled primaryFill="currentColor" />}
+            strings={{ label: 'Camera' }}
+            onRenderIcon={() => <VideoOff20Filled primaryFill="currentColor" />}
           />
         </FluentThemeProvider>
       </div>
@@ -414,9 +513,9 @@ const a =
         <FluentProvider theme={webLightTheme}>
           <ControlBarButtonV9
             showLabel={true}
-            strings={{ label: 'airplane' }}
-            onIcon={<VehicleShip20Filled primaryFill="currentColor" />}
-            offIcon={<Airplane20Filled primaryFill="currentColor" />}
+            strings={{ label: 'Camera' }}
+            onIcon={<VideoOff20Filled primaryFill="currentColor" />}
+            offIcon={<VideoOff20Filled primaryFill="currentColor" />}
           />
         </FluentProvider>
       </div>
@@ -425,64 +524,99 @@ const a =
   <tr>
     <td>ControlBarButton (split)</td>
     <td>
-      <ControlBarButton
-        onClick={() => {}}
-        split={true}
-        menuProps={{ items: [{ text: 'Item a' }, { text: 'Item b' }] }}
-        showLabel={true}
-        strings={{ label: 'airplane' }}
-        onRenderIcon={() => <Airplane20Filled primaryFill="currentColor" />}
-        styles={{
-          root: {
-            border: 'solid 1px ' + getTheme().palette.neutralQuaternaryAlt,
-            borderRadius: getTheme().effects.roundedCorner4,
-            minHeight: '2.5rem',
-            maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
-          },
-          flexContainer: {
-            display: 'flex',
-            flexFlow: 'row nowrap'
-          },
-          textContainer: {
-            // Override the default so that label doesn't introduce a new block.
-            display: 'inline',
-            // Ensure width is set to permit child to show ellipsis when there is a label that is too long
-            maxWidth: '100%'
-          },
-          label: {
-            fontSize: getTheme().fonts.medium.fontSize,
-            // Ensure there is enough space between the icon and text to allow for the unread messages badge in the chat button
-            marginLeft: '0.625rem',
-            // Ensure letters that go above and below the standard text line like 'g', 'y', 'j' are not clipped
-            lineHeight: '1.5rem',
-            // Do not allow very long button texts to ruin the control bar experience, instead ensure long text is truncated and shows ellipsis
-            display: 'block',
-            textOverflow: 'ellipsis',
-            whiteSpace: 'nowrap',
-            overflow: 'hidden'
-          },
-          splitButtonMenuButton: {
-            border: 'solid 1px ' + getTheme().palette.neutralQuaternaryAlt,
-            borderTopRightRadius: getTheme().effects.roundedCorner4,
-            borderBottomRightRadius: getTheme().effects.roundedCorner4,
-            borderTopLeftRadius: '0',
-            borderBottomLeftRadius: '0'
-          },
-          splitButtonMenuButtonChecked: {
-            // Default colors the menu half similarly for :hover and when button is checked.
-            // To align with how the left-half is styled, override the checked style.
-            background: 'none'
-          }
-        }}
-      />
+      <FluentThemeProvider theme={lightTheme}>
+        <ControlBarButton
+          onClick={() => {}}
+          split={true}
+          menuProps={{
+            items: [
+              {
+                itemType: ContextualMenuItemType.Section,
+                sectionProps: {
+                  topDivider: true,
+                  bottomDivider: true,
+                  title: 'Camera',
+                  items: [
+                    {
+                      text: 'Logitech Brio',
+                      subMenuProps: {
+                        items: [
+                          { key: '1', text: 'Another Mic' },
+                          { key: '2', text: 'And another mic' }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              },
+              { itemType: ContextualMenuItemType.Divider },
+              {
+                text: 'Turn on camera',
+                iconProps: {},
+                onRenderIcon: () => <Video20Filled primaryFill="currentColor" />
+              },
+              {
+                text: 'Effects',
+                iconProps: {},
+                onRenderIcon: () => <VideoBackgroundEffect20Regular primaryFill="currentColor" />
+              }
+            ]
+          }}
+          showLabel={true}
+          strings={{ label: 'Turn off' }}
+          onRenderIcon={() => <VideoOff20Filled primaryFill="currentColor" />}
+          styles={{
+            root: {
+              border: 'solid 1px ' + getTheme().palette.neutralQuaternaryAlt,
+              borderRadius: getTheme().effects.roundedCorner4,
+              minHeight: '2.5rem',
+              maxWidth: '12rem' // allot extra space than the regular ControlBarButton. This is to give extra room to have the icon beside the text.
+            },
+            flexContainer: {
+              display: 'flex',
+              flexFlow: 'row nowrap'
+            },
+            textContainer: {
+              // Override the default so that label doesn't introduce a new block.
+              display: 'inline',
+              // Ensure width is set to permit child to show ellipsis when there is a label that is too long
+              maxWidth: '100%'
+            },
+            label: {
+              fontSize: getTheme().fonts.medium.fontSize,
+              // Ensure there is enough space between the icon and text to allow for the unread messages badge in the chat button
+              marginLeft: '0.625rem',
+              // Ensure letters that go above and below the standard text line like 'g', 'y', 'j' are not clipped
+              lineHeight: '1.5rem',
+              // Do not allow very long button texts to ruin the control bar experience, instead ensure long text is truncated and shows ellipsis
+              display: 'block',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden'
+            },
+            splitButtonMenuButton: {
+              border: 'solid 1px ' + getTheme().palette.neutralQuaternaryAlt,
+              borderTopRightRadius: getTheme().effects.roundedCorner4,
+              borderBottomRightRadius: getTheme().effects.roundedCorner4,
+              borderTopLeftRadius: '0',
+              borderBottomLeftRadius: '0'
+            },
+            splitButtonMenuButtonChecked: {
+              // Default colors the menu half similarly for :hover and when button is checked.
+              // To align with how the left-half is styled, override the checked style.
+              background: 'none'
+            }
+          }}
+        />
+      </FluentThemeProvider>
     </td>
     <td>
       <FluentProvider theme={webLightTheme}>
         <ControlBarSplitButtonV9
           showLabel={true}
-          strings={{ label: 'airplane' }}
-          onIcon={<VehicleShip20Filled primaryFill="currentColor" />}
-          offIcon={<Airplane20Filled primaryFill="currentColor" />}
+          strings={{ label: 'Turn off' }}
+          onIcon={<VideoOff20Filled primaryFill="currentColor" />}
+          offIcon={<VideoOff20Filled primaryFill="currentColor" />}
         />
       </FluentProvider>
     </td>
@@ -493,35 +627,72 @@ const a =
 
 ```tsx
 /// v8 - everything passed in as top level props
-<ControlBarButton
-  onClick={() => {}}
-  split={true}
-  menuProps={{items:
-    [
-      {itemType: ContextualMenuItemType.Section, sectionProps: { title: 'item A'}},
-      {itemType: ContextualMenuItemType.Section, sectionProps: { title: 'item B'}}
-    ]
+<CameraButton
+  cameras={[{ id: string; name: string}]}
+  selectedCameraId={string}
+  onToggleCamera={() => {}}
+  onSelectCamera={(id: string) => {}}
+  onEffectsClick={() => {}}
+  strings={{
+    onLabel: string,
+    offLabel: string,
+    tooltipOnContent: string,
+    tooltipOffContent: string,
+    tooltipVideoLoadingContent: string,
+    effectsMenuItemTitle: string,
+    ...
   }}
-  showLabel={true}
-  strings={{ label: 'airplane' }}
-  onRenderIcon={() => (<Airplane20Filled primaryFill="currentColor"/>)}
+  styles={{
+    root: ...,
+    menuStyles: {
+      root: ...,
+      ...
+    }
+  }}
 />
 
 /// v9 - everything is slotted in, in fact the button is slotted into the menu:
 <Menu positioning="below-end">
   <MenuTrigger>
     {(triggerProps: MenuButtonProps) => (
-      <ControlBarSplitButtonV9 menuButton={triggerProps} icon={<Airplane20Filled />} />
+      <CameraButton menuButton={triggerProps} icon={<Video20Filled />} isDisabled={boolean} />
     )}
   </MenuTrigger>
 
   <MenuPopover>
     <MenuList>
-      <MenuItem>Item a</MenuItem>
-      <MenuItem>Item b</MenuItem>
+      <CameraListMenu cameras=[] selectedCamera={} onSelectedCameraChange={} />
+      <MenuDivider />
+      <CameraToggleMenuItem checked={boolean} onCameraToggled={(isChecked) => void} />
+      <EffectsMenuItem onClick={} />
     </MenuList>
   </MenuPopover>
 </Menu>
+
+/// OR possible something both data driven but with customization exposure:
+<CameraButton
+  cameras={[{ id: string; name: string}]}
+  selectedCameraId={string}
+  onToggleCamera={() => {}}
+  onSelectCamera={(id: string) => {}}
+  onEffectClick={() => {}}
+>
+  <CameraButtonCameraList>
+    ({props: {cameras: Camera[], selectedCameraId: string, onSelectCamera: (id: string) => void} => (
+      <CameraListMenu {...props} />
+    )})
+  </CameraButtonCameraList>
+  <CameraButtonToggle>
+    ({props: {checked: boolean, onToggle: (isChecked: boolean) => void} => (
+      <CameraToggleMenuItem {...props} />
+    )})
+  </CameraButtonToggle>
+  <CameraButtonEffects>
+    ({props: {onClick: () => void} => (
+      <EffectsMenuItem {...props} />
+    )})
+  </CameraButtonEffects>
+</CameraButton>
 ```
 
 #### Add custom menu item to the default set
@@ -530,26 +701,7 @@ const a =
 /// v8 - use callback that contains defaults:
 <ControlBarButton onFetchSplitButtonMenuItems={(defaultMenuItems) => [...defaultMenuItems, customItem]} />
 
-/// v9 - TODO: THIS IS AN OPEN QUESTION FOR FLUENT
-///      Do we export something like toggleCameraMenuItem, microphoneSelectionMenu, microphoneSelectionMenuItem
-<Menu positioning="below-end">
-  <MenuTrigger>
-    {(triggerProps: MenuButtonProps) => (
-      <ControlBarSplitButtonV9 menuButton={triggerProps} icon={<Airplane20Filled />} />
-    )}
-  </MenuTrigger>
-
-  <MenuPopover>
-    <MenuList>
-      <MenuItem>Item a</MenuItem>
-      <MenuItem>Item b</MenuItem>
-    </MenuList>
-  </MenuPopover>
-</Menu>
-
-/// Alternative?
-
-<ControlBarSplitButtonv9 menuItems={() => JSX.Element[]} />
+/// v9 - TODO: THIS IS AN OPEN QUESTION
 ```
 
 #### Connecting to stateful
@@ -688,26 +840,24 @@ const toggleCameraMenuItemProps = usePropsFor(ToggleCameraMenuItem);
   </div>
 </FluentThemeProvider>
 
-## Items of investigation (todos)
-
-- What is use props for interface now like with components as slots?
-  - E.g. if I override the camera button split menu how do I get the handler that switches the chosen camera
-
 ## Open Questions
 
 - Best way to allow defaults + custom items (e.g. in a split button menu)
-- Why does persona's avatar take avatar props instead of an avatar component slot?
-- Will dialog be getting drag functionality - is there a intake form for requests?
-- Splitbutton touch behavior has changed
+- Why does persona's avatar take avatar props instead of an avatar component slot? What goes into this decision?
+  https://codesandbox.io/s/bold-blackwell-s7wk98?file=/example.tsx
 - No more `registerIcons` - how should we handle customizing icons? (Icon Provider?)
+- Will dialog be getting drag functionality - is there a intake form for requests? Or file github issue and go from there?
+- Splitbutton touch behavior has changed - intentional?
+- I see `.` for associating like-components (e.g. Stack and Stack.Item) is not used anymore - any design behind that? (e.g. poor treeshaking?)
+- Does fluent have SWAG estimates for migrating 1 component from v8 to v9?
 - If babel or webpack doesn't transpile styles ahead of time, do they still work just less optimized? (i.e. what happens if I dont have the webpack plugin or babel translator installed?)
 - ~~Is animation for context menus being worked on or is this a design change?~~ Fixed: [https://github.com/microsoft/fluentui/pull/28119](https://github.com/microsoft/fluentui/pull/28119)
-- Should we `.` for associating like-components (e.g. Stack and Stack.Item)
 
+<!--
 ## Key Takeaways
-
 - Instead of passing data (as top level props), you pass components (via slots)
   - Therefore, instead of exposing data APIs we must expose the components we use
 - Instead of nested styles prop, we use className (and styles are built at build time, not interpreted at runtime)
   - Therefore runtime variables _cannot_ be used in styles calculations
 - ...
+-->

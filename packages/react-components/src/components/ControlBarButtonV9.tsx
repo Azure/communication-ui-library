@@ -5,7 +5,11 @@ import React from 'react';
 import {
   Menu,
   MenuButtonProps,
+  MenuDivider,
+  MenuGroup,
+  MenuGroupHeader,
   MenuItem,
+  MenuItemRadio,
   MenuList,
   MenuPopover,
   MenuTrigger,
@@ -16,6 +20,7 @@ import {
   makeStyles,
   shorthands
 } from '@fluentui/react-components';
+import { Video20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
 
 /**
  * Strings of {@link ControlBarButton} that can be overridden.
@@ -201,9 +206,43 @@ export const ControlBarSplitButtonV9 = (props: ControlBarButtonPropsV9): JSX.Ele
       </MenuTrigger>
 
       <MenuPopover>
-        <MenuList>
-          <MenuItem>Item a</MenuItem>
-          <MenuItem>Item b</MenuItem>
+        <MenuList hasIcons>
+          <MenuGroupHeader>Camera</MenuGroupHeader>
+          <CameraSubMenu />
+          <MenuDivider />
+          <MenuItem icon={<Video20Filled />}>Turn camera on</MenuItem>
+          <MenuItem icon={<VideoBackgroundEffect20Regular />}>Effects</MenuItem>
+        </MenuList>
+      </MenuPopover>
+    </Menu>
+  );
+};
+
+const CameraSubMenu = () => {
+  const [checkedValues, setCheckedValues] = React.useState<Record<string, string[]>>({ 1: ['1'] });
+  const onChange = (e, { name, checkedItems }) => {
+    setCheckedValues((s) => ({ ...s, [name]: checkedItems }));
+  };
+
+  return (
+    <Menu>
+      <MenuTrigger disableButtonEnhancement>
+        <MenuItem>Logitech Brio</MenuItem>
+      </MenuTrigger>
+
+      <MenuPopover>
+        <MenuList checkedValues={checkedValues} onCheckedValueChange={onChange}>
+          <MenuGroup>
+            <MenuItemRadio name="1" value="1">
+              Logitech Brio
+            </MenuItemRadio>
+            <MenuItemRadio name="2" value="2">
+              Another Camera
+            </MenuItemRadio>
+            <MenuItemRadio name="3" value="3">
+              And another camera
+            </MenuItemRadio>
+          </MenuGroup>
         </MenuList>
       </MenuPopover>
     </Menu>
