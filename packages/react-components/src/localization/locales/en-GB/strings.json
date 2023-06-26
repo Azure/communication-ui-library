@@ -44,8 +44,8 @@
     "tooltipContent": "Leave call"
   },
   "cameraButton": {
-    "onLabel": "Turn off",
-    "offLabel": "Turn on",
+    "onLabel": "Camera",
+    "offLabel": "Camera",
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effects"
   },
   "microphoneButton": {
-    "onLabel": "Mute",
-    "offLabel": "Unmute",
+    "onLabel": "Mic",
+    "offLabel": "Mic",
     "tooltipDisabledContent": "Microphone is disabled",
     "tooltipOnContent": "Mute microphone",
     "tooltipOffContent": "Unmute microphone",
@@ -153,8 +153,8 @@
     "muteGeneric": "Failed to mute microphone",
     "unmuteGeneric": "Failed to unmute microphone",
     "speakingWhileMuted": "Your microphone is muted",
-    "startScreenShareGeneric": "Failed to start screen sharing",
-    "stopScreenShareGeneric": "There was an issue starting screen share.",
+    "startScreenShareGeneric": "There was an issue starting screen share.",
+    "stopScreenShareGeneric": "Failed to stop screen sharing",
     "callNetworkQualityLow": "Network quality is low.",
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
     "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",

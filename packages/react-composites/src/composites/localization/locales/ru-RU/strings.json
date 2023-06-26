@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Идет переключение...",
     "transferPageTransferTargetText": "Подключение...",
     "transferPageUnknownTransferorDisplayName": "Неизвестно",
-    "transferPageUnknownTransferTargetDisplayName": "Неизвестно"
+    "transferPageUnknownTransferTargetDisplayName": "Неизвестно",
+    "transferPageNoticeString": "Для вас выполняется передача",
+    "participantCouldNotBeReachedTitle": "Целевой участник сейчас недоступен",
+    "participantCouldNotBeReachedMoreDetails": "Обратитесь к участнику, когда он будет доступен",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Разрешение на связь с целевым участником отсутствует",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Проверьте, что целевой участник находится в том же клиенте",
+    "unableToResolveTenantTitle": "Не удалось разрешить идентификатор клиента для целевого участника",
+    "unableToResolveTenantMoreDetails": "Проверьте, что идентификатор участника введен правильно",
+    "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
+    "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате"
   },
   "chat": {
     "chatListHeader": "В этом чате",
