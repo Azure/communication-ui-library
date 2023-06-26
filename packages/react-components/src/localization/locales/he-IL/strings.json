@@ -7,7 +7,9 @@
     "mutedIconLabel": "מושתק",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
-    "participantStateHold": "בהמתנה"
+    "participantStateHold": "בהמתנה",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} מקליד...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "הצגה אינה זמינה",
     "tooltipOnContent": "מציג את המסך שלך",
     "tooltipOffContent": "הצג את המסך שלך"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "אתמול",
