@@ -44,8 +44,8 @@
     "tooltipContent": "Poistu puhelusta"
   },
   "cameraButton": {
-    "onLabel": "Poista käytöstä",
-    "offLabel": "Ota käyttöön",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kamera on poissa käytöstä",
     "tooltipOnContent": "Poista kamera käytöstä",
     "tooltipOffContent": "Käynnistä kamera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Tehosteet"
   },
   "microphoneButton": {
-    "onLabel": "Mykistä",
-    "offLabel": "Poista mykistys",
+    "onLabel": "Mikrofoni",
+    "offLabel": "Mikrofoni",
     "tooltipDisabledContent": "Mikrofoni on poissa käytöstä",
     "tooltipOnContent": "Mykistä mikrofoni",
     "tooltipOffContent": "Poista mikrofonin mykistys",

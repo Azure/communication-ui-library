@@ -44,8 +44,8 @@
     "tooltipContent": "Lämna samtal"
   },
   "cameraButton": {
-    "onLabel": "Inaktivera",
-    "offLabel": "Aktivera",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kameran är inaktiverad",
     "tooltipOnContent": "Stäng av kameran",
     "tooltipOffContent": "Aktivera kameran",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effekter"
   },
   "microphoneButton": {
-    "onLabel": "Mikrofon av",
-    "offLabel": "Mikrofon på",
+    "onLabel": "Mikrofon",
+    "offLabel": "Mikrofon",
     "tooltipDisabledContent": "Mikrofonen är inaktiverad",
     "tooltipOnContent": "Stäng av mikrofonen",
     "tooltipOffContent": "Slå på mikrofonen",

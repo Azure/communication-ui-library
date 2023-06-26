@@ -44,8 +44,8 @@
     "tooltipContent": "Anruf verlassen"
   },
   "cameraButton": {
-    "onLabel": "Deaktivieren",
-    "offLabel": "Aktivieren",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kamera ist deaktiviert",
     "tooltipOnContent": "Kamera ausschalten",
     "tooltipOffContent": "Kamera einschalten",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effekte"
   },
   "microphoneButton": {
-    "onLabel": "Stumm schalten",
-    "offLabel": "Stummschaltung aufheben",
+    "onLabel": "Mikrofon",
+    "offLabel": "Mikrofon",
     "tooltipDisabledContent": "Mikrofon ist deaktiviert",
     "tooltipOnContent": "Mikrofon stummschalten",
     "tooltipOffContent": "Mikrofonstummschaltung aufheben",

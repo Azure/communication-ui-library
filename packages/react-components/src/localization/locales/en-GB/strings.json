@@ -44,8 +44,8 @@
     "tooltipContent": "Leave call"
   },
   "cameraButton": {
-    "onLabel": "Turn off",
-    "offLabel": "Turn on",
+    "onLabel": "Camera",
+    "offLabel": "Camera",
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effects"
   },
   "microphoneButton": {
-    "onLabel": "Mute",
-    "offLabel": "Unmute",
+    "onLabel": "Mic",
+    "offLabel": "Mic",
     "tooltipDisabledContent": "Microphone is disabled",
     "tooltipOnContent": "Mute microphone",
     "tooltipOffContent": "Unmute microphone",
