@@ -77,8 +77,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'in-progress-beta-feature-demo',
         // Feature for updates needed for Click to Call (C2C) scenarios
         'click-to-call',
-        // Mention feature
-        'mention',
         // Feature for call transfer
         'call-transfer',
         // Optimal Video count feature,
