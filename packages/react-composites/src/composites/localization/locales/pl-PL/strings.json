@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Trwa przełączanie...",
     "transferPageTransferTargetText": "Trwa łączenie...",
     "transferPageUnknownTransferorDisplayName": "Nieznany",
-    "transferPageUnknownTransferTargetDisplayName": "Nieznany"
+    "transferPageUnknownTransferTargetDisplayName": "Nieznany",
+    "transferPageNoticeString": "Jesteś w trakcie przekierowania",
+    "participantCouldNotBeReachedTitle": "Uczestnik docelowy jest obecnie niedostępny",
+    "participantCouldNotBeReachedMoreDetails": "Skontaktuj się z uczestnikiem, gdy będzie dostępny",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Uprawnienie do dotarcia do uczestnika docelowego jest niedozwolone",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Sprawdź, czy uczestnik docelowy znajduje się w tej samej dzierżawie",
+    "unableToResolveTenantTitle": "Nie można rozpoznać identyfikatora dzierżawy dla uczestnika docelowego",
+    "unableToResolveTenantMoreDetails": "Sprawdź, czy identyfikator uczestnika został wprowadzony poprawnie",
+    "participantIdIsMalformedTitle": "Identyfikator uczestnika ma niepoprawny format",
+    "participantIdIsMalformedMoreDetails": "Sprawdź, czy identyfikator uczestnika ma poprawny format"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
