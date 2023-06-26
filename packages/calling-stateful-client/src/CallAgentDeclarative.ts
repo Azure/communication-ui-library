@@ -6,10 +6,10 @@ import { clearCallRelatedState, DeclarativeCallCommon, ProxyCallAgentCommon } fr
 import { CallContext } from './CallContext';
 import { callDeclaratify } from './CallDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */
-import { DeclarativeIncomingCall } from './IncomingCallDeclarative';
+import { DeclarativeIncomingCall, incomingCallDeclaratify } from './IncomingCallDeclarative';
 import { InternalCallContext } from './InternalCallContext';
 import { _isACSCall, _isACSCallAgent } from './TypeGuards';
-import { CallAgentCommon, CallCommon } from './BetaToStableTypes';
+import { CallAgentCommon, CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /**
@@ -40,10 +40,12 @@ export type DeclarativeCallAgent = CallAgent &
  */
 class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<DeclarativeCallAgent> {
   private _callAgent: CallAgent;
+  private _callContext: CallContext;
 
   constructor(callAgent: CallAgent, context: CallContext, internalContext: InternalCallContext) {
     super(context, internalContext);
     this._callAgent = callAgent;
+    this._callContext = context;
     this.subscribe();
   }
 
@@ -88,6 +90,10 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
 
   protected agentSubscribe(agent: CallAgentCommon, args: Parameters<CallAgent['on']>): void {
     if (_isACSCallAgent(agent)) {
+      const eventHandler = args[1] as unknown as (event: { incomingCall: IncomingCallCommon }) => void;
+      this._callAgent.on('incomingCall', ({ incomingCall }) => {
+        eventHandler({ incomingCall: incomingCallDeclaratify(incomingCall, this._callContext) });
+      });
       return agent.on(...args);
     }
     throw Error('Unreachable code, DeclarativeCallAgent.agentSubscribe must be called with an ACS callAgent.');

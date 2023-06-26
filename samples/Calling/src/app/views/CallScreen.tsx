@@ -21,10 +21,11 @@ import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react
 import { TeamsAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
+import { IncomingCall, TeamsIncomingCall } from '@azure/communication-calling';
 
 export interface CallScreenProps {
   token: string;
@@ -44,6 +45,7 @@ export interface CallScreenProps {
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, /* @conditional-compile-remove(teams-identity-support) */ isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
+  const [incomingCall, setIncomingCall] = useState<IncomingCall | TeamsIncomingCall>();
 
   const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
     adapter.on('error', (e) => {
@@ -63,6 +65,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     /* @conditional-compile-remove(call-transfer) */
     adapter.on('transferRequested', (e) => {
       e.accept();
+    });
+    adapter.on('incomingCallReceived', (e) => {
+      setIncomingCall(e.incomingCall);
     });
   }, []);
 
@@ -95,7 +100,26 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return <TeamsCallScreen afterCreate={afterTeamsCallAdapterCreate} credential={credential} {...props} />;
   }
 
-  return <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />;
+  return (
+    <>
+      {incomingCall ? (
+        <div style={{ border: '2px solid' }}>
+          {incomingCall.callerInfo.displayName} is calling you
+          <button
+            onClick={() => {
+              incomingCall.accept();
+              setIncomingCall(undefined);
+            }}
+          >
+            Accept
+          </button>
+        </div>
+      ) : (
+        <></>
+      )}
+      <AzureCommunicationCallScreen afterCreate={afterCallAdapterCreate} credential={credential} {...props} />
+    </>
+  );
 };
 
 /* @conditional-compile-remove(teams-identity-support) */

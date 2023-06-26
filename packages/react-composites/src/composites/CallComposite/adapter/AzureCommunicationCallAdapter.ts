@@ -12,7 +12,9 @@ import {
   TeamsCall,
   TeamsCallAgent as BetaTeamsCallAgent,
   _isACSCall,
-  _isTeamsCall
+  _isTeamsCall,
+  IncomingCallCommon,
+  _isACSCallAgent
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
@@ -390,6 +392,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     this.onClientStateChange = onStateChange;
 
+    this.subscribeCallAgentEvents();
     this.subscribeDeviceManagerEvents();
 
     this.callClient.onStateChange(onStateChange);
@@ -918,6 +921,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
   }
 
+  private subscribeCallAgentEvents(): void {
+    if (_isTeamsCallAgent(this.callAgent)) {
+      this.callAgent.on('incomingCall', (incomingCall) => {
+        this.incomingCallingReceived(incomingCall);
+      });
+    } else if (_isACSCallAgent(this.callAgent)) {
+      this.callAgent.on('incomingCall', (incomingCall) => {
+        this.incomingCallingReceived(incomingCall);
+      });
+    }
+  }
+
   private subscribeCallEvents(): void {
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
@@ -1000,6 +1015,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(call-transfer) */
   private transferRequested(args: TransferRequestedEventArgs): void {
     this.emitter.emit('transferRequested', args);
+  }
+
+  private incomingCallingReceived(event: { incomingCall: IncomingCallCommon }): void {
+    this.emitter.emit('incomingCallReceived', {
+      incomingCall: {
+        callerInfo: event.incomingCall.callerInfo,
+        accept: () => {
+          this.call && _isInCall(this.call.state) && this.call?.hold();
+          this.context.setIncomingCallIdToJoin(event.incomingCall.id);
+          this.call = undefined;
+          this.context.setCurrentCallId(undefined);
+          // Sync client state to make sure correct state being set
+          this.context.updateClientState(this.callClient.getState());
+        }
+      }
+    });
   }
 
   private callIdChanged(): void {

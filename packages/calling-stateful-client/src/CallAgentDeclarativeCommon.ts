@@ -180,12 +180,12 @@ export abstract class ProxyCallAgentCommon {
       }
       case 'on': {
         return (...args: Parameters<AgentType['on']>): void => {
-          const isCallsUpdated = args[0] === 'callsUpdated';
-          if (isCallsUpdated) {
-            const listener = args[1];
-            this._externalCallsUpdatedListeners.add(listener as CollectionUpdatedEvent<CallCommon>);
-          } else {
-            this.agentSubscribe(target, args);
+          switch (args[0] as string) {
+            case 'callsUpdated':
+              this._externalCallsUpdatedListeners.add(args[1] as CollectionUpdatedEvent<CallCommon>);
+              break;
+            default:
+              this.agentSubscribe(target, args);
           }
         };
       }

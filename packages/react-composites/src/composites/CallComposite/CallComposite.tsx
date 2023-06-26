@@ -244,10 +244,10 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
-  const inboundCallingProps = useAdaptedSelector(_incomingCallPopupSelector);
-  const inboundCallingHandlers = useHandlers(IncomingCallPopup);
-  const callIdToAccept = useSelector((state) => state.incomingCallIdToJoin);
-  const incomingCallsToShow = inboundCallingProps.incomingCalls?.filter((call) => call.id !== callIdToAccept);
+  // const inboundCallingProps = useAdaptedSelector(_incomingCallPopupSelector);
+  // const inboundCallingHandlers = useHandlers(IncomingCallPopup);
+  // const callIdToAccept = useSelector((state) => state.incomingCallIdToJoin);
+  // const incomingCallsToShow = inboundCallingProps.incomingCalls?.filter((call) => call.id !== callIdToAccept);
 
   const userId = useSelector((state) => state.userId);
 
@@ -472,7 +472,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   return (
     <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
       {retElement}
-      <IncomingCallPopup incomingCalls={incomingCallsToShow} {...inboundCallingHandlers} />
+      {/* <IncomingCallPopup incomingCalls={incomingCallsToShow} {...inboundCallingHandlers} /> */}
     </SidePaneProvider>
   );
 };
