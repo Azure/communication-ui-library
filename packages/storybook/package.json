@@ -6,6 +6,7 @@
     "build": "node ./scripts/build.mjs",
     "clean": "",
     "start": "node ./scripts/start.mjs",
+    "storybook": "storybook",
     "deploy-storybook": "node ./scripts/deploy.mjs",
     "test": "node ./scripts/test.mjs",
     "test:coverage": "rushx test --coverage",
@@ -15,8 +16,7 @@
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "node ./scripts/lint.mjs",
     "lint:fix": "rushx lint -- --fix",
-    "lint:quiet": "rushx lint -- --quiet",
-    "prepare": "husky install"
+    "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
     "@azure/communication-calling": "1.14.1-beta.1 || >=1.14.1",
@@ -113,6 +113,7 @@
     "ts-node": "^9.1.1",
     "typescript": "4.3.5",
     "uuid": "^8.1.0",
-    "webpack": "5.76.0"
+    "webpack": "5.76.0",
+    "tsconfig-paths-webpack-plugin": "~4.0.1"
   }
 }
