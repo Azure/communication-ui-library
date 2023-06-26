@@ -4,7 +4,7 @@
 import { CallWithChatAdapter } from './CallWithChatAdapter';
 import { CallAdapter, CallAdapterState } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, SelectedVideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,

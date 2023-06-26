@@ -514,7 +514,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /* @conditional-compile-remove(video-background-effects) */
-  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: SelectedVideoBackgroundEffect): void {
+  public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
