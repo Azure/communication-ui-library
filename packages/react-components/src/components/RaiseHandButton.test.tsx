@@ -12,7 +12,6 @@ import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { screen } from '@testing-library/react';
 
-/* @conditional-compile-remove(raise-hand) */
 describe('RaiseHandButton strings should be localizable and overridable', () => {
   beforeAll(() => {
     registerIcons({
@@ -22,6 +21,11 @@ describe('RaiseHandButton strings should be localizable and overridable', () => 
       }
     });
   });
+  test('Always true test for stable build to avoid error of no tests in suite', async () => {
+    expect(true).toBe(true);
+  });
+
+  /* @conditional-compile-remove(raise-hand) */
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({
       raiseHandButton: { offLabel: 'Raise Hand', onLabel: 'Lower Hand' }
@@ -33,6 +37,7 @@ describe('RaiseHandButton strings should be localizable and overridable', () => 
     expect(screen.getByRole('button').textContent).toBe('Lower Hand');
   });
 
+  /* @conditional-compile-remove(raise-hand) */
   test('Should override button label with `strings` prop', async () => {
     const testLocale = createTestLocale({
       raiseHandButton: { offLabel: 'Raise Hand', onLabel: 'Lower Hand' }
