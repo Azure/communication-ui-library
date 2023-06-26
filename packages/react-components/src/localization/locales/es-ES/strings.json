@@ -44,8 +44,8 @@
     "tooltipContent": "Abandonar llamada"
   },
   "cameraButton": {
-    "onLabel": "Desactivar",
-    "offLabel": "Activar",
+    "onLabel": "Cámara",
+    "offLabel": "Cámara",
     "tooltipDisabledContent": "La cámara está deshabilitada",
     "tooltipOnContent": "Desconectar la cámara",
     "tooltipOffContent": "Activar la cámara",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Efectos"
   },
   "microphoneButton": {
-    "onLabel": "Silenciar",
-    "offLabel": "Reactivar audio",
+    "onLabel": "Micro",
+    "offLabel": "Micro",
     "tooltipDisabledContent": "Micrófono deshabilitado",
     "tooltipOnContent": "Silenciar micrófono",
     "tooltipOffContent": "Reactivar micrófono",
