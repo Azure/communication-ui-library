@@ -155,7 +155,16 @@
     "transferPageTransferorText": "転送しています...",
     "transferPageTransferTargetText": "接続中...",
     "transferPageUnknownTransferorDisplayName": "不明",
-    "transferPageUnknownTransferTargetDisplayName": "不明"
+    "transferPageUnknownTransferTargetDisplayName": "不明",
+    "transferPageNoticeString": "転送中です",
+    "participantCouldNotBeReachedTitle": "ターゲットの参加者は現在連絡できません",
+    "participantCouldNotBeReachedMoreDetails": "参加者が連絡可能になったら連絡してください",
+    "permissionToReachTargetParticipantNotAllowedTitle": "ターゲットの参加者への連絡が許可されていません",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "ターゲットの参加者が同じテナントにいることを確認してください",
+    "unableToResolveTenantTitle": "ターゲット参加者のテナント ID を解決できません",
+    "unableToResolveTenantMoreDetails": "参加者 ID が正しく入力チェックしてください",
+    "participantIdIsMalformedTitle": "参加者 ID の形式が正しくありません",
+    "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください"
   },
   "chat": {
     "chatListHeader": "このチャット内",

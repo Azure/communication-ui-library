@@ -44,8 +44,8 @@
     "tooltipContent": "مغادرة المكالمة"
   },
   "cameraButton": {
-    "onLabel": "إيقاف تشغيل",
-    "offLabel": "تمكين",
+    "onLabel": "الكاميرا",
+    "offLabel": "الكاميرا",
     "tooltipDisabledContent": "الكاميرا مُعطلة",
     "tooltipOnContent": "إيقاف تشغيل الكاميرا",
     "tooltipOffContent": "تشغيل الكاميرا",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "التأثيرات"
   },
   "microphoneButton": {
-    "onLabel": "كتم الصوت",
-    "offLabel": "إلغاء كتم الصوت",
+    "onLabel": "الميكروفون",
+    "offLabel": "الميكروفون",
     "tooltipDisabledContent": "تم تعطيل الميكروفون",
     "tooltipOnContent": "كتم صوت الميكروفون",
     "tooltipOffContent": "إلغاء كتم صوت الميكروفون",
