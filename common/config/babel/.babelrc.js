@@ -75,10 +75,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for updates needed for Click to Call (C2C) scenarios
-        'click-to-call',
-        // Mention feature
-        'mention',
         // Feature for call transfer
         'call-transfer'
       ],
