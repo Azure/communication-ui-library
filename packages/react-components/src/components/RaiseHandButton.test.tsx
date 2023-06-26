@@ -13,6 +13,7 @@ import { registerIcons } from '@fluentui/react';
 import { screen } from '@testing-library/react';
 
 describe('RaiseHandButton strings should be localizable and overridable', () => {
+  /* @conditional-compile-remove(raise-hand) */
   beforeAll(() => {
     registerIcons({
       icons: {
