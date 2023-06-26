@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(raise-hand) */
 import React from 'react';
+/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton } from './RaiseHandButton';
+/* @conditional-compile-remove(raise-hand) */
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
+/* @conditional-compile-remove(raise-hand) */
 import { registerIcons } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hand) */
 import { screen } from '@testing-library/react';
 
+/* @conditional-compile-remove(raise-hand) */
 describe('RaiseHandButton strings should be localizable and overridable', () => {
   beforeAll(() => {
     registerIcons({
