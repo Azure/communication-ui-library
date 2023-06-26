@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Removing OVC from in progress features",
+  "packageName": "@azure/communication-react",
+  "email": "vriosrada@microsoft.com",
+  "dependentChangeType": "patch"
+}
