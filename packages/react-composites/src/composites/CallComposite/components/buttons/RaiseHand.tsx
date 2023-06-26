@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { ControlBarButtonStyles, RaiseHandButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { usePropsFor } from '../../hooks/usePropsFor';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
 
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 /** @private */
 export const RaiseHand = (props: {
   // The value of `CallControlOptions.raiseHandButton`.
@@ -40,7 +40,7 @@ export const RaiseHand = (props: {
   );
 };
 
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 const isDisabled = (option?: boolean | { disabled: boolean }): boolean => {
   if (option === undefined || option === true || option === false) {
     return false;

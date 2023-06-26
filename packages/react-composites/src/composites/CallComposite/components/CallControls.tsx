@@ -21,7 +21,7 @@ import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from './buttons/RaiseHand';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -192,7 +192,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(rooms) */
   screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
 
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonIsEnabled = true;
 
   let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
@@ -224,7 +224,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
          */}
         <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
           {
-            /* @conditional-compile-remove(raise-hands) */ raiseHandButtonIsEnabled && (
+            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && (
               <RaiseHand displayType={options?.displayType} />
             )
           }

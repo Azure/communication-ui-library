@@ -397,21 +397,21 @@ export interface CallAdapterCallOperations {
    * @public
    */
   stopScreenShare(): Promise<void>;
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   /**
    * Raise hand for current user
    *
    * @public
    */
   raiseHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   /**
    * lower hand for current user
    *
    * @public
    */
   lowerHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hands) */
+  /* @conditional-compile-remove(raise-hand) */
   /**
    * Lower hand for participants from the call.
    *

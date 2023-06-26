@@ -7,12 +7,12 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { Features } from '@azure/communication-calling';
 import { CommunicationIdentifier, isCommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
@@ -94,7 +94,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         /* @conditional-compile-remove(teams-identity-support) */
         await call?.removeParticipant(participant);
       },
-      /* @conditional-compile-remove(raise-hands) */
+      /* @conditional-compile-remove(raise-hand) */
       onLowerHands: async (userIds: string[]): Promise<void> => {
         const participants = userIds.map((userId) => {
           return _toCommunicationIdentifier(userId) as CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;

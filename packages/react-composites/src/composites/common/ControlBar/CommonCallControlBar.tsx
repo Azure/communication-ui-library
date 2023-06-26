@@ -13,7 +13,7 @@ import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-compon
 import { ControlBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hands) */
+/* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
@@ -266,7 +266,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout="horizontal" styles={centerContainerStyles}>
                     {
-                      /* @conditional-compile-remove(raise-hands) */ isEnabled(options.raiseHandButton) && (
+                      /* @conditional-compile-remove(raise-hand) */ isEnabled(options.raiseHandButton) && (
                         <RaiseHand
                           displayType={options.displayType}
                           styles={commonButtonStyles}
