@@ -21,6 +21,8 @@ import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
 import { Participants } from './buttons/Participants';
 import { ScreenShare } from './buttons/ScreenShare';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHand } from './buttons/RaiseHand';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { People } from './buttons/People';
@@ -190,6 +192,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
   /* @conditional-compile-remove(rooms) */
   screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+
+  /* @conditional-compile-remove(raise-hands) */
+  const raiseHandButtonIsEnabled = true;
 
   let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
   /* @conditional-compile-remove(rooms) */

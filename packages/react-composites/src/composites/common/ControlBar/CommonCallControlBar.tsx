@@ -13,6 +13,8 @@ import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-compon
 import { ControlBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare';

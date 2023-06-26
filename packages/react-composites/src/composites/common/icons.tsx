@@ -139,6 +139,14 @@ export type CallCompositeIcons = {
   ControlButtonParticipants?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(raise-hands) */
+  ControlButtonRaiseHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hands) */
+  ControlButtonLowerHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hands) */
+  ParticipantItemRaisedHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hands) */
+  ParticipantIteRaisedHand?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;
