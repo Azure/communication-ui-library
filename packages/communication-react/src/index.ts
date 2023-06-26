@@ -260,6 +260,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(raise-hand) */
+export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(rooms) */
