@@ -51,6 +51,9 @@ export type {
   ViewScalingMode
 } from './types';
 
+/* @conditional-compile-remove(raise-hand) */
+export type { RaisedHand } from './types';
+
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsAvailableLanguageStrings } from './types';
 

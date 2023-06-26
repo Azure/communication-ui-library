@@ -10,6 +10,8 @@ import {
   PersonaPresence,
   Stack
 } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hand) */
+import { Text } from '@fluentui/react';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -77,6 +79,9 @@ export type ParticipantListProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onRemoveParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(raise-hand) */
+  /** Optional callback to render the context menu for each participant  */
+  onLowerHands?: (userIds: string[]) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
@@ -114,7 +119,9 @@ const onRenderParticipantDefault = (
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted
+    callingParticipant?.isScreenSharing ||
+    callingParticipant?.isMuted ||
+    /* @conditional-compile-remove(raise-hand) */ callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.isScreenSharing && (
@@ -127,6 +134,22 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
+            {
+              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
+                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
+                  <Stack.Item>
+                    <Text>{callingParticipant.raisedHand?.order}</Text>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Icon
+                      iconName="ParticipantItemRaisedHand"
+                      className={iconStyles}
+                      ariaLabel={strings.raisedHandIconLabel}
+                    />
+                  </Stack.Item>
+                </Stack>
+              )
+            }
           </Stack>
         )
       : () => null;
@@ -186,6 +209,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     myUserId,
     participants,
     onRemoveParticipant,
+    /* @conditional-compile-remove(raise-hand) */
+    onLowerHands,
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
@@ -218,6 +243,20 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         });
       }
 
+      /* @conditional-compile-remove(raise-hand) */
+      const callingParticipant = participant as CallParticipantListParticipant;
+      /* @conditional-compile-remove(raise-hand) */
+      if (callingParticipant.raisedHand && onLowerHands) {
+        menuItems.push({
+          key: 'lowerHand',
+          text: strings.lowerParticipantHandButtonLabel,
+          onClick: () => onLowerHands([participant.userId]),
+          itemProps: {
+            styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
+          }
+        });
+      }
+
       if (onFetchParticipantMenuItems) {
         menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
       }
@@ -229,8 +268,13 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       myUserId,
       onFetchParticipantMenuItems,
       onRemoveParticipant,
+      /* @conditional-compile-remove(raise-hand) */
+      onLowerHands,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
-      strings.removeButtonLabel
+      /* @conditional-compile-remove(raise-hand) */
+      strings.removeButtonLabel,
+      /* @conditional-compile-remove(raise-hand) */
+      strings.lowerParticipantHandButtonLabel
     ]
   );
 

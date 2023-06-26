@@ -172,6 +172,8 @@ export const _RemoteVideoTile = React.memo(
           displayName={remoteParticipant.displayName || strings?.displayNamePlaceholder}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={remoteParticipant.raisedHand}
           isSpeaking={remoteParticipant.isSpeaking}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
