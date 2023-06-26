@@ -7,7 +7,9 @@
     "mutedIconLabel": "Gedempt",
     "displayNamePlaceholder": "Naamloze deelnemer",
     "participantStateRinging": "Bellen...",
-    "participantStateHold": "In de wacht"
+    "participantStateHold": "In de wacht",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} typt ...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "Presenteren is uitgeschakeld",
     "tooltipOnContent": "Uw scherm presenteren",
     "tooltipOffContent": "Uw scherm presenteren"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "Gisteren",
