@@ -285,6 +285,10 @@ export const generateDefaultDeviceMenuProps = (
                 key: camera.id,
                 text: camera.name,
                 title: camera.name,
+                iconProps: {
+                  iconName: 'ContextMenuCameraIcon',
+                  styles: { root: { lineHeight: 0 } }
+                },
                 itemProps: {
                   styles: menuItemStyles
                 },
@@ -333,6 +337,10 @@ export const generateDefaultDeviceMenuProps = (
                 itemProps: {
                   styles: menuItemStyles
                 },
+                iconProps: {
+                  iconName: 'ContextMenuMicIcon',
+                  styles: { root: { lineHeight: 0 } }
+                },
                 canCheck: true,
                 isChecked: microphone.id === selectedMicrophone?.id,
                 onClick: () => {
@@ -368,6 +376,10 @@ export const generateDefaultDeviceMenuProps = (
                 title: speaker.name,
                 itemProps: {
                   styles: menuItemStyles
+                },
+                iconProps: {
+                  iconName: 'ContextMenuMicIcon',
+                  styles: { root: { lineHeight: 0 } }
                 },
                 canCheck: true,
                 isChecked: speaker.id === selectedSpeaker?.id,
