@@ -86,9 +86,12 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants = [];
+    let convert = convertRemoteParticipantToVideoGalleryRemoteParticipant as any;
+    /* @conditional-compile-remove(raise-hand) */
+    convert = convertRemoteParticipantToVideoGalleryRemoteParticipantBeta;
     return {
       screenShareParticipant: screenShareRemoteParticipant
-        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
+        ? convert(
             toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
             checkIsSpeaking(screenShareRemoteParticipant),
