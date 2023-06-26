@@ -79,8 +79,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'click-to-call',
         // Mention feature
         'mention',
-        // Feature for call transfer
-        'call-transfer',
         // Optimal Video count feature,
         'optimal-video-count'
       ],
