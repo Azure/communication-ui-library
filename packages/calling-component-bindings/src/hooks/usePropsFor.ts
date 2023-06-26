@@ -11,6 +11,8 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandButton } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -25,6 +27,8 @@ import {
   ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
+/* @conditional-compile-remove(raise-hands) */
+import { RaiseHandButtonSelector, raiseHandButtonSelector } from '../callControlSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { holdButtonSelector, HoldButtonSelector } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
@@ -99,6 +103,8 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? CameraButtonSelector
   : AreEqual<Component, typeof ScreenShareButton> extends true
   ? ScreenShareButtonSelector
+  : AreEqual<Component, typeof RaiseHandButton> extends true
+  ? /* @conditional-compile-remove(raise-hands) */ RaiseHandButtonSelector
   : AreEqual<Component, typeof ParticipantList> extends true
   ? ParticipantListSelector
   : AreEqual<Component, typeof ParticipantsButton> extends true
@@ -125,10 +131,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  if (component === HoldButton) {
-    return findConditionalCompiledSelector(component);
-  }
   return findSelector(component);
 };
 
@@ -137,6 +139,16 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   // Dialpad only has handlers currently and doesn't require any props from the stateful layer so return the emptySelector
   if (component === Dialpad) {
     return emptySelector;
+  }
+
+  /* @conditional-compile-remove(raise-hands) */
+  if (component === RaiseHandButton) {
+    return raiseHandButtonSelector;
+  }
+
+  /* @conditional-compile-remove(PSTN-calls) */
+  if (component === HoldButton) {
+    return holdButtonSelector;
   }
 
   switch (component) {
@@ -160,12 +172,4 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return errorBarSelector;
   }
   return undefined;
-};
-
-/* @conditional-compile-remove(PSTN-calls) */
-const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
-  switch (component) {
-    case HoldButton:
-      return holdButtonSelector;
-  }
 };

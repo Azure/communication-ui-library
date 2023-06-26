@@ -11,11 +11,15 @@ import {
   getIsMuted,
   CallingBaseSelectorProps
 } from './baseSelectors';
+/* @conditional-compile-remove(raise-hand) */
+import { getUserRaisedHand } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(raise-hand) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(rooms) */
+import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(communication-common-beta-v3) */
@@ -60,6 +64,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
+            /* @conditional-compile-remove(raise-hand) */ participant.raisedHand,
             /* @conditional-compile-remove(rooms) */ participant.role
           );
         })
@@ -76,8 +81,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(raise-hand) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
+  /* @conditional-compile-remove(rooms) */
+  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
@@ -100,13 +107,22 @@ export type ParticipantListSelector = (
  * @public
  */
 export const participantListSelector: ParticipantListSelector = createSelector(
-  [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
+  [
+    getIdentifier,
+    getDisplayName,
+    getRemoteParticipants,
+    getIsScreenSharingOn,
+    getIsMuted,
+    /* @conditional-compile-remove(raise-hand) */ getUserRaisedHand
+  ],
   (
     userId,
     displayName,
     remoteParticipants,
     isScreenSharingOn,
-    isMuted
+    isMuted,
+    /* @conditional-compile-remove(raise-hand) */
+    userRaisedHand
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -121,6 +137,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
+      /* @conditional-compile-remove(raise-hand) */
+      raisedHand: userRaisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false

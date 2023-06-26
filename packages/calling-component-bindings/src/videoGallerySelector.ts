@@ -27,6 +27,9 @@ import {
   memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
 
+/* @conditional-compile-remove(raise-hand) */
+import { convertRemoteParticipantToVideoGalleryRemoteParticipantBeta } from './utils/videoGalleryUtils';
+
 /**
  * Selector type for {@link VideoGallery} component.
  *
@@ -89,6 +92,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
             checkIsSpeaking(screenShareRemoteParticipant),
+            /* @conditional-compile-remove(raise-hand) */
+            screenShareRemoteParticipant.raisedHand,
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName

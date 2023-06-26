@@ -5,6 +5,8 @@ import { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hands) */
+import { RaisedHand } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
 
@@ -54,7 +56,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   };
 };
 
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(raise-hands) */
 /**
  * @private
  */
@@ -66,9 +68,37 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
+    raisedHand: RaisedHand | undefined,
     role: Role
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      raisedHand,
+      role
+    );
+  }
+);
+
+/* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
+  (
+    userId: string,
+    displayName: string | undefined,
+    state: RemoteParticipantState,
+    isMuted: boolean,
+    isScreenSharing: boolean,
+    isSpeaking: boolean,
+    role: Role
+  ): CallParticipantListParticipant => {
+    return convertRemoteParticipantToParticipantListParticipantBetaRelease(
       userId,
       displayName,
       state,
@@ -80,8 +110,33 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
   }
 );
 
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(raise-hands) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (
+  userId: string,
+  displayName: string | undefined,
+  state: RemoteParticipantState,
+  isMuted: boolean,
+  isScreenSharing: boolean,
+  isSpeaking: boolean,
+  raisedHand: RaisedHand | undefined,
+  role: Role
+): CallParticipantListParticipant => {
+  return {
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking
+    ),
+    raisedHand,
+    role
+  };
+};
+
+/* @conditional-compile-remove(rooms) */
+const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
   userId: string,
   displayName: string | undefined,
   state: RemoteParticipantState,
