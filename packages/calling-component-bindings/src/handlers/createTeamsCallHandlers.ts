@@ -15,7 +15,11 @@ import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-sta
 import memoizeOne from 'memoize-one';
 import { ReactElement } from 'react';
 import { isTeamsCallParticipants } from '../utils/callUtils';
-import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
+import {
+  createDefaultCommonCallingHandlers,
+  CommonCallingHandlers,
+  VideoBackGroundDependency
+} from './createCommonHandlers';
 
 /**
  * Object containing all the teams call handlers required for calling components.
@@ -45,10 +49,13 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     callClient: StatefulCallClient,
     callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent,
     deviceManager: StatefulDeviceManager | undefined,
-    call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall
+    call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall,
+    options?: {
+      onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+    }
   ): never | TeamsCallingHandlers => {
     return {
-      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
+      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
       onStartCall: (participants, options) => {
         /* @conditional-compile-remove(teams-identity-support) */
         const threadId = options?.threadId;

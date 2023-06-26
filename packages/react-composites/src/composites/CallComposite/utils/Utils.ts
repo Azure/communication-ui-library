@@ -14,10 +14,8 @@ import {
 } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
+import { AdapterStateModifier, VideoBackGroundDependency } from '../adapter/AzureCommunicationCallAdapter';
 import { AdapterError } from '../../common/adapters';
-/* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurEffect, BackgroundReplacementEffect } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
@@ -473,12 +471,15 @@ export const dismissVideoEffectsError = (toDismiss: AdapterError): DismissedErro
 /* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export const getBackgroundEffectFromSelectedEffect = (
-  selectedEffect: VideoBackgroundEffect | undefined
+  selectedEffect: VideoBackgroundEffect | undefined,
+  videoBackgroundDependency: VideoBackGroundDependency
 ): VideoEffectProcessor | undefined =>
   selectedEffect?.effectName === 'blur'
-    ? new BackgroundBlurEffect()
+    ? videoBackgroundDependency.createBackgroundBlurEffect()
     : selectedEffect?.effectName === 'replacement'
-    ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
+    ? videoBackgroundDependency.createBackgroundReplacementEffect({
+        backgroundImageUrl: selectedEffect.backgroundImageUrl
+      })
     : undefined;
 
 /* @conditional-compile-remove(video-background-effects) */

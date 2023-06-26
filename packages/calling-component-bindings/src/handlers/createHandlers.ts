@@ -17,7 +17,11 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
-import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
+import {
+  createDefaultCommonCallingHandlers,
+  CommonCallingHandlers,
+  VideoBackGroundDependency
+} from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -44,10 +48,13 @@ export const createDefaultCallingHandlers = memoizeOne(
     callClient: StatefulCallClient,
     callAgent: CallAgent | undefined,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | undefined
+    call: Call | undefined,
+    options?: {
+      onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+    }
   ): CallingHandlers => {
     return {
-      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call),
+      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
       // FIXME: onStartCall API should use string, not the underlying SDK types.
       onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
         /* @conditional-compile-remove(teams-adhoc-call) */

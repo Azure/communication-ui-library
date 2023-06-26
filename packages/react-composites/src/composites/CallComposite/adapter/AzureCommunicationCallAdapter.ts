@@ -33,14 +33,16 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call
+  Call,
+  BackgroundBlurEffect,
+  BackgroundReplacementEffect
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -120,7 +122,10 @@ class CallContext {
       /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
-      /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages?: VideoBackgroundImage[];
+      /* @conditional-compile-remove(video-background-effects) */
+      videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+      };
     }
   ) {
     this.state = {
@@ -136,7 +141,8 @@ class CallContext {
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
-      /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages: options?.videoBackgroundImages,
+      /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages:
+        options?.videoBackgroundOptions?.videoBackgroundImages,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined
     };
@@ -316,6 +322,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+  private onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
 
   private get call(): CallCommon | undefined {
     return this._call;
@@ -331,7 +338,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     locator: CallAdapterLocator,
     callAgent: AgentType,
     deviceManager: StatefulDeviceManager,
-    options?: AzureCommunicationCallAdapterOptions & TeamsAdapterOptions
+    options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
   ) {
     this.bindPublicMethods();
     this.callClient = callClient;
@@ -345,9 +352,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(rooms) */
     // to prevent showing components that depend on role such as local video tile, camera button, etc. in a rooms call
     // we set the default roleHint as 'Consumer' when roleHint is undefined since it has the lowest level of permissions
-    if (isRoomsCall && options?.roleHint === undefined) {
+    if (isRoomsCall && options && 'roleHint' in options && options?.roleHint === undefined) {
       options = { ...options, roleHint: 'Consumer' };
     }
+
+    this.onResolveVideoBackGroundDependency = options?.videoBackgroundOptions?.onResolveDependency;
 
     this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
 
@@ -372,7 +381,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.context.updateClientState(clientState);
     };
 
-    this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined);
+    this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined, {
+      onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+    });
 
     this.onClientStateChange = onStateChange;
 
@@ -655,9 +666,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         {
           const selectedEffect = this.getState().selectedVideoBackgroundEffect;
           const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-          if (selectedEffect && selectedCamera) {
+          if (selectedEffect && selectedCamera && this.onResolveVideoBackGroundDependency) {
             const stream = new SDKLocalVideoStream(selectedCamera);
-            const effect = getBackgroundEffectFromSelectedEffect(selectedEffect);
+            const effect = getBackgroundEffectFromSelectedEffect(
+              selectedEffect,
+              await this.onResolveVideoBackGroundDependency()
+            );
 
             if (effect) {
               await stream.feature(Features.VideoEffects).startEffects(effect);
@@ -1113,13 +1127,24 @@ export type CommonCallAdapterOptions = {
   /**
    * Default set of background images for background image picker.
    */
-  videoBackgroundImages?: VideoBackgroundImage[];
+  videoBackgroundOptions?: {
+    videoBackgroundImages?: VideoBackgroundImage[];
+    onResolveDependency?: () => Promise<VideoBackGroundDependency>;
+  };
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
    * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
    * and would not be updated again within the lifecycle of adapter.
    */
   onFetchProfile?: OnFetchProfileCallback;
+};
+
+/**
+ * @private
+ */
+export type VideoBackGroundDependency = {
+  createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+  createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
 
 /**

@@ -32,7 +32,7 @@ export type { CallingHandlers } from './handlers/createHandlers';
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsOptions } from './handlers/createCommonHandlers';
+export type { CaptionsOptions, VideoBackGroundDependency } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 

@@ -15,6 +15,7 @@ import {
   _isTeamsCall,
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
+import { VideoBackGroundDependency } from './AzureCommunicationCallAdapter';
 
 /**
  * @private
@@ -32,16 +33,31 @@ export const createHandlers = <AgentType extends CallAgent | TeamsCallAgent>(
   callClient: StatefulCallClient,
   callAgent: AgentType,
   deviceManager: StatefulDeviceManager | undefined,
-  call: CallCommon | undefined
+  call: CallCommon | undefined,
+  options?: {
+    onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+  }
 ): CallHandlersOf<AgentType> => {
   // Call can be either undefined or ACS Call
   if (_isACSCallAgent(callAgent) && (!call || (call && _isACSCall(call)))) {
-    return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call) as CallHandlersOf<AgentType>;
+    return createDefaultCallingHandlers(
+      callClient,
+      callAgent,
+      deviceManager,
+      call,
+      options
+    ) as CallHandlersOf<AgentType>;
   }
 
   /* @conditional-compile-remove(teams-identity-support) */
   if (_isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
-    return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call) as CallHandlersOf<AgentType>;
+    return createDefaultTeamsCallingHandlers(
+      callClient,
+      callAgent,
+      deviceManager,
+      call,
+      options
+    ) as CallHandlersOf<AgentType>;
   }
   throw new Error('Unhandled agent type');
 };

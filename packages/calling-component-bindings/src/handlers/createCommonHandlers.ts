@@ -6,7 +6,11 @@ import {
   Call,
   LocalVideoStream,
   StartCallOptions,
-  VideoDeviceInfo
+  VideoDeviceInfo,
+  BackgroundBlurEffect,
+  BackgroundReplacementEffect,
+  BackgroundBlurConfig,
+  BackgroundReplacementConfig
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -22,13 +26,6 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */
-import {
-  BackgroundBlurConfig,
-  BackgroundBlurEffect,
-  BackgroundReplacementConfig,
-  BackgroundReplacementEffect
-} from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
 
@@ -113,6 +110,14 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 };
 
 /**
+ * @beta
+ */
+export type VideoBackGroundDependency = {
+  createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+  createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
+
+/**
  * Create the common implementation of {@link CallingHandlers} for all types of Call
  *
  * @private
@@ -121,7 +126,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined
+    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
+    options?: {
+      onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+    }
   ): CommonCallingHandlers => {
     const onStartLocalVideo = async (): Promise<void> => {
       // Before the call object creates a stream, dispose of any local preview streams.
@@ -464,7 +472,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream.feature(Features.VideoEffects).startEffects(new BackgroundBlurEffect(backgroundBlurConfig));
+        const createEffect =
+          options?.onResolveVideoBackGroundDependency &&
+          (await options.onResolveVideoBackGroundDependency())?.createBackgroundBlurEffect;
+        return createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundBlurConfig));
       }
     };
 
@@ -476,9 +487,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        return stream
-          .feature(Features.VideoEffects)
-          .startEffects(new BackgroundReplacementEffect(backgroundReplacementConfig));
+        const createEffect =
+          options?.onResolveVideoBackGroundDependency &&
+          (await options.onResolveVideoBackGroundDependency())?.createBackgroundReplacementEffect;
+        return (
+          createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundReplacementConfig))
+        );
       }
     };
     /* @conditional-compile-remove(close-captions) */

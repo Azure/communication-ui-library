@@ -117,7 +117,9 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
-      videoBackgroundImages
+      videoBackgroundOptions: {
+        videoBackgroundImages
+      }
     }),
     []
   );
