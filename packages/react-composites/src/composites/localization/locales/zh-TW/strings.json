@@ -155,7 +155,16 @@
     "transferPageTransferorText": "正在轉接...",
     "transferPageTransferTargetText": "正在連線...",
     "transferPageUnknownTransferorDisplayName": "未知",
-    "transferPageUnknownTransferTargetDisplayName": "未知"
+    "transferPageUnknownTransferTargetDisplayName": "未知",
+    "transferPageNoticeString": "正在將您轉接",
+    "participantCouldNotBeReachedTitle": "目標參與者目前沒空",
+    "participantCouldNotBeReachedMoreDetails": "請在參與者有空時聯絡他們",
+    "permissionToReachTargetParticipantNotAllowedTitle": "不允許連絡目標參與者的權限",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "請檢查目標參與者是否位於相同的租用戶中",
+    "unableToResolveTenantTitle": "無法解析目標參與者的租用戶識別碼",
+    "unableToResolveTenantMoreDetails": "請檢查已正確輸入參與者識別碼",
+    "participantIdIsMalformedTitle": "參與者識別碼的格式不正確",
+    "participantIdIsMalformedMoreDetails": "請檢查參與者識別碼的格式是否正確"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
