@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Optimal Video Count provides a way to get a value which dictates the maximum number of remote renderers that should be rendered to get a good quality video.",
+  "packageName": "@azure/communication-react",
+  "email": "vriosrada@microsoft.com",
+  "dependentChangeType": "patch"
+}
