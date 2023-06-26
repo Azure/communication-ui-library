@@ -66,10 +66,10 @@
     "events": "~3.3.0",
     "immer": "9.0.6",
     "memoize-one": "~5.2.1",
-    "nanoid": "3.1.32",
     "react-linkify": "^1.0.0-alpha",
     "reselect": "~4.0.0",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "nanoid": "3.3.6"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.14.1-beta.1 || >=1.14.1",
