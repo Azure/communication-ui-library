@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "rebase on master",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "patch"
+}
