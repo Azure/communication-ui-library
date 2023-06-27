@@ -24,7 +24,7 @@ We achieve this by conditionally compiling away code to drop features from the s
 
 All build, test, local development server scripts can compile the code in this repository in one of two flavors:
 
-* `beta`: This is the default build flavor. It includes all code in the packages, and depends on the beta flavors of some of our dependencies.
+* `beta`: This is the default build flavor. It includes all code in the packges, and depends on the beta flavors of some of our dependencies.
 * `stable`: Conditionally compiled code is removed when building this flavor. It also depends on only the stable flavors of our dependencies.
 
 # Tooling
@@ -104,7 +104,7 @@ To install the extension:
 3. Restart your VSCode to activate the extension
 
 To use the extension:
-1. Switch stable flavor using `rush switch-flavor:stable` or switch beta-release flavor using `rush switch-flavor:beta-release`
+1. Switch stable flavor using `rush switch-flavor:stable`
 2. Press Ctrl + Shift + P when you have your VSCode open, type `Before-after Diff: Enable On Save Feature`, press Enter
 3. Start editing your code, once you save the file, the extension will run the preprocess command and beautify the generated file
 4. Once finished, a side by side diff window will be opened, left side will be generated code, and right side will be original code
