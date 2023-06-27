@@ -92,7 +92,7 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
  */
 export const getIsCTE = (): boolean | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
-  return !!urlParams.get('isCTE');
+  return urlParams.get('isCTE') === 'true';
 };
 
 /* @conditional-compile-remove(rooms) */
