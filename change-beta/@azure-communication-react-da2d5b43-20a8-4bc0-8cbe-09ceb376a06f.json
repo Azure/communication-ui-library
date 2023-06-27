@@ -1,5 +1,5 @@
 {
-  "type": "pre-release",
+  "type": "prerelease",
   "comment": "adding raised hand functionality to stateful client",
   "packageName": "@azure/communication-react",
   "email": "ruslanzdor@microsoft.com",
