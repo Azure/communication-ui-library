@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Doorverbinden...",
     "transferPageTransferTargetText": "Verbinding maken...",
     "transferPageUnknownTransferorDisplayName": "Onbekend",
-    "transferPageUnknownTransferTargetDisplayName": "Onbekend"
+    "transferPageUnknownTransferTargetDisplayName": "Onbekend",
+    "transferPageNoticeString": "U wordt doorgeschakeld",
+    "participantCouldNotBeReachedTitle": "Doeldeelnemer is momenteel niet beschikbaar",
+    "participantCouldNotBeReachedMoreDetails": "Neem contact op met de deelnemer wanneer deze beschikbaar is",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Machtiging om de doeldeelnemer te bereiken is niet toegestaan",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Controleer of de doeldeelnemer zich in dezelfde tenant bevindt",
+    "unableToResolveTenantTitle": "Kan de tenant-id voor de doeldeelnemer niet omzetten",
+    "unableToResolveTenantMoreDetails": "Controleer of de deelnemer-id juist is ingevoerd",
+    "participantIdIsMalformedTitle": "Deelnemer-id heeft niet de juiste indeling",
+    "participantIdIsMalformedMoreDetails": "Controleer of de deelnemer-id de juiste indeling heeft"
   },
   "chat": {
     "chatListHeader": "In deze chat",

@@ -71,6 +71,7 @@ export const parameters = {
           'Identity',
           'Rooms',
           'Communication as Teams user',
+          'Adhoc calling',
           'Transfer'
         ],
         EXAMPLES_FOLDER_PREFIX,

@@ -104,6 +104,10 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount: {
+      maxRemoteVideoStreams: 4
     }
   };
   return call;

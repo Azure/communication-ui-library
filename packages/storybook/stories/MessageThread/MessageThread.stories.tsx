@@ -241,7 +241,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Mention of Users with a custom renderer within Messages</Heading>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         When a user is mentioned in a message, a custom HTML tag is used to represent the element in the MessageThread.
         This element can be styled using the standard methods and the renderer can be overridden for further

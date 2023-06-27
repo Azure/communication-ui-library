@@ -26,7 +26,7 @@ export const childrenContainerStyle = (pageControlBarHeight: number): IStyle => 
  */
 export const rootStyle: IStyle = {
   height: '100%',
-  width: '100%',
+  width: 'inherit', // this needs to inherit its parent's width otherwise will collapse if there are no children.
   gap: `${VERTICAL_GALLERY_GAP}rem`,
   position: 'relative'
 };

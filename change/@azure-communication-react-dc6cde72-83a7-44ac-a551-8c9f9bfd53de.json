@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fixed captionsBannerProps naming to adhere to internal type naming convention, improved styling and internal storybook",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}

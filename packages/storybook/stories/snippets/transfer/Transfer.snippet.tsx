@@ -16,14 +16,14 @@ export type ContainerProps = {
   fluentTheme?: PartialTheme | Theme;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
-  // Teams user ids need to have prefix '8:orgid:'. For example, '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
+  // Teams user ids need to be in format '8:orgid:<UUID>'. For example, '8:orgid:87d349ed-44d7-43e1-9a83-5f2406dee5bd'
   microsoftTeamsUserId?: string;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   const credential = useMemo(() => {
     try {
-      return new AzureCommunicationTokenCredential(props.token); // <-- This props.token would be your Teams access token
+      return new AzureCommunicationTokenCredential(props.token);
     } catch {
       console.error('Failed to construct token credential');
       return undefined;
