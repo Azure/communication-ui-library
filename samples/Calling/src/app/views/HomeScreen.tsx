@@ -417,13 +417,16 @@ const TeamsUserIdsTextFieldLabel = (props: ITextFieldProps): JSX.Element => {
     maxWidth: '18.75rem'
   };
   const calloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
-  const iconButtonStyles: Partial<IButtonStyles> = { root: { height: '26px' } };
+  const iconButtonStyles: Partial<IButtonStyles> = { root: { height: '1.625rem' } };
   const iconProps = { iconName: 'Info' };
 
   return (
     <>
       <Stack horizontal verticalAlign="center">
-        <label className={mergeStyles({ fontWeight: 600, paddingTop: '5px', paddingBottom: '5px' })} id={props.id}>
+        <label
+          className={mergeStyles({ fontWeight: 600, paddingTop: '0.3125rem', paddingBottom: '0.3125rem' })}
+          id={props.id}
+        >
           {props.label}
         </label>
         <IconButton
