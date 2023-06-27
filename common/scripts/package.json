@@ -1,8 +1,0 @@
-{
-  "name": "@internal/scripts",
-  "version": "1.0.0",
-  "private": true,
-  "devDependencies": {
-    "semver": "~7.5.3"
-  }
-}
