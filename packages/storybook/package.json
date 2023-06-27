@@ -60,7 +60,7 @@
     "@storybook/react": "~6.5.14",
     "@storybook/storybook-deployer": "~2.8.16",
     "@storybook/theming": "~6.5.14",
-    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/jest-dom": "^5.16.5",
     "@types/classnames": "^2.2.11",
     "@types/jest": "~29.5.2",
     "@types/json-stringify-safe": "^5.0.0",
