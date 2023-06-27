@@ -184,10 +184,6 @@ class CallContext {
     this.callId = callId;
   }
 
-  public setIncomingCallIdToJoin(callId?: string): void {
-    this.setState({ ...this.state, incomingCallIdToJoin: callId });
-  }
-
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.on('callEnded', handler);
   }
@@ -512,18 +508,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  public async acceptIncomingCall(id: string): Promise<undefined> {
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      this.call && _isInCall(this.call.state) && this.call?.hold();
-      this.context.setIncomingCallIdToJoin(id);
-      this.call = undefined;
-      this.context.setCurrentCallId(undefined);
-      // Sync client state to make sure correct state being set
-      this.context.updateClientState(this.callClient.getState());
-      return undefined;
-    });
-  }
-
   public async querySpeakers(): Promise<AudioDeviceInfo[]> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       return this.deviceManager.isSpeakerSelectionAvailable ? this.deviceManager.getSpeakers() : [];
@@ -567,11 +551,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private async _joinIncomingCall(
     incomingCallId: string,
-    audioOptions: AudioOptions,
-    videoOptions: VideoOptions
+    audioOptions?: AudioOptions,
+    videoOptions?: VideoOptions
   ): Promise<CallCommon> {
     const ret = await this.handlers.onAcceptIncomingCall(incomingCallId, { audioOptions, videoOptions });
-    this.context.setIncomingCallIdToJoin(undefined);
     if (!ret) {
       throw new Error('Cannot join the incomingCall, please check the call id is still there!');
     }
@@ -1023,11 +1006,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         callerInfo: event.incomingCall.callerInfo,
         accept: () => {
           this.call && _isInCall(this.call.state) && this.call?.hold();
-          this.context.setIncomingCallIdToJoin(event.incomingCall.id);
-          this.call = undefined;
-          this.context.setCurrentCallId(undefined);
-          // Sync client state to make sure correct state being set
-          this.context.updateClientState(this.callClient.getState());
+          this._joinIncomingCall(event.incomingCall.id);
         }
       }
     });
@@ -1117,7 +1096,6 @@ export type CallParticipantsLocator = {
  */
 export type IncomingCallLocator = {
   kind: 'IncomingCallLocator';
-  incomingCallIdToAccept?: string;
 };
 
 /**
