@@ -27,7 +27,7 @@
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react-northstar": "0.61.0",
-    "@fluentui/react": "~8.98.3",
+    "@fluentui/react": "~8.110.4",
     "@fluentui/theme-samples": "8.1.5",
     "@internal/fake-backends": "1.6.1-beta.0",
     "@microsoft/applicationinsights-react-js": "~3.0.5",
