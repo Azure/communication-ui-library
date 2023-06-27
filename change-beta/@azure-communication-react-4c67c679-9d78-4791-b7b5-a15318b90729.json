@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Prevent device contextMenu to be dismissed",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}
