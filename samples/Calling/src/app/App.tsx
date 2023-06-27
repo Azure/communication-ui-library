@@ -119,8 +119,11 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             let callLocator: CallAdapterLocator | undefined =
-              //{ kind: 'IncomingCallLocator' } ||
-              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
+              // This is the locator to enable call waiting screen
+              { kind: 'IncomingCallLocator' } ||
+              callDetails.callLocator ||
+              getTeamsLinkFromUrl() ||
+              getGroupIdFromUrl();
 
             /* @conditional-compile-remove(rooms) */
             callLocator = callLocator || getRoomIdFromUrl();
