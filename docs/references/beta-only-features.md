@@ -45,8 +45,6 @@ rush switch-flavor:beta
 rush build
 ```
 
-
-
 All the build tooling is aware of build flavor and works as expected:
 
 ```bash
@@ -68,7 +66,7 @@ rushx start
 
 This is especially useful because `rush build` may hide detailed errors upon failure.
 
-The only exception is `rush update` for stable flavor. There is a separate command to update dependencies for stable flavored build:
+The only exception is `rush update`. There is a separate command to update dependencies for stable flavored build:
 
 ```bash
 rush update:stable
@@ -76,15 +74,10 @@ rush update:stable
 
 # Conditionally adding a feature
 
-You must first define your new feature by adding it to the `features` and `inProgressFeatures` (not ready for release) list in [this config file](../../common/config/babel/.babelrc.js).
-
-You will need to make your feature [independently removable](#independently-removable-feature) when you are adding them, otherwise you might see some CI failures when raising your PR.
+You must first define your new feature by adding it to the [`features` list in this config file](../../common/config/babel/.babelrc.js).
 
 This repository contains a [live document](../../packages/acs-ui-common/src/conditional-compilation-sample/index.tsx) that describes how you can then add code that is conditionally compiled, and also walks through common scenarios you might encounter when trying to add a beta-only
 feature.
-
-## When the feature is ready for beta release
-When your feature are ready for beta release, remove it from inProgressFeatures, but keep it in features list, in [this config file](../../common/config/babel/.babelrc.js).
 
 ## Stabilizing a feature
 
@@ -121,13 +114,6 @@ To use the extension:
 The extension is just a small tool to run a specific command to generate code and compare them based on relative path, you can easily check and edit settings for the extension:
 `.vscode/settings.json`
 
-## Independently removable feature
-Independently removable means that your single feature can be removed from the source code without causing any errors. All our current CC features are beta-removable, which means they could be removed altogether under stable flavor, but this does not necessarily mean they are independently removable. 
-
-If your code passes the CC check but not CCC check, it is a high chance that your code is not independently removable. And most likely that means your beta feature and some other beta features share same lines, which breaks the build when only one feature gets removed.
-
-There is [a good example commit](https://github.com/Azure/communication-ui-library/pull/3088/commits/710e2c47b9b845c3041ff6d815ceae8155d9184d) on what is not independently removable and how to fix it.
-
 # Releases
 
 Conditional compilation necessitates a few extra steps when we release a package:
@@ -142,11 +128,3 @@ You an help with the manual step of figuring out what the CHANGELOG is in each r
 * `prerelease` for a change that affects only the beta flavor build
 * `patch`, `minor` or `major` for changes that affect the stable (and of course beta) flavor build as appropriate.
 * `none` for documentation changes etc that don't affect the NPM bundle meaningfully.
-
-## Writing changelog of in progress feature
-1. When you are developing in-progress features, choose `none` when you do the `rush changelog`, so release driver can ignore them when grooming the release log. 
-
-2. We expect there is a single PR to remove feature from in-progress list, at that time, write a better general (in 1-2 sentences) introduction to your feature, so release driver knows what to write in the release log. 
-
-## Look for release thread
-If you are a in-progress feature owner, please look for release thread posted by release driver, which contains api snapshot updates and UI snapshot updates, please make sure your in-progress feature are correctly removed in api snapshots and behaves correctly in UI snapshots. If you find anything not working well, that might be an indicator that some more sentences needed to be conditional compiled.
