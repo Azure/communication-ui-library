@@ -189,7 +189,7 @@ const convertPageStateToString = (state: CallAdapterState): string => {
 const videoBackgroundImages = [
   {
     key: 'ab1',
-    url: '/backgrounds/abstract1.jpg',
+    url: '/backgrounds/contoso.png',
     tooltipText: 'Custom Background'
   },
   {
