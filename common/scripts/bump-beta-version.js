@@ -13,19 +13,19 @@ const main = () => {
 
 const bumpBetaVersion = (currentVersion) => {
   const versionStrs = currentVersion.split('-beta.');
-  const [major, minor] = versionStrs[0].split('.');
+  const [major, minor, patch] = versionStrs[0].split('.');
   const betaVersion = versionStrs[1];
   
-  // If there is no beta version then we simply append '-beta.0'
   if (betaVersion === undefined) {
-    return [versionStrs, 0].join('-beta.');
+    // We will bump the minor version when we create a beta on top of a stable one
+    const newMinor = Number.parseInt(minor) + 1;
+    // If there is no beta version then we simply append '-beta.0'
+    return `${major}.${newMinor}.0-beta.0`
   }
 
   const newBeta = Number.parseInt(betaVersion) + 1;
-  // We will bump the minor version when we create a beta on top of a stable one
-  const newMinor = Number.parseInt(betaVersion) === 0 ? Number.parseInt(minor) + 1 : minor;
 
-  return [[major, newMinor, 0].join('.'), `${newBeta}`].join('-beta.');
+  return `${major}.${minor}.${patch}-beta.${newBeta}`
 }
 
 main();
