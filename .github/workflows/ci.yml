@@ -651,6 +651,7 @@ jobs:
         id: visualregressiontests
         run: |
           cd samples/tests
+          npx playwright install --with-deps
           rushx test:e2e:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
