@@ -1,8 +1,101 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Tue, 23 May 2023 21:43:12 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Jun 2023 22:07:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.7.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.7.0-beta.1)
+
+Tue, 27 Jun 2023 22:07:18 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.6.0...@azure/communication-react_v1.7.0-beta.1)
+
+### Minor changes
+
+- `@azure/communication-react`
+  - `@azure/communication-chat` peer dependency updated to 1.3.2-beta.2 for beta packages ([PR #3115](https://github.com/azure/communication-ui-library/pull/3115) by joshlai@microsoft.com)
+  - Introduce new handler for disposing screen share for remote particapants, stops flash when navigating overflow galleries ([PR #3202](https://github.com/azure/communication-ui-library/pull/3202) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Bump peer depedencies to react 18 ([PR #3050](https://github.com/azure/communication-ui-library/pull/3050) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Add const exports for missing supported locales ([PR #3163](https://github.com/azure/communication-ui-library/pull/3163) by 77021369+jimchou-dev@users.noreply.github.com)
+  - Implement file sharing from Teams to ACS ([PR #3132](https://github.com/azure/communication-ui-library/pull/3132) by 77021369+jimchou-dev@users.noreply.github.com)
+  - `react-aria-live` react 18 support ([PR #3050](https://github.com/azure/communication-ui-library/pull/3050) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update control bar ui ([PR #3254](https://github.com/azure/communication-ui-library/pull/3254) by carolinecao@microsoft.com)
+
+### Patches
+
+- `@azure/communication-react`
+  - Add `Edited` for live message speak out ([PR #3173](https://github.com/azure/communication-ui-library/pull/3173) by longamy@microsoft.com)
+  - Add margin to participant item to allow the focus border to show when selecting each participant with keyboard ([PR #3178](https://github.com/azure/communication-ui-library/pull/3178) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - updating @azure dependencies ([PR #3182](https://github.com/azure/communication-ui-library/pull/3182) by alkwa@microsoft.com)
+  - Embed the EditBox inside a Chat.Message to enable the accessibility ([PR #3097](https://github.com/azure/communication-ui-library/pull/3097) by longamy@microsoft.com)
+  - Extend touchable/clickable area of button to full height of send box. ([PR #3185](https://github.com/azure/communication-ui-library/pull/3185) by longamy@microsoft.com)
+  - Update micPrimaryActionSplitButtonTitle to microphonePrimaryActionSplitButtonTitle ([PR #3214](https://github.com/azure/communication-ui-library/pull/3214) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update useAzureCommunicationCallAdapter hook to protect against multiple client creations ([PR #3157](https://github.com/azure/communication-ui-library/pull/3157) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Replace useId with a communication react specific id generator for React 16 ([PR #3239](https://github.com/azure/communication-ui-library/pull/3239) by edwardlee@microsoft.com)
+  - Remove default persona coin size in VideoTile. Changed onRenderAvatar callback not show persona until coin size is defined. ([PR #3051](https://github.com/azure/communication-ui-library/pull/3051) by 79475487+mgamis-msft@users.noreply.github.com)
+  - update unsubscribe logic for captions ([PR #3203](https://github.com/azure/communication-ui-library/pull/3203) by alkwa@microsoft.com)
+  - Updates VideoTile resize hook to not rerender on the observer reference ([PR #3223](https://github.com/azure/communication-ui-library/pull/3223) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Expose aria-labelledby prop for participantItems ([PR #3218](https://github.com/azure/communication-ui-library/pull/3218) by edwardlee@microsoft.com)
+  - Show local tile in the overflow gallery when video gallery is in default layout ([PR #3222](https://github.com/azure/communication-ui-library/pull/3222) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Update video gallery behavior to show local tile when screen sharing alone in a call ([PR #3222](https://github.com/azure/communication-ui-library/pull/3222) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Add the leaving page ([PR #3108](https://github.com/azure/communication-ui-library/pull/3108) by jiangnanhello@live.com)
+  - Removed Duplicated Package Reference in React Component Package ([PR #3112](https://github.com/azure/communication-ui-library/pull/3112) by 109105353+jpeng-ms@users.noreply.github.com)
+  - Fix scroll and new message prompt in sidepane chat for safari ([PR #3116](https://github.com/azure/communication-ui-library/pull/3116) by edwardlee@microsoft.com)
+  - Update locale strings ([PR #3181](https://github.com/azure/communication-ui-library/pull/3181) by 2684369+JamesBurnside@users.noreply.github.com)
+  - add new handler to dispose screenshare ([PR #3202](https://github.com/azure/communication-ui-library/pull/3202) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Remove empty space to the right of participant displayName when tile is not being interacted with. ([PR #3080](https://github.com/azure/communication-ui-library/pull/3080) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - updating version of node to 16.19.0 across all packlets ([PR #3016](https://github.com/azure/communication-ui-library/pull/3016) by 79329532+alkwa-msft@users.noreply.github.com)
+  - Enable mouse / touch selection of mentions by word ([PR #3101](https://github.com/azure/communication-ui-library/pull/3101) by 3941071+emlynmac@users.noreply.github.com)
+  - Fixed an issue with a cursor position when multiline parameter is set to true ([PR #3233](https://github.com/azure/communication-ui-library/pull/3233) by 98852890+vhuseinova-msft@users.noreply.github.com)
+  - moving isValidIdentifier to common ([PR #3221](https://github.com/azure/communication-ui-library/pull/3221) by alkwa@microsoft.com)
+  - Fetch translated strings ([PR #3270](https://github.com/azure/communication-ui-library/pull/3270) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+  - adding in lock files adding azurelogger to the composite packlet for both beta and stable ([PR #3190](https://github.com/azure/communication-ui-library/pull/3190) by alkwa@microsoft.com)
+  - Add missing 'rem' from width of avatar. This caused formatting issues when embedding inside a Teams Toolkit App. ([PR #3161](https://github.com/azure/communication-ui-library/pull/3161) by palatter@microsoft.com)
+  - Fix bug where static html samples are not showing fluent icons ([PR #3106](https://github.com/azure/communication-ui-library/pull/3106) by carolinecao@microsoft.com)
+  - Update side pane heading styles and correct video effects side pane width in the call screen. ([PR #3179](https://github.com/azure/communication-ui-library/pull/3179) by 2684369+JamesBurnside@users.noreply.github.com)
+  - using correct host layer id for pipip ([PR #3204](https://github.com/azure/communication-ui-library/pull/3204) by alkwa@microsoft.com)
+  - Enable ArrowUp and ArrowDown key inside EditBox ([PR #3177](https://github.com/azure/communication-ui-library/pull/3177) by longamy@microsoft.com)
+  - Internally replace usage of fluent react northstar with intermediary bundler output ([PR #3050](https://github.com/azure/communication-ui-library/pull/3050) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fixes resizeObserver infinite loop error in older versions of react ([PR #3192](https://github.com/azure/communication-ui-library/pull/3192) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Replace access token video with update ([PR #3136](https://github.com/azure/communication-ui-library/pull/3136) by 3941071+emlynmac@users.noreply.github.com)
+  - adding logging for time to enumerate devices in adapter ([PR #3190](https://github.com/azure/communication-ui-library/pull/3190) by alkwa@microsoft.com)
+  - Cursor icon remains as default cursor on inactionable participantItems ([PR #3191](https://github.com/azure/communication-ui-library/pull/3191) by edwardlee@microsoft.com)
+  - fixing how common code deals with E.164 numbers ([PR #3176](https://github.com/azure/communication-ui-library/pull/3176) by alkwa@microsoft.com)
+  - Add height to FocuzTrapZone in SpokenLanguageDrawer ([PR #3082](https://github.com/azure/communication-ui-library/pull/3082) by edwardlee@microsoft.com)
+  - Expose aria-labelledby prop for participantItems ([PR #3218](https://github.com/azure/communication-ui-library/pull/3218) by edwardlee@microsoft.com)
+  - Fixed long Seen display name as ellipsis ([PR #3090](https://github.com/azure/communication-ui-library/pull/3090) by 77021369+jimchou-dev@users.noreply.github.com)
+
+### Changes
+
+- `@azure/communication-react`
+  - Introduce storybook updates for CallComposite configurations for Click to Call. ([PR #3170](https://github.com/azure/communication-ui-library/pull/3170) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Added onFetchProfile to CommonCallAdapterOptions. ([PR #3148](https://github.com/azure/communication-ui-library/pull/3148) by miguelgamis@microsoft.com)
+  - Dismiss video effects error when camera is off ([PR #3137](https://github.com/azure/communication-ui-library/pull/3137) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Update Calling stable to 1.14.1 ([PR #3258](https://github.com/azure/communication-ui-library/pull/3258) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Introduce E2E tests for Call Composite local tile options ([PR #3096](https://github.com/azure/communication-ui-library/pull/3096) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Update fluentui package ([PR #3279](https://github.com/azure/communication-ui-library/pull/3279) by edwardlee@microsoft.com)
+  - Auto-dismiss errors on selection of new effect ([PR #3160](https://github.com/azure/communication-ui-library/pull/3160) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Introduce new options for the CallComposite to configure LocalVideoTile positioning enabling new use case scenarios with the composite like click to call ([PR #3274](https://github.com/azure/communication-ui-library/pull/3274) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Adding OVC to stateful client and adding selectors ([PR #3089](https://github.com/azure/communication-ui-library/pull/3089) by vriosrada@microsoft.com)
+  - Fixed start captions console error and add loading screen  ([PR #3021](https://github.com/azure/communication-ui-library/pull/3021) by carolinecao@microsoft.com)
+  - A menu item role for mention popover items and create FocusZone to ensure the first item is focused when using talk back. ([PR #3055](https://github.com/azure/communication-ui-library/pull/3055) by palatter@microsoft.com)
+  - Filter out remote participants with Disconnected state in participant list selector ([PR #3154](https://github.com/azure/communication-ui-library/pull/3154) by miguelgamis@microsoft.com)
+  - Added onFetchProfile to CommonCallAdapterOptions to allow displayName changes when using AzureCommunicationCallAdapter ([PR #3148](https://github.com/azure/communication-ui-library/pull/3148) by miguelgamis@microsoft.com)
+  - Add the leaving page ([PR #3108](https://github.com/azure/communication-ui-library/pull/3108) by jiangnanhello@live.com)
+  - Prevent device contextMenu to be dismissed ([PR #3102](https://github.com/azure/communication-ui-library/pull/3102) by jiangnanhello@live.com)
+  - Bump mention storybook pages versioning for beta banners ([PR #3277](https://github.com/azure/communication-ui-library/pull/3277) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+  - Add Contoso background ([PR #3216](https://github.com/azure/communication-ui-library/pull/3216) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Remove displayText from msft-mention ([PR #3135](https://github.com/azure/communication-ui-library/pull/3135) by 3941071+emlynmac@users.noreply.github.com)
+  - Improve Accessibility for Files Sharing feature ([PR #3139](https://github.com/azure/communication-ui-library/pull/3139) by longamy@microsoft.com)
+  - Decouple types from SDKs by adding new types for BackgroundBlurConfig and BackgroundReplacementConfig ([PR #3152](https://github.com/azure/communication-ui-library/pull/3152) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Update types from internal review ([PR #3159](https://github.com/azure/communication-ui-library/pull/3159) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Merge startScreenShareGeneric and startScreenSharingGeneric strings ([PR #3198](https://github.com/azure/communication-ui-library/pull/3198) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix issue where new controls were not being respected by the overflow galleries. ([PR #3172](https://github.com/azure/communication-ui-library/pull/3172) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - bump c2c storybook page versioning for beta banners ([PR #3276](https://github.com/azure/communication-ui-library/pull/3276) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Add ability to accept or reject transfer requests through CallAdapter event subscription. Call composite shows transfer page when a transfer request is accepted followed by seamless transition to new call. ([PR #3272](https://github.com/azure/communication-ui-library/pull/3272) by miguelgamis@microsoft.com)
+  - Rename nonevideoeffect to novideoeffect ([PR #3104](https://github.com/azure/communication-ui-library/pull/3104) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - add new API for hiding local tile in composite ([PR #3036](https://github.com/azure/communication-ui-library/pull/3036) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Support mentions capabilities in chat message thread. Enables user to @ mention another user by providing a Search capability to look for the desired user and then tagging them on the message. ([PR #3271](https://github.com/azure/communication-ui-library/pull/3271) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+  - Optimal Video Count provides a way to get a value which dictates the maximum number of remote renderers that should be rendered to get a good quality video. ([PR #3273](https://github.com/azure/communication-ui-library/pull/3273) by vriosrada@microsoft.com)
 
 ## [1.5.1-beta.5](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.5)
 
