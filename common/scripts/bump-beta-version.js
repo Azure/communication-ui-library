@@ -11,6 +11,8 @@ const main = () => {
   updateAllDepVersions(bumpBetaVersion, depNames);
 }
 
+// TODO: This needs to be updated. This does not work for all beta release scenarios outlined in documentation
+// https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/43834/How-to-determine-the-next-web-UI-Library-package-version.
 const bumpBetaVersion = (currentVersion) => {
   const versionStrs = currentVersion.split('-beta.');
   const [major, minor] = versionStrs[0].split('.');
