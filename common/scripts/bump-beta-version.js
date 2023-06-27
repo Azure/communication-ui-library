@@ -28,6 +28,7 @@ const bumpBetaVersion = (currentVersion) => {
     return `${major}.${newMinor}.0-beta.${newBeta}`
   }
 
+  const newBeta = Number.parseInt(betaVersion) + 1;
   return `${major}.${minor}.${patch}-beta.${newBeta}`
 }
 
