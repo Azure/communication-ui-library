@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Resolve issue where the number zero appeared in edit box.",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "patch"
+}
