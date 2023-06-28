@@ -63,7 +63,6 @@ export const localVideoTileContainerStyle = (
   localVideoTileSizeRem: { width: number; height: number },
   screenSharePresent?: boolean
 ): IStyle => {
-  console.log(screenSharePresent);
   return {
     width: screenSharePresent ? `${localVideoTileSizeRem.width}rem` : '',
     height: screenSharePresent ? `${localVideoTileSizeRem.height}rem` : '',

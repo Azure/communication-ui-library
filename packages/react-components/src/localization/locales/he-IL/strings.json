@@ -44,8 +44,8 @@
     "tooltipContent": "עזוב את השיחה"
   },
   "cameraButton": {
-    "onLabel": "כבה",
-    "offLabel": "הפעל",
+    "onLabel": "מצלמה",
+    "offLabel": "מצלמה",
     "tooltipDisabledContent": "המצלמה אינה זמינה",
     "tooltipOnContent": "כבה מצלמה",
     "tooltipOffContent": "הפעל מצלמה",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "אפקטים"
   },
   "microphoneButton": {
-    "onLabel": "השתק",
-    "offLabel": "בטל השתקה",
+    "onLabel": "מיקרופון",
+    "offLabel": "מיקרופון",
     "tooltipDisabledContent": "המיקרופון אינו זמין",
     "tooltipOnContent": "השתק מיקרופון",
     "tooltipOffContent": "בטל השתקה של מיקרופון",
