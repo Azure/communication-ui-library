@@ -91,6 +91,11 @@ export const getInlineImageDocs: () => JSX.Element = () => {
   );
 };
 
+// The Web UI library currently supports the following file permissions:
+//   - "Anyone", and
+//   - "People you choose" (with email address)
+// The Teams user (sender) should be made aware of that all other permissions (such as "People in your organization") aren't supported. The Teams user should double check if the default permission is supported after uploading the file in their Teams client. In addition, The Teams admin could impose policies that limits or disable this feature entirely (such as having file sharing disabled or having certain permission disabled).
+
 export const getFileSharingDocs: () => JSX.Element = () => {
   return (
     <>
@@ -98,16 +103,12 @@ export const getFileSharingDocs: () => JSX.Element = () => {
       <SingleLineBetaBanner />
       <Description>Microsoft Teams enables file attachment sharing with the following permissions:</Description>
       <Description>- Anyone</Description>
-      <Description>- Individuals within your organization</Description>
-      <Description>- Participants currently in this chat</Description>
-      <Description>- People who already have access</Description>
-      <Description>- Specific individuals you select</Description>
+      <Description>- Specific individuals you select (with email address)</Description>
       <Description>
-        Microsoft Teams allows users to share file attachments as part of chat messages. These files are stored in
-        SharePoint or OneDrive and require authentication to access them. Depending on the file's sharing permissions
-        (e.g., Anyone, Individuals within your Organization, People you choose, etc.), ACS users in the Teams Interop
-        Interop meeting who try to access the shared files will be redirected to a SharePoint web page and prompted to
-        authenticate in order to access the file.
+        The Teams user (sender) should be made aware of that all other permissions (such as "People in your
+        organization") aren't supported. The Teams user should double check if the default permission is supported after
+        uploading the file in their Teams client. In addition, The Teams admin could impose policies that limits or
+        disable this feature entirely (such as having file sharing disabled or having certain permission disabled).
       </Description>
       <Description>
         To learn more about the Sharing Permission, please refer to the [Limit sharing in Microsoft
