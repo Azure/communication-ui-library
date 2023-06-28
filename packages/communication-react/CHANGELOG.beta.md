@@ -24,11 +24,8 @@ The Web UI Calling composite now supports the ability to accept or reject transf
 ### New CallComposite configurations to support click to call scenarios - Public Preview
 The Web UI Calling composite now supports new options to configure LocalVideoTile positioning. This enables new use case scenarios with the composite like click to call
 
-### Features
-- Add the leaving page ([PR #3108](https://github.com/azure/communication-ui-library/pull/3108) by jiangnanhello@live.com)
-- Auto-dismiss error bar on selection of new effect ([PR #3160](https://github.com/azure/communication-ui-library/pull/3160) by 97124699+prabhjot-msft@users.noreply.github.com)
-
 ### Bug Fixes
+- Fix issue of intermittently showing participants when leaving while connecting to call by adding a leaving page ([PR #3108](https://github.com/azure/communication-ui-library/pull/3108) by jiangnanhello@live.com)
 - Introduce new handler for disposing screen share for remote participants, stops flash when navigating overflow galleries ([PR #3202](https://github.com/azure/communication-ui-library/pull/3202) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Add margin to participant item to allow the focus border to show when selecting each participant with keyboard ([PR #3178](https://github.com/azure/communication-ui-library/pull/3178) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Extend touchable/clickable area of button to full height of send box ([PR #3185](https://github.com/azure/communication-ui-library/pull/3185) by longamy@microsoft.com)
@@ -41,12 +38,12 @@ The Web UI Calling composite now supports new options to configure LocalVideoTil
 - Fix scroll and new message prompt in sidepane chat for safari ([PR #3116](https://github.com/azure/communication-ui-library/pull/3116) by edwardlee@microsoft.com)
 - Add new handler to dispose screenshare ([PR #3202](https://github.com/azure/communication-ui-library/pull/3202) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Remove empty space to the right of participant displayName when tile is not being interacted with ([PR #3080](https://github.com/azure/communication-ui-library/pull/3080) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Fixed an issue with a cursor position when multiline parameter is set to true ([PR #3233](https://github.com/azure/communication-ui-library/pull/3233) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix an issue with a cursor position when multiline parameter is set to true ([PR #3233](https://github.com/azure/communication-ui-library/pull/3233) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Add missing 'rem' from width of avatar. This caused formatting issues when embedding inside a Teams Toolkit App ([PR #3161](https://github.com/azure/communication-ui-library/pull/3161) by palatter@microsoft.com)
 - Fix bug where static html samples are not showing fluent icons ([PR #3106](https://github.com/azure/communication-ui-library/pull/3106) by carolinecao@microsoft.com)
 - Enable ArrowUp and ArrowDown key inside EditBox ([PR #3177](https://github.com/azure/communication-ui-library/pull/3177) by longamy@microsoft.com)
 - Cursor icon remains as default cursor on inactionable participantItems ([PR #3191](https://github.com/azure/communication-ui-library/pull/3191) by edwardlee@microsoft.com)
-- Fixing how common code deals with E.164 numbers ([PR #3176](https://github.com/azure/communication-ui-library/pull/3176) by alkwa@microsoft.com)
+- Fix how common code deals with E.164 numbers ([PR #3176](https://github.com/azure/communication-ui-library/pull/3176) by alkwa@microsoft.com)
 - Add height to FocusTrapZone in SpokenLanguageDrawer ([PR #3082](https://github.com/azure/communication-ui-library/pull/3082) by edwardlee@microsoft.com)
 - Convert long visible display names as ellipsis ([PR #3090](https://github.com/azure/communication-ui-library/pull/3090) by 77021369+jimchou-dev@users.noreply.github.com)
 - Prevent device contextMenu to be dismissed ([PR #3102](https://github.com/azure/communication-ui-library/pull/3102) by jiangnanhello@live.com)
@@ -84,7 +81,8 @@ The Web UI Calling composite now supports new options to configure LocalVideoTil
   - Rename nonevideoeffect to novideoeffect ([PR #3104](https://github.com/azure/communication-ui-library/pull/3104) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Add new API for hiding local tile in composite ([PR #3036](https://github.com/azure/communication-ui-library/pull/3036) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Add logging for time to enumerate devices in adapter ([PR #3190](https://github.com/azure/communication-ui-library/pull/3190) by alkwa@microsoft.com)
-  
+  - Auto-dismiss error bar on selection of new effect ([PR #3160](https://github.com/azure/communication-ui-library/pull/3160) by 97124699+prabhjot-msft@users.noreply.github.com)
+
 ## [1.5.1-beta.5](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.5)
 
 Tue, 23 May 2023 21:43:12 GMT
@@ -457,16 +455,16 @@ Check out our quickstarts repo in Github [JS Quickstarts](https://github.com/Azu
 - Fix custom menu items being triggered as a flyout and as a drawer menu item on mobile. Fix custom menu items not triggering on callwithchat composite at all ([PR #2239](https://github.com/azure/communication-ui-library/pull/2239) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix React hook order console errors for LocalDeviceSettings ([PR #2198](https://github.com/azure/communication-ui-library/pull/2198) by miguelgamis@microsoft.com)
 - Message thread background color in composites matches composite background color ([PR #2126](https://github.com/azure/communication-ui-library/pull/2126) by anjulgarg@live.com)
-- Fixed bug where drawer on mobile does not get dismissed after making a selection ([PR #2115](https://github.com/azure/communication-ui-library/pull/2115) by carolinecao@microsoft.com)
+- Fix bug where drawer on mobile does not get dismissed after making a selection ([PR #2115](https://github.com/azure/communication-ui-library/pull/2115) by carolinecao@microsoft.com)
 - Fix running render passes on people pane on every render ([PR #2240](https://github.com/azure/communication-ui-library/pull/2240) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix Calling Composite's control bar buttons incorrectly showing as disabled when the control bar button is set to `true` in the control bar options ([PR #2325](https://github.com/azure/communication-ui-library/pull/2325) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fixed input order bug on calling dialpad and dtmf dialpad ([PR #2284](https://github.com/azure/communication-ui-library/pull/2284) by carolinecao@microsoft.com)
+- Fix input order bug on calling dialpad and dtmf dialpad ([PR #2284](https://github.com/azure/communication-ui-library/pull/2284) by carolinecao@microsoft.com)
 - Fix local device settings dropdowns to be disabled until device permissions are granted ([PR #2351](https://github.com/azure/communication-ui-library/pull/2351) by miguelgamis@microsoft.com)
 - Autofocus on back button when initially opening People and Chat pane ([PR #2045](https://github.com/azure/communication-ui-library/pull/2045) by edwardlee@microsoft.com)
 - Fix joinCall set correct mute state based on microphoneOn parameter ([PR #2131](https://github.com/azure/communication-ui-library/pull/2131) by fanjin1989@gmail.com)
 - Add Announcer to copy invite link button to announce action on button ([PR #2289](https://github.com/azure/communication-ui-library/pull/2289) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix disabled start call button when role is Consumer ([PR #2251](https://github.com/azure/communication-ui-library/pull/2251) by miguelgamis@microsoft.com)
-- Fixed bug where voice over does not annouce menu item selected in both calling and callwithchat ([PR #2060](https://github.com/azure/communication-ui-library/pull/2060) by carolinecao@microsoft.com)
+- Fix bug where voice over does not annouce menu item selected in both calling and callwithchat ([PR #2060](https://github.com/azure/communication-ui-library/pull/2060) by carolinecao@microsoft.com)
 - Fix infinite spinner during screenShare ([PR #2191](https://github.com/azure/communication-ui-library/pull/2191) by jinan@microsoft.com)
 - Fix invalid scrollbars when gif images are shared in chat ([PR #2037](https://github.com/azure/communication-ui-library/pull/2037) by anjulgarg@live.com)
 - Fix bug of dismissed menu when scrolling ([PR #2069](https://github.com/azure/communication-ui-library/pull/2069) by jinan@microsoft.com)
@@ -474,7 +472,7 @@ Check out our quickstarts repo in Github [JS Quickstarts](https://github.com/Azu
 - Fix screenshare button selector to disable button when call is InLobby or Connecting state ([PR #2059](https://github.com/azure/communication-ui-library/pull/2059) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ### Improvements
-- Fixed onCallEnded event to trigger before the composite page transition ([PR #2201](https://github.com/azure/communication-ui-library/pull/2201) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix onCallEnded event to trigger before the composite page transition ([PR #2201](https://github.com/azure/communication-ui-library/pull/2201) by 2684369+JamesBurnside@users.noreply.github.com)
 - Introduces fade in/out animations to is speaking while muted indicator ([PR #2312](https://github.com/azure/communication-ui-library/pull/2312) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Composites now using theme.semanticColors.bodyBackground as background color ([PR #2117](https://github.com/azure/communication-ui-library/pull/2117) by anjulgarg@live.com)
 - Replace floating div with border with inset border of video tile to show user is speaking ([PR #2236](https://github.com/azure/communication-ui-library/pull/2236) by miguelgamis@microsoft.com)
@@ -626,9 +624,9 @@ Tue, 01 Mar 2022 16:42:52 GMT
 - Use `messageid` to check read info instead of `readon` time stamp ([PR #1503](https://github.com/azure/communication-ui-library/pull/1503) by carolinecao@microsoft.com)
 - Prevent horizontal scroll in MessageThread by limiting the image preview max size in a chat message ([PR #1490](https://github.com/azure/communication-ui-library/pull/1490) by jiangnanhello@live.com)
 - Bugfix for messages from teams users having extra margins around the message content ([PR #1507](https://github.com/azure/communication-ui-library/pull/1507) by jiangnanhello@live.com)
-- Fixed Avatars position in message thread ([PR #1345](https://github.com/azure/communication-ui-library/pull/1345) by edwardlee@microsoft.com)
+- Fix Avatars position in message thread ([PR #1345](https://github.com/azure/communication-ui-library/pull/1345) by edwardlee@microsoft.com)
 - Fix EndCallButton theme colors for better contrast ([PR #1471](https://github.com/azure/communication-ui-library/pull/1471) by 82062616+prprabhu-ms@users.noreply.github.com)
-- Fixed Editbox border which disappeared after adding file sharing changes ([PR #1523](https://github.com/azure/communication-ui-library/pull/1523) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix Editbox border which disappeared after adding file sharing changes ([PR #1523](https://github.com/azure/communication-ui-library/pull/1523) by 97124699+prabhjot-msft@users.noreply.github.com)
 
 ### Improvements
 
@@ -667,11 +665,11 @@ Mon, 24 Jan 2022 23:18:53 GMT
   - Move @azure/communication-chat to peer dependency ([PR #1294](https://github.com/azure/communication-ui-library/pull/1294) by 82062616+prprabhu-ms@users.noreply.github.com)
 - UI Components
   - Added strings to the side pane from locale context ([PR #1278](https://github.com/azure/communication-ui-library/pull/1278) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - Fixed inability to click the horizontal gallery left/right button by changing pointerEvents of LayerHost ([PR #1293](https://github.com/azure/communication-ui-library/pull/1293) by kaurprabhjot@microsoft.com)
-  - Fixed ScreenShareButton style to allow custom styles ([PR #1286](https://github.com/azure/communication-ui-library/pull/1286) by edwardlee@microsoft.com)
+  - Fix inability to click the horizontal gallery left/right button by changing pointerEvents of LayerHost ([PR #1293](https://github.com/azure/communication-ui-library/pull/1293) by kaurprabhjot@microsoft.com)
+  - Fix ScreenShareButton style to allow custom styles ([PR #1286](https://github.com/azure/communication-ui-library/pull/1286) by edwardlee@microsoft.com)
   - Small code modifications for conditional build 1. Conditional build does not support <Type*> convert, use `foo as Bar` 2. Add a hook to bypass type error when build meeting composite ([PR #1284](https://github.com/azure/communication-ui-library/pull/1284) by jinan@microsoft.com)
   - Horizontal gallery button height fixed ([PR #1285](https://github.com/azure/communication-ui-library/pull/1285) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Fixed alignment of typing indicator in chat composite by reducing minHeight ([PR #1297](https://github.com/azure/communication-ui-library/pull/1297) by kaurprabhjot@microsoft.com)
+  - Fix alignment of typing indicator in chat composite by reducing minHeight ([PR #1297](https://github.com/azure/communication-ui-library/pull/1297) by kaurprabhjot@microsoft.com)
   - Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks ([PR #1277](https://github.com/azure/communication-ui-library/pull/1277) by anjulgarg@live.com)
 - UI Composites
   - implemented custom datamodel functionality to meeting composite excluding sidebar ([PR #1319](https://github.com/azure/communication-ui-library/pull/1319) by 94866715+dmceachernmsft@users.noreply.github.com)
@@ -686,7 +684,7 @@ Mon, 24 Jan 2022 23:18:53 GMT
   - Increase size of participant flyout menu items for mobile view ([PR #1322](https://github.com/azure/communication-ui-library/pull/1322) by edwardlee@microsoft.com)
   - Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks ([PR #1277](https://github.com/azure/communication-ui-library/pull/1277) by anjulgarg@live.com)
 - Storybook
-  - Fixed storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps ([PR #1272](https://github.com/azure/communication-ui-library/pull/1272) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Fix storybook controls around the meetings composite to work with the new MeetingCompositeOptions type in the MeetingCompositeProps ([PR #1272](https://github.com/azure/communication-ui-library/pull/1272) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Moving dependencies from @uifabric/react-hooks to @fluentui/react-hooks ([PR #1277](https://github.com/azure/communication-ui-library/pull/1277) by anjulgarg@live.com)
   - Add manual documentation for adapters ([PR #1325](https://github.com/azure/communication-ui-library/pull/1325) by 2684369+JamesBurnside@users.noreply.github.com)
   - Added entry for endpointUrl in appsettings.json instead of using connectionString twice ([PR #1310](https://github.com/azure/communication-ui-library/pull/1310) by 97124699+prabhjot-msft@users.noreply.github.com)
@@ -773,13 +771,13 @@ Mon, 1 Nov 2021 12:57:14 GMT
 
 ### Bug fixes
 
-* Fixed issue where messages from a Teams client would fail to render in `MessageThread` and `ChatComposite`
+* Fix issue where messages from a Teams client would fail to render in `MessageThread` and `ChatComposite`
 * `CallControl` items are consistent between Lobby and Call screen
 * Maintain position in `MessageThread` when fetching additional messages
-* Fixed browser camera indicator still showing in use after turning it off
-* Fixed issue where some message thread strings could not be set through the ChatComposite interface
+* Fix browser camera indicator still showing in use after turning it off
+* Fix issue where some message thread strings could not be set through the ChatComposite interface
 * Fix box-shadow showing below the Call Composite controls bar
-* Fixed issue where some message thread strings could not be set through the ChatComposite interface
+* Fix issue where some message thread strings could not be set through the ChatComposite interface
 
 ## [1.0.0-beta.6](https://github.com/azure/communication-ui-library/tree/@internal/react-components_v1.0.0-beta.6)
 
