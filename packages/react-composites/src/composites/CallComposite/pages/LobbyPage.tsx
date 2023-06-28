@@ -57,8 +57,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{ strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={props.options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+      errorBarProps={props.options?.errorBar !== false && errorBarProps}
       callControlProps={{
         options: callControlOptions,
         increaseFlyoutItemSize: props.mobileView

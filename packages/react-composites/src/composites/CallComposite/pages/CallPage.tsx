@@ -80,8 +80,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     <CallArrangement
       id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+      errorBarProps={options?.errorBar !== false && errorBarProps}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,
