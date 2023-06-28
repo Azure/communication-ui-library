@@ -44,8 +44,8 @@
     "tooltipContent": "Abbandona chiamata"
   },
   "cameraButton": {
-    "onLabel": "Disabilita",
-    "offLabel": "Abilita",
+    "onLabel": "Fotocamera",
+    "offLabel": "Fotocamera",
     "tooltipDisabledContent": "La videocamera è disabilitata",
     "tooltipOnContent": "Spegni la videocamera",
     "tooltipOffContent": "Accendi la videocamera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effetti"
   },
   "microphoneButton": {
-    "onLabel": "Disattiva audio",
-    "offLabel": "Riattiva audio",
+    "onLabel": "Microfono",
+    "offLabel": "Microfono",
     "tooltipDisabledContent": "Il microfono è disabilitato",
     "tooltipOnContent": "Disattiva microfono",
     "tooltipOffContent": "Riattiva microfono",

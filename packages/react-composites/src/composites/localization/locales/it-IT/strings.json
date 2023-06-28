@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Trasferimento in corso...",
     "transferPageTransferTargetText": "Connessione in corso...",
     "transferPageUnknownTransferorDisplayName": "Sconosciuto",
-    "transferPageUnknownTransferTargetDisplayName": "Sconosciuto"
+    "transferPageUnknownTransferTargetDisplayName": "Sconosciuto",
+    "transferPageNoticeString": "Stai per essere trasferito",
+    "participantCouldNotBeReachedTitle": "Il partecipante di riferimento non è attualmente disponibile",
+    "participantCouldNotBeReachedMoreDetails": "Contatta il partecipante quando è disponibile",
+    "permissionToReachTargetParticipantNotAllowedTitle": "L'autorizzazione per raggiungere il partecipante di riferimento non è consentita",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Verificare che il partecipante di riferimento si trovi nello stesso tenant",
+    "unableToResolveTenantTitle": "Non è possibile risolvere l'ID tenant per il partecipante di destinazione",
+    "unableToResolveTenantMoreDetails": "Verifica che l'ID partecipante sia stato immesso correttamente",
+    "participantIdIsMalformedTitle": "Il formato dell'ID partecipante non è corretto",
+    "participantIdIsMalformedMoreDetails": "Verifica che il formato dell'ID partecipante sia corretto"
   },
   "chat": {
     "chatListHeader": "In questa chat",

@@ -44,8 +44,8 @@
     "tooltipContent": "通話を終了"
   },
   "cameraButton": {
-    "onLabel": "オフにする",
-    "offLabel": "オンにする",
+    "onLabel": "カメラ",
+    "offLabel": "カメラ",
     "tooltipDisabledContent": "カメラが無効になっています",
     "tooltipOnContent": "カメラをオフ",
     "tooltipOffContent": "カメラをオンにする",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "効果"
   },
   "microphoneButton": {
-    "onLabel": "ミュート",
-    "offLabel": "ミュート解除",
+    "onLabel": "マイク",
+    "offLabel": "マイク",
     "tooltipDisabledContent": "マイクが無効になっています",
     "tooltipOnContent": "マイクをミュートにする",
     "tooltipOffContent": "マイクのミュートを解除する",

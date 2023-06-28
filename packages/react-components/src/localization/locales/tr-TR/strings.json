@@ -44,8 +44,8 @@
     "tooltipContent": "Aramadan ayrıl"
   },
   "cameraButton": {
-    "onLabel": "Kapat",
-    "offLabel": "Aç",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kamera devre dışı",
     "tooltipOnContent": "Kamerayı kapat",
     "tooltipOffContent": "Kamerayı aç",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Efektler"
   },
   "microphoneButton": {
-    "onLabel": "Sesi kapat",
-    "offLabel": "Sesi aç",
+    "onLabel": "Mikrofon",
+    "offLabel": "Mikrofon",
     "tooltipDisabledContent": "Mikrofon devre dışı",
     "tooltipOnContent": "Mikrofonun sesini kapat",
     "tooltipOffContent": "Mikrofonun sesini aç",

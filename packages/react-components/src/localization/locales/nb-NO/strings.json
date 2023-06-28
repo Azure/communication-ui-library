@@ -44,8 +44,8 @@
     "tooltipContent": "Forlat samtale"
   },
   "cameraButton": {
-    "onLabel": "Deaktiver",
-    "offLabel": "Aktiver",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kameraet er deaktivert",
     "tooltipOnContent": "Slå av kamera",
     "tooltipOffContent": "Slå på kamera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effekter"
   },
   "microphoneButton": {
-    "onLabel": "Deaktiver varsler",
-    "offLabel": "Opphev demping",
+    "onLabel": "Mikrofon",
+    "offLabel": "Mikrofon",
     "tooltipDisabledContent": "Mikrofonen er deaktivert",
     "tooltipOnContent": "Demp mikrofon",
     "tooltipOffContent": "Opphev demping av mikrofon",
