@@ -103,7 +103,7 @@ export const getFileSharingDocs: () => JSX.Element = () => {
       <SingleLineBetaBanner />
       <Description>Microsoft Teams enables file attachment sharing with the following permissions:</Description>
       <Description>- Anyone</Description>
-      <Description>- Specific individuals you select (with email address)</Description>
+      <Description>- Anyone you choose (with email address)</Description>
       <Description>
         The Teams user (sender) should be made aware of that all other permissions (such as "People in your
         organization") aren't supported. The Teams user should double check if the default permission is supported after
