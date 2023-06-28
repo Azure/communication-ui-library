@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorBar } from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeOptions } from '../../../index-public';
 import { useLocale } from '../../localization';
@@ -21,6 +21,8 @@ export interface HoldPageProps {
   modalLayerHostId: string;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -59,6 +61,8 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       dataUiId={'hold-page'}
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
+      latestErrors={props.latestErrors}
+      onDismissError={props.onDismissError}
     />
   );
 };

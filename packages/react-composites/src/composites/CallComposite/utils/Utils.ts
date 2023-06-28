@@ -9,7 +9,6 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
-import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { BackgroundBlurEffect, BackgroundReplacementEffect } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
@@ -423,28 +422,6 @@ export const createParticipantModifier = (
           }
         : undefined
     };
-  };
-};
-
-/**
- * @private
- */
-export interface DismissedError {
-  dismissedAt: Date;
-  activeSince?: Date;
-}
-
-/**
- * @private
- */
-export const dismissVideoEffectsError = (toDismiss: AdapterError): DismissedError => {
-  const now = new Date(Date.now());
-  const toDismissTimestamp = toDismiss.timestamp ?? now;
-
-  // Record that this error was dismissed for the first time right now.
-  return {
-    dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
-    activeSince: toDismiss.timestamp
   };
 };
 

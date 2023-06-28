@@ -132,6 +132,8 @@ export const TransferPage = (
         dataUiId={'transfer-page'}
         updateSidePaneRenderer={props.updateSidePaneRenderer}
         mobileChatTabHeader={props.mobileChatTabHeader}
+        latestErrors={props.latestErrors}
+        onDismissError={props.onDismissError}
       />
     </Stack>
   );

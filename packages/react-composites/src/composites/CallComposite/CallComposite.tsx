@@ -2,8 +2,14 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
-import React, { useEffect, useMemo, useRef } from 'react';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  useTheme
+} from '@internal/react-components';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -40,6 +46,9 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import { CallState } from '@internal/calling-stateful-client';
+import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
+import { TrackedErrors } from './types/ErrorTracking';
+import { usePropsFor } from './hooks/usePropsFor';
 
 /**
  * Props for {@link CallComposite}.
@@ -256,6 +265,19 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
+  // This works by tracking the most recent timestamp of any active error type.
+  // And then tracking when that error type was last dismissed.
+  const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
+  const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
+  useEffect(() => {
+    setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
+  }, [activeErrors]);
+  const onDismissError = useCallback((error: ActiveErrorMessage) => {
+    setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+  }, []);
+  const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
+
   const adapter = useAdapter();
   const locale = useLocale();
   const palette = useTheme().palette;
@@ -297,6 +319,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
           deviceChecks={props.options?.deviceChecks}
@@ -368,6 +392,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -382,6 +408,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           onRenderAvatar={onRenderAvatar}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -397,6 +425,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -411,6 +441,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               options={props.options}
               updateSidePaneRenderer={setSidePaneRenderer}
               mobileChatTabHeader={props.mobileChatTabHeader}
+              latestErrors={latestErrors}
+              onDismissError={onDismissError}
             />
           }
         </>

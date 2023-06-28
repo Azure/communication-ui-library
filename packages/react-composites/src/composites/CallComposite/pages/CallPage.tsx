@@ -4,7 +4,12 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -37,6 +42,8 @@ export interface CallPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -111,6 +118,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
       dataUiId={'call-page'}
+      latestErrors={props.latestErrors}
+      onDismissError={props.onDismissError}
     />
   );
 };

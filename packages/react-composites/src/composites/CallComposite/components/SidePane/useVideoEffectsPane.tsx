@@ -1,16 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
-import { AdapterError } from '../../../common/adapters';
-import { DismissedError, dismissVideoEffectsError } from '../../utils';
-import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
-import { useSelector } from '../../hooks/useSelector';
+import { ActiveErrorMessage } from '@internal/react-components';
 
 /** @private */
 export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
@@ -21,7 +18,9 @@ export const VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM = 17.5;
 /** @private */
 export const useVideoEffectsPane = (
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void,
-  mobileView: boolean
+  mobileView: boolean,
+  latestErrors: ActiveErrorMessage[],
+  onDismissError: (error: ActiveErrorMessage) => void
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;
@@ -52,32 +51,21 @@ export const useVideoEffectsPane = (
     );
   }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
-  const [dismissedVideoEffectsError, setDismissedVideoEffectsError] = useState<DismissedError>();
-  const [activeVideoEffect, setActiveVideoEffect] = useState<ActiveVideoEffect>();
-  const onDismissVideoEffectError = useCallback((error: AdapterError) => {
-    setDismissedVideoEffectsError(dismissVideoEffectsError(error));
-  }, []);
-  const latestVideoEffectError = useSelector(videoBackgroundErrorsSelector);
-  const activeVideoEffectError = useCallback(() => {
-    if (
-      latestVideoEffectError &&
-      (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt) &&
-      (!activeVideoEffect || latestVideoEffectError.timestamp > activeVideoEffect.timestamp)
-    ) {
-      return latestVideoEffectError;
-    }
-    return undefined;
-  }, [dismissedVideoEffectsError, latestVideoEffectError, activeVideoEffect]);
+  const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
+  console.log('video effects errors: ', latestVideoEffectError);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <VideoEffectsPaneContent
-        onDismissError={onDismissVideoEffectError}
-        activeVideoEffectError={activeVideoEffectError}
-        setActiveVideoEffect={setActiveVideoEffect}
+        onDismissError={onDismissError}
+        activeVideoEffectError={latestVideoEffectError}
+        activeVideoEffectChange={() => {
+          // Clear any existing video effects error when the user clicks on a new video effect
+          latestVideoEffectError && onDismissError?.(latestVideoEffectError);
+        }}
       />
     );
-  }, [onDismissVideoEffectError, activeVideoEffectError]);
+  }, [latestVideoEffectError, onDismissError]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
