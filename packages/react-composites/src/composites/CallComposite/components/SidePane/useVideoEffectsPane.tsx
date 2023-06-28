@@ -51,21 +51,27 @@ export const useVideoEffectsPane = (
     );
   }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
+  /* @conditional-compile-remove(video-background-effects) */
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
-  console.log('video effects errors: ', latestVideoEffectError);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <VideoEffectsPaneContent
         onDismissError={onDismissError}
+        /* @conditional-compile-remove(video-background-effects) */
         activeVideoEffectError={latestVideoEffectError}
         activeVideoEffectChange={() => {
           // Clear any existing video effects error when the user clicks on a new video effect
+          /* @conditional-compile-remove(video-background-effects) */
           latestVideoEffectError && onDismissError?.(latestVideoEffectError);
         }}
       />
     );
-  }, [latestVideoEffectError, onDismissError]);
+  }, [
+    /* @conditional-compile-remove(video-background-effects) */
+    latestVideoEffectError,
+    onDismissError
+  ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({

@@ -2456,6 +2456,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 

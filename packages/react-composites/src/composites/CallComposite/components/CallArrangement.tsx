@@ -64,7 +64,7 @@ import {
   VIDEO_EFFECTS_SIDE_PANE_ID,
   VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM
 } from './SidePane/useVideoEffectsPane';
-import { filterLatestErrors, isDisabled } from '../utils';
+import { isDisabled } from '../utils';
 import { SidePaneRenderer, useIsSidePaneOpen } from './SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
 import { useIsParticularSidePaneOpen } from './SidePane/SidePaneProvider';
