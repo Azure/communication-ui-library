@@ -98,7 +98,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const onRenderFileUploads = useCallback(() => {
     return (
-      attachedFilesMetadata?.length && (
+      attachedFilesMetadata?.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_FileUploadCards
             activeFileUploads={attachedFilesMetadata?.map((file) => ({
