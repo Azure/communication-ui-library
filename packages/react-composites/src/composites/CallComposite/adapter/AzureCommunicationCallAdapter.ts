@@ -563,7 +563,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-      console.log('selectedCamera', selectedCamera);
       const localStream = selectedCamera ? new LocalVideoStream(selectedCamera) : undefined;
       const videoOptions = localStream && cameraOn ? { localVideoStreams: [localStream] } : {};
       /* @conditional-compile-remove(teams-adhoc-call) */
