@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add Contoso background",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

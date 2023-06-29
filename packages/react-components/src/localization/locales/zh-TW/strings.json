@@ -44,8 +44,8 @@
     "tooltipContent": "離開通話"
   },
   "cameraButton": {
-    "onLabel": "關閉",
-    "offLabel": "開啟",
+    "onLabel": "相機",
+    "offLabel": "相機",
     "tooltipDisabledContent": "相機已停用",
     "tooltipOnContent": "關閉攝影機",
     "tooltipOffContent": "開啟相機",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "效果"
   },
   "microphoneButton": {
-    "onLabel": "靜音",
-    "offLabel": "取消靜音",
+    "onLabel": "麥克風",
+    "offLabel": "麥克風",
     "tooltipDisabledContent": "麥克風已停用",
     "tooltipOnContent": "將麥克風設為靜音",
     "tooltipOffContent": "取消麥克風靜音",

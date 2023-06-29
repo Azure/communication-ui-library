@@ -44,8 +44,8 @@
     "tooltipContent": "Покинуть вызов"
   },
   "cameraButton": {
-    "onLabel": "Отключить",
-    "offLabel": "Включить",
+    "onLabel": "Камера",
+    "offLabel": "Камера",
     "tooltipDisabledContent": "Камера отключена",
     "tooltipOnContent": "Выключить камеру",
     "tooltipOffContent": "Включить камеру",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Эффекты"
   },
   "microphoneButton": {
-    "onLabel": "Отключить звук",
-    "offLabel": "Включить звук",
+    "onLabel": "Микрофон",
+    "offLabel": "Микрофон",
     "tooltipDisabledContent": "Микрофон отключен",
     "tooltipOnContent": "Отключить микрофон",
     "tooltipOffContent": "Включить микрофон",

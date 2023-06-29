@@ -44,8 +44,8 @@
     "tooltipContent": "Opuść rozmowę"
   },
   "cameraButton": {
-    "onLabel": "Wyłącz",
-    "offLabel": "Włącz",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kamera jest wyłączona",
     "tooltipOnContent": "Wyłącz kamerę",
     "tooltipOffContent": "Włącz kamerę",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Efekty"
   },
   "microphoneButton": {
-    "onLabel": "Wycisz",
-    "offLabel": "Wyłącz wyciszenie",
+    "onLabel": "Mikrofon",
+    "offLabel": "Mikrofon",
     "tooltipDisabledContent": "Mikrofon jest wyłączony",
     "tooltipOnContent": "Wycisz mikrofon",
     "tooltipOffContent": "Wyłącz wyciszenie mikrofonu",

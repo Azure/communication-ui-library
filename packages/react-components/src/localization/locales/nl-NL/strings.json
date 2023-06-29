@@ -44,8 +44,8 @@
     "tooltipContent": "Gesprek verlaten"
   },
   "cameraButton": {
-    "onLabel": "Uitschakelen",
-    "offLabel": "Inschakelen",
+    "onLabel": "Camera",
+    "offLabel": "Camera",
     "tooltipDisabledContent": "Camera is uitgeschakeld",
     "tooltipOnContent": "Camera uitschakelen",
     "tooltipOffContent": "Camera inschakelen",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effecten"
   },
   "microphoneButton": {
-    "onLabel": "Dempen",
-    "offLabel": "Dempen opheffen",
+    "onLabel": "Microfoon",
+    "offLabel": "Microfoon",
     "tooltipDisabledContent": "Microfoon is uitgeschakeld",
     "tooltipOnContent": "Microfoon uitschakelen",
     "tooltipOffContent": "Microfoon inschakelen",

@@ -81,7 +81,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Mentioning Users</Heading>
-      <SingleLineBetaBanner />
+      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         The SendBox component supports mentioning users in the chat. To enable this feature, set the
         `mentionLookupOptions` property to an object and implement the required functionality.

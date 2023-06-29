@@ -44,8 +44,8 @@
     "tooltipContent": "Sair da chamada"
   },
   "cameraButton": {
-    "onLabel": "Desabilitar",
-    "offLabel": "Habilitar",
+    "onLabel": "Câmera",
+    "offLabel": "Câmera",
     "tooltipDisabledContent": "A câmera está desabilitada",
     "tooltipOnContent": "Desabilitar a câmera",
     "tooltipOffContent": "Ligar a câmera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Efeitos"
   },
   "microphoneButton": {
-    "onLabel": "Mudo",
-    "offLabel": "Desativar mudo",
+    "onLabel": "Microfone",
+    "offLabel": "Microfone",
     "tooltipDisabledContent": "O microfone está desabilitado",
     "tooltipOnContent": "Ativar mudo do microfone",
     "tooltipOffContent": "Desativar mudo do microfone",

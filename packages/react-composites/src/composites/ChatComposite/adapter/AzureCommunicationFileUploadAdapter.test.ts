@@ -6,7 +6,7 @@ import { ChatErrors, ChatThreadClientState } from '@internal/chat-stateful-clien
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
-import { nanoid } from 'nanoid';
+import { v1 as generateGUID } from 'uuid';
 /* @conditional-compile-remove(file-sharing) */
 import { ChatAdapterState } from '..';
 /* @conditional-compile-remove(file-sharing) */
@@ -107,7 +107,7 @@ const createChatContext = (): ChatContext =>
 
 /* @conditional-compile-remove(file-sharing) */
 const generateFiles = (quantity: number): File[] => {
-  return Array.from({ length: quantity }, () => new File([], nanoid(), { type: 'text/plain' }));
+  return Array.from({ length: quantity }, () => new File([], generateGUID(), { type: 'text/plain' }));
 };
 
 export default {};
