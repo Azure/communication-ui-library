@@ -38,8 +38,7 @@ import {
   galleryParentContainerStyles,
   bannerNotificationStyles,
   CONTROL_BAR_Z_INDEX,
-  DRAWER_Z_INDEX,
-  verticalControlBarStyles
+  DRAWER_Z_INDEX
 } from '../styles/CallPage.styles';
 import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';

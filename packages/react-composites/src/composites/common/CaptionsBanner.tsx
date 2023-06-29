@@ -22,11 +22,7 @@ import { _captionsBannerSelector } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../localization';
-
-/* @conditional-compile-remove(close-captions) */
-const mobileViewBannerWidth = '90%';
-/* @conditional-compile-remove(close-captions) */
-const desktopViewBannerWidth = '50%';
+import { captionsBannerContainerStyles } from './styles/CaptionsBanner.styles';
 
 /** @private */
 export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
@@ -76,7 +72,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
         /* @conditional-compile-remove(close-captions) */
         <div className={containerClassName}>
           <Stack horizontalAlign="center">
-            <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
+            <Stack.Item styles={captionsBannerContainerStyles(props.isMobile)}>
               <_CaptionsBanner {...captionsBannerProps} {...handlers} strings={captionsBannerStrings} />
             </Stack.Item>
           </Stack>
