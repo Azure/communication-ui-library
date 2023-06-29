@@ -554,15 +554,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  public joinCall(microphoneOn?: boolean): CallTypeOf<AgentType> | undefined {
+  public async joinCall(microphoneOn?: boolean, cameraOn?: boolean): Promise<CallTypeOf<AgentType> | undefined> {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     }
 
-    return this.teeErrorToEventEmitter(() => {
+    return await this.teeErrorToEventEmitter(async () => {
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
-      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+      console.log('selectedCamera', selectedCamera);
+      const localStream = selectedCamera ? new LocalVideoStream(selectedCamera) : undefined;
+      const videoOptions = localStream && cameraOn ? { localVideoStreams: [localStream] } : {};
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
       if (isOutboundCall(this.locator)) {
@@ -1524,6 +1527,9 @@ export const createAzureCommunicationCallAdapterFromClient: (
   options?
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  deviceManager.getCameras();
+  deviceManager.getMicrophones();
+  deviceManager.getSpeakers();
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(
@@ -1551,6 +1557,9 @@ export const createTeamsCallAdapterFromClient = async (
   options?: TeamsAdapterOptions
 ): Promise<TeamsCallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+  deviceManager.getCameras();
+  deviceManager.getMicrophones();
+  deviceManager.getSpeakers();
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);

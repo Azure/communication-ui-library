@@ -793,7 +793,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+  joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
   /**
    * Start the call.
    *
@@ -830,7 +830,7 @@ export interface CommonCallAdapter
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): void;
+  joinCall(microphoneOn?: boolean, cameraOn?: boolean): void;
   /**
    * Start the call.
    *
@@ -861,7 +861,7 @@ export interface CallAdapter extends CommonCallAdapter {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+  joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
   /**
    * Start the call.
    *
@@ -893,7 +893,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
    *
    * @beta
    */
-  joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+  joinCall(microphoneOn?: boolean, cameraOn?: boolean): TeamsCall | undefined;
   /**
    * Start the call.
    *
