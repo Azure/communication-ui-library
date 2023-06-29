@@ -178,7 +178,7 @@ const sendRemoteInlineImageMessage = (
       attachments: [
         {
           id: 'SomeImageId1',
-          attachmentType: 'inlineImage',
+          attachmentType: 'teamsInlineImage',
           contentType: 'png',
           name: '',
           url: 'images/inlineImageExample1.png',
