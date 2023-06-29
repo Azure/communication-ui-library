@@ -1088,7 +1088,7 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1890,7 +1890,7 @@ export interface TeamsInteropFileMetadata extends BaseFileMetadata {
 // @beta (undocumented)
 export interface TeamsInteropImageFileMetadata extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: 'inlineImage';
+    attachmentType: 'inlineImage' | 'attachedImage';
     // (undocumented)
     id: string;
     // (undocumented)
