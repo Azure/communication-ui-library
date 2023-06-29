@@ -2182,6 +2182,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -2296,6 +2297,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @beta

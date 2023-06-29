@@ -1292,6 +1292,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @beta
