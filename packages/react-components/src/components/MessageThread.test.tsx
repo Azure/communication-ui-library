@@ -277,7 +277,6 @@ describe.only('Message should display image and attachment correctly', () => {
           url: expectedFileSrc1
         },
         {
-          id: fildId2,
           name: fildName2,
           attachmentType: 'fileSharing',
           extension: 'pdf',
@@ -307,7 +306,7 @@ describe.only('Message should display image and attachment correctly', () => {
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
 
-      // Second attachment: previewUrl === undefined, will show DownloadFile Icon
+      // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
 
