@@ -47,6 +47,11 @@ export interface _CaptionsBannerProps {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
   strings?: _CaptionsBannerStrings;
+  /**
+   * Optional form factor for the component.
+   * @defaultValue 'default'
+   */
+  formFactor?: 'default' | 'compact';
 }
 
 /**
@@ -54,7 +59,7 @@ export interface _CaptionsBannerProps {
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings } = props;
+  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings, formFactor = 'default' } = props;
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
@@ -97,7 +102,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
             <Ref innerRef={captionsScrollDivRef}>
-              <Stack verticalAlign="start" className={captionsBannerClassName}>
+              <Stack verticalAlign="start" styles={captionsBannerClassName(formFactor)}>
                 {captions.map((caption) => {
                   return (
                     <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>

@@ -267,7 +267,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           styles={callArrangementContainerStyles(verticalControlBar)}
         >
           {props.callControlProps?.options !== false && !isMobileWithActivePane && (
-            <Stack verticalAlign={'center'} className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
+            <Stack
+              verticalAlign={'center'}
+              className={mergeStyles({
+                zIndex: CONTROL_BAR_Z_INDEX,
+                padding: verticalControlBar ? '0.25rem' : 'unset'
+              })}
+            >
               {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                 <CallControls
                   {...props.callControlProps}

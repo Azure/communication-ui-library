@@ -22,7 +22,6 @@ import { _captionsBannerSelector } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../localization';
-import { captionsBannerContainerStyles } from './styles/CaptionsBanner.styles';
 
 /** @private */
 export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
@@ -69,19 +68,25 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
         )
       }
       {
-        /* @conditional-compile-remove(close-captions) */
-        <div className={containerClassName}>
-          <Stack horizontalAlign="center">
-            <Stack.Item styles={captionsBannerContainerStyles(props.isMobile)}>
-              <_CaptionsBanner {...captionsBannerProps} {...handlers} strings={captionsBannerStrings} />
-            </Stack.Item>
-          </Stack>
-          {!props.isMobile && captionsBannerProps.isCaptionsOn && (
-            <div className={floatingChildClassName}>
-              <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
-            </div>
-          )}
-        </div>
+        /* @conditional-compile-remove(close-captions) */ captionsBannerProps.isCaptionsOn && (
+          <div className={containerClassName}>
+            <Stack horizontalAlign="center">
+              <Stack.Item style={{ width: props.isMobile ? '90%' : '50%' }}>
+                <_CaptionsBanner
+                  {...captionsBannerProps}
+                  {...handlers}
+                  formFactor={props.isMobile ? 'compact' : 'default'}
+                  strings={captionsBannerStrings}
+                />
+              </Stack.Item>
+            </Stack>
+            {!props.isMobile && captionsBannerProps.isCaptionsOn && (
+              <div className={floatingChildClassName}>
+                <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
+              </div>
+            )}
+          </div>
+        )
       }
     </>
   );

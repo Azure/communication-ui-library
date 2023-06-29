@@ -90,12 +90,12 @@ export const bannerNotificationStyles: IStackStyles = {
 /**
  * @private
  */
-export const callArrangementContainerStyles = (verticalControBar?: boolean): IStackStyles => {
+export const callArrangementContainerStyles = (verticalControlBar?: boolean): IStackStyles => {
   return {
     root: {
       width: '100%',
       height: '100%',
-      flexDirection: verticalControBar ? 'unset' : 'column-reverse' // to allow first initial keyboard focus on ControlBar
+      flexDirection: verticalControlBar ? 'unset' : 'column-reverse' // to allow first initial keyboard focus on ControlBar
     }
   };
 };
