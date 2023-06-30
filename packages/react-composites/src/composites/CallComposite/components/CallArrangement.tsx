@@ -255,7 +255,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
-  const verticalControlBar = props.mobileView && containerWidth && containerWidth > 480 ? true : false;
+  const verticalControlBar =
+    props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
