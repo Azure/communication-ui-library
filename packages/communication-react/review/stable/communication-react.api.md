@@ -1501,6 +1501,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1580,6 +1581,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public

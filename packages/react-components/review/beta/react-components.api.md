@@ -788,6 +788,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @internal
