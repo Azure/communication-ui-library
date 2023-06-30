@@ -19,7 +19,7 @@ The Web UI Chat composite now supports to view and download a file shared by a T
 The Web UI Calling and CallWithChat composite now supports optimal Video Count. This provides a way to get a value which dictates the maximum number of remote renderers that should be rendered to get a good quality video.
 
 ### Ad-hoc Calling - Public Preview
-The Web UI Calling composite now supports the ability to call Teams users and call queues through their organization id
+The Web UI Calling composite now supports the ability to call Teams users and call queues through their organization id.
 
 ### Call Transfer - Public Preview
 The Web UI Calling composite now supports the ability to accept or reject transfer requests through CallAdapter event subscription. The Calling composite will show a transfer page when a transfer request is accepted which is then followed by a seamless transition to the new call.
