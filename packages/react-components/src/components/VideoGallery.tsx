@@ -502,7 +502,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
-      /* @conditional-compile-remove(pinned-participants) */
+
       return (
         <_RemoteVideoTile
           key={participant.userId}
@@ -543,7 +543,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           toggleAnnouncerString={toggleAnnouncerString}
         />
       );
-      return <></>;
     },
     [
       onCreateRemoteStreamView,
