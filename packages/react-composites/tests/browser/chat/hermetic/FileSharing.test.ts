@@ -6,7 +6,7 @@ import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils'
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing Attach file icon', async () => {
+test.describe('Filesharing Attach file icon', async () => {
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
     expect(
@@ -25,7 +25,7 @@ test.describe.only('Filesharing Attach file icon', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing SendBox', async () => {
+test.describe('Filesharing SendBox', async () => {
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -60,7 +60,7 @@ test.describe.only('Filesharing SendBox', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing ProgressBar', async () => {
+test.describe('Filesharing ProgressBar', async () => {
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -165,7 +165,7 @@ test.describe.only('Filesharing ProgressBar', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing SendBox Errorbar', async () => {
+test.describe('Filesharing SendBox Errorbar', async () => {
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -217,7 +217,7 @@ test.describe.only('Filesharing SendBox Errorbar', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing Global Errorbar', async () => {
+test.describe('Filesharing Global Errorbar', async () => {
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -251,7 +251,7 @@ test.describe.only('Filesharing Global Errorbar', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing Message Thread', async () => {
+test.describe('Filesharing Message Thread', async () => {
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -304,7 +304,7 @@ test.describe.only('Filesharing Message Thread', async () => {
 });
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-test.describe.only('Inline Image Message Thread', async () => {
+test.describe('Inline Image Message Thread', async () => {
   test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -325,7 +325,7 @@ test.describe.only('Inline Image Message Thread', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe.only('Filesharing Edit Message', async () => {
+test.describe('Filesharing Edit Message', async () => {
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
