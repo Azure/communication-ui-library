@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Call Adapter JoinCall API to also allow start with video",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
