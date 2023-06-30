@@ -98,8 +98,9 @@ const leaveCall = async (adapter: CallAdapter): Promise<void> => {
 };
 
 const ConfirmationDialog = (props: { hidden: boolean; onConfirm?: () => void; onCancel?: () => void }): JSX.Element => {
+  const dialogStyles = { root: { display: 'flex', justifyContent: 'center' } };
   return (
-    <Dialog hidden={props.hidden}>
+    <Dialog hidden={props.hidden} styles={dialogStyles}>
       <Text>You are being transferred</Text>
       <Stack horizontal>
         <DefaultButton onClick={props.onCancel}>Cancel</DefaultButton>
