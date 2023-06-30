@@ -239,7 +239,6 @@ describe.only('Message should display image and attachment correctly', () => {
 
   test('Message richtext/html fileSharing and inline image attachment should display correctly', async () => {
     const fildId1 = 'SomeFileId1';
-    const fildId2 = 'SomeFileId2';
     const fildName1 = 'SomeFileId1.txt';
     const fildName2 = 'SomeFileId2.pdf';
     const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
