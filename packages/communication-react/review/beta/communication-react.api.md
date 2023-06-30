@@ -1736,6 +1736,9 @@ export type CommunicationParticipant = {
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -1849,6 +1852,9 @@ export interface ComponentStrings {
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;

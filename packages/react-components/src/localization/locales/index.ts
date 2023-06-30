@@ -6,6 +6,7 @@ import { ComponentLocale, ComponentStrings } from '..';
 import en_US from './en-US/strings.json';
 import en_GB from './en-GB/strings.json';
 import ar_SA from './ar-SA/strings.json';
+import cs_CZ from './cs-CZ/strings.json';
 import de_DE from './de-DE/strings.json';
 import es_ES from './es-ES/strings.json';
 import fi_FI from './fi-FI/strings.json';
@@ -51,7 +52,13 @@ export const COMPONENT_LOCALE_EN_GB: ComponentLocale = { strings: createComponen
  */
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale = { strings: createComponentStrings(ar_SA) };
 /**
- * Locale for  German (Germany).
+ * Locale for Czech (Czech Republic).
+ *
+ * @public
+ */
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale = { strings: createComponentStrings(cs_CZ) };
+/**
+ * Locale for German (Germany).
  *
  * @public
  */
