@@ -253,7 +253,8 @@ test.describe('Filesharing Message Thread', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
