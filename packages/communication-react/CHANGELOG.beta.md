@@ -49,6 +49,8 @@ The Web UI Calling composite now supports new options to configure LocalVideoTil
   - Prevent device contextMenu to be dismissed ([PR #3102](https://github.com/azure/communication-ui-library/pull/3102) by jiangnanhello@live.com)
   - Decouple types from SDKs by adding new types for BackgroundBlurConfig and BackgroundReplacementConfig ([PR #3152](https://github.com/azure/communication-ui-library/pull/3152) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Fix issue where new controls were not being respected by the overflow galleries ([PR #3172](https://github.com/azure/communication-ui-library/pull/3172) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - Fix speaker icon in contextual menu of microphone and devices button ([PR #3294](https://github.com/Azure/communication-ui-library/pull/3294) by miguelgamis@microsoft.com)
+  - Resolve issue with edit box showing the number zero ([PR #3295](https://github.com/Azure/communication-ui-library/pull/3295) by palatter@microsoft.com)
 
 ### Improvements
   - `@azure/communication-chat` peer dependency updated to 1.3.2-beta.2 for beta packages ([PR #3115](https://github.com/azure/communication-ui-library/pull/3115) by joshlai@microsoft.com)
@@ -82,6 +84,7 @@ The Web UI Calling composite now supports new options to configure LocalVideoTil
   - Add new API for hiding local tile in composite ([PR #3036](https://github.com/azure/communication-ui-library/pull/3036) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Add logging for time to enumerate devices in adapter ([PR #3190](https://github.com/azure/communication-ui-library/pull/3190) by alkwa@microsoft.com)
   - Auto-dismiss error bar on selection of new effect ([PR #3160](https://github.com/azure/communication-ui-library/pull/3160) by 97124699+prabhjot-msft@users.noreply.github.com)
+  - Add Czech component and composite locales ([PR #3298](https://github.com/Azure/communication-ui-library/pull/3298) by miguelgamis@microsoft.com)
 
 ## [1.5.1-beta.5](https://github.com/azure/communication-ui-library/tree/1.5.1-beta.5)
 
