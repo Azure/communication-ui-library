@@ -208,6 +208,9 @@ export interface _ComplianceBannerStrings {
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
