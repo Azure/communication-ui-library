@@ -36,15 +36,13 @@ test.describe('Filesharing SendBox', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -72,16 +70,14 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 0.8,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -106,16 +102,14 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: -1,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -140,16 +134,14 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 1,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 10,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -177,8 +169,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             error: 'File too big. Select a file under 99 MB.',
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -199,8 +190,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -263,8 +253,7 @@ test.describe('Filesharing Message Thread', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -338,8 +327,7 @@ test.describe('Filesharing Edit Message', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
