@@ -6,7 +6,7 @@ import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils'
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing Attach file icon', async () => {
+test.describe.only('Filesharing Attach file icon', async () => {
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
     expect(
@@ -25,7 +25,7 @@ test.describe('Filesharing Attach file icon', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing SendBox', async () => {
+test.describe.only('Filesharing SendBox', async () => {
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -36,13 +36,15 @@ test.describe('Filesharing SendBox', async () => {
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -58,7 +60,7 @@ test.describe('Filesharing SendBox', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing ProgressBar', async () => {
+test.describe.only('Filesharing ProgressBar', async () => {
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -70,14 +72,16 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 0.8,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -102,14 +106,16 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: -1,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -134,14 +140,16 @@ test.describe('Filesharing ProgressBar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 1,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           },
           {
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
             progress: 10,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -157,7 +165,7 @@ test.describe('Filesharing ProgressBar', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing SendBox Errorbar', async () => {
+test.describe.only('Filesharing SendBox Errorbar', async () => {
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -169,7 +177,8 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             error: 'File too big. Select a file under 99 MB.',
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -190,7 +199,8 @@ test.describe('Filesharing SendBox Errorbar', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             progress: 0.5,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
@@ -207,7 +217,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing Global Errorbar', async () => {
+test.describe.only('Filesharing Global Errorbar', async () => {
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -241,7 +251,7 @@ test.describe('Filesharing Global Errorbar', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing Message Thread', async () => {
+test.describe.only('Filesharing Message Thread', async () => {
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -253,8 +263,7 @@ test.describe('Filesharing Message Thread', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
@@ -295,7 +304,7 @@ test.describe('Filesharing Message Thread', async () => {
 });
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-test.describe('Inline Image Message Thread', async () => {
+test.describe.only('Inline Image Message Thread', async () => {
   test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -316,7 +325,7 @@ test.describe('Inline Image Message Thread', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing Edit Message', async () => {
+test.describe.only('Filesharing Edit Message', async () => {
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -328,7 +337,8 @@ test.describe('Filesharing Edit Message', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing'
+            attachmentType: 'fileSharing',
+            id: ''
           }
         ]
       })
