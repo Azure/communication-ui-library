@@ -237,8 +237,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /** Join existing Call. */
-  public joinCall(microphoneOn?: boolean): Call | undefined {
-    return this.callAdapter.joinCall(microphoneOn);
+  public joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined {
+    return this.callAdapter.joinCall(microphoneOn, cameraOn);
   }
   /** Leave current Call. */
   public async leaveCall(forEveryone?: boolean): Promise<void> {

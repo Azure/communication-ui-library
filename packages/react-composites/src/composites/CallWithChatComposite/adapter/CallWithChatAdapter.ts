@@ -82,7 +82,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  joinCall(microphoneOn?: boolean): Call | undefined;
+  joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
   /**
    * Leave the call.
    *

@@ -170,7 +170,7 @@ export interface BaseCustomStyles {
 
 // @public
 export interface CallAdapter extends CommonCallAdapter {
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -181,7 +181,7 @@ export type CallAdapterCallEndedEvent = {
 
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -571,7 +571,7 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1092,7 +1092,7 @@ export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
-    joinCall(microphoneOn?: boolean): void;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
 

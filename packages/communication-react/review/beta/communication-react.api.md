@@ -294,7 +294,7 @@ export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
 
 // @public
 export interface CallAdapter extends CommonCallAdapter {
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -307,7 +307,7 @@ export type CallAdapterCallEndedEvent = {
 
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -851,7 +851,7 @@ export interface CallWithChatAdapterManagement {
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
-    joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1604,7 +1604,7 @@ export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
-    joinCall(microphoneOn?: boolean): void;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): void;
     startCall(participants: string[], options?: StartCallOptions): void;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
@@ -3476,7 +3476,7 @@ export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
-    joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    joinCall(microphoneOn?: boolean, cameraOn?: boolean): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }

@@ -101,8 +101,9 @@ import { DiagnosticsForwarder } from './DiagnosticsForwarder';
 import { useEffect, useRef, useState } from 'react';
 import { CallHandlersOf, createHandlers } from './createHandlers';
 import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchProfileCallback';
+import { getSelectedCameraFromAdapterState } from '../utils';
 /* @conditional-compile-remove(video-background-effects) */
-import { getBackgroundEffectFromSelectedEffect, getSelectedCameraFromAdapterState } from '../utils';
+import { getBackgroundEffectFromSelectedEffect } from '../utils';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -306,7 +307,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private callClient: StatefulCallClient;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
-  private localStream: SDKLocalVideoStream | undefined;
   private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: CallCommon;
@@ -554,16 +554,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  public async joinCall(microphoneOn?: boolean, cameraOn?: boolean): Promise<CallTypeOf<AgentType> | undefined> {
+  public joinCall(microphoneOn?: boolean, cameraOn?: boolean): CallTypeOf<AgentType> | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     }
 
-    return await this.teeErrorToEventEmitter(async () => {
+    return this.teeErrorToEventEmitter(() => {
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-      const localStream = selectedCamera ? new LocalVideoStream(selectedCamera) : undefined;
+      const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
       const videoOptions = localStream && cameraOn ? { localVideoStreams: [localStream] } : {};
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
