@@ -2,7 +2,6 @@ import { Meta, Source } from '@storybook/addon-docs';
 import { SingleLineBetaBanner } from './BetaBanners/SingleLineBetaBanner';
 
 import TransferSnippetText from '!!raw-loader!./snippets/transfer/Transfer.snippet.tsx';
-import TransferWithDialogPromptSnippetText from '!!raw-loader!./snippets/transfer/TransferWithDialogPrompt.snippet.tsx';
 
 <Meta
   id="transfer"
@@ -50,10 +49,6 @@ const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter) => {
   return adapter;
 }, []);
 ```
-
-Here is another example of using a dialog to prompt the user to accept or reject transfer requests.
-
-<Source code={TransferWithDialogPromptSnippetText} />
 
 ## Requesting transfers
 
