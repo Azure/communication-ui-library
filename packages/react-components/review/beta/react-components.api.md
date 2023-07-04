@@ -75,13 +75,6 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
-// @beta (undocumented)
-export interface BaseFileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
 // @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
@@ -702,8 +695,11 @@ export type CustomAvatarOptions = {
 };
 
 // @beta (undocumented)
-export interface CustomFileMetadata extends BaseFileMetadata {
+export interface CustomFileMetadata {
     attachmentType: 'fileSharing';
+    extension: string;
+    name: string;
+    url: string;
 }
 
 // @public
@@ -1880,21 +1876,27 @@ export interface SystemMessageCommon extends MessageCommon {
 }
 
 // @beta (undocumented)
-export interface TeamsInteropFileMetadata extends BaseFileMetadata {
+export interface TeamsInteropFileMetadata {
     // (undocumented)
     attachmentType: 'fileSharing';
+    extension: string;
     // (undocumented)
     id: string;
+    name: string;
+    url: string;
 }
 
 // @beta (undocumented)
-export interface TeamsInteropImageFileMetadata extends BaseFileMetadata {
+export interface TeamsInteropImageFileMetadata {
     // (undocumented)
     attachmentType: 'inlineImage' | 'attachedImage';
+    extension: string;
     // (undocumented)
     id: string;
+    name: string;
     // (undocumented)
     previewUrl?: string;
+    url: string;
 }
 
 // @internal (undocumented)

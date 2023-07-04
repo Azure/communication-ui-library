@@ -23,7 +23,7 @@ export type FileMetadataAttachmentType =
 /**
  * @beta
  */
-export interface BaseFileMetadata {
+export interface CustomFileMetadata {
   /**
    * File name to be displayed.
    */
@@ -38,12 +38,6 @@ export interface BaseFileMetadata {
    * Download URL for the file.
    */
   url: string;
-}
-
-/**
- * @beta
- */
-export interface CustomFileMetadata extends BaseFileMetadata {
   /**
    * Attachment Type
    */
@@ -55,7 +49,21 @@ export interface CustomFileMetadata extends BaseFileMetadata {
 /**
  * @beta
  */
-export interface TeamsInteropFileMetadata extends BaseFileMetadata {
+export interface TeamsInteropFileMetadata {
+  /**
+   * File name to be displayed.
+   */
+  name: string;
+  /**
+   * Extension is used for rendering the file icon.
+   * An unknown extension will be rendered as a generic icon.
+   * Example: `jpeg`
+   */
+  extension: string;
+  /**
+   * Download URL for the file.
+   */
+  url: string;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
@@ -73,7 +81,21 @@ export interface TeamsInteropFileMetadata extends BaseFileMetadata {
 /**
  * @beta
  */
-export interface TeamsInteropImageFileMetadata extends BaseFileMetadata {
+export interface TeamsInteropImageFileMetadata {
+  /**
+   * File name to be displayed.
+   */
+  name: string;
+  /**
+   * Extension is used for rendering the file icon.
+   * An unknown extension will be rendered as a generic icon.
+   * Example: `jpeg`
+   */
+  extension: string;
+  /**
+   * Download URL for the file.
+   */
+  url: string;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.

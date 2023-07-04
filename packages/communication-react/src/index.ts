@@ -279,7 +279,6 @@ export type { FileMetadata } from '../../react-components/src';
 export type {
   FileMetadataAttachmentType,
   AttachmentDownloadResult,
-  BaseFileMetadata,
   TeamsInteropFileMetadata,
   TeamsInteropImageFileMetadata,
   CustomFileMetadata
