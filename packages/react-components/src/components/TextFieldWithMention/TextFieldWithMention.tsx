@@ -534,14 +534,16 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           relativePosition.top -= adjustOffset;
         }
         setCaretPosition(relativePosition);
-
         if (triggerPriorIndex !== undefined) {
           // trigger is found
-          const isSpaceBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
+          const symbolBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex);
+          const isSpaceBeforeTrigger = symbolBeforeTrigger === ' ';
+          // check if \r (Carriage Return), \n (Line Feed) or \r\n (End Of Line) is before the trigger
+          const isNewLineBeforeTrigger = /\r|\n/.exec(symbolBeforeTrigger);
           const wordAtSelection = newValue.substring(triggerPriorIndex, currentSelectionEndValue);
           let tagIndex = currentTriggerStartIndex;
-          if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
-            //no space before the trigger <- continuation of the previous word
+          if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0 && isNewLineBeforeTrigger === null) {
+            // no space before the trigger, it's not a beginning of the line and no new line before  <- continuation of the previous word
             tagIndex = -1;
             setCurrentTriggerStartIndex(tagIndex);
           } else if (wordAtSelection === triggerText) {
