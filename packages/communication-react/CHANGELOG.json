@@ -2,6 +2,903 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 27 Jun 2023 22:07:18 GMT",
+      "tag": "@azure/communication-react_v1.7.0-beta.1",
+      "version": "1.7.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "488c96642ee98759cf20a3c9f6ded440faf71103",
+            "comment": "Add `Edited` for live message speak out"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "70d072656829df3061cbbd40ae8c34304669879f",
+            "comment": "Add margin to participant item to allow the focus border to show when selecting each participant with keyboard"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a79c442b3fa1cbb55501e3a7ddb429fb8be953d7",
+            "comment": "updating @azure dependencies"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "db415f08a42121b541ab64d0ee8d37bb4e90bf25",
+            "comment": "Embed the EditBox inside a Chat.Message to enable the accessibility"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "918ec2682d96ac973a149608e4473cc555655af9",
+            "comment": "Extend touchable/clickable area of button to full height of send box."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "13e9e1dbc5f36b1501d65eb368914de4b956c002",
+            "comment": "Update micPrimaryActionSplitButtonTitle to microphonePrimaryActionSplitButtonTitle"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c1dcea2ac69d152ffc74102035cc22c63d303c91",
+            "comment": "Update useAzureCommunicationCallAdapter hook to protect against multiple client creations"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5323c89d357f370811737c7f2e26ab9a5aa2b201",
+            "comment": "Replace useId with a communication react specific id generator for React 16"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "661d3ed5a2c616af30109623ffdd0ef7ff354065",
+            "comment": "Remove default persona coin size in VideoTile. Changed onRenderAvatar callback not show persona until coin size is defined."
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9b1d8fca68b8cf3d330ab4d3e15d34d550216d08",
+            "comment": "update unsubscribe logic for captions"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "26aef3b52fcbf80910906e265aea4e0706aee473",
+            "comment": "Updates VideoTile resize hook to not rerender on the observer reference"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "de5e629c6ad22c8c62346a342e5b656411779545",
+            "comment": "Expose aria-labelledby prop for participantItems"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "369b54f31e6dca6a6cff98a3f806e20ef71d5cfb",
+            "comment": "Show local tile in the overflow gallery when video gallery is in default layout"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "369b54f31e6dca6a6cff98a3f806e20ef71d5cfb",
+            "comment": "Update video gallery behavior to show local tile when screen sharing alone in a call"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "3dac3d219ea144b49aecc627df09987234825833",
+            "comment": "Add the leaving page"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "459b2a1aaac58e849c81561ffb2a498df7ce0221",
+            "comment": "Removed Duplicated Package Reference in React Component Package"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cd8ca2693e27fb2b37f5352a60a980af2b191faa",
+            "comment": "Fix scroll and new message prompt in sidepane chat for safari"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a3f3341bee810c714c5d5bbb9579f6a57feaec35",
+            "comment": "Update locale strings"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "72d6aecb106389202d944fb82f69ee586629d468",
+            "comment": "add new handler to dispose screenshare"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0656cb4121b8e1b94c7365048611345d6ebfb400",
+            "comment": "Remove empty space to the right of participant displayName when tile is not being interacted with."
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dc9bef7100ec475a8cf08df9d653e7308b3ca237",
+            "comment": "updating version of node to 16.19.0 across all packlets"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eef5216616a8b3f0ea9015ab526850bd59ec7d4c",
+            "comment": "Enable mouse / touch selection of mentions by word"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "adc7ffb3b58e28776d474a9d40b68baa8cd80c9c",
+            "comment": "Fixed an issue with a cursor position when multiline parameter is set to true"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "041d76135f9fca377caa4a99ecf91c65c90153e3",
+            "comment": "moving isValidIdentifier to common"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6fa42df80c8cc4da3d3746f4d4de597e3a893eea",
+            "comment": "Fetch translated strings"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0c4e35cf3e8ad5a7767799465000387ed0bc7f3b",
+            "comment": "adding in lock files adding azurelogger to the composite packlet for both beta and stable"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "712a91eeabd6ced44c1a5b7784cb28622e0d26a6",
+            "comment": "Add missing 'rem' from width of avatar. This caused formatting issues when embedding inside a Teams Toolkit App."
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cc96a0d2d6bd5670384d51e451c85eb66872bdae",
+            "comment": "Fix bug where static html samples are not showing fluent icons"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fab6c184b6b2fff1b3b1aa806cce971d0235b242",
+            "comment": "Update side pane heading styles and correct video effects side pane width in the call screen."
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "262d946eda0368e0330b0886b63b540b68108345",
+            "comment": "using correct host layer id for pipip"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bb6279f0bb245eba7cea1341f54914d0c49f7a69",
+            "comment": "Enable ArrowUp and ArrowDown key inside EditBox"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b618b2a2149cd7905fa53d07f77cee02f6b10ca4",
+            "comment": "Internally replace usage of fluent react northstar with intermediary bundler output"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5ecff5e672a046dc467fd337f577cc05bf92345",
+            "comment": "Fixes resizeObserver infinite loop error in older versions of react"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dd1b9ac2d44545e5c90d9bd39f80c50ae077d34b",
+            "comment": "Replace access token video with update"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0c4e35cf3e8ad5a7767799465000387ed0bc7f3b",
+            "comment": "adding logging for time to enumerate devices in adapter"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "863563bad1d000f1e0915c945ed2e4645a04afd6",
+            "comment": "Cursor icon remains as default cursor on inactionable participantItems"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5491c459b20b8ea30185e74bbb18f144bdc3622d",
+            "comment": "fixing how common code deals with E.164 numbers"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cb4f873859e1761e964e7b089a847948c370f08a",
+            "comment": "Add height to FocuzTrapZone in SpokenLanguageDrawer"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "de5e629c6ad22c8c62346a342e5b656411779545",
+            "comment": "Expose aria-labelledby prop for participantItems"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9f41527e0f6d02e36ad1345658fe915273e40e6a",
+            "comment": "Fixed long Seen display name as ellipsis"
+          }
+        ],
+        "minor": [
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ea106e570fb60364ceb36f0328267fed75c39f27",
+            "comment": "`@azure/communication-chat` peer dependency updated to 1.3.2-beta.2 for beta packages"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "72d6aecb106389202d944fb82f69ee586629d468",
+            "comment": "Introduce new handler for disposing screen share for remote particapants, stops flash when navigating overflow galleries"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b618b2a2149cd7905fa53d07f77cee02f6b10ca4",
+            "comment": "Bump peer depedencies to react 18"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "80c85a4a07da49971545e9752cef803ce57b78bb",
+            "comment": "Add const exports for missing supported locales"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "af3a72214d22f1ab3b8368ff10f9ab3a34e24075",
+            "comment": "Implement file sharing from Teams to ACS"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b618b2a2149cd7905fa53d07f77cee02f6b10ca4",
+            "comment": "`react-aria-live` react 18 support"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "20b1233ea62197a95f84b9485a26bf5cafdc2728",
+            "comment": "Update control bar ui"
+          }
+        ],
+        "none": [
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "700fe0f4fc9eedf1bb87ba55de4c90204641472a",
+            "comment": "Add unit tests for Mention Popover's position"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e8c6deffe68f126bb81cd724eeb2904c7eb06e2b",
+            "comment": "Announce that you are being transferred when transfer page is showing when screenreader is on"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4fca8d48723f828db152641f6867a412102be7b0",
+            "comment": "Mark call transfer to in progress feature"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "18128f2fe7bdaa242e382606a0102717c0dd3851",
+            "comment": "Fix best practices docs"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "079a3bd454e144cd774ab03602dd45b209afa835",
+            "comment": "Remove flakey snapshots to regenerate them"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "20c4c6e54544249d2458958a25d10aaa6cdc9169",
+            "comment": "Groom 1.6.0 changelog"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5dd1c66738c3b42cd4cbc273ec73510da0173234",
+            "comment": "update onCancelMessageEdit to onCancelEditMessage for 1.6.0 release"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c4ed1cd263d6078cc46bb46cb53a284a6e2de077",
+            "comment": "Handle mention messages with angle brackets and ampersand"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8f8d2fcdbd971e441a5bc8492fcd384e77328367",
+            "comment": "Fix Suggestion debounce cancelation"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bfeb4a7ca48ad3cf65466f555dae0acc603a6f5e",
+            "comment": "Fix up visual artifact on MentionPopover"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b871248ab34a114cfdec4e8ae33e738324a7fe60",
+            "comment": "Fix cte query arg in Calling sample"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f9ce1a02ee75953b8c4041224ec8df61d1736078",
+            "comment": "Fixed selection indexes for mouse click events on mention"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "03f792f2864d2fca1378e2dc664817bef25e5112",
+            "comment": "Fix storybook deadlinks"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "537ea78a6c9f75d4ef5a716f8b76367d94c2eb45",
+            "comment": "Remove displayText parameter from mentions"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c4fac9e2bd52cda0a75fe79cc35ef2292506d03c",
+            "comment": "Add github action to deploy features to test apps"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "de33d73cd6b50febfb36647dd55b5afacdc4475c",
+            "comment": "Add breaking change checker info"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b350ec36bc66f70425ff92211aa741c80dc19eb9",
+            "comment": "Delete internal storybook pages for mention"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b8530e3bbb64891262ab53e88b5bfe39654ed6b2",
+            "comment": "Fixed margins for mention send box example in Storybook"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fa8d35c12334736109fa4d286ad1fc057f037dd4",
+            "comment": "Stateful client update to have CallState property of accepted transfer call"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6b7b8af818cf82bd27840945bafbc58271c76cfe",
+            "comment": "Fixup teams like theme example"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "16cc43b287da1a8130f2566e2e26b4eba9a72758",
+            "comment": "Add ability to run only live e2e tests locally"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5dae6f35618750cb57966567881b862cad73c64a",
+            "comment": "Block release if api not match"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "d4393abb422b5a95fc2d8a43032d972e9108d530",
+            "comment": "Still output success result when skip the check"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "02f7bf49d4ba4c0b12580fd592f7eda1a7e4c8f2",
+            "comment": "Fix Deploy CI Pipelines"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "017614b0fdab30715138920501fe1026f7fe506f",
+            "comment": "Update beta version bump script"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "19772d087ce7c8fb851d386ca2c429f7e11043aa",
+            "comment": "Added test for MentionPopover rendering"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fa68767e873e71eabe1cc97ec7f21c448eca821c",
+            "comment": "Added page when a call transfer is accepted"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8126281f3fccf144db318f1f1b9a21d80c26d776",
+            "comment": "Do not show mention suggestion items with empty display text"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7321c3f1c753296bec0b00dec162ec6fc638ef97",
+            "comment": "CC tool improvements: show error when eslint fail"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "e6a800ac7f1bde29747e6a0976abd50111acfdca",
+            "comment": "Revert changes for release-publish"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "750a54599f284b0ec6274f0e762be9ac53dc6a5a",
+            "comment": "Add unit tests for mention logic"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e23060b7b36be2eb32b3de36bbe95a075c9e352d",
+            "comment": "Second part of mention refactor tasks"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2e777d5658caa396466c5beffde8f7ac904d0217",
+            "comment": "Increase rush install max attempts"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5f16100c25545eb98f6881024e5a4816780246b1",
+            "comment": "Maintain audio and video state by default after accepting transfer. Only showing transfer target in transfer page when their display name is known. Opacity of transfer page avatar change to 40%"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9163b7950b108b2f6f22f05ae5697123b9f2c18e",
+            "comment": "Fixed cursor position during mention editing"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "68de0a84c3ad42c30c5fa4272c5127d836e2c791",
+            "comment": "Upgrade to rush 5.100.1"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e25cdd7d2fd69eeffe082de074ae1a3946bead7f",
+            "comment": "Updated initial index value in findStringsDiffIndexes to include the last symbol in the strings"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6a7ca9d1fdc0ddb211574d859f18140e7e7402eb",
+            "comment": "Bumped"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8c6a8a38133d75e351047ba4eef008f0d83af90c",
+            "comment": "Created conceptual docs page for transfer in storybook"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1d0a06819308792183139a80e421e8406e8076eb",
+            "comment": "FIx browser permission snippets"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0622a1a6ef9e6b65dbdc9d28c8234db94dc57811",
+            "comment": "Fixed Storybook sendbox showing alert before clear the inputField"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "833781ecf8fd5c38aee98cac192a82e580d95c54",
+            "comment": "Update Adapters storybook page to include transfer API changes"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2c7d1462a0bce395e9ab2939e7648984228d3c2e",
+            "comment": "Remove webpack4 dependency from storybook"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2d407609f54b485fc13ed2b71de19a9e7f34fb24",
+            "comment": "Add tests for mouse and keyboard events when interacting with mentions in SendBox"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "39ddc74642d5af99dd4b1d3f59c73b7e40919bec",
+            "comment": "Added tests for mention functionality in SendBox"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f33e298ccd492e436dbfbe0801e6d9adce792c87",
+            "comment": "Update deploy-azure-webapps.yml to OICD"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "9c30d322d8444c9559ec72a8e577d7940960168b",
+            "comment": "Add breaking change check pipeline"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0baf6ac0fcb55590887effa1c5bf00488e389c0f",
+            "comment": "Fix up popover position within scrolled textfield"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "22053b455707b08fabeccd7bc989148e35a237c5",
+            "comment": "Fix for a Storybook issue when messages can't be sent in Message thread"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "063117f6c74d3269f574c0c5559093f623259081",
+            "comment": "Fixed selection is incorrect after deletion"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "447cd7b4fa7279e0bc6d5b12e73c052230774032",
+            "comment": "Show message content in an alert after sending mention messages in Storybook"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "10eab3088ab15152aa289bce841056bca632bb7d",
+            "comment": "Use more specific messages for endcall page when adhoc calling fails"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f321a2e3447fc79ba9bd886af62acd73e98ac109",
+            "comment": "Add file sharing page in storybook"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ef8bdc4425d095d12ad511e0e312f039bf2b0d46",
+            "comment": "Contribution Guideline updates"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1d3c25ed491afaae9901ae1690815847f16ad6ac",
+            "comment": "Refactor mention out into a new component"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c2f1ad4d4d7221af633705ae3f7406b975f05ba9",
+            "comment": "Add adhoc calling conceptual docs page to storybook"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2df0f917555f01388bc3c9c4d72f0c58159b8a46",
+            "comment": "AzureCommunicationCallAdapter emitting transferRequested event and added acceptedTransferCallState propetry to CallAdapterClientState"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ad5b54fad3028317a240b022892637045378609c",
+            "comment": "Part 1 mention refactor from PR feedback"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dbcf2f550be86123523137de85cf5f1503a77a07",
+            "comment": "Add unit tests for Mention in MessageThread component"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5384ed3080bef5ca181e8e39e8ef80835e8ffac7",
+            "comment": "Rename property CallState.transferFeature to CallState.transfer"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4a307bffc6a0c0397287d9ee553066200ced5445",
+            "comment": "Fix use cases documentation to note that composites can change icons"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b2d0b0b278e87a8a54947ff2cf7c4e3c971746f8",
+            "comment": "Add azure deployment failure to the pipeline"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "18dee23c3d64fd01b0afa74612f81f0a28027772",
+            "comment": "Point readme instructions to install non-fixed versions of peer deps"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "38057249e199d7fda00e0410f085677e91f395c4",
+            "comment": "Ensure user switches to newly accepted transfer call when it is in the connected state and hang up the old call"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "48fbffd6822dc7547ab042bc1eac1aa337d3d643",
+            "comment": "Fix mention popover position is far up in long text"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f0e756a5f3a4c33b5883be33997b1d03d4e480d0",
+            "comment": "Remove mention everyone from non-mention section of the MessageTread storybook"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "154c48903a44952777545ec0e861b220f8538db0",
+            "comment": "Updated mouse selections and clicks handling behaviour for mentions"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3b0357786dd12ba367aa858071bf0582295c7a69",
+            "comment": "Change playwright config maxDiffPixels to 1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "81a861dfa8dcded655e7ece41c2d136fba2ad7d8",
+            "comment": "Add url support for teams call"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c3d26e53c176582e6e0b66c9731c826e59605429",
+            "comment": "Update release validation for new security requirements"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "0de47832fafeb4a94876136c8d0b1389e88d4b5a",
+            "comment": "Get treeshaked build in production mode"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "64e9f551ef104eeb8eb9899006c9a2723bd7cd07",
+            "comment": "Introduce storybook updates for CallComposite configurations for Click to Call."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "439da51ff9cceeb56e65c03472e0fae3985576af",
+            "comment": "Added onFetchProfile to CommonCallAdapterOptions."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1c74f9088fdadae41422ea8d3e184892e17d6c9b",
+            "comment": "Dismiss video effects error when camera is off"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "59ff039dcd2406d871184b60912684a93b04277d",
+            "comment": "Update Calling stable to 1.14.1"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f23096b1adf7f00f1daa79f6a0310f6b65449d09",
+            "comment": "Introduce E2E tests for Call Composite local tile options"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5cee1799c91b637320b0e153603c4d9cc3f97e13",
+            "comment": "Update fluentui package"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4a0b3f4dc6468d36cb865e69b446d48af398fb79",
+            "comment": "Auto-dismiss errors on selection of new effect"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "31f214c494255175ca6fd7a0a205630c94b27d2c",
+            "comment": "Introduce new options for the CallComposite to configure LocalVideoTile positioning enabling new use case scenarios with the composite like click to call"
+          },
+          {
+            "author": "vriosrada@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d5de58d12b780804dc04b84cf2b02e7cdf65a830",
+            "comment": "Adding OVC to stateful client and adding selectors"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ae96fb965560790da22b7c45d3af81a1e54baa30",
+            "comment": "Fixed start captions console error and add loading screen "
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "77072d2c7512d5c054a7f95b4899388da504e4e8",
+            "comment": "A menu item role for mention popover items and create FocusZone to ensure the first item is focused when using talk back."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a9ed5926f3c4afbcad8ecb6dae0f086489b5e0c5",
+            "comment": "Filter out remote participants with Disconnected state in participant list selector"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "439da51ff9cceeb56e65c03472e0fae3985576af",
+            "comment": "Added onFetchProfile to CommonCallAdapterOptions to allow displayName changes when using AzureCommunicationCallAdapter"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "3dac3d219ea144b49aecc627df09987234825833",
+            "comment": "Add the leaving page"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "43a3130861c48333695c3614170b00e9b51aa9c3",
+            "comment": "Prevent device contextMenu to be dismissed"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a698b205015331c02743ab2dde20661a659d0e6a",
+            "comment": "Bump mention storybook pages versioning for beta banners"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fe9234f6a89fb147393f399963f1f6c744f89030",
+            "comment": "Add Contoso background"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "613b0878e8b9f26a9e8727da807501abc4f32343",
+            "comment": "Remove displayText from msft-mention"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c5c0a0f485fd4edc74c07d1652b0694f711d8b4d",
+            "comment": "Improve Accessibility for Files Sharing feature"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "957327f9e7edb43d2080139c8c3214b612144a17",
+            "comment": "Decouple types from SDKs by adding new types for BackgroundBlurConfig and BackgroundReplacementConfig"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a444a3392629f5d442b163a0ec313c492c0a07a3",
+            "comment": "Update types from internal review"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "436b51e43c734793d5bff7a0988972247061fc5d",
+            "comment": "Merge startScreenShareGeneric and startScreenSharingGeneric strings"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "762896e7df89647a51277c25e40806232fc501ff",
+            "comment": "Fix issue where new controls were not being respected by the overflow galleries."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8112c3079de05df5a119f5d341d8c9394d6dcbce",
+            "comment": "bump c2c storybook page versioning for beta banners"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1e86a9352c9c220834d61dbcd4a95f9dc0f96a0d",
+            "comment": "Add ability to accept or reject transfer requests through CallAdapter event subscription. Call composite shows transfer page when a transfer request is accepted followed by seamless transition to new call."
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0525fb2d8eedd943f79d94efd1c7e68583b2067a",
+            "comment": "Rename nonevideoeffect to novideoeffect"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d70dc56dd4b251e39a42419730fccb9b70c636ea",
+            "comment": "add new API for hiding local tile in composite"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a20a40a323a02bf24da0ce73b93f77636d7964fa",
+            "comment": "Support mentions capabilities in chat message thread. Enables user to @ mention another user by providing a Search capability to look for the desired user and then tagging them on the message."
+          },
+          {
+            "author": "vriosrada@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3feb06594a3d0673fcd8bf327d77063d29966e82",
+            "comment": "Optimal Video Count provides a way to get a value which dictates the maximum number of remote renderers that should be rendered to get a good quality video."
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Jun 2023 19:04:18 GMT",
       "tag": "@azure/communication-react_v1.6.0",
       "version": "1.6.0",

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add breaking change check pipeline",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}
