@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update 1.7.0-beta.1 changelog with adhoc feature description",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
