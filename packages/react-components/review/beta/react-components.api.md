@@ -696,6 +696,7 @@ export type CustomAvatarOptions = {
 
 // @beta (undocumented)
 export interface CustomFileMetadata {
+    attachmentType: 'fileSharing';
     extension: string;
     name: string;
     url: string;
@@ -1080,10 +1081,10 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata;
+export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1191,9 +1192,6 @@ export interface _Identifiers {
     videoGallery: string;
     videoTile: string;
 }
-
-// @beta
-export const isTeamsInteropFileMetadata: (fileMetadata: FileMetadata) => fileMetadata is TeamsInteropFileMetadata;
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -1880,7 +1878,18 @@ export interface SystemMessageCommon extends MessageCommon {
 // @beta (undocumented)
 export interface TeamsInteropFileMetadata {
     // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
+    attachmentType: 'fileSharing';
+    extension: string;
+    // (undocumented)
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta (undocumented)
+export interface TeamsInteropImageFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage' | 'attachedImage';
     extension: string;
     // (undocumented)
     id: string;

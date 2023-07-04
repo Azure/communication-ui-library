@@ -2077,6 +2077,7 @@ export interface CustomControlButtonProps {
 
 // @beta (undocumented)
 export interface CustomFileMetadata {
+    attachmentType: 'fileSharing';
     extension: string;
     name: string;
     url: string;
@@ -2502,10 +2503,10 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata;
+export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
 
 // @beta
 export interface FileSharingOptions {
@@ -3483,7 +3484,18 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
 // @beta (undocumented)
 export interface TeamsInteropFileMetadata {
     // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
+    attachmentType: 'fileSharing';
+    extension: string;
+    // (undocumented)
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta (undocumented)
+export interface TeamsInteropImageFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage' | 'attachedImage';
     extension: string;
     // (undocumented)
     id: string;

@@ -280,6 +280,7 @@ export type {
   FileMetadataAttachmentType,
   AttachmentDownloadResult,
   TeamsInteropFileMetadata,
+  TeamsInteropImageFileMetadata,
   CustomFileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */

@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, FileMetadata, isTeamsInteropFileMetadata } from './FileDownloadCards';
+import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -201,7 +201,7 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedImgSrc1
@@ -209,7 +209,7 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: imgId2,
           name: imgId2,
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: expectedImgSrc2,
           previewUrl: expectedImgSrc2
@@ -218,7 +218,7 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = isTeamsInteropFileMetadata(attachment) ? attachment.previewUrl ?? '' : '';
+      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
       return [
         {
           blobUrl: url
@@ -239,7 +239,6 @@ describe.only('Message should display image and attachment correctly', () => {
 
   test('Message richtext/html fileSharing and inline image attachment should display correctly', async () => {
     const fildId1 = 'SomeFileId1';
-    const fildId2 = 'SomeFileId2';
     const fildName1 = 'SomeFileId1.txt';
     const fildName2 = 'SomeFileId2.pdf';
     const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
@@ -264,21 +263,19 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: expectedImgSrc1,
-          previewUrl: expectedImgSrc1
+          previewUrl: expectedFilePreviewSrc1
         },
         {
           id: fildId1,
           name: fildName1,
           attachmentType: 'fileSharing',
           extension: 'txt',
-          url: expectedFileSrc1,
-          previewUrl: expectedFilePreviewSrc1
+          url: expectedFileSrc1
         },
         {
-          id: fildId2,
           name: fildName2,
           attachmentType: 'fileSharing',
           extension: 'pdf',
@@ -288,7 +285,7 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = isTeamsInteropFileMetadata(attachment) ? attachment.previewUrl ?? '' : '';
+      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
       return [
         {
           blobUrl: url
@@ -308,12 +305,12 @@ describe.only('Message should display image and attachment correctly', () => {
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
 
-      // Second attachment: previewUrl === undefined, will show DownloadFile Icon
+      // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
 
       // Inline Image attachment
-      expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedImgSrc1);
+      expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedFilePreviewSrc1);
       expect(onFetchAttachmentCount).toEqual(expectedOnFetchInlineImageAttachmentCount);
     });
   });

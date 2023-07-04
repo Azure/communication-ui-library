@@ -75,20 +75,35 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
-  return attachments.map((attachment) => ({
-    attachmentType: mapAttachmentType(attachment.attachmentType),
-    id: attachment.id,
-    name: attachment.name ?? '',
-    extension: attachment.contentType ?? '',
-    url: extractAttachmentUrl(attachment),
-    previewUrl: attachment.previewUrl
-  }));
+  const fileMetadata: FileMetadata[] = [];
+  attachments.forEach((attachment) => {
+    const attachmentType = mapAttachmentType(attachment.attachmentType);
+    if (attachmentType === 'inlineImage') {
+      fileMetadata.push({
+        attachmentType: attachmentType,
+        id: attachment.id,
+        name: attachment.name ?? '',
+        extension: attachment.contentType ?? '',
+        url: extractAttachmentUrl(attachment),
+        previewUrl: attachment.previewUrl
+      });
+    } else if (attachmentType === 'fileSharing') {
+      fileMetadata.push({
+        attachmentType: attachmentType,
+        id: attachment.id,
+        name: attachment.name ?? '',
+        extension: attachment.contentType ?? '',
+        url: extractAttachmentUrl(attachment)
+      });
+    }
+  });
+  return fileMetadata;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachmentType => {
   if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
-    return 'teamsInlineImage';
+    return 'inlineImage';
   } else if (attachmentType === 'file') {
     return 'fileSharing';
   }

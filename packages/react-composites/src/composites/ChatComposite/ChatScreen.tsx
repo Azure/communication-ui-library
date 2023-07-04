@@ -48,7 +48,7 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, FileMetadata, isTeamsInteropFileMetadata } from '@internal/react-components';
+import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 
 /**
  * @private
@@ -199,7 +199,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onRenderInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
-      if (isTeamsInteropFileMetadata(attachment) && attachment.previewUrl) {
+      if (attachment.attachmentType === 'inlineImage' && attachment.previewUrl) {
         const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.previewUrl] });
         return blob;
       }

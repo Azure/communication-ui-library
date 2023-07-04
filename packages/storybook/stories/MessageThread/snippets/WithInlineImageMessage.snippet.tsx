@@ -3,8 +3,7 @@ import {
   MessageThread,
   Message,
   FileMetadata,
-  AttachmentDownloadResult,
-  TeamsInteropFileMetadata
+  AttachmentDownloadResult
 } from '@azure/communication-react';
 import React from 'react';
 
@@ -18,7 +17,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     return [
       {
         // blobUrl: URL.createObjectURL(blob);
-        blobUrl: (attachment as TeamsInteropFileMetadata).previewUrl ?? ''
+        blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : ''
       }
     ];
   };
@@ -39,7 +38,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         {
           id: 'SomeImageId1',
           name: 'SomeImageId1',
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: 'images/inlineImageExample1.png',
           previewUrl: 'images/inlineImageExample1.png'
@@ -47,7 +46,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         {
           id: 'SomeImageId2',
           name: 'SomeImageId2',
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: 'images/inlineImageExample2.png',
           previewUrl: 'images/inlineImageExample2.png'

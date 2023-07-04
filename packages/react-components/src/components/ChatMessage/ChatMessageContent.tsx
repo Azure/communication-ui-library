@@ -19,7 +19,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata, isTeamsInteropFileMetadata } from '../FileDownloadCards';
+import { FileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -80,7 +80,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
       if (
         props.onFetchAttachment &&
         props.attachmentsMap &&
-        isTeamsInteropFileMetadata(fileMetadata) &&
+        fileMetadata.attachmentType === 'inlineImage' &&
         props.attachmentsMap[fileMetadata.id] === undefined
       ) {
         props.onFetchAttachment(fileMetadata);
@@ -195,7 +195,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
     function isImageNode(file: FileMetadata): boolean {
-      return isTeamsInteropFileMetadata(file) && file.id === node.attribs.id;
+      return file.attachmentType === 'inlineImage' && file.id === node.attribs.id;
     }
 
     // Process img node with id in attachments list

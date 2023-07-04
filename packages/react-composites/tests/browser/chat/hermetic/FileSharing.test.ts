@@ -228,8 +228,7 @@ test.describe('Filesharing Global Errorbar', async () => {
             name: 'Sample.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ],
         failFileDownload: true
@@ -264,8 +263,7 @@ test.describe('Filesharing Message Thread', async () => {
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             uploadComplete: true,
-            attachmentType: 'fileSharing',
-            id: ''
+            attachmentType: 'fileSharing'
           }
         ]
       })
