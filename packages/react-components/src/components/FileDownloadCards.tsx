@@ -312,10 +312,8 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ file.attachmentType ===
-                      'fileSharing' &&
                     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                    !('id' in file) ? (
+                    file.attachmentType === 'fileSharing' ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
