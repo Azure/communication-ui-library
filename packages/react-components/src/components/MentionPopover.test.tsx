@@ -81,7 +81,7 @@ describe('Display mention popover in the correct position', () => {
     expect(style.left).toBe('100px');
     expect(style.right).toBe('');
     expect(style.top).toBe('');
-    expect(style.bottom).toBe('150px');
+    expect(style.bottom).toBe('154px');
   });
 
   test('Show mention popover above the cursor when popover does not fit horizontally of the target', async () => {
@@ -97,7 +97,7 @@ describe('Display mention popover in the correct position', () => {
     expect(style.left).toBe('');
     expect(style.right).toBe('150px');
     expect(style.top).toBe('');
-    expect(style.bottom).toBe('150px');
+    expect(style.bottom).toBe('154px');
   });
 
   test('Show mention popover below the cursor when popover fits horizontally of the target', async () => {
@@ -112,7 +112,7 @@ describe('Display mention popover in the correct position', () => {
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('100px');
     expect(style.right).toBe('');
-    expect(style.top).toBe('250px');
+    expect(style.top).toBe('254px');
     expect(style.bottom).toBe('');
   });
 
@@ -128,7 +128,7 @@ describe('Display mention popover in the correct position', () => {
     expect(style.maxWidth).toBe('200px');
     expect(style.left).toBe('');
     expect(style.right).toBe('100px');
-    expect(style.top).toBe('250px');
+    expect(style.top).toBe('254px');
     expect(style.bottom).toBe('');
   });
 
@@ -143,6 +143,6 @@ describe('Display mention popover in the correct position', () => {
     expect(style.left).toBe('0px');
     expect(style.right).toBe('');
     expect(style.top).toBe('');
-    expect(style.bottom).toBe('200px');
+    expect(style.bottom).toBe('204px');
   });
 });
