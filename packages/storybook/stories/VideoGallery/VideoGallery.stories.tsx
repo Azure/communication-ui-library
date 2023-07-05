@@ -371,7 +371,7 @@ const getDocs: () => JSX.Element = () => {
       <Source code={renderingOptionsDefault} />
 
       <Heading>Local video tile aspect ratio options</Heading>
-      <SingleLineBetaBanner version={'1.5.2-beta.1'} />
+      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         The local video tile can have its aspect ratio controlled to ensure the expected behavior for the device
         formfactor and orientation. If left unset it will follow the default of `followDeviceOrientation` which will

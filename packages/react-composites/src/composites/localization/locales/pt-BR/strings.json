@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Transferindo...",
     "transferPageTransferTargetText": "Conectando...",
     "transferPageUnknownTransferorDisplayName": "Desconhecido",
-    "transferPageUnknownTransferTargetDisplayName": "Desconhecido"
+    "transferPageUnknownTransferTargetDisplayName": "Desconhecido",
+    "transferPageNoticeString": "Você está sendo transferido",
+    "participantCouldNotBeReachedTitle": "O participante de destino não está disponível no momento",
+    "participantCouldNotBeReachedMoreDetails": "Entre em contato com o participante quando ele estiver disponível",
+    "permissionToReachTargetParticipantNotAllowedTitle": "A permissão para alcançar o participante de destino não é permitida",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Verifique se o participante de destino está no mesmo locatário",
+    "unableToResolveTenantTitle": "Não é possível resolve ID do locatário para o participante de destino",
+    "unableToResolveTenantMoreDetails": "Verifique se a ID do participante foi inserida corretamente",
+    "participantIdIsMalformedTitle": "A ID do participante não está no formato correto",
+    "participantIdIsMalformedMoreDetails": "Verifique marcar a ID do participante está no formato correto"
   },
   "chat": {
     "chatListHeader": "Neste chat",

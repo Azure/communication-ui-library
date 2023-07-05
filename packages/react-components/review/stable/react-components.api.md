@@ -208,6 +208,9 @@ export interface _ComplianceBannerStrings {
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -422,6 +425,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @internal

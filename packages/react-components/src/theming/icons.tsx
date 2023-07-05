@@ -329,5 +329,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(close-captions) */
   CaptionsSettingsIcon: <Settings20Regular />,
   /* @conditional-compile-remove(close-captions) */
-  ChangeSpokenLanguageIcon: <PersonVoice20Regular />
+  ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
+  ContextMenuCameraIcon: <Video20Regular />,
+  ContextMenuMicIcon: <Mic20Regular />,
+  ContextMenuSpeakerIcon: <Speaker220Regular />
 };

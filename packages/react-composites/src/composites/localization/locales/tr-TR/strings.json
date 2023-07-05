@@ -155,7 +155,16 @@
     "transferPageTransferorText": "Aktarılıyor...",
     "transferPageTransferTargetText": "Bağlanıyor...",
     "transferPageUnknownTransferorDisplayName": "Bilinmiyor",
-    "transferPageUnknownTransferTargetDisplayName": "Bilinmiyor"
+    "transferPageUnknownTransferTargetDisplayName": "Bilinmiyor",
+    "transferPageNoticeString": "Çağrı aktarılıyor",
+    "participantCouldNotBeReachedTitle": "Hedef katılımcı şu anda uygun değil",
+    "participantCouldNotBeReachedMoreDetails": "Uygun olduğunda katılımcıyla iletişim kurun",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Hedef katılımcıya erişim iznine izin verilmiyor",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Lütfen hedef katılımcının aynı kiracıda olup olmadığını denetleyin",
+    "unableToResolveTenantTitle": "Hedef katılımcının kiracı kimliği çözülemiyor",
+    "unableToResolveTenantMoreDetails": "Lütfen katılımcı kimliğinin doğru giril olup olmadığını denetleyin",
+    "participantIdIsMalformedTitle": "Katılımcı kimliği doğru biçimde değil",
+    "participantIdIsMalformedMoreDetails": "Lütfen katılımcı kimliğinin doğru biçimde olduğundan emin olun"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",
