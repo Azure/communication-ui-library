@@ -80,6 +80,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   /* @conditional-compile-remove(vertical-gallery) */
   const containerHeight = _useContainerHeight(containerRef);
+  /* @conditional-compile-remove(click-to-call) */
+  const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
     /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
@@ -144,7 +146,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
-          props.localVideoTileOptions === false ? 'hidden' : props.isMobile ? 'followDeviceOrientation' : '16:9'
+          props.localVideoTileOptions === false
+            ? 'hidden'
+            : props.isMobile && containerAspectRatio < 1
+            ? '9:16'
+            : '16:9'
         }
       />
     );
@@ -157,7 +163,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions,
-    layoutBasedOnTilePosition
+    layoutBasedOnTilePosition,
+    /* @conditional-compile-remove(click-to-call) */
+    containerAspectRatio
   ]);
 
   return (

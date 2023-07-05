@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add github action to deploy features to test apps",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
