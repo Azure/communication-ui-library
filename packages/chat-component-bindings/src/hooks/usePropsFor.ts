@@ -11,6 +11,7 @@ import { Common, AreEqual } from '@internal/acs-ui-common';
 import { ChatHandlers } from '../handlers/createHandlers';
 import { ChatParticipantListSelector, chatParticipantListSelector } from '../chatParticipantListSelector';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
+import { useChatThreadClient } from '../providers/ChatThreadClientProvider';
 
 /**
  * Primary hook to get all hooks necessary for a chat Component.
@@ -78,12 +79,21 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   return findSelector(component);
 };
 
+const messageThreadSelectorsByThread = {};
+
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     case SendBox:
       return sendBoxSelector;
     case MessageThread:
-      return messageThreadSelector;
+      const threadClient = useChatThreadClient();
+      let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
+      if (!messageThreadSelectorImpl) {
+        messageThreadSelectorsByThread[threadClient.threadId] = messageThreadSelector(threadClient.threadId);
+        messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
+      }
+      return messageThreadSelectorImpl;
+
     case TypingIndicator:
       return typingIndicatorSelector;
     case ParticipantList:
