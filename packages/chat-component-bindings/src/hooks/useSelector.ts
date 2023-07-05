@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { diff } from 'deep-diff';
 import { ChatClientState, StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatClientContext } from '../providers/ChatClientProvider';
 
@@ -55,7 +54,7 @@ export const useSelector = <
     }
     const onStateChange = (state: ChatClientState): void => {
       const newProps = selector(state, selectorProps ?? threadConfigProps);
-      if (diff(propRef.current, newProps)) {
+      if (propRef.current !== newProps) {
         setProps(newProps);
       }
     };
