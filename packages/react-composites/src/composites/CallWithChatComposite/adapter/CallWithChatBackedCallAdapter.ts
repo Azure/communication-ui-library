@@ -87,6 +87,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public joinCall = (microphoneOn?: boolean): Call | undefined => {
     return this.callWithChatAdapter.joinCall(microphoneOn);
   };
+  public joinCallWithOptions = (options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined => {
+    return this.callWithChatAdapter.joinCallWithOptions(options);
+  };
   public leaveCall = async (forEveryone?: boolean): Promise<void> =>
     await this.callWithChatAdapter.leaveCall(forEveryone);
   public startCall = (

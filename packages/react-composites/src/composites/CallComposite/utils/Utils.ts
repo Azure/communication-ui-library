@@ -14,8 +14,9 @@ import { AdapterError } from '../../common/adapters';
 import { BackgroundBlurEffect, BackgroundReplacementEffect } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoDeviceInfo, VideoEffectProcessor } from '@azure/communication-calling';
+import { VideoEffectProcessor } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -459,7 +460,6 @@ export const getBackgroundEffectFromSelectedEffect = (
     ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
     : undefined;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @remarks this logic should mimic the onToggleCamera in the common call handlers.
  * @private
