@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update PSTN and 1:N callstate logic to not show config screen in composites when starting call.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

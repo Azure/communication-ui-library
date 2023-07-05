@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Do not show mention suggestion items with empty display text",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

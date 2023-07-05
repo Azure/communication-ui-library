@@ -464,6 +464,10 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
+    participantCouldNotBeReachedMoreDetails?: string;
+    participantCouldNotBeReachedTitle?: string;
+    participantIdIsMalformedMoreDetails?: string;
+    participantIdIsMalformedTitle?: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
@@ -472,6 +476,8 @@ export interface CallCompositeStrings {
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
+    permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
+    permissionToReachTargetParticipantNotAllowedTitle?: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -495,12 +501,15 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageNoticeString: string;
     transferPageTransferorText: string;
     transferPageTransferTargetText: string;
     transferPageUnknownTransferorDisplayName: string;
     transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
+    unableToResolveTenantMoreDetails?: string;
+    unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
@@ -1027,6 +1036,9 @@ export type CommonCallControlOptions = {
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -1281,6 +1293,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @beta

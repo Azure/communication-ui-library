@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "updating conditional flags on these lines for a stable build",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add type definitions to the new StatefulCallClient state fields for the incoming VideoEffectsFeature. This includes just type definitions with implementation to follow.",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

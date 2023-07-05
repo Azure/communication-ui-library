@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixed an issue with a cursor position when multiline parameter is set to true",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

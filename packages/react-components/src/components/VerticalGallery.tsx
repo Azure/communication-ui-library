@@ -118,9 +118,12 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const firstIndexOfCurrentPage = (page - 1) * childrenPerPage;
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = useMemo(() => {
-    return indexesArray[clippedPage - 1].map((index) => {
-      return React.Children.toArray(children)[index];
-    });
+    if (indexesArray[0] !== undefined) {
+      return indexesArray[clippedPage - 1].map((index) => {
+        return React.Children.toArray(children)[index];
+      });
+    }
+    return;
   }, [indexesArray, clippedPage, children]);
 
   const showButtons = numberOfChildren > childrenPerPage;

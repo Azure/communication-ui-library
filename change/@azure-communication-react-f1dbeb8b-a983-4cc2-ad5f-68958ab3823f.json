@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "minor updates to storybook around cte documentation",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "none"
-}

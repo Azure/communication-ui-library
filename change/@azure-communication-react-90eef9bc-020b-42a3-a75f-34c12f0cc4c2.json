@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "Implement file sharing from Teams to ACS",
-  "packageName": "@azure/communication-react",
-  "email": "77021369+jimchou-dev@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

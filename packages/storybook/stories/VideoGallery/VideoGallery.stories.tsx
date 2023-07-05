@@ -55,8 +55,8 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         VideoGallery lays out the local user and each remote participant in a call in a
         [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery component is made up
-        of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Horizontal
-        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), and a [Local Video
+        of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Overflow
+        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#overflow-gallery), and a [Local Video
         Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used to place each
         [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component into which section is explained below.
       </Description>
@@ -226,7 +226,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Local Video Camera Button</Heading>
-      <DetailedBetaBanner />
       <Description>
         The VideoGallery can take in customization to allow for the introduction of local camera controls where the
         button will cycle through the different camera's in the users device. Typical usage is to enable this button on
@@ -371,7 +370,7 @@ const getDocs: () => JSX.Element = () => {
       <Source code={renderingOptionsDefault} />
 
       <Heading>Local video tile aspect ratio options</Heading>
-      <SingleLineBetaBanner version={'1.5.2-beta.1'} />
+      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         The local video tile can have its aspect ratio controlled to ensure the expected behavior for the device
         formfactor and orientation. If left unset it will follow the default of `followDeviceOrientation` which will
@@ -438,7 +437,7 @@ const ViewOptionsDefault = (): JSX.Element => {
 `;
 
 const MockLocalParticipant = {
-  userId: 'user1',
+  userId: 'userLocal',
   displayName: 'You',
   state: 'Connected',
   isMuted: true,

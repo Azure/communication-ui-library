@@ -6,6 +6,7 @@ import {
   COMPONENT_LOCALE_EN_US,
   COMPONENT_LOCALE_EN_GB,
   COMPONENT_LOCALE_AR_SA,
+  COMPONENT_LOCALE_CS_CZ,
   COMPONENT_LOCALE_DE_DE,
   COMPONENT_LOCALE_ES_ES,
   COMPONENT_LOCALE_FI_FI,
@@ -28,6 +29,7 @@ import { CompositeLocale, CompositeStrings } from '../LocalizationProvider';
 import en_US from './en-US/strings.json';
 import en_GB from './en-GB/strings.json';
 import ar_SA from './ar-SA/strings.json';
+import cs_CZ from './cs-CZ/strings.json';
 import de_DE from './de-DE/strings.json';
 import es_ES from './es-ES/strings.json';
 import fi_FI from './fi-FI/strings.json';
@@ -80,6 +82,15 @@ export const COMPOSITE_LOCALE_EN_GB: CompositeLocale = {
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale = {
   component: COMPONENT_LOCALE_AR_SA,
   strings: createCompositeStrings(ar_SA)
+};
+/**
+ * Locale for Czech (Czech Republic)
+ *
+ * @public
+ */
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale = {
+  component: COMPONENT_LOCALE_CS_CZ,
+  strings: createCompositeStrings(cs_CZ)
 };
 /**
  * Locale for German (Germany)

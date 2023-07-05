@@ -44,10 +44,10 @@ jobs:
         run: git checkout ${{ github.event.inputs.branch }}
 
       # Ensure node version is great enough
-      - name: Use Node.js v16.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
+          node-version: '18.x'
 
       # Make sure that Rush is installed in run
       - name: Add rush to run

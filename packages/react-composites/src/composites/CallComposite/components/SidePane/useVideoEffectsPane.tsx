@@ -11,7 +11,12 @@ import { AdapterError } from '../../../common/adapters';
 import { DismissedError, dismissVideoEffectsError } from '../../utils';
 import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
 import { useSelector } from '../../hooks/useSelector';
-const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
+
+/** @private */
+export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
+
+/** @private */
+export const VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM = 17.5;
 
 /** @private */
 export const useVideoEffectsPane = (
