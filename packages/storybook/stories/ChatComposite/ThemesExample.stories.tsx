@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, getControlledTheme, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { GetDocs } from './ChatCompositeDocs';
+import { Docs } from './ChatCompositeDocs';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
 import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
 
@@ -91,8 +91,9 @@ export default {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
     docs: {
+      //Prevent Docs auto scroll to top
       container: null,
-      page: () => <GetDocs scrollToHeading="theme" />
+      page: () => Docs()
     }
   }
 } as Meta;

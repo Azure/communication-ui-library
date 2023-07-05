@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 import { Description, Heading, Subheading, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-const InlineImageText = require('!!raw-loader!../../MessageThread/snippets/WithInlineImageMessage.snippet.tsx').default;
 const CallComponentText = require('!!raw-loader!./snippets/CallComponent.snippet.tsx').default;
 const ComplianceBannerText = require('!!raw-loader!./snippets/ComplianceBanner.snippet.tsx').default;
 const LobbyComponentText = require('!!raw-loader!./snippets/Lobby.snippet.tsx').default;

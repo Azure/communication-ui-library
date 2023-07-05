@@ -7,7 +7,6 @@ import { Title, Description, Heading, Source, Props } from '@storybook/addon-doc
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
-import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 
 const containerText = require('!!raw-loader!./snippets/Container.snippet.tsx').default;
 const customDataModelExampleContainerText =
@@ -38,33 +37,34 @@ options={{
 }} />
 `;
 
-export const GetDocs: (string) => JSX.Element = ({ scrollToHeading }) => {
+export const Docs: () => JSX.Element = () => {
   const refBasicUsage = useRef(null);
   const refCustomBehavior = useRef(null);
   const refCustomDataModel = useRef(null);
   const refCustomDateTimeFormat = useRef(null);
-  const refJoinChat = useRef(null);
+  const refExistedJoinChat = useRef(null);
   const refTheme = useRef(null);
 
-  const scrollToRef = (ref) => {
+  const scrollToRef = (ref): void => {
     ref.current.scrollIntoView({ behavior: 'auto' });
   };
   useEffect(() => {
-    if (scrollToHeading === 'basic-usage' && refBasicUsage.current) {
+    const url = document.URL;
+
+    if (url.includes('basic-example') && refBasicUsage.current) {
       scrollToRef(refBasicUsage);
-    } else if (scrollToHeading === 'custom-behavior' && refCustomBehavior.current) {
+    } else if (url.includes('custom-behavior') && refCustomBehavior.current) {
       scrollToRef(refCustomBehavior);
-    } else if (scrollToHeading === 'custom-data-model' && refCustomDataModel.current) {
+    } else if (url.includes('custom-data-model') && refCustomDataModel.current) {
       scrollToRef(refCustomDataModel);
-    } else if (scrollToHeading === 'custom-date-time-format' && refCustomDateTimeFormat.current) {
+    } else if (url.includes('custom-date-time-format') && refCustomDateTimeFormat.current) {
       scrollToRef(refCustomDateTimeFormat);
-    } else if (scrollToHeading === 'theme' && refTheme.current) {
-      console.log('scrollTo theme:::');
+    } else if (url.includes('theme') && refTheme.current) {
       scrollToRef(refTheme);
-    } else if (scrollToHeading === 'join-chat' && refJoinChat.current) {
-      scrollToRef(refJoinChat);
+    } else if (url.includes('existing-chat-thread') && refExistedJoinChat.current) {
+      scrollToRef(refExistedJoinChat);
     }
-  }, [scrollToHeading]);
+  }, [refBasicUsage, refCustomBehavior, refCustomDataModel, refCustomDateTimeFormat, refTheme, refExistedJoinChat]);
 
   return (
     <>
@@ -185,7 +185,7 @@ export const GetDocs: (string) => JSX.Element = ({ scrollToHeading }) => {
         shows a way to intercept messages entered by the user and modify them before sending them on to the backend.
       </Description>
       <Source code={customBehaviorExampleText} />
-      <div ref={refJoinChat}>
+      <div ref={refExistedJoinChat}>
         <Heading>Joining existing Chat</Heading>
         <Description>
           The [join existing chat
