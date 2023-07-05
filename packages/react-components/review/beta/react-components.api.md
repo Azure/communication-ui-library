@@ -697,14 +697,6 @@ export type CustomAvatarOptions = {
     showUnknownPersonaCoin?: boolean;
 };
 
-// @beta (undocumented)
-export interface CustomFileMetadata {
-    attachmentType: 'fileSharing';
-    extension: string;
-    name: string;
-    url: string;
-}
-
 // @public
 export interface CustomMessage extends MessageCommon {
     // (undocumented)
@@ -1087,10 +1079,31 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = CustomFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropImageFileMetadata;
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithOptions | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithOptions' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata {
+    attachmentType: 'fileSharing';
+    extension: string;
+    name: string;
+    url: string;
+}
+
+// @beta
+export interface FileSharingMetadataWithOptions {
+    // (undocumented)
+    attachmentType: 'fileSharingWithOptions';
+    extension: string;
+    // (undocumented)
+    id: string;
+    name: string;
+    // (undocumented)
+    options?: Record<string, string> | undefined;
+    url: string;
+}
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1197,6 +1210,19 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage' | 'attachedImage';
+    extension: string;
+    // (undocumented)
+    id: string;
+    name: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
@@ -1879,30 +1905,6 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
-}
-
-// @beta (undocumented)
-export interface TeamsInteropFileMetadata {
-    // (undocumented)
-    attachmentType: 'fileSharing';
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    url: string;
-}
-
-// @beta (undocumented)
-export interface TeamsInteropImageFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage' | 'attachedImage';
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
 }
 
 // @internal (undocumented)

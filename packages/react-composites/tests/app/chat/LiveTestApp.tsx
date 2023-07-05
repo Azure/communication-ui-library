@@ -63,7 +63,7 @@ export const LiveTestApp = (): JSX.Element => {
             name: file.name,
             extension: file.extension,
             url: file.url,
-            attachmentType: 'fileSharing',
+            attachmentType: 'fileSharingWithOptions',
             id: ''
           });
         } else if (file.error) {

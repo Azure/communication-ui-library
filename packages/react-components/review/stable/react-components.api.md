@@ -363,13 +363,6 @@ export type CustomAvatarOptions = {
     text?: string;
 };
 
-// @beta (undocumented)
-export interface CustomFileMetadata {
-    extension: string;
-    name: string;
-    url: string;
-}
-
 // @public
 export interface CustomMessage extends MessageCommon {
     // (undocumented)
@@ -722,7 +715,14 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = CustomFileMetadata;
+export type FileMetadata = FileSharingMetadata;
+
+// @beta
+export interface FileSharingMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
 
 // @internal
 export interface _FileUploadCardsStrings {

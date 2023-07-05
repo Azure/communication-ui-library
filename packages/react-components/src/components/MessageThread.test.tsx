@@ -271,7 +271,7 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharing',
+          attachmentType: 'fileSharingWithOptions',
           extension: 'txt',
           url: expectedFileSrc1
         },

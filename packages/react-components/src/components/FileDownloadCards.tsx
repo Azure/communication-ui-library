@@ -16,14 +16,17 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export type FileMetadataAttachmentType =
   | 'fileSharing'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithOptions'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage'
   | 'unknown';
 
 /**
+ * Meta Data containing basic information about the uploaded file.
+ * Typically used for ACS to ACS file transfers.
  * @beta
  */
-export interface CustomFileMetadata {
+export interface FileSharingMetadata {
   /**
    * File name to be displayed.
    */
@@ -47,9 +50,10 @@ export interface CustomFileMetadata {
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
+ * Meta Data containing more detailed data about the uploaded file.
  * @beta
  */
-export interface TeamsInteropFileMetadata {
+export interface FileSharingMetadataWithOptions {
   /**
    * File name to be displayed.
    */
@@ -69,19 +73,25 @@ export interface TeamsInteropFileMetadata {
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
-  attachmentType: 'fileSharing';
+  attachmentType: 'fileSharingWithOptions';
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Unique ID of the file.
    */
   id: string;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /*
+   * Optional dictionary of meta data asscoiated with the file.
+   */
+  options?: Record<string, string> | undefined;
 }
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
+ * Meta Data containing data for images.
  * @beta
  */
-export interface TeamsInteropImageFileMetadata {
+export interface ImageFileMetadata {
   /**
    * File name to be displayed.
    */
@@ -120,9 +130,9 @@ export interface TeamsInteropImageFileMetadata {
  * @beta
  */
 export type FileMetadata =
-  | CustomFileMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropFileMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ TeamsInteropImageFileMetadata;
+  | FileSharingMetadata
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithOptions
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -236,7 +246,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
 
   const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    return attachment.attachmentType === 'fileSharing';
+    return attachment.attachmentType === 'fileSharing' || attachment.attachmentType === 'fileSharingWithOptions';
     return false;
   }, []);
 
