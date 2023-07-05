@@ -11,7 +11,8 @@ import { Common, AreEqual } from '@internal/acs-ui-common';
 import { ChatHandlers } from '../handlers/createHandlers';
 import { ChatParticipantListSelector, chatParticipantListSelector } from '../chatParticipantListSelector';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
-import { useChatThreadClient } from '../providers/ChatThreadClientProvider';
+import { ChatThreadClientContext } from '../providers/ChatThreadClientProvider';
+import { useContext } from 'react';
 
 /**
  * Primary hook to get all hooks necessary for a chat Component.
@@ -82,12 +83,15 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
 const messageThreadSelectorsByThread = {};
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  // For the message thread selector we need to create a new one for each thread
+  // If we have just one for the entire app, then we will have updates when not expecting due to
+  // the arguments changing
   const getMessageThreadSelector: () => MessageThreadSelector = () => {
-    const threadClient = useChatThreadClient();
-    let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
+    const threadId = useContext(ChatThreadClientContext)?.threadId ?? 'single-chat-thread-default-id';
+    let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
     if (!messageThreadSelectorImpl) {
-      messageThreadSelectorsByThread[threadClient.threadId] = messageThreadSelectorWithThread(threadClient.threadId);
-      messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
+      messageThreadSelectorsByThread[threadId] = messageThreadSelectorWithThread();
+      messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
     }
     return messageThreadSelectorImpl;
   };

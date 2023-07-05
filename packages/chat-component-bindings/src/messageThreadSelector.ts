@@ -242,7 +242,7 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
  *
  * @private
  */
-export const messageThreadSelectorWithThread: (threadId?: string) => MessageThreadSelector = () =>
+export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =>
   createSelector(
     [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
     (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
@@ -260,7 +260,7 @@ export const messageThreadSelectorWithThread: (threadId?: string) => MessageThre
 
       const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
 
-      // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
+      // readReceiptsBySenderId[senderID] gets updated every time a new message is read by this sender
       // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
       readReceipts
         .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
