@@ -82,18 +82,21 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
 const messageThreadSelectorsByThread = {};
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  const getMessageThreadSelector: () => MessageThreadSelector = () => {
+    const threadClient = useChatThreadClient();
+    let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
+    if (!messageThreadSelectorImpl) {
+      messageThreadSelectorsByThread[threadClient.threadId] = messageThreadSelectorWithThread(threadClient.threadId);
+      messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
+    }
+    return messageThreadSelectorImpl;
+  };
+
   switch (component) {
     case SendBox:
       return sendBoxSelector;
     case MessageThread:
-      const threadClient = useChatThreadClient();
-      let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
-      if (!messageThreadSelectorImpl) {
-        messageThreadSelectorsByThread[threadClient.threadId] = messageThreadSelectorWithThread(threadClient.threadId);
-        messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
-      }
-      return messageThreadSelectorImpl;
-
+      return getMessageThreadSelector();
     case TypingIndicator:
       return typingIndicatorSelector;
     case ParticipantList:
