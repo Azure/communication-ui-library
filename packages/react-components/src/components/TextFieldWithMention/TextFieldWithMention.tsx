@@ -127,7 +127,9 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
 
   useEffect(() => {
     setInternalTextValue(textValue);
-  }, [textValue]);
+    // update mention suggestions before the next render cycle
+    updateMentionSuggestions([]);
+  }, [textValue, updateMentionSuggestions]);
 
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
