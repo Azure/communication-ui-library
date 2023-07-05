@@ -10,45 +10,19 @@ import { StorybookBanner, StorybookBannerProps } from './StorybookBanner';
 /**
  * @private
  */
-export const SingleLineBetaBanner = (props: { version?: string; topOfPage?: boolean }): JSX.Element => {
+export const SingleLineBetaBanner = (props: {
+  version?: string;
+  topOfPage?: boolean;
+  content?: string;
+}): JSX.Element => {
   const palette = blueBannerPalette;
   return (
     <Stack styles={props.topOfPage ? { root: { paddingTop: '1rem' } } : {}}>
       <StorybookBanner>
         <Stack style={{ display: 'inline-block' }}>
           <Text>
-            This feature is currently in public preview {props.version ? 'version' : ''}{' '}
-            {props.version ? (
-              <b>
-                {'>'}={props.version}
-              </b>
-            ) : (
-              ''
-            )}{' '}
-            and not recommended for production use.{' '}
-          </Text>
-          <Link
-            className={mergeStyles({ color: palette.link })}
-            underline={true}
-            href={MICROSOFT_AZURE_PREVIEWS_URL}
-            target="_blank"
-          >
-            More info.
-          </Link>
-        </Stack>
-      </StorybookBanner>
-    </Stack>
-  );
-};
-
-export const SingleLineBetaListBanner = (props: { version?: string; topOfPage?: boolean }): JSX.Element => {
-  const palette = blueBannerPalette;
-  return (
-    <Stack styles={props.topOfPage ? { root: { paddingTop: '1rem' } } : {}}>
-      <StorybookBanner>
-        <Stack style={{ display: 'inline-block' }}>
-          <Text>
-            The following features are currently in public preview {props.version ? 'version' : ''}{' '}
+            {props.content ? props.content : 'This feature is currently in public preview'}{' '}
+            {props.version ? 'version' : ''}{' '}
             {props.version ? (
               <b>
                 {'>'}={props.version}
