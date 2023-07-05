@@ -5,7 +5,7 @@ import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } fr
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { SendBoxSelector, sendBoxSelector } from '../sendBoxSelector';
-import { MessageThreadSelector, messageThreadSelector } from '../messageThreadSelector';
+import { MessageThreadSelector, messageThreadSelectorWithThread } from '../messageThreadSelector';
 import { TypingIndicatorSelector, typingIndicatorSelector } from '../typingIndicatorSelector';
 import { Common, AreEqual } from '@internal/acs-ui-common';
 import { ChatHandlers } from '../handlers/createHandlers';
@@ -89,7 +89,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       const threadClient = useChatThreadClient();
       let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
       if (!messageThreadSelectorImpl) {
-        messageThreadSelectorsByThread[threadClient.threadId] = messageThreadSelector(threadClient.threadId);
+        messageThreadSelectorsByThread[threadClient.threadId] = messageThreadSelectorWithThread(threadClient.threadId);
         messageThreadSelectorImpl = messageThreadSelectorsByThread[threadClient.threadId];
       }
       return messageThreadSelectorImpl;

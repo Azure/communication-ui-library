@@ -239,11 +239,10 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
   !!chatMessage.content?.participants && chatMessage.content.participants.some((p) => !!p.displayName);
 
 /**
- * Selector for {@link MessageThread} component.
  *
- * @public
+ * @private
  */
-export const messageThreadSelector: (threadId: string) => MessageThreadSelector = () =>
+export const messageThreadSelectorWithThread: (threadId?: string) => MessageThreadSelector = () =>
   createSelector(
     [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
     (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
@@ -332,3 +331,10 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   }
   return !!(message.content && message.content?.message !== '');
 };
+
+/**
+ * Selector for {@link MessageThread} component.
+ *
+ * @public
+ */
+export const messageThreadSelector: MessageThreadSelector = messageThreadSelectorWithThread();
