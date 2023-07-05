@@ -155,7 +155,16 @@
     "transferPageTransferorText": "מעביר...",
     "transferPageTransferTargetText": "מתחבר...",
     "transferPageUnknownTransferorDisplayName": "לא ידוע",
-    "transferPageUnknownTransferTargetDisplayName": "לא ידוע"
+    "transferPageUnknownTransferTargetDisplayName": "לא ידוע",
+    "transferPageNoticeString": "אתה מועבר כעת",
+    "participantCouldNotBeReachedTitle": "ממשתתף היעד אינו זמין כעת",
+    "participantCouldNotBeReachedMoreDetails": "פנה למשתתף כאשר הוא זמין",
+    "permissionToReachTargetParticipantNotAllowedTitle": "אין הרשאה להגיע למשתתף היעד",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "בדוק שמשתתף היעד נמצא באותו דייר",
+    "unableToResolveTenantTitle": "לא ניתן לזהות מזהה דייר עבור משתתף היעד",
+    "unableToResolveTenantMoreDetails": "בדוק שמזהה המשתתף הוזן כראוי",
+    "participantIdIsMalformedTitle": "מזהה המשתתף אינו בתבנית הנכונה",
+    "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",

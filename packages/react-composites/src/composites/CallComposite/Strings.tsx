@@ -545,4 +545,44 @@ export interface CallCompositeStrings {
    * notice to be announced by narrator the transfer page is showing
    */
   transferPageNoticeString: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when target participant could not be reached
+   */
+  participantCouldNotBeReachedTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when target participant could not be reached
+   */
+  participantCouldNotBeReachedMoreDetails?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when permission to reach participant is not allowed
+   */
+  permissionToReachTargetParticipantNotAllowedTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when permission to reach participant is not allowed
+   */
+  permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when tenant id for the target participant could not be resolved
+   */
+  unableToResolveTenantTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when tenant id for the target participant could not be resolved
+   */
+  unableToResolveTenantMoreDetails?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when target participant id is malformed
+   */
+  participantIdIsMalformedTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when target participant id is malformed
+   */
+  participantIdIsMalformedMoreDetails?: string;
 }

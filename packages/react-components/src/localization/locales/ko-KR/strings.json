@@ -44,8 +44,8 @@
     "tooltipContent": "통화에서 나가기"
   },
   "cameraButton": {
-    "onLabel": "끄기",
-    "offLabel": "켜기",
+    "onLabel": "카메라",
+    "offLabel": "카메라",
     "tooltipDisabledContent": "카메라가 비활성화되었습니다",
     "tooltipOnContent": "카메라 끄기",
     "tooltipOffContent": "카메라 켜기",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "효과"
   },
   "microphoneButton": {
-    "onLabel": "음소거",
-    "offLabel": "음소거 해제",
+    "onLabel": "마이크",
+    "offLabel": "마이크",
     "tooltipDisabledContent": "마이크가 비활성화되었습니다",
     "tooltipOnContent": "마이크 음소거",
     "tooltipOffContent": "마이크 음소거 해제",

@@ -25,7 +25,12 @@ export const SidePaneHeader = (props: {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
     () => ({
-      root: { minWidth: '1.5rem', padding: 0, backgroundColor: theme.semanticColors.bodyBackground },
+      root: {
+        minWidth: '1.5rem',
+        padding: '0.5rem 0.25rem',
+        marginRight: '0.25rem',
+        backgroundColor: theme.semanticColors.bodyBackground
+      },
       icon: { color: theme.palette.neutralSecondary },
       iconHovered: { color: theme.palette.neutralSecondary },
       iconPressed: { color: theme.palette.neutralSecondary }
@@ -38,14 +43,16 @@ export const SidePaneHeader = (props: {
   }
 
   return (
-    <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles}>
+    <Stack horizontal horizontalAlign="space-between" styles={sidePaneHeaderContainerStyles} verticalAlign="center">
       <Stack.Item styles={sidePaneHeaderStyles}>{props.headingText}</Stack.Item>
-      <CommandBarButton
-        ariaLabel={props.dismissSidePaneButtonAriaLabel}
-        styles={sidePaneCloseButtonStyles}
-        iconProps={{ iconName: 'cancel' }}
-        onClick={props.onClose}
-      />
+      <Stack.Item>
+        <CommandBarButton
+          ariaLabel={props.dismissSidePaneButtonAriaLabel}
+          styles={sidePaneCloseButtonStyles}
+          iconProps={{ iconName: 'cancel' }}
+          onClick={props.onClose}
+        />
+      </Stack.Item>
     </Stack>
   );
 };

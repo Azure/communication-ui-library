@@ -207,12 +207,13 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     } else {
       finalPosition.left = leftOffset;
     }
-
+    // Offset between cursor and mention popover
+    const verticalOffset = 4;
     if (location === 'below') {
-      finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
+      finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0) + verticalOffset;
     } else {
       // (location === 'above')
-      finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0);
+      finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0) + verticalOffset;
     }
     setPosition(finalPosition);
   }, [location, target, targetPositionOffset]);
@@ -231,20 +232,19 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   );
 
   const personaRenderer = useCallback(
-    (displayName?: string): JSX.Element => {
-      const displayNamePlaceholder = localeStrings.participantItem.displayNamePlaceholder;
+    (displayName: string): JSX.Element => {
       const avatarOptions = {
-        text: displayName?.trim() || displayNamePlaceholder,
+        text: displayName.trim(),
         size: PersonaSize.size24,
         initialsColor: theme.palette.neutralLight,
         initialsTextColor: theme.palette.neutralSecondary,
         showOverflowTooltip: false,
-        showUnknownPersonaCoin: !displayName?.trim() || displayName === displayNamePlaceholder
+        showUnknownPersonaCoin: false
       };
 
       return <Persona {...avatarOptions} />;
     },
-    [localeStrings, theme]
+    [theme]
   );
 
   const defaultOnRenderSuggestionItem = useCallback(

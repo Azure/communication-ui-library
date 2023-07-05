@@ -155,7 +155,16 @@
     "transferPageTransferorText": "يتم الآن التحويل...",
     "transferPageTransferTargetText": "جارٍ الاتصال...",
     "transferPageUnknownTransferorDisplayName": "غير معروف",
-    "transferPageUnknownTransferTargetDisplayName": "غير معروف"
+    "transferPageUnknownTransferTargetDisplayName": "غير معروف",
+    "transferPageNoticeString": "يجري نقلك",
+    "participantCouldNotBeReachedTitle": "المشارك المستهدف غير متوفر حاليا",
+    "participantCouldNotBeReachedMoreDetails": "الرجاء الاتصال بالمشارك عندما يكون متوفرا",
+    "permissionToReachTargetParticipantNotAllowedTitle": "غير مسموح بإذن الوصول إلى المشارك الهدف",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "الرجاء التحقق من أن المشارك الهدف موجود في نفس المستأجر",
+    "unableToResolveTenantTitle": "تعذر حل معرف المستأجر للمشارك الهدف",
+    "unableToResolveTenantMoreDetails": "الرجاء التحقق من إدخال معرف المشارك بشكل صحيح",
+    "participantIdIsMalformedTitle": "تنسيق معرف المشارك غير صحيح",
+    "participantIdIsMalformedMoreDetails": "الرجاء التحقق من أن معرف المشارك بالتنسيق الصحيح"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
