@@ -5,12 +5,14 @@ import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } fr
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
 import { SendBoxSelector, sendBoxSelector } from '../sendBoxSelector';
-import { MessageThreadSelector, messageThreadSelector } from '../messageThreadSelector';
+import { MessageThreadSelector, messageThreadSelectorWithThread } from '../messageThreadSelector';
 import { TypingIndicatorSelector, typingIndicatorSelector } from '../typingIndicatorSelector';
 import { Common, AreEqual } from '@internal/acs-ui-common';
 import { ChatHandlers } from '../handlers/createHandlers';
 import { ChatParticipantListSelector, chatParticipantListSelector } from '../chatParticipantListSelector';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
+import { ChatThreadClientContext } from '../providers/ChatThreadClientProvider';
+import { useContext } from 'react';
 
 /**
  * Primary hook to get all hooks necessary for a chat Component.
@@ -78,12 +80,27 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   return findSelector(component);
 };
 
+const messageThreadSelectorsByThread = {};
+
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  // For the message thread selector we need to create a new one for each thread
+  // If we have just one for the entire app, then we will have updates when not expecting due to
+  // the arguments changing
+  const getMessageThreadSelector: () => MessageThreadSelector = () => {
+    const threadId = useContext(ChatThreadClientContext)?.threadId ?? 'default-id-when-not-in-provider';
+    let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
+    if (!messageThreadSelectorImpl) {
+      messageThreadSelectorsByThread[threadId] = messageThreadSelectorWithThread();
+      messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
+    }
+    return messageThreadSelectorImpl;
+  };
+
   switch (component) {
     case SendBox:
       return sendBoxSelector;
     case MessageThread:
-      return messageThreadSelector;
+      return getMessageThreadSelector();
     case TypingIndicator:
       return typingIndicatorSelector;
     case ParticipantList:
