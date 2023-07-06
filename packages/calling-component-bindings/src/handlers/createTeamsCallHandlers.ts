@@ -18,7 +18,7 @@ import { isTeamsCallParticipants } from '../utils/callUtils';
 import {
   createDefaultCommonCallingHandlers,
   CommonCallingHandlers,
-  VideoBackGroundDependency
+  VideoEffectBackGroundDependency
 } from './createCommonHandlers';
 
 /**
@@ -51,7 +51,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall,
     options?: {
-      onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+      onResolveVideoBackGroundDependency?: () => Promise<VideoEffectBackGroundDependency>;
     }
   ): never | TeamsCallingHandlers => {
     return {

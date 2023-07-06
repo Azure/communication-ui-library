@@ -49,6 +49,8 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */
 export type { CommonCallAdapterOptions } from './adapter';
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackGroundDependency } from './adapter/AzureCommunicationCallAdapter';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 export type { CallParticipantsLocator } from './adapter';

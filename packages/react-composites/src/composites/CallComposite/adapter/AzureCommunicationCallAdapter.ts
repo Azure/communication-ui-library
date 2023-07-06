@@ -660,7 +660,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async leaveCall(forEveryone?: boolean): Promise<void> {
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
-    this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, undefined);
+    this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, undefined, {
+      onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+    });
     // We set the adapter.call object to undefined immediately when a call is ended.
     // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
     this.call = undefined;
@@ -827,7 +829,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
-    this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call);
+    this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
+      onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+    });
     this.subscribeCallEvents();
   }
   /* @conditional-compile-remove(video-background-effects) */
@@ -1169,7 +1173,7 @@ export type CommonCallAdapterOptions = {
 };
 
 /**
- * @private
+ * @beta
  */
 export type VideoBackGroundDependency = {
   createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;

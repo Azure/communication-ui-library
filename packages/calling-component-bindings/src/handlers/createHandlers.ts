@@ -20,7 +20,7 @@ import { isACSCallParticipants } from '../utils/callUtils';
 import {
   createDefaultCommonCallingHandlers,
   CommonCallingHandlers,
-  VideoBackGroundDependency
+  VideoEffectBackGroundDependency
 } from './createCommonHandlers';
 
 /**
@@ -50,7 +50,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | undefined,
     options?: {
-      onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+      onResolveVideoBackGroundDependency?: () => Promise<VideoEffectBackGroundDependency>;
     }
   ): CallingHandlers => {
     return {

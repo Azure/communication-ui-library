@@ -34,3 +34,5 @@ export type {
   CustomCallControlButtonCallback,
   CustomCallControlButtonPlacement
 } from './common/ControlBar/CustomButton';
+
+export { onResolveDependency } from './common/resolveDependency';

@@ -8,8 +8,12 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig as BackgroundBlurConfig_2 } from '@azure/communication-calling-effects';
+import { BackgroundBlurEffect } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig as BackgroundReplacementConfig_2 } from '@azure/communication-calling-effects';
+import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -1612,7 +1616,10 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 
 // @beta
 export type CommonCallAdapterOptions = {
-    videoBackgroundImages?: VideoBackgroundImage[];
+    videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackGroundDependency>;
+    };
     onFetchProfile?: OnFetchProfileCallback;
 };
 
@@ -2002,13 +2009,17 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 }): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {
+    onResolveVideoBackGroundDependency?: (() => Promise<VideoEffectBackGroundDependency>) | undefined;
+} | undefined) => CallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
 // @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
+    onResolveVideoBackGroundDependency?: (() => Promise<VideoEffectBackGroundDependency>) | undefined;
+} | undefined) => never | TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -3073,6 +3084,9 @@ export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
+// @public (undocumented)
+export const onResolveDependency: () => Promise<VideoBackGroundDependency>;
+
 // @beta
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
@@ -3685,9 +3699,15 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 }
 
 // @beta
-export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
+export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig_2 {
     effectName: 'blur';
 }
+
+// @beta (undocumented)
+export type VideoBackGroundDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig_2) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig_2) => BackgroundReplacementEffect;
+};
 
 // @beta
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
@@ -3705,10 +3725,16 @@ export interface VideoBackgroundNoEffect {
 }
 
 // @beta
-export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
+export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig_2 {
     effectName: 'replacement';
     key?: string;
 }
+
+// @beta (undocumented)
+export type VideoEffectBackGroundDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

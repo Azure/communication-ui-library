@@ -112,7 +112,7 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 /**
  * @beta
  */
-export type VideoBackGroundDependency = {
+export type VideoEffectBackGroundDependency = {
   createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
@@ -128,7 +128,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
     options?: {
-      onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+      onResolveVideoBackGroundDependency?: () => Promise<VideoEffectBackGroundDependency>;
     }
   ): CommonCallingHandlers => {
     const onStartLocalVideo = async (): Promise<void> => {
