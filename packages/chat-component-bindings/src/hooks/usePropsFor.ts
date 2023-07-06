@@ -87,7 +87,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   // If we have just one for the entire app, then we will have updates when not expecting due to
   // the arguments changing
   const getMessageThreadSelector: () => MessageThreadSelector = () => {
-    const threadId = useContext(ChatThreadClientContext)?.threadId ?? 'single-chat-thread-default-id';
+    const threadId = useContext(ChatThreadClientContext)?.threadId ?? 'default-id-when-not-in-provider';
     let messageThreadSelectorImpl = messageThreadSelectorsByThread[threadId];
     if (!messageThreadSelectorImpl) {
       messageThreadSelectorsByThread[threadId] = messageThreadSelectorWithThread();
