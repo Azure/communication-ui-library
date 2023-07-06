@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Support mentions capabilities in chat message thread. Enables user to @ mention another user by providing a Search capability to look for the desired user and then tagging them on the message.",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

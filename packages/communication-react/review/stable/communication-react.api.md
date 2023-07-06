@@ -1167,6 +1167,9 @@ export type CommunicationParticipant = {
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -1256,6 +1259,9 @@ export interface ComponentStrings {
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -1501,6 +1507,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1580,6 +1587,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public

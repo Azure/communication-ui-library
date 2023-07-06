@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Revert changes for release-publish",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}
