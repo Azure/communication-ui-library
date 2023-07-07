@@ -285,6 +285,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   /* @conditional-compile-remove(one-to-n-calling) */
                   onPeopleButtonClicked={togglePeoplePane}
+                  displayVertical={verticalControlBar}
                 />
               ) : (
                 <CommonCallControlBar

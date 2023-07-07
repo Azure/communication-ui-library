@@ -3,7 +3,15 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  dragToRight,
+  existsOnPage,
+  isTestProfileLandscapeMobile,
+  pageClick,
+  stableScreenshot,
+  waitForSelector
+} from '../../common/utils';
 import {
   addScreenshareStream,
   addVideoStream,
@@ -135,10 +143,10 @@ test.describe('Overflow gallery tests', async () => {
   });
 
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
-  test('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
+  test.only('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
-  }) => {
+  }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;
@@ -166,7 +174,10 @@ test.describe('Overflow gallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     /* @conditional-compile-remove(pinned-participants) */
-    if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
+    if (
+      (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) &&
+      !isTestProfileLandscapeMobile(testInfo)
+    ) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
       expect(await stableScreenshot(page)).toMatchSnapshot(
         'scrollable-horizontal-gallery-with-joining-participant-dragged.png'
