@@ -68,7 +68,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
         )
       }
       {
-        <div className={containerClassName}>
+        /* @conditional-compile-remove(close-captions) */ <div className={containerClassName}>
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? '90%' : '50%' }}>
               <_CaptionsBanner
