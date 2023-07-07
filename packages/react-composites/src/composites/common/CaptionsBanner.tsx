@@ -68,25 +68,23 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
         )
       }
       {
-        /* @conditional-compile-remove(close-captions) */ captionsBannerProps.isCaptionsOn && (
-          <div className={containerClassName}>
-            <Stack horizontalAlign="center">
-              <Stack.Item style={{ width: props.isMobile ? '90%' : '50%' }}>
-                <_CaptionsBanner
-                  {...captionsBannerProps}
-                  {...handlers}
-                  formFactor={props.isMobile ? 'compact' : 'default'}
-                  strings={captionsBannerStrings}
-                />
-              </Stack.Item>
-            </Stack>
-            {!props.isMobile && captionsBannerProps.isCaptionsOn && (
-              <div className={floatingChildClassName}>
-                <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
-              </div>
-            )}
-          </div>
-        )
+        <div className={containerClassName}>
+          <Stack horizontalAlign="center">
+            <Stack.Item style={{ width: props.isMobile ? '90%' : '50%' }}>
+              <_CaptionsBanner
+                {...captionsBannerProps}
+                {...handlers}
+                formFactor={props.isMobile ? 'compact' : 'default'}
+                strings={captionsBannerStrings}
+              />
+            </Stack.Item>
+          </Stack>
+          {!props.isMobile && captionsBannerProps.isCaptionsOn && (
+            <div className={floatingChildClassName}>
+              <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
+            </div>
+          )}
+        </div>
       }
     </>
   );

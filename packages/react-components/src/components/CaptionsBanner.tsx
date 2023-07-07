@@ -26,7 +26,7 @@ export type _CaptionsInfo = {
 
 /**
  * @internal
- * strings for captions banneer
+ * strings for captions banner
  */
 export interface _CaptionsBannerStrings {
   captionsBannerSpinnerText?: string;
