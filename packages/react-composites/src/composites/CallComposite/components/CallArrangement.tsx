@@ -256,7 +256,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const verticalControlBar =
-    props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
+    props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9 ? true : false;
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
