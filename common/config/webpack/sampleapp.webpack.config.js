@@ -9,7 +9,10 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
-    entry: './src/index.tsx',
+    entry: {
+      build: './src/index.tsx',
+      videoEffects: './src/another-module.js',
+    },
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
     resolve:  {
@@ -32,7 +35,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     },
     output: {
       path: path.join(sampleAppDir, env.production ? '/dist/build' : 'dist'),
-      filename: 'build.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [
