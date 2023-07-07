@@ -143,7 +143,7 @@ test.describe('Overflow gallery tests', async () => {
   });
 
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(pinned-participants) */
-  test.only('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
+  test('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
   }, testInfo) => {
