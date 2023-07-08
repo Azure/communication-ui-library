@@ -30,7 +30,7 @@
     "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@azure/communication-common": "3.0.0-beta.1 || >=2.2.0",
+    "@azure/communication-common": "3.0.0-beta.1 || 2.2.1",
     "@azure/core-paging": "^1.5.0",
     "@azure/logger": "^1.0.4",
     "@internal/acs-ui-common": "1.7.0-beta.1",

@@ -23,7 +23,7 @@
   },
   "types": "dist/communication-react.d.ts",
   "dependencies": {
-    "@azure/communication-common": "3.0.0-beta.1 || >=2.2.0",
+    "@azure/communication-common": "3.0.0-beta.1 || 2.2.1",
     "@azure/core-client": "^1.7.3",
     "@azure/core-paging": "^1.5.0",
     "@azure/core-rest-pipeline": "^1.11.0",
