@@ -3,7 +3,7 @@
 
 import { Image, MessageBar, Stack } from '@fluentui/react';
 import { Title, Description, Heading, Source } from '@storybook/addon-docs';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
 
@@ -30,7 +30,17 @@ options={{
 }} />
 `;
 
-export const getDocs: () => JSX.Element = () => {
+export const Docs: () => JSX.Element = () => {
+  const refTeamsMeeting = useRef(null);
+
+  useEffect(() => {
+    const url = document.URL;
+
+    if (url.includes('teams-meeting') && refTeamsMeeting.current) {
+      refTeamsMeeting.current.scrollIntoView({ behavior: 'auto' });
+    }
+  }, [refTeamsMeeting]);
+
   return (
     <>
       <Title>CallWithChatComposite</Title>
@@ -102,14 +112,14 @@ export const getDocs: () => JSX.Element = () => {
         action or the [overall theming example](./?path=/docs/theming--page) to see how theming works for all the
         components in this UI library.
       </Description>
-
-      <Heading>Joining a Teams Meeting</Heading>
-      <Description>
-        The [Joining a Teams Meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting) preview provides an
-        easy playground to join an existing Teams meeting. This is useful if you want to explore the composite in a
-        Teams interop scenario.
-      </Description>
-
+      <div ref={refTeamsMeeting}>
+        <Heading>Joining a Teams Meeting</Heading>
+        <Description>
+          The [Joining a Teams Meeting](./?path=/story/composites-call-with-chat-jointeamsmeeting) preview provides an
+          easy playground to join an existing Teams meeting. This is useful if you want to explore the composite in a
+          Teams interop scenario.
+        </Description>
+      </div>
       <Heading>Customize Call Controls</Heading>
       <Description>
         CallWithChatComposite provides a set of default controls for the call that can be customized similar to

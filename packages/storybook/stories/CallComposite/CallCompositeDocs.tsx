@@ -4,7 +4,7 @@
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
@@ -33,7 +33,30 @@ const callParticipantsLocatorSnippet = `
 { participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
 `;
 
-export const getDocs: () => JSX.Element = () => {
+export const Docs: () => JSX.Element = () => {
+  const refCustomDataModel = useRef(null);
+  const refCustomDateTimeFormat = useRef(null);
+  const refExistedJoinCall = useRef(null);
+  const refTheme = useRef(null);
+
+  const scrollToRef = (ref): void => {
+    ref.current.scrollIntoView({ behavior: 'auto' });
+  };
+
+  useEffect(() => {
+    const url = document.URL;
+
+    if (url.includes('custom-data-model') && refCustomDataModel.current) {
+      scrollToRef(refCustomDataModel);
+    } else if (url.includes('custom-date-time-format') && refCustomDateTimeFormat.current) {
+      scrollToRef(refCustomDateTimeFormat);
+    } else if (url.includes('theme') && refTheme.current) {
+      scrollToRef(refTheme);
+    } else if (url.includes('join-existing-call') && refExistedJoinCall.current) {
+      scrollToRef(refExistedJoinCall);
+    }
+  }, [refCustomDataModel, refCustomDateTimeFormat, refTheme, refExistedJoinCall]);
+
   return (
     <>
       <Title>CallComposite</Title>
@@ -143,29 +166,33 @@ export const getDocs: () => JSX.Element = () => {
         Example](./?path=/story/composites-call-basicexample--basic-example).
       </Description>
 
-      <Heading>Theming</Heading>
-      <Description>
-        CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
-        [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
-        UI library.
-      </Description>
+      <div ref={refTheme}>
+        <Heading>Theming</Heading>
+        <Description>
+          CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
+          theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
+          [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
+          UI library.
+        </Description>
+      </div>
 
-      <Heading>Custom Data Model</Heading>
-      <Description>
-        It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
-        then use the Azure Communication Services identity service to create corresponding authentication tokens for
-        their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example
-        canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
-        initials displayed for users can be provided by Contoso.
-      </Description>
-      <Description>Note that, by default, the initials text color is setup to `white`</Description>
-      <Source code={customDataModelExampleContainerText} />
-      <Description>
-        See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
-        custom data model can be injected for all the components in this UI library.
-      </Description>
+      <div ref={refCustomDataModel}>
+        <Heading>Custom Data Model</Heading>
+        <Description>
+          It is a primary tenet of Azure Communication Services that customers bring their own user identities.
+          Customers then use the Azure Communication Services identity service to create corresponding authentication
+          tokens for their users. The ChatComposite allows developers to easily inject custom data associated with these
+          user identities. Look at the [example
+          canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
+          initials displayed for users can be provided by Contoso.
+        </Description>
+        <Description>Note that, by default, the initials text color is setup to `white`</Description>
+        <Source code={customDataModelExampleContainerText} />
+        <Description>
+          See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+          custom data model can be injected for all the components in this UI library.
+        </Description>
+      </div>
 
       <Heading>Fonts</Heading>
       <Description>
@@ -245,13 +272,14 @@ export const getDocs: () => JSX.Element = () => {
         local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
 
-      <Heading>Joining an existing Call</Heading>
-      <Description>
-        The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
-        playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
-        useful if you want to explore the composite with multiple users.
-      </Description>
-
+      <div ref={refExistedJoinCall}>
+        <Heading>Joining an existing Call</Heading>
+        <Description>
+          The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
+          playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
+          useful if you want to explore the composite with multiple users.
+        </Description>
+      </div>
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>
