@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { ErrorBar } from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar } from '@internal/react-components';
 import { useSelector } from '../hooks/useSelector';
 import { lobbySelector } from '../selectors/lobbySelector';
 import { CallCompositeOptions } from '../CallComposite';
@@ -28,6 +28,8 @@ export interface LobbyPageProps {
   options?: CallCompositeOptions;
   mobileChatTabHeader: MobileChatSidePaneTabHeaderProps | undefined;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -55,8 +57,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   return (
     <CallArrangement
       complianceBannerProps={{ strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={props.options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+      errorBarProps={props.options?.errorBar !== false && errorBarProps}
       callControlProps={{
         options: callControlOptions,
         increaseFlyoutItemSize: props.mobileView
@@ -69,6 +70,8 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       dataUiId={'lobby-page'}
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
+      latestErrors={props.latestErrors}
+      onDismissError={props.onDismissError}
     />
   );
 };
