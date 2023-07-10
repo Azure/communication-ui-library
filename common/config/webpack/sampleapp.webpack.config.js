@@ -10,8 +10,7 @@ const CopyPlugin = require("copy-webpack-plugin");
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
     entry: {
-      build: './src/index.tsx',
-      videoEffects: './src/another-module.js',
+      build: './src/index.tsx'
     },
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),

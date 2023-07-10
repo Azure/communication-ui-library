@@ -15,7 +15,7 @@ import { VideoBackGroundDependency } from '../CallComposite';
  */
 // eslint-disable-next-line jsdoc/require-jsdoc
 export const onResolveDependency = async (): Promise<VideoBackGroundDependency> => {
-  const module = await import(/* webpackChunkName: "videoEffects" */ '@azure/communication-calling-effects');
+  const module = await import('@azure/communication-calling-effects');
   // eslint-disable-next-line jsdoc/require-jsdoc
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {
     return new module.BackgroundBlurEffect(config);
