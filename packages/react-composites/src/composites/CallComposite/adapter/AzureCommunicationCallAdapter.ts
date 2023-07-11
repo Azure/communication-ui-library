@@ -1558,7 +1558,10 @@ export const createAzureCommunicationCallAdapterFromClient: (
   options?
 ): Promise<CallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  await Promise.all([deviceManager.getCameras(), deviceManager.getMicrophones(), deviceManager.getSpeakers()]);
+  await Promise.all([deviceManager.getCameras(), deviceManager.getMicrophones()]);
+  if (deviceManager.isSpeakerSelectionAvailable) {
+    await deviceManager.getSpeakers();
+  }
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(
@@ -1586,7 +1589,10 @@ export const createTeamsCallAdapterFromClient = async (
   options?: TeamsAdapterOptions
 ): Promise<TeamsCallAdapter> => {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  await Promise.all([deviceManager.getCameras(), deviceManager.getMicrophones(), deviceManager.getSpeakers()]);
+  await Promise.all([deviceManager.getCameras(), deviceManager.getMicrophones()]);
+  if (deviceManager.isSpeakerSelectionAvailable) {
+    await deviceManager.getSpeakers();
+  }
   /* @conditional-compile-remove(unsupported-browser) */
   await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
