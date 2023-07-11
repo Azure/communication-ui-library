@@ -53,8 +53,8 @@
     "cameraMenuTitle": "Kamera",
     "cameraMenuTooltip": "Zvolit kameru",
     "cameraButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Vypnout možnosti kamery a fotoaparátu",
-    "offSplitButtonAriaLabel": "Zapnout možnosti kamery a fotoaparátu",
+    "onSplitButtonAriaLabel": "Vypnout kameru a možnosti kamery",
+    "offSplitButtonAriaLabel": "Zapnout kameru a možnosti kamery",
     "cameraActionTurnedOnAnnouncement": "Vaše kamera je zapnutá",
     "cameraActionTurnedOffAnnouncement": "Vaše kamera je vypnutá",
     "onSplitButtonPrimaryActionCamera": "Vypnout kameru",
@@ -73,8 +73,8 @@
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor",
     "microphoneButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Ztlumit možnosti mikrofonu a zvuku",
-    "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možností zvuku",
+    "onSplitButtonAriaLabel": "Ztlumit mikrofon a možnosti zvuku",
+    "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možnosti zvuku",
     "microphoneActionTurnedOnAnnouncement": "Váš mikrofon je zapnutý",
     "microphoneActionTurnedOffAnnouncement": "Váš mikrofon je vypnutý",
     "offSplitButtonMicrophonePrimaryAction": "Zrušit ztlumení mikrofonu",
@@ -99,13 +99,13 @@
     "menuHeader": "V tomto hovoru",
     "participantsListButtonLabel": "Počet lidí: {numParticipants}",
     "muteAllButtonLabel": "Ztlumit všechny",
-    "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonLabel": "Kopírovat odkaz pozvánky",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval"
   },
   "screenShareButton": {
-    "onLabel": "Zastavit prezentaci",
-    "offLabel": "Přítomno",
-    "tooltipDisabledContent": "Sdílení je zakázáno",
+    "onLabel": "Zrušit sdílení obrazovky",
+    "offLabel": "Zapnout sdílení obrazovky",
+    "tooltipDisabledContent": "Sdílení obrazovky je zakázáno",
     "tooltipOnContent": "Sdílí se vaše obrazovka",
     "tooltipOffContent": "Sdílet obrazovku"
   },
@@ -235,21 +235,21 @@
     "secondaryText": "Pokud se zobrazí výzva, povolte přístup. To je proto, aby vás účastníci slyšeli a viděli.",
     "linkText": "Potřebujete pomoc? Získat nápovědu k řešení potíží",
     "primaryButtonText": "Pokračovat bez kamery a mikrofonu",
-    "ariaLabel": "Kontroluje se přístup k mikrofonu a kameře. Povolit přístup, pokud se zobrazí výzva."
+    "ariaLabel": "Kontroluje se přístup k mikrofonu a kameře. Povolte přístup, pokud se zobrazí výzva."
   },
   "CameraSitePermissionsCheck": {
     "primaryText": "Kontroluje se přístup ke kameře",
     "secondaryText": "Pokud se zobrazí výzva, povolte přístup. To je proto, aby vás účastníci viděli.",
     "linkText": "Potřebujete pomoc? Získat nápovědu k řešení potíží",
     "primaryButtonText": "Pokračovat bez kamery",
-    "ariaLabel": "Kontroluje se přístup ke kameře. Povolit přístup, pokud se zobrazí výzva."
+    "ariaLabel": "Kontroluje se přístup ke kameře. Povolte přístup, pokud se zobrazí výzva."
   },
   "MicrophoneSitePermissionsCheck": {
     "primaryText": "Kontroluje se přístup k mikrofonu",
     "secondaryText": "Pokud se zobrazí výzva, povolte přístup. To je proto, aby vás účastníci slyšeli.",
     "linkText": "Potřebujete pomoc? Získat nápovědu k řešení potíží",
     "primaryButtonText": "Pokračovat bez mikrofonu",
-    "ariaLabel": "Kontroluje se přístup k mikrofonu. Povolit přístup, pokud se zobrazí výzva."
+    "ariaLabel": "Kontroluje se přístup k mikrofonu. Povolte přístup, pokud se zobrazí výzva."
   },
   "CameraAndMicrophoneSitePermissionsDenied": {
     "primaryText": "Nejde získat přístup ke kameře a mikrofonu",
