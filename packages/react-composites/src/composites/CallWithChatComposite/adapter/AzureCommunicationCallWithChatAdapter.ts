@@ -164,6 +164,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   private bindPublicMethods(): void {
     this.joinCall.bind(this);
+    this.joinCallWithOptions.bind(this);
     this.leaveCall.bind(this);
     this.startCall.bind(this);
     this.onStateChange.bind(this);
@@ -239,6 +240,11 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Join existing Call. */
   public joinCall(microphoneOn?: boolean): Call | undefined {
     return this.callAdapter.joinCall(microphoneOn);
+  }
+
+  /** Join existing Call. */
+  public joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined {
+    return this.callAdapter.joinCallWithOptions(options);
   }
   /** Leave current Call. */
   public async leaveCall(forEveryone?: boolean): Promise<void> {

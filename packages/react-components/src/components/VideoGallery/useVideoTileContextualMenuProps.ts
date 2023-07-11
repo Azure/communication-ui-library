@@ -5,6 +5,7 @@ import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { useMemo } from 'react';
 import { VideoGalleryRemoteParticipant, ViewScalingMode } from '../../types';
+import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -135,7 +136,7 @@ export const useVideoTileContextualMenuProps = (props: {
       return undefined;
     }
 
-    return { items, styles: {} };
+    return { items, styles: {}, calloutProps: { preventDismissOnEvent } };
   }, [
     scalingMode,
     strings,
