@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Updates Communication Common package based on Calling's need for beta version.",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}
