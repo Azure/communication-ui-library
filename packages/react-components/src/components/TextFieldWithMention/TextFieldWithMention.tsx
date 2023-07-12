@@ -393,7 +393,13 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       selectionEndValue?: number;
       interactionStartSelection?: { start: number | undefined; end: number | undefined };
     }): void => {
-      if (shouldHandleOnMouseDownDuringSelect) {
+      if (event.currentTarget.selectionStart === 0 && event.currentTarget.selectionEnd === inputTextValue.length) {
+        // entire text is selected, no need to change anything
+        setSelectionStartValue(event.currentTarget.selectionStart);
+        setSelectionEndValue(event.currentTarget.selectionEnd);
+        setInteractionStartSelection(undefined);
+        setShouldHandleOnMouseDownDuringSelect(false);
+      } else if (shouldHandleOnMouseDownDuringSelect) {
         if (
           interactionStartSelection !== undefined &&
           (interactionStartSelection.start !== event.currentTarget.selectionStart ||
