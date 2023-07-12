@@ -563,7 +563,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     return this.teeErrorToEventEmitter(() => {
       let audioOptions: AudioOptions;
-      let videoOptions;
+      let videoOptions: VideoOptions;
       // if using the deprecated joinCall API
       if (typeof options !== 'object') {
         const microphoneOn = options;
