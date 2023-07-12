@@ -37,6 +37,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -77,7 +78,7 @@ export interface CallWithChatAdapterManagement {
   // Call Interface Methods
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
@@ -90,7 +91,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Leave the call.
    *

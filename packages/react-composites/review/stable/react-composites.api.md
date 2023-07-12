@@ -122,11 +122,9 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 
 // @public
 export interface CallAdapter extends CommonCallAdapter {
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
-    joinCallWithOptions(options?: {
-        microphoneOn?: boolean;
-        cameraOn?: boolean;
-    }): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -137,11 +135,9 @@ export type CallAdapterCallEndedEvent = {
 
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
-    joinCallWithOptions(options?: {
-        microphoneOn?: boolean;
-        cameraOn?: boolean;
-    }): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -394,11 +390,9 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
-    joinCallWithOptions(options?: {
-        microphoneOn?: boolean;
-        cameraOn?: boolean;
-    }): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -734,11 +728,9 @@ export type _ChatThreadRestError = {
 
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    // @deprecated
     joinCall(microphoneOn?: boolean): void;
-    joinCallWithOptions(options?: {
-        microphoneOn?: boolean;
-        cameraOn?: boolean;
-    }): void;
+    joinCall(options?: JoinCallOptions): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
 
@@ -1002,6 +994,12 @@ export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
 }) => void;
+
+// @public
+export type JoinCallOptions = {
+    microphoneOn: boolean;
+    cameraOn: boolean;
+};
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {

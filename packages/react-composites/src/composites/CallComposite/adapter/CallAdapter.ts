@@ -265,6 +265,16 @@ export interface VideoBackgroundImage {
   tooltipText?: string;
 }
 
+/**
+ * Options for setting microphone and camera state when joining a call
+ *
+ * @public
+ */
+export type JoinCallOptions = {
+  microphoneOn: boolean;
+  cameraOn: boolean;
+};
+
 /* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
@@ -788,7 +798,7 @@ export interface CallAdapterSubscribers {
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
@@ -802,7 +812,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Start the call.
    *
@@ -834,7 +844,7 @@ export interface CommonCallAdapter
     CallAdapterSubscribers {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
@@ -847,7 +857,7 @@ export interface CommonCallAdapter
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): void;
+  joinCall(options?: JoinCallOptions): void;
   /**
    * Start the call.
    *
@@ -873,7 +883,7 @@ export interface CommonCallAdapter
 export interface CallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
@@ -887,7 +897,7 @@ export interface CallAdapter extends CommonCallAdapter {
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Start the call.
    *
@@ -914,7 +924,7 @@ export interface CallAdapter extends CommonCallAdapter {
 export interface TeamsCallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @beta
@@ -927,7 +937,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): TeamsCall | undefined;
+  joinCall(options?: JoinCallOptions): TeamsCall | undefined;
   /**
    * Start the call.
    *
