@@ -1,13 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatMessage } from '@azure/communication-chat';
 import { IStackStyles, Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import { ControlBarButtonProps } from '@internal/react-components';
-import React, { useCallback, useMemo, useState } from 'react';
-import { useEffect } from 'react';
-import { ChatAdapter } from '../../ChatComposite';
+import React, { useCallback, useMemo } from 'react';
 import { CallWithChatCompositeIcon } from '../../common/icons';
 import { ChatButton } from './ChatButton';
 import { useCallWithChatCompositeStrings } from '../hooks/useCallWithChatCompositeStrings';
@@ -17,17 +14,9 @@ import { NotificationIcon } from './NotificationIcon';
  * @private
  */
 export interface ChatButtonWithUnreadMessagesBadgeProps extends ControlBarButtonProps {
-  chatAdapter: ChatAdapter;
-  isChatPaneVisible: boolean;
-  newMessageLabel?: string;
+  unreadChatMessagesCount: number;
+  newMessageLabel: string;
 }
-
-/**
- * Helper function to determine if the message in the event is a valid one from a user.
- * Display name is used since system messages will not have one.
- */
-const validNewChatMessage = (message): boolean =>
-  !!message.senderDisplayName && (message.type === 'text' || message.type === 'html');
 
 const filledIcon = <CallWithChatCompositeIcon iconName={'ControlBarChatButtonActive'} />;
 const regularIcon = <CallWithChatCompositeIcon iconName={'ControlBarChatButtonInactive'} />;
@@ -36,8 +25,7 @@ const regularIcon = <CallWithChatCompositeIcon iconName={'ControlBarChatButtonIn
  * @private
  */
 export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMessagesBadgeProps): JSX.Element => {
-  const { chatAdapter, isChatPaneVisible, newMessageLabel } = props;
-  const [unreadChatMessagesCount, setUnreadChatMessagesCount] = useState<number>(0);
+  const { newMessageLabel, unreadChatMessagesCount } = props;
 
   const baseIcon = props.showLabel ? regularIcon : filledIcon;
   const callWithChatStrings = useCallWithChatCompositeStrings();
@@ -68,23 +56,6 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
       </Stack>
     );
   }, [unreadChatMessagesCount, newMessageLabel, baseIcon]);
-
-  useEffect(() => {
-    if (isChatPaneVisible) {
-      setUnreadChatMessagesCount(0);
-      return;
-    }
-    const incrementUnreadChatMessagesCount = (event: { message: ChatMessage }): void => {
-      if (!isChatPaneVisible && validNewChatMessage(event.message)) {
-        setUnreadChatMessagesCount(unreadChatMessagesCount + 1);
-      }
-    };
-    chatAdapter.on('messageReceived', incrementUnreadChatMessagesCount);
-
-    return () => {
-      chatAdapter.off('messageReceived', incrementUnreadChatMessagesCount);
-    };
-  }, [chatAdapter, setUnreadChatMessagesCount, isChatPaneVisible, unreadChatMessagesCount]);
 
   return (
     <ChatButton
