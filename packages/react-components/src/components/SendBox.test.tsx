@@ -296,7 +296,7 @@ describe('Clicks/Touch should select mention', () => {
     await act(async () => {
       triggerMouseEvent(input, 'mousedown');
     });
-    // Triple click a letter at 12-th index
+    // Triple click a letter at 14-th index
     await userEvent.pointer({
       keys: '[MouseLeft][MouseLeft][MouseLeft]',
       target: input,
