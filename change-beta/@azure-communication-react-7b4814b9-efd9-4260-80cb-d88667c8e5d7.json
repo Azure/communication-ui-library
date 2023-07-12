@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Fix for the entire text selection in TextFieldWithMention\u001c\\",
+  "comment": "Fix for the text selection in TextFieldWithMention",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

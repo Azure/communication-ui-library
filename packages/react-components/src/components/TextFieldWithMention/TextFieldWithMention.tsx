@@ -429,15 +429,32 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           });
           setInteractionStartSelection(undefined);
           setShouldHandleOnMouseDownDuringSelect(false);
-        } else if (event.currentTarget.selectionStart !== null) {
+        } else if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionEnd !== null) {
           // on select was triggered by mouse down/up with no movement
           const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
             // handle mention click by selecting the whole mention
             // if the selection is not on the bounds of the mention
-            const mentionEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
             // disable selection for clicks on mention bounds
+            const mentionEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
+
             if (
+              event.currentTarget.selectionStart !== event.currentTarget.selectionEnd &&
+              event.currentTarget.selectionEnd > mentionEndIndex
+            ) {
+              // handle triple click when the text starts from mention
+              if (event.currentTarget.selectionDirection === null) {
+                event.currentTarget.setSelectionRange(mentionTag.plainTextBeginIndex, event.currentTarget.selectionEnd);
+              } else {
+                event.currentTarget.setSelectionRange(
+                  mentionTag.plainTextBeginIndex,
+                  event.currentTarget.selectionEnd,
+                  event.currentTarget.selectionDirection
+                );
+              }
+              setSelectionStartValue(mentionTag.plainTextBeginIndex);
+              setSelectionEndValue(event.currentTarget.selectionEnd);
+            } else if (
               event.currentTarget.selectionStart !== event.currentTarget.selectionEnd ||
               (event.currentTarget.selectionStart !== mentionTag.plainTextBeginIndex &&
                 event.currentTarget.selectionStart !== mentionEndIndex)
@@ -464,7 +481,6 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             setSelectionEndValue(nullToUndefined(event.currentTarget.selectionEnd));
           }
           setInteractionStartSelection(undefined);
-          setShouldHandleOnMouseDownDuringSelect(false);
         }
       } else {
         // selection was changed by keyboard
