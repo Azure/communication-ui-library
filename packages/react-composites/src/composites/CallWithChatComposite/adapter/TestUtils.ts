@@ -15,6 +15,7 @@ import {
   StartCallOptions,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo,
+  AudioDeviceInfo,
   RoomLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -73,7 +74,7 @@ export class MockCallClient {
     return Promise.resolve(new MockCallAgent());
   }
   getDeviceManager(): Promise<DeviceManager> {
-    return Promise.resolve(createMockDeviceManagerWithCameras());
+    return Promise.resolve(createMockDeviceManager());
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   feature<TFeature extends CallFeature>(factory: CallFeatureFactory<TFeature>): TFeature {
@@ -112,9 +113,15 @@ interface MockDeviceManager extends Mutable<DeviceManager> {
   emit(event: any, data?: any);
 }
 
-const createMockDeviceManagerWithCameras = (): MockDeviceManager => {
+const createMockDeviceManager = (): MockDeviceManager => {
   return addMockEmitter({
     async getCameras(): Promise<VideoDeviceInfo[]> {
+      return [];
+    },
+    async getMicrophones(): Promise<AudioDeviceInfo[]> {
+      return [];
+    },
+    async getSpeakers(): Promise<AudioDeviceInfo[]> {
       return [];
     }
   }) as MockDeviceManager;
