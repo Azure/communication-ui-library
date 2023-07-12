@@ -25,7 +25,8 @@ export const localVideoSelector = reselect.createSelector(
     return {
       isAvailable: !!localVideoStream,
       isMirrored: localVideoStream?.view?.isMirrored,
-      renderElement: localVideoStream?.view?.target
+      renderElement: localVideoStream?.view?.target,
+      activeVideoEffects: localVideoStream?.videoEffects
     };
   }
 );
