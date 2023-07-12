@@ -15,6 +15,7 @@ import { NotificationIcon } from './NotificationIcon';
  */
 export interface ChatButtonWithUnreadMessagesBadgeProps extends ControlBarButtonProps {
   unreadChatMessagesCount: number;
+  hideUnreadChatMessagesBadge?: boolean;
   newMessageLabel: string;
 }
 
@@ -25,7 +26,7 @@ const regularIcon = <CallWithChatCompositeIcon iconName={'ControlBarChatButtonIn
  * @private
  */
 export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMessagesBadgeProps): JSX.Element => {
-  const { newMessageLabel, unreadChatMessagesCount } = props;
+  const { newMessageLabel, unreadChatMessagesCount, hideUnreadChatMessagesBadge } = props;
 
   const baseIcon = props.showLabel ? regularIcon : filledIcon;
   const callWithChatStrings = useCallWithChatCompositeStrings();
@@ -49,13 +50,13 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
   const notificationOnIcon = useCallback((): JSX.Element => {
     return (
       <Stack styles={chatNotificationContainerStyles}>
-        {unreadChatMessagesCount > 0 && (
+        {unreadChatMessagesCount > 0 && !hideUnreadChatMessagesBadge && (
           <NotificationIcon chatMessagesCount={unreadChatMessagesCount} label={newMessageLabel} />
         )}
         {baseIcon}
       </Stack>
     );
-  }, [unreadChatMessagesCount, newMessageLabel, baseIcon]);
+  }, [unreadChatMessagesCount, newMessageLabel, baseIcon, hideUnreadChatMessagesBadge]);
 
   return (
     <ChatButton
