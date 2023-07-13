@@ -226,6 +226,15 @@ export interface BaseCustomStyles {
 }
 
 // @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -2536,6 +2545,12 @@ export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(
 
 // @beta (undocumented)
 export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithPayload' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+}
 
 // @beta
 export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
