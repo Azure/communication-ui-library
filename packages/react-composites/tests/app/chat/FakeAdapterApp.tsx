@@ -6,6 +6,7 @@ import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   ChatAdapter,
   ChatComposite,
@@ -125,7 +126,8 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         name: file.name,
         extension: file.extension,
         url: file.url,
-        attachmentType: 'fileSharing'
+        attachmentType: 'fileSharing',
+        id: file.id
       });
     } else if (file.error) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
@@ -152,7 +154,7 @@ const sendRemoteFileSharingMessage = (
       type: 'text',
       metadata: {
         fileSharingMetadata: JSON.stringify([
-          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing' }
+          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing', id: uuidv4() }
         ])
       }
     }

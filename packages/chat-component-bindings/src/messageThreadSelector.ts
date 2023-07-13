@@ -87,7 +87,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
         url: extractAttachmentUrl(attachment),
         previewUrl: attachment.previewUrl
       });
-    } else if (attachmentType === 'fileSharingWithOptions') {
+    } else if (attachmentType === 'fileSharingWithPayload') {
       fileMetadata.push({
         attachmentType: attachmentType,
         id: attachment.id,
@@ -105,7 +105,7 @@ const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachme
   if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
     return 'inlineImage';
   } else if (attachmentType === 'file') {
-    return 'fileSharingWithOptions';
+    return 'fileSharingWithPayload';
   }
   return 'unknown';
 };

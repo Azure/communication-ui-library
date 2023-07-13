@@ -240,6 +240,7 @@ describe.only('Message should display image and attachment correctly', () => {
   test('Message richtext/html fileSharing and inline image attachment should display correctly', async () => {
     const fildId1 = 'SomeFileId1';
     const fildName1 = 'SomeFileId1.txt';
+    const fildId2 = 'SomeFileId2';
     const fildName2 = 'SomeFileId2.pdf';
     const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
     const expectedFileSrc2 = 'http://localhost/someFileSrcUrl2';
@@ -271,11 +272,12 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharingWithOptions',
+          attachmentType: 'fileSharingWithPayload',
           extension: 'txt',
           url: expectedFileSrc1
         },
         {
+          id: fildId2,
           name: fildName2,
           attachmentType: 'fileSharing',
           extension: 'pdf',
@@ -285,7 +287,10 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
+      const url =
+        attachment.attachmentType === 'inlineImage' || attachment.attachmentType === 'attachedImage'
+          ? attachment.previewUrl ?? ''
+          : '';
       return [
         {
           blobUrl: url

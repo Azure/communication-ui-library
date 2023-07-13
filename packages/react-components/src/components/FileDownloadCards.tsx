@@ -16,17 +16,17 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export type FileMetadataAttachmentType =
   | 'fileSharing'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithOptions'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithPayload'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage'
   | 'unknown';
 
 /**
- * Meta Data containing basic information about the uploaded file.
+ * Base interface that all Meta Data should extend.
  * Typically used for ACS to ACS file transfers.
  * @beta
  */
-export interface FileSharingMetadata {
+export interface BaseFileMetadata {
   /**
    * File name to be displayed.
    */
@@ -42,8 +42,23 @@ export interface FileSharingMetadata {
    */
   url: string;
   /**
+   * Unique ID of the file.
+   */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  id: string;
+  /**
    * Attachment Type
    */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  attachmentType: FileMetadataAttachmentType;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+}
+/**
+ * Meta Data containing basic information about the uploaded file.
+ * Typically used for ACS to ACS file transfers.
+ * @beta
+ */
+export interface FileSharingMetadata extends BaseFileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentType: 'fileSharing';
 }
@@ -53,37 +68,18 @@ export interface FileSharingMetadata {
  * Meta Data containing more detailed data about the uploaded file.
  * @beta
  */
-export interface FileSharingMetadataWithOptions {
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Extension is used for rendering the file icon.
-   * An unknown extension will be rendered as a generic icon.
-   * Example: `jpeg`
-   */
-  extension: string;
-  /**
-   * Download URL for the file.
-   */
-  url: string;
+export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
-  attachmentType: 'fileSharingWithOptions';
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /*
-   * Unique ID of the file.
-   */
-  id: string;
+  attachmentType: 'fileSharingWithPayload';
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Optional dictionary of meta data asscoiated with the file.
    */
-  options?: Record<string, string> | undefined;
+  payload?: Record<string, string> | undefined;
 }
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -91,32 +87,13 @@ export interface FileSharingMetadataWithOptions {
  * Meta Data containing data for images.
  * @beta
  */
-export interface ImageFileMetadata {
-  /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Extension is used for rendering the file icon.
-   * An unknown extension will be rendered as a generic icon.
-   * Example: `jpeg`
-   */
-  extension: string;
-  /**
-   * Download URL for the file.
-   */
-  url: string;
+export interface ImageFileMetadata extends BaseFileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
   attachmentType: 'inlineImage' | 'attachedImage';
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /*
-   * Unique ID of the file.
-   */
-  id: string;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Preview URL for the file.
@@ -131,7 +108,7 @@ export interface ImageFileMetadata {
  */
 export type FileMetadata =
   | FileSharingMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithOptions
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithPayload
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -246,7 +223,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
 
   const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    return attachment.attachmentType === 'fileSharing' || attachment.attachmentType === 'fileSharingWithOptions';
+    return attachment.attachmentType === 'fileSharing' || attachment.attachmentType === 'fileSharingWithPayload';
     return false;
   }, []);
 

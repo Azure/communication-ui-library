@@ -76,6 +76,15 @@ export interface BaseCustomStyles {
 }
 
 // @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -1080,30 +1089,23 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithOptions | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithPayload | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithOptions' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithPayload' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
 
 // @beta
-export interface FileSharingMetadata {
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
     attachmentType: 'fileSharing';
-    extension: string;
-    name: string;
-    url: string;
 }
 
 // @beta
-export interface FileSharingMetadataWithOptions {
+export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharingWithOptions';
-    extension: string;
+    attachmentType: 'fileSharingWithPayload';
     // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    options?: Record<string, string> | undefined;
-    url: string;
+    payload?: Record<string, string> | undefined;
 }
 
 // @internal
@@ -1214,16 +1216,11 @@ export interface _Identifiers {
 }
 
 // @beta
-export interface ImageFileMetadata {
+export interface ImageFileMetadata extends BaseFileMetadata {
     // (undocumented)
     attachmentType: 'inlineImage' | 'attachedImage';
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
     // (undocumented)
     previewUrl?: string;
-    url: string;
 }
 
 // @public
