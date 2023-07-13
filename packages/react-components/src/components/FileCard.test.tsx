@@ -24,7 +24,7 @@ describe('FileCard should be rendered properly', () => {
   it('should render the component with progress bar', () => {
     renderFileCardWithDefaults({ progress: 0.5 });
     const progressIndicator = screen.getByRole('progressbar');
-    expect(progressIndicator.style.width === '50%').toBeTruthy();
+    expect(progressIndicator.style.width).toBe('50%');
   });
 
   it('should render the component with action icon', () => {
