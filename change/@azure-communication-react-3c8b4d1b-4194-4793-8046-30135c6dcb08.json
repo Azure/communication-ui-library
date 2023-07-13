@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Ensure popover position is set prior to rendering.",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
