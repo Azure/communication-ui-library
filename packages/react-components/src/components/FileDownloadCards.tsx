@@ -51,7 +51,6 @@ export interface BaseFileMetadata {
    */
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentType: FileMetadataAttachmentType;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 }
 /**
  * Meta Data containing basic information about the uploaded file.
@@ -69,13 +68,11 @@ export interface FileSharingMetadata extends BaseFileMetadata {
  * @beta
  */
 export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
   attachmentType: 'fileSharingWithPayload';
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Optional dictionary of meta data asscoiated with the file.
    */
