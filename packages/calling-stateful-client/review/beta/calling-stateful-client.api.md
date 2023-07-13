@@ -136,7 +136,6 @@ export interface CallState {
 
 // @beta
 export interface CapabilitiesCallFeature {
-    // (undocumented)
     capabilities: ParticipantCapabilities;
 }
 
