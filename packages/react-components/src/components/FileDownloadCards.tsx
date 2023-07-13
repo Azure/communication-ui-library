@@ -210,6 +210,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     return false;
   }, []);
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     return attachment.attachmentType === 'fileSharing' && attachment.payload?.teamsFileAttachment === 'true';
