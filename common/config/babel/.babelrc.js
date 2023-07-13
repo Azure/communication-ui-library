@@ -66,7 +66,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for call transfer
         'call-transfer',
         // Optimal Video Count
-        'optimal-video-count'
+        'optimal-video-count',
+        // Feature for capabilities
+        'capabilities'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -74,7 +76,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
       inProgressFeatures: [
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
-        'in-progress-beta-feature-demo'
+        'in-progress-beta-feature-demo',
+        // Feature for capabilities
+        'capabilities'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
