@@ -2532,30 +2532,17 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithOptions | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithPayload | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithOptions' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithPayload' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
 
 // @beta
-export interface FileSharingMetadata {
-    attachmentType: 'fileSharing';
-    extension: string;
-    name: string;
-    url: string;
-}
-
-// @beta
-export interface FileSharingMetadataWithOptions {
+export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharingWithOptions';
-    extension: string;
+    attachmentType: 'fileSharingWithPayload';
     // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    options?: Record<string, string> | undefined;
-    url: string;
+    payload?: Record<string, string> | undefined;
 }
 
 // @beta
@@ -2717,16 +2704,11 @@ export interface _Identifiers {
 }
 
 // @beta
-export interface ImageFileMetadata {
+export interface ImageFileMetadata extends BaseFileMetadata {
     // (undocumented)
     attachmentType: 'inlineImage' | 'attachedImage';
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
     // (undocumented)
     previewUrl?: string;
-    url: string;
 }
 
 // @beta

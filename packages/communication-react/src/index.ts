@@ -277,8 +277,10 @@ export type {
 export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type {
+  BaseFileMetadata,
   FileMetadataAttachmentType,
   AttachmentDownloadResult,
+  FileSharingMetadata,
   FileSharingMetadataWithPayload,
   ImageFileMetadata
 } from '../../react-components/src';
