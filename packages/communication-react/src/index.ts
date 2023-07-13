@@ -281,7 +281,6 @@ export type {
   FileMetadataAttachmentType,
   AttachmentDownloadResult,
   FileSharingMetadata,
-  FileSharingMetadataWithPayload,
   ImageFileMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */

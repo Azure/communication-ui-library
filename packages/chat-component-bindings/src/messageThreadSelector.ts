@@ -87,13 +87,14 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
         url: extractAttachmentUrl(attachment),
         previewUrl: attachment.previewUrl
       });
-    } else if (attachmentType === 'fileSharingWithPayload') {
+    } else if (attachmentType === 'fileSharing') {
       fileMetadata.push({
         attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
         extension: attachment.contentType ?? '',
-        url: extractAttachmentUrl(attachment)
+        url: extractAttachmentUrl(attachment),
+        payload: { teamsFileAttachment: 'true' }
       });
     }
   });
@@ -105,7 +106,7 @@ const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachme
   if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
     return 'inlineImage';
   } else if (attachmentType === 'file') {
-    return 'fileSharingWithPayload';
+    return 'fileSharing';
   }
   return 'unknown';
 };

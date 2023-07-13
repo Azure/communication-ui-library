@@ -2541,21 +2541,15 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithPayload | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithPayload' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
 
 // @beta
 export interface FileSharingMetadata extends BaseFileMetadata {
     // (undocumented)
     attachmentType: 'fileSharing';
-}
-
-// @beta
-export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'fileSharingWithPayload';
     // (undocumented)
     payload?: Record<string, string> | undefined;
 }

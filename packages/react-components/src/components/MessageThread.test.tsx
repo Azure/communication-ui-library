@@ -272,9 +272,10 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharingWithPayload',
+          attachmentType: 'fileSharing',
           extension: 'txt',
-          url: expectedFileSrc1
+          url: expectedFileSrc1,
+          payload: { teamsFileAttachment: 'true' }
         },
         {
           id: fildId2,

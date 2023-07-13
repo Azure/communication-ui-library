@@ -16,7 +16,6 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export type FileMetadataAttachmentType =
   | 'fileSharing'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'fileSharingWithPayload'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage'
   | 'unknown';
@@ -60,19 +59,7 @@ export interface BaseFileMetadata {
 export interface FileSharingMetadata extends BaseFileMetadata {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentType: 'fileSharing';
-}
-
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-/**
- * Meta Data containing more detailed data about the uploaded file.
- * @beta
- */
-export interface FileSharingMetadataWithPayload extends BaseFileMetadata {
-  /*
-   * Attachment type of the file.
-   * Possible values {@link FileDownloadHandler}.
-   */
-  attachmentType: 'fileSharingWithPayload';
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Optional dictionary of meta data asscoiated with the file.
    */
@@ -105,7 +92,6 @@ export interface ImageFileMetadata extends BaseFileMetadata {
  */
 export type FileMetadata =
   | FileSharingMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ FileSharingMetadataWithPayload
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -220,8 +206,14 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
 
   const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    return attachment.attachmentType === 'fileSharing' || attachment.attachmentType === 'fileSharingWithPayload';
+    return attachment.attachmentType === 'fileSharing';
     return false;
+  }, []);
+
+  const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    return attachment.attachmentType === 'fileSharing' && attachment.payload?.teamsFileAttachment === 'true';
+    return true;
   }, []);
 
   const fileCardGroupDescription = useMemo(
@@ -287,7 +279,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true &&
                     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                    file.attachmentType === 'fileSharing' ? (
+                    isShowDownloadIcon(file) ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
