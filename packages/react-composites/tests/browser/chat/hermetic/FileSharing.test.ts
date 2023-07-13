@@ -33,12 +33,14 @@ test.describe('Filesharing SendBox', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
             attachmentType: 'fileSharing'
           },
           {
+            id: 'SomeMockId',
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
@@ -66,6 +68,7 @@ test.describe('Filesharing ProgressBar', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -73,6 +76,7 @@ test.describe('Filesharing ProgressBar', async () => {
             attachmentType: 'fileSharing'
           },
           {
+            id: 'SomeMockId',
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
@@ -98,6 +102,7 @@ test.describe('Filesharing ProgressBar', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -105,6 +110,7 @@ test.describe('Filesharing ProgressBar', async () => {
             attachmentType: 'fileSharing'
           },
           {
+            id: 'SomeMockId',
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
@@ -130,6 +136,7 @@ test.describe('Filesharing ProgressBar', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -137,6 +144,7 @@ test.describe('Filesharing ProgressBar', async () => {
             attachmentType: 'fileSharing'
           },
           {
+            id: 'SomeMockId',
             name: 'SampleXlsLoooongName.xlsx',
             extension: 'xslx',
             url: 'https://sample.com/SampleXls.xlsx',
@@ -165,6 +173,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -186,6 +195,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -215,6 +225,7 @@ test.describe('Filesharing Global Errorbar', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'Sample.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -249,6 +260,7 @@ test.describe('Filesharing Message Thread', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
@@ -323,6 +335,7 @@ test.describe('Filesharing Edit Message', async () => {
         fileSharingEnabled: true,
         fileUploads: [
           {
+            id: 'SomeMockId',
             name: 'SampleFile1.pdf',
             extension: 'pdf',
             url: 'https://sample.com/SampleFile.pdf',
