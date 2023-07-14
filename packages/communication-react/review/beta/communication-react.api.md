@@ -686,7 +686,6 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
-    sidePaneActiveTabAriaLabel: string;
     soundLabel: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
