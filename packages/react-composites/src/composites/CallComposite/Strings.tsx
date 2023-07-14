@@ -224,6 +224,11 @@ export interface CallCompositeStrings {
   dismissSidePaneButtonLabel?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
+   * Aria Label for side pane active tab header
+   */
+  sidePaneActiveTabAriaLabel: string;
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
    * Side pane People section subheader.
    */
   peoplePaneSubTitle: string;

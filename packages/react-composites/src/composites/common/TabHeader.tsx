@@ -79,6 +79,11 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             onClick={onChatButtonClicked}
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'chat'}
+            ariaLabel={
+              activeTab === 'chat'
+                ? strings.sidePaneActiveTabAriaLabel.replace('{header}', strings.chatButtonLabel)
+                : ''
+            }
             role={'tab'}
             disabled={props.disableChatButton}
           >
@@ -92,6 +97,11 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             onClick={onPeopleButtonClicked}
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'people'}
+            ariaLabel={
+              activeTab === 'people'
+                ? strings.sidePaneActiveTabAriaLabel.replace('{header}', strings.peopleButtonLabel)
+                : ''
+            }
             role={'tab'}
             disabled={props.disablePeopleButton}
           >

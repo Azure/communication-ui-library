@@ -23,6 +23,7 @@
     "copyInviteLinkActionedAriaLabel": "Invite link copied",
     "defaultPlaceHolder": "Select an option",
     "dismissSidePaneButtonLabel": "Close",
+    "sidePaneActiveTabAriaLabel": "{header} currently selected",
     "videoEffectsPaneTitle": "Effects",
     "videoEffectsPaneBackgroundSelectionTitle": "Background",
     "configurationPageVideoEffectsButtonLabel": "Effects",
