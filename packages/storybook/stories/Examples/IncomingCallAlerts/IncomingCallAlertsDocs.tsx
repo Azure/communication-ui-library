@@ -236,7 +236,7 @@ const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
 };
 `;
 
-export const getDocs: () => JSX.Element = () => {
+export const getModalDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>Incoming Call Alerts</Title>
@@ -246,7 +246,14 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Heading>Incoming Call Modal</Heading>
       <Source code={exampleIncomingCallModal} />
-      <Heading>Incoming Call Toast</Heading>
+    </>
+  );
+};
+
+export const getToastDocs: () => JSX.Element = () => {
+  return (
+    <>
+      <Title>Incoming Call Toast</Title>
       <Source code={exampleIncomingCallToast} />
     </>
   );

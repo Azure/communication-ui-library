@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update locator types for AzureCommunicationCallAdapterArgs in storybook",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -7,7 +7,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React, { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { ArgsFrom, controlsToAdd, defaultCallWithChatCompositeHiddenControls } from '../controlsUtils';
-import { getDocs } from './CallWithChatCompositeDocs';
+import { Docs } from './CallWithChatCompositeDocs';
 import { CallWithChatExampleProps } from './snippets/CallWithChat.snippet';
 import { CallWithChatExperienceWithErrorChecks } from './snippets/CallWithChatWithErrorChecks.snippet';
 import { createCallWithChat } from './snippets/Server.snippet';
@@ -88,7 +88,7 @@ export default {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
     docs: {
-      page: () => getDocs()
+      page: () => Docs()
     }
   }
 } as Meta;

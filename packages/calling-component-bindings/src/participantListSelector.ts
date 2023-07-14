@@ -31,7 +31,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
          */
         .filter((participant: RemoteParticipantState) => {
           return (
-            (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
+            !['InLobby', 'Idle', 'Connecting', 'Disconnected'].includes(participant.state) ||
             participant.identifier.kind === 'phoneNumber'
           );
         })

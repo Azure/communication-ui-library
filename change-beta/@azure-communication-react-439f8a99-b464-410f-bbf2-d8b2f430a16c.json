@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Doc the single thread usage of adapter and composite",
-  "packageName": "@azure/communication-react",
-  "email": "longamy@microsoft.com",
-  "dependentChangeType": "none"
-}

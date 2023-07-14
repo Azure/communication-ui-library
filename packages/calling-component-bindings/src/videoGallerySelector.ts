@@ -16,6 +16,8 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(optimal-video-count) */
+import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
@@ -38,6 +40,8 @@ export type VideoGallerySelector = (
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
+  /* @conditional-compile-remove(optimal-video-count) */
+  optimalVideoCount?: number;
 };
 
 /**
@@ -53,7 +57,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIsScreenSharingOn,
     getDisplayName,
     getIdentifier,
-    getDominantSpeakers
+    getDominantSpeakers,
+    /* @conditional-compile-remove(optimal-video-count) */
+    getOptimalVideoCount
   ],
   (
     screenShareRemoteParticipantId,
@@ -63,7 +69,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isScreenSharingOn,
     displayName: string | undefined,
     identifier: string,
-    dominantSpeakers
+    dominantSpeakers,
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -90,7 +98,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),
-      dominantSpeakers: dominantSpeakerIds
+      dominantSpeakers: dominantSpeakerIds,
+      /* @conditional-compile-remove(optimal-video-count) */
+      maxRemoteVideoStreams: optimalVideoCount
     };
   }
 );

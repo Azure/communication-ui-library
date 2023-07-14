@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update side pane heading styles and correct video effects side pane width in the call screen.",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

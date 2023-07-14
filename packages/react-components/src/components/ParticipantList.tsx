@@ -83,8 +83,10 @@ export type ParticipantListProps = {
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
-  /** prop to determine if we should show tooltip for participants or not */
+  /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
+  /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
+  participantAriaLabelledBy?: string;
 };
 
 const onRenderParticipantDefault = (
@@ -95,7 +97,8 @@ const onRenderParticipantDefault = (
   createParticipantMenuItems?: (participant: ParticipantListParticipant) => IContextualMenuItem[],
   styles?: ParticipantListItemStyles,
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
-  showParticipantOverflowTooltip?: boolean
+  showParticipantOverflowTooltip?: boolean,
+  participantAriaLabelledBy?: string
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -144,6 +147,7 @@ const onRenderParticipantDefault = (
       /* @conditional-compile-remove(one-to-n-calling) */
       /* @conditional-compile-remove(PSTN-calls) */
       participantState={callingParticipant.state}
+      ariaLabelledBy={participantAriaLabelledBy}
     />
   );
 };
@@ -185,7 +189,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
-    showParticipantOverflowTooltip
+    showParticipantOverflowTooltip,
+    participantAriaLabelledBy
   } = props;
 
   const ids = useIdentifiers();
@@ -246,7 +251,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               createParticipantMenuItems,
               participantItemStyles,
               props.onParticipantClick,
-              showParticipantOverflowTooltip
+              showParticipantOverflowTooltip,
+              participantAriaLabelledBy
             )
       )}
     </Stack>

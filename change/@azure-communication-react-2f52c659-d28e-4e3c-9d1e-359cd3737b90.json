@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Added onFetchProfile to CommonCallAdapterOptions to allow displayName changes when using AzureCommunicationCallAdapter",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

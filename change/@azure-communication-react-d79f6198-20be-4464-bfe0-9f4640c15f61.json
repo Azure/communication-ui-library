@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix broken links in UI Components Get Started page in storybook",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
@@ -18,20 +18,21 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
+import DOMPurify from 'dompurify';
 
 type ChatMessageContentProps = {
   message: ChatMessage;
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
 };
 
@@ -73,9 +74,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     props.message.attachedFilesMetadata?.map((fileMetadata) => {
       if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
@@ -87,7 +86,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       content={processHtmlToReact(props)}
     />
@@ -95,11 +94,10 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       content={
         <Linkify
@@ -161,15 +159,25 @@ const extractContent = (s: string): string => {
   return span.textContent || span.innerText;
 };
 
+const generateLiveMessage = (props: ChatMessageContentProps): string => {
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
+    props.message.mine ? '' : liveAuthor
+  } ${extractContent(props.message.content || '')} `;
+};
+
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
+  // Strip all html tags from the content for aria.
+
   return props.message.content
     ? props.message.mine
       ? _formatString(props.strings.messageContentMineAriaText, {
-          message: props.message.content
+          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
         })
       : _formatString(props.strings.messageContentAriaText, {
           author: `${props.message.senderDisplayName}`,
-          message: props.message.content
+          message: DOMPurify.sanitize(props.message.content, { ALLOWED_TAGS: [] })
         })
     : undefined;
 };
@@ -177,7 +185,7 @@ const messageContentAriaText = (props: ChatMessageContentProps): string | undefi
 const processNodeDefinitions = ProcessNodeDefinitions();
 const htmlToReactParser = Parser();
 
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
@@ -210,10 +218,10 @@ const processMention = (props: ChatMessageContentProps): ProcessingInstructionTy
   },
   processNode: (node) => {
     if (props.mentionDisplayOptions?.onRenderMention) {
-      const { id, displaytext } = node.attribs;
+      const { id } = node.attribs;
       const mention: Mention = {
         id: id,
-        displayText: displaytext
+        displayText: node.children[0]?.data ?? ''
       };
       return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
     }
@@ -223,7 +231,7 @@ const processMention = (props: ChatMessageContentProps): ProcessingInstructionTy
 
 const processHtmlToReact = (props: ChatMessageContentProps): JSX.Element => {
   const steps: ProcessingInstructionType[] = [
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     processInlineImage(props),
     /* @conditional-compile-remove(mention) */
     processMention(props),

@@ -42,6 +42,12 @@ export interface ErrorBarProps extends IMessageBarProps {
    * @defaultValue false
    */
   ignorePremountErrors?: boolean;
+
+  /**
+   * Callback called when the dismiss button is triggered.
+   * Use this to control errors shown when they dismissed by the user.
+   */
+  onDismissError?: (dismissedError: ActiveErrorMessage) => void;
 }
 
 /**
@@ -210,10 +216,6 @@ export interface ErrorBarStrings {
    */
   failedToJoinCallInvalidMeetingLink?: string;
   /**
-   * Generic message for when screen sharing fails
-   */
-  startScreenSharingGeneric?: string;
-  /**
    * Error bar string letting you know remote participants see a frozen stream for you.
    */
   cameraFrozenForRemoteParticipants?: string;
@@ -268,6 +270,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   const localeStrings = useLocale().strings.errorBar;
   const strings = props.strings ?? localeStrings;
 
+  const trackDismissedErrorsInternally = !props.onDismissError;
+
   // Timestamp for when this comopnent is first mounted.
   // Never updated through the lifecycle of this component.
   const mountTimestamp = useRef(new Date(Date.now()));
@@ -276,10 +280,10 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
 
   // dropDismissalsForInactiveErrors only returns a new object if `dismissedErrors` actually changes.
   // Without this behaviour, this `useEffect` block would cause a render loop.
-  useEffect(
-    () => setDismissedErrors(dropDismissalsForInactiveErrors(props.activeErrorMessages, dismissedErrors)),
-    [props.activeErrorMessages, dismissedErrors]
-  );
+  useEffect(() => {
+    trackDismissedErrorsInternally &&
+      setDismissedErrors(dropDismissalsForInactiveErrors(props.activeErrorMessages, dismissedErrors));
+  }, [props.activeErrorMessages, dismissedErrors, trackDismissedErrorsInternally]);
 
   const toShow = errorsToShow(
     props.activeErrorMessages,
@@ -310,7 +314,11 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
           key={error.type}
           messageBarType={messageBarType(error.type)}
           messageBarIconProps={messageBarIconProps(error.type)}
-          onDismiss={() => setDismissedErrors(dismissError(dismissedErrors, error))}
+          onDismiss={() =>
+            trackDismissedErrorsInternally
+              ? setDismissedErrors(dismissError(dismissedErrors, error))
+              : props.onDismissError?.(error)
+          }
           dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
           dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >

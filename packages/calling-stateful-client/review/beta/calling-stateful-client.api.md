@@ -46,6 +46,12 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
 import { VideoStreamRendererView } from '@azure/communication-calling';
 
+// @beta
+export interface AcceptedTransfer {
+    callId: string;
+    timestamp: Date;
+}
+
 // @public
 export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommon_2;
 
@@ -109,6 +115,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
+    optimalVideoCount: OptimalVideoCountFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -122,6 +129,7 @@ export interface CallState {
     state: CallState_2;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
+    transfer: TransferFeature;
 }
 
 // @beta (undocumented)
@@ -238,6 +246,11 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
+// @beta
+export interface OptimalVideoCountFeatureState {
+    maxRemoteVideoStreams: number;
+}
+
 // @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
@@ -305,6 +318,13 @@ export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identi
 // @public
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
+}
+
+// @beta
+export interface TransferFeature {
+    acceptedTransfers: {
+        [key: string]: AcceptedTransfer;
+    };
 }
 
 // @public

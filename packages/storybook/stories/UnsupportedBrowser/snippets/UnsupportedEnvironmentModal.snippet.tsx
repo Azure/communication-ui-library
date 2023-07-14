@@ -1,9 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { UnsupportedBrowser, UnsupportedBrowserVersion, UnsupportedOperatingSystem } from '@azure/communication-react';
-import { Modal, PrimaryButton, Stack } from '@fluentui/react';
+import {
+  DEFAULT_COMPONENT_ICONS,
+  UnsupportedBrowser,
+  UnsupportedBrowserVersion,
+  UnsupportedOperatingSystem
+} from '@azure/communication-react';
+import { Modal, PrimaryButton, Stack, registerIcons } from '@fluentui/react';
 import React, { useState } from 'react';
+
+registerIcons({
+  icons: DEFAULT_COMPONENT_ICONS
+});
 
 export const UnsupportedEnvironmentModals: () => JSX.Element = () => {
   const [unsupportedBrowserModalOpen, setUnsupportedBrowserModalOpen] = useState<boolean>(false);

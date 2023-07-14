@@ -1,25 +1,26 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
-import { AdapterError } from '../../../common/adapters';
-import { DismissedError, dismissVideoEffectsError } from '../../utils';
-/* @conditional-compile-remove(video-background-effects) */
-import { videoBackgroundErrorsSelector } from '../../selectors/videoBackgroundErrorsSelector';
-/* @conditional-compile-remove(video-background-effects) */
-import { useSelector } from '../../hooks/useSelector';
+import { ActiveErrorMessage } from '@internal/react-components';
 
-const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
+/** @private */
+export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
+
+/** @private */
+export const VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM = 17.5;
 
 /** @private */
 export const useVideoEffectsPane = (
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void,
-  mobileView: boolean
+  mobileView: boolean,
+  latestErrors: ActiveErrorMessage[],
+  onDismissError: (error: ActiveErrorMessage) => void
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;
@@ -50,35 +51,27 @@ export const useVideoEffectsPane = (
     );
   }, [closePane, /* @conditional-compile-remove(video-background-effects) */ locale.strings, mobileView]);
 
-  const [dismissedVideoEffectsError, setDismissedVideoEffectsError] = useState<DismissedError>();
-  const onDismissVideoEffectError = useCallback((error: AdapterError) => {
-    setDismissedVideoEffectsError(dismissVideoEffectsError(error));
-  }, []);
   /* @conditional-compile-remove(video-background-effects) */
-  const latestVideoEffectError = useSelector(videoBackgroundErrorsSelector);
-  const activeVideoEffectError = useCallback(() => {
-    /* @conditional-compile-remove(video-background-effects) */
-    if (
-      latestVideoEffectError &&
-      (!dismissedVideoEffectsError || latestVideoEffectError.timestamp > dismissedVideoEffectsError.dismissedAt)
-    ) {
-      return latestVideoEffectError;
-    }
-    return undefined;
-  }, [
-    dismissedVideoEffectsError,
-    /* @conditional-compile-remove(video-background-effects) */
-    latestVideoEffectError
-  ]);
+  const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
       <VideoEffectsPaneContent
-        onDismissError={onDismissVideoEffectError}
-        activeVideoEffectError={activeVideoEffectError}
+        onDismissError={onDismissError}
+        /* @conditional-compile-remove(video-background-effects) */
+        activeVideoEffectError={latestVideoEffectError}
+        activeVideoEffectChange={() => {
+          // Clear any existing video effects error when the user clicks on a new video effect
+          /* @conditional-compile-remove(video-background-effects) */
+          latestVideoEffectError && onDismissError?.(latestVideoEffectError);
+        }}
       />
     );
-  }, [onDismissVideoEffectError, activeVideoEffectError]);
+  }, [
+    /* @conditional-compile-remove(video-background-effects) */
+    latestVideoEffectError,
+    onDismissError
+  ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
@@ -117,3 +110,20 @@ export const useVideoEffectsPane = (
     isVideoEffectsPaneOpen: isOpen
   };
 };
+
+/**
+ * Active video effect with timestamp.
+ *
+ * @private
+ */
+export interface ActiveVideoEffect {
+  /**
+   * Type of video effect that is active.
+   */
+  type: 'blur' | 'replacement';
+  /**
+   * The latest timestamp when this effect was activated.
+   *
+   */
+  timestamp: Date;
+}

@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Du ble ikke gitt adgang i samtalen. Hvis dette var en feil, må du bli med i samtalen på nytt.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Avvist fra lobbyen",
     "learnMore": "Mer informasjon",
+    "leavingCallTitle": "Forlater...",
     "leftCallMoreDetails": "Hvis dette var en feil, må du bli med i samtalen på nytt.",
     "leftCallTitle": "Du forlot samtalen",
     "lobbyScreenConnectingToCallTitle": "Blir med i samtalen",
@@ -149,7 +150,21 @@
       "ro-ro": "Rumensk",
       "sk-sk": "Slovakisk",
       "zh-tw": "Kinesisk – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Starter teksting...",
+    "transferPageTransferorText": "Overfører...",
+    "transferPageTransferTargetText": "Kobler til...",
+    "transferPageUnknownTransferorDisplayName": "Ukjent",
+    "transferPageUnknownTransferTargetDisplayName": "Ukjent",
+    "transferPageNoticeString": "Anropet blir overført",
+    "participantCouldNotBeReachedTitle": "Måldeltaker er for øyeblikket ikke tilgjengelig",
+    "participantCouldNotBeReachedMoreDetails": "Kontakt deltakeren når vedkommende er tilgjengelig",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Tillatelse til å nå måldeltaker er ikke tillatt",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Kontroller at måldeltakeren er i samme leier",
+    "unableToResolveTenantTitle": "Kan ikke løse leier-ID for måldeltakeren",
+    "unableToResolveTenantMoreDetails": "Kontroller at deltaker-ID-en er riktig angitt",
+    "participantIdIsMalformedTitle": "Deltaker-ID-en har ikke riktig format",
+    "participantIdIsMalformedMoreDetails": "Kontroller at deltaker-ID-en har riktig format"
   },
   "chat": {
     "chatListHeader": "I denne chatten",

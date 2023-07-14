@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { ComplianceBanner as Banner } from './snippets/ComplianceBanner.snippet';
-import { getDocs } from './TeamsInteropDocs';
+import { getComplianceBannerDocs } from './TeamsInteropDocs';
 
 const ComplianceBannerStory = (): JSX.Element => {
   const [teamsInterop, setTeamsInterop] = useState({
@@ -52,7 +52,7 @@ export default {
   component: ComplianceBanner,
   parameters: {
     docs: {
-      page: () => getDocs()
+      page: () => getComplianceBannerDocs()
     }
   }
 } as Meta;

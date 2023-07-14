@@ -186,6 +186,19 @@ export interface LocalVideoStreamVideoEffectsState {
   activeEffects?: VideoEffectName[];
 }
 
+/* @conditional-compile-remove(optimal-video-count) */
+/**
+ * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+ *
+ * @beta
+ */
+export interface OptimalVideoCountFeatureState {
+  /**
+   * State of the current optimal video count.
+   */
+  maxRemoteVideoStreams: number;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RemoteVideoStream}.
  *
@@ -352,6 +365,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(optimal-video-count) */
+  /**
+   * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+   */
+  optimalVideoCount: OptimalVideoCountFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
@@ -392,6 +410,41 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Transfer state of call
+   */
+  transfer: TransferFeatureState;
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface TransferFeatureState {
+  /**
+   * Accepted transfer requests
+   */
+  acceptedTransfers: { [key: string]: AcceptedTransfer };
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface AcceptedTransfer {
+  /**
+   * Stores call id of accepted transfer
+   */
+  callId: string;
+  /**
+   * Stores timestamp when transfer was accepted
+   */
+  timestamp: Date;
 }
 
 /**

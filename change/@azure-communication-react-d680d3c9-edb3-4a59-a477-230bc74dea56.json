@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Extend touchable/clickable area of button to full height of send box.",
+  "packageName": "@azure/communication-react",
+  "email": "longamy@microsoft.com",
+  "dependentChangeType": "patch"
+}

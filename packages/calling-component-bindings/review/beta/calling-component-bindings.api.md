@@ -149,7 +149,11 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeLocalStreamView: () => Promise<void>;
     // (undocumented)
+    onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -339,6 +343,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
+    optimalVideoCount?: number;
 };
 
 // (No @packageDocumentation comment for this package)

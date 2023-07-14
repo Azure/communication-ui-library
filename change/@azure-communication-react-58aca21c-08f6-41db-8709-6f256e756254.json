@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update storybook adapter doc for captions adapter changes",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "none"
-}

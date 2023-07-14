@@ -100,6 +100,14 @@ function createMockCall(mockCallId: string): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transfer: {
+      acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount: {
+      maxRemoteVideoStreams: 4
     }
   };
   return call;

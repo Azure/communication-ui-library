@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Description, Heading, Source, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
@@ -14,16 +14,24 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>Themes</Title>
       <Description>
-        Example Themes that can be leveraged by developers to provide color schemes to UI Components
+        Below is an example of a [Microsoft Teams](http://teams.microsoft.com/) Theme being applied to UI Components. In
+        this example a color palette that resembles Teams is provided to the FluentThemeProvider. The
+        FluentThemeProvider in turn styles the UI Components.
       </Description>
       <Heading>Teams-Like Theme</Heading>
-      <Source code={exampleTeamsTheme} />
+      <Canvas mdxSource={exampleTeamsTheme}>
+        <TeamsTheme />
+      </Canvas>
     </>
   );
 };
 
 const TeamsStory: () => JSX.Element = () => {
-  return <TeamsTheme />;
+  return (
+    <div style={{ width: '40rem' }}>
+      <TeamsTheme />
+    </div>
+  );
 };
 
 export const Teams = TeamsStory.bind({});

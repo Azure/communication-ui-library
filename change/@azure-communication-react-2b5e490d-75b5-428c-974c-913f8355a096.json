@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Added empty icon render for tab navigation of video tile",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

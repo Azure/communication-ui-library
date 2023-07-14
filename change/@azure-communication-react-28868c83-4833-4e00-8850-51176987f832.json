@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update overflow gallery logic to allow more video participants to render video streams if available on different pages.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

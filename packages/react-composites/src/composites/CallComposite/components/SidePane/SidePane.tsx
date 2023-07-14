@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { Stack } from '@fluentui/react';
 import {
+  containerContextStyles,
   paneBodyContainer,
   scrollableContainer,
   scrollableContainerContents
@@ -17,6 +18,7 @@ import { hiddenStyles } from '../../../common/styles/Pane.styles';
 export interface SidePaneProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileView?: boolean;
+  maxWidth?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
@@ -34,11 +36,12 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     !overrideSidePane.isActive;
   const renderingOnlyHiddenContent = renderingHiddenOverrideContent && !sidePaneRenderer;
 
+  const maxWidthStyles = useMemo(() => sidePaneStyles(props.maxWidth), [props.maxWidth]);
   const paneStyles = renderingOnlyHiddenContent
     ? hiddenStyles
     : props.mobileView
     ? availableSpaceStyles
-    : sidePaneStyles;
+    : maxWidthStyles;
 
   let Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
@@ -85,7 +88,9 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
         <Stack verticalFill styles={scrollableContainer}>
           {ContentRender && (
             <Stack.Item verticalFill styles={scrollableContainerContents}>
-              <ContentRender />
+              <Stack styles={containerContextStyles}>
+                <ContentRender />
+              </Stack>
             </Stack.Item>
           )}
           {OverrideContentRender && (
@@ -97,7 +102,9 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
                   : scrollableContainerContents
               }
             >
-              <OverrideContentRender />
+              <Stack styles={containerContextStyles}>
+                <OverrideContentRender />
+              </Stack>
             </Stack.Item>
           )}
         </Stack>

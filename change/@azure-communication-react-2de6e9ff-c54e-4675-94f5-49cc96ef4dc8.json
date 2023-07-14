@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix CallWithChat overflow buttons onClick not working, styles not being fully applied and and showLabel: false not hiding the button label.",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add onFetchProfile to adapter",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

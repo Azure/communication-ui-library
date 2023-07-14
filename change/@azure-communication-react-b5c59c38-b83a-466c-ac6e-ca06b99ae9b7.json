@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Add Video Effects Pane to Call Composite",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

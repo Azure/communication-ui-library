@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Sinulle ei myönnetty puheluun merkintää. Jos tämä oli virhe, liity puheluun uudelleen.",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Poistettu odotustilasta",
     "learnMore": "Lisätietoja",
+    "leavingCallTitle": "Poistumassa...",
     "leftCallMoreDetails": "Jos tämä oli virhe, liity puheluun uudelleen.",
     "leftCallTitle": "Poistuit puhelusta",
     "lobbyScreenConnectingToCallTitle": "Liitytään puheluun",
@@ -149,7 +150,21 @@
       "ro-ro": "romania",
       "sk-sk": "slovakki",
       "zh-tw": "kiina – Taiwan"
-    }
+    },
+    "captionsBannerSpinnerText": "Aloitetaan tekstitystä...",
+    "transferPageTransferorText": "Siirretään...",
+    "transferPageTransferTargetText": "Yhdistetään...",
+    "transferPageUnknownTransferorDisplayName": "Tuntematon",
+    "transferPageUnknownTransferTargetDisplayName": "Tuntematon",
+    "transferPageNoticeString": "Sinut siirretään",
+    "participantCouldNotBeReachedTitle": "Kohdeosallistuja ei ole tällä hetkellä tavoitettavissa",
+    "participantCouldNotBeReachedMoreDetails": "Ota yhteyttä osallistujaan, kun hän on tavoitettavissa",
+    "permissionToReachTargetParticipantNotAllowedTitle": "Kohdeosallistujan tavoittamisoikeutta ei sallita",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "Tarkista, että kohdeosallistuja on samassa vuokraajassa",
+    "unableToResolveTenantTitle": "Kohdeosallistujan vuokraajan tunnusta ei voi selvittää",
+    "unableToResolveTenantMoreDetails": "Tarkista, että osallistujan tunnus on kirjoitettu oikein",
+    "participantIdIsMalformedTitle": "Osallistujan tunnus ei ole oikeassa muodossa",
+    "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

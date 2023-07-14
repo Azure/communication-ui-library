@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Split buttons now hold primary action for toggling camera and mic on touch devices.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -39,6 +39,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
@@ -152,6 +154,8 @@ export class CallContext {
         existingCall.localVideoStreams = call.localVideoStreams;
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
+        /* @conditional-compile-remove(optimal-video-count) */
+        existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
@@ -383,6 +387,16 @@ export class CallContext {
         if (participant) {
           participant.isMuted = muted;
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(optimal-video-count) */
+  public setOptimalVideoCount(callId: string, optimalVideoCount: number): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.optimalVideoCount.maxRemoteVideoStreams = optimalVideoCount;
       }
     });
   }
@@ -782,6 +796,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.supportedSpokenLanguages = spokenLanguages;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.transfer.acceptedTransfers[acceptedTransfer.callId] = acceptedTransfer;
       }
     });
   }

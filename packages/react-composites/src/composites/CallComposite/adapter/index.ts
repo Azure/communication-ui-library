@@ -54,5 +54,8 @@ export type {
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
 
+/* @conditional-compile-remove(call-transfer) */
+export type { TransferRequestedListener } from './CallAdapter';
+
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';

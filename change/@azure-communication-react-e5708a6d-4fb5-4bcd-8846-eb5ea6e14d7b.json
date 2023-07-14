@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Unblock PR failures by updating user agent used in e2e tests",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

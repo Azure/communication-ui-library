@@ -129,6 +129,10 @@ export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle =>
     maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
     height: 'auto !important'
   },
+  '& video': {
+    maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
+    height: 'auto !important'
+  },
   '& p': {
     // Deal with awkward padding seen in messages from Teams.
     // For more info see https://github.com/Azure/communication-ui-library/pull/1507
@@ -204,7 +208,7 @@ export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlot
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
-  width: `${AVATAR_WIDTH_REM}`,
+  width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
   display: 'block',
