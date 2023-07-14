@@ -59,7 +59,7 @@ describe('Filecard action handler should be called', () => {
   });
 });
 
-const renderFileCardWithDefaults = (props?: Partial<_FileCardProps>) => {
+const renderFileCardWithDefaults = (props?: Partial<_FileCardProps>): void => {
   const mergedProps: _FileCardProps = {
     fileName: 'MockFileCard',
     fileExtension: 'docx',
