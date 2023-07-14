@@ -18,7 +18,7 @@ describe('FileCard should be rendered properly', () => {
 
   it('should render the component', () => {
     renderFileCardWithDefaults();
-    expect(screen.getByText('MockFileCard')).toBeTruthy();
+    expect(screen.getByText('MockFileCard')).toBeDefined();
   });
 
   it('should render the component with progress bar', () => {
@@ -37,7 +37,7 @@ describe('FileCard should be rendered properly', () => {
     });
 
     const button = screen.getAllByRole('button');
-    expect(button.length === 1).toBeTruthy();
+    expect(button.length).toBe(1);
   });
 });
 
@@ -59,18 +59,12 @@ describe('Filecard action handler should be called', () => {
   });
 });
 
-const renderFileCardWithDefaults = (
-  props?: Partial<_FileCardProps>
-): {
-  rerender: (ui: React.ReactElement) => void;
-  initialProps: Partial<_FileCardProps>;
-} => {
+const renderFileCardWithDefaults = (props?: Partial<_FileCardProps>) => {
   const mergedProps: _FileCardProps = {
     fileName: 'MockFileCard',
     fileExtension: 'docx',
     ...(props ?? {})
   };
 
-  const { rerender } = render(<_FileCard {...mergedProps} />);
-  return { rerender, initialProps: mergedProps };
+  render(<_FileCard {...mergedProps} />);
 };
