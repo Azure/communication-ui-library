@@ -354,6 +354,7 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    formFactor?: 'default' | 'compact';
     // (undocumented)
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -1092,14 +1093,14 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingMetadata extends BaseFileMetadata {
     // (undocumented)
     attachmentType: 'fileSharing';
     // (undocumented)
-    payload?: Record<string, string> | undefined;
+    payload?: Record<string, string>;
 }
 
 // @internal
@@ -1212,7 +1213,7 @@ export interface _Identifiers {
 // @beta
 export interface ImageFileMetadata extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: 'inlineImage' | 'attachedImage';
+    attachmentType: 'inlineImage';
     // (undocumented)
     previewUrl?: string;
 }
