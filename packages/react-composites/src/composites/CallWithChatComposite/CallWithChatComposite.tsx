@@ -41,6 +41,7 @@ import { isDisabled } from '../CallComposite/utils';
 import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButton';
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
+import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -283,13 +284,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatProps.adapter, isChatOpen);
+
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
       placement: mobileView ? 'primary' : 'secondary',
       onRenderButton: () => (
         <ChatButtonWithUnreadMessagesBadge
-          chatAdapter={chatProps.adapter}
-          isChatPaneVisible={isChatOpen}
           checked={isChatOpen}
           showLabel={args.displayType !== 'compact'}
           onClick={toggleChat}
@@ -297,18 +298,22 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           strings={chatButtonStrings}
           styles={commonButtonStyles}
           newMessageLabel={callWithChatStrings.chatButtonNewMessageNotificationLabel}
+          unreadChatMessagesCount={unreadChatMessagesCount}
+          // As chat is disabled when on hold, we don't want to show the unread badge when on hold
+          hideUnreadChatMessagesBadge={isOnHold}
         />
       )
     }),
     [
       callWithChatStrings.chatButtonNewMessageNotificationLabel,
       chatButtonStrings,
-      chatProps.adapter,
       commonButtonStyles,
       isChatOpen,
       chatButtonDisabled,
       mobileView,
-      toggleChat
+      toggleChat,
+      unreadChatMessagesCount,
+      isOnHold
     ]
   );
 
