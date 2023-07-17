@@ -288,10 +288,7 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url =
-        attachment.attachmentType === 'inlineImage' || attachment.attachmentType === 'attachedImage'
-          ? attachment.previewUrl ?? ''
-          : '';
+      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
       return [
         {
           blobUrl: url
