@@ -51,6 +51,7 @@ export interface CommonCallControlBarProps {
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
+  displayVertical?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -262,7 +263,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                   occluding some of its content.
                 */}
                 <div ref={controlBarContainerRef}>
-                  <ControlBar layout="horizontal" styles={centerContainerStyles}>
+                  <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
                     {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}

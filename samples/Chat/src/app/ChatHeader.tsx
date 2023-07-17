@@ -18,6 +18,11 @@ import { useTheme } from '@azure/communication-react';
 /* @conditional-compile-remove(chat-composite-participant-pane) */
 import { PeopleButton, PeopleButtonProps } from './PeopleButton';
 
+export interface ChatHeaderProps {
+  onEndChat(): void;
+}
+
+/* @conditional-compile-remove(chat-composite-participant-pane) */
 export interface ChatHeaderProps extends PeopleButtonProps {
   onEndChat(): void;
 }
