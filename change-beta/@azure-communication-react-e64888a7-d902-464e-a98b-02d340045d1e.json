@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix conditional comments for Chat sample app",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
