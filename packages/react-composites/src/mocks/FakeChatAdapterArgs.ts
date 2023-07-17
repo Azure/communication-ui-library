@@ -8,7 +8,12 @@ import type { FileMetadata } from '@internal/react-components';
  * Type to represent a file upload the local participant will perform.
  * @internal
  */
-export type _MockFileUpload = FileMetadata & { uploadComplete?: boolean; error?: string; progress?: number };
+export type _MockFileUpload = FileMetadata & {
+  uploadComplete?: boolean;
+  error?: string;
+  progress?: number;
+  attachmentType: string;
+};
 
 /**
  * Arguments to pass via query argument to app with a Chat composite using a fake chat adapter.

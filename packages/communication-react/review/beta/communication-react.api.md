@@ -226,6 +226,15 @@ export interface BaseCustomStyles {
 }
 
 // @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -295,6 +304,10 @@ export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
 // @public
 export interface CallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -308,6 +321,10 @@ export type CallAdapterCallEndedEvent = {
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -852,6 +869,10 @@ export interface CallWithChatAdapterManagement {
     // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1605,6 +1626,10 @@ export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     joinCall(microphoneOn?: boolean): void;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): void;
     startCall(participants: string[], options?: StartCallOptions): void;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
@@ -2464,6 +2489,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 
@@ -2515,20 +2541,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'attachedImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string> | undefined;
+}
 
 // @beta
 export interface FileSharingOptions {
@@ -2686,6 +2710,14 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage' | 'attachedImage';
+    // (undocumented)
+    previewUrl?: string;
 }
 
 // @beta
@@ -3485,6 +3517,11 @@ export type TeamsAdapterOptions = CommonCallAdapterOptions;
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    // @public
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }

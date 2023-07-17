@@ -105,7 +105,7 @@ const GenerateMockMessageAttachments = (): FileMetadata[] => {
     {
       id: 'SomeImageId',
       name: 'SomeImageId',
-      attachmentType: 'teamsInlineImage',
+      attachmentType: 'inlineImage',
       extension: 'png',
       url: 'images/github.png',
       previewUrl: 'images/github.png'
