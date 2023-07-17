@@ -58,6 +58,13 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
+// @beta
+export interface BaseFileMetadata {
+    extension: string;
+    name: string;
+    url: string;
+}
+
 // @public
 export interface CallingTheme {
     // (undocumented)
@@ -716,10 +723,10 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
+export type FileMetadata = FileSharingMetadata;
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
 }
 
 // @internal

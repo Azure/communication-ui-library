@@ -272,6 +272,40 @@ describe('Clicks/Touch should select mention', () => {
     expect(input.selectionEnd).toBe((value + suggestions[0].displayText).length);
   });
 
+  test('Mouse triple click when text starts from mention should select the text in the input field', async () => {
+    renderSendBox();
+    // Find the input field
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    act(() => {
+      // Focus on the input field
+      input.focus();
+    });
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard(trigger);
+    });
+    // Select the suggestion
+    await selectFirstMention();
+    expect(input.value).toBe(trigger + suggestions[0].displayText);
+    await waitFor(async () => {
+      // Type into the input field
+      await userEvent.keyboard(' and');
+    });
+    const typedValue = trigger + suggestions[0].displayText + ' and';
+    // Fix for mousedown issue in userEvent when `document` become null unexpectedly
+    await act(async () => {
+      triggerMouseEvent(input, 'mousedown');
+    });
+    // Triple click a letter at 14-th index
+    await userEvent.pointer({
+      keys: '[MouseLeft][MouseLeft][MouseLeft]',
+      target: input,
+      offset: 14
+    });
+    expect(input.selectionStart).toBe(0);
+    expect(input.selectionEnd).toBe(typedValue.length);
+  });
+
   test('Mouse selection of first word in a mention should select only first word in the mention', async () => {
     renderSendBox();
     // Find the input field

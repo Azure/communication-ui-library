@@ -1472,6 +1472,7 @@ export type _MockFileUpload = FileMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;
+    attachmentType: string;
 };
 
 // @public
