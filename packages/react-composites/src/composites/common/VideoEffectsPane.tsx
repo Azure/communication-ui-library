@@ -23,6 +23,7 @@ import { activeVideoBackgroundEffectSelector } from '../CallComposite/selectors/
 import { useSelector } from '../CallComposite/hooks/useSelector';
 /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
+/* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../CallComposite/selectors/localVideoStreamSelector';
 import { ActiveVideoEffect } from '../CallComposite/components/SidePane/useVideoEffectsPane';
 
@@ -44,9 +45,11 @@ export const VideoEffectsPaneContent = (props: {
   } = props;
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();
+  /* @conditional-compile-remove(video-background-effects) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(video-background-effects) */
   const strings = locale.strings.call;
+  /* @conditional-compile-remove(video-background-effects) */
   const activeVideoEffects = useSelector(localVideoSelector).activeVideoEffects?.activeEffects;
   /* @conditional-compile-remove(video-background-effects) */
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
@@ -131,6 +134,7 @@ export const VideoEffectsPaneContent = (props: {
     [adapter, activeVideoEffectChange, selectableVideoEffects]
   );
 
+  /* @conditional-compile-remove(video-background-effects) */
   if (activeVideoEffectError && activeVideoEffects && activeVideoEffects.length === 0) {
     const noneEffect: VideoBackgroundNoEffect = {
       effectName: 'none'
