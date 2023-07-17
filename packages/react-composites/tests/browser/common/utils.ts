@@ -413,6 +413,11 @@ export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
   return testName.includes('desktop') ? true : false;
 };
 
+export const isTestProfileLandscapeMobile = (testInfo: TestInfo): boolean => {
+  const testName = testInfo.project.name.toLowerCase();
+  return testName.includes('landscape') ? true : false;
+};
+
 export interface StubOptions {
   /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;
