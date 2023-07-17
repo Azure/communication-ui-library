@@ -199,7 +199,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onRenderInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
-      if (attachment.previewUrl) {
+      if (attachment.attachmentType === 'inlineImage' && attachment.previewUrl) {
         const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.previewUrl] });
         return blob;
       }

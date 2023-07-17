@@ -843,17 +843,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (
-        !onFetchAttachments ||
-        attachment.id in inlineAttachments ||
-        attachment.attachmentType !== 'teamsInlineImage'
-      ) {
+      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage' || attachment.id in inlineAttachments) {
         return;
       }
+
       setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
       const attachmentDownloadResult = await onFetchAttachments(attachment);
       if (attachmentDownloadResult[0]) {
-        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
+        setInlineAttachments((prev) => ({
+          ...prev,
+          [attachment.id]: attachmentDownloadResult[0].blobUrl
+        }));
       }
     },
     [inlineAttachments, onFetchAttachments]
