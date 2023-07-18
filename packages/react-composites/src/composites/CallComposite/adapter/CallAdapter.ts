@@ -300,7 +300,6 @@ export type VideoBackgroundEffect =
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes to remove video background effect
  *
