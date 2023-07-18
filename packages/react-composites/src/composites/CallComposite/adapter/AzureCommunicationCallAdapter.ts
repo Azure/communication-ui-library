@@ -126,6 +126,7 @@ class CallContext {
       /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackGroundDependency>;
       };
     }
   ) {
@@ -144,6 +145,8 @@ class CallContext {
       /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages:
         options?.videoBackgroundOptions?.videoBackgroundImages,
+      /* @conditional-compile-remove(video-background-effects) */
+      onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined
     };

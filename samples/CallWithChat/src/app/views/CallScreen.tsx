@@ -9,8 +9,8 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
-  // onResolveVideoEffectDependency
+  CallWithChatAdapter,
+  onResolveVideoEffectDependencyLazy
 } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
@@ -81,8 +81,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     ];
     return {
       videoBackgroundOptions: {
-        videoBackgroundImages
-        // onResolveDependency: onResolveVideoEffectDependency
+        videoBackgroundImages,
+        onResolveDependency: onResolveVideoEffectDependencyLazy
       }
     };
   }, []);

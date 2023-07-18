@@ -39,6 +39,7 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+import { VideoBackGroundDependency } from './AzureCommunicationCallAdapter';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -129,6 +130,11 @@ export type CallAdapterClientState = {
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Dependency to be injected for video background effect.
+   */
+  onResolveVideoEffectDependency?: () => Promise<VideoBackGroundDependency>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * State to track the selected video background effect.
