@@ -114,7 +114,7 @@ export interface ParticipantItemProps {
    * Optional callback when component is clicked
    */
   onClick?: (props?: ParticipantItemProps) => void;
-  /** prop to determine if we should show tooltip for participants or not */
+  /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */

@@ -29,14 +29,14 @@ test.describe('Error bar tests', async () => {
     const initialState = defaultMockCallAdapterState();
     initialState.latestErrors = {
       'Call.unmute': {
-        timestamp: new Date(Date.now() + 3600 * 1000 * 24),
+        timestamp: new Date(0),
         name: 'Failure to unmute',
         message: 'Could not unmute',
         target: 'Call.unmute',
         innerError: new Error('Inner error of failure to unmute')
       },
       'Call.stopVideo': {
-        timestamp: new Date(Date.now() + 3600 * 1000 * 25),
+        timestamp: new Date(1),
         name: 'Failure to stop video',
         message: 'Could not stop video',
         target: 'Call.stopVideo',

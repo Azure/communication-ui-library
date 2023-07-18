@@ -11,8 +11,9 @@ import {
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-
+import React, { useCallback, useEffect, useMemo } from 'react';
+/* @conditional-compile-remove(chat-composite-participant-pane) */
+import { useState } from 'react';
 import { ChatHeader } from './ChatHeader';
 import { chatCompositeContainerStyle, chatScreenContainerStyle } from './styles/ChatScreen.styles';
 import { createAutoRefreshingCredential } from './utils/credential';
