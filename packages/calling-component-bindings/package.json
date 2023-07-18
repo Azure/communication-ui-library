@@ -35,7 +35,12 @@
     "@internal/react-components": "1.7.0-beta.1",
     "@azure/communication-common": "^2.2.0",
     "memoize-one": "~5.2.1",
-    "reselect": "~4.0.0"
+    "reselect": "~4.0.0",
+    "roosterjs-editor-core": "^7.16.0",
+    "roosterjs-editor-dom": "^7.16.0",
+    "roosterjs-editor-plugins": "^7.16.0",
+    "roosterjs-editor-types": "^7.16.0",
+    "roosterjs-editor-api": "^7.16.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.14.1-beta.1 || >=1.14.1",

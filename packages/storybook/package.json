@@ -36,7 +36,12 @@
     "resize-observer-polyfill": "~1.5.1",
     "tslib": "~2.5.0",
     "browserslist": "~4.20.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "roosterjs-editor-core": "^7.16.0",
+    "roosterjs-editor-dom": "^7.16.0",
+    "roosterjs-editor-plugins": "^7.16.0",
+    "roosterjs-editor-types": "^7.16.0",
+    "roosterjs-editor-api": "^7.16.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",

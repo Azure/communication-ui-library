@@ -45,7 +45,12 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-linkify": "^1.0.0-alpha",
-    "reselect": "~4.0.0"
+    "reselect": "~4.0.0",
+    "roosterjs-editor-core": "^7.16.0",
+    "roosterjs-editor-dom": "^7.16.0",
+    "roosterjs-editor-plugins": "^7.16.0",
+    "roosterjs-editor-types": "^7.16.0",
+    "roosterjs-editor-api": "^7.16.0"
   },
   "devDependencies": {
     "@babel/core": "~7.16.0",

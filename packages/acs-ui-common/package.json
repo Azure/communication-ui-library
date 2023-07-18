@@ -31,7 +31,12 @@
   },
   "dependencies": {
     "@azure/communication-common": "^2.2.0",
-    "@azure/logger": "^1.0.4"
+    "@azure/logger": "^1.0.4",
+    "roosterjs-editor-core": "^7.16.0",
+    "roosterjs-editor-dom": "^7.16.0",
+    "roosterjs-editor-plugins": "^7.16.0",
+    "roosterjs-editor-types": "^7.16.0",
+    "roosterjs-editor-api": "^7.16.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0 <19.0.0",

@@ -45,7 +45,12 @@
     "reselect": "~4.0.0",
     "textarea-caret-ts": "^4.1.1",
     "use-debounce": "^9.0.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "roosterjs-editor-core": "^7.16.0",
+    "roosterjs-editor-dom": "^7.16.0",
+    "roosterjs-editor-plugins": "^7.16.0",
+    "roosterjs-editor-types": "^7.16.0",
+    "roosterjs-editor-api": "^7.16.0"
   },
   "peerDependencies": {
     "@azure/communication-calling": "1.14.1-beta.1 || >=1.14.1",
