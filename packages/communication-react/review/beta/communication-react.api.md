@@ -63,6 +63,7 @@ import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -812,6 +813,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    capabilities?: CapabilitiesCallFeature;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1262,6 +1264,11 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export type CancelEditCallback = (messageId: string) => void;
+
+// @beta
+export interface CapabilitiesCallFeature {
+    capabilities: ParticipantCapabilities;
+}
 
 // @beta
 export interface CaptionsAvailableLanguageStrings {
