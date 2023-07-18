@@ -35,4 +35,5 @@ export type {
   CustomCallControlButtonPlacement
 } from './common/ControlBar/CustomButton';
 
-export { onResolveDependency } from './common/resolveDependency';
+export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectDependencyLazy';
+export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';

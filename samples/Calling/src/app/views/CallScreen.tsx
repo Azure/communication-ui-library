@@ -11,7 +11,7 @@ import {
   CommonCallAdapter,
   CallAdapter,
   toFlatCommunicationIdentifier,
-  onResolveDependency
+  onResolveVideoEffectDependencyLazy
 } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
@@ -159,7 +159,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundOptions: {
         videoBackgroundImages,
-        onResolveDependency
+        onResolveDependency: onResolveVideoEffectDependencyLazy
       }
     };
   }, [/* @conditional-compile-remove(rooms) */ roleHint]);

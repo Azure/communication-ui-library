@@ -1489,7 +1489,10 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public (undocumented)
-export const onResolveDependency: () => Promise<VideoBackGroundDependency>;
+export const onResolveVideoEffectDependency: () => Promise<VideoBackGroundDependency>;
+
+// @public (undocumented)
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackGroundDependency>;
 
 // @public
 export type ParticipantsAddedListener = (event: {

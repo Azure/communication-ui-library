@@ -3124,7 +3124,10 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @public (undocumented)
-export const onResolveDependency: () => Promise<VideoBackGroundDependency>;
+export const onResolveVideoEffectDependency: () => Promise<VideoBackGroundDependency>;
+
+// @public (undocumented)
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackGroundDependency>;
 
 // @beta
 export interface OptimalVideoCountFeatureState {
