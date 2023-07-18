@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix tab ordering in the callscreen for the video effects pane",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
