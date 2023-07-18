@@ -227,6 +227,15 @@ export interface BaseCustomStyles {
 }
 
 // @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -2539,20 +2548,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
 
 // @beta
 export interface FileSharingOptions {
@@ -2710,6 +2717,14 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    previewUrl?: string;
 }
 
 // @beta

@@ -99,4 +99,4 @@ plugins.push([
   }
 ]);
 
-module.exports = { plugins };
+module.exports = { plugins, ignore: ["**/*.d.ts"] };

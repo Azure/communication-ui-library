@@ -16,25 +16,15 @@ import { _formatString } from '@internal/acs-ui-common';
  */
 export type FileMetadataAttachmentType =
   | 'fileSharing'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
   | 'unknown';
 
 /**
- * Meta Data containing information about the uploaded file.
+ * Base interface that all Meta Data should extend.
+ * Typically used for ACS to ACS file transfers.
  * @beta
  */
-export interface FileMetadata {
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /*
-   * Attachment type of the file.
-   * Possible values {@link FileDownloadHandler}.
-   */
-  attachmentType: FileMetadataAttachmentType;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /*
-   * Unique ID of the file.
-   */
-  id: string;
+export interface BaseFileMetadata {
   /**
    * File name to be displayed.
    */
@@ -49,6 +39,44 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
+  /**
+   * Unique ID of the file.
+   */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  id: string;
+  /**
+   * Attachment Type
+   */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  attachmentType: FileMetadataAttachmentType;
+}
+/**
+ * Meta Data containing basic information about the uploaded file.
+ * Typically used for ACS to ACS file transfers.
+ * @beta
+ */
+export interface FileSharingMetadata extends BaseFileMetadata {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  attachmentType: 'fileSharing';
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /*
+   * Optional dictionary of meta data asscoiated with the file.
+   */
+  payload?: Record<string, string>;
+}
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/**
+ * Meta Data containing data for images.
+ * @beta
+ */
+export interface ImageFileMetadata extends BaseFileMetadata {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /*
+   * Attachment type of the file.
+   * Possible values {@link FileDownloadHandler}.
+   */
+  attachmentType: 'inlineImage';
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Preview URL for the file.
@@ -56,6 +84,14 @@ export interface FileMetadata {
    */
   previewUrl?: string;
 }
+
+/**
+ * Meta Data containing information about the uploaded file.
+ * @beta
+ */
+export type FileMetadata =
+  | FileSharingMetadata
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
@@ -167,18 +203,31 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
+  const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    return attachment.attachmentType === 'fileSharing';
+    return false;
+  }, []);
+
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    return attachment.attachmentType === 'fileSharing' && attachment.payload?.teamsFileAttachment !== 'true';
+    return true;
+  }, []);
+
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.filter((file) => file.attachmentType === 'fileSharing').length}`
+        fileCount: `${fileMetadata.filter(isFileSharingAttachment).length}`
       });
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata.length}`
       });
     },
-    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata]
+    [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
   );
 
   const fileDownloadHandler = useCallback(
@@ -205,9 +254,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   if (
     !fileMetadata ||
     fileMetadata.length === 0 ||
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(
-      (attachment) => attachment.attachmentType === 'fileSharing'
-    )
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !fileMetadata.some(isFileSharingAttachment)
   ) {
     return <></>;
   }
@@ -219,7 +266,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
           fileMetadata
             .filter((attachment) => {
               /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-              return attachment.attachmentType === 'fileSharing';
+              return isFileSharingAttachment(attachment);
               return true;
             })
             .map((file) => (
@@ -231,7 +278,8 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
                   showSpinner ? (
                     <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
                   ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ !file.previewUrl ? (
+                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+                    isShowDownloadIcon(file) ? (
                     <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                       <DownloadIconTrampoline />
                     </IconButton>
