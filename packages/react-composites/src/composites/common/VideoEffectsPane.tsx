@@ -4,7 +4,7 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { ActiveErrorMessage, _VideoEffectsItemProps } from '@internal/react-components';
@@ -168,7 +168,7 @@ const VideoEffectsPaneTrampoline = (
 
   /* @conditional-compile-remove(video-background-effects) */
   return (
-    <Stack horizontalAlign="center">
+    <Stack className={mergeStyles({ paddingLeft: '0.5rem' })}>
       {activeVideoEffectError && isCameraOn && (
         <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(activeVideoEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}
