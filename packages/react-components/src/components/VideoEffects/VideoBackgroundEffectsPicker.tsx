@@ -136,7 +136,7 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           data-ui-id="video-effects-picker-row"
         >
           {options.map((option) => (
-            <FocusZone key={option.itemKey} shouldFocusOnMount={!!(option.itemKey === 'none')}>
+            <FocusZone key={option.itemKey} shouldFocusOnMount={option.itemKey === 'none'}>
               <_VideoEffectsItem {...option} itemKey={option.itemKey} />
             </FocusZone>
           ))}
