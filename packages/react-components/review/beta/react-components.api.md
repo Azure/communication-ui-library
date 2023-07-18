@@ -1622,12 +1622,9 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
-<<<<<<< HEAD
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
-=======
     participantAriaLabelledBy?: string;
->>>>>>> 223552f3a4671d84e07e7e1c2b8d61bc73026727
 };
 
 // @beta
