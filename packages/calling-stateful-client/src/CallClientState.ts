@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -131,6 +133,19 @@ export interface TranscriptionCallFeatureState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
    */
   isTranscriptionActive: boolean;
+}
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
+ *
+ * @beta
+ */
+export interface CapabilitiesFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
+   */
+  capabilities: ParticipantCapabilities;
 }
 
 /**
@@ -415,6 +430,11 @@ export interface CallState {
    * Transfer state of call
    */
   transfer: TransferFeatureState;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
+   */
+  capabilities?: CapabilitiesFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */

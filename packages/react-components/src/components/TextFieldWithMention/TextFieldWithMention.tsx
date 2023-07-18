@@ -562,9 +562,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         // Update the caret position, used for positioning the suggestions popover
         const textField = event.currentTarget;
         const relativePosition = Caret.getRelativePosition(textField);
-        const adjustOffset = Math.max(0, textField.scrollHeight - textField.clientHeight);
-        if (relativePosition.top > adjustOffset) {
-          relativePosition.top -= adjustOffset;
+        if (textField.scrollHeight > textField.clientHeight) {
+          relativePosition.top -= textField.scrollTop;
         }
         setCaretPosition(relativePosition);
         if (triggerPriorIndex !== undefined) {
