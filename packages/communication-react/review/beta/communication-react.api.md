@@ -63,6 +63,7 @@ import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -223,6 +224,15 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
 }
 
 // @beta
@@ -803,6 +813,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    capabilities?: CapabilitiesCallFeature;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1253,6 +1264,11 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 
 // @public
 export type CancelEditCallback = (messageId: string) => void;
+
+// @beta
+export interface CapabilitiesCallFeature {
+    capabilities: ParticipantCapabilities;
+}
 
 // @beta
 export interface CaptionsAvailableLanguageStrings {
@@ -2532,20 +2548,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
 
 // @beta
 export interface FileSharingOptions {
@@ -2703,6 +2717,14 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    previewUrl?: string;
 }
 
 // @beta

@@ -257,12 +257,26 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  const verticalControlBar =
+    props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-        <Stack grow styles={callArrangementContainerStyles}>
+        <Stack
+          reversed
+          horizontal={verticalControlBar}
+          grow
+          styles={callArrangementContainerStyles(verticalControlBar)}
+        >
           {props.callControlProps?.options !== false && !isMobileWithActivePane && (
-            <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
+            <Stack
+              verticalAlign={'center'}
+              className={mergeStyles({
+                zIndex: CONTROL_BAR_Z_INDEX,
+                padding: verticalControlBar ? '0.25rem' : 'unset'
+              })}
+            >
               {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                 <CallControls
                   {...props.callControlProps}
@@ -273,6 +287,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   /* @conditional-compile-remove(one-to-n-calling) */
                   onPeopleButtonClicked={togglePeoplePane}
+                  displayVertical={verticalControlBar}
                 />
               ) : (
                 <CommonCallControlBar
@@ -292,9 +307,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onShowVideoEffectsPicker={openVideoEffectsPane}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                  displayVertical={verticalControlBar}
                 />
               )}
-            </Stack.Item>
+            </Stack>
           )}
           {props.callControlProps?.options !== false && showDrawer && (
             <Stack styles={drawerContainerStylesValue}>
