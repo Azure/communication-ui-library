@@ -9,6 +9,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -343,6 +345,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.transcription.isTranscriptionActive = isTranscriptionActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(capabilities) */
+  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.capabilities = { capabilities: capabilities };
       }
     });
   }
