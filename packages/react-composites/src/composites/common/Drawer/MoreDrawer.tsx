@@ -41,8 +41,6 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 /* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
-import { defaultSpokenLanguage } from '../utils';
-/* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageDrawer } from './SpokenLanguageDrawer';
 /* @conditional-compile-remove(close-captions) */
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
@@ -236,7 +234,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       text: props.strings.peopleButtonLabel,
       iconProps: { iconName: 'MoreDrawerPeople' },
       onItemClick: props.onPeopleButtonClicked,
-      disabled: isDisabled(drawerSelectionOptions.peopleButton)
+      disabled: isDisabled(drawerSelectionOptions.peopleButton) || props.disableButtonsForHoldScreen
     });
   }
 
@@ -281,9 +279,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(close-captions) */
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
-    startCaptionsButtonProps.currentSpokenLanguage === ''
-      ? defaultSpokenLanguage
-      : startCaptionsButtonProps.currentSpokenLanguage
+    startCaptionsButtonProps.currentSpokenLanguage
   );
   /* @conditional-compile-remove(close-captions) */
   const onToggleChange = useCallback(async () => {
@@ -291,9 +287,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       await startCaptionsButtonHandlers.onStartCaptions({
         spokenLanguage: currentSpokenLanguage
       });
-      // set spoken language when start captions with a spoken language specified.
-      // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-      startCaptionsButtonHandlers.onSetSpokenLanguage(currentSpokenLanguage);
     } else {
       startCaptionsButtonHandlers.onStopCaptions();
     }

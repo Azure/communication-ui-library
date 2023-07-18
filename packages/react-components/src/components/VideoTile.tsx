@@ -163,14 +163,16 @@ const DefaultPlaceholder = (props: CustomAvatarOptions): JSX.Element => {
   return (
     <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
       <Stack styles={defaultPersonaStyles}>
-        <Persona
-          coinSize={coinSize}
-          hidePersonaDetails={hidePersonaDetails}
-          text={text ?? ''}
-          initialsTextColor="white"
-          aria-label={noVideoAvailableAriaLabel ?? ''}
-          showOverflowTooltip={false}
-        />
+        {coinSize && (
+          <Persona
+            coinSize={coinSize}
+            hidePersonaDetails={hidePersonaDetails}
+            text={text ?? ''}
+            initialsTextColor="white"
+            aria-label={noVideoAvailableAriaLabel ?? ''}
+            showOverflowTooltip={false}
+          />
+        )}
       </Stack>
     </Stack>
   );
@@ -243,7 +245,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   /* @conditional-compile-remove(pinned-participants) */
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const [personaSize, setPersonaSize] = useState(100);
+  // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
+  const [personaSize, setPersonaSize] = useState<number>(1);
   const videoTileRef = useRef<HTMLDivElement>(null);
 
   const locale = useLocale();
@@ -254,8 +257,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const observer = useRef(
     new ResizeObserver((entries): void => {
       const { width, height } = entries[0].contentRect;
-      const personaSize = Math.min(width, height) / 3;
-      setPersonaSize(Math.max(Math.min(personaSize, personaMaxSize), personaMinSize));
+      const personaCalcSize = Math.min(width, height) / 3;
+      // we only want to set the persona size if it has changed
+      if (personaCalcSize !== personaSize) {
+        setPersonaSize(Math.max(Math.min(personaCalcSize, personaMaxSize), personaMinSize));
+      }
     })
   );
 
@@ -265,7 +271,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     }
     const currentObserver = observer.current;
     return () => currentObserver.disconnect();
-  }, [observer, videoTileRef]);
+  }, [videoTileRef]);
 
   /* @conditional-compile-remove(pinned-participants) */
   const useLongPressProps = useMemo(() => {
@@ -387,6 +393,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   className={mergeStyles(displayNameStyle)}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
+                  data-ui-id="video-tile-display-name"
                 >
                   {displayName}
                 </Text>

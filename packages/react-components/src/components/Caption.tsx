@@ -56,8 +56,8 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
         <Stack.Item className={displayNameContainerClassName}>
           <Text className={displayNameClassName}>{displayName}</Text>
         </Stack.Item>
-        <Stack.Item>
-          <Text className={captionClassName}>{captionText}</Text>
+        <Stack.Item className={captionClassName} dir="auto">
+          {captionText}
         </Stack.Item>
       </Stack>
     </Stack>

@@ -26,7 +26,7 @@ export const BrowserPemissionDeniedAndroidDrawer: () => JSX.Element = () => {
           </Stack>
         )}
         {isDrawerShowing && (
-          <_DrawerSurface onLightDismiss={onLightDismissTriggered}>
+          <_DrawerSurface disableMaxHeight={true} onLightDismiss={onLightDismissTriggered}>
             <CameraAndMicrophoneSitePermissions
               appName={'Contoso app'}
               onTroubleshootingClick={() => alert('clicked troubleshooting link')}

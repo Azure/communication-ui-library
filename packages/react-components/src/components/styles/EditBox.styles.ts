@@ -6,14 +6,17 @@ import { mergeStyles } from '@fluentui/react';
 /**
  * @private
  */
-export const editBoxStyle = (inlineEditButtons: boolean): string =>
-  mergeStyles({
+export const editBoxStyle = (inlineEditButtons: boolean): string => {
+  const paddingRight = inlineEditButtons ? {} : { paddingRight: '0.5rem' };
+
+  return mergeStyles({
     marginTop: '0.0875rem',
     marginBottom: '0.0875rem',
     // @TODO future refactor: This is being used to give enough space to the accept/reject edits buttons
     // This space affordance should be handled by the InputBoxComponent not the here (by the parent of the InputBoxComponent)
-    paddingRight: inlineEditButtons ? '3.25rem' : '0.5rem'
+    ...paddingRight
   });
+};
 
 /**
  * @private

@@ -26,7 +26,6 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
@@ -40,6 +39,7 @@ import { IContextualMenuStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
+import { IRawStyle } from '@fluentui/react';
 import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
@@ -171,6 +171,10 @@ export interface BaseCustomStyles {
 // @public
 export interface CallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -182,12 +186,20 @@ export type CallAdapterCallEndedEvent = {
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
 export interface CallAdapterCallOperations {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    disposeLocalVideoStreamView(): Promise<void>;
+    disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+    disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+    // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
@@ -374,7 +386,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'lobby' | 'removedFromCall';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -411,6 +423,7 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     learnMore: string;
+    leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
     lobbyScreenConnectingToCallMoreDetails?: string;
@@ -476,7 +489,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopVideo' | 'Call.unmute' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -561,9 +574,16 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
+    disposeLocalVideoStreamView(): Promise<void>;
+    disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+    disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1085,6 +1105,10 @@ export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     joinCall(microphoneOn?: boolean): void;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
 
@@ -1113,7 +1137,11 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeLocalStreamView: () => Promise<void>;
     // (undocumented)
+    onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -1152,6 +1180,12 @@ export type CommunicationParticipant = {
 };
 
 // @public
+export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -1164,7 +1198,13 @@ export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_FI_FI: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_HE_IL: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_IT_IT: ComponentLocale;
@@ -1176,13 +1216,22 @@ export const COMPONENT_LOCALE_JA_JP: ComponentLocale;
 export const COMPONENT_LOCALE_KO_KR: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_NB_NO: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_NL_NL: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_PL_PL: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_PT_BR: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_RU_RU: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_SV_SE: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_TR_TR: ComponentLocale;
@@ -1205,6 +1254,9 @@ export interface ComponentLocale {
 export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never ? CallingReturnProps<Component> extends never ? undefined : CallingReturnProps<Component> : ChatReturnProps<Component>;
 
 // @public
+export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
+
+// @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
     devicesButton: DevicesButtonStrings;
@@ -1222,6 +1274,12 @@ export interface ComponentStrings {
 }
 
 // @public
+export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
 
 // @public
@@ -1234,7 +1292,13 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 export const COMPOSITE_LOCALE_ES_ES: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_FI_FI: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_HE_IL: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_IT_IT: CompositeLocale;
@@ -1246,13 +1310,22 @@ export const COMPOSITE_LOCALE_JA_JP: CompositeLocale;
 export const COMPOSITE_LOCALE_KO_KR: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_NB_NO: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_NL_NL: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_PL_PL: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_PT_BR: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_RU_RU: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_SV_SE: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_TR_TR: CompositeLocale;
@@ -1448,6 +1521,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1525,6 +1601,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1635,6 +1714,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 
@@ -1665,7 +1745,6 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
-    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1852,7 +1931,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1926,7 +2005,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
@@ -2018,12 +2097,12 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
-    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
+    microphonePrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
     offSplitButtonMicrophonePrimaryAction?: string;
@@ -2077,6 +2156,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
+    ariaLabelledBy?: string;
     displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
@@ -2133,7 +2213,11 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
+<<<<<<< HEAD
     totalParticipantCount?: number;
+=======
+    participantAriaLabelledBy?: string;
+>>>>>>> 223552f3a4671d84e07e7e1c2b8d61bc73026727
 };
 
 // @public
@@ -2519,7 +2603,10 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
+    onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;

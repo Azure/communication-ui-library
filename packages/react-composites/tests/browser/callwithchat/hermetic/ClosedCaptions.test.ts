@@ -4,11 +4,29 @@
 import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-import { IDS, captionsFeatureState } from '../../common/constants';
+import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
+  test('Show loading banner when start captions is clicked but captions is not started yet', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    if (initialState?.call) {
+      initialState.isTeamsCall = true;
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: true
+      };
+    }
+    await loadCallPage(page, serverUrl, initialState);
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
+  });
+
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
@@ -18,6 +36,17 @@ test.describe('Closed Captions Banner tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
+  });
+
+  test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    if (initialState?.call) {
+      initialState.isTeamsCall = true;
+      initialState.call.captionsFeature = captionsFeatureStateArabic;
+    }
+    await loadCallPage(page, serverUrl, initialState);
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-captions-RTL.png');
   });
 
   test('Captions menu shows correct when clicked on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -38,7 +67,11 @@ test.describe('Closed Captions Banner tests', async () => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     if (initialState?.call) {
       initialState.isTeamsCall = true;
-      initialState.call.captionsFeature = { ...captionsFeatureState, isCaptionsFeatureActive: false };
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: false
+      };
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -73,7 +106,7 @@ test.describe('Closed Captions Banner tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
 
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
-    await waitForSelector(page, dataUiId('call-with-chat-composite-chat-pane'));
+    await waitForSelector(page, dataUiId('sendbox-textfield'));
     expect(await stableScreenshot(page)).toMatchSnapshot('captions-with-chat-pane.png');
   });
 

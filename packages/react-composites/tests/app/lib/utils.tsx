@@ -75,3 +75,13 @@ export function verifyParamExists<T>(param: T, paramName: string): T {
  */
 export const isMobile = (): boolean =>
   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+/**
+ * @private
+ */
+export const jsonDateDeserializer = (key: unknown, value: unknown): unknown => {
+  if (key === 'timestamp' && typeof value === 'string') {
+    return new Date(value);
+  }
+  return value;
+};

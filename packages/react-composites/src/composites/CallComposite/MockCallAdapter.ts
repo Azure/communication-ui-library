@@ -61,6 +61,9 @@ export class MockCallAdapter implements CallAdapter {
   joinCall(): Call | undefined {
     throw Error('joinCall not implemented');
   }
+  joinCallWithOptions(): Call | undefined {
+    throw Error('joinCallWithOptions not implemented');
+  }
   leaveCall(): Promise<void> {
     throw Error('leaveCall not implemented');
   }
@@ -98,7 +101,16 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('createStreamView not implemented');
   }
   disposeStreamView(): Promise<void> {
-    throw Error('disposeStreamView not implemented');
+    return Promise.resolve();
+  }
+  disposeScreenShareStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  disposeLocalVideoStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  disposeRemoteVideoStreamView(): Promise<void> {
+    return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   askDevicePermission(constrain: PermissionConstraints): Promise<void> {
@@ -156,18 +168,14 @@ export class MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
+  /* @conditional-compile-remove(video-background-effects) */
+  startVideoBackgroundEffect(): Promise<void> {
+    throw new Error('startVideoBackgroundEffect not implemented.');
+  }
 
   /* @conditional-compile-remove(video-background-effects) */
-  blurVideoBackground(): Promise<void> {
-    throw new Error('blurVideoBackground not implemented.');
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  replaceVideoBackground(): Promise<void> {
-    throw new Error('replaceVideoBackground not implemented.');
-  }
-  /* @conditional-compile-remove(video-background-effects) */
-  stopVideoBackgroundEffect(): Promise<void> {
-    throw new Error('stopVideoBackgroundEffect not implemented.');
+  stopVideoBackgroundEffects(): Promise<void> {
+    throw new Error('stopVideoBackgroundEffects not implemented.');
   }
   /* @conditional-compile-remove(video-background-effects) */
   updateBackgroundPickerImages(): void {
@@ -210,7 +218,16 @@ const defaultCallAdapterState: CallAdapterState = {
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transfer: {
+      acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount: {
+      maxRemoteVideoStreams: 4
     }
   },
   userId: { kind: 'communicationUser', communicationUserId: '1' },

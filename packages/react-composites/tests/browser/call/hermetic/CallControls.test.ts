@@ -32,6 +32,7 @@ test.describe('CallControls tests', async () => {
   });
 });
 
+/* @conditional-compile-remove(control-bar-button-injection) */
 test.describe('Call composite custom button injection tests', () => {
   test('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);

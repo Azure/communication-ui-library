@@ -24,7 +24,7 @@ test('phone number conversion from E.164 format', () => {
   expect(isPhoneNumberIdentifier(parsed)).toBeTruthy;
   expect(parsed).toEqual({
     kind: 'phoneNumber',
-    phoneNumber: '15555555555'
+    phoneNumber: '+15555555555'
   });
 });
 

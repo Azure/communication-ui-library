@@ -17,6 +17,7 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { useId } from '@fluentui/react-hooks';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -51,6 +52,7 @@ export const ParticipantListWithHeading = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
+  const subheadingUniqueId = useId();
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
   const totalParticipantCount = participantListProps.totalParticipantCount;
@@ -67,7 +69,7 @@ export const ParticipantListWithHeading = (props: {
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed} aria-label={title}>
+      <Stack.Item styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
         {paneTitleTrampoline(
           title ?? '',
           /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
@@ -95,6 +97,7 @@ export const ParticipantListWithHeading = (props: {
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           showParticipantOverflowTooltip={!props.isMobile}
+          participantAriaLabelledBy={subheadingUniqueId}
         />
       </FocusZone>
     </Stack>

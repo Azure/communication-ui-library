@@ -19,13 +19,15 @@ import {
   createGroupId,
   fetchTokenResponse,
   getGroupIdFromUrl,
-  getOutboundParticipants,
   getTeamsLinkFromUrl,
   isLandscape,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
   WEB_APP_TITLE
 } from './utils/AppUtils';
+/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling) */
+import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
@@ -156,7 +158,13 @@ const App = (): JSX.Element => {
 
             // Update window URL to have a joinable link
             if (!joiningExistingCall) {
-              window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
+              window.history.pushState(
+                {},
+                document.title,
+                window.location.origin +
+                  getJoinParams(callLocator) +
+                  getIsCTEParam(/* @conditional-compile-remove(teams-identity-support) */ !!callDetails.teamsToken)
+              );
             }
             /* @conditional-compile-remove(teams-identity-support) */
             setIsTeamsCall(!!callDetails.teamsToken);
@@ -214,6 +222,10 @@ const App = (): JSX.Element => {
       document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
   }
+};
+
+const getIsCTEParam = (isCTE?: boolean): string => {
+  return isCTE ? '&isCTE=true' : '';
 };
 
 const getJoinParams = (locator: CallAdapterLocator): string => {

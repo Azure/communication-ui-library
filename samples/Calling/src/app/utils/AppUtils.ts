@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { GroupLocator, RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { RoomLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
@@ -83,6 +85,14 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   const urlParams = new URLSearchParams(window.location.search);
   const teamsLink = urlParams.get('teamsLink');
   return teamsLink ? { meetingLink: teamsLink } : undefined;
+};
+
+/**
+ * Get teams meeting link from the url's query params.
+ */
+export const getIsCTE = (): boolean | undefined => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get('isCTE') === 'true';
 };
 
 /* @conditional-compile-remove(rooms) */

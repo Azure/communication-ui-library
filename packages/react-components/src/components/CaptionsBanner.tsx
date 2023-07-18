@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { Stack, FocusZone } from '@fluentui/react';
+import { Stack, FocusZone, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
-import { Ref } from '@fluentui/react-northstar';
+import { Ref } from '@internal/northstar-wrapper';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
   captionsBannerClassName,
-  captionsContainerClassName
+  captionsContainerClassName,
+  loadingBannerClassName
 } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 
@@ -17,10 +18,19 @@ import { OnRenderAvatarCallback } from '../types';
  * information required for each line of caption
  */
 export type _CaptionsInfo = {
+  id: string;
   displayName: string;
   captionText: string;
   userId?: string;
 };
+
+/**
+ * @internal
+ * strings for captions banner
+ */
+export interface _CaptionsBannerStrings {
+  captionsBannerSpinnerText?: string;
+}
 
 /**
  * @internal
@@ -29,12 +39,19 @@ export type _CaptionsInfo = {
 export interface _CaptionsBannerProps {
   captions: _CaptionsInfo[];
   isCaptionsOn?: boolean;
+  startCaptionsInProgress?: boolean;
   /**
    * Optional callback to override render of the avatar.
    *
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
+  strings?: _CaptionsBannerStrings;
+  /**
+   * Optional form factor for the component.
+   * @defaultValue 'default'
+   */
+  formFactor?: 'default' | 'compact';
 }
 
 /**
@@ -42,7 +59,7 @@ export interface _CaptionsBannerProps {
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions, isCaptionsOn, onRenderAvatar } = props;
+  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings, formFactor = 'default' } = props;
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
@@ -81,19 +98,26 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
 
   return (
     <>
-      {isCaptionsOn && (
+      {startCaptionsInProgress && (
         <FocusZone as="ul" className={captionsContainerClassName}>
-          <Ref innerRef={captionsScrollDivRef}>
-            <Stack verticalAlign="start" className={captionsBannerClassName}>
-              {captions.map((caption, key) => {
-                return (
-                  <div key={key} className={captionContainerClassName} data-is-focusable={true}>
-                    <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
-                  </div>
-                );
-              })}
+          {isCaptionsOn && (
+            <Ref innerRef={captionsScrollDivRef}>
+              <Stack verticalAlign="start" styles={captionsBannerClassName(formFactor)}>
+                {captions.map((caption) => {
+                  return (
+                    <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
+                      <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
+                    </div>
+                  );
+                })}
+              </Stack>
+            </Ref>
+          )}
+          {!isCaptionsOn && (
+            <Stack verticalAlign="center" className={loadingBannerClassName} data-is-focusable={true}>
+              <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" />
             </Stack>
-          </Ref>
+          )}
         </FocusZone>
       )}
     </>

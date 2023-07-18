@@ -27,6 +27,8 @@ import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/Floa
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
+/* @conditional-compile-remove(click-to-call) */
+import { LocalVideoTileSize } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -42,6 +44,11 @@ export interface FloatingLocalVideoLayoutProps extends LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
+  /* @conditional-compile-remove(click-to-call) */
+  /**
+   * Local video tile mode
+   */
+  localVideoTileSize?: LocalVideoTileSize;
 }
 
 /**
@@ -63,7 +70,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     parentWidth,
     parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
-    pinnedParticipantUserIds = []
+    pinnedParticipantUserIds = [],
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   } = props;
 
   const theme = useTheme();
@@ -111,15 +119,16 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
    * re-render the initial tiles -> dispose them -> create new tiles, we need to take care of
    * this case when those components are here
    */
-  const [indexesToRender, setIndexesToRender] = useState<number[]>([
-    ...Array(maxRemoteVideoStreams - activeVideoStreams).keys()
-  ]);
+  const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
   const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
     return onRenderRemoteParticipant(
       p,
       maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && indexesToRender.includes(i) && activeVideoStreams++ < maxRemoteVideoStreams
+        ? p.videoStream?.isAvailable &&
+            indexesToRender &&
+            indexesToRender.includes(i) &&
+            activeVideoStreams++ < maxRemoteVideoStreams
         : p.videoStream?.isAvailable
     );
   });
@@ -127,27 +136,33 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
-    if (isNarrow) {
+    if (isNarrow || /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16') {
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryTiles.length > 0 && overflowGalleryPosition === 'VerticalRight') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'VerticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
+    /*@conditional-compile-remove(click-to-call) */
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'HorizontalBottom') {
+      return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
+    }
     return LARGE_FLOATING_MODAL_SIZE_REM;
   }, [
     overflowGalleryTiles.length,
     isNarrow,
+    screenShareComponent,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   ]);
 
   const wrappedLocalVideoComponent =
-    localVideoComponent && shouldFloatLocalVideo ? (
+    (localVideoComponent && shouldFloatLocalVideo) || (screenShareComponent && localVideoComponent) ? (
       // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
       showCameraSwitcherInLocalPreview ? (
         <Stack
@@ -158,8 +173,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         >
           {localVideoComponent}
         </Stack>
-      ) : overflowGalleryTiles.length > 0 ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem))}>
+      ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
+        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent))}>
           {localVideoComponent}
         </Stack>
       ) : (
@@ -174,7 +189,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
-    if (overflowGalleryTiles.length === 0) {
+    if (overflowGalleryTiles.length === 0 && !screenShareComponent) {
       return null;
     }
     return (
@@ -198,6 +213,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   }, [
     isNarrow,
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
+    screenShareComponent,
     overflowGalleryTiles,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,

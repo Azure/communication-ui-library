@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
@@ -10,17 +10,12 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { DevicesButton, ErrorBar } from '@internal/react-components';
+import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
 import { _usePermissions, _Permissions } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { DefaultButton } from '@fluentui/react';
-/* @conditional-compile-remove(video-background-effects) */
-import { effectsButtonStyles } from '../styles/CallConfiguration.styles';
-/* @conditional-compile-remove(video-background-effects) */
-import { useTheme } from '@fluentui/react';
+import { Panel, PanelType, Stack } from '@fluentui/react';
+import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -49,7 +44,13 @@ import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { CallReadinessModal, CallReadinessModalFallBack } from '../components/CallReadinessModal';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectsPane } from '../../common/VideoEffectsPane';
+import { VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM, useVideoEffectsPane } from '../components/SidePane/useVideoEffectsPane';
+import { SidePane } from '../components/SidePane/SidePane';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(video-background-effects) */
+import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 
 /**
  * @private
@@ -57,7 +58,9 @@ import { VideoEffectsPane } from '../../common/VideoEffectsPane';
 export interface ConfigurationPageProps {
   mobileView: boolean;
   startCallHandler(): void;
-  /* @conditional-compile-remove(call-readiness) */
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
   modalLayerHostId: string;
   /* @conditional-compile-remove(call-readiness) */
   deviceChecks?: DeviceCheckOptions;
@@ -77,14 +80,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const {
     startCallHandler,
     mobileView,
-    /* @conditional-compile-remove(call-readiness) */ modalLayerHostId,
+    modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
   } = props;
 
-  /* @conditional-compile-remove(video-background-effects) */
-  const [showVideoEffectsPane, setVideoEffectsPane] = useState(false);
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
@@ -96,10 +97,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(setVideoState, setAudioState);
 
-  let errorBarProps = usePropsFor(ErrorBar);
+  const errorBarProps = usePropsFor(ErrorBar);
   const adapter = useAdapter();
-  /* @conditional-compile-remove(video-background-effects) */
-  const theme = useTheme();
   const deviceState = adapter.getState().devices;
   /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = adapter.getState().environmentInfo;
@@ -108,16 +107,24 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(rooms) */
   const rolePermissions = _usePermissions();
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const isCameraOn = useSelector(localVideoSelector).isAvailable;
+
+  let filteredLatestErrors: ActiveErrorMessage[] = props.latestErrors;
+
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton) {
-    errorBarProps = {
-      ...errorBarProps,
-      activeErrorMessages: errorBarProps.activeErrorMessages.filter(
-        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
-      )
-    };
+    filteredLatestErrors = filteredLatestErrors.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
   }
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if ((useIsParticularSidePaneOpen('videoeffects') || !isCameraOn) && errorBarProps) {
+    filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
+  }
+
   /* @conditional-compile-remove(rooms) */
   if (!rolePermissions.microphoneButton) {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
@@ -203,6 +210,35 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
+  /* @conditional-compile-remove(video-background-effects) */
+  const { toggleVideoEffectsPane, closeVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
+    props.updateSidePaneRenderer,
+    mobileView,
+    props.latestErrors,
+    props.onDismissError
+  );
+
+  const startCall = useCallback(async () => {
+    /* @conditional-compile-remove(video-background-effects) */
+    closeVideoEffectsPane();
+    startCallHandler();
+  }, [startCallHandler, /* @conditional-compile-remove(video-background-effects) */ closeVideoEffectsPane]);
+
+  const panelLayerProps = useMemo(
+    () => ({
+      hostId: modalLayerHostId
+    }),
+    [modalLayerHostId]
+  );
+
+  const filteredErrorBarProps = useMemo(
+    () => ({
+      ...errorBarProps,
+      activeErrorMessages: filteredLatestErrors
+    }),
+    [errorBarProps, filteredLatestErrors]
+  );
+
   return (
     <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
       <Stack styles={bannerNotificationStyles}>
@@ -218,7 +254,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           onNetworkingTroubleShootingClick={onNetworkingTroubleShootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
-          errorBarProps={errorBarProps}
+          errorBarProps={filteredErrorBarProps}
+          onDismissError={props.onDismissError}
         />
       </Stack>
       {
@@ -226,7 +263,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
         videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
           <CallReadinessModal
-            /* @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             mobileView={mobileView}
             /* @conditional-compile-remove(unsupported-browser) */
@@ -258,78 +294,78 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         )
       }
 
-      <Stack
-        grow
-        horizontal={!mobileWithPreview}
-        horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
-        verticalAlign="center"
-        tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
-      >
-        {mobileWithPreview && (
-          <Stack.Item>
-            {title}
-            {callDescription}
-          </Stack.Item>
-        )}
-        {localPreviewTrampoline(
-          mobileWithPreview,
-          /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
-        )}
-        <Stack className={mobileView ? undefined : selectionContainerStyle}>
-          {!mobileWithPreview && (
-            <>
-              <Stack.Item styles={callDetailsContainerStylesDesktop}>
-                {title}
-                {callDescription}
-              </Stack.Item>
-              {
-                /* @conditional-compile-remove(video-background-effects) */
-                <DefaultButton
-                  iconProps={{ iconName: 'OptionsVideoBackgroundEffect' }}
-                  styles={effectsButtonStyles(theme)}
-                  onClick={() => {
-                    setVideoEffectsPane(!showVideoEffectsPane);
-                  }}
-                >
-                  {locale.strings.call.effects}
-                </DefaultButton>
-              }
-              <LocalDeviceSettings
-                {...options}
-                {...localDeviceSettingsHandlers}
-                cameraPermissionGranted={cameraPermissionGrantedTrampoline(
-                  cameraPermissionGranted,
-                  /* @conditional-compile-remove(call-readiness) */ videoState
-                )}
-                microphonePermissionGranted={micPermissionGrantedTrampoline(
-                  microphonePermissionGranted,
-                  /* @conditional-compile-remove(call-readiness) */ audioState
-                )}
-                /* @conditional-compile-remove(call-readiness) */
-                onClickEnableDevicePermission={() => {
-                  setIsPermissionsModalDismissed(true);
-                }}
-              />
-            </>
+      <Stack verticalFill grow horizontal className={fillWidth}>
+        <Stack
+          className={fillWidth}
+          horizontal={!mobileWithPreview}
+          horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+          verticalAlign="center"
+          tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
+        >
+          {mobileWithPreview && (
+            <Stack.Item>
+              {title}
+              {callDescription}
+            </Stack.Item>
           )}
-          <Stack
-            styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
-          >
-            <StartCallButton
-              className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
-              onClick={startCallHandler}
-              disabled={disableStartCallButton}
-            />
+          {localPreviewTrampoline(
+            mobileWithPreview,
+            /* @conditional-compile-remove(rooms) */ !rolePermissions.cameraButton
+          )}
+          <Stack className={mobileView ? undefined : selectionContainerStyle}>
+            {!mobileWithPreview && (
+              <>
+                <Stack.Item styles={callDetailsContainerStylesDesktop}>
+                  {title}
+                  {callDescription}
+                </Stack.Item>
+                <LocalDeviceSettings
+                  {...options}
+                  {...localDeviceSettingsHandlers}
+                  cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                    cameraPermissionGranted,
+                    /* @conditional-compile-remove(call-readiness) */ videoState
+                  )}
+                  microphonePermissionGranted={micPermissionGrantedTrampoline(
+                    microphonePermissionGranted,
+                    /* @conditional-compile-remove(call-readiness) */ audioState
+                  )}
+                  /* @conditional-compile-remove(call-readiness) */
+                  onClickEnableDevicePermission={() => {
+                    setIsPermissionsModalDismissed(true);
+                  }}
+                  /* @conditional-compile-remove(video-background-effects) */
+                  onVideoEffectsClick={toggleVideoEffectsPane}
+                />
+              </>
+            )}
+            <Stack
+              styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+            >
+              <StartCallButton
+                className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
+                onClick={startCall}
+                disabled={disableStartCallButton}
+              />
+            </Stack>
           </Stack>
         </Stack>
+        <Panel
+          /* @conditional-compile-remove(video-background-effects) */
+          isOpen={isVideoEffectsPaneOpen}
+          hasCloseButton={false}
+          isBlocking={false}
+          isHiddenOnDismiss={false}
+          styles={panelStyles}
+          focusTrapZoneProps={panelFocusProps}
+          layerProps={panelLayerProps}
+          type={PanelType.custom}
+          /* @conditional-compile-remove(video-background-effects) */
+          customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+        >
+          <SidePane mobileView={props.mobileView} updateSidePaneRenderer={props.updateSidePaneRenderer} />
+        </Panel>
       </Stack>
-      {
-        /* @conditional-compile-remove(video-background-effects) */
-        <VideoEffectsPane
-          showVideoEffectsOptions={showVideoEffectsPane}
-          setshowVideoEffectsOptions={setVideoEffectsPane}
-        />
-      }
     </Stack>
   );
 };

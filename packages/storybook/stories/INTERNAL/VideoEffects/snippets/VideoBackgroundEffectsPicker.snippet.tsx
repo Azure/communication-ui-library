@@ -26,7 +26,7 @@ export const VideoBackgroundEffectsPicker = (): JSX.Element => {
 
 const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
   {
-    key: 'none',
+    itemKey: 'none',
     iconProps: {
       iconName: 'VideoEffectsNone'
     },
@@ -36,7 +36,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'blur',
+    itemKey: 'blur',
     iconProps: {
       iconName: 'VideoEffectsBlur'
     },
@@ -46,7 +46,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'addImage',
+    itemKey: 'addImage',
     iconProps: {
       iconName: 'VideoEffectsAddImage'
     },
@@ -56,7 +56,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'customBackground1',
+    itemKey: 'customBackground1',
     backgroundProps: {
       url: 'images/video-background-effects/bg1.jpg'
     },
@@ -65,7 +65,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'customBackground2',
+    itemKey: 'customBackground2',
     backgroundProps: {
       url: 'images/video-background-effects/bg2.jpg'
     },
@@ -74,7 +74,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'customBackground3',
+    itemKey: 'customBackground3',
     backgroundProps: {
       url: 'images/video-background-effects/bg3.jpg'
     },
@@ -83,7 +83,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'customBackground4',
+    itemKey: 'customBackground4',
     backgroundProps: {
       url: 'images/video-background-effects/bg4.png'
     },
@@ -92,7 +92,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'customBackground5',
+    itemKey: 'customBackground5',
     backgroundProps: {
       url: 'images/video-background-effects/bg5.png'
     },
@@ -101,7 +101,7 @@ const selectableVideoEffects: _VideoBackgroundEffectChoiceOption[] = [
     }
   },
   {
-    key: 'customBackground6',
+    itemKey: 'customBackground6',
     backgroundProps: {
       url: 'images/video-background-effects/bg6.png'
     },

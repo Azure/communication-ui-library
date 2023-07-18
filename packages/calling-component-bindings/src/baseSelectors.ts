@@ -78,6 +78,13 @@ export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseS
 export const getIsMuted = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
   state.calls[props.callId]?.isMuted;
 
+/* @conditional-compile-remove(optimal-video-count) */
+/**
+ * @private
+ */
+export const getOptimalVideoCount = (state: CallClientState, props: CallingBaseSelectorProps): number | undefined =>
+  state.calls[props.callId]?.optimalVideoCount.maxRemoteVideoStreams;
+
 /**
  * @private
  */
@@ -152,6 +159,15 @@ export const getCaptions = (state: CallClientState, props: CallingBaseSelectorPr
 /** @private */
 export const getCaptionsStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
   return state.calls[props.callId]?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(close-captions) */
+/** @private */
+export const getStartCaptionsInProgress = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): boolean | undefined => {
+  return state.calls[props.callId]?.captionsFeature.startCaptionsInProgress;
 };
 
 /* @conditional-compile-remove(close-captions) */

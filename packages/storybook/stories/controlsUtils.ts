@@ -80,16 +80,6 @@ const defaultRemoteParticipants = [
   { name: 'Michonne', status: 'Idle', isMuted: false, isScreenSharing: false }
 ];
 
-const defaultAtMentionSuggestions = [
-  { userId: '1', suggestionType: 'person', displayName: 'Harry Hopkins' },
-  { userId: '2', suggestionType: 'person', displayName: 'Charles Macdonald' },
-  { userId: '3', suggestionType: 'person', displayName: 'Hayden Thomson' },
-  { userId: '4', suggestionType: 'person', displayName: 'Marc Cox' },
-  { userId: '5', suggestionType: 'person', displayName: 'Stevie Knox' },
-  { userId: '6', suggestionType: 'person', displayName: 'Rebecca Huff' },
-  { userId: 'everyone', suggestionType: 'everyone', displayName: 'Everyone' }
-];
-
 const defaultTypingUsers = [
   {
     userId: '1',
@@ -389,6 +379,12 @@ export const controlsToAdd = {
     defaultValue: 'HorizontalBottom',
     name: 'Overflow Gallery Position'
   },
+  localVideoTileSize: {
+    control: 'select',
+    options: ['9:16', '16:9', 'hidden', 'followDeviceOrientation'],
+    defaultValue: 'followDeviceOrientation',
+    name: 'Local Video Tile Size'
+  },
   videoTileHeight: { control: { type: 'range', min: 80, max: 800, step: 10 }, defaultValue: 300, name: 'Height (px)' },
   videoTileWidth: { control: { type: 'range', min: 100, max: 1200, step: 10 }, defaultValue: 400, name: 'Width (px)' },
   callWithChatControlOptions: {
@@ -403,13 +399,7 @@ export const controlsToAdd = {
       displayType: 'default'
     },
     name: 'Control Bar Customizations'
-  },
-  atMentionSuggestions: {
-    control: 'object',
-    defaultValue: defaultAtMentionSuggestions,
-    name: 'At Mention Suggestions'
-  },
-  title: { control: 'text', defaultValue: 'Suggestions', name: 'Title' }
+  }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };

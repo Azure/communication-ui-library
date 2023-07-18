@@ -4,7 +4,7 @@
     "baseUrl": "./preprocessed",
     "outDir": "./dist/dist-esm"
   },
-  "typeRoots": ["./node_modules/@types"],
+  "typeRoots": ["./node_modules/@types", "./@types"],
   "include": ["preprocessed/**/*"],
   "exclude": ["dist", "node_modules"]
 }

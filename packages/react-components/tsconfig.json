@@ -3,7 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist/dist-esm"
   },
-  "typeRoots": ["./node_modules/@types"],
+  "typeRoots": ["./node_modules/@types", "./@types"],
   "include": ["src/**/*"],
   "exclude": ["dist", "node_modules"]
 }

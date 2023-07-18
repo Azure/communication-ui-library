@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Added missing aria label for title in this call",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

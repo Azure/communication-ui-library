@@ -4,7 +4,12 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -21,19 +26,24 @@ import { mediaGallerySelector } from '../selectors/mediaGallerySelector';
 import { mutedNotificationSelector } from '../selectors/mutedNotificationSelector';
 import { networkReconnectTileSelector } from '../selectors/networkReconnectTileSelector';
 import { reduceCallControlsForMobile } from '../utils';
+import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
+import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 /**
  * @private
  */
 export interface CallPageProps {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
   modalLayerHostId: string;
   callInvitationURL?: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -70,8 +80,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     <CallArrangement
       id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+      errorBarProps={options?.errorBar !== false && errorBarProps}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,
@@ -82,7 +91,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
-      /* @conditional-compile-remove(one-to-n-calling) */
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
@@ -96,6 +104,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               /* @conditional-compile-remove(pinned-participants) */
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
               drawerMenuHostId={drawerMenuHostId}
+              /* @conditional-compile-remove(click-to-call) */
+              localVideoTileOptions={options?.localVideoTile}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -104,7 +114,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           <></>
         )
       }
+      updateSidePaneRenderer={props.updateSidePaneRenderer}
+      mobileChatTabHeader={props.mobileChatTabHeader}
       dataUiId={'call-page'}
+      latestErrors={props.latestErrors}
+      onDismissError={props.onDismissError}
     />
   );
 };

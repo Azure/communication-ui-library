@@ -3,7 +3,6 @@
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { CustomCallControlButtonPlacement } from '../ControlBar/CustomButton';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { CustomCallControlButtonCallback } from '../ControlBar/CustomButton';
 
 /**
@@ -92,6 +91,15 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
+};
+
+/**
+ * While the public API for the custom buttons is in beta. Use this type to access the internal
+ * API.
+ * @internal
+ */
+export type _CommonCallControlOptions = CommonCallControlOptions & {
+  onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
 
 /**

@@ -81,6 +81,10 @@ export interface CallCompositeStrings {
    */
   failedToJoinCallDueToNoNetworkMoreDetails?: string;
   /**
+   * Text to display on a leaving page.
+   */
+  leavingCallTitle?: string;
+  /**
    * Title text of the page shown to the user when they leave a call in the call composite.
    */
   leftCallTitle: string;
@@ -319,9 +323,24 @@ export interface CallCompositeStrings {
   roomNotFoundDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
-   * Label for the button to open effects and title of the effects
+   * Video Effects pane title.
    */
-  effects?: string;
+  videoEffectsPaneTitle: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Video Effects pane sub section title for choosing background.
+   */
+  videoEffectsPaneBackgroundSelectionTitle: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Label for the button to open effects
+   */
+  configurationPageVideoEffectsButtonLabel?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Error message for video effect failure
+   */
+  unableToStartVideoEffect?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Label for the blur video background effect item
@@ -342,6 +361,11 @@ export interface CallCompositeStrings {
    * Tooltip text for the blur video background effect item
    */
   removeBackgroundTooltip?: string;
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Text to show when warning the user the camera is off and inform the user to turn the camera on to see the selected video background effect.
+   */
+  cameraOffBackgroundEffectWarningText?: string;
   /* @conditional-compile-remove(rooms) */
   /**
    * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
@@ -491,4 +515,74 @@ export interface CallCompositeStrings {
    * list of key value pairs that pairs language code to language names
    */
   captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * captions banner loading spinner label
+   */
+  captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text when showing the transferor who initiated the transfer
+   */
+  transferPageTransferorText: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page text when showing the transfer target
+   */
+  transferPageTransferTargetText: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferorDisplayName: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * transfer page display name for unknown participant
+   */
+  transferPageUnknownTransferTargetDisplayName: string;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * notice to be announced by narrator the transfer page is showing
+   */
+  transferPageNoticeString: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when target participant could not be reached
+   */
+  participantCouldNotBeReachedTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when target participant could not be reached
+   */
+  participantCouldNotBeReachedMoreDetails?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when permission to reach participant is not allowed
+   */
+  permissionToReachTargetParticipantNotAllowedTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when permission to reach participant is not allowed
+   */
+  permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when tenant id for the target participant could not be resolved
+   */
+  unableToResolveTenantTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when tenant id for the target participant could not be resolved
+   */
+  unableToResolveTenantMoreDetails?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * Title text of the page shown to the user when target participant id is malformed
+   */
+  participantIdIsMalformedTitle?: string;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  /**
+   * More details text of the page shown to the user when target participant id is malformed
+   */
+  participantIdIsMalformedMoreDetails?: string;
 }

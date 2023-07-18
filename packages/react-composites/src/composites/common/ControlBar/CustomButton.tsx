@@ -5,9 +5,12 @@
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import { CustomCallControlButtonCallbackArgs, CustomControlButtonProps } from '../types/CommonCallControlOptions';
+import {
+  _CommonCallControlOptions,
+  CustomCallControlButtonCallbackArgs,
+  CustomControlButtonProps
+} from '../types/CommonCallControlOptions';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
 /**
@@ -49,22 +52,27 @@ const generateCustomControlBarButtons = (
   customButtons
     ? customButtons
         .filter((buttonProps) => buttonProps.placement === placement)
-        .map((buttonProps, i) => (internalProps) => (
-          <ControlBarButton
-            ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
-            ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
-            disabled={buttonProps.disabled ?? internalProps.disabled}
-            id={buttonProps.id ?? internalProps.id}
-            key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
-            onClick={buttonProps.onItemClick ?? internalProps.onClick}
-            onRenderIcon={() => (
-              <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
-            )}
-            showLabel={buttonProps.showLabel ?? internalProps.showLabel}
-            text={buttonProps.text ?? internalProps.text}
-            styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
-          />
-        ))
+        .map((buttonProps, i) => (internalProps) => {
+          if (buttonProps['onRenderButton']) {
+            return buttonProps['onRenderButton'](internalProps);
+          }
+          return (
+            <ControlBarButton
+              ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
+              ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
+              disabled={buttonProps.disabled ?? internalProps.disabled}
+              id={buttonProps.id ?? internalProps.id}
+              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+              onClick={buttonProps.onItemClick ?? internalProps.onClick}
+              onRenderIcon={() => (
+                <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
+              )}
+              showLabel={buttonProps.showLabel ?? internalProps.showLabel}
+              text={buttonProps.text ?? internalProps.text}
+              styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
+            />
+          );
+        })
     : [];
 
 /** @private */
@@ -189,12 +197,11 @@ export interface CustomCallControlButtonProps extends CustomControlButtonProps {
   iconName?: string;
 }
 
-/* @conditional-compile-remove(control-bar-button-injection) */
 /** @private */
 export const onFetchCustomButtonPropsTrampoline = (
   options?: CommonCallControlOptions
 ): CustomCallControlButtonCallback[] | undefined => {
   let response: CustomCallControlButtonCallback[] | undefined = undefined;
-  response = options?.onFetchCustomButtonProps;
+  response = (options as _CommonCallControlOptions)?.onFetchCustomButtonProps;
   return response;
 };

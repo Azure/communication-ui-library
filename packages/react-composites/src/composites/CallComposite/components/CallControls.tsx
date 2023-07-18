@@ -15,7 +15,6 @@ import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-/* @conditional-compile-remove(control-bar-button-injection) */
 import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
@@ -38,6 +37,7 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
+import { callControlsContainerStyles } from '../styles/CallPage.styles';
 
 /**
  * @private
@@ -56,6 +56,7 @@ export type CallControlsProps = {
    */
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
+  displayVertical?: boolean;
 };
 
 // Enforce a background color on control bar to ensure it matches the composite background color.
@@ -105,7 +106,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
-  /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(new-call-control-bar) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -127,6 +128,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
+    /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     if (!isRoomsCallTrampoline()) {
       items.push({
         key: 'holdButtonKey',
@@ -167,7 +169,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const theme = useTheme();
 
-  /* @conditional-compile-remove(control-bar-button-injection) */
   const customButtons = useMemo(
     () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
@@ -199,7 +200,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
-    <Stack horizontalAlign="center">
+    <Stack horizontalAlign="center" className={callControlsContainerStyles}>
       {
         /* @conditional-compile-remove(PSTN-calls) */
         <SendDtmfDialpad
@@ -217,7 +218,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
+        <ControlBar
+          layout={props.displayVertical ? 'vertical' : 'horizontal'}
+          styles={controlBarStyles(theme.semanticColors.bodyBackground)}
+        >
           {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}
@@ -274,7 +278,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               />
             )
           }
-          {/* @conditional-compile-remove(control-bar-button-injection) */ customButtons['primary']}
+          {customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

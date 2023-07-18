@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update calling SDK beta version to 1.10.0-beta.1",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

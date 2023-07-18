@@ -86,12 +86,26 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
   };
 };
 
+export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
+  return {
+    messageType: 'chat',
+    ...UserThree,
+    messageId: Math.random().toString(),
+    content:
+      "<p>Hi <msft-mention id='everyone'>Everyone</msft-mention>, please welcome <msft-mention id='3'>Jeffrey Mathews</msft-mention> to the team</p>",
+    createdOn: new Date('2020-04-13T00:00:00.000+07:01'),
+    mine: false,
+    attached: false,
+    contentType: 'html'
+  };
+};
+
 const GenerateMockMessageAttachments = (): FileMetadata[] => {
   return [
     {
       id: 'SomeImageId',
       name: 'SomeImageId',
-      attachmentType: 'teamsInlineImage',
+      attachmentType: 'inlineImage',
       extension: 'png',
       url: 'images/github.png',
       previewUrl: 'images/github.png'

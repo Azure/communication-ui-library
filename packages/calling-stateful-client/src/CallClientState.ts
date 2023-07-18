@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -102,6 +104,10 @@ export interface CaptionsCallFeatureState {
    */
   isCaptionsFeatureActive: boolean;
   /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsInProgress: boolean;
+  /**
    * supported caption languages
    */
   supportedCaptionLanguages: string[];
@@ -127,6 +133,19 @@ export interface TranscriptionCallFeatureState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature.isTranscriptionActive}.
    */
   isTranscriptionActive: boolean;
+}
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
+ *
+ * @beta
+ */
+export interface CapabilitiesFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
+   */
+  capabilities: ParticipantCapabilities;
 }
 
 /**
@@ -177,13 +196,22 @@ export interface LocalVideoStreamState {
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
-   * State of the video background effect.
+   * List of effects if any are active.
    */
-  isActive: boolean;
+  activeEffects?: VideoEffectName[];
+}
+
+/* @conditional-compile-remove(optimal-video-count) */
+/**
+ * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+ *
+ * @beta
+ */
+export interface OptimalVideoCountFeatureState {
   /**
-   * Name of the effect if one is active.
+   * State of the current optimal video count.
    */
-  effectName?: VideoEffectName;
+  maxRemoteVideoStreams: number;
 }
 
 /**
@@ -352,6 +380,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(optimal-video-count) */
+  /**
+   * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+   */
+  optimalVideoCount: OptimalVideoCountFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
@@ -392,6 +425,46 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Transfer state of call
+   */
+  transfer: TransferFeatureState;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
+   */
+  capabilities?: CapabilitiesFeatureState;
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface TransferFeatureState {
+  /**
+   * Accepted transfer requests
+   */
+  acceptedTransfers: { [key: string]: AcceptedTransfer };
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface AcceptedTransfer {
+  /**
+   * Stores call id of accepted transfer
+   */
+  callId: string;
+  /**
+   * Stores timestamp when transfer was accepted
+   */
+  timestamp: Date;
 }
 
 /**
@@ -609,20 +682,20 @@ export type CallErrorTarget =
   | 'Call.hangUp'
   | 'Call.hold'
   | 'Call.mute'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteIncomingAudio'
+  | 'Call.muteIncomingAudio'
   | 'Call.off'
   | 'Call.on'
   | 'Call.removeParticipant'
   | 'Call.resume'
   | 'Call.sendDtmf'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.startAudio'
+  | 'Call.startAudio'
   | 'Call.startScreenSharing'
   | 'Call.startVideo'
   | 'Call.stopScreenSharing'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.stopAudio'
+  | 'Call.stopAudio'
   | 'Call.stopVideo'
   | 'Call.unmute'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.unmuteIncomingAudio'
+  | 'Call.unmuteIncomingAudio'
   | 'CallAgent.dispose'
   | 'CallAgent.feature'
   | 'CallAgent.join'

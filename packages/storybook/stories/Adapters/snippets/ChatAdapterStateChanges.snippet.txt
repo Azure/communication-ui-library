@@ -11,6 +11,7 @@ chatAdapter.removeParticipants()
 chatAdapter.setTopic()
 
 //Chat events
+//Only messages from the thread that initialize the chat adapter will trigger the event.
 chatAdapter.on('messageReceived', (event) => {
   console.log(event.message.content?.message);
 })

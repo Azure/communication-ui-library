@@ -42,7 +42,7 @@ export const _isTeamsCallAgent = (callAgent: CallAgentCommon): callAgent is Team
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @private
+ * @internal
  * Determine whether a call is:
  * A TeamsCall
  * or a ACS Call joining the teams meeting

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Refactor modal sizes in VideoGallery to use rem instead of px",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

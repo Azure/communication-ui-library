@@ -25,6 +25,9 @@
     "uploading": "جارٍ التحميل",
     "uploadCompleted": "اكتمل التحميل"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "الاقتراحات"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "تم إرسال الرسالة",
     "deliveredTooltipText": "تم الإرسال",
@@ -41,8 +44,8 @@
     "tooltipContent": "مغادرة المكالمة"
   },
   "cameraButton": {
-    "onLabel": "إيقاف تشغيل",
-    "offLabel": "تمكين",
+    "onLabel": "الكاميرا",
+    "offLabel": "الكاميرا",
     "tooltipDisabledContent": "الكاميرا مُعطلة",
     "tooltipOnContent": "إيقاف تشغيل الكاميرا",
     "tooltipOffContent": "تشغيل الكاميرا",
@@ -56,11 +59,12 @@
     "cameraActionTurnedOffAnnouncement": "تم إيقاف تشغيل كاميراتك",
     "onSplitButtonPrimaryActionCamera": "إيقاف تشغيل الكاميرا",
     "offSplitButtonPrimaryActionCamera": "تشغيل الكاميرا",
-    "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا"
+    "cameraPrimaryActionSplitButtonTitle": "استخدام الكاميرا",
+    "videoEffectsMenuItemTitle": "التأثيرات"
   },
   "microphoneButton": {
-    "onLabel": "كتم الصوت",
-    "offLabel": "إلغاء كتم الصوت",
+    "onLabel": "الميكروفون",
+    "offLabel": "الميكروفون",
     "tooltipDisabledContent": "تم تعطيل الميكروفون",
     "tooltipOnContent": "كتم صوت الميكروفون",
     "tooltipOffContent": "إلغاء كتم صوت الميكروفون",
@@ -75,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "تم إيقاف الميكروفون",
     "offSplitButtonMicrophonePrimaryAction": "إلغاء كتم صوت الميكروفون",
     "onSplitButtonMicrophonePrimaryAction": "كتم صوت الميكروفون",
-    "micPrimaryActionSplitButtonTitle": "استخدام الميكروفون"
+    "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون"
   },
   "devicesButton": {
     "label": "الأجهزة",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "المزيد من الخيارات",
     "downloadFile": "تنزيل ملف",
     "blockedWarningText": "تم حذف هذه الرسالة بسبب نهج تنظيمي.",
-    "blockedWarningLinkText": "تفاصيل"
+    "blockedWarningLinkText": "تفاصيل",
+    "fileCardGroupMessage": "تحتوي الرسالة على مرفق {fileCount}"
   },
   "errorBar": {
     "unableToReachChatService": "أنت غير متصل",
@@ -148,7 +153,7 @@
     "muteGeneric": "فشل كتم صوت الميكروفون",
     "unmuteGeneric": "فشل إلغاء كتم صوت الميكروفون",
     "speakingWhileMuted": "تم كتم صوت الميكروفون",
-    "startScreenShareGeneric": "فشل تشغيل مشاركة الشاشة",
+    "startScreenShareGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
     "stopScreenShareGeneric": "فشل إيقاف مشاركة الشاشة",
     "callNetworkQualityLow": "جودة الشبكة مقبولة.",
     "callNoSpeakerFound": "لم يتم العثور على سماعات أو سماعات رأس. قم بتوصيل جهاز صوت لسماع المكالمة.",
@@ -169,8 +174,8 @@
     "dismissButtonAriaLabel": "إغلاق",
     "failedToJoinCallGeneric": "فشل في الانضمام إلى المكالمة.",
     "failedToJoinCallInvalidMeetingLink": "تعذر الانضمام إلى الاجتماع. ارتباط غير صالح.",
-    "startScreenSharingGeneric": "حدثت مشكلة أثناء بدء مشاركة الشاشة.",
-    "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك."
+    "cameraFrozenForRemoteParticipants": "يواجه المستخدمون في المكالمة مشكلات في رؤية الفيديو الخاص بك. الرجاء التحقق من أجهزتك وشبكتك.",
+    "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",

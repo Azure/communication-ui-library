@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles } from '@fluentui/react';
+import { IStackStyles, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { scrollbarStyles } from './Common.style';
 
@@ -27,7 +27,8 @@ export const displayNameClassName = mergeStyles({
 export const captionClassName = mergeStyles({
   fontWeight: 400,
   fontSize: _pxToRem(16),
-  lineHeight: _pxToRem(22)
+  lineHeight: _pxToRem(22),
+  width: '100%'
 });
 
 /**
@@ -44,24 +45,35 @@ export const captionsContainerClassName = mergeStyles({
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
-  overflowAnchor: 'none'
+  overflowAnchor: 'auto'
 });
 
 /**
  * @private
  */
-export const captionsBannerClassName = mergeStyles({
-  height: _pxToRem(100),
-  overflowY: 'auto',
-  overflowX: 'hidden',
-  ...scrollbarStyles
+export const captionsBannerClassName = (formFactor: 'default' | 'compact'): IStackStyles => {
+  return {
+    root: {
+      overflowX: 'hidden',
+      height: formFactor === 'compact' ? '4.5rem' : '6.25rem',
+      overflowY: 'auto',
+      ...scrollbarStyles
+    }
+  };
+};
+
+/**
+ * @private
+ */
+export const loadingBannerClassName = mergeStyles({
+  height: _pxToRem(100)
 });
 
 /**
  * @private
  */
 export const captionsContentContainerClassName = mergeStyles({
-  minWidth: 0
+  width: '100%'
 });
 
 /**

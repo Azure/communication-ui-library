@@ -1,19 +1,21 @@
 import {
   CameraAndMicrophoneSitePermissions,
   CameraSitePermissions,
+  DEFAULT_COMPONENT_ICONS,
   MicrophoneSitePermissions
 } from '@azure/communication-react';
-import { Modal, PrimaryButton, Stack } from '@fluentui/react';
+import { Modal, PrimaryButton, Stack, registerIcons } from '@fluentui/react';
 import React, { useState } from 'react';
-import { useLocale } from '../../../../react-components/src/localization';
+
+registerIcons({
+  icons: DEFAULT_COMPONENT_ICONS
+});
 
 export const SitePermissionsDeniedModal: () => JSX.Element = () => {
   const [microphoneCameraModalOpen, setMicrophoneCameraModalOpen] = useState<boolean>(false);
   const [microphoneModalOpen, setMicrophoneModalOpen] = useState<boolean>(false);
   const [cameraModalOpen, setCameraModalOpen] = useState<boolean>(false);
-  const micCameralocale = useLocale().strings.CameraAndMicrophoneSitePermissionsDenied;
-  const cameraLocale = useLocale().strings.CameraSitePermissionsDenied;
-  const microphoneLocale = useLocale().strings.MicrophoneSitePermissionsDenied;
+
   return (
     <Stack horizontal>
       <PrimaryButton
@@ -46,7 +48,6 @@ export const SitePermissionsDeniedModal: () => JSX.Element = () => {
           onTroubleshootingClick={() => {
             alert('clicked trouble shooting');
           }}
-          strings={micCameralocale}
           kind={'denied'}
         />
       </Modal>
@@ -56,7 +57,6 @@ export const SitePermissionsDeniedModal: () => JSX.Element = () => {
           onTroubleshootingClick={() => {
             alert('clicked trouble shooting');
           }}
-          strings={microphoneLocale}
           kind={'denied'}
         />
       </Modal>
@@ -69,7 +69,6 @@ export const SitePermissionsDeniedModal: () => JSX.Element = () => {
           onContinueAnywayClick={() => {
             setCameraModalOpen(false);
           }}
-          strings={cameraLocale}
           kind={'denied'}
         />
       </Modal>

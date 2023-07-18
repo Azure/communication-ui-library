@@ -2,38 +2,53 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { useEffect, useMemo } from 'react';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  useTheme
+} from '@internal/react-components';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { useLocale } from '../localization';
+import { CompositeLocale, useLocale } from '../localization';
 import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getPage } from './selectors/baseSelectors';
+import { getEndedCall, getPage } from './selectors/baseSelectors';
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
-import { mainScreenContainerStyleDesktop, mainScreenContainerStyleMobile } from './styles/CallComposite.styles';
+/* @conditional-compile-remove(call-transfer) */
+import { TransferPage } from './pages/TransferPage';
+import {
+  leavingPageStyle,
+  mainScreenContainerStyleDesktop,
+  mainScreenContainerStyleMobile
+} from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
 /* @conditional-compile-remove(rooms) */
 import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { LayerHost, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
+import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
+import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
+import { CallState } from '@internal/calling-stateful-client';
+import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
+import { TrackedErrors } from './types/ErrorTracking';
+import { usePropsFor } from './hooks/usePropsFor';
 
 /**
  * Props for {@link CallComposite}.
@@ -100,6 +115,26 @@ export interface RemoteVideoTileMenuOptions {
    * @defaultValue false
    */
   isHidden?: boolean;
+}
+
+/* @conditional-compile-remove(click-to-call) */
+/**
+ * Options for the local video tile in the Call composite.
+ *
+ * @beta
+ */
+export interface LocalVideoTileOptions {
+  /**
+   * Position of the local video tile. If unset will render the local tile in the floating local position.
+   *
+   * @defaultValue 'floating'
+   * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
+   * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
+   * local video tile rules and be docked in the bottom corner.
+   * 'hidden' - local video tile will not be rendered.
+   * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
+   */
+  position?: 'grid' | 'floating';
 }
 /**
  * Optional features of the {@link CallComposite}.
@@ -178,11 +213,17 @@ export type CallCompositeOptions = {
    * Remote participant video tile menu options
    */
   remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+  /* @conditional-compile-remove(click-to-call) */
+  /**
+   * Options for controlling the local video tile.
+   *
+   * @remarks if 'false' the local video tile will not be rendered.
+   */
+  localVideoTile?: boolean | LocalVideoTileOptions;
 };
 
 type MainScreenProps = {
   mobileView: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
   modalLayerHostId: string;
   onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
@@ -191,14 +232,56 @@ type MainScreenProps = {
   options?: CallCompositeOptions;
   /* @conditional-compile-remove(rooms) */
   roleHint?: Role;
+  overrideSidePane?: InjectedSidePaneProps;
+  onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+};
+
+const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
+  return !!overrideSidePane?.isActive;
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
+  const endedCall = useSelector(getEndedCall);
+
+  const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
+  const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
+
+  const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
+  useEffect(() => {
+    setInjectedSidePaneProps(props.overrideSidePane);
+    // When the injected side pane is opened, clear the previous side pane active state.
+    // this ensures when the injected side pane is "closed", the previous side pane is not "re-opened".
+    if (!isShowing(overridePropsRef.current) && isShowing(props.overrideSidePane)) {
+      setSidePaneRenderer(undefined);
+    }
+    overridePropsRef.current = props.overrideSidePane;
+  }, [props.overrideSidePane]);
+
+  const onSidePaneIdChange = props.onSidePaneIdChange;
+  useEffect(() => {
+    onSidePaneIdChange?.(sidePaneRenderer?.id);
+  }, [sidePaneRenderer?.id, onSidePaneIdChange]);
+
+  // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
+  // This works by tracking the most recent timestamp of any active error type.
+  // And then tracking when that error type was last dismissed.
+  const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
+  const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
+  useEffect(() => {
+    setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
+  }, [activeErrors]);
+  const onDismissError = useCallback((error: ActiveErrorMessage) => {
+    setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+  }, []);
+  const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
 
   const adapter = useAdapter();
   const locale = useLocale();
+  const palette = useTheme().palette;
+  const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   /* @conditional-compile-remove(rooms) */
   const role = useSelector(getRole);
@@ -235,7 +318,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           startCallHandler={(): void => {
             adapter.joinCall();
           }}
-          /* @conditional-compile-remove(call-readiness) */
+          updateSidePaneRenderer={setSidePaneRenderer}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
           deviceChecks={props.options?.deviceChecks}
@@ -276,23 +361,55 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case 'leftCall':
+    case 'leaving':
       pageElement = (
         <NoticePage
-          iconName="NoticePageLeftCall"
-          title={locale.strings.call.leftCallTitle}
-          moreDetails={locale.strings.call.leftCallMoreDetails}
-          dataUiId={'left-call-page'}
+          title={locale.strings.call.leavingCallTitle ?? 'Leaving...'}
+          dataUiId={'leaving-page'}
+          pageStyle={leavePageStyle}
+          disableStartCallButton={true}
         />
       );
       break;
+    case 'leftCall': {
+      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageLeftCall"
+          title={title}
+          moreDetails={moreDetails}
+          dataUiId={'left-call-page'}
+          disableStartCallButton={disableStartCallButton}
+        />
+      );
+      break;
+    }
     case 'lobby':
       pageElement = (
         <LobbyPage
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
+        />
+      );
+      break;
+    /* @conditional-compile-remove(call-transfer) */
+    case 'transferring':
+      pageElement = (
+        <TransferPage
+          mobileView={props.mobileView}
+          modalLayerHostId={props.modalLayerHostId}
+          options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          onRenderAvatar={onRenderAvatar}
+          onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -304,9 +421,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
-          /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
           modalLayerHostId={props.modalLayerHostId}
           options={props.options}
+          updateSidePaneRenderer={setSidePaneRenderer}
+          mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -314,7 +434,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'hold':
       pageElement = (
         <>
-          {<HoldPage mobileView={props.mobileView} modalLayerHostId={props.modalLayerHostId} options={props.options} />}
+          {
+            <HoldPage
+              mobileView={props.mobileView}
+              modalLayerHostId={props.modalLayerHostId}
+              options={props.options}
+              updateSidePaneRenderer={setSidePaneRenderer}
+              mobileChatTabHeader={props.mobileChatTabHeader}
+              latestErrors={latestErrors}
+              onDismissError={onDismissError}
+            />
+          }
         </>
       );
       break;
@@ -349,7 +479,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
 
-  return retElement;
+  return (
+    <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
+      {retElement}
+    </SidePaneProvider>
+  );
 };
 
 /**
@@ -361,7 +495,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
  *
  * @public
  */
-export const CallComposite = (props: CallCompositeProps): JSX.Element => {
+export const CallComposite = (props: CallCompositeProps): JSX.Element => <CallCompositeInner {...props} />;
+
+/**
+ * @private
+ */
+export interface InternalCallCompositeProps {
+  overrideSidePane?: InjectedSidePaneProps;
+  onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
+
+  // legacy property to avoid breaking change
+  mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+}
+
+/** @private */
+export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompositeProps): JSX.Element => {
   const {
     adapter,
     callInvitationUrl,
@@ -388,9 +536,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
 
   const mobileView = formFactor === 'mobile';
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const modalLayerHostId = useId('modalLayerhost');
-
   const mainScreenContainerClassName = useMemo(() => {
     return mobileView ? mainScreenContainerStyleMobile : mainScreenContainerStyleDesktop;
   }, [mobileView]);
@@ -404,22 +550,23 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
             modalLayerHostId={modalLayerHostId}
             options={options}
             /* @conditional-compile-remove(rooms) */
             roleHint={roleHint}
+            onSidePaneIdChange={props.onSidePaneIdChange}
+            overrideSidePane={props.overrideSidePane}
+            mobileChatTabHeader={props.mobileChatTabHeader}
           />
           {
-            // This layer host is for ModalLocalAndRemotePIP in CallPane. This LayerHost cannot be inside the CallPane
-            // because when the CallPane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
+            // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
+            // because when the SidePane is hidden, ie. style property display is 'none', it takes up no space. This causes problems when dragging
             // the Modal because the draggable bounds thinks it has no space and will always return to its initial position after dragging.
             // Additionally, this layer host cannot be in the Call Arrangement as it needs to be rendered before useMinMaxDragPosition() in
             // common/utils useRef is called.
             // Warning: this is fragile and works because the call arrangement page is only rendered after the call has connected and thus this
             // LayerHost will be guaranteed to have rendered (and subsequently mounted in the DOM). This ensures the DOM element will be available
             // before the call to `document.getElementById(modalLayerHostId)` is made.
-            /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(call-readiness) */
             <LayerHost id={modalLayerHostId} className={mergeStyles(modalLayerHostStyle)} />
           }
         </CallAdapterProvider>
@@ -437,4 +584,45 @@ const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ rol
     };
   }
   return { video: true, audio: true };
+};
+
+const getEndedCallStrings = (
+  locale: CompositeLocale,
+  endedCall?: CallState
+): { title: string; moreDetails?: string; disableStartCallButton: boolean } => {
+  let title = locale.strings.call.leftCallTitle;
+  let moreDetails = locale.strings.call.leftCallMoreDetails;
+  let disableStartCallButton = false;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case 10037:
+      if (locale.strings.call.participantCouldNotBeReachedTitle) {
+        title = locale.strings.call.participantCouldNotBeReachedTitle;
+        moreDetails = locale.strings.call.participantCouldNotBeReachedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10124:
+      if (locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle) {
+        title = locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle;
+        moreDetails = locale.strings.call.permissionToReachTargetParticipantNotAllowedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10119:
+      if (locale.strings.call.unableToResolveTenantTitle) {
+        title = locale.strings.call.unableToResolveTenantTitle;
+        moreDetails = locale.strings.call.unableToResolveTenantMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case 10044:
+      if (locale.strings.call.participantIdIsMalformedTitle) {
+        title = locale.strings.call.participantIdIsMalformedTitle;
+        moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
+        disableStartCallButton = true;
+      }
+      break;
+  }
+  return { title, moreDetails, disableStartCallButton };
 };

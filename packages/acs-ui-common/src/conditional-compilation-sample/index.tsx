@@ -65,10 +65,18 @@ interface B {
 }
 
 /**
+ * Conditionally remove a in-progress feature in beta release.
+ */
+/* @conditional-compile-remove(in-progress-beta-feature-demo) */
+export interface _InProgressInterface {
+  foo: boolean;
+}
+
+/**
  * Conditionally import from a package.
  */
 /* @conditional-compile-remove(demo) */
-import { Dir } from 'fs';
+import { DummyImport } from './utils';
 
 /**
  * Conditionally export from a module.
@@ -80,7 +88,7 @@ export interface C {
 }
 
 /* @conditional-compile-remove(demo) */
-export type MyDir = Dir;
+export type DummyImportUsage = DummyImport;
 
 /**
  * Conditionally add fields to an interface

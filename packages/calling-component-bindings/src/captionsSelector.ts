@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 /* @conditional-compile-remove(close-captions) */
-import { CallClientState } from '@internal/calling-stateful-client';
+import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
-import { CallingBaseSelectorProps } from './baseSelectors';
+import { CallingBaseSelectorProps, getStartCaptionsInProgress } from './baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import {
   getCaptions,
@@ -99,21 +99,44 @@ export type _CaptionsBannerSelector = (
  * @internal
  */
 export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
-  [getCaptions, getCaptionsStatus],
-  (captions, isCaptionsFeatureActive) => {
-    const captionsInfo = captions?.map((c) => {
+  [getCaptions, getCaptionsStatus, getStartCaptionsInProgress],
+  (captions, isCaptionsFeatureActive, startCaptionsInProgress) => {
+    // Following Teams app logic, no matter how many 'Partial' captions come,
+    // we only pick first one according to start time, and all the other partial captions will be filtered out
+    // This will give customers a stable captions experience when others talking over the dominant speaker
+    const captionsToRender = captions?.filter((captions) => captions.resultType === 'Final');
+    const firstPartialCaptions = captions
+      ?.filter((captions) => captions.resultType === 'Partial')
+      .sort(captionsComparator)[0];
+
+    firstPartialCaptions && captionsToRender?.push(firstPartialCaptions);
+
+    const captionsInfo = captionsToRender?.map((c) => {
+      const userId = getCaptionsSpeakerIdentifier(c);
       return {
+        id: c.timestamp.getTime() + userId + c.speaker.displayName,
         displayName: c.speaker.displayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
-        userId: c.speaker.identifier ? toFlatCommunicationIdentifier(c.speaker.identifier) : ''
+        userId
       };
     });
     return {
       captions: captionsInfo ?? [],
-      isCaptionsOn: isCaptionsFeatureActive ?? false
+      isCaptionsOn: isCaptionsFeatureActive ?? false,
+      startCaptionsInProgress: startCaptionsInProgress ?? false
     };
   }
 );
 
-// This is a placeholder to bypass CC of "close-captions", remove when move the feature to stable
-export {};
+/* @conditional-compile-remove(close-captions) */
+const captionsComparator = (captionsA: CaptionsInfo, captionsB: CaptionsInfo): number => {
+  return (
+    captionsA.timestamp.getTime() - captionsB.timestamp.getTime() ||
+    getCaptionsSpeakerIdentifier(captionsA).localeCompare(getCaptionsSpeakerIdentifier(captionsB))
+  );
+};
+
+/* @conditional-compile-remove(close-captions) */
+const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
+  return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';
+};

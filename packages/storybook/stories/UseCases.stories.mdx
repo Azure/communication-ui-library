@@ -1,4 +1,5 @@
 import { Meta } from '@storybook/addon-docs';
+import { SingleLineBetaBanner } from './BetaBanners/SingleLineBetaBanner';
 
 <Meta id="usecases" title="Use Cases" parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }} />
 
@@ -14,7 +15,7 @@ To take full advantage of these capabilities, we recommend using the UI Componen
 
 | Area                                                                                            | Use Cases                                                                                                                                                   |
 | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Call Types                                                                                      | Join Teams Meeting                                                                                                                                          |
+| Call Types                                                                                      | [Join a Teams Meeting](#teams-interop-use-case)                                                                                                             |
 |                                                                                                 | Join Azure Communication Services call with Group Id                                                                                                        |
 | [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) | Call Lobby                                                                                                                                                  |
 |                                                                                                 | Transcription and recording alert banner                                                                                                                    |
@@ -38,19 +39,19 @@ To take full advantage of these capabilities, we recommend using the UI Componen
 
 ## Chat Use Cases
 
-| Area         | Use Cases                                        |
-| ------------ | ------------------------------------------------ |
-| Chat Types   | Join a Teams Meeting Chat                        |
-|              | Join an Azure Communication Services chat thread |
-| Chat Actions | Send chat message                                |
-|              | Receive chat message                             |
-|              | Edit chat message                                |
-|              | Remove chat message                              |
-| Chat Events  | Typing Indicators                                |
-|              | Read Receipt                                     |
-|              | Participant added/removed                        |
-|              | Chat title changed                               |
-| Participants | Participant roster                               |
+| Area         | Use Cases                                            |
+| ------------ | ---------------------------------------------------- |
+| Chat Types   | [Join a Teams Meeting Chat](#teams-interop-use-case) |
+|              | Join an Azure Communication Services chat thread     |
+| Chat Actions | Send chat message                                    |
+|              | Receive chat message                                 |
+|              | Edit chat message                                    |
+|              | Remove chat message                                  |
+| Chat Events  | Typing Indicators                                    |
+|              | Read Receipt                                         |
+|              | Participant added/removed                            |
+|              | Chat title changed                                   |
+| Participants | Participant roster                                   |
 
 ## Teams Interop Use Case
 
@@ -69,6 +70,11 @@ For example:
 - [Compliance banner](./?path=/story/examples-teamsinterop-compliancebanner--compliance-banner): Sample banner to show the user whether the call is being recorded or not.
 - [Teams Theme](./?path=/story/examples-themes-teams--teams): Sample theme that makes the UI Library looks like Microsoft Teams.
 
+<SingleLineBetaBanner content="The following features are currently in public preview" />
+
+- [File Sharing](./?path=/docs/ui-components-messagethread--message-thread#display-file-attachments-with-messages): Feature allows Teams users to share file attachments as part of chat messages.
+- [Inline Images](./?path=/docs/ui-components-messagethread--message-thread#display-inline-image-with-messages): Feature allows Teams users to attach images as part of chat messages.
+
 ## Customization
 
 UI Library exposes patterns for developers to modify components to fit the look and feel of their application.
@@ -79,8 +85,8 @@ These capabilities are a key area of differentiation between Composites and UI C
 | Fluent based Theming                                | ✔          | ✔             |
 | Experience layout is composable                     |            | ✔             |
 | CSS Styling can be used to modify style properties  |            | ✔             |
-| Icons can be replaced                               |            | ✔             |
 | Participant gallery layout can be modified          |            | ✔             |
+| Icons can be replaced                               | ✔          | ✔             |
 | Call control layout can be modified                 | ✔          | ✔             |
 | Data models can be injected to modify user metadata | ✔          | ✔             |
 

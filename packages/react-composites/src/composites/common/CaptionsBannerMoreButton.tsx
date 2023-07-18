@@ -49,6 +49,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     }),
     [localeStrings]
   );
+
   /* @conditional-compile-remove(close-captions) */
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
@@ -57,9 +58,6 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     await startCaptionsButtonHandlers.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-    // set spoken language when start captions with a spoken language specified.
-    // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
-    startCaptionsButtonHandlers.onSetSpokenLanguage(startCaptionsButtonProps.currentSpokenLanguage);
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */

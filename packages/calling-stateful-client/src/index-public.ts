@@ -30,5 +30,11 @@ export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDe
 export type { DeclarativeIncomingCall } from './IncomingCallDeclarative';
 /* @conditional-compile-remove(video-background-effects) */
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
+/* @conditional-compile-remove(capabilities) */
+export type { CapabilitiesFeatureState as CapabilitiesCallFeature } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';
+/* @conditional-compile-remove(optimal-video-count) */
+export type { OptimalVideoCountFeatureState } from './CallClientState';

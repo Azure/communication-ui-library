@@ -44,7 +44,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       const drawerPeopleMenuDiv = await page.$('div[role="menu"] >> text=People');
       await drawerPeopleMenuDiv?.click();
     }
-    await waitForSelector(page, dataUiId('call-with-chat-composite-people-pane'));
+    await waitForSelector(page, dataUiId('people-pane-content'));
 
     if (!isTestProfileDesktop(testInfo)) {
       await waitForPiPiPToHaveLoaded(page);

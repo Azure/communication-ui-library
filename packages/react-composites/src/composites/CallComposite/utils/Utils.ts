@@ -2,21 +2,20 @@
 // Licensed under the MIT license.
 
 import { CallAdapterState, CallCompositePage, END_CALL_PAGES } from '../adapter/CallAdapter';
-/* @conditional-compile-remove(video-background-effects) */
-import { CommonCallAdapter } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import {
-  CommunicationIdentifier,
-  isCommunicationUserIdentifier,
-  isMicrosoftTeamsUserIdentifier,
-  isPhoneNumberIdentifier,
-  isUnknownIdentifier
-} from '@azure/communication-common';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { BackgroundBlurEffect, BackgroundReplacementEffect } from '@azure/communication-calling-effects';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffect } from '../adapter/CallAdapter';
+import { VideoDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectProcessor } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -40,23 +39,6 @@ export const isCameraOn = (state: CallAdapterState): boolean => {
     }
   }
   return false;
-};
-
-/* @conditional-compile-remove(video-background-effects) */
-/**
- * @private
- */
-export const startSelectedVideoEffect = async (adapter: CommonCallAdapter): Promise<void> => {
-  if (adapter.getState().selectedVideoBackgroundEffect) {
-    const selectedVideoBackgroundEffect = adapter.getState().selectedVideoBackgroundEffect;
-    if (selectedVideoBackgroundEffect?.effectName === 'blur') {
-      await adapter.blurVideoBackground();
-    } else if (selectedVideoBackgroundEffect?.effectName === 'none') {
-      await adapter.stopVideoBackgroundEffect();
-    } else if (selectedVideoBackgroundEffect?.effectName === 'replacement') {
-      await adapter.replaceVideoBackground({ backgroundImageUrl: selectedVideoBackgroundEffect.backgroundImageUrl });
-    }
-  }
 };
 
 /**
@@ -145,13 +127,14 @@ type GetCallCompositePageFunction = ((
   call: CallState | undefined,
   previousCall: CallState | undefined
 ) => CallCompositePage) &
-  /* @conditional-compile-remove(unsupported-browser) */ ((
+  ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
-    unsupportedBrowserInfo?: {
+    /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    }
+    },
+    /* @conditional-compile-remove(call-transfer) */ transferCall?: CallState
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -169,7 +152,8 @@ type GetCallCompositePageFunction = ((
 export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
-  unsupportedBrowserInfo?
+  unsupportedBrowserInfo?,
+  transferCall?: CallState
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
@@ -179,6 +163,11 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     )
   ) {
     return 'unsupportedEnvironment';
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  if (transferCall !== undefined) {
+    return 'transferring';
   }
 
   if (call) {
@@ -194,6 +183,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return 'hold';
       return 'call';
+    } else if (call?.state === 'Disconnecting') {
+      return 'leaving';
     } else if (_isInCall(call?.state)) {
       return 'call';
     } else {
@@ -247,6 +238,7 @@ export const IsCallEndedPage = (
     | 'call'
     | 'configuration'
     | 'joinCallFailedDueToNoNetwork'
+    | 'leaving'
     | 'leftCall'
     | 'lobby'
     | 'removedFromCall'
@@ -254,6 +246,7 @@ export const IsCallEndedPage = (
     | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
     | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
     | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
+    | /* @conditional-compile-remove(call-transfer) */ 'transferring'
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
@@ -365,22 +358,6 @@ const isUnsupportedEnvironment = (
 };
 
 /**
- * Check if an object is identifier.
- *
- * @param identifier
- * @returns whether an identifier is one of identifier types (for runtime validation)
- * @private
- */
-export const isValidIdentifier = (identifier: CommunicationIdentifier): boolean => {
-  return (
-    isCommunicationUserIdentifier(identifier) ||
-    isPhoneNumberIdentifier(identifier) ||
-    isMicrosoftTeamsUserIdentifier(identifier) ||
-    isUnknownIdentifier(identifier)
-  );
-};
-
-/**
  * Check if we are using safari browser
  * @private
  */
@@ -448,3 +425,21 @@ export const createParticipantModifier = (
     };
   };
 };
+
+/* @conditional-compile-remove(video-background-effects) */
+/** @private */
+export const getBackgroundEffectFromSelectedEffect = (
+  selectedEffect: VideoBackgroundEffect | undefined
+): VideoEffectProcessor | undefined =>
+  selectedEffect?.effectName === 'blur'
+    ? new BackgroundBlurEffect()
+    : selectedEffect?.effectName === 'replacement'
+    ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
+    : undefined;
+
+/**
+ * @remarks this logic should mimic the onToggleCamera in the common call handlers.
+ * @private
+ */
+export const getSelectedCameraFromAdapterState = (state: CallAdapterState): VideoDeviceInfo | undefined =>
+  state.devices.selectedCamera || state.devices.cameras[0];

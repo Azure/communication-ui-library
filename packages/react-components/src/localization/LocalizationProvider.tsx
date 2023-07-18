@@ -41,6 +41,8 @@ import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOper
 import { VerticalGalleryStrings } from '../components/VerticalGallery';
 /* @conditional-compile-remove(total-participant-count) */
 import { ParticipantListStrings } from '../components/ParticipantList';
+/* @conditional-compile-remove(mention) */
+import { MentionPopoverStrings } from '../components/MentionPopover';
 
 /**
  * Locale information for all components exported from this library.
@@ -84,6 +86,9 @@ export interface ComponentStrings {
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
   sendBox: SendBoxStrings;
+  /* @conditional-compile-remove(mention) */
+  /** Strings for MentionPopover */
+  mentionPopover: MentionPopoverStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */

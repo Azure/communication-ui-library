@@ -129,7 +129,8 @@ export const moreButtonStyles: IButtonStyles = {
     zIndex: 1,
     color: 'inherit',
     top: '-0.125rem',
-    height: '100%'
+    height: '100%',
+    padding: '0rem'
   },
   rootHovered: {
     background: 'none'

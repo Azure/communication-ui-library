@@ -25,6 +25,9 @@
     "uploading": "Cargando",
     "uploadCompleted": "Carga completada"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Sugerencias"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensaje enviado",
     "deliveredTooltipText": "Enviado",
@@ -41,8 +44,8 @@
     "tooltipContent": "Abandonar llamada"
   },
   "cameraButton": {
-    "onLabel": "Desactivar",
-    "offLabel": "Activar",
+    "onLabel": "Cámara",
+    "offLabel": "Cámara",
     "tooltipDisabledContent": "La cámara está deshabilitada",
     "tooltipOnContent": "Desconectar la cámara",
     "tooltipOffContent": "Activar la cámara",
@@ -56,11 +59,12 @@
     "cameraActionTurnedOffAnnouncement": "La cámara se ha desactivado",
     "onSplitButtonPrimaryActionCamera": "Desconectar la cámara",
     "offSplitButtonPrimaryActionCamera": "Activar la cámara",
-    "cameraPrimaryActionSplitButtonTitle": "Usar cámara"
+    "cameraPrimaryActionSplitButtonTitle": "Usar cámara",
+    "videoEffectsMenuItemTitle": "Efectos"
   },
   "microphoneButton": {
-    "onLabel": "Silenciar",
-    "offLabel": "Reactivar audio",
+    "onLabel": "Micro",
+    "offLabel": "Micro",
     "tooltipDisabledContent": "Micrófono deshabilitado",
     "tooltipOnContent": "Silenciar micrófono",
     "tooltipOffContent": "Reactivar micrófono",
@@ -75,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "El micrófono se ha desactivado",
     "offSplitButtonMicrophonePrimaryAction": "Reactivar micrófono",
     "onSplitButtonMicrophonePrimaryAction": "Silenciar micrófono",
-    "micPrimaryActionSplitButtonTitle": "Usar micrófono"
+    "microphonePrimaryActionSplitButtonTitle": "Usar micrófono"
   },
   "devicesButton": {
     "label": "Dispositivos",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Más opciones",
     "downloadFile": "Descargar archivo",
     "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
-    "blockedWarningLinkText": "Detalles"
+    "blockedWarningLinkText": "Detalles",
+    "fileCardGroupMessage": "El mensaje tiene {fileCount} datos adjuntos"
   },
   "errorBar": {
     "unableToReachChatService": "Sin conexión",
@@ -148,7 +153,7 @@
     "muteGeneric": "No se pudo silenciar el micrófono",
     "unmuteGeneric": "No se pudo reactivar el micrófono",
     "speakingWhileMuted": "El micrófono está desactivado",
-    "startScreenShareGeneric": "No se pudo iniciar la pantalla compartida",
+    "startScreenShareGeneric": "Hubo un problema al iniciar la pantalla compartida.",
     "stopScreenShareGeneric": "No se pudo detener la pantalla compartida",
     "callNetworkQualityLow": "La calidad de la red es baja.",
     "callNoSpeakerFound": "No se encontraron altavoces ni auriculares. Conecta un dispositivo de audio para escuchar la llamada.",
@@ -169,8 +174,8 @@
     "dismissButtonAriaLabel": "Cerrar",
     "failedToJoinCallGeneric": "No se pudo unir a la llamada.",
     "failedToJoinCallInvalidMeetingLink": "No se puede unir a la reunión. Vínculo no válido.",
-    "startScreenSharingGeneric": "Hubo un problema al iniciar la pantalla compartida.",
-    "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el vídeo. Compruebe los dispositivos y la red."
+    "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el vídeo. Compruebe los dispositivos y la red.",
+    "unableToStartVideoEffect": "No se puede aplicar el efecto de vídeo."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Está compartiendo su pantalla",

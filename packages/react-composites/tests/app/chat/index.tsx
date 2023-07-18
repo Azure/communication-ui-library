@@ -3,7 +3,7 @@
 
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { initializeIconsForUITests } from '../lib/utils';
 import { FakeAdapterApp } from './FakeAdapterApp';
 import { LiveTestApp } from './LiveTestApp';
@@ -16,4 +16,9 @@ const params = Object.fromEntries(urlSearchParams.entries());
 initializeFileTypeIcons();
 initializeIconsForUITests();
 
-ReactDOM.render(params.fakeChatAdapterArgs ? <FakeAdapterApp /> : <LiveTestApp />, document.getElementById('root'));
+const domNode = document.getElementById('root');
+if (!domNode) {
+  throw new Error('Failed to find the root element');
+}
+
+createRoot(domNode).render(params.fakeChatAdapterArgs ? <FakeAdapterApp /> : <LiveTestApp />);

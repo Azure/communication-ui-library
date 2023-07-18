@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add CC to auto add `export {}`",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}

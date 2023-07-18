@@ -10,6 +10,9 @@ import React from 'react';
  */
 
 /** @private */
+export type DummyImport = unknown;
+
+/** @private */
 export type DummyState = unknown;
 
 /** @private */

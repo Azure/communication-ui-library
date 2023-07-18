@@ -9,7 +9,7 @@ import { v1 as createGUID } from 'uuid';
 import { COMPOSITE_FOLDER_PREFIX, compositeExperienceContainerStyle } from '../constants';
 import { defaultCallCompositeHiddenControls, controlsToAdd, getControlledTheme, ArgsFrom } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './CallCompositeDocs';
+import { Docs } from './CallCompositeDocs';
 import { ContosoCallContainer } from './snippets/Container.snippet';
 import { ConfigHintBanner } from './snippets/Utils';
 
@@ -31,7 +31,7 @@ const ThemeExampleStory = (args: ArgsFrom<typeof storyControls>, context): JSX.E
   const containerProps = useMemo(() => {
     if (args.userId && args.token) {
       const containerProps = {
-        userId: args.userId,
+        userId: { communicationUserId: args.userId },
         token: args.token,
         locator: createGUID()
       };
@@ -79,7 +79,9 @@ export default {
   },
   parameters: {
     docs: {
-      page: () => getDocs()
+      //Prevent Docs auto scroll to top
+      container: null,
+      page: () => Docs()
     }
   }
 } as Meta;

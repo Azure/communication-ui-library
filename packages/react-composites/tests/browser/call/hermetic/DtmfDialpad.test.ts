@@ -21,6 +21,7 @@ test.describe('Dtmf dialpad tests', async () => {
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
+    await waitForSelector(page, dataUiId('dialpadContainer'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`Call-Dtmf-Dialpad.png`);
   });
   test('Dtmf dialpad should not render in non-PSTN call', async ({ page, serverUrl }) => {

@@ -57,8 +57,8 @@ function HermeticAppImpl(props: { queryArgs: HermeticQueryArgs & CommonQueryArgs
 
   return (
     <>
-      <BaseApp queryArgs={args} adapter={callWithChatAdapter} />
       <HiddenChatComposites adapters={chatAdapters?.remotes ?? []} />
+      <BaseApp queryArgs={args} adapter={callWithChatAdapter} />
     </>
   );
 }

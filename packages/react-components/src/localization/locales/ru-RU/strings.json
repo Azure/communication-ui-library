@@ -25,6 +25,9 @@
     "uploading": "Отправка",
     "uploadCompleted": "Отправка завершена"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Рекомендации"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
     "deliveredTooltipText": "Отправлено",
@@ -41,8 +44,8 @@
     "tooltipContent": "Покинуть вызов"
   },
   "cameraButton": {
-    "onLabel": "Отключить",
-    "offLabel": "Включить",
+    "onLabel": "Камера",
+    "offLabel": "Камера",
     "tooltipDisabledContent": "Камера отключена",
     "tooltipOnContent": "Выключить камеру",
     "tooltipOffContent": "Включить камеру",
@@ -56,11 +59,12 @@
     "cameraActionTurnedOffAnnouncement": "Камера отключена",
     "onSplitButtonPrimaryActionCamera": "Выключить камеру",
     "offSplitButtonPrimaryActionCamera": "Включить камеру",
-    "cameraPrimaryActionSplitButtonTitle": "Использовать камеру"
+    "cameraPrimaryActionSplitButtonTitle": "Использовать камеру",
+    "videoEffectsMenuItemTitle": "Эффекты"
   },
   "microphoneButton": {
-    "onLabel": "Отключить звук",
-    "offLabel": "Включить звук",
+    "onLabel": "Микрофон",
+    "offLabel": "Микрофон",
     "tooltipDisabledContent": "Микрофон отключен",
     "tooltipOnContent": "Отключить микрофон",
     "tooltipOffContent": "Включить микрофон",
@@ -75,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Ваш микрофон отключен",
     "offSplitButtonMicrophonePrimaryAction": "Включить микрофон",
     "onSplitButtonMicrophonePrimaryAction": "Отключить микрофон",
-    "micPrimaryActionSplitButtonTitle": "Использовать микрофон"
+    "microphonePrimaryActionSplitButtonTitle": "Использовать микрофон"
   },
   "devicesButton": {
     "label": "Устройства",
@@ -134,7 +138,8 @@
     "actionMenuMoreOptions": "Дополнительные параметры",
     "downloadFile": "Скачать файл",
     "blockedWarningText": "Это сообщение было удалено политикой организации.",
-    "blockedWarningLinkText": "Сведения"
+    "blockedWarningLinkText": "Сведения",
+    "fileCardGroupMessage": "Сообщение содержит {fileCount} вложение"
   },
   "errorBar": {
     "unableToReachChatService": "Вы не в сети",
@@ -148,7 +153,7 @@
     "muteGeneric": "Не удалось отключить микрофон",
     "unmuteGeneric": "Не удалось включить микрофон",
     "speakingWhileMuted": "Микрофон отключен",
-    "startScreenShareGeneric": "Не удалось начать демонстрацию экрана",
+    "startScreenShareGeneric": "Возникла проблема с запуском демонстрации экрана.",
     "stopScreenShareGeneric": "Не удалось остановить демонстрацию экрана",
     "callNetworkQualityLow": "Качество работы сети: низкое.",
     "callNoSpeakerFound": "Динамики и наушники не найдены. Подключите звуковое устройство, чтобы услышать звонок.",
@@ -169,8 +174,8 @@
     "dismissButtonAriaLabel": "Закрыть",
     "failedToJoinCallGeneric": "Не удалось присоединиться к звонку.",
     "failedToJoinCallInvalidMeetingLink": "Не удалось присоединиться к собранию. Недопустимая ссылка.",
-    "startScreenSharingGeneric": "Возникла проблема с запуском демонстрации экрана.",
-    "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть."
+    "cameraFrozenForRemoteParticipants": "У участников звонка возникают проблемы с просмотром вашего видео. Проверьте свои устройства и сеть.",
+    "unableToStartVideoEffect": "Не удалось применить эффект видео."
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",

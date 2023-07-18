@@ -4,6 +4,7 @@
 import { Role } from '@internal/react-components';
 import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
+import { jsonDateDeserializer } from '../lib/utils';
 
 export interface QueryArgs {
   // Defined only for hermetic tests.
@@ -20,6 +21,7 @@ export interface QueryArgs {
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
+  localVideoTilePosition?: false | ('grid' | 'floating');
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -33,9 +35,18 @@ export interface QueryArgs {
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
+  const localVideoTilePosition = !params.localVideoTilePosition
+    ? undefined
+    : params.localVideoTilePosition === 'false'
+    ? false
+    : params.localVideoTilePosition === 'floating'
+    ? 'floating'
+    : 'grid';
 
   return {
-    mockCallAdapterState: params.mockCallAdapterState ? JSON.parse(params.mockCallAdapterState) : undefined,
+    mockCallAdapterState: params.mockCallAdapterState
+      ? JSON.parse(params.mockCallAdapterState, jsonDateDeserializer) // json date deserializer is needed because Date objects are serialized as strings by JSON.stringify
+      : undefined,
     useFrLocale: Boolean(params.useFrLocale),
     showCallDescription: Boolean(params.showCallDescription),
     injectParticipantMenuItems: Boolean(params.injectParticipantMenuItems),
@@ -54,6 +65,7 @@ export function parseQueryArgs(): QueryArgs {
     makeMeLotsOfPeople: Boolean(params.makeMeLotsOfPeople),
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
-      : undefined
+      : undefined,
+    localVideoTilePosition
   };
 }

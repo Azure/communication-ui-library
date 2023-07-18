@@ -75,7 +75,7 @@ const config = {
   ]
 };
 
-if (process.env['COMMUNICATION_REACT_FLAVOR'] === 'stable') {
+if (process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta') {
   if (!config.module) config.module = {};
   if (!config.module.rules) config.module.rules = [];
   config.module.rules.push({

@@ -6,10 +6,10 @@ import {
   Chat,
   ChatItemProps,
   Flex,
-  Ref,
   ShorthandValue,
-  mergeStyles as mergeNorthstarThemes
-} from '@fluentui/react-northstar';
+  mergeStyles as mergeNorthstarThemes,
+  Ref
+} from '@internal/northstar-wrapper';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -39,8 +39,6 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
-import { ComponentSlotStyle } from '@fluentui/react-northstar';
-import { LiveAnnouncer } from 'react-aria-live';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -52,7 +50,8 @@ import {
   ParticipantAddedSystemMessage,
   ParticipantRemovedSystemMessage,
   Message,
-  ReadReceiptsBySenderId
+  ReadReceiptsBySenderId,
+  ComponentSlotStyle
 } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
@@ -65,13 +64,16 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(at-mention) */
-import { AtMentionOptions } from './AtMentionFlyout';
+import LiveAnnouncer from './Announcer/LiveAnnouncer';
+/* @conditional-compile-remove(mention) */
+import { MentionOptions } from './MentionPopover';
+/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -242,6 +244,9 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
+  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /** String for aria text in file attachment group*/
+  fileCardGroupMessage: string;
 }
 
 /**
@@ -366,7 +371,7 @@ const memoizeAllMessages = memoizeFnAll(
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
-    onCancelMessageEdit?: CancelEditCallback,
+    onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
@@ -376,7 +381,7 @@ const memoizeAllMessages = memoizeFnAll(
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
-      onCancelMessageEdit,
+      onCancelEditMessage,
       onDeleteMessage,
       onSendMessage,
       disableEditing
@@ -524,15 +529,7 @@ export type UpdateMessageCallback = (
  * @public
  * Callback function run when a message edit is cancelled.
  */
-export type CancelEditCallback = (
-  messageId: string,
-  /* @conditional-compile-remove(file-sharing) */
-  metadata?: Record<string, string>,
-  /* @conditional-compile-remove(file-sharing) */
-  options?: {
-    attachedFilesMetadata?: FileMetadata[];
-  }
-) => void;
+export type CancelEditCallback = (messageId: string) => void;
 
 /**
  * Props for {@link MessageThread}.
@@ -640,7 +637,7 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional callback to retrieve the inline image in a message.
    * @param attachment - FileMetadata object we want to render
@@ -661,7 +658,7 @@ export type MessageThreadProps = {
    *
    * @param messageId - message id from chatClient
    */
-  onCancelMessageEdit?: CancelEditCallback;
+  onCancelEditMessage?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -708,12 +705,12 @@ export type MessageThreadProps = {
    * @beta
    */
   onDisplayDateTimeString?: (messageDate: Date) => string;
-  /* @conditional-compile-remove(at-mention) */
+  /* @conditional-compile-remove(mention) */
   /**
-   * Optional props needed to lookup suggestions and display mentions in the at mention scenario.
+   * Optional props needed to lookup a mention query and display mentions
    * @beta
    */
-  atMentionOptions?: AtMentionOptions;
+  mentionOptions?: MentionOptions;
 };
 
 /**
@@ -763,7 +760,7 @@ export type MessageProps = {
    *
    * @param messageId - message id from chatClient
    */
-  onCancelMessageEdit?: CancelEditCallback;
+  onCancelEditMessage?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -810,13 +807,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
-    onCancelMessageEdit,
+    onCancelEditMessage,
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images) */
-    onFetchAttachments
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onFetchAttachments,
+    /* @conditional-compile-remove(mention) */
+    mentionOptions
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -839,18 +838,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (!onFetchAttachments || attachment.id in inlineAttachments) {
+      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage' || attachment.id in inlineAttachments) {
         return;
       }
+
       setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
       const attachmentDownloadResult = await onFetchAttachments(attachment);
       if (attachmentDownloadResult[0]) {
-        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
+        setInlineAttachments((prev) => ({
+          ...prev,
+          [attachment.id]: attachmentDownloadResult[0].blobUrl
+        }));
       }
     },
     [inlineAttachments, onFetchAttachments]
@@ -864,6 +867,11 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       isAllChatMessagesLoadedRef.current = false;
     }
   }, [onLoadPreviousChatMessages]);
+
+  /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  useEffect(() => {
+    initializeFileTypeIcons();
+  }, []);
 
   const previousTopRef = useRef<number>(-1);
   const previousHeightRef = useRef<number>(-1);
@@ -1117,10 +1125,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
-            /* @conditional-compile-remove(teams-inline-images) */
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
-            /* @conditional-compile-remove(teams-inline-images) */
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments}
+            /* @conditional-compile-remove(mention) */
+            mentionOptions={mentionOptions}
           />
         );
       }
@@ -1138,10 +1148,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
-      /* @conditional-compile-remove(teams-inline-images) */
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
-      /* @conditional-compile-remove(teams-inline-images) */
-      inlineAttachments
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      inlineAttachments,
+      /* @conditional-compile-remove(mention) */
+      mentionOptions
     ]
   );
 
@@ -1235,7 +1247,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
-            onCancelMessageEdit,
+            onCancelEditMessage,
             onDeleteMessage,
             onSendMessage,
             props.disableEditing
@@ -1258,7 +1270,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
-      onCancelMessageEdit,
+      onCancelEditMessage,
       onDeleteMessage,
       onSendMessage,
       lastSeenChatMessage,

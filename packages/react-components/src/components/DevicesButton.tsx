@@ -278,10 +278,17 @@ export const generateDefaultDeviceMenuProps = (
             key: 'sectionCamera',
             title: strings.cameraMenuTooltip,
             subMenuProps: {
+              calloutProps: {
+                preventDismissOnEvent
+              },
               items: cameras.map((camera) => ({
                 key: camera.id,
                 text: camera.name,
                 title: camera.name,
+                iconProps: {
+                  iconName: 'ContextMenuCameraIcon',
+                  styles: { root: { lineHeight: 0 } }
+                },
                 itemProps: {
                   styles: menuItemStyles
                 },
@@ -320,12 +327,19 @@ export const generateDefaultDeviceMenuProps = (
             key: key,
             title: title,
             subMenuProps: {
+              calloutProps: {
+                preventDismissOnEvent
+              },
               items: microphones.map((microphone) => ({
                 key: microphone.id,
                 text: microphone.name,
                 title: microphone.name,
                 itemProps: {
                   styles: menuItemStyles
+                },
+                iconProps: {
+                  iconName: 'ContextMenuMicIcon',
+                  styles: { root: { lineHeight: 0 } }
                 },
                 canCheck: true,
                 isChecked: microphone.id === selectedMicrophone?.id,
@@ -353,12 +367,19 @@ export const generateDefaultDeviceMenuProps = (
           {
             key: 'sectionSpeaker',
             subMenuProps: {
+              calloutProps: {
+                preventDismissOnEvent
+              },
               items: speakers.map((speaker) => ({
                 key: speaker.id,
                 text: speaker.name,
                 title: speaker.name,
                 itemProps: {
                   styles: menuItemStyles
+                },
+                iconProps: {
+                  iconName: 'ContextMenuSpeakerIcon',
+                  styles: { root: { lineHeight: 0 } }
                 },
                 canCheck: true,
                 isChecked: speaker.id === selectedSpeaker?.id,

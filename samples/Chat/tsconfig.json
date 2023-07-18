@@ -9,6 +9,7 @@
       "@internal/acs-ui-common": ["../../../packages/acs-ui-common/src"],
       "@internal/calling-stateful-client": ["../../../packages/calling-stateful-client/src"],
       "@internal/chat-stateful-client": ["../../../packages/chat-stateful-client/src"],
+      "@internal/northstar-wrapper": ["../../../packages/northstar-wrapper/src"],
       "@internal/react-components": ["../../../packages/react-components/src"],
       "@internal/react-composites": ["../../../packages/react-composites/src"],
       "@azure/communication-react": ["../../../packages/communication-react/src"]

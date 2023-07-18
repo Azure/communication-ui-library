@@ -50,12 +50,16 @@ export const dismissError = (dismissedErrors: DismissedError[], toDismiss: Activ
     }
   }
 
+  const toDismissTimestamp = toDismiss.timestamp ?? now;
+
   // Record that this error was dismissed for the first time right now.
   return [
     ...dismissedErrors,
     {
       type: toDismiss.type,
-      dismissedAt: now,
+      // the error time could be sometimes later than the button click time, which cause the dismiss not working
+      // so we set the dismiss time to the later one
+      dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
       activeSince: toDismiss.timestamp
     }
   ];
@@ -151,7 +155,7 @@ export const messageBarType = (errorType: ErrorType): MessageBarType => {
     case 'callVideoRecoveredBySystem':
     case 'callMacOsCameraAccessDenied':
     case 'callMacOsScreenShareAccessDenied':
-    case 'startScreenSharingGeneric':
+    case 'startScreenShareGeneric':
     case 'cameraFrozenForRemoteParticipants':
       return MessageBarType.warning;
     default:
@@ -221,3 +225,23 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
  * @private
  */
 export const defaultSpokenLanguage = 'en-us';
+
+/**
+ * @private
+ */
+const SAFARI_COMPOSITION_KEYCODE = 229;
+/**
+ * Determine if the press of the enter key is from a composition session or not (Safari only)
+ *
+ * @private
+ */
+export const isEnterKeyEventFromCompositionSession = (e: React.KeyboardEvent<HTMLElement>): boolean =>
+  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
+  e.nativeEvent.isComposing ||
+  e.nativeEvent.keyCode === SAFARI_COMPOSITION_KEYCODE ||
+  e.nativeEvent.which === SAFARI_COMPOSITION_KEYCODE;
+
+/**
+ * @private
+ */
+export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);

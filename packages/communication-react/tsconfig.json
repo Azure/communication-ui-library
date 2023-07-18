@@ -10,7 +10,8 @@
       "@internal/calling-stateful-client": ["../../calling-stateful-client/src"],
       "@internal/chat-stateful-client": ["../../chat-stateful-client/src"],
       "@internal/react-components": ["../../react-components/src"],
-      "@internal/react-composites": ["../../react-composites/src"]
+      "@internal/react-composites": ["../../react-composites/src"],
+      "@internal/northstar-wrapper": ["../../northstar-wrapper/src"]
     },
     "plugins": [
       {

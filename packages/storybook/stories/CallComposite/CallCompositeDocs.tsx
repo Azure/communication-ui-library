@@ -4,7 +4,7 @@
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
 import { Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
@@ -33,7 +33,30 @@ const callParticipantsLocatorSnippet = `
 { participantsIDs: ["<phone #>", "<phone #>", "<ACS userId>", ...] }
 `;
 
-export const getDocs: () => JSX.Element = () => {
+export const Docs: () => JSX.Element = () => {
+  const refCustomDataModel = useRef(null);
+  const refCustomDateTimeFormat = useRef(null);
+  const refExistedJoinCall = useRef(null);
+  const refTheme = useRef(null);
+
+  const scrollToRef = (ref): void => {
+    ref.current.scrollIntoView({ behavior: 'auto' });
+  };
+
+  useEffect(() => {
+    const url = document.URL;
+
+    if (url.includes('custom-data-model') && refCustomDataModel.current) {
+      scrollToRef(refCustomDataModel);
+    } else if (url.includes('custom-date-time-format') && refCustomDateTimeFormat.current) {
+      scrollToRef(refCustomDateTimeFormat);
+    } else if (url.includes('theme') && refTheme.current) {
+      scrollToRef(refTheme);
+    } else if (url.includes('join-existing-call') && refExistedJoinCall.current) {
+      scrollToRef(refExistedJoinCall);
+    }
+  }, [refCustomDataModel, refCustomDateTimeFormat, refTheme, refExistedJoinCall]);
+
   return (
     <>
       <Title>CallComposite</Title>
@@ -143,29 +166,33 @@ export const getDocs: () => JSX.Element = () => {
         Example](./?path=/story/composites-call-basicexample--basic-example).
       </Description>
 
-      <Heading>Theming</Heading>
-      <Description>
-        CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
-        theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
-        [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
-        UI library.
-      </Description>
+      <div ref={refTheme}>
+        <Heading>Theming</Heading>
+        <Description>
+          CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
+          theme example](./?path=/story/composites-call-themeexample--theme-example) to see theming in action or the
+          [overall theming example](./?path=/docs/theming--page) to see how theming works for all the components in this
+          UI library.
+        </Description>
+      </div>
 
-      <Heading>Custom Data Model</Heading>
-      <Description>
-        It is a primary tenet of Azure Communication Services that customers bring their own user identities. Customers
-        then use the Azure Communication Services identity service to create corresponding authentication tokens for
-        their users. The ChatComposite allows developers to easily inject custom data associated with these user
-        identities. Look at the [example
-        canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
-        initials displayed for users can be provided by Contoso.
-      </Description>
-      <Description>Note that, by default, the initials text color is setup to `white`</Description>
-      <Source code={customDataModelExampleContainerText} />
-      <Description>
-        See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
-        custom data model can be injected for all the components in this UI library.
-      </Description>
+      <div ref={refCustomDataModel}>
+        <Heading>Custom Data Model</Heading>
+        <Description>
+          It is a primary tenet of Azure Communication Services that customers bring their own user identities.
+          Customers then use the Azure Communication Services identity service to create corresponding authentication
+          tokens for their users. The ChatComposite allows developers to easily inject custom data associated with these
+          user identities. Look at the [example
+          canvas](./?path=/story/composites-call-customdatamodelexample--custom-data-model-example) to see how the
+          initials displayed for users can be provided by Contoso.
+        </Description>
+        <Description>Note that, by default, the initials text color is setup to `white`</Description>
+        <Source code={customDataModelExampleContainerText} />
+        <Description>
+          See the [Custom data model example documentation](./?path=/docs/customuserdatamodel--page) to understand how
+          custom data model can be injected for all the components in this UI library.
+        </Description>
+      </div>
 
       <Heading>Fonts</Heading>
       <Description>
@@ -202,13 +229,57 @@ export const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code="<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />" />
 
-      <Heading>Joining an existing Call</Heading>
+      <Heading>Customize Local Video Tile</Heading>
+      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
-        The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
-        playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
-        useful if you want to explore the composite with multiple users.
+        Just like customizing the control bar we have some configuration options for the local video tile. These
+        controls are to help facilitate different calling experiences like creating an audio only call.
+      </Description>
+      <Description>
+        These options allow for you to decide which part of the gallery that the composite shows the local video tile.
+        We currently support controls to show the local video tile in either the `grid view` of the gallery or in the
+        `floating` position we see today.
+      </Description>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-grid-layout.png"
+            alt="Grid layout for composite video gallery"
+          />
+          <Description>Call Composite with `grid` layout.</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-floating-layout.png"
+            alt="Floating layout for composite video gallery"
+          />
+          <Description>Call Composite with `floating` layout.</Description>
+        </Stack>
+      </Stack>
+      <Source code="<CallComposite options={localVideoTileOptions: {position: 'grid'}} />" />
+      <Source code="<CallComposite options={localVideoTileOptions: {position: 'floating'}} />" />
+      <Description>
+        Just like the `CallControlOptions` we can also disable the local video tile from the gallery by providing false
+        instead of the options object.
+      </Description>
+      <Source code="<CallComposite options={localVideoTileOptions: false />" />
+      <Description>
+        This will hide the local video tile from the composite's video gallery. The default value is `floating` which
+        will have the local video tile follow our `floatingLocalLayout`. See our [video
+        gallery](./?path=/docs/ui-components-videogallery--video-gallery) component docs for more information on our
+        local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
 
+      <div ref={refExistedJoinCall}>
+        <Heading>Joining an existing Call</Heading>
+        <Description>
+          The [join existing call](./?path=/story/composites-call-joinexistingcall--join-existing-call) provides an easy
+          playground to join an existing Azure Communication Services group call or an existing Teams meeting. This is
+          useful if you want to explore the composite with multiple users.
+        </Description>
+      </div>
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner version={'1.3.2-beta.1'} />
       <Description>

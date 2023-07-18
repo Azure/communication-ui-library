@@ -3,7 +3,11 @@
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { CustomCallControlButtonPlacement } from '../../common/ControlBar/CustomButton';
-import { CallControlDisplayType, CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
+import {
+  CallControlDisplayType,
+  CommonCallControlOptions,
+  _CommonCallControlOptions
+} from '../../common/types/CommonCallControlOptions';
 
 /**
  * Customization options for the control bar in calling experience.
@@ -20,6 +24,15 @@ export type CallControlOptions =
       /* @conditional-compile-remove(new-call-control-bar) */
       legacyControlBarExperience?: boolean;
     };
+
+/**
+ * While the API for the legacyControlBarExperience is in beta. Use this type to access the internal
+ * API.
+ * @internal
+ */
+export type _CallControlOptions = _CommonCallControlOptions & {
+  legacyControlBarExperience?: boolean;
+};
 
 /**
  * Arguments for {@link CustomCallControlButtonCallback}.

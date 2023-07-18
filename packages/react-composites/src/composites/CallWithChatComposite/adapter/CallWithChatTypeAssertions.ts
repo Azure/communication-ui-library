@@ -95,6 +95,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(rooms) */ 'roleHint'
   | /* @conditional-compile-remove(video-background-effects) */ 'videoBackgroundImages'
   | /* @conditional-compile-remove(video-background-effects) */ 'selectedVideoBackgroundEffect'
+  | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
   | 'cameraStatus'
 >;
 

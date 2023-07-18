@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "added adapter method to update selected video background effect",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

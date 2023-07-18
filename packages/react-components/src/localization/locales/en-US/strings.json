@@ -28,6 +28,9 @@
     "uploading": "Uploading",
     "uploadCompleted": "Upload completed"
   },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggestions"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
     "deliveredTooltipText": "Sent",
@@ -44,8 +47,8 @@
     "tooltipContent": "Leave call"
   },
   "cameraButton": {
-    "onLabel": "Turn off",
-    "offLabel": "Turn on",
+    "onLabel": "Camera",
+    "offLabel": "Camera",
     "tooltipDisabledContent": "Camera is disabled",
     "tooltipOnContent": "Turn off camera",
     "tooltipOffContent": "Turn on camera",
@@ -59,11 +62,12 @@
     "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
     "onSplitButtonPrimaryActionCamera": "Turn off camera",
     "offSplitButtonPrimaryActionCamera": "Turn on camera",
-    "cameraPrimaryActionSplitButtonTitle": "Use camera"
+    "cameraPrimaryActionSplitButtonTitle": "Use camera",
+    "videoEffectsMenuItemTitle": "Effects"
   },
   "microphoneButton": {
-    "onLabel": "Mute",
-    "offLabel": "Unmute",
+    "onLabel": "Mic",
+    "offLabel": "Mic",
     "tooltipDisabledContent": "Microphone is disabled",
     "tooltipOnContent": "Mute microphone",
     "tooltipOffContent": "Unmute microphone",
@@ -78,7 +82,7 @@
     "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
     "offSplitButtonMicrophonePrimaryAction": "Unmute microphone",
     "onSplitButtonMicrophonePrimaryAction": "Mute microphone",
-    "micPrimaryActionSplitButtonTitle": "Use microphone"
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone"
   },
   "devicesButton": {
     "label": "Devices",
@@ -137,7 +141,8 @@
     "actionMenuMoreOptions": "More Options",
     "downloadFile": "Download file",
     "blockedWarningText": "This message was deleted due to organizational policy.",
-    "blockedWarningLinkText": "Details"
+    "blockedWarningLinkText": "Details",
+    "fileCardGroupMessage": "The message has {fileCount} attachment"
   },
   "errorBar": {
     "unableToReachChatService": "You are offline",
@@ -151,7 +156,7 @@
     "muteGeneric": "Failed to mute microphone",
     "unmuteGeneric": "Failed to unmute microphone",
     "speakingWhileMuted": "Your microphone is muted",
-    "startScreenShareGeneric": "Failed to start screen sharing",
+    "startScreenShareGeneric": "There was an issue starting screen share.",
     "stopScreenShareGeneric": "Failed to stop screen sharing",
     "callNetworkQualityLow": "Network quality is low.",
     "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
@@ -172,7 +177,6 @@
     "dismissButtonAriaLabel": "Close",
     "failedToJoinCallGeneric": "Failed to join call.",
     "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
-    "startScreenSharingGeneric": "There was an issue starting screen share.",
     "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
     "unableToStartVideoEffect": "Unable to apply video effect."
   },

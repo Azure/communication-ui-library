@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update the basic example snippet for chat composite not to include beta code.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

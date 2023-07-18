@@ -8,6 +8,7 @@ import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { yellowBannerPalette } from '../BetaBanners/BannerPalettes';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { StorybookBanner } from '../BetaBanners/StorybookBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -54,8 +55,8 @@ const getDocs: () => JSX.Element = () => {
       <Description>
         VideoGallery lays out the local user and each remote participant in a call in a
         [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component. The VideoGallery component is made up
-        of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Horizontal
-        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), and a [Local Video
+        of a [Grid Layout](./?path=/docs/ui-components-videogallery--video-gallery#grid-layout), [Overflow
+        Gallery](./?path=/docs/ui-components-videogallery--video-gallery#overflow-gallery), and a [Local Video
         Tile](./?path=/docs/ui-components-videogallery--video-gallery#local-video-tile). The logic used to place each
         [VideoTile](./?path=/docs/ui-components-videotile--video-tile) component into which section is explained below.
       </Description>
@@ -225,7 +226,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Local Video Camera Button</Heading>
-      <DetailedBetaBanner />
       <Description>
         The VideoGallery can take in customization to allow for the introduction of local camera controls where the
         button will cycle through the different camera's in the users device. Typical usage is to enable this button on
@@ -266,32 +266,27 @@ const getDocs: () => JSX.Element = () => {
         are shown in the GridLayout. This is shown in the video clip below. Pinned participants will be shown in the
         order that they are pinned.
       </Description>
-      <video width="90%" controls>
-        <source src="videos/video-gallery-pinning.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <Image style={{ width: '90%' }} src="images/video-gallery-pinning.gif" alt="VideoGallery pinning" />
       <Description>
         When screensharing is active, pinned participants are placed first in the horizontal gallery as shown in video
         clip below.
       </Description>
-      <video width="90%" controls>
-        <source src="videos/video-gallery-pinning-with-screenshare.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <Image
+        style={{ width: '90%' }}
+        src="images/video-gallery-pinning-with-screenshare.gif"
+        alt="VideoGallery pinning with screenshare active"
+      />
       <Description>
         Pinned participants can be unpinned through the contextual menu as shown in the video clip below.
       </Description>
-      <video width="90%" controls>
-        <source src="videos/video-gallery-unpinning.mp4" type="video/mp4" />
-        Your browser does not support the video element.
-      </video>
+      <Image style={{ width: '90%' }} src="images/video-gallery-unpinning.gif" alt="VideoGallery unpinning" />
       <Description>
         The maximum pinned participants is currently set to 4 for the VideoGallery. The pin menu item will be disabled
         when this limit is reached as shown in the screenshot below.
       </Description>
       <Image
         style={{ width: '90%' }}
-        /* set an approximate default height to avoid reflow when the image loads */ src="images/pinned-limit-reached-video-gallery.png"
+        src="images/pinned-limit-reached-video-gallery.png"
         alt="Disabled pin menu item in VideoGallery when limit reached"
       />
       <Subheading>Pinning participants via long touch for mobile</Subheading>
@@ -374,6 +369,40 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={renderingOptionsDefault} />
 
+      <Heading>Local video tile aspect ratio options</Heading>
+      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
+      <Description>
+        The local video tile can have its aspect ratio controlled to ensure the expected behavior for the device
+        formfactor and orientation. If left unset it will follow the default of `followDeviceOrientation` which will
+        have the tile follow the responsive behaviors that the gallery laredy provides.
+      </Description>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-gallery-169.png"
+            alt="Grid layout for composite video gallery"
+          />
+          <Description>Local tile size `16:9` aspect ratio.</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '27.2rem' }}
+            src="images/storybook-gallery-916.png"
+            alt="Floating layout for composite video gallery"
+          />
+          <Description>Local tile size `9:16` aspect ratio.</Description>
+        </Stack>
+        <Stack horizontalAlign="center">
+          <img
+            style={{ width: '100%', maxWidth: '25rem' }}
+            src="images/storybook-gallery-hidden.png"
+            alt="Floating layout for composite video gallery"
+          />
+          <Description>Local tile size `hidden` removes the local tile</Description>
+        </Stack>
+      </Stack>
+
       <Heading>Props</Heading>
       <ArgsTable of={VideoGalleryComponent} />
     </>
@@ -408,7 +437,7 @@ const ViewOptionsDefault = (): JSX.Element => {
 `;
 
 const MockLocalParticipant = {
-  userId: 'user1',
+  userId: 'userLocal',
   displayName: 'You',
   state: 'Connected',
   isMuted: true,
@@ -458,6 +487,7 @@ const VideoGalleryStory = (args): JSX.Element => {
       overflowGalleryPosition={args.overflowGalleryPosition}
       localParticipant={MockLocalParticipant}
       remoteParticipants={remoteParticipants}
+      localVideoTileSize={args.localVideoTileSize}
     />
   );
 };
@@ -474,6 +504,7 @@ export default {
     remoteParticipants: controlsToAdd.remoteParticipantNames,
     videoGalleryLayout: controlsToAdd.videoGallerylayout,
     overflowGalleryPosition: controlsToAdd.overflowGalleryPosition,
+    localVideoTileSize: controlsToAdd.localVideoTileSize,
     screenShareExperience: controlsToAdd.screenShareExperience,
     // Hiding auto-generated controls
     styles: hiddenControl,

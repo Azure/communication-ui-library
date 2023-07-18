@@ -29,10 +29,10 @@ import { ACSKnownMessageType } from './utils/constants';
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
-import { FileMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images) */
-import { ChatAttachment } from '@azure/communication-chat';
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { FileMetadata, FileMetadataAttachmentType } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { AttachmentType, ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -73,19 +73,71 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
   }
 };
 
-/* @conditional-compile-remove(teams-inline-images) */
-const extractInlineImageFilesMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
-  return attachments.map((attachment) => ({
-    attachmentType: attachment.attachmentType,
-    id: attachment.id,
-    name: attachment.name ?? '',
-    extension: attachment.contentType ?? '',
-    url: attachment.url,
-    previewUrl: attachment.previewUrl
-  }));
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
+  const fileMetadata: FileMetadata[] = [];
+  attachments.forEach((attachment) => {
+    const attachmentType = mapAttachmentType(attachment.attachmentType);
+    if (attachmentType === 'inlineImage') {
+      fileMetadata.push({
+        attachmentType: attachmentType,
+        id: attachment.id,
+        name: attachment.name ?? '',
+        extension: attachment.contentType ?? '',
+        url: extractAttachmentUrl(attachment),
+        previewUrl: attachment.previewUrl
+      });
+    } else if (attachmentType === 'fileSharing') {
+      fileMetadata.push({
+        attachmentType: attachmentType,
+        id: attachment.id,
+        name: attachment.name ?? '',
+        extension: attachment.contentType ?? '',
+        url: extractAttachmentUrl(attachment),
+        payload: { teamsFileAttachment: 'true' }
+      });
+    }
+  });
+  return fileMetadata;
 };
 
-/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachmentType => {
+  if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
+    return 'inlineImage';
+  } else if (attachmentType === 'file') {
+    return 'fileSharing';
+  }
+  return 'unknown';
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const extractAttachmentUrl = (attachment: ChatAttachment): string => {
+  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
+};
+
+const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
+    const attachments: ChatAttachment[] = message.content?.attachments;
+    const teamsImageHtmlContent = attachments
+      .filter((attachment) => attachment.attachmentType === 'teamsImage')
+      .map((attachment) => generateImageAttachmentImgHtml(attachment))
+      .join('');
+
+    if (teamsImageHtmlContent) {
+      return (message.content?.message ?? '') + teamsImageHtmlContent;
+    }
+  }
+  return message.content?.message;
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
+  return `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
+};
+
+/* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
   let fileMetadata: FileMetadata[] = [];
 
@@ -94,9 +146,9 @@ const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] =>
     fileMetadata = fileMetadata.concat(extractAttachedFilesMetadata(message.metadata));
   }
 
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (message.content?.attachments) {
-    fileMetadata = fileMetadata.concat(extractInlineImageFilesMetadata(message.content?.attachments));
+    fileMetadata = fileMetadata.concat(extractTeamsAttachmentsMetadata(message.content?.attachments));
   }
 
   return fileMetadata;
@@ -113,7 +165,7 @@ const convertToUiBlockedMessage = (
   return {
     messageType: 'blocked',
     createdOn: message.createdOn,
-    warningText: message.content?.message,
+    warningText: undefined,
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,
     senderId: messageSenderId,
@@ -134,7 +186,7 @@ const convertToUiChatMessage = (
   return {
     messageType: 'chat',
     createdOn: message.createdOn,
-    content: message.content?.message,
+    content: processChatMessageContent(message),
     contentType: sanitizedMessageContentType(message.type),
     status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
     senderDisplayName: message.senderDisplayName,
@@ -145,7 +197,7 @@ const convertToUiChatMessage = (
     deletedOn: message.deletedOn,
     mine: messageSenderId === userId,
     metadata: message.metadata,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     attachedFilesMetadata: extractFilesMetadata(message)
   };
 };
@@ -203,74 +255,74 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
   !!chatMessage.content?.participants && chatMessage.content.participants.some((p) => !!p.displayName);
 
 /**
- * Selector for {@link MessageThread} component.
  *
- * @public
+ * @private
  */
-export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
-  (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
-    // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
-    const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
+export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =>
+  createSelector(
+    [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
+    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+      // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
+      const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
 
-    // get number of participants
-    // filter out the non valid participants (no display name)
-    // Read Receipt details will be disabled when participant count is 0
-    const participantCount = isTeamsInterop
-      ? undefined
-      : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
+      // get number of participants
+      // filter out the non valid participants (no display name)
+      // Read Receipt details will be disabled when participant count is 0
+      const participantCount = isTeamsInterop
+        ? undefined
+        : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
 
-    // creating key value pairs of senderID: last read message information
+      // creating key value pairs of senderID: last read message information
 
-    const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
+      const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
 
-    // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
-    // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
-    readReceipts
-      .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
-      .forEach((r) => {
-        readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
-          lastReadMessage: r.chatMessageId,
-          displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
-        };
-      });
+      // readReceiptsBySenderId[senderID] gets updated every time a new message is read by this sender
+      // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
+      readReceipts
+        .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
+        .forEach((r) => {
+          readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
+            lastReadMessage: r.chatMessageId,
+            displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+          };
+        });
 
-    // A function takes parameter above and generate return value
-    const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
-      Object.values(chatMessages)
-        .filter(
-          (message) =>
-            message.type.toLowerCase() === ACSKnownMessageType.text ||
-            message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
-            message.type.toLowerCase() === ACSKnownMessageType.html ||
-            (message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message)) ||
-            (message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message)) ||
-            // TODO: Add support for topicUpdated system messages in MessageThread component.
-            // message.type === ACSKnownMessageType.topicUpdated ||
-            message.clientMessageId !== undefined
-        )
-        .filter(isMessageValidToRender)
-        .map((message) => {
-          return memoizedFn(
-            message.id ?? message.clientMessageId,
-            message,
-            userId,
-            message.createdOn <= latestReadTime,
-            isLargeGroup
-          );
-        })
-    );
+      // A function takes parameter above and generate return value
+      const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
+        Object.values(chatMessages)
+          .filter(
+            (message) =>
+              message.type.toLowerCase() === ACSKnownMessageType.text ||
+              message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
+              message.type.toLowerCase() === ACSKnownMessageType.html ||
+              (message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message)) ||
+              (message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message)) ||
+              // TODO: Add support for topicUpdated system messages in MessageThread component.
+              // message.type === ACSKnownMessageType.topicUpdated ||
+              message.clientMessageId !== undefined
+          )
+          .filter(isMessageValidToRender)
+          .map((message) => {
+            return memoizedFn(
+              message.id ?? message.clientMessageId,
+              message,
+              userId,
+              message.createdOn <= latestReadTime,
+              isLargeGroup
+            );
+          })
+      );
 
-    updateMessagesWithAttached(convertedMessages);
-    return {
-      userId,
-      showMessageStatus: true,
-      messages: convertedMessages,
-      participantCount,
-      readReceiptsBySenderId
-    };
-  }
-);
+      updateMessagesWithAttached(convertedMessages);
+      return {
+        userId,
+        showMessageStatus: true,
+        messages: convertedMessages,
+        participantCount,
+        readReceiptsBySenderId
+      };
+    }
+  );
 
 const sanitizedMessageContentType = (type: string): MessageContentType => {
   const lowerCaseType = type.toLowerCase();
@@ -283,7 +335,10 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.['fileSharingMetadata']) {
+  if (
+    message.metadata?.['fileSharingMetadata'] ||
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ message.content?.attachments
+  ) {
     return true;
   }
   /* @conditional-compile-remove(data-loss-prevention) */
@@ -292,3 +347,10 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   }
   return !!(message.content && message.content?.message !== '');
 };
+
+/**
+ * Selector for {@link MessageThread} component.
+ *
+ * @public
+ */
+export const messageThreadSelector: MessageThreadSelector = messageThreadSelectorWithThread();

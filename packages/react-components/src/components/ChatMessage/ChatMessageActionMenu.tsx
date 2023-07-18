@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, mergeStyles, Theme } from '@fluentui/react';
-import { MenuProps, Ref } from '@fluentui/react-northstar';
+import { MenuProps, Ref } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { chatActionsCSS, iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
