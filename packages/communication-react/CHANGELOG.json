@@ -253,7 +253,7 @@
             "author": "joshlai@microsoft.com",
             "package": "@azure/communication-react",
             "commit": "ea106e570fb60364ceb36f0328267fed75c39f27",
-            "comment": "`@azure/communication-chat` peer dependency updated to 1.3.2-beta.2 for beta packages"
+            "comment": "`@azure/communication-chat` peer dependency updated to 1.3.2-beta.3 for beta packages"
           },
           {
             "author": "94866715+dmceachernmsft@users.noreply.github.com",
@@ -3103,7 +3103,7 @@
             "author": "joshlai@microsoft.com",
             "package": "@azure/communication-react",
             "commit": "ea106e570fb60364ceb36f0328267fed75c39f27",
-            "comment": "`@azure/communication-chat` peer dependency updated to 1.3.2-beta.2 for beta packages"
+            "comment": "`@azure/communication-chat` peer dependency updated to 1.3.2-beta.3 for beta packages"
           },
           {
             "author": "97124699+prabhjot-msft@users.noreply.github.com",
