@@ -4,9 +4,9 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { ChatThreadClientState } from '@internal/chat-stateful-client';
-import { CallAdapter, CallAdapterState, CallCompositePage, VideoBackGroundDependency } from '../../CallComposite';
+import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
+import { VideoBackgroundImage, VideoBackgroundEffect, VideoBackGroundDependency } from '../../CallComposite';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';

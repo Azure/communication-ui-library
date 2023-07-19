@@ -213,17 +213,17 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
     <Stack data-ui-id="call-composite-device-settings" tokens={mainStackTokens}>
       {roleCanUseCamera && (
         <Stack>
-          {onResolveVideoEffectDependency && (
-            <Stack horizontal horizontalAlign="space-between" styles={cameraAndVideoEffectsContainerStyleDesktop}>
-              <Label
-                id={'call-composite-local-camera-settings-label'}
-                className={mergeStyles(dropDownStyles(theme).label)}
-                disabled={!cameraPermissionGranted} // follows dropdown disabled state
-              >
-                {cameraLabel}
-              </Label>
-              {
-                /* @conditional-compile-remove(video-background-effects) */
+          <Stack horizontal horizontalAlign="space-between" styles={cameraAndVideoEffectsContainerStyleDesktop}>
+            <Label
+              id={'call-composite-local-camera-settings-label'}
+              className={mergeStyles(dropDownStyles(theme).label)}
+              disabled={!cameraPermissionGranted} // follows dropdown disabled state
+            >
+              {cameraLabel}
+            </Label>
+            {
+              /* @conditional-compile-remove(video-background-effects) */
+              onResolveVideoEffectDependency && (
                 <DefaultButton
                   iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
                   styles={effectsButtonStyles(theme)}
@@ -232,9 +232,9 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
                 >
                   {locale.strings.call.configurationPageVideoEffectsButtonLabel}
                 </DefaultButton>
-              }
-            </Stack>
-          )}
+              )
+            }
+          </Stack>
           <ConfigurationPageCameraDropdown
             cameraGrantedDropdown={cameraGrantedDropdown}
             cameraPermissionGranted={cameraPermissionGranted ?? false}

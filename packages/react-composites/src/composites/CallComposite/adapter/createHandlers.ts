@@ -15,6 +15,7 @@ import {
   _isTeamsCall,
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackGroundDependency } from './AzureCommunicationCallAdapter';
 
 /**
@@ -35,6 +36,7 @@ export const createHandlers = <AgentType extends CallAgent | TeamsCallAgent>(
   deviceManager: StatefulDeviceManager | undefined,
   call: CallCommon | undefined,
   options?: {
+    /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
   }
 ): CallHandlersOf<AgentType> => {

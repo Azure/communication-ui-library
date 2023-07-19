@@ -8,7 +8,9 @@ import { CallState, RemoteParticipantState } from '@internal/calling-stateful-cl
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { AdapterStateModifier, VideoBackGroundDependency } from '../adapter/AzureCommunicationCallAdapter';
+import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackGroundDependency } from '../adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { VideoDeviceInfo } from '@azure/communication-calling';

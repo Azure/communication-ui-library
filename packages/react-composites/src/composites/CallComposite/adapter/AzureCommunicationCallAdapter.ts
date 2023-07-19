@@ -33,16 +33,19 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call,
-  BackgroundBlurEffect,
-  BackgroundReplacementEffect
+  Call
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type {
+  BackgroundBlurConfig,
+  BackgroundReplacementConfig,
+  BackgroundBlurEffect,
+  BackgroundReplacementEffect
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -326,6 +329,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
+  /* @conditional-compile-remove(video-background-effects) */
   private onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
 
   private get call(): CallCommon | undefined {
@@ -359,7 +363,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     if (isRoomsCall && options && 'roleHint' in options && options?.roleHint === undefined) {
       options = { ...options, roleHint: 'Consumer' };
     }
-
+    /* @conditional-compile-remove(video-background-effects) */
     this.onResolveVideoBackGroundDependency = options?.videoBackgroundOptions?.onResolveDependency;
 
     this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
@@ -414,9 +418,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
     };
 
-    this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined, {
-      onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
-    });
+    this.handlers = createHandlers(
+      callClient,
+      callAgent,
+      deviceManager,
+      undefined,
+      /* @conditional-compile-remove(video-background-effects) */ {
+        onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+      }
+    );
 
     this.onClientStateChange = onStateChange;
 
@@ -697,9 +707,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async leaveCall(forEveryone?: boolean): Promise<void> {
     await this.handlers.onHangUp(forEveryone);
     this.unsubscribeCallEvents();
-    this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, undefined, {
-      onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
-    });
+    this.handlers = createHandlers(
+      this.callClient,
+      this.callAgent,
+      this.deviceManager,
+      undefined,
+      /* @conditional-compile-remove(video-background-effects) */ {
+        onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+      }
+    );
     // We set the adapter.call object to undefined immediately when a call is ended.
     // We do not set the context.callId to undefined because it is a part of the immutable data flow loop.
     this.call = undefined;
@@ -866,9 +882,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     // Resync state after callId is set
     this.context.updateClientState(this.callClient.getState());
-    this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
-      onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
-    });
+    this.handlers = createHandlers(
+      this.callClient,
+      this.callAgent,
+      this.deviceManager,
+      this.call,
+      /* @conditional-compile-remove(video-background-effects) */ {
+        onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+      }
+    );
     this.subscribeCallEvents();
   }
   /* @conditional-compile-remove(video-background-effects) */
@@ -1209,6 +1231,7 @@ export type CommonCallAdapterOptions = {
   onFetchProfile?: OnFetchProfileCallback;
 };
 
+/* @conditional-compile-remove(video-background-effects) */
 /**
  * @beta
  */

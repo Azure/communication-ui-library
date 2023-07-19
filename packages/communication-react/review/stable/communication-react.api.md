@@ -7,6 +7,10 @@
 /// <reference types="react" />
 
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import { BackgroundBlurEffect } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -1423,7 +1427,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {} | undefined) => CallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -2568,6 +2572,12 @@ export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT
 
 // @public
 export const useTheme: () => Theme;
+
+// @beta (undocumented)
+export type VideoEffectBackGroundDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
 
 // @public
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;

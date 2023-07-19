@@ -9,10 +9,8 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
-import type { BackgroundBlurConfig as BackgroundBlurConfig_2 } from '@azure/communication-calling-effects';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling';
-import type { BackgroundReplacementConfig as BackgroundReplacementConfig_2 } from '@azure/communication-calling-effects';
 import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -3748,14 +3746,14 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 }
 
 // @beta
-export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig_2 {
+export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
     effectName: 'blur';
 }
 
 // @beta (undocumented)
 export type VideoBackGroundDependency = {
-    createBackgroundBlurEffect: (config?: BackgroundBlurConfig_2) => BackgroundBlurEffect;
-    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig_2) => BackgroundReplacementEffect;
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
 
 // @beta
@@ -3774,7 +3772,7 @@ export interface VideoBackgroundNoEffect {
 }
 
 // @beta
-export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig_2 {
+export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
     effectName: 'replacement';
     key?: string;
 }

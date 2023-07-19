@@ -9,6 +9,10 @@
 import { ActiveErrorMessage } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import { BackgroundBlurEffect } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
@@ -138,7 +142,7 @@ export interface CommonCallingHandlers {
 }
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {} | undefined) => CallingHandlers;
 
 // @public
 export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -232,6 +236,12 @@ export const useCallingSelector: <SelectorT extends (state: CallClientState, pro
 
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @beta (undocumented)
+export type VideoEffectBackGroundDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
 
 // @internal (undocumented)
 export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined) => VideoGalleryRemoteParticipant[];

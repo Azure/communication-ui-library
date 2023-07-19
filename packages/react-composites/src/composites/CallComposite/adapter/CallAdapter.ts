@@ -5,7 +5,7 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -39,6 +39,7 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackGroundDependency } from './AzureCommunicationCallAdapter';
 
 /**

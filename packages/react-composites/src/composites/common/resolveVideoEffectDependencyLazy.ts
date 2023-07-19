@@ -1,20 +1,24 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(video-background-effects) */
 import type {
   BackgroundBlurConfig,
   BackgroundBlurEffect,
   BackgroundReplacementConfig,
   BackgroundReplacementEffect
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(video-background-effects) */
 import { VideoBackGroundDependency } from '../CallComposite';
 
 /**
  *
  * @public
  */
+/* @conditional-compile-remove(video-background-effects) */
 // eslint-disable-next-line jsdoc/require-jsdoc
 export const onResolveVideoEffectDependencyLazy = async (): Promise<VideoBackGroundDependency> => {
+  // eslint-disable-next-line jsdoc/require-jsdoc
   const module = await import('@azure/communication-calling-effects');
   // eslint-disable-next-line jsdoc/require-jsdoc
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {
@@ -31,3 +35,5 @@ export const onResolveVideoEffectDependencyLazy = async (): Promise<VideoBackGro
   };
   return videoBackGroundDependency;
 };
+
+export {};

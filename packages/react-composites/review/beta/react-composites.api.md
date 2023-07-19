@@ -9,10 +9,10 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import type { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundBlurEffect } from '@azure/communication-calling';
-import type { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementEffect } from '@azure/communication-calling';
+import type { BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundBlurEffect } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';

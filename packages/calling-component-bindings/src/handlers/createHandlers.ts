@@ -17,11 +17,9 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
-import {
-  createDefaultCommonCallingHandlers,
-  CommonCallingHandlers,
-  VideoEffectBackGroundDependency
-} from './createCommonHandlers';
+import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoEffectBackGroundDependency } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -50,6 +48,7 @@ export const createDefaultCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | undefined,
     options?: {
+      /* @conditional-compile-remove(video-background-effects) */
       onResolveVideoBackGroundDependency?: () => Promise<VideoEffectBackGroundDependency>;
     }
   ): CallingHandlers => {
