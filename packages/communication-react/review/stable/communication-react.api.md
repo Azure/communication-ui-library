@@ -2213,7 +2213,6 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
-    totalParticipantCount?: number;
     participantAriaLabelledBy?: string;
 };
 

@@ -98,6 +98,7 @@ export type ParticipantListProps = {
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
+  /* @conditional-compile-remove(total-participant-count) */
   /** Total number of people in the call. This number can be larger than the remote participant count. */
   totalParticipantCount?: number;
   /* @conditional-compile-remove(total-participant-count) */
