@@ -371,12 +371,19 @@ export class FakeChatThreadClient implements IChatThreadClient {
   private baseChatEvent(): BaseChatEvent {
     const thread = this.checkedGetThread();
     const me = this.checkedGetMe();
+    const identifier = getIdentifierKind(me.id);
+
+    /* @conditional-compile-remove(communication-common-beta-v3) */
+    if (identifier.kind === 'microsoftBot') {
+      throw new Error('Unsupported indentifer kind: microsoftBot');
+    }
+
     return {
       threadId: thread.id,
-      sender: getIdentifierKind(me.id),
+      sender: identifier,
       senderDisplayName: me.displayName ?? '',
       // Verify/FIXME: Do we need to multicast event with each individual recepient's ID?
-      recipient: getIdentifierKind(me.id)
+      recipient: identifier
     };
   }
 }
