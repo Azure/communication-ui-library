@@ -283,8 +283,7 @@ export interface RemoteParticipantState {
     | PhoneNumberKind
     | MicrosoftTeamsUserKind
     | UnknownIdentifierKind
-    /* @conditional-compile-remove(communication-common-beta-v3) */
-    | MicrosoftBotIdentifier;
+    | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotIdentifier;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */

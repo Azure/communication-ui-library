@@ -29,9 +29,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
     return (
       remoteParticipants
         // Filter out MicrosoftBot participants
-        /* @conditional-compile-remove(communication-common-beta-v3) */
         .filter((participant: RemoteParticipantState) => {
+          /* @conditional-compile-remove(communication-common-beta-v3) */
           return !isMicrosoftBotIdentifier(participant.identifier);
+          return true;
         })
         /**
          * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
