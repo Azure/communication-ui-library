@@ -312,7 +312,7 @@ test.describe('Participant pane tests', async () => {
     const participants: MockRemoteParticipantState[] = [];
 
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { makeMeLotsOfPeople: 'true' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { mockParticipantCount: '150' }));
 
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
@@ -329,7 +329,7 @@ test.describe('Participant pane tests', async () => {
     const participants: MockRemoteParticipantState[] = [];
 
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { makeMeLotsOfPeople: 'true' }));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { mockParticipantCount: '150' }));
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));

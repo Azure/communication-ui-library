@@ -1629,7 +1629,6 @@ export type ParticipantListProps = {
 
 // @beta
 export interface ParticipantListStrings {
-    // (undocumented)
     overflowParticipantCount?: string;
 }
 

@@ -3215,7 +3215,6 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
 
 // @beta
 export interface ParticipantListStrings {
-    // (undocumented)
     overflowParticipantCount?: string;
 }
 

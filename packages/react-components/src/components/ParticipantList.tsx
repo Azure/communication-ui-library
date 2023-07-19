@@ -54,6 +54,9 @@ export interface ParticipantListStyles extends BaseCustomStyles {
  * @beta
  */
 export interface ParticipantListStrings {
+  /**
+   * String for rendering the count of participants not contained in the displayed participant list
+   */
   overflowParticipantCount?: string;
 }
 

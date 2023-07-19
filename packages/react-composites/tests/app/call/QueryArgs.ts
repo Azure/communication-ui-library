@@ -29,7 +29,7 @@ export interface QueryArgs {
   groupId: string;
   token: string;
   displayName: string;
-  makeMeLotsOfPeople: boolean;
+  mockRemoteParticipantCount: number;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -62,7 +62,7 @@ export function parseQueryArgs(): QueryArgs {
     role: (params.role as Role) ?? undefined,
     rtl: Boolean(params.rtl),
     callInvitationUrl: params.callInvitationUrl,
-    makeMeLotsOfPeople: Boolean(params.makeMeLotsOfPeople),
+    mockRemoteParticipantCount: Number(params.mockRemoteParticipantCount),
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined,

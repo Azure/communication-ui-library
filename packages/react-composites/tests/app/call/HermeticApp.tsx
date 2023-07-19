@@ -24,10 +24,10 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
 
   useEffect(() => {
     ((): void => {
-      if (queryArgs.makeMeLotsOfPeople && queryArgs.mockCallAdapterState?.call) {
+      if (queryArgs.mockRemoteParticipantCount && queryArgs.mockCallAdapterState?.call) {
         const participants: { [keys: string]: MockRemoteParticipantState } = {};
         const call = queryArgs.mockCallAdapterState.call;
-        for (let i = 0; i < 150; i++) {
+        for (let i = 0; i < queryArgs.mockRemoteParticipantCount; i++) {
           participants[i] = {
             identifier: { communicationUserId: `user${i}`, kind: 'communicationUser' },
             displayName: `User ${i}`,
@@ -47,14 +47,13 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
           }
         };
         console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
-        console.log(callAdapterState.call?.totalParticipantCount);
         setCallAdapter(new MockCallAdapter(callAdapterState));
       } else {
         console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
         setCallAdapter(new MockCallAdapter(queryArgs.mockCallAdapterState));
       }
     })();
-  }, [queryArgs.mockCallAdapterState, queryArgs.makeMeLotsOfPeople]);
+  }, [queryArgs.mockCallAdapterState, queryArgs.mockRemoteParticipantCount]);
 
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
 }
