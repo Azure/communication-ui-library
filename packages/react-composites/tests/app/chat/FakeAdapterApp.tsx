@@ -214,7 +214,7 @@ const sendRemoteInlineImageMessage = (
       message: messageWithInlineImage.content?.message ?? '',
       attachments: messageWithInlineImage.content?.attachments,
       threadId: threadId,
-      sender: getIdentifierKind(remoteParticipant.id),
+      sender: remoteParticipantId,
       senderDisplayName: remoteParticipant.displayName ?? '',
       recipient: localParticipantId,
       metadata: {}
