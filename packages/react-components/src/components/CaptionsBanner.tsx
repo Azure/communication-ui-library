@@ -87,7 +87,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom]);
+  }, [handleScrollToTheBottom, isCaptionsOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
