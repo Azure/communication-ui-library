@@ -182,10 +182,10 @@ export abstract class ProxyCallAgentCommon {
         return (...args: Parameters<AgentType['on']>): void => {
           // typescript is not smart enough to handle multiple overloads and pull the correct type here so force casting args
           const event = args[0] as 'incomingCall' | 'callsUpdated' | 'connectionStateChanged';
-          const listener = args[1] as unknown as CollectionUpdatedEvent<CallCommon>;
 
           const isCallsUpdated = event === 'callsUpdated';
           if (isCallsUpdated) {
+            const listener = args[1] as unknown as CollectionUpdatedEvent<CallCommon>;
             this._externalCallsUpdatedListeners.add(listener);
           } else {
             this.agentSubscribe(target, args);
@@ -196,10 +196,10 @@ export abstract class ProxyCallAgentCommon {
         return (...args: Parameters<AgentType['off']>): void => {
           // typescript is not smart enough to handle multiple overloads and pull the correct type here so force casting args
           const event = args[0] as 'incomingCall' | 'callsUpdated' | 'connectionStateChanged';
-          const listener = args[1] as unknown as CollectionUpdatedEvent<CallCommon>;
 
           const isCallsUpdated = event === 'callsUpdated';
           if (isCallsUpdated) {
+            const listener = args[1] as unknown as CollectionUpdatedEvent<CallCommon>;
             this._externalCallsUpdatedListeners.delete(listener);
           } else {
             this.agentUnsubscribe(target, args);
