@@ -179,6 +179,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-adhoc-call) */
   const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
+  const renderDisplayNameFieldTrmapoline = (): JSX.Element => {
+    /* @conditional-compile-remove(teams-identity-support) */
+    return !teamsIdentityChosen ? <DisplayNameField defaultName={displayName} setName={setDisplayName} /> : <></>;
+    return <DisplayNameField defaultName={displayName} setName={setDisplayName} />;
+  };
 
   return (
     <Stack
@@ -346,7 +351,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {!teamsIdentityChosen && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
+          {renderDisplayNameFieldTrmapoline()}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
