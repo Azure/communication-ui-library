@@ -36,7 +36,7 @@ import {
   CommunicationIdentifierKind
 } from '@azure/communication-common';
 /* @conditional-compile-remove(communication-common-beta-v3) */
-import { MicrosoftBotIdentifier } from '@azure/communication-common';
+import { MicrosoftBotKind } from '@azure/communication-common';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -283,7 +283,7 @@ export interface RemoteParticipantState {
     | PhoneNumberKind
     | MicrosoftTeamsUserKind
     | UnknownIdentifierKind
-    | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotIdentifier;
+    | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */
