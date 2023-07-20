@@ -1870,7 +1870,6 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
-    // (undocumented)
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
