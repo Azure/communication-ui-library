@@ -63,7 +63,7 @@ export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatPar
 
   /* @conditional-compile-remove(communication-common-beta-v3) */
   if (identifier.kind === 'microsoftBot') {
-    throw new Error('Unsupported indentifer kind: microsoftBot');
+    throw new Error('Unsupported indentifier kind: microsoftBot');
   }
 
   return {
