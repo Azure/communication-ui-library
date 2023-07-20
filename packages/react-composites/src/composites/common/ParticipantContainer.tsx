@@ -18,6 +18,7 @@ import {
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
+import { _formatString } from '@internal/acs-ui-common';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -106,8 +107,10 @@ export const ParticipantListWithHeading = (props: {
 
 const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number): string => {
   /* @conditional-compile-remove(total-participant-count) */
-  const participantCountString = totalParticipantCount ? `(${totalParticipantCount})` : '';
+  const participantCountString = totalParticipantCount
+    ? { numberOfPeople: `(${totalParticipantCount})` }
+    : { numberOfPeople: '' };
   /* @conditional-compile-remove(total-participant-count) */
-  return `${paneTitle} ${participantCountString}`;
+  return _formatString(paneTitle, participantCountString);
   return paneTitle;
 };
