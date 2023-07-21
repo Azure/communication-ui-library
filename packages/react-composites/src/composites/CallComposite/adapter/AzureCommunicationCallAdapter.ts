@@ -117,6 +117,7 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
+    isRoomsCall: boolean,
     options?: {
       /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
@@ -133,10 +134,10 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
+      isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
-      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages: options?.videoBackgroundImages,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined
@@ -343,14 +344,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = 'roomId' in this.locator;
-    /* @conditional-compile-remove(rooms) */
-    // to prevent showing components that depend on role such as local video tile, camera button, etc. in a rooms call
-    // we set the default roleHint as 'Consumer' when roleHint is undefined since it has the lowest level of permissions
-    if (isRoomsCall && options?.roleHint === undefined) {
-      options = { ...options, roleHint: 'Consumer' };
-    }
-
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
+    // /* @conditional-compile-remove(rooms) */
+    // // to prevent showing components that depend on role such as local video tile, camera button, etc. in a rooms call
+    // // we set the default roleHint as 'Consumer' when roleHint is undefined since it has the lowest level of permissions
+    // if (isRoomsCall && options?.roleHint === undefined) {
+    //   options = { ...options, roleHint: 'Consumer' };
+    // }
+    console.log(isRoomsCall);
+    this.context = new CallContext(callClient.getState(), isTeamsMeeting, isRoomsCall, options);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -1190,15 +1191,7 @@ export type CommonCallAdapterOptions = {
  *
  * @beta
  */
-export type AzureCommunicationCallAdapterOptions = {
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
-   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
-   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
-   */
-  roleHint?: Role;
-} & CommonCallAdapterOptions;
+export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.

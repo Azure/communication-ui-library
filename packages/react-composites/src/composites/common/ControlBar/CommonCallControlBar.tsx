@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
-import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
+import { CallAdapterProvider, useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
@@ -82,6 +82,7 @@ const inferCommonCallControlOptions = (
 export const CommonCallControlBar = (props: CommonCallControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
   const rtl = theme.rtl;
+  const adapter = useAdapter();
 
   const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
   const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);
@@ -205,23 +206,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     return <></>;
   }
 
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
-
   const sideButtonsPresent =
     isEnabled(options.peopleButton) || isEnabled(options.chatButton) || customButtons['secondary'] !== undefined;
 
-  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
+  const screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
   /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+  // screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
 
-  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
+  const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
   /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+  // microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
 
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+  const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
   /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+  // cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
     <div ref={controlBarSizeRef}>
