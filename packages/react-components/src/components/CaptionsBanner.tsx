@@ -114,7 +114,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             </Ref>
           )}
           {!isCaptionsOn && (
-            <Stack verticalAlign="center" className={loadingBannerClassName} data-is-focusable={true}>
+            <Stack verticalAlign="center" styles={loadingBannerClassName(formFactor)} data-is-focusable={true}>
               <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" />
             </Stack>
           )}
