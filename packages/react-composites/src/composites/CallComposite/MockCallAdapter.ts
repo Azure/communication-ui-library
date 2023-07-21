@@ -248,5 +248,6 @@ const defaultCallAdapterState: CallAdapterState = {
     deviceAccess: { video: true, audio: true }
   },
   isTeamsCall: false,
+  isRoomsCall: false,
   latestErrors: {}
 };

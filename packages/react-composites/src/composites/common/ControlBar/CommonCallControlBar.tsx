@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
-import { CallAdapterProvider, useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
+import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
 import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
@@ -82,7 +82,6 @@ const inferCommonCallControlOptions = (
 export const CommonCallControlBar = (props: CommonCallControlBarProps & ContainerRectProps): JSX.Element => {
   const theme = useTheme();
   const rtl = theme.rtl;
-  const adapter = useAdapter();
 
   const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
   const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);

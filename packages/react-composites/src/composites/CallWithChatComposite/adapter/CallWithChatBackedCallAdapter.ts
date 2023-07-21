@@ -226,6 +226,7 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
+    isRoomsCall: callWithChatAdapterState.isRoomsCall,
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
