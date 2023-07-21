@@ -8,6 +8,8 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall, TeamsCallAgent } from '@azure/communication-calling';
 import { CommunicationIdentifier, isCommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(communication-common-beta-v3) */
+import { isMicrosoftBotIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -73,6 +75,10 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
         }
+        /* @conditional-compile-remove(communication-common-beta-v3) */
+        if (isMicrosoftBotIdentifier(participant)) {
+          throw new Error('Adding Microsoft Bot Identifier is not supported!');
+        }
         /* @conditional-compile-remove(teams-identity-support) */
         if (isPhoneNumberIdentifier(participant)) {
           call?.addParticipant(participant, threadId ? { threadId } : undefined);
@@ -86,6 +92,10 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         const participant = _toCommunicationIdentifier(userId);
         if (isCommunicationUserIdentifier(participant)) {
           throw new Error('CommunicationIdentifier in Teams call is not supported!');
+        }
+        /* @conditional-compile-remove(communication-common-beta-v3) */
+        if (isMicrosoftBotIdentifier(participant)) {
+          throw new Error('Removing Microsoft Bot Identifier is not supported!');
         }
         /* @conditional-compile-remove(teams-identity-support) */
         await call?.removeParticipant(participant);

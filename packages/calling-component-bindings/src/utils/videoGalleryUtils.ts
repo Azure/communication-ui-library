@@ -11,6 +11,7 @@ import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/rea
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -34,7 +35,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
         .filter((participant: RemoteParticipantState) => {
           return (
             !['InLobby', 'Idle', 'Connecting', 'Disconnected'].includes(participant.state) ||
-            participant.identifier.kind === 'phoneNumber'
+            isPhoneNumberIdentifier(participant.identifier)
           );
         })
         .map((participant: RemoteParticipantState) => {
