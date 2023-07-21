@@ -58,11 +58,20 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
   };
 };
 
-export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatParticipant => ({
-  id: getIdentifierKind(p.id),
-  displayName: p.displayName ?? '',
-  shareHistoryTime: p.shareHistoryTime
-});
+export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatParticipant => {
+  const identifier = getIdentifierKind(p.id);
+
+  /* @conditional-compile-remove(communication-common-beta-v3) */
+  if (identifier.kind === 'microsoftBot') {
+    throw new Error('Unsupported indentifier kind: microsoftBot');
+  }
+
+  return {
+    id: identifier,
+    displayName: p.displayName ?? '',
+    shareHistoryTime: p.shareHistoryTime
+  };
+};
 
 export const latestMessageTimestamp = (messages: ChatMessage[]): Date | undefined => {
   if (messages.length === 0) {
