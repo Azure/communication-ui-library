@@ -85,9 +85,12 @@ export interface CallWithChatAdapterManagement {
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
+  * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
    *
-   * @param options - param to set microphone/camera initially on/off.
+   * @param options - param to set microphone/camera initially on/off/use precall state.
    *
    * @public
    */

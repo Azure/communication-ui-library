@@ -2755,8 +2755,8 @@ export type IsSpeakingChangedListener = (event: {
 
 // @public
 export type JoinCallOptions = {
-    microphoneOn: boolean;
-    cameraOn: boolean;
+    microphoneOn?: boolean | 'keep';
+    cameraOn?: boolean | 'keep';
 };
 
 // @public
