@@ -274,8 +274,8 @@ export interface VideoBackgroundImage {
  * @public
  */
 export type JoinCallOptions = {
-  microphoneOn?: boolean|'keep';
-  cameraOn?: boolean|'keep';
+  microphoneOn?: boolean | 'keep';
+  cameraOn?: boolean | 'keep';
 };
 
 /* @conditional-compile-remove(close-captions) */
@@ -899,7 +899,7 @@ export interface CallAdapter extends CommonCallAdapter {
   joinCall(microphoneOn?: boolean): Call | undefined;
 
   /**
-  * Join the call with options bag to set microphone/camera initial state when joining call
+   * Join the call with options bag to set microphone/camera initial state when joining call
    * true = turn on the device when joining call
    * false = turn off the device when joining call
    * 'keep'/undefined = retain devices' precall state

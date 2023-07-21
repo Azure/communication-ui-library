@@ -575,16 +575,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         // undefined = keep = use precall state
         // true = turn on
         // false = turn off
-        const microphoneState = options.microphoneOn ?? 'keep'
-        const cameraState = options.cameraOn ?? 'keep'
+        const microphoneState = options.microphoneOn ?? 'keep';
+        const cameraState = options.cameraOn ?? 'keep';
 
-        audioOptions = { muted: !(microphoneState === 'keep' ? this.getState().isLocalPreviewMicrophoneEnabled : microphoneState) };
+        audioOptions = {
+          muted: !(microphoneState === 'keep' ? this.getState().isLocalPreviewMicrophoneEnabled : microphoneState)
+        };
         const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
         const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
         const precallVideoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
 
-        videoOptions = cameraState === 'keep' ? precallVideoOptions : (localStream && options?.cameraOn ? { localVideoStreams: [localStream] } : {});
-
+        videoOptions =
+          cameraState === 'keep'
+            ? precallVideoOptions
+            : localStream && options?.cameraOn
+            ? { localVideoStreams: [localStream] }
+            : {};
       }
 
       /* @conditional-compile-remove(teams-adhoc-call) */
