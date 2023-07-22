@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update script to determine next beta version",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}
