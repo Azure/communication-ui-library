@@ -15,7 +15,8 @@ on:
         options:
           - stable-minor
           - stable-patch
-          - beta
+          - beta-minor
+          - beta-patch
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
 concurrency:
@@ -74,9 +75,12 @@ jobs:
       # Create pre-release branch
       #
       # Bump versions first so we can use the new version in the branch name.
-      - name: Bump beta package versions if beta
-        if: ${{ github.event.inputs.bump_type == 'beta' }}
-        run: node common/scripts/bump-beta-version.js
+      - name: Bump beta patch package versions
+        if: ${{ github.event.inputs.bump_type == 'beta-patch' }}
+        run: node common/scripts/bump-beta-version.js patch
+      - name: Bump beta minor package versions
+        if: ${{ github.event.inputs.bump_type == 'beta-minor' }}
+        run: node common/scripts/bump-beta-version.js minor
       - name: Bump stable patch package versions
         if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/bump-stable-version.js patch

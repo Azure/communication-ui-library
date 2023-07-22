@@ -31,7 +31,8 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 1. Options for this workflow:
     1. Branch - This is the branch that the release will be created from. Default option is from `main`.
     2. Bump Type - This is the type of release that will be created, the options for this are:
-        - `beta` - You will want to select this option when you want to do a beta release e.g: `release/1.2.beta.1`
+        - `beta-minor` - This option is best for when there are API changes in a beta release e.g `1.2.0-beta.1 -> 1.3.0-beta.2`
+        - `beta-patch` - This option is best for when there are no API changes in a beta release e.g: `1.2.0-beta.1 -> 1.2.1-beta.2`
         - `stable-minor` - This option is best for when you want to release from `1.2.0 -> 1.3.0`
         - `stable-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1`
 

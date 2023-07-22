@@ -1,0 +1,15 @@
+{
+  "name": "@internal/scripts",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "jest": "29.5.0",
+    "semver": "~7.5.3"
+  },
+  "scripts": {
+    "build": "echo skip",
+    "lint": "echo skip",
+    "lint:fix": "echo skip",
+    "test": "jest"
+}
+}

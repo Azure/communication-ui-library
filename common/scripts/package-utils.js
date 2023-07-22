@@ -30,13 +30,13 @@ function overrideAllPackages(packagePaths, packageProcessFunc) {
   }
 }
 
-const updateAllVersions = (versionUpdater) => {
+const updateAllVersions = (versionUpdater, minor) => {
   const packagePaths = findAllPackageJSON(PACKAGES_DIR);
 
   const packageProcessFunc = (packageJson) => {
     const result = {
       ...packageJson,
-      version: versionUpdater(packageJson.version)
+      version: versionUpdater(packageJson.version, minor)
     };
     return result;
   }
@@ -44,7 +44,7 @@ const updateAllVersions = (versionUpdater) => {
   overrideAllPackages(packagePaths, packageProcessFunc);
 }
 
-const updateAllDepVersions = (versionUpdater, deps/* dependency names to update version*/) => {
+const updateAllDepVersions = (versionUpdater, minor, deps/* dependency names to update version*/) => {
   const packagePaths = [...findAllPackageJSON(PACKAGES_DIR), ...findAllPackageJSON(SAMPLES_DIR), ...findAllPackageJSON(TOOLS_DIR)];
 
   const packageProcessFunc = (packageJson) => {
@@ -57,8 +57,8 @@ const updateAllDepVersions = (versionUpdater, deps/* dependency names to update 
 
   const updateDependencies = (dependencies) => {
     for (const depName in dependencies) {
-      if (deps.includes(depName)) {
-        dependencies[depName] = versionUpdater(dependencies[depName]);
+      if (deps && deps.includes(depName)) {
+        dependencies[depName] = versionUpdater(dependencies[depName], minor);
       }
     }
   }
