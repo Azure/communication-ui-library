@@ -225,7 +225,7 @@ const App = (): JSX.Element => {
 };
 
 const getIsCTEParam = (isCTE?: boolean): string => {
-  return `&isCTE=${!!isCTE}`;
+  return isCTE ? '&isCTE=true' : '';
 };
 
 const getJoinParams = (locator: CallAdapterLocator): string => {

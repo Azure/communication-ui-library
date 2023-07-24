@@ -1,6 +1,6 @@
 {
-  "type": "none",
-  "comment": "move client commits to separate branch",
+  "type": "prerelease",
+  "comment": "adding raised hand functionality to stateful client",
   "packageName": "@azure/communication-react",
   "email": "ruslanzdor@microsoft.com",
   "dependentChangeType": "patch"

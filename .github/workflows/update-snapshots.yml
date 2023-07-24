@@ -107,6 +107,7 @@ jobs:
         id: updatesnapshots
         run: |
           cd samples/tests
+          npx playwright install --with-deps
           rushx update:snapshot:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -196,6 +197,7 @@ jobs:
         id: updatesnapshots
         run: |
           cd samples/tests
+          npx playwright install --with-deps
           rushx update:snapshot:bundle
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
