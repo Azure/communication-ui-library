@@ -28,7 +28,7 @@ Mon, 24 Jul 2023 17:34:36 GMT
   - Effects pane header misaligned ([PR #3338](https://github.com/azure/communication-ui-library/pull/3338) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Resolve issue with edit box showing the number zero ([PR #3295](https://github.com/azure/communication-ui-library/pull/3295) by palatter@microsoft.com)
   - Add vertical offset for mention popover ([PR #3301](https://github.com/azure/communication-ui-library/pull/3301) by 98852890+vhuseinova-msft@users.noreply.github.com)
-  - Mention editing fixes ([PR #3322](https://github.com/azure/communication-ui-library/pull/3322) by 98852890+vhuseinova-msft@users.noreply.github.com)
+  - Fix for cursor position and mention editing issues in SendBox ([PR #3322](https://github.com/azure/communication-ui-library/pull/3322) by 98852890+vhuseinova-msft@users.noreply.github.com)
   - Ensure popover position is set prior to rendering. ([PR #3330](https://github.com/azure/communication-ui-library/pull/3330) by 3941071+emlynmac@users.noreply.github.com)
   - Fix Mention Popover's position is too low when insert mention in the middle of a very long text ([PR #3348](https://github.com/azure/communication-ui-library/pull/3348) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
   - Fix for the text selection for triple click in TextFieldWithMention ([PR #3336](https://github.com/azure/communication-ui-library/pull/3336) by 98852890+vhuseinova-msft@users.noreply.github.com)
