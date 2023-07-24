@@ -80,7 +80,7 @@ export type ParticipantListProps = {
   /** Optional callback to render the context menu for each participant  */
   onRemoveParticipant?: (userId: string) => void;
   /* @conditional-compile-remove(raise-hand) */
-  /** Optional callback to render the context menu for each participant  */
+  /** Optional callback when to update raised hand states for participants  */
   onLowerHands?: (userIds: string[]) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -244,9 +244,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       }
 
       /* @conditional-compile-remove(raise-hand) */
-      const callingParticipant = participant as CallParticipantListParticipant;
+      const remoteParticipant = participant as CallParticipantListParticipant;
       /* @conditional-compile-remove(raise-hand) */
-      if (callingParticipant.raisedHand && onLowerHands) {
+      if (remoteParticipant.raisedHand && onLowerHands) {
         menuItems.push({
           key: 'lowerHand',
           text: strings.lowerParticipantHandButtonLabel,
