@@ -255,9 +255,8 @@ export interface OptimalVideoCountFeatureState {
 
 // @public
 export interface RaiseHandCallFeature {
-    raisedHands: RaisedHand[];
-    // (undocumented)
     localParticipantRaisedHand?: RaisedHand;
+    raisedHands: RaisedHand[];
 }
 
 // @public
