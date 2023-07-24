@@ -2756,9 +2756,7 @@ export type IsSpeakingChangedListener = (event: {
 
 // @public
 export interface JoinCallOptions {
-    // (undocumented)
     cameraOn?: boolean | 'keep';
-    // (undocumented)
     microphoneOn?: boolean | 'keep';
 }
 

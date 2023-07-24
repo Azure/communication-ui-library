@@ -274,7 +274,19 @@ export interface VideoBackgroundImage {
  * @public
  */
 export interface JoinCallOptions {
+  /**
+   * microphone state when joining call
+   * true: turn on
+   * false: turn off
+   * 'keep': maintain precall state
+   */
   microphoneOn?: boolean | 'keep';
+  /**
+   * camera state when joining call
+   * true: turn on
+   * false: turn off
+   * 'keep': maintain precall state
+   */
   cameraOn?: boolean | 'keep';
 };
 
