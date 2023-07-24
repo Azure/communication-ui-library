@@ -2,6 +2,297 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 24 Jul 2023 17:34:36 GMT",
+      "tag": "@azure/communication-react_v1.8.0-beta.2",
+      "version": "1.8.0-beta.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d0f73dea29c92c84d4826cb2a16e24d8a41692a4",
+            "comment": "Fix mention popover content view is not wrapped up in the scroll view when the list is long"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "223552f3a4671d84e07e7e1c2b8d61bc73026727",
+            "comment": "Effects pane header misaligned"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3e42b7937543449faa90b14de9e57a1398ed4949",
+            "comment": "Resolve issue with edit box showing the number zero"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "310e489c1f861c0220950d47fdf9649824820181",
+            "comment": "Add vertical offset for mention popover"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "402ef71bd11e611e3059ca4a19976dcb8053ffbd",
+            "comment": "Mention editing fixes"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c77632d88edacaf0145220c7fa2dba4b688333d6",
+            "comment": "Ensure popover position is set prior to rendering."
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3ac0c49996868c542405a777e42ce1b3f3003842",
+            "comment": "Fix Mention Popover's position is too low when insert mention in the middle of a very long text"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0aa08af3672111a692d5dbab76b1ec5674fb229",
+            "comment": "Fix for the text selection for triple click in TextFieldWithMention"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f6c715dd16cd5bba65b0e2e0ce199b01b0ce36c8",
+            "comment": "Fix for VideoTile context menu being dismissed when new captions come in"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "991d1a289c1236039805d3d953474f2ca9ee806f",
+            "comment": "Add selected state aria label to active tab header"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "73774e898a99ab18166b94106f089c1801277149",
+            "comment": "Fixed adapter error on mobile querying speakers when speakers are not available"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "12cbb34209e32e77725c4b9ac34793198e057b1e",
+            "comment": "If video effect fails, none effect in picker is highlighted"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e3574c1108609555570fe4cde43770fef6080fb2",
+            "comment": "Ensure chat client state changes are true changes"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "01f7906e02209c790c4a2a35d296cfc9af1c82ef",
+            "comment": "Bump @azure/communication-* SDKs"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8a3366ee7e7a166b78817bf8aaded13bd938beb8",
+            "comment": "Fix tab ordering in the callscreen for the video effects pane"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0b57240f9ce88fbbc2cc67ed0359525aa88f3f79",
+            "comment": "Addressed the issue where video not scale properly in message content"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2fef76fcd28e3053f64f9961cbf31da2f623f240",
+            "comment": "Fix conditional comments for Chat sample app"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6150212c479bbe07f63bb7d42d54b10bfb110170",
+            "comment": "Fixed bug where captions keep scrolling to the bottom when new captions are received "
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "884099b359993a6c5e3fc8bc64644d142d91f966",
+            "comment": "Allow mention to be added after new line break"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8df2a2d6e9f2e082c1e7a0f48be62635331280f6",
+            "comment": "Fix unread chat messages badge on the CallWithChatComposite being cleared when the call goes on hold"
+          }
+        ],
+        "minor": [
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9b85abf7ac1a46460838063f40580f018b2c1f92",
+            "comment": "[FileDownloadCards] cleaning up some unused property"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "33592e04c1745a7055b71fcf098b689fc7952ebe",
+            "comment": "[TeamsInteropFileMetadata] introducing new type for future scalability"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e5428a4369c69bd882acc1750c2d0155fd9b21b9",
+            "comment": "New adapter API joinCallWithOptions to allow start with video and mic"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9e51c0b5e0f16a2747367ff7051aae21edb93245",
+            "comment": "Added Czech component and composite locales"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "33592e04c1745a7055b71fcf098b689fc7952ebe",
+            "comment": "Add new File Attachment types"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "81ea9c671c2da3a68f13ebcff97e2636c0923562",
+            "comment": "Hoist error tracking to composite level to allow tracking to be shared across components. This fixes an issue where errors would reappear after being dismissed."
+          }
+        ],
+        "none": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a58e28350730601d08b2c214a6c084662539a136",
+            "comment": "update pnpm version to 8.6.9"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "be9b970e00bb45e78a4a37c2d633425ca934cd05",
+            "comment": "Rephrase file sharing storybook page"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e591b444ec366e49900c4fda73bcd9d54e1e1ff7",
+            "comment": "Updated description for showParticipantOverflowTooltip prop"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ecf4ed0d3c8d2ed86eec692c3f19ae14fda4620b",
+            "comment": "fix breaking change check by ensuring dependencies are installed for the base branch"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "374ee5617494cff71deab5d3524e424083bd86ad",
+            "comment": "Update 1.7.0-beta.1 changelog with adhoc feature description"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8e49aa00eebc3fe6ecd1e10ecff3e7fb9fceffc4",
+            "comment": "Update VideoGallery storybook page to correct some errors"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f52ba1cfa102642978855ead3eaf0fde18e0908e",
+            "comment": "Testing dependencies update"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "374ee5617494cff71deab5d3524e424083bd86ad",
+            "comment": "Update changelog for hot fixes"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "96f80a99d3801d75a19331cec8cb5c01d99dc0ac",
+            "comment": "[FileCard.test] adding new FileCard unit tests"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "275391e2f0608ae555773ff8bf1bd62e67b16726",
+            "comment": "Remove transfer request prompt example from Transfer storybook documentation"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "306d539722cde78f86767abc9275e0c13097ca06",
+            "comment": "Add downloadAttachment method for adapter storbook page"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c1f35be4443f1f23a6af3f9fdb9eafcce336c6f3",
+            "comment": "Added capabilites feature to stateful client"
+          },
+          {
+            "author": "longamy@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d5f40d432d5ea32dca066a8a1c07f7074459dc79",
+            "comment": "Improve Storybook Sidebar Navigation and Content Arrangement"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "aa0e10da6a72eac5b0f4b9761b3931570d7e4ba6",
+            "comment": "Video effects conceptual docs in storybook"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "374ee5617494cff71deab5d3524e424083bd86ad",
+            "comment": "Add public preview to file sharing and fix indentation for Bug Fixes section"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8e9b2a175e27f343ef60fff09975c94c63caf055",
+            "comment": "Fix speaker icon in contextual menu of microphone and devices button"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "374ee5617494cff71deab5d3524e424083bd86ad",
+            "comment": "Bumped"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8c39df4e4aa4fe0eb20a7ffb94939618008ee721",
+            "comment": "Update Captions component for mobile landscape to not obstruct the verticalGallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ea1d0fd39b1cd988b07470948f1fb2b1d96ec03d",
+            "comment": "CallComposite to control the local tile aspect ratio based on screen aspect ratio and formfactor"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "374ee5617494cff71deab5d3524e424083bd86ad",
+            "comment": "beta version bump"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jun 2023 22:07:18 GMT",
       "tag": "@azure/communication-react_v1.7.0-beta.1",
       "version": "1.7.0-beta.1",
