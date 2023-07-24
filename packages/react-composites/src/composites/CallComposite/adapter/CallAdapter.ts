@@ -795,14 +795,6 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   joinCall(microphoneOn?: boolean): Call | undefined;
 
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
-   *
-   * @param options - param to set microphone/camera initially on/off.
-   *
-   * @public
-   */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
-  /**
    * Start the call.
    *
    * @param participants - An array of participant ids to join
@@ -840,14 +832,6 @@ export interface CommonCallAdapter
    */
   joinCall(microphoneOn?: boolean): void;
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
-   *
-   * @param options - param to set microphone/camera initially on/off.
-   *
-   * @public
-   */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): void;
-  /**
    * Start the call.
    *
    * @param participants - An array of participant ids to join
@@ -880,14 +864,6 @@ export interface CallAdapter extends CommonCallAdapter {
   joinCall(microphoneOn?: boolean): Call | undefined;
 
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
-   *
-   * @param options - param to set microphone/camera initially on/off.
-   *
-   * @public
-   */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
-  /**
    * Start the call.
    *
    * @param participants - An array of participant ids to join
@@ -919,14 +895,6 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
    * @beta
    */
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
-  /**
-   * Join the call with options bag to set microphone/camera initially on/off.
-   *
-   * @param options - param to set microphone/camera initially on/off.
-   *
-   * @public
-   */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): TeamsCall | undefined;
   /**
    * Start the call.
    *
