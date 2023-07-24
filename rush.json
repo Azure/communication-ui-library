@@ -36,6 +36,11 @@
       "reviewCategory": "internal"
     },
     {
+      "packageName": "@internal/react-components-v2",
+      "projectFolder": "packages/react-components-v2",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "@internal/react-composites",
       "projectFolder": "packages/react-composites",
       "reviewCategory": "internal"
