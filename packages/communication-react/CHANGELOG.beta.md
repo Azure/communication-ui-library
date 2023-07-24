@@ -17,7 +17,6 @@ Mon, 24 Jul 2023 17:34:36 GMT
   - Allow mention to be added after new line break ([PR #3310](https://github.com/azure/communication-ui-library/pull/3310) by 98852890+vhuseinova-msft@users.noreply.github.com)
   - [FileDownloadCards] cleaning up some unused property ([PR #3347](https://github.com/azure/communication-ui-library/pull/3347) by joshlai@microsoft.com)
   - [TeamsInteropFileMetadata] introducing new type for future scalability ([PR #3156](https://github.com/azure/communication-ui-library/pull/3156) by joshlai@microsoft.com)
-  - New adapter API joinCallWithOptions to allow start with video and mic ([PR #3319](https://github.com/azure/communication-ui-library/pull/3319) by carolinecao@microsoft.com)
   - Added Czech component and composite locales ([PR #3298](https://github.com/azure/communication-ui-library/pull/3298) by miguelgamis@microsoft.com)
   - Add new File Attachment types ([PR #3156](https://github.com/azure/communication-ui-library/pull/3156) by 77021369+jimchou-dev@users.noreply.github.com)
   - Update Captions component for mobile landscape to not obstruct the verticalGallery ([PR #3305](https://github.com/azure/communication-ui-library/pull/3305) by 94866715+dmceachernmsft@users.noreply.github.com)
