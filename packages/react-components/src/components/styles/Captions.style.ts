@@ -51,7 +51,7 @@ export const captionContainerClassName = mergeStyles({
 /**
  * @private
  */
-export const captionsBannerClassName = (formFactor: 'default' | 'compact'): IStackStyles => {
+export const captionsBannerStyles = (formFactor: 'default' | 'compact'): IStackStyles => {
   return {
     root: {
       overflowX: 'hidden',
@@ -65,7 +65,7 @@ export const captionsBannerClassName = (formFactor: 'default' | 'compact'): ISta
 /**
  * @private
  */
-export const loadingBannerClassName = (formFactor: 'default' | 'compact'): IStackStyles => {
+export const loadingBannerStyles = (formFactor: 'default' | 'compact'): IStackStyles => {
   return {
     root: {
       height: formFactor === 'compact' ? '4.5rem' : '8.75rem'
