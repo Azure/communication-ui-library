@@ -271,7 +271,6 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    // (undocumented)
     raisedHand?: RaisedHand;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;

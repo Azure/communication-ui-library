@@ -315,6 +315,9 @@ export interface RemoteParticipantState {
   role?: ParticipantRole;
 
   /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
+   */
   raisedHand?: RaisedHand;
 }
 
