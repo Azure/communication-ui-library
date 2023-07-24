@@ -20,6 +20,7 @@ import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet
 import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
 import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
 import { MobileWrapper } from './snippets/MobileWrapper';
+import { OVC3x3VideoGalleryExample } from './snippets/OVC3x3.snippet';
 import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipantsDisabled.snippet';
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
@@ -35,6 +36,7 @@ const LocalVideoCameraCycleButtonExampleText =
   require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
 const ManagedPinnedParticipantsExampleText =
   require('!!raw-loader!./snippets/ManagedPinnedParticipants.snippet.tsx').default;
+const OVC3x3ExampleText = require('!!raw-loader!./snippets/OVC3x3.snippet.tsx').default;
 const PinnedParticipantsDisabledExampleText =
   require('!!raw-loader!./snippets/PinnedParticipantsDisabled.snippet.tsx').default;
 const PinnedParticipantsMobileExampleText =
@@ -402,6 +404,26 @@ const getDocs: () => JSX.Element = () => {
           <Description>Local tile size `hidden` removes the local tile</Description>
         </Stack>
       </Stack>
+
+      <Heading>Optimal Video Count and 3x3 Video Tiles</Heading>
+      <DetailedBetaBanner />
+      <Description>
+        The Optimal Video Count (OVC) feature provides a way to make sure that the number of videos rendered within the
+        gallery is appropiate and that all videos are rendering in the best quality possible. This feature is used in
+        the implementation of the VideoGallery as a default behavior for maxRemoteVideoRenderers property currently
+        exposed, changing the previous default which was static to a dynamic one that it is coming from SDK layer. This
+        Optimal Video Count value could increase or decrease during the call according to the network conditions in
+        conjuction with the memory usage by the participant currently rendering videos. To read more about OVC, video
+        quality and how it works within the sdk, [Click
+        Here](https://learn.microsoft.com/en-us/azure/communication-services/how-tos/calling-sdk/manage-video?pivots=platform-web)
+      </Description>
+      <Subheading>3x3 Video Gallery Layout</Subheading>
+      <Description>
+        The 3x3 video gallery allows customers to have 9 remote videos rendering with the highest optimal quality.
+      </Description>
+      <Canvas mdxSource={OVC3x3ExampleText}>
+        <OVC3x3VideoGalleryExample />
+      </Canvas>
 
       <Heading>Props</Heading>
       <ArgsTable of={VideoGalleryComponent} />
