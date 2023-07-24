@@ -273,7 +273,7 @@ export interface VideoBackgroundImage {
  *
  * @public
  */
-export type JoinCallOptions = {
+export interface JoinCallOptions {
   microphoneOn?: boolean | 'keep';
   cameraOn?: boolean | 'keep';
 };

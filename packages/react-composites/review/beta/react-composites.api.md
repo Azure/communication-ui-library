@@ -1434,10 +1434,12 @@ export type IsSpeakingChangedListener = (event: {
 }) => void;
 
 // @public
-export type JoinCallOptions = {
-    microphoneOn?: boolean | 'keep';
+export interface JoinCallOptions {
+    // (undocumented)
     cameraOn?: boolean | 'keep';
-};
+    // (undocumented)
+    microphoneOn?: boolean | 'keep';
+}
 
 // @beta
 export interface LocalVideoTileOptions {
