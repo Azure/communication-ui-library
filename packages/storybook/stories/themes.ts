@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { lightTheme, darkTheme } from '@azure/communication-react';
+// import { lightTheme, darkTheme } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 
 export const THEMES: Record<string, { name: string; theme: PartialTheme }> = {
   Light: {
     name: 'Light',
-    theme: lightTheme
+    theme: {} // lightTheme
   },
   Dark: {
     name: 'Dark',
-    theme: darkTheme
+    theme: {} // darkTheme
   }
 };

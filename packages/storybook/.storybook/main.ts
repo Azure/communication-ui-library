@@ -34,7 +34,7 @@ const storybookConfig: StorybookConfig = {
     options: { }
   }, // path.resolve('@storybook/react-webpack5/preset', '..') as any,
   staticDirs: ['../public', '.'],
-  stories: DEVELOPMENT_BUILD ? storybookDevGlobPaths : storybookProdGlobPaths,
+  stories: ['../stories/CallComposite/BasicExample.stories.tsx'], //DEVELOPMENT_BUILD ? storybookDevGlobPaths : storybookProdGlobPaths,
   typescript: { reactDocgen: 'react-docgen' },
   webpackFinal: async (config) => {
     if (config.performance) {
@@ -61,6 +61,19 @@ const storybookConfig: StorybookConfig = {
         '@internal/fake-backends': path.resolve(__dirname, '../../fake-backends/src')
       };
     }
+    // Custom rule for ts files
+    const tsRule = {
+        test: /\.(tsx?|jsx?)$/,
+        loader: 'ts-loader',
+        options: {
+            transpileOnly: true,
+        },
+    };
+
+    return {
+        ...config,
+        module: { ...config.module, rules: [...(config.module?.rules || []), tsRule] },
+    };
     return config;
   },
 };

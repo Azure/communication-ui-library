@@ -28,7 +28,7 @@ export const parameters = {
     ),
   },
   options: {
-    storySort: {
+    // storySort: {
       order: [
         'Overview',
         'Use Cases',
@@ -101,7 +101,7 @@ export const parameters = {
           ],
         ],
       ]
-    }
+    // }
   },
   viewMode: 'docs',
   previewTabs: {
