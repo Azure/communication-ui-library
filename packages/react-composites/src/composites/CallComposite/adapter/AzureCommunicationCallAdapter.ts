@@ -461,7 +461,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.getState.bind(this);
     this.dispose.bind(this);
     this.joinCall.bind(this);
-    this.joinCallWithOptions.bind(this);
     this.leaveCall.bind(this);
     this.setCamera.bind(this);
     this.setMicrophone.bind(this);
@@ -565,38 +564,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
       // TODO: find a way to expose stream to here
       const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-      /* @conditional-compile-remove(teams-adhoc-call) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      if (isOutboundCall(this.locator)) {
-        const phoneNumber = this.getState().alternateCallerId;
-        return this.startCall(this.locator.participantIds, {
-          alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
-          audioOptions,
-          videoOptions
-        });
-      }
-      const call = this._joinCall(audioOptions, videoOptions);
-
-      this.processNewCall(call);
-      return call;
-    });
-  }
-
-  public joinCallWithOptions(options?: {
-    microphoneOn?: boolean;
-    cameraOn?: boolean;
-  }): CallTypeOf<AgentType> | undefined {
-    if (_isInCall(this.getState().call?.state ?? 'None')) {
-      throw new Error('You are already in the call!');
-    }
-
-    const { microphoneOn, cameraOn } = options ?? {};
-
-    return this.teeErrorToEventEmitter(() => {
-      const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-      const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
-      const videoOptions = localStream && cameraOn ? { localVideoStreams: [localStream] } : {};
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
       if (isOutboundCall(this.locator)) {

@@ -84,14 +84,6 @@ export interface CallWithChatAdapterManagement {
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
-   *
-   * @param options - param to set microphone/camera initially on/off.
-   *
-   * @public
-   */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
-  /**
    * Leave the call.
    *
    * @param forEveryone - Whether to remove all participants when leaving
