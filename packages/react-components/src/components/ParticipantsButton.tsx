@@ -123,7 +123,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   onRemoveParticipant?: (userId: string) => void;
   /* @conditional-compile-remove(raise-hand) */
   /**
-   * Callback to render the context menu for each participant
+   * Callback to render raised hand states for each participant
    */
   onLowerHands?: (userId: string[]) => void;
   /**
