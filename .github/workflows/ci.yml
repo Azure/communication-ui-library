@@ -3,7 +3,7 @@ name: CI
 on:
   # Postsubmit CI on main.
   push:
-    branches: [main]
+    branches: [main, next/2.0.0]
   # Presubmit CI on PRs to all branches.
   pull_request:
   # Allows you to run this workflow manually from the Actions tab.
@@ -734,7 +734,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/next/2.0.0'
     strategy:
       matrix:
         include:

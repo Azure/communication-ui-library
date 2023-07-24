@@ -10,7 +10,7 @@
   },
   "repository": {
     "url": "https://github.com/Azure/communication-ui-library",
-    "defaultBranch": "main"
+    "defaultBranch": "next/2.0.0"
   },
   "telemetryEnabled": false,
   "variants": [
