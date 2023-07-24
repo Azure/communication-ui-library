@@ -8,7 +8,7 @@ on:
       - packages/react-composites/**
       - packages/communication-react/**
   push:
-    branches: [main, next/2.0.0]
+    branches: [main, 2.0]
   workflow_dispatch:
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
