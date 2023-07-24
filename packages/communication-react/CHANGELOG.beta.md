@@ -9,19 +9,21 @@ This log was last generated on Mon, 24 Jul 2023 17:34:36 GMT and should not be m
 Mon, 24 Jul 2023 17:34:36 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.7.0-beta.1...@azure/communication-react_v1.8.0-beta.2)
 
-### Minor changes
 
-- `@azure/communication-react`
+### Improvements
+  - Update SDKs dependencies ([PR #3355](https://github.com/azure/communication-ui-library/pull/3355) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Ensure chat client state changes are true changes ([PR #3317](https://github.com/azure/communication-ui-library/pull/3317) by 3941071+emlynmac@users.noreply.github.com)
+  - Add selected state aria label to active tab header ([PR #3345](https://github.com/azure/communication-ui-library/pull/3345) by edwardlee@microsoft.com)
+  - Allow mention to be added after new line break ([PR #3310](https://github.com/azure/communication-ui-library/pull/3310) by 98852890+vhuseinova-msft@users.noreply.github.com)
   - [FileDownloadCards] cleaning up some unused property ([PR #3347](https://github.com/azure/communication-ui-library/pull/3347) by joshlai@microsoft.com)
   - [TeamsInteropFileMetadata] introducing new type for future scalability ([PR #3156](https://github.com/azure/communication-ui-library/pull/3156) by joshlai@microsoft.com)
   - New adapter API joinCallWithOptions to allow start with video and mic ([PR #3319](https://github.com/azure/communication-ui-library/pull/3319) by carolinecao@microsoft.com)
   - Added Czech component and composite locales ([PR #3298](https://github.com/azure/communication-ui-library/pull/3298) by miguelgamis@microsoft.com)
   - Add new File Attachment types ([PR #3156](https://github.com/azure/communication-ui-library/pull/3156) by 77021369+jimchou-dev@users.noreply.github.com)
-  - Hoist error tracking to composite level to allow tracking to be shared across components. This fixes an issue where errors would reappear after being dismissed. ([PR #3286](https://github.com/azure/communication-ui-library/pull/3286) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Update Captions component for mobile landscape to not obstruct the verticalGallery ([PR #3305](https://github.com/azure/communication-ui-library/pull/3305) by 94866715+dmceachernmsft@users.noreply.github.com)
+  - CallComposite to control the local tile aspect ratio based on screen aspect ratio and formfactor ([PR #3309](https://github.com/azure/communication-ui-library/pull/3309) by 94866715+dmceachernmsft@users.noreply.github.com)
 
-### Patches
-
-- `@azure/communication-react`
+### Bug Fixes
   - Fix mention popover content view is not wrapped up in the scroll view when the list is long ([PR #3339](https://github.com/azure/communication-ui-library/pull/3339) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
   - Effects pane header misaligned ([PR #3338](https://github.com/azure/communication-ui-library/pull/3338) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Resolve issue with edit box showing the number zero ([PR #3295](https://github.com/azure/communication-ui-library/pull/3295) by palatter@microsoft.com)
@@ -31,24 +33,14 @@ Mon, 24 Jul 2023 17:34:36 GMT
   - Fix Mention Popover's position is too low when insert mention in the middle of a very long text ([PR #3348](https://github.com/azure/communication-ui-library/pull/3348) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
   - Fix for the text selection for triple click in TextFieldWithMention ([PR #3336](https://github.com/azure/communication-ui-library/pull/3336) by 98852890+vhuseinova-msft@users.noreply.github.com)
   - Fix for VideoTile context menu being dismissed when new captions come in ([PR #3303](https://github.com/azure/communication-ui-library/pull/3303) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Add selected state aria label to active tab header ([PR #3345](https://github.com/azure/communication-ui-library/pull/3345) by edwardlee@microsoft.com)
   - Fixed adapter error on mobile querying speakers when speakers are not available ([PR #3331](https://github.com/azure/communication-ui-library/pull/3331) by carolinecao@microsoft.com)
-  - If video effect fails, none effect in picker is highlighted ([PR #3334](https://github.com/azure/communication-ui-library/pull/3334) by 97124699+prabhjot-msft@users.noreply.github.com)
-  - Ensure chat client state changes are true changes ([PR #3317](https://github.com/azure/communication-ui-library/pull/3317) by 3941071+emlynmac@users.noreply.github.com)
-  - Bump @azure/communication-* SDKs ([PR #3355](https://github.com/azure/communication-ui-library/pull/3355) by 2684369+JamesBurnside@users.noreply.github.com)
+  - Fix the bug when video effect fails, none effect in picker is highlighted ([PR #3334](https://github.com/azure/communication-ui-library/pull/3334) by 97124699+prabhjot-msft@users.noreply.github.com)
   - Fix tab ordering in the callscreen for the video effects pane ([PR #3351](https://github.com/azure/communication-ui-library/pull/3351) by 94866715+dmceachernmsft@users.noreply.github.com)
   - Addressed the issue where video not scale properly in message content ([PR #3324](https://github.com/azure/communication-ui-library/pull/3324) by 109105353+jpeng-ms@users.noreply.github.com)
   - Fix conditional comments for Chat sample app ([PR #3314](https://github.com/azure/communication-ui-library/pull/3314) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
   - Fixed bug where captions keep scrolling to the bottom when new captions are received  ([PR #3353](https://github.com/azure/communication-ui-library/pull/3353) by carolinecao@microsoft.com)
-  - Allow mention to be added after new line break ([PR #3310](https://github.com/azure/communication-ui-library/pull/3310) by 98852890+vhuseinova-msft@users.noreply.github.com)
   - Fix unread chat messages badge on the CallWithChatComposite being cleared when the call goes on hold ([PR #3332](https://github.com/azure/communication-ui-library/pull/3332) by 2684369+JamesBurnside@users.noreply.github.com)
-
-### Changes
-
-- `@azure/communication-react`
-  - Update Captions component for mobile landscape to not obstruct the verticalGallery ([PR #3305](https://github.com/azure/communication-ui-library/pull/3305) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - CallComposite to control the local tile aspect ratio based on screen aspect ratio and formfactor ([PR #3309](https://github.com/azure/communication-ui-library/pull/3309) by 94866715+dmceachernmsft@users.noreply.github.com)
-  - beta version bump ([PR #3315](https://github.com/azure/communication-ui-library/pull/3315) by joshlai@microsoft.com)
+  - Hoist error tracking to composite level to allow tracking to be shared across components. This fixes an issue where errors would reappear after being dismissed. ([PR #3286](https://github.com/azure/communication-ui-library/pull/3286) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.7.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.7.0-beta.1)
 
