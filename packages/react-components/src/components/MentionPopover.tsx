@@ -165,7 +165,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   const localeStrings = useLocale().strings;
   const popoverRef = useRef() as React.MutableRefObject<HTMLDivElement>;
 
-  const [position, setPosition] = useState<Position>({ left: 0 });
+  const [position, setPosition] = useState<Position | undefined>();
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Mention | undefined>(undefined);
   const [changedSelection, setChangedSelection] = useState<boolean | undefined>(undefined); // Selection UI as per teams
 
@@ -207,12 +207,13 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     } else {
       finalPosition.left = leftOffset;
     }
-
+    // Offset between cursor and mention popover
+    const verticalOffset = 4;
     if (location === 'below') {
-      finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0);
+      finalPosition.top = (rect?.height ?? 0) + (targetPositionOffset?.top ?? 0) + verticalOffset;
     } else {
       // (location === 'above')
-      finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0);
+      finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0) + verticalOffset;
     }
     setPosition(finalPosition);
   }, [location, target, targetPositionOffset]);
@@ -297,36 +298,38 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
 
   return (
     <div ref={popoverRef}>
-      <Stack
-        data-testid={'mention-suggestion-list-container'}
-        className={mergeStyles(
-          {
-            maxHeight: 212,
-            maxWidth: position.maxWidth
-          },
-          mentionPopoverContainerStyle(theme),
-          {
-            ...position,
-            position: 'absolute'
-          }
-        )}
-      >
-        <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
-          {getHeaderTitle()}
-        </Stack.Item>
+      {position && (
         <Stack
-          /* @conditional-compile-remove(mention) */
-          data-ui-id={ids.mentionSuggestionList}
-          className={suggestionListStyle}
+          data-testid={'mention-suggestion-list-container'}
+          className={mergeStyles(
+            {
+              maxHeight: 212,
+              maxWidth: position.maxWidth
+            },
+            mentionPopoverContainerStyle(theme),
+            {
+              ...position,
+              position: 'absolute'
+            }
+          )}
         >
-          {suggestions.map((suggestion, index) => {
-            const active = index === activeSuggestionIndex;
-            return onRenderSuggestionItem
-              ? onRenderSuggestionItem(suggestion, onSuggestionSelected, active)
-              : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, active);
-          })}
+          <Stack.Item styles={headerStyleThemed(theme)} aria-label={title}>
+            {getHeaderTitle()}
+          </Stack.Item>
+          <Stack
+            /* @conditional-compile-remove(mention) */
+            data-ui-id={ids.mentionSuggestionList}
+            className={suggestionListStyle}
+          >
+            {suggestions.map((suggestion, index) => {
+              const active = index === activeSuggestionIndex;
+              return onRenderSuggestionItem
+                ? onRenderSuggestionItem(suggestion, onSuggestionSelected, active)
+                : defaultOnRenderSuggestionItem(suggestion, onSuggestionSelected, active);
+            })}
+          </Stack>
         </Stack>
-      </Stack>
+      )}
     </div>
   );
 };

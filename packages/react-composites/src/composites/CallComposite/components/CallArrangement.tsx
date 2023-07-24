@@ -10,6 +10,7 @@ import {
   _DrawerMenuItemProps,
   _useContainerHeight,
   _useContainerWidth,
+  ActiveErrorMessage,
   ErrorBar,
   ErrorBarProps,
   useTheme
@@ -92,6 +93,8 @@ export interface CallArrangementProps {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -184,7 +187,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(video-background-effects) */
-  const { openVideoEffectsPane } = useVideoEffectsPane(props.updateSidePaneRenderer, props.mobileView);
+  const { openVideoEffectsPane } = useVideoEffectsPane(
+    props.updateSidePaneRenderer,
+    props.mobileView,
+    props.latestErrors,
+    props.onDismissError
+  );
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
     setShowDrawer(true);
@@ -222,7 +230,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   canUnmute = rolePermissions.microphoneButton;
 
-  let errorBarProps = props.errorBarProps;
+  let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
 
   /* @conditional-compile-remove(video-background-effects) */
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
@@ -230,22 +238,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
   if (!rolePermissions.cameraButton && props.errorBarProps) {
-    errorBarProps = {
-      ...props.errorBarProps,
-      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter(
-        (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
-      )
-    };
+    filteredLatestErrors = filteredLatestErrors.filter(
+      (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
+    );
   }
 
   /* @conditional-compile-remove(video-background-effects) */
   const isVideoPaneOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
   /* @conditional-compile-remove(video-background-effects) */
   if ((isVideoPaneOpen || !isCameraOn) && props.errorBarProps) {
-    errorBarProps = {
-      ...props.errorBarProps,
-      activeErrorMessages: props.errorBarProps.activeErrorMessages.filter((e) => e.type !== 'unableToStartVideoEffect')
-    };
+    filteredLatestErrors = filteredLatestErrors.filter((e) => e.type !== 'unableToStartVideoEffect');
   }
 
   /* @conditional-compile-remove(close-captions) */
@@ -255,12 +257,26 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  const verticalControlBar =
+    props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-        <Stack grow styles={callArrangementContainerStyles}>
+        <Stack
+          reversed
+          horizontal={verticalControlBar}
+          grow
+          styles={callArrangementContainerStyles(verticalControlBar)}
+        >
           {props.callControlProps?.options !== false && !isMobileWithActivePane && (
-            <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
+            <Stack
+              verticalAlign={'center'}
+              className={mergeStyles({
+                zIndex: CONTROL_BAR_Z_INDEX,
+                padding: verticalControlBar ? '0.25rem' : 'unset'
+              })}
+            >
               {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                 <CallControls
                   {...props.callControlProps}
@@ -271,6 +287,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   /* @conditional-compile-remove(one-to-n-calling) */
                   onPeopleButtonClicked={togglePeoplePane}
+                  displayVertical={verticalControlBar}
                 />
               ) : (
                 <CommonCallControlBar
@@ -290,9 +307,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onShowVideoEffectsPicker={openVideoEffectsPane}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                  displayVertical={verticalControlBar}
                 />
               )}
-            </Stack.Item>
+            </Stack>
           )}
           {props.callControlProps?.options !== false && showDrawer && (
             <Stack styles={drawerContainerStylesValue}>
@@ -331,9 +349,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     <Stack styles={bannerNotificationStyles}>
                       <_ComplianceBanner {...props.complianceBannerProps} />
                     </Stack>
-                    {errorBarProps !== false && (
+                    {props.errorBarProps !== false && (
                       <Stack styles={bannerNotificationStyles}>
-                        <ErrorBar {...errorBarProps} />
+                        <ErrorBar
+                          {...props.errorBarProps}
+                          onDismissError={props.onDismissError}
+                          activeErrorMessages={filteredLatestErrors}
+                        />
                       </Stack>
                     )}
                     {canUnmute && !!props.mutedNotificationProps && (

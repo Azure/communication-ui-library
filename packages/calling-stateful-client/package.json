@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-stateful-client",
-  "version": "1.6.1-beta.0",
+  "version": "1.7.0-beta.1",
   "description": "Stateful proxy over the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -30,17 +30,17 @@
     "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
-    "@azure/communication-common": "^2.2.0",
+    "@azure/communication-common": "3.0.0-beta.1 || ^2.2.1",
     "@azure/logger": "^1.0.4",
-    "@internal/acs-ui-common": "1.6.1-beta.0",
+    "@internal/acs-ui-common": "1.7.0-beta.1",
     "events": "~3.3.0",
     "immer": "9.0.6"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.14.1-beta.1 || >=1.14.1"
+    "@azure/communication-calling": "1.15.1-beta.1 || >=1.14.1"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.14.1-beta.1 || >=1.14.1",
+    "@azure/communication-calling": "1.15.1-beta.1 || >=1.14.1",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "~7.16.0",
     "@babel/core": "~7.16.0",

@@ -85,6 +85,9 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
 
   const [inputTextValue, setInputTextValue] = useState<string>('');
 
+  // Internal value for text value prop
+  const [internalTextValue, setInternalTextValue] = useState<string>('');
+
   const [tagsValue, setTagsValue] = useState<TagData[]>([]);
 
   // Index of the previous selection start in the text field
@@ -122,14 +125,20 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     [setMentionSuggestions]
   );
 
+  useEffect(() => {
+    setInternalTextValue(textValue);
+    // update mention suggestions before the next render cycle
+    updateMentionSuggestions([]);
+  }, [textValue, updateMentionSuggestions]);
+
   // Parse the text and get the plain text version to display in the input box
   useEffect(() => {
     const trigger = mentionLookupOptions?.trigger || DEFAULT_MENTION_TRIGGER;
-    const parsedHTMLData = textToTagParser(textValue, trigger);
+    const parsedHTMLData = textToTagParser(internalTextValue, trigger);
     setInputTextValue(parsedHTMLData.plainText);
     setTagsValue(parsedHTMLData.tags);
     updateMentionSuggestions([]);
-  }, [textValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
+  }, [internalTextValue, mentionLookupOptions?.trigger, updateMentionSuggestions]);
 
   useEffect(() => {
     // effect for caret index update
@@ -145,7 +154,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     textFieldRef?.current?.setSelectionRange(updatedCaretIndex, updatedCaretIndex);
     setSelectionStartValue(updatedCaretIndex);
     setSelectionEndValue(updatedCaretIndex);
-  }, [caretIndex, inputTextValue.length, textFieldRef, setSelectionStartValue, setSelectionEndValue]);
+  }, [caretIndex, inputTextValue, textFieldRef, setSelectionStartValue, setSelectionEndValue]);
 
   const onSuggestionSelected = useCallback(
     (suggestion: Mention) => {
@@ -162,7 +171,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       const triggerText = mentionLookupOptions?.trigger ?? DEFAULT_MENTION_TRIGGER;
       // update html text with updated plain text
       const updatedContent = updateHTML({
-        htmlText: textValue,
+        htmlText: internalTextValue,
         oldPlainText,
         tags: tagsValue,
         startIndex: currentTriggerStartIndex,
@@ -170,6 +179,8 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         change: mention,
         mentionTrigger: triggerText
       });
+
+      setInternalTextValue(updatedContent.updatedHTML);
       const displayName = getDisplayNameForMentionSuggestion(suggestion, localeStrings);
       const newCaretIndex = currentTriggerStartIndex + displayName.length + triggerText.length;
       // move the caret in the text field to the end of the mention plain text
@@ -189,7 +200,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       currentTriggerStartIndex,
       mentionLookupOptions?.trigger,
       onChange,
-      textValue,
+      internalTextValue,
       tagsValue,
       updateMentionSuggestions,
       localeStrings
@@ -382,7 +393,13 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       selectionEndValue?: number;
       interactionStartSelection?: { start: number | undefined; end: number | undefined };
     }): void => {
-      if (shouldHandleOnMouseDownDuringSelect) {
+      if (event.currentTarget.selectionStart === 0 && event.currentTarget.selectionEnd === inputTextValue.length) {
+        // entire text is selected, no need to change anything
+        setSelectionStartValue(event.currentTarget.selectionStart);
+        setSelectionEndValue(event.currentTarget.selectionEnd);
+        setInteractionStartSelection(undefined);
+        setShouldHandleOnMouseDownDuringSelect(false);
+      } else if (shouldHandleOnMouseDownDuringSelect) {
         if (
           interactionStartSelection !== undefined &&
           (interactionStartSelection.start !== event.currentTarget.selectionStart ||
@@ -412,15 +429,32 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           });
           setInteractionStartSelection(undefined);
           setShouldHandleOnMouseDownDuringSelect(false);
-        } else if (event.currentTarget.selectionStart !== null) {
+        } else if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionEnd !== null) {
           // on select was triggered by mouse down/up with no movement
           const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
             // handle mention click by selecting the whole mention
             // if the selection is not on the bounds of the mention
-            const mentionEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
             // disable selection for clicks on mention bounds
+            const mentionEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
+
             if (
+              event.currentTarget.selectionStart !== event.currentTarget.selectionEnd &&
+              event.currentTarget.selectionEnd > mentionEndIndex
+            ) {
+              // handle triple click when the text starts from mention
+              if (event.currentTarget.selectionDirection === null) {
+                event.currentTarget.setSelectionRange(mentionTag.plainTextBeginIndex, event.currentTarget.selectionEnd);
+              } else {
+                event.currentTarget.setSelectionRange(
+                  mentionTag.plainTextBeginIndex,
+                  event.currentTarget.selectionEnd,
+                  event.currentTarget.selectionDirection
+                );
+              }
+              setSelectionStartValue(mentionTag.plainTextBeginIndex);
+              setSelectionEndValue(event.currentTarget.selectionEnd);
+            } else if (
               event.currentTarget.selectionStart !== event.currentTarget.selectionEnd ||
               (event.currentTarget.selectionStart !== mentionTag.plainTextBeginIndex &&
                 event.currentTarget.selectionStart !== mentionEndIndex)
@@ -447,7 +481,6 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             setSelectionEndValue(nullToUndefined(event.currentTarget.selectionEnd));
           }
           setInteractionStartSelection(undefined);
-          setShouldHandleOnMouseDownDuringSelect(false);
         }
       } else {
         // selection was changed by keyboard
@@ -529,19 +562,20 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         // Update the caret position, used for positioning the suggestions popover
         const textField = event.currentTarget;
         const relativePosition = Caret.getRelativePosition(textField);
-        const adjustOffset = Math.max(0, textField.scrollHeight - textField.clientHeight);
-        if (relativePosition.top > adjustOffset) {
-          relativePosition.top -= adjustOffset;
+        if (textField.scrollHeight > textField.clientHeight) {
+          relativePosition.top -= textField.scrollTop;
         }
         setCaretPosition(relativePosition);
-
         if (triggerPriorIndex !== undefined) {
           // trigger is found
-          const isSpaceBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex) === ' ';
+          const symbolBeforeTrigger = newValue.substring(triggerPriorIndex - 1, triggerPriorIndex);
+          const isSpaceBeforeTrigger = symbolBeforeTrigger === ' ';
+          // check if \r (Carriage Return), \n (Line Feed) or \r\n (End Of Line) is before the trigger
+          const isNewLineBeforeTrigger = /\r|\n/.exec(symbolBeforeTrigger);
           const wordAtSelection = newValue.substring(triggerPriorIndex, currentSelectionEndValue);
           let tagIndex = currentTriggerStartIndex;
-          if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0) {
-            //no space before the trigger <- continuation of the previous word
+          if (!isSpaceBeforeTrigger && triggerPriorIndex !== 0 && isNewLineBeforeTrigger === null) {
+            // no space before the trigger, it's not a beginning of the line and no new line before  <- continuation of the previous word
             tagIndex = -1;
             setCurrentTriggerStartIndex(tagIndex);
           } else if (wordAtSelection === triggerText) {
@@ -585,6 +619,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         change,
         mentionTrigger: triggerText
       });
+      setInternalTextValue(updatedContent.updatedHTML);
 
       // update caret index if needed
       if (updatedContent.updatedSelectionIndex !== undefined) {
@@ -680,7 +715,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           handleOnChange({
             event: e,
             tagsValue,
-            htmlTextValue: textValue,
+            htmlTextValue: internalTextValue,
             inputTextValue,
             currentTriggerStartIndex,
             previousSelectionStart: nullToUndefined(selectionStartValue),
@@ -699,7 +734,9 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             if (caretIndex !== e.currentTarget.selectionStart || caretIndex !== e.currentTarget.selectionEnd) {
               e.currentTarget.setSelectionRange(caretIndex, caretIndex);
             }
-            setCaretIndex(undefined);
+            // caret index should not be set to undefined here
+            // as it will cause issues when suggestion is selected by mouse
+            // caret index will be set to undefined during keyboard/mouse or touch interactions
             return;
           }
           handleOnSelect({
@@ -748,11 +785,9 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           handleOnInteractionCompleted;
         }}
         onBlur={() => {
-          // setup all flags to default values when text field loses focus
+          // setup shouldHandleOnMouseDownDuringSelect to false when text field loses focus
+          // as the click should be handled by text field anymore
           setShouldHandleOnMouseDownDuringSelect(false);
-          setCaretIndex(undefined);
-          setSelectionStartValue(undefined);
-          setSelectionEndValue(undefined);
         }}
         onKeyDown={onTextFieldKeyDown}
         elementRef={inputBoxRef}

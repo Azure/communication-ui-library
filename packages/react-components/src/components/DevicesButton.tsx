@@ -378,7 +378,7 @@ export const generateDefaultDeviceMenuProps = (
                   styles: menuItemStyles
                 },
                 iconProps: {
-                  iconName: 'ContextMenuMicIcon',
+                  iconName: 'ContextMenuSpeakerIcon',
                   styles: { root: { lineHeight: 0 } }
                 },
                 canCheck: true,

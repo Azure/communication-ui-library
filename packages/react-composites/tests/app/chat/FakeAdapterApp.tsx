@@ -6,6 +6,7 @@ import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
 import React, { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   ChatAdapter,
   ChatComposite,
@@ -126,7 +127,7 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         extension: file.extension,
         url: file.url,
         attachmentType: 'fileSharing',
-        id: ''
+        id: file.id
       });
     } else if (file.error) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
@@ -153,7 +154,7 @@ const sendRemoteFileSharingMessage = (
       type: 'text',
       metadata: {
         fileSharingMetadata: JSON.stringify([
-          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing' }
+          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing', id: uuidv4() }
         ])
       }
     }
@@ -166,6 +167,14 @@ const sendRemoteInlineImageMessage = (
   remoteParticipant: ChatParticipant,
   threadId: string
 ): void => {
+  const localParticipantId = getIdentifierKind(localParticipant.id);
+  const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
+
+  /* @conditional-compile-remove(communication-common-beta-v3) */
+  if (localParticipantId.kind === 'microsoftBot' || remoteParticipantId.kind === 'microsoftBot') {
+    throw new Error('Unsupported indentifier kind: microsoftBot');
+  }
+
   const thread: Thread = chatClientModel.checkedGetThread(localParticipant.id, threadId);
   const messageWithInlineImage: ChatMessage = {
     id: `${thread.messages.length}`,
@@ -205,9 +214,9 @@ const sendRemoteInlineImageMessage = (
       message: messageWithInlineImage.content?.message ?? '',
       attachments: messageWithInlineImage.content?.attachments,
       threadId: threadId,
-      sender: getIdentifierKind(remoteParticipant.id),
+      sender: remoteParticipantId,
       senderDisplayName: remoteParticipant.displayName ?? '',
-      recipient: getIdentifierKind(localParticipant.id),
+      recipient: localParticipantId,
       metadata: {}
     });
 };

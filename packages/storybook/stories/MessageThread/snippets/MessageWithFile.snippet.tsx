@@ -21,11 +21,11 @@ export const MessageWithFile: () => JSX.Element = () => {
             contentType: 'text',
             attachedFilesMetadata: [
               {
+                id: 'SomeUniqueId1',
                 name: 'RouterConfig.xlsx',
                 extension: 'xlsx',
                 url: 'https://www.example.com/files/RouterConfig.xlsx',
-                attachmentType: 'fileSharing',
-                id: ''
+                attachmentType: 'fileSharing'
               }
             ]
           },

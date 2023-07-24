@@ -75,20 +75,36 @@ const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMet
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
-  return attachments.map((attachment) => ({
-    attachmentType: mapAttachmentType(attachment.attachmentType),
-    id: attachment.id,
-    name: attachment.name ?? '',
-    extension: attachment.contentType ?? '',
-    url: extractAttachmentUrl(attachment),
-    previewUrl: attachment.previewUrl
-  }));
+  const fileMetadata: FileMetadata[] = [];
+  attachments.forEach((attachment) => {
+    const attachmentType = mapAttachmentType(attachment.attachmentType);
+    if (attachmentType === 'inlineImage') {
+      fileMetadata.push({
+        attachmentType: attachmentType,
+        id: attachment.id,
+        name: attachment.name ?? '',
+        extension: attachment.contentType ?? '',
+        url: extractAttachmentUrl(attachment),
+        previewUrl: attachment.previewUrl
+      });
+    } else if (attachmentType === 'fileSharing') {
+      fileMetadata.push({
+        attachmentType: attachmentType,
+        id: attachment.id,
+        name: attachment.name ?? '',
+        extension: attachment.contentType ?? '',
+        url: extractAttachmentUrl(attachment),
+        payload: { teamsFileAttachment: 'true' }
+      });
+    }
+  });
+  return fileMetadata;
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachmentType => {
   if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
-    return 'teamsInlineImage';
+    return 'inlineImage';
   } else if (attachmentType === 'file') {
     return 'fileSharing';
   }
@@ -239,74 +255,74 @@ const hasValidParticipant = (chatMessage: ChatMessageWithStatus): boolean =>
   !!chatMessage.content?.participants && chatMessage.content.participants.some((p) => !!p.displayName);
 
 /**
- * Selector for {@link MessageThread} component.
  *
- * @public
+ * @private
  */
-export const messageThreadSelector: MessageThreadSelector = createSelector(
-  [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
-  (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
-    // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
-    const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
+export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =>
+  createSelector(
+    [getUserId, getChatMessages, getLatestReadTime, getIsLargeGroup, getReadReceipts, getParticipants],
+    (userId, chatMessages, latestReadTime, isLargeGroup, readReceipts, participants) => {
+      // We can't get displayName in teams meeting interop for now, disable rr feature when it is teams interop
+      const isTeamsInterop = Object.values(participants).find((p) => 'microsoftTeamsUserId' in p.id) !== undefined;
 
-    // get number of participants
-    // filter out the non valid participants (no display name)
-    // Read Receipt details will be disabled when participant count is 0
-    const participantCount = isTeamsInterop
-      ? undefined
-      : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
+      // get number of participants
+      // filter out the non valid participants (no display name)
+      // Read Receipt details will be disabled when participant count is 0
+      const participantCount = isTeamsInterop
+        ? undefined
+        : Object.values(participants).filter((p) => p.displayName && p.displayName !== '').length;
 
-    // creating key value pairs of senderID: last read message information
+      // creating key value pairs of senderID: last read message information
 
-    const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
+      const readReceiptsBySenderId: ReadReceiptsBySenderId = {};
 
-    // readReceiptsBySenderId[senderID] gets updated everytime a new message is read by this sender
-    // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
-    readReceipts
-      .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
-      .forEach((r) => {
-        readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
-          lastReadMessage: r.chatMessageId,
-          displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
-        };
-      });
+      // readReceiptsBySenderId[senderID] gets updated every time a new message is read by this sender
+      // in this way we can make sure that we are only saving the latest read message id and read on time for each sender
+      readReceipts
+        .filter((r) => r.sender && toFlatCommunicationIdentifier(r.sender) !== userId)
+        .forEach((r) => {
+          readReceiptsBySenderId[toFlatCommunicationIdentifier(r.sender)] = {
+            lastReadMessage: r.chatMessageId,
+            displayName: participants[toFlatCommunicationIdentifier(r.sender)]?.displayName ?? ''
+          };
+        });
 
-    // A function takes parameter above and generate return value
-    const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
-      Object.values(chatMessages)
-        .filter(
-          (message) =>
-            message.type.toLowerCase() === ACSKnownMessageType.text ||
-            message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
-            message.type.toLowerCase() === ACSKnownMessageType.html ||
-            (message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message)) ||
-            (message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message)) ||
-            // TODO: Add support for topicUpdated system messages in MessageThread component.
-            // message.type === ACSKnownMessageType.topicUpdated ||
-            message.clientMessageId !== undefined
-        )
-        .filter(isMessageValidToRender)
-        .map((message) => {
-          return memoizedFn(
-            message.id ?? message.clientMessageId,
-            message,
-            userId,
-            message.createdOn <= latestReadTime,
-            isLargeGroup
-          );
-        })
-    );
+      // A function takes parameter above and generate return value
+      const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
+        Object.values(chatMessages)
+          .filter(
+            (message) =>
+              message.type.toLowerCase() === ACSKnownMessageType.text ||
+              message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
+              message.type.toLowerCase() === ACSKnownMessageType.html ||
+              (message.type === ACSKnownMessageType.participantAdded && hasValidParticipant(message)) ||
+              (message.type === ACSKnownMessageType.participantRemoved && hasValidParticipant(message)) ||
+              // TODO: Add support for topicUpdated system messages in MessageThread component.
+              // message.type === ACSKnownMessageType.topicUpdated ||
+              message.clientMessageId !== undefined
+          )
+          .filter(isMessageValidToRender)
+          .map((message) => {
+            return memoizedFn(
+              message.id ?? message.clientMessageId,
+              message,
+              userId,
+              message.createdOn <= latestReadTime,
+              isLargeGroup
+            );
+          })
+      );
 
-    updateMessagesWithAttached(convertedMessages);
-    return {
-      userId,
-      showMessageStatus: true,
-      messages: convertedMessages,
-      participantCount,
-      readReceiptsBySenderId
-    };
-  }
-);
+      updateMessagesWithAttached(convertedMessages);
+      return {
+        userId,
+        showMessageStatus: true,
+        messages: convertedMessages,
+        participantCount,
+        readReceiptsBySenderId
+      };
+    }
+  );
 
 const sanitizedMessageContentType = (type: string): MessageContentType => {
   const lowerCaseType = type.toLowerCase();
@@ -331,3 +347,10 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   }
   return !!(message.content && message.content?.message !== '');
 };
+
+/**
+ * Selector for {@link MessageThread} component.
+ *
+ * @public
+ */
+export const messageThreadSelector: MessageThreadSelector = messageThreadSelectorWithThread();

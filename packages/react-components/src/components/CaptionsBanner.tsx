@@ -7,9 +7,9 @@ import { Ref } from '@internal/northstar-wrapper';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
-  captionsBannerClassName,
+  captionsBannerStyles,
   captionsContainerClassName,
-  loadingBannerClassName
+  loadingBannerStyles
 } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 
@@ -26,7 +26,7 @@ export type _CaptionsInfo = {
 
 /**
  * @internal
- * strings for captions banneer
+ * strings for captions banner
  */
 export interface _CaptionsBannerStrings {
   captionsBannerSpinnerText?: string;
@@ -47,6 +47,11 @@ export interface _CaptionsBannerProps {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
   strings?: _CaptionsBannerStrings;
+  /**
+   * Optional form factor for the component.
+   * @defaultValue 'default'
+   */
+  formFactor?: 'default' | 'compact';
 }
 
 /**
@@ -54,7 +59,7 @@ export interface _CaptionsBannerProps {
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
-  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings } = props;
+  const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings, formFactor = 'default' } = props;
   const captionsScrollDivRef = useRef<HTMLElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
@@ -82,7 +87,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom]);
+  }, [handleScrollToTheBottom, isCaptionsOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
@@ -97,7 +102,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
             <Ref innerRef={captionsScrollDivRef}>
-              <Stack verticalAlign="start" className={captionsBannerClassName}>
+              <Stack verticalAlign="start" styles={captionsBannerStyles(formFactor)}>
                 {captions.map((caption) => {
                   return (
                     <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
@@ -109,7 +114,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             </Ref>
           )}
           {!isCaptionsOn && (
-            <Stack verticalAlign="center" className={loadingBannerClassName} data-is-focusable={true}>
+            <Stack verticalAlign="center" styles={loadingBannerStyles(formFactor)} data-is-focusable={true}>
               <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" />
             </Stack>
           )}

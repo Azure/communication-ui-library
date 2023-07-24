@@ -26,6 +26,8 @@ import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscrib
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -50,6 +52,8 @@ export class CallSubscriber {
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
+  /* @conditional-compile-remove(capabilities) */
+  private _capabilitiesSubscriber: CapabilitiesSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -87,6 +91,13 @@ export class CallSubscriber {
     });
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
+
+    /* @conditional-compile-remove(capabilities) */
+    this._capabilitiesSubscriber = new CapabilitiesSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Capabilities)
+    );
 
     this.subscribe();
   }
@@ -171,6 +182,8 @@ export class CallSubscriber {
     this._captionsSubscriber?.unsubscribe();
     /* @conditional-compile-remove(raise-hand) */
     this._raiseHandSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(capabilities) */
+    this._capabilitiesSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {
