@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
@@ -59,10 +57,12 @@ import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MicrosoftBotKind } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -227,6 +227,15 @@ export interface BaseCustomStyles {
 }
 
 // @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
+}
+
+// @beta
 export interface BlockedMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
@@ -296,6 +305,10 @@ export interface BrowserPermissionDeniedStyles extends BaseCustomStyles {
 // @public
 export interface CallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -309,6 +322,10 @@ export type CallAdapterCallEndedEvent = {
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -796,6 +813,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    capabilities?: CapabilitiesCallFeature;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -854,6 +872,10 @@ export interface CallWithChatAdapterManagement {
     // @beta
     holdCall: () => Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1245,6 +1267,11 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
+export interface CapabilitiesCallFeature {
+    capabilities: ParticipantCapabilities;
+}
+
+// @beta
 export interface CaptionsAvailableLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -1607,6 +1634,10 @@ export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     joinCall(microphoneOn?: boolean): void;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): void;
     startCall(participants: string[], options?: StartCallOptions): void;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
@@ -1738,6 +1769,9 @@ export type CommunicationParticipant = {
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -1851,6 +1885,9 @@ export interface ComponentStrings {
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -2184,6 +2221,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -2298,6 +2336,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @beta
@@ -2458,6 +2497,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 
@@ -2509,20 +2549,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
 
 // @beta
 export interface FileSharingOptions {
@@ -2680,6 +2718,14 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    previewUrl?: string;
 }
 
 // @beta
@@ -3280,7 +3326,7 @@ export interface RecordingCallFeature {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
-    identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+    identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHand;
@@ -3486,6 +3532,11 @@ export type TeamsAdapterOptions = CommonCallAdapterOptions;
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    // @public
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }

@@ -40,7 +40,7 @@ function restrictBuildFlavorForWorkflows(target) {
 }
 
 // Dependencies to choose the right version for beta and stable
-const SDK_DEPS = ["@azure/communication-calling", "@azure/communication-chat"]
+const SDK_DEPS = ["@azure/communication-calling", "@azure/communication-common", "@azure/communication-chat"]
 // Depencies that are beta only and should be removed from stable packages
 const BETA_ONLY_DEPS = ["@azure/communication-calling-effects"]
 

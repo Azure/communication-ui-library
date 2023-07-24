@@ -56,6 +56,7 @@ export type CallControlsProps = {
    */
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
+  displayVertical?: boolean;
 };
 
 // Enforce a background color on control bar to ensure it matches the composite background color.
@@ -217,7 +218,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
+        <ControlBar
+          layout={props.displayVertical ? 'vertical' : 'horizontal'}
+          styles={controlBarStyles(theme.semanticColors.bodyBackground)}
+        >
           {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}

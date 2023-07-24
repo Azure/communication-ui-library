@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -73,6 +71,15 @@ export interface AttachmentDownloadResult {
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
 }
 
 // @beta
@@ -345,6 +352,7 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    formFactor?: 'default' | 'compact';
     // (undocumented)
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -509,6 +517,9 @@ export interface _ComplianceBannerStrings {
 
 // @public
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
@@ -787,6 +798,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     ChangeSpokenLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @internal
@@ -973,6 +985,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 
@@ -1075,20 +1088,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1195,6 +1206,14 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    previewUrl?: string;
 }
 
 // @public

@@ -83,7 +83,7 @@ export type ParticipantListProps = {
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
   /** Styles for the {@link ParticipantList} */
   styles?: ParticipantListStyles;
-  /** prop to determine if we should show tooltip for participants or not */
+  /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
   /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;

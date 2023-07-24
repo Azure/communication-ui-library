@@ -13,7 +13,7 @@ import {
   ArgsFrom
 } from '../controlsUtils';
 import { compositeLocale } from '../localizationUtils';
-import { getDocs } from './ChatCompositeDocs';
+import { Docs } from './ChatCompositeDocs';
 import {
   CustomDataModelExampleContainer,
   CustomDataModelExampleContainerProps
@@ -103,7 +103,9 @@ export default {
     useMaxHeightParent: true,
     useMaxWidthParent: true,
     docs: {
-      page: () => getDocs()
+      //Prevent Docs auto scroll to top
+      container: null,
+      page: () => Docs()
     }
   }
 } as Meta;

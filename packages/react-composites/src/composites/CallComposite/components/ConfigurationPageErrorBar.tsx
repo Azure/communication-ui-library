@@ -31,6 +31,7 @@ export interface ConfigurationPageErrorBarProps {
     camera: PermissionState;
     microphone: PermissionState;
   };
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -65,9 +66,10 @@ export const ConfigurationPageErrorBar = (props: ConfigurationPageErrorBarProps)
         onNetworkingTroubleshootingClick={onNetworkingTroubleShootingClick}
         permissionsState={permissionsState}
         {...errorBarProps}
+        onDismissError={props.onDismissError}
       />
     );
   }
 
-  return <ErrorBar {...errorBarProps} />;
+  return <ErrorBar {...errorBarProps} onDismissError={props.onDismissError} />;
 };

@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -123,6 +121,10 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface CallAdapter extends CommonCallAdapter {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -134,6 +136,10 @@ export type CallAdapterCallEndedEvent = {
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -387,6 +393,10 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -723,6 +733,10 @@ export type _ChatThreadRestError = {
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
     joinCall(microphoneOn?: boolean): void;
+    joinCallWithOptions(options?: {
+        microphoneOn?: boolean;
+        cameraOn?: boolean;
+    }): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
 
@@ -744,6 +758,9 @@ export type CommonCallControlOptions = {
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -919,6 +936,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionMicMuted: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1007,6 +1025,7 @@ export type _MockFileUpload = FileMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;
+    attachmentType: string;
 };
 
 // @public
