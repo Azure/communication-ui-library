@@ -160,7 +160,10 @@ export interface RaiseHandCallFeatureState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
   raisedHands: RaisedHand[];
-  userRaisedHand?: RaisedHand;
+  /**
+   * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
+   */
+  localParticipantRaisedHand?: RaisedHand;
 }
 ``;
 

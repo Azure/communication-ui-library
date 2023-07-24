@@ -162,7 +162,7 @@ export class CallContext {
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(raise-hand) */
-        existingCall.raiseHand.userRaisedHand = call.raiseHand.userRaisedHand;
+        existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
         /* @conditional-compile-remove(total-participant-count) */
@@ -350,7 +350,7 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.raiseHand.raisedHands = raisedHands;
-        call.raiseHand.userRaisedHand = raisedHands.find(
+        call.raiseHand.localParticipantRaisedHand = raisedHands.find(
           (raisedHand) =>
             toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)
         );

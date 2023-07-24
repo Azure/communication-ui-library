@@ -43,21 +43,7 @@ import {
 } from './TestUtils';
 
 jest.mock('@azure/communication-calling', () => {
-  const mockCallFeature = (): any => {
-    return {
-      get Recording(): CallFeatureFactory<RecordingCallFeature> {
-        return { callApiCtor: MockRecordingCallFeatureImpl };
-      },
-      get Transcription(): CallFeatureFactory<TranscriptionCallFeature> {
-        return { callApiCtor: MockTranscriptionCallFeatureImpl };
-      },
-      get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
-        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
-      }
-    };
-  };
-
-  const mock = {
+  return {
     VideoStreamRenderer: jest.fn().mockImplementation(() => {
       return {
         createView: () => {
@@ -68,9 +54,18 @@ jest.mock('@azure/communication-calling', () => {
         }
       };
     }),
-    Features: mockCallFeature()
+    Features: {
+      get Recording(): CallFeatureFactory<RecordingCallFeature> {
+        return { callApiCtor: MockRecordingCallFeatureImpl };
+      },
+      get Transcription(): CallFeatureFactory<TranscriptionCallFeature> {
+        return { callApiCtor: MockTranscriptionCallFeatureImpl };
+      },
+      get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
+        return { callApiCtor: StubDiagnosticsCallFeatureImpl };
+      }
+    }
   };
-  return mock;
 });
 
 describe('Stateful call client', () => {
