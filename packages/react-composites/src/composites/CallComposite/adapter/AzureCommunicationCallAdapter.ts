@@ -580,7 +580,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       return call;
     });
   }
-  
+
   private _joinCall(audioOptions: AudioOptions, videoOptions: VideoOptions): CallTypeOf<AgentType> {
     const isTeamsMeeting = 'meetingLink' in this.locator;
     /* @conditional-compile-remove(rooms) */
