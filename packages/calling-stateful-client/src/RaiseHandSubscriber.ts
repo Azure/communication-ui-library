@@ -27,27 +27,33 @@ export class RaiseHandSubscriber {
   }
 
   private subscribe = (): void => {
-    this._raiseHand.on('raisedHandEvent', this.stateChanged);
-    this._raiseHand.on('loweredHandEvent', this.stateChanged);
+    this._raiseHand.on('raisedHandEvent', this.raisedHand);
+    this._raiseHand.on('loweredHandEvent', this.loweredHand);
   };
 
   public unsubscribe = (): void => {
-    this._raiseHand.off('raisedHandEvent', this.stateChanged);
-    this._raiseHand.off('loweredHandEvent', this.stateChanged);
+    this._raiseHand.off('raisedHandEvent', this.raisedHand);
+    this._raiseHand.off('loweredHandEvent', this.loweredHand);
   };
 
-  private stateChanged = (event: RaisedHandChangedEvent): void => {
+  private raisedHand = (): void => {
     this._context.setCallRaisedHands(this._callIdRef.callId, this._raiseHand.getRaisedHands());
-    const raisedHand = this._raiseHand
-      .getRaisedHands()
-      .find(
-        (raisedHand) =>
-          toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(event.identifier)
+    for (const raisedHand of this._raiseHand.getRaisedHands()) {
+      this._context.setParticipantIsRaisedHand(
+        this._callIdRef.callId,
+        toFlatCommunicationIdentifier(raisedHand.identifier),
+        raisedHand
       );
+    }
+  };
+
+  private loweredHand = (event: RaisedHandChangedEvent): void => {
+    this.raisedHand();
+
     this._context.setParticipantIsRaisedHand(
       this._callIdRef.callId,
       toFlatCommunicationIdentifier(event.identifier),
-      raisedHand
+      undefined
     );
   };
 }
