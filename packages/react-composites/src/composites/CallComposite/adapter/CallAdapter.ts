@@ -288,7 +288,7 @@ export interface JoinCallOptions {
    * 'keep': maintain precall state
    */
   cameraOn?: boolean | 'keep';
-};
+}
 
 /* @conditional-compile-remove(close-captions) */
 /**
