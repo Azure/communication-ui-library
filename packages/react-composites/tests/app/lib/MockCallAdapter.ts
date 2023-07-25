@@ -47,9 +47,6 @@ export class MockCallAdapter implements CallAdapter {
   joinCall(): Call | undefined {
     throw Error('joinCall not implemented');
   }
-  joinCallWithOptions(): Call | undefined {
-    throw Error('joinCallWithOptions not implemented');
-  }
   leaveCall(): Promise<void> {
     throw Error('leaveCall not implemented');
   }

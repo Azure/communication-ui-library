@@ -83,6 +83,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
@@ -164,7 +165,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   private bindPublicMethods(): void {
     this.joinCall.bind(this);
-    this.joinCallWithOptions.bind(this);
     this.leaveCall.bind(this);
     this.startCall.bind(this);
     this.onStateChange.bind(this);
@@ -238,13 +238,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /** Join existing Call. */
-  public joinCall(microphoneOn?: boolean): Call | undefined {
-    return this.callAdapter.joinCall(microphoneOn);
-  }
-
-  /** Join existing Call. */
-  public joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined {
-    return this.callAdapter.joinCallWithOptions(options);
+  public joinCall(options?: boolean | JoinCallOptions): Call | undefined {
+    if (typeof options === 'boolean') {
+      return this.callAdapter.joinCall(options);
+    } else {
+      return this.callAdapter.joinCall(options);
+    }
   }
   /** Leave current Call. */
   public async leaveCall(forEveryone?: boolean): Promise<void> {
