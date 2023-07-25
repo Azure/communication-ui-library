@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ControlBarButtonStyles, DevicesButton, Role } from '@internal/react-components';
+import { ControlBarButtonStyles, DevicesButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
-import { DevicesButtonStrings } from '@internal/react-components';
+import { DevicesButtonStrings, Role } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
@@ -11,6 +11,7 @@ import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '
 import { CompositeLocale, useLocale } from '../../../localization';
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /** @private */

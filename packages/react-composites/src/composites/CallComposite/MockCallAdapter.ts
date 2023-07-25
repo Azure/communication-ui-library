@@ -18,10 +18,11 @@ import type { CallAdapter, CallAdapterState } from './adapter';
 export class MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    /* @conditional-compile-remove(rooms) */
     localParticipantRole?: Role;
   }) {
     this.state = {
-      ...createDefaultCallAdapterState(testState.localParticipantRole)
+      ...createDefaultCallAdapterState(/* @conditional-compile-remove(rooms) */ testState.localParticipantRole)
     };
 
     if (testState.askDevicePermission) {
@@ -188,7 +189,7 @@ export class MockCallAdapter implements CallAdapter {
 /**
  * Default call adapter state that the {@link MockCallAdapter} class is initialized with an optional role.
  */
-const createDefaultCallAdapterState = (role?: Role): CallAdapterState => {
+const createDefaultCallAdapterState = (/* @conditional-compile-remove(rooms) */ role?: Role): CallAdapterState => {
   return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,
@@ -249,6 +250,7 @@ const createDefaultCallAdapterState = (role?: Role): CallAdapterState => {
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    /* @conditional-compile-remove(rooms) */
     isRoomsCall: false,
     latestErrors: {}
   };

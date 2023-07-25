@@ -18,7 +18,8 @@ import { peoplePaneContainerTokens } from '../common/styles/ParticipantContainer
 import { participantListContainerStyles, peoplePaneContainerStyle } from './styles/PeoplePaneContent.styles';
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { CallCompositeStrings, CommonCallAdapter } from '../CallComposite';
+import { CallCompositeStrings } from '../CallComposite';
+import { CommonCallAdapter } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';

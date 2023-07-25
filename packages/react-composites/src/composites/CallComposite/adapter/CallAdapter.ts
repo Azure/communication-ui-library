@@ -98,6 +98,7 @@ export type CallAdapterClientState = {
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
+  /* @conditional-compile-remove(rooms) */
   isRoomsCall: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
@@ -113,13 +114,6 @@ export type CallAdapterClientState = {
    * Environment information about system the adapter is made on
    */
   environmentInfo?: EnvironmentInfo;
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
-   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
-   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
-   */
-  roleHint?: Role;
   /**
    * State to track whether the local participant's camera is on. To be used when creating a custom
    * control bar with the CallComposite.

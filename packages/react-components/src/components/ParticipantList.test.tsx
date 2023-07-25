@@ -5,6 +5,7 @@ import React from 'react';
 import { ParticipantList } from './ParticipantList';
 import { registerIcons } from '@fluentui/react';
 import { render } from '@testing-library/react';
+/* @conditional-compile-remove(rooms) */
 import { Role } from '../types/CommunicationParticipant';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
@@ -76,4 +77,5 @@ const getRemoveParticipantButton = (container: HTMLElement): HTMLButtonElement =
   return body?.querySelector('button[data-ui-id="participant-list-remove-participant-button"]') as HTMLButtonElement;
 };
 
+/* @conditional-compile-remove(rooms) */
 const mockMyUser = { userId: '0', displayName: 'me', role: 'Presenter' as Role, isRemovable: false };

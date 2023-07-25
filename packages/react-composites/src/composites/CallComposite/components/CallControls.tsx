@@ -32,11 +32,10 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
-/* @conditional-compile-remove(rooms) */
 import { CommonCallAdapter } from '../adapter';
 
 /**
@@ -67,7 +66,7 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
-
+  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -185,7 +184,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const onDismissDialpad = (): void => {
     setShowDialpad(false);
   };
-
+  /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
 
   let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);

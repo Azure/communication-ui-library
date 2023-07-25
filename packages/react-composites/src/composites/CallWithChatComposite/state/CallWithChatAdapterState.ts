@@ -74,6 +74,7 @@ export interface CallWithChatClientState {
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
+  /* @conditional-compile-remove(rooms) */
   /** State of whether the active call is a rooms call */
   isRoomsCall: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -117,6 +118,7 @@ export function callWithChatAdapterStateFromBackingStates(
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
+    /* @conditional-compile-remove(rooms) */
     isRoomsCall: callAdapterState.isRoomsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: chatAdapterState.latestErrors,

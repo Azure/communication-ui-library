@@ -14,9 +14,10 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams,
   getRemoteParticipants,
-  getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
@@ -61,6 +62,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getDominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
     getOptimalVideoCount,
+    /* @conditional-compile-remove(rooms) */
     getRole
   ],
   (
@@ -74,6 +76,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     dominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount,
+    /* @conditional-compile-remove(rooms) */
     role
   ) => {
     const screenShareRemoteParticipant =
@@ -103,6 +106,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         isMuted,
         isScreenSharingOn,
         localVideoStream,
+        /* @conditional-compile-remove(rooms) */
         role
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(

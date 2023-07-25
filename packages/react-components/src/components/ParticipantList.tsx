@@ -197,7 +197,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
-
+  /* @conditional-compile-remove(rooms) */
   const myRole = participants.find((p) => p.userId === myUserId)?.role;
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
@@ -225,6 +225,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     },
     [
       ids.participantListRemoveParticipantButton,
+      /* @conditional-compile-remove(rooms) */
       myRole,
       myUserId,
       onFetchParticipantMenuItems,

@@ -4,6 +4,7 @@
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { Role } from './CommunicationParticipant';
+/* @conditional-compile-remove(rooms) */
 import { ParticipantState } from './ParticipantListParticipant';
 
 /**
@@ -41,6 +42,7 @@ export type VideoGalleryParticipant = {
   videoStream?: VideoGalleryStream;
   /** Whether participant is screen sharing or not */
   isScreenSharingOn?: boolean;
+  /* @conditional-compile-remove(rooms) */
   /** Role of the participant in a rooms call */
   role?: Role;
 };

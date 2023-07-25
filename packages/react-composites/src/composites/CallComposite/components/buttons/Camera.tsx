@@ -6,6 +6,7 @@ import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
@@ -21,7 +22,9 @@ export const Camera = (props: {
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
+  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
   return (
     <CameraButton
@@ -31,7 +34,9 @@ export const Camera = (props: {
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={
-        cameraButtonProps.disabled || props.disabled || (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+        cameraButtonProps.disabled ||
+        props.disabled ||
+        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
       }
       /* @conditional-compile-remove(video-background-effects) */
       onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}

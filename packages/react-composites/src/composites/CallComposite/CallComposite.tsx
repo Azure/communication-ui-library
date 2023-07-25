@@ -506,9 +506,9 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
 
   useEffect(() => {
     (async () => {
-      const constrain = getQueryOptions(
-        /* @conditional-compile-remove(rooms) */ { role: adapter.getState().call?.role as Role }
-      );
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role as Role
+      });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();

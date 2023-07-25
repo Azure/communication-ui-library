@@ -449,6 +449,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
+    /*@conditional-compile-remove(click-to-call) */
     localVideoTileSize
   ]);
 

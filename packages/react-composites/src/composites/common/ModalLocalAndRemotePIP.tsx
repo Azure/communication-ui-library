@@ -15,6 +15,7 @@ import {
   modalStyle,
   PIPContainerStyle
 } from './styles/ModalLocalAndRemotePIP.styles';
+/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 /**
@@ -41,6 +42,7 @@ export const ModalLocalAndRemotePIP = (props: {
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
+  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const role = adapter.getState().call?.role;
@@ -59,7 +61,7 @@ export const ModalLocalAndRemotePIP = (props: {
       );
     }
     return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
-  }, [pictureInPictureProps, pictureInPictureHandlers, role]);
+  }, [pictureInPictureProps, pictureInPictureHandlers, /* @conditional-compile-remove(rooms) */ role]);
 
   /* @conditional-compile-remove(rooms) */
   if (!(role === 'Consumer') && !pictureInPictureProps.dominantRemoteParticipant) {

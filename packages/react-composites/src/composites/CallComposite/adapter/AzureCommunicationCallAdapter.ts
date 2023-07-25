@@ -117,9 +117,9 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
+    /* @conditional-compile-remove(rooms) */
     isRoomsCall: boolean,
     options?: {
-      /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages?: VideoBackgroundImage[];
@@ -134,7 +134,7 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
-      isRoomsCall,
+      /* @conditional-compile-remove(rooms) */ isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
@@ -351,7 +351,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     //   options = { ...options, roleHint: 'Consumer' };
     // }
     console.log(isRoomsCall);
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, isRoomsCall, options);
+    this.context = new CallContext(
+      callClient.getState(),
+      isTeamsMeeting,
+      /* @conditional-compile-remove(rooms) */ isRoomsCall,
+      /* @conditional-compile-remove(rooms) */ options
+    );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 

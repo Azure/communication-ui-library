@@ -6,6 +6,7 @@ import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /** @private */
@@ -18,7 +19,9 @@ export const ScreenShare = (props: {
 }): JSX.Element => {
   const screenShareButtonProps = usePropsFor(ScreenShareButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
+  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
 
   const screenShareButtonDisabled = (): boolean => {
@@ -33,7 +36,9 @@ export const ScreenShare = (props: {
       {...screenShareButtonProps}
       showLabel={props.displayType !== 'compact'}
       disabled={
-        screenShareButtonDisabled() || props.disabled || (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+        screenShareButtonDisabled() ||
+        props.disabled ||
+        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
       }
       styles={styles}
     />
