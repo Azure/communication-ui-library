@@ -63,7 +63,8 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
-  CallAdapter
+  CallAdapter,
+  JoinCallOptions
 } from './CallAdapter';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
@@ -467,7 +468,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.getState.bind(this);
     this.dispose.bind(this);
     this.joinCall.bind(this);
-    this.joinCallWithOptions.bind(this);
     this.leaveCall.bind(this);
     this.setCamera.bind(this);
     this.setMicrophone.bind(this);
@@ -562,47 +562,43 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  public joinCall(microphoneOn?: boolean): CallTypeOf<AgentType> | undefined {
+  public joinCall(options?: boolean | JoinCallOptions): CallTypeOf<AgentType> | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     }
 
     return this.teeErrorToEventEmitter(() => {
-      const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-      // TODO: find a way to expose stream to here
-      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-      /* @conditional-compile-remove(teams-adhoc-call) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      if (isOutboundCall(this.locator)) {
-        const phoneNumber = this.getState().alternateCallerId;
-        return this.startCall(this.locator.participantIds, {
-          alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
-          audioOptions,
-          videoOptions
-        });
+      let audioOptions: AudioOptions;
+      let videoOptions: VideoOptions;
+      // if using the deprecated joinCall API
+      if (typeof options !== 'object') {
+        const microphoneOn = options;
+        audioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
+        // TODO: find a way to expose stream to here
+        videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+      } else {
+        // if using the options bag
+        // undefined = keep = use precall state
+        // true = turn on
+        // false = turn off
+        const microphoneState = options.microphoneOn ?? 'keep';
+        const cameraState = options.cameraOn ?? 'keep';
+
+        audioOptions = {
+          muted: !(microphoneState === 'keep' ? this.getState().isLocalPreviewMicrophoneEnabled : microphoneState)
+        };
+        const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+        const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
+        const precallVideoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+
+        videoOptions =
+          cameraState === 'keep'
+            ? precallVideoOptions
+            : localStream && options?.cameraOn
+            ? { localVideoStreams: [localStream] }
+            : {};
       }
-      const call = this._joinCall(audioOptions, videoOptions);
 
-      this.processNewCall(call);
-      return call;
-    });
-  }
-
-  public joinCallWithOptions(options?: {
-    microphoneOn?: boolean;
-    cameraOn?: boolean;
-  }): CallTypeOf<AgentType> | undefined {
-    if (_isInCall(this.getState().call?.state ?? 'None')) {
-      throw new Error('You are already in the call!');
-    }
-
-    const { microphoneOn, cameraOn } = options ?? {};
-
-    return this.teeErrorToEventEmitter(() => {
-      const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-      const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
-      const videoOptions = localStream && cameraOn ? { localVideoStreams: [localStream] } : {};
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
       if (isOutboundCall(this.locator)) {

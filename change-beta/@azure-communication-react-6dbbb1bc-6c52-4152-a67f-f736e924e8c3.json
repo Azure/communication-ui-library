@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "Deprecate old joinCall API and replace with joinCall API with options bag",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
