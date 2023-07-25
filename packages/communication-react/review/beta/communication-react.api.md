@@ -3337,8 +3337,8 @@ export interface RaiseHandButtonStrings {
 
 // @public
 export interface RaiseHandCallFeature {
-    localParticipantRaisedHand?: RaisedHand;
-    raisedHands: RaisedHand[];
+    localParticipantRaisedHand?: RaisedHand_2;
+    raisedHands: RaisedHand_2[];
 }
 
 // @public
@@ -3361,7 +3361,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand;
+    raisedHand?: RaisedHand_2;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
