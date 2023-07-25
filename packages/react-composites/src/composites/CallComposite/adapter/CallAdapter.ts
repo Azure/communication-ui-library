@@ -97,6 +97,9 @@ export type CallAdapterClientState = {
   endedCall?: CallState;
   isTeamsCall: boolean;
   /* @conditional-compile-remove(rooms) */
+  /**
+   * State to track whether the call is a rooms call.
+   */
   isRoomsCall: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
