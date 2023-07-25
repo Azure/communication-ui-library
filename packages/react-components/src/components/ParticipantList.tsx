@@ -199,7 +199,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
   const myRole = participants.find((p) => p.userId === myUserId)?.role;
-
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];

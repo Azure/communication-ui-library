@@ -18,16 +18,14 @@ import type { CallAdapter, CallAdapterState } from './adapter';
 export class MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
-    /* @conditional-compile-remove(rooms) */ options?: { roleHint?: Role };
+    localParticipantRole?: Role;
   }) {
-    this.state = { ...defaultCallAdapterState };
+    this.state = {
+      ...createDefaultCallAdapterState(testState.localParticipantRole)
+    };
 
     if (testState.askDevicePermission) {
       this.askDevicePermission = testState.askDevicePermission;
-    }
-    /* @conditional-compile-remove(rooms) */
-    if (testState.options?.roleHint) {
-      this.state.roleHint = testState.options.roleHint;
     }
   }
 
@@ -188,66 +186,70 @@ export class MockCallAdapter implements CallAdapter {
 }
 
 /**
- * Default call adapter state that the {@link MockCallAdapter} class is initialized with
+ * Default call adapter state that the {@link MockCallAdapter} class is initialized with an optional role.
  */
-const defaultCallAdapterState: CallAdapterState = {
-  displayName: 'Agnes Thompson',
-  isLocalPreviewMicrophoneEnabled: true,
-  page: 'call',
-  call: {
-    id: 'call1',
-    /* @conditional-compile-remove(teams-identity-support) */
-    kind: CallKind.Call,
-    callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
-    direction: 'Incoming',
-    transcription: { isTranscriptionActive: false },
-    recording: { isRecordingActive: false },
-    startTime: new Date(500000000000),
-    endTime: new Date(500000000000),
-    diagnostics: { network: { latest: {} }, media: { latest: {} } },
-    state: 'Connected',
-    localVideoStreams: [],
-    isMuted: false,
-    isScreenSharingOn: false,
-    remoteParticipants: {},
-    remoteParticipantsEnded: {},
-    /* @conditional-compile-remove(close-captions) */
-    captionsFeature: {
-      captions: [],
-      supportedSpokenLanguages: [],
-      supportedCaptionLanguages: [],
-      currentCaptionLanguage: '',
-      currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false,
-      startCaptionsInProgress: false
+const createDefaultCallAdapterState = (role?: Role): CallAdapterState => {
+  return {
+    displayName: 'Agnes Thompson',
+    isLocalPreviewMicrophoneEnabled: true,
+    page: 'call',
+    call: {
+      id: 'call1',
+      /* @conditional-compile-remove(teams-identity-support) */
+      kind: CallKind.Call,
+      callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
+      direction: 'Incoming',
+      transcription: { isTranscriptionActive: false },
+      recording: { isRecordingActive: false },
+      startTime: new Date(500000000000),
+      endTime: new Date(500000000000),
+      diagnostics: { network: { latest: {} }, media: { latest: {} } },
+      state: 'Connected',
+      localVideoStreams: [],
+      isMuted: false,
+      isScreenSharingOn: false,
+      remoteParticipants: {},
+      remoteParticipantsEnded: {},
+      /* @conditional-compile-remove(rooms) */
+      role,
+      /* @conditional-compile-remove(close-captions) */
+      captionsFeature: {
+        captions: [],
+        supportedSpokenLanguages: [],
+        supportedCaptionLanguages: [],
+        currentCaptionLanguage: '',
+        currentSpokenLanguage: '',
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: false
+      },
+      /* @conditional-compile-remove(call-transfer) */
+      transfer: {
+        acceptedTransfers: {}
+      },
+      /* @conditional-compile-remove(optimal-video-count) */
+      optimalVideoCount: {
+        maxRemoteVideoStreams: 4
+      }
     },
-    /* @conditional-compile-remove(call-transfer) */
-    transfer: {
-      acceptedTransfers: {}
+    userId: { kind: 'communicationUser', communicationUserId: '1' },
+    devices: {
+      isSpeakerSelectionAvailable: true,
+      selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
+      cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
+      selectedMicrophone: {
+        id: 'microphone1',
+        name: '1st Microphone',
+        deviceType: 'Microphone',
+        isSystemDefault: true
+      },
+      microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
+      selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
+      speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+      unparentedViews: [],
+      deviceAccess: { video: true, audio: true }
     },
-    /* @conditional-compile-remove(optimal-video-count) */
-    optimalVideoCount: {
-      maxRemoteVideoStreams: 4
-    }
-  },
-  userId: { kind: 'communicationUser', communicationUserId: '1' },
-  devices: {
-    isSpeakerSelectionAvailable: true,
-    selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
-    cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
-    selectedMicrophone: {
-      id: 'microphone1',
-      name: '1st Microphone',
-      deviceType: 'Microphone',
-      isSystemDefault: true
-    },
-    microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
-    selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
-    speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
-    unparentedViews: [],
-    deviceAccess: { video: true, audio: true }
-  },
-  isTeamsCall: false,
-  isRoomsCall: false,
-  latestErrors: {}
+    isTeamsCall: false,
+    isRoomsCall: false,
+    latestErrors: {}
+  };
 };

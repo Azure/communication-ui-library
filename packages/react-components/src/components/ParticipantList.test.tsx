@@ -5,6 +5,7 @@ import React from 'react';
 import { ParticipantList } from './ParticipantList';
 import { registerIcons } from '@fluentui/react';
 import { render } from '@testing-library/react';
+import { Role } from '../types/CommunicationParticipant';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
 const dummyOnRemoveParticipantCallback = () => {};
@@ -29,8 +30,9 @@ describe('ParticipantList tests for different roles', () => {
   test('ParticipantList should have enabled remove menu item for Presenter role', async () => {
     const { container } = render(
       <ParticipantList
-        participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
+        participants={[mockMyUser, { displayName: 'User1', userId: '1', isRemovable: true, role: 'Presenter' }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
+        myUserId={'0'}
       />
     );
 
@@ -43,7 +45,7 @@ describe('ParticipantList tests for different roles', () => {
   test('ParticipantList should have disabled remove menu item for Attendee role', async () => {
     const { container } = render(
       <ParticipantList
-        participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
+        participants={[{ displayName: 'User1', userId: '1', isRemovable: true, role: 'Attendee' }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />
     );
@@ -56,7 +58,7 @@ describe('ParticipantList tests for different roles', () => {
   test('ParticipantList should have disabled remove menu item for Consumer role', async () => {
     const { container } = render(
       <ParticipantList
-        participants={[{ displayName: 'User1', userId: '1', isRemovable: true }]}
+        participants={[{ displayName: 'User1', userId: '1', isRemovable: true, role: 'Consumer' }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />
     );
@@ -73,3 +75,5 @@ const getRemoveParticipantButton = (container: HTMLElement): HTMLButtonElement =
   const body = container.parentElement;
   return body?.querySelector('button[data-ui-id="participant-list-remove-participant-button"]') as HTMLButtonElement;
 };
+
+const mockMyUser = { userId: '0', displayName: 'me', role: 'Presenter' as Role, isRemovable: false };
