@@ -20,6 +20,7 @@ module.exports = {
   moduleNameMapper: {
     '@azure/communication-react': '<rootDir>/../communication-react/src/index.ts',
     'react-components': '<rootDir>/../react-components/src/index.ts',
+    'react-components-v2': '<rootDir>/../react-components-v2/src/index.ts',
     'react-composites': '<rootDir>/../react-composites/src/index.ts',
     'chat-stateful-client': '<rootDir>/../chat-stateful-client/src/index.ts',
     'chat-component-bindings': '<rootDir>/../chat-component-bindings/src/index.ts',

@@ -39,6 +39,7 @@
     "@internal/chat-stateful-client": "2.0.0-beta.0",
     "@internal/chat-component-bindings": "2.0.0-beta.0",
     "@internal/react-components": "2.0.0-beta.0",
+    "@internal/react-components-v2": "2.0.0-beta.0",
     "@internal/react-composites": "2.0.0-beta.0",
     "@types/react-linkify": "^1.0.0",
     "json-stringify-safe": "^5.0.1",

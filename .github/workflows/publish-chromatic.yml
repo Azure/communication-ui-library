@@ -5,6 +5,7 @@ on:
     paths:
       - packages/storybook/**
       - packages/react-components/**
+      - packages/react-components-v2/**
       - packages/react-composites/**
       - packages/communication-react/**
   push:

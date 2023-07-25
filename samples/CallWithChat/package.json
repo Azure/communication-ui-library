@@ -42,6 +42,7 @@
     "@internal/calling-component-bindings": "2.0.0-beta.0",
     "@internal/calling-stateful-client": "2.0.0-beta.0",
     "@internal/react-components": "2.0.0-beta.0",
+    "@internal/react-components-v2": "2.0.0-beta.0",
     "@internal/react-composites": "2.0.0-beta.0",
     "merge": "^2.1.1",
     "mobile-detect": "~1.4.5",

@@ -27,6 +27,7 @@ module.exports = (appDir, babelConfig) => {
         '@internal/chat-stateful-client': path.resolve(appDir, '../../../../chat-stateful-client/src'),
         '@internal/fake-backends': path.resolve(appDir, '../../../../fake-backends/src'),
         '@internal/react-components': path.resolve(appDir, '../../../../react-components/src'),
+        '@internal/react-components-v2': path.resolve(appDir, '../../../../react-components-v2/src'),
         '@internal/react-composites': path.resolve(appDir, '../../../../react-composites/src')
       }
     },
