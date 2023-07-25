@@ -17,8 +17,6 @@ import {
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 /* @conditional-compile-remove(call-readiness) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
@@ -111,17 +109,18 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
   const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
+  /* @conditional-compile-remove(rooms) */
+  const role = adapter.getState().call?.role;
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
   let roleCanUseCamera = true;
   let roleCanUseMic = true;
+
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  roleCanUseCamera = role === 'Consumer' ? false : true;
   /* @conditional-compile-remove(rooms) */
-  roleCanUseCamera = rolePermissions.cameraButton;
-  /* @conditional-compile-remove(rooms) */
-  roleCanUseMic = rolePermissions.microphoneButton;
+  roleCanUseMic = role === 'Consumer' ? false : true;
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for

@@ -10,8 +10,6 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -38,6 +36,8 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
+/* @conditional-compile-remove(rooms) */
+import { CommonCallAdapter } from '../adapter';
 
 /**
  * @private
@@ -67,6 +67,8 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+
+  const adapter = useAdapter();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale();
@@ -129,7 +131,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }
 
     /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-    if (!isRoomsCallTrampoline()) {
+    if (!isRoomsCallTrampoline(adapter)) {
       items.push({
         key: 'holdButtonKey',
         text: localeStrings.component.strings.holdButton.tooltipOffContent,
@@ -184,20 +186,19 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const role = adapter.getState().call?.role;
 
   let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
   /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+  screenShareButtonIsEnabled = role === 'Presenter' && screenShareButtonIsEnabled;
 
   let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
   /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+  microphoneButtonIsEnabled = role !== 'Consumer' && microphoneButtonIsEnabled;
 
   let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
   /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+  cameraButtonIsEnabled = role !== 'Consumer' && cameraButtonIsEnabled;
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>
@@ -289,11 +290,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 const isEnabled = (option: unknown): boolean => option !== false;
 
 /** @private */
-export const isRoomsCallTrampoline = (): boolean => {
+export const isRoomsCallTrampoline = (adapter: CommonCallAdapter): boolean => {
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
-  /* @conditional-compile-remove(rooms) */
-  return !!rolePermissions.role;
+  return adapter.getState().isRoomsCall;
 
   return false;
 };

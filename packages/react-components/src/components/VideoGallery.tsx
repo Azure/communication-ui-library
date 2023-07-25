@@ -27,8 +27,6 @@ import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 import { useIdentifiers } from '../identifiers';
@@ -374,15 +372,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
-
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
     /* @conditional-compile-remove(rooms) */
-    if (!permissions.cameraButton || /* @conditional-compile-remove(click-to-call) */ localVideoTileSize === 'hidden') {
+    if (
+      localParticipant.role === 'Consumer' ||
+      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize === 'hidden'
+    ) {
       return undefined;
     }
     if (onRenderLocalVideoTile) {
@@ -451,8 +449,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /* @conditional-compile-remove(rooms) */ permissions.cameraButton,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    localVideoTileSize
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
