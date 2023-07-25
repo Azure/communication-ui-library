@@ -125,7 +125,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
   /**
    * Callback to render raised hand states for each participant
    */
-  onLowerHands?: (userId: string[]) => void;
+  onLowerParticipantHand?: (userId: string) => void;
   /**
    * Callback to render custom menu items for each participant.
    */
@@ -183,7 +183,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onRenderAvatar,
     onRemoveParticipant,
     /* @conditional-compile-remove(raise-hand) */
-    onLowerHands,
+    onLowerParticipantHand,
     onFetchParticipantMenuItems,
     showParticipantOverflowTooltip
   } = props;
@@ -214,7 +214,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         onRenderAvatar={onRenderAvatar}
         onRemoveParticipant={onRemoveParticipant}
         /* @conditional-compile-remove(raise-hand) */
-        onLowerHands={onLowerHands}
+        onLowerParticipantHand={onLowerParticipantHand}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         styles={styles?.menuStyles?.participantListStyles}
         showParticipantOverflowTooltip={showParticipantOverflowTooltip}
@@ -225,7 +225,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     myUserId,
     onRemoveParticipant,
     /* @conditional-compile-remove(raise-hand) */
-    onLowerHands,
+    onLowerParticipantHand,
     onRenderAvatar,
     onRenderParticipant,
     participants,

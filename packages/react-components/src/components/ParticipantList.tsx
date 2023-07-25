@@ -81,7 +81,7 @@ export type ParticipantListProps = {
   onRemoveParticipant?: (userId: string) => void;
   /* @conditional-compile-remove(raise-hand) */
   /** Optional callback when to update raised hand states for participants  */
-  onLowerHands?: (userIds: string[]) => void;
+  onLowerParticipantHand?: (userIds: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
@@ -138,7 +138,7 @@ const onRenderParticipantDefault = (
               /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
                 <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
                   <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.order}</Text>
+                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                   </Stack.Item>
                   <Stack.Item>
                     <Icon
@@ -210,7 +210,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     participants,
     onRemoveParticipant,
     /* @conditional-compile-remove(raise-hand) */
-    onLowerHands,
+    onLowerParticipantHand,
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
@@ -243,14 +243,17 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         });
       }
 
+      /* This block is depend on capabilities implementation because only organizer and presenter can lower hand */
       /* @conditional-compile-remove(raise-hand) */
+      /* @conditional-compile-remove(capabilities) */
       const remoteParticipant = participant as CallParticipantListParticipant;
       /* @conditional-compile-remove(raise-hand) */
-      if (remoteParticipant.raisedHand && onLowerHands) {
+      /* @conditional-compile-remove(capabilities) */
+      if (remoteParticipant.raisedHand && onLowerParticipantHand) {
         menuItems.push({
           key: 'lowerHand',
           text: strings.lowerParticipantHandButtonLabel,
-          onClick: () => onLowerHands([participant.userId]),
+          onClick: () => onLowerParticipantHand(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
           }
@@ -269,7 +272,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onFetchParticipantMenuItems,
       onRemoveParticipant,
       /* @conditional-compile-remove(raise-hand) */
-      onLowerHands,
+      onLowerParticipantHand,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
       /* @conditional-compile-remove(raise-hand) */
       strings.removeButtonLabel,
