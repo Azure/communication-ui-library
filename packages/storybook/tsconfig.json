@@ -1,4 +1,5 @@
 {
+  "baseUrl": ".",
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
     "outDir": "./dist",
