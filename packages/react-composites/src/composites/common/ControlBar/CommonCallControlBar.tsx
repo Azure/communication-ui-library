@@ -207,16 +207,10 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     isEnabled(options.peopleButton) || isEnabled(options.chatButton) || customButtons['secondary'] !== undefined;
 
   const screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
-  /* @conditional-compile-remove(rooms) */
-  // screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
 
   const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
-  /* @conditional-compile-remove(rooms) */
-  // microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  // cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
     <div ref={controlBarSizeRef}>

@@ -6,7 +6,6 @@ import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
 import { Role } from '@internal/react-components';
 import { EventEmitter } from 'stream';
 import type { CallAdapter, CallAdapterState } from './adapter';
@@ -18,7 +17,6 @@ import type { CallAdapter, CallAdapterState } from './adapter';
 export class MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
-    /* @conditional-compile-remove(rooms) */
     localParticipantRole?: Role;
   }) {
     this.state = {
@@ -186,7 +184,7 @@ export class MockCallAdapter implements CallAdapter {
 /**
  * Default call adapter state that the {@link MockCallAdapter} class is initialized with an optional role.
  */
-const createDefaultCallAdapterState = (/* @conditional-compile-remove(rooms) */ role?: Role): CallAdapterState => {
+const createDefaultCallAdapterState = (role?: Role): CallAdapterState => {
   return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,
