@@ -1,0 +1,148 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import {
+  DefaultButton,
+  IModalStyleProps,
+  IModalStyles,
+  IOverlayStyleProps,
+  IOverlayStyles,
+  IStyle,
+  IStyleFunctionOrObject,
+  Icon,
+  IconButton,
+  Layer,
+  Modal,
+  Stack,
+  getTheme,
+  mergeStyles
+} from '@fluentui/react';
+
+import React from 'react';
+import { BaseCustomStyles } from '../types';
+import {
+  cancelIcon,
+  closeButtonStyles,
+  controlBarContainerStyle,
+  downloadButtonStyle,
+  downloadIcon,
+  downloadIconStyle,
+  focusTrapZoneStyle,
+  headerStyle,
+  imageStyle,
+  overlayStyles,
+  scrollableContentStyle,
+  titleBarContainerStyle,
+  titleStyle
+} from './styles/ImageGallery.style';
+
+/**
+ * Fluent styles for {@link ImageGallery}.
+ *
+ * @beta
+ */
+export interface ImageGalleryStylesProps extends BaseCustomStyles {
+  /** Styles for the ImageGallery Modal. */
+  modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
+  /** Styles for the ImageGallery Modal overlay. */
+  overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+  /** Styles for the ImageGallery header bar. */
+  header?: IStyle;
+  /** Styles for the ImageGallery titleBar container. */
+  titleBarContainer?: IStyle;
+  /** styles for the title label */
+  title?: IStyle;
+  /** Styles for the ImageGallery controlBar container. */
+  controlBarContainer?: IStyle;
+  /** Styles for the download button. */
+  downloadButton?: IStyle;
+  /** Styles for the close modal icon. */
+  closeIcon?: IStyle;
+  /** Styles for the image. */
+  image?: IStyle;
+}
+
+/**
+ * Props for {@link ImageGallery}.
+ *
+ * @beta
+ */
+export interface ImageGalleryImageProps {
+  imageUrl: string;
+  downloadFileName: string;
+  altText?: string;
+}
+
+/**
+ * Props for {@link ImageGallery}.
+ *
+ * @beta
+ */
+export interface ImageGalleryProps {
+  images: Array<ImageGalleryImageProps>;
+  onDismiss: () => void;
+  onImageDownloadButtonClicked: (imageUrl: string, downloadFileName: string) => void;
+  modalLayerHostId?: string;
+  title?: string;
+  titleIcon?: JSX.Element;
+  /**
+   * Allows users to pass in an object contains custom CSS styles.
+   * @Example
+   * ```
+   * <ImageGallery styles={{ image: { background: 'blue' } }} />
+   * ```
+   */
+  styles?: ImageGalleryStylesProps;
+}
+
+/**
+ * @beta
+ */
+export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
+  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, title, titleIcon, styles } = props;
+  const theme = getTheme();
+
+  const downloadButtonTitleString = 'Download';
+  const closeString = 'Close';
+
+  return (
+    <Layer hostId={modalLayerHostId}>
+      <Modal
+        titleAriaId={title}
+        isOpen={images.length > 0}
+        onDismiss={onDismiss}
+        isBlocking={false}
+        overlay={{ styles: { ...overlayStyles, ...styles?.overlay } }}
+        layerProps={{ id: modalLayerHostId }}
+        styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
+      >
+        <img src={images[0].imageUrl} className={mergeStyles(imageStyle, styles?.image)} />
+      </Modal>
+      <Stack className={mergeStyles(headerStyle(theme), styles?.header)}>
+        <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
+          {titleIcon}
+          <Stack.Item className={mergeStyles(titleStyle(theme), styles?.title)} aria-label={title}>
+            {title}
+          </Stack.Item>
+        </Stack>
+        <Stack className={mergeStyles(controlBarContainerStyle, styles?.controlBarContainer)}>
+          <DefaultButton
+            className={mergeStyles(downloadButtonStyle, styles?.downloadButton)}
+            text={downloadButtonTitleString}
+            onClick={() => onImageDownloadButtonClicked(images[0].imageUrl, images[0].downloadFileName)}
+            onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={downloadIconStyle} />}
+            aria-live={'polite'}
+            aria-label={downloadButtonTitleString}
+          />
+          <IconButton
+            iconProps={cancelIcon}
+            className={mergeStyles(closeButtonStyles(theme), styles?.closeIcon)}
+            onClick={onDismiss}
+            ariaLabel={closeString}
+            aria-live={'polite'}
+          />
+        </Stack>
+      </Stack>
+    </Layer>
+  );
+};

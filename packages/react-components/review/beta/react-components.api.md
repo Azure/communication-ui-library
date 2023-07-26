@@ -16,6 +16,10 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
+import { IModalStyleProps } from '@fluentui/react';
+import { IModalStyles } from '@fluentui/react';
+import { IOverlayStyleProps } from '@fluentui/react';
+import { IOverlayStyles } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -1214,6 +1218,49 @@ export interface ImageFileMetadata extends BaseFileMetadata {
     attachmentType: 'inlineImage';
     // (undocumented)
     previewUrl?: string;
+}
+
+// @beta (undocumented)
+export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+
+// @beta
+export interface ImageGalleryImageProps {
+    // (undocumented)
+    altText?: string;
+    // (undocumented)
+    downloadFileName: string;
+    // (undocumented)
+    imageUrl: string;
+}
+
+// @beta
+export interface ImageGalleryProps {
+    // (undocumented)
+    images: Array<ImageGalleryImageProps>;
+    // (undocumented)
+    modalLayerHostId?: string;
+    // (undocumented)
+    onDismiss: () => void;
+    // (undocumented)
+    onImageDownloadButtonClicked: (imageUrl: string, downloadFileName: string) => void;
+    styles?: ImageGalleryStylesProps;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    titleIcon?: JSX.Element;
+}
+
+// @beta
+export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    closeIcon?: IStyle;
+    controlBarContainer?: IStyle;
+    downloadButton?: IStyle;
+    header?: IStyle;
+    image?: IStyle;
+    modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
+    overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+    title?: IStyle;
+    titleBarContainer?: IStyle;
 }
 
 // @public
