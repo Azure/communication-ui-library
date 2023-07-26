@@ -82,7 +82,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Do not use in production code.
         'in-progress-beta-feature-demo',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+        // v9 isConformant tests - currently broken in stable
+        'isConformant-v9',
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
