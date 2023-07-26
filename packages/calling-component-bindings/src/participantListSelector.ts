@@ -12,7 +12,7 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 /* @conditional-compile-remove(raise-hand) */
-import { getUserRaisedHand } from './baseSelectors';
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
@@ -113,7 +113,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipants,
     getIsScreenSharingOn,
     getIsMuted,
-    /* @conditional-compile-remove(raise-hand) */ getUserRaisedHand
+    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand
   ],
   (
     userId,
@@ -122,7 +122,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isScreenSharingOn,
     isMuted,
     /* @conditional-compile-remove(raise-hand) */
-    userRaisedHand
+    raisedHand
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -138,7 +138,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
       /* @conditional-compile-remove(raise-hand) */
-      raisedHand: userRaisedHand,
+      raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false

@@ -51,6 +51,8 @@ import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
+/* @conditional-compile-remove(close-captions) */
+import { convertFromSDKToRaisedHandState } from './Converter';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -351,11 +353,18 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.raiseHand.raisedHands = raisedHands;
-        call.raiseHand.localParticipantRaisedHand = raisedHands.find(
+        call.raiseHand.raisedHands = raisedHands.map((raisedHand) => {
+          return convertFromSDKToRaisedHandState(raisedHand);
+        });
+        const raisedHand = raisedHands.find(
           (raisedHand) =>
             toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)
         );
+        if (raisedHand) {
+          call.raiseHand.localParticipantRaisedHand = convertFromSDKToRaisedHandState(raisedHand);
+        } else {
+          call.raiseHand.localParticipantRaisedHand = undefined;
+        }
       }
     });
   }

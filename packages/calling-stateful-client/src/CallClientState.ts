@@ -176,13 +176,22 @@ export interface RaiseHandCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  raisedHands: RaisedHand[];
+  raisedHands: RaisedHandState[];
   /**
    * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  localParticipantRaisedHand?: RaisedHand;
+  localParticipantRaisedHand?: RaisedHandState;
 }
-``;
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Raised hand state with order
+ *
+ * @public
+ */
+export type RaisedHandState = {
+  raisedHandOrderPosition: number;
+};
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.

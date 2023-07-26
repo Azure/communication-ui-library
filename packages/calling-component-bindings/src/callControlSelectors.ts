@@ -13,7 +13,7 @@ import {
   getLocalVideoStreams
 } from './baseSelectors';
 /* @conditional-compile-remove(raise-hand) */
-import { getUserRaisedHand } from './baseSelectors';
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
@@ -143,7 +143,7 @@ export type RaiseHandButtonSelector = (
  * @public
  */
 export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createSelector(
-  [getUserRaisedHand, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
+  [getLocalParticipantRaisedHand, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
   (raisedHand, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
     return {
       checked: raisedHand ? true : false,

@@ -66,7 +66,9 @@ const createCompositeHandlers = memoizeOne(
     },
     /* @conditional-compile-remove(raise-hand) */
     onToggleRaiseHand: async () => {
-      adapter.getState().call?.raiseHand.userRaisedHand ? await adapter.lowerHand() : await adapter.raiseHand();
+      adapter.getState().call?.raiseHand.localParticipantRaisedHand
+        ? await adapter.lowerHand()
+        : await adapter.raiseHand();
     },
     onSelectCamera: async (deviceInfo, options) => {
       await adapter.setCamera(deviceInfo, options);

@@ -9,7 +9,7 @@ import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-co
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
-import { RaisedHand } from '@internal/react-components';
+import { RaisedHandState } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
@@ -88,7 +88,7 @@ const memoizedAllConvertRemoteParticipantBeta = memoizeFnAll(
     userId: string,
     isMuted: boolean,
     isSpeaking: boolean,
-    raisedHand: RaisedHand | undefined,
+    raisedHand: RaisedHandState | undefined,
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string
@@ -153,7 +153,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipantBeta = (
   userId: string,
   isMuted: boolean,
   isSpeaking: boolean,
-  raisedHand: RaisedHand | undefined,
+  raisedHand: RaisedHandState | undefined,
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string
