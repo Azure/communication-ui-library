@@ -12,8 +12,8 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
-/* @conditional-compile-remove(rooms) */
-import { getRole } from './baseSelectors';
+/* @conditional-compile-remove(capabilities) */
+import { getCapabilites } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
@@ -41,11 +41,13 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [getCallExists, getIsMuted, getDeviceManager, /* @conditional-compile-remove(rooms) */ getRole],
-  (callExists, isMuted, deviceManager, /* @conditional-compile-remove(rooms) */ role) => {
+  [getCallExists, getIsMuted, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
+  (callExists, isMuted, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
+    /* @conditional-compile-remove(capabilities) */
+    const capable = capabilities?.muteUnmuteMic.isPresent;
     return {
-      disabled: !callExists || !permission || /* @conditional-compile-remove(rooms) */ role === 'Consumer',
+      disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ !capable,
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
@@ -76,18 +78,19 @@ export type CameraButtonSelector = (
  * @public
  */
 export const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
-  [getLocalVideoStreams, getDeviceManager, /* @conditional-compile-remove(rooms) */ getRole],
-  (localVideoStreams, deviceManager, /* @conditional-compile-remove(rooms) */ role) => {
+  [getLocalVideoStreams, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
+  (localVideoStreams, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
-
+    /* @conditional-compile-remove(capabilities) */
+    const capable = capabilities?.turnVideoOnOff.isPresent;
     return {
       disabled:
         !deviceManager.selectedCamera ||
         !permission ||
         !deviceManager.cameras.length ||
-        /* @conditional-compile-remove(rooms) */ role === 'Consumer',
+        /* @conditional-compile-remove(capabilities) */ !capable,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
@@ -118,20 +121,20 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
   [
     getIsScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(rooms) */ getRole
+    /* @conditional-compile-remove(capabilities) */ getCapabilites
   ],
   (
     isScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ callState,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(capabilities) */ capabilities
   ) => {
+    /* @conditional-compile-remove(capabilities) */
+    const capable = capabilities?.shareScreen.isPresent;
     return {
       checked: isScreenSharingOn,
       /* @conditional-compile-remove(PSTN-calls) */
       disabled:
-        (callState === 'InLobby' ? true : callState === 'Connecting' ?? false) ||
-        /* @conditional-compile-remove(rooms) */ role === 'Consumer' ||
-        /* @conditional-compile-remove(rooms) */ role === 'Attendee'
+        ['InLobby', 'Connecting'].includes(callState) || /* @conditional-compile-remove(capabilities) */ !capable
     };
   }
 );

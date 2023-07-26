@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -37,6 +39,15 @@ export const getDeviceManager = (state: CallClientState): DeviceManagerState => 
  */
 export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined =>
   state.calls[props.callId]?.role;
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * @private
+ */
+export const getCapabilites = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilities?.capabilities;
 
 /**
  * @private
