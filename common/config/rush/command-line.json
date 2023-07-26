@@ -6,7 +6,7 @@
       "name": "prettier",
       "summary": "Used by the pre-commit Git hook. This command invokes Prettier to reformat staged changes.",
       "autoinstallerName": "rush-prettier",
-      "shellCommand": "npx lint-staged -q",
+      "shellCommand": "npx lint-staged",
       "safeForSimultaneousRushProcesses": true
     },
     {
