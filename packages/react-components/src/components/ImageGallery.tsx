@@ -14,7 +14,6 @@ import {
   Layer,
   Modal,
   Stack,
-  getTheme,
   mergeStyles
 } from '@fluentui/react';
 
@@ -35,6 +34,8 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
+import { useTheme } from '../theming/FluentThemeProvider';
+import { isDarkThemed } from '../theming/themeUtils';
 
 /**
  * Fluent styles for {@link ImageGallery}.
@@ -100,11 +101,11 @@ export interface ImageGalleryProps {
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, title, titleIcon, styles } = props;
-  const theme = getTheme();
+  const theme = useTheme();
+  const isDarkTheme = isDarkThemed(theme);
 
   const downloadButtonTitleString = 'Download';
   const closeString = 'Close';
-
   return (
     <Layer hostId={modalLayerHostId}>
       <Modal
@@ -118,16 +119,16 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       >
         <img src={images[0].imageUrl} className={mergeStyles(imageStyle, styles?.image)} />
       </Modal>
-      <Stack className={mergeStyles(headerStyle(theme), styles?.header)}>
+      <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
           {titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme), styles?.title)} aria-label={title}>
+          <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme), styles?.title)} aria-label={title}>
             {title}
           </Stack.Item>
         </Stack>
         <Stack className={mergeStyles(controlBarContainerStyle, styles?.controlBarContainer)}>
           <DefaultButton
-            className={mergeStyles(downloadButtonStyle, styles?.downloadButton)}
+            className={mergeStyles(downloadButtonStyle(theme, isDarkTheme), styles?.downloadButton)}
             text={downloadButtonTitleString}
             onClick={() => onImageDownloadButtonClicked(images[0].imageUrl, images[0].downloadFileName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={downloadIconStyle} />}
@@ -136,7 +137,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
           <IconButton
             iconProps={cancelIcon}
-            className={mergeStyles(closeButtonStyles(theme), styles?.closeIcon)}
+            className={mergeStyles(closeButtonStyles(theme, isDarkTheme), styles?.closeIcon)}
             onClick={onDismiss}
             ariaLabel={closeString}
             aria-live={'polite'}

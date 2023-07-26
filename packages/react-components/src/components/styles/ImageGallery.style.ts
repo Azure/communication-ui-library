@@ -42,17 +42,15 @@ export const scrollableContentStyle = mergeStyles({
 /**
  * @private
  */
-export const headerStyle = (theme: Theme): string =>
-  mergeStyles({
-    color: theme.palette.neutralPrimary,
-    fontSize: 'inherit',
-    margin: '0',
-    width: '100%',
-    height: '3.5rem',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: '0 0.75rem'
-  });
+export const headerStyle = mergeStyles({
+  fontSize: 'inherit',
+  margin: '0',
+  width: '100%',
+  height: '3.5rem',
+  flexDirection: 'row',
+  justifyContent: 'space-between',
+  padding: '0 0.75rem'
+});
 
 /**
  * @private
@@ -69,10 +67,10 @@ export const titleBarContainerStyle = mergeStyles({
 /**
  * @private
  */
-export const titleStyle = (theme: Theme): string =>
+export const titleStyle = (theme: Theme, isDarkThemed: boolean): string =>
   mergeStyles({
     paddingLeft: '0.5rem',
-    color: theme.palette.white,
+    color: isDarkThemed ? undefined : theme.palette.white,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
     fontStyle: 'normal',
@@ -109,25 +107,41 @@ export const imageStyle = mergeStyles({
 /**
  * @private
  */
-export const closeButtonStyles = (theme: Theme): string =>
+export const closeButtonStyles = (theme: Theme, isDarkThemed: boolean): string =>
   mergeStyles({
     margin: '0 0.5rem',
-    color: theme.palette.white,
+    color: isDarkThemed ? theme.palette.black : theme.palette.white,
     padding: '0.25rem',
     ':hover': {
-      color: theme.palette.white
+      color: isDarkThemed ? theme.palette.black : theme.palette.white,
+      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+    },
+    ':active': {
+      color: isDarkThemed ? theme.palette.black : theme.palette.white,
+      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
     }
   });
 
 /**
  * @private
  */
-export const downloadButtonStyle = mergeStyles({
-  margin: '0 0.5rem',
-  height: '32px',
-  borderWidth: '1px',
-  fontSize: '0.875rem', // 14px
-  fontWeight: 600,
-  padding: '0.38rem 0.75rem',
-  borderRadius: '4px'
-});
+export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): string =>
+  mergeStyles({
+    margin: '0 0.5rem',
+    height: '32px',
+    borderWidth: '1px',
+    fontSize: '0.875rem', // 14px
+    fontWeight: 600,
+    padding: '0.38rem 0.75rem',
+    borderRadius: '4px',
+    backgroundColor: isDarkThemed ? theme.palette.neutralLight : theme.palette.neutralPrimary,
+    color: isDarkThemed ? undefined : theme.palette.white,
+    ':hover': {
+      color: isDarkThemed ? theme.palette.black : theme.palette.white,
+      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+    },
+    ':active': {
+      color: isDarkThemed ? theme.palette.black : theme.palette.white,
+      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+    }
+  });
