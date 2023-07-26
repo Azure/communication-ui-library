@@ -204,7 +204,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       let menuItems: IContextualMenuItem[] = [];
       let participantIsRemovable = participant.isRemovable;
       /* @conditional-compile-remove(rooms) */
-      participantIsRemovable = myRole === 'Presenter' && participantIsRemovable;
+      participantIsRemovable = (myRole === 'Presenter' || myRole === undefined) && participantIsRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
