@@ -7,9 +7,9 @@ import { Ref } from '@internal/northstar-wrapper';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
-  captionsBannerClassName,
+  captionsBannerStyles,
   captionsContainerClassName,
-  loadingBannerClassName
+  loadingBannerStyles
 } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 
@@ -87,7 +87,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom]);
+  }, [handleScrollToTheBottom, isCaptionsOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
@@ -102,7 +102,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
             <Ref innerRef={captionsScrollDivRef}>
-              <Stack verticalAlign="start" styles={captionsBannerClassName(formFactor)}>
+              <Stack verticalAlign="start" styles={captionsBannerStyles(formFactor)}>
                 {captions.map((caption) => {
                   return (
                     <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
@@ -114,7 +114,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             </Ref>
           )}
           {!isCaptionsOn && (
-            <Stack verticalAlign="center" className={loadingBannerClassName} data-is-focusable={true}>
+            <Stack verticalAlign="center" styles={loadingBannerStyles(formFactor)} data-is-focusable={true}>
               <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" />
             </Stack>
           )}

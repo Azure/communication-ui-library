@@ -167,6 +167,14 @@ const sendRemoteInlineImageMessage = (
   remoteParticipant: ChatParticipant,
   threadId: string
 ): void => {
+  const localParticipantId = getIdentifierKind(localParticipant.id);
+  const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
+
+  /* @conditional-compile-remove(communication-common-beta-v3) */
+  if (localParticipantId.kind === 'microsoftBot' || remoteParticipantId.kind === 'microsoftBot') {
+    throw new Error('Unsupported indentifier kind: microsoftBot');
+  }
+
   const thread: Thread = chatClientModel.checkedGetThread(localParticipant.id, threadId);
   const messageWithInlineImage: ChatMessage = {
     id: `${thread.messages.length}`,
@@ -206,9 +214,9 @@ const sendRemoteInlineImageMessage = (
       message: messageWithInlineImage.content?.message ?? '',
       attachments: messageWithInlineImage.content?.attachments,
       threadId: threadId,
-      sender: getIdentifierKind(remoteParticipant.id),
+      sender: remoteParticipantId,
       senderDisplayName: remoteParticipant.displayName ?? '',
-      recipient: getIdentifierKind(localParticipant.id),
+      recipient: localParticipantId,
       metadata: {}
     });
 };

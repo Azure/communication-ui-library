@@ -84,7 +84,8 @@ export type {
   MediaDiagnosticChangedEvent,
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener
+  ParticipantsLeftListener,
+  JoinCallOptions
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
