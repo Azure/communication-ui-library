@@ -34,6 +34,7 @@ describe('ParticipantList tests for different roles', () => {
         participants={[mockMyUser, { displayName: 'User1', userId: '1', isRemovable: true, role: 'Presenter' }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
         myUserId={'0'}
+        myRole={'Presenter'}
       />
     );
 
@@ -48,6 +49,7 @@ describe('ParticipantList tests for different roles', () => {
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true, role: 'Attendee' }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
+        myRole={'Attendee'}
       />
     );
 
@@ -61,6 +63,7 @@ describe('ParticipantList tests for different roles', () => {
       <ParticipantList
         participants={[{ displayName: 'User1', userId: '1', isRemovable: true, role: 'Consumer' }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
+        myRole={'Consumer'}
       />
     );
 
