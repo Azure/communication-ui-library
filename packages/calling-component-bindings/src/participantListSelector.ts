@@ -17,6 +17,7 @@ import { memoizedConvertAllremoteParticipants } from './utils/participantListSel
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { getParticipantCount } from './baseSelectors';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(communication-common-beta-v3) */
 import { isMicrosoftBotIdentifier } from '@azure/communication-common';
@@ -92,6 +93,7 @@ export type ParticipantListSelector = (
 ) => {
   participants: CallParticipantListParticipant[];
   myUserId: string;
+  totalParticipantCount?: number;
 };
 
 /**
@@ -100,16 +102,18 @@ export type ParticipantListSelector = (
  * @public
  */
 export const participantListSelector: ParticipantListSelector = createSelector(
-  [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
+  [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted, getParticipantCount],
   (
     userId,
     displayName,
     remoteParticipants,
     isScreenSharingOn,
-    isMuted
+    isMuted,
+    partitipantCount
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
+    totalParticipantCount?: number;
   } => {
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
@@ -125,9 +129,13 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false
     });
+    /* @conditional-compile-remove(total-participant-count) */
+    const totalParticipantCount = partitipantCount;
     return {
       participants: participants,
-      myUserId: userId
+      myUserId: userId,
+      /* @conditional-compile-remove(total-participant-count) */
+      totalParticipantCount: totalParticipantCount
     };
   }
 );
