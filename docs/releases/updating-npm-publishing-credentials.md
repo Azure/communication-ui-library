@@ -24,4 +24,4 @@ For more information on these visit the internal wiki page: <https://dev.azure.c
      
 
 # Troubleshooting
-1. If you experience a 401 error, try rotating AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN and rerun the job. If you still see the error, rotate the AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY. You can get this key from the [kv](https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/AzureSDKEng/providers/Microsoft.KeyVault/vaults/azuresdkpartnerdrops-kv). 
+1. If you experience a 401 error, try rotating AZURE_SDK_RELEASE_PIPELINE_DEVOPS_TOKEN and rerun the job. If you still see the error, update the AZURESDKPARTNERDROPS_SERVICE_PRINCIPAL_KEY. You can get this key from the [kv](https://ms.portal.azure.com/#@microsoft.onmicrosoft.com/resource/subscriptions/a18897a6-7e44-457d-9260-f2854c0aca42/resourceGroups/AzureSDKEng/providers/Microsoft.KeyVault/vaults/azuresdkpartnerdrops-kv). 
