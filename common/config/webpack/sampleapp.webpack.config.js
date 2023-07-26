@@ -21,6 +21,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         // reference internal packlets src directly for hot reloading when developing
         '@azure/communication-react': path.resolve(sampleAppDir, '../../packages/communication-react/src'),
         '@internal/react-components': path.resolve(sampleAppDir, '../../packages/react-components/src'),
+        '@internal/react-components-v2': path.resolve(sampleAppDir, '../../packages/react-components-v2/src'),
         '@internal/react-composites': path.resolve(sampleAppDir, '../../packages/react-composites/src'),
         '@internal/chat-stateful-client': path.resolve(sampleAppDir, '../../packages/chat-stateful-client/src'),
         '@internal/chat-component-bindings': path.resolve(sampleAppDir, '../../packages/chat-component-bindings/src'),

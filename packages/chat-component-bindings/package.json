@@ -35,6 +35,7 @@
     "@internal/acs-ui-common": "2.0.0-beta.0",
     "@internal/chat-stateful-client": "2.0.0-beta.0",
     "@internal/react-components": "2.0.0-beta.0",
+    "@internal/react-components-v2": "2.0.0-beta.0",
     "reselect": "~4.0.0",
     "memoize-one": "~5.2.1"
   },
