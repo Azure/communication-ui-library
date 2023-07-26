@@ -26,6 +26,7 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -84,11 +85,12 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public getState = (): CallAdapterState =>
     callAdapterStateFromCallWithChatAdapterState(this.callWithChatAdapter.getState());
   public dispose = (): void => this.callWithChatAdapter.dispose();
-  public joinCall = (microphoneOn?: boolean): Call | undefined => {
-    return this.callWithChatAdapter.joinCall(microphoneOn);
-  };
-  public joinCallWithOptions = (options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined => {
-    return this.callWithChatAdapter.joinCallWithOptions(options);
+  public joinCall = (options?: boolean | JoinCallOptions): Call | undefined => {
+    if (typeof options === 'boolean') {
+      return this.callWithChatAdapter.joinCall(options);
+    } else {
+      return this.callWithChatAdapter.joinCall(options);
+    }
   };
   public leaveCall = async (forEveryone?: boolean): Promise<void> =>
     await this.callWithChatAdapter.leaveCall(forEveryone);

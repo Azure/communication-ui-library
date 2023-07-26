@@ -48,7 +48,8 @@ export type {
   MediaDiagnosticChangedEvent,
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener
+  ParticipantsLeftListener,
+  JoinCallOptions
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */
