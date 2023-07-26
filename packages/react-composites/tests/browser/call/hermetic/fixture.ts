@@ -14,6 +14,7 @@ import type {
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
 import type { CallKind } from '@azure/communication-calling';
+import { Role } from '@internal/react-components';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -50,7 +51,10 @@ const usePage = async ({ browser }, use) => {
 /**
  * Create the default {@link MockCallAdapterState}for hermetic e2e tests.
  */
-export function defaultMockCallAdapterState(participants?: MockRemoteParticipantState[]): MockCallAdapterState {
+export function defaultMockCallAdapterState(
+  participants?: MockRemoteParticipantState[],
+  role?: Role
+): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
     remoteParticipants[toFlatCommunicationIdentifier(p.identifier)] = p;
@@ -76,6 +80,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
+      role,
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
@@ -112,6 +117,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isRoomsCall: false,
     latestErrors: {}
   };
 }
@@ -249,8 +255,8 @@ export const test = base.extend<TestFixture>({
 /**
  * Sets up the default state for the configuration screen.
  */
-export const defaultMockConfigurationPageState = (): MockCallAdapterState => {
-  const state = defaultMockCallAdapterState();
+export const defaultMockConfigurationPageState = (role?: Role): MockCallAdapterState => {
+  const state = defaultMockCallAdapterState([], role);
   state.page = 'configuration';
   state.call = undefined;
   return state;
