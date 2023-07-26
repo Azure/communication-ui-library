@@ -158,7 +158,7 @@
     "ts-jest": "^29.1.0",
     "ts-loader": "^8.0.12",
     "ts-node": "^10.9.1",
-    "type-fest": "~4.0.0",
+    "type-fest": "~2.19.0",
     "typescript": "4.3.5",
     "webpack-cli": "~4.10.0",
     "webpack-dev-server": "4.8.1",

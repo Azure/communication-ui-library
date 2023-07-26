@@ -18526,9 +18526,9 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /type-fest@4.0.0:
-    resolution: {integrity: sha512-d/oYtUnPM9zar2fqqGLYPzgcY0qUlYK0evgNVti93xpzfjGkMgZHu9Lvgrkn0rqGXTgsFRxFamzjGoD9Uo+dgw==}
-    engines: {node: '>=16'}
+  /type-fest@2.19.0:
+    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
+    engines: {node: '>=12.20'}
     dev: false
 
   /type-is@1.6.18:
@@ -20399,7 +20399,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-V4kjmAyMhiBtAHNS5uSscN/KhLcrx9bwXy5UEEgogasIrEkcNh/YZIXB1G2uacdbYQFxmyKf8h4PlbMI900uNQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-r7uAMKHR3slqeeIdLwCNSafr9ums1bNYYdXfXBU4AKhC1+VYItJwcQCMSfnFv4c5gaerAeSEnJPcCfApvDIHkQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20483,7 +20483,7 @@ packages:
       ts-jest: 29.1.1(@babel/core@7.22.9)(babel-jest@29.6.1)(jest@29.6.1)(typescript@4.3.5)
       ts-node: 10.9.1(@types/node@20.4.5)(typescript@4.3.5)
       ttypescript: 1.5.15(ts-node@10.9.1)(typescript@4.3.5)
-      type-fest: 4.0.0
+      type-fest: 2.19.0
       typescript: 4.3.5
       use-debounce: 9.0.4(react@18.2.0)
       uuid: 9.0.0
@@ -20673,7 +20673,7 @@ packages:
     dev: false
 
   file:projects/react-components-v2.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-xzDOzDlCmh8KsXN2wv8FWCiAQUzHn/4x7EULQUVKgPIYEt38BVpF+9eCExtDARx1TNOU2hpAn2EQwkmm8uCK/A==, tarball: file:projects/react-components-v2.tgz}
+    resolution: {integrity: sha512-+FZC+eq7kfItzOnsiDiUFccGP4jpcHoI0RyhYkbJsxk/Epy4ZNAykILWrolRAfht2+rNm4QkVaJNjc9kzl7v8g==, tarball: file:projects/react-components-v2.tgz}
     id: file:projects/react-components-v2.tgz
     name: '@rush-temp/react-components-v2'
     version: 0.0.0
@@ -20752,7 +20752,7 @@ packages:
       textarea-caret-ts: 4.1.1
       ts-jest: 29.1.1(@babel/core@7.22.9)(babel-jest@29.6.1)(jest@29.6.1)(typescript@4.3.5)
       ts-node: 10.9.1(@types/node@20.4.5)(typescript@4.3.5)
-      type-fest: 4.0.0
+      type-fest: 2.19.0
       typescript: 4.3.5
       use-debounce: 9.0.4(react@18.2.0)
       uuid: 9.0.0
@@ -20774,7 +20774,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-NeYMBIbrhUldaPQV4fcZm8IRkt+NsAuU7ixHjmbwgCwtnNlbNphtzZTHDf04Ji+GYcUGe8NKoeacmRrIaHQZOA==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-nm1gr4NP3S03FDSd/MdbtqLex2Jvg0PW1QGkC0/Xc7uNkpKdD9vQNsSXFP1yukACPBnHDAy9kKJuazwhx3Datg==, tarball: file:projects/react-components.tgz}
     id: file:projects/react-components.tgz
     name: '@rush-temp/react-components'
     version: 0.0.0
@@ -20851,7 +20851,7 @@ packages:
       textarea-caret-ts: 4.1.1
       ts-jest: 29.1.1(@babel/core@7.22.9)(babel-jest@29.6.1)(jest@29.6.1)(typescript@4.3.5)
       ts-node: 10.9.1(@types/node@20.4.5)(typescript@4.3.5)
-      type-fest: 4.0.0
+      type-fest: 2.19.0
       typescript: 4.3.5
       use-debounce: 9.0.4(react@18.2.0)
       uuid: 9.0.0
@@ -20873,7 +20873,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-wdk843791gi3KbzDIp4oMFXMbr7wo7XCpfSDr+5fSdUaDqcmgd9O316JeR7IqEZV8VdAJN4RxmpgIfiVbJwQSw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-4/LZk5UNTk+AaGqwK9dH1f9e6CJw8DRHEXOA5oiL8UDBA6zHjuinY9PDxxMYkUBTlHvU27mXq86ElXoNxIGtZw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20967,7 +20967,7 @@ packages:
       ts-jest: 29.1.1(@babel/core@7.22.9)(babel-jest@29.6.1)(jest@29.6.1)(typescript@4.3.5)
       ts-loader: 8.4.0(typescript@4.3.5)(webpack@5.76.0)
       ts-node: 10.9.1(@types/node@20.4.5)(typescript@4.3.5)
-      type-fest: 4.0.0
+      type-fest: 2.19.0
       typescript: 4.3.5
       uuid: 9.0.0
       webpack: 5.76.0(webpack-cli@4.10.0)
