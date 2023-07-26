@@ -618,6 +618,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
+    ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -1610,8 +1611,15 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
+    totalParticipantCount?: number;
+    strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
 };
+
+// @beta
+export interface ParticipantListStrings {
+    overflowParticipantCount?: string;
+}
 
 // @public
 export interface ParticipantListStyles extends BaseCustomStyles {

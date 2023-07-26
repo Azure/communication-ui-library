@@ -21,6 +21,7 @@ import { memoizedConvertAllremoteParticipants } from './utils/participantListSel
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { getParticipantCount } from './baseSelectors';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(communication-common-beta-v3) */
 import { isMicrosoftBotIdentifier } from '@azure/communication-common';
@@ -96,6 +97,7 @@ export type ParticipantListSelector = (
 ) => {
   participants: CallParticipantListParticipant[];
   myUserId: string;
+  totalParticipantCount?: number;
 };
 
 /**
@@ -110,7 +112,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipants,
     getIsScreenSharingOn,
     getIsMuted,
-    /* @conditional-compile-remove(rooms) */ getRole
+    /* @conditional-compile-remove(rooms) */ getRole,
+    getParticipantCount
   ],
   (
     userId,
@@ -118,10 +121,12 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     remoteParticipants,
     isScreenSharingOn,
     isMuted,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(rooms) */ role,
+    partitipantCount
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
+    totalParticipantCount?: number;
   } => {
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
@@ -138,9 +143,13 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       isRemovable: false,
       /* @conditional-compile-remove(rooms) */ role: role as Role
     });
+    /* @conditional-compile-remove(total-participant-count) */
+    const totalParticipantCount = partitipantCount;
     return {
       participants: participants,
-      myUserId: userId
+      myUserId: userId,
+      /* @conditional-compile-remove(total-participant-count) */
+      totalParticipantCount: totalParticipantCount
     };
   }
 );

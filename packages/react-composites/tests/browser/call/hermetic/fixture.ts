@@ -81,6 +81,7 @@ export function defaultMockCallAdapterState(
       remoteParticipants,
       remoteParticipantsEnded: {},
       role,
+      totalParticipantCount: Object.values(remoteParticipants).length + 1,
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
