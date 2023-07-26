@@ -4,6 +4,7 @@
 import React from 'react';
 import { ExampleComponentProps } from './ExampleComponent.types';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import { useExampleComponentStyles } from './ExampleComponent.styles';
 
 /**
  * Example component that can be used as template for a new component.
@@ -16,8 +17,9 @@ import type { ForwardRefComponent } from '@fluentui/react-utilities';
  * @internal
  */
 export const ExampleComponent: ForwardRefComponent<ExampleComponentProps> = React.forwardRef((props, ref) => {
+  const classname = useExampleComponentStyles(props);
   return (
-    <div {...props} ref={ref}>
+    <div {...props} className={classname} ref={ref}>
       Example Component
     </div>
   );
