@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(rooms) */
+import { Role } from './CommunicationParticipant';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
-import { Role } from './CommunicationParticipant';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantState } from './ParticipantListParticipant';
 
 /**

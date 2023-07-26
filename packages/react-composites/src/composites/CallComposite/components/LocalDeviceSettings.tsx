@@ -17,7 +17,7 @@ import {
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
@@ -101,7 +101,7 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;

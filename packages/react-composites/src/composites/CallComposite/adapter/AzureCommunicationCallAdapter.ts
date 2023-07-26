@@ -348,7 +348,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       callClient.getState(),
       isTeamsMeeting,
       /* @conditional-compile-remove(rooms) */ isRoomsCall,
-      /* @conditional-compile-remove(rooms) */ options
+      /* @conditional-compile-remove(video-background-effects) */ options
     );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
@@ -1204,7 +1204,7 @@ export type AzureCommunicationCallAdapterArgs = {
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
+  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
    */
@@ -1316,7 +1316,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   const displayName = 'displayName' in args ? args.displayName : undefined;
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(video-background-effects) */
   const options = 'options' in args ? args.options : undefined;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -1362,11 +1362,6 @@ const useAzureCommunicationCallAdapterGeneric = <
           if (!displayName) {
             throw new Error('Unreachable code, displayName already checked above.');
           }
-          // This is just the type check to ensure that roleHint is defined.
-          /* @conditional-compile-remove(rooms) */
-          if (options && !('roleHint' in options)) {
-            throw new Error('Unreachable code, provided a options without roleHint.');
-          }
           if (creatingAdapterRef.current) {
             console.warn(
               'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
@@ -1380,7 +1375,7 @@ const useAzureCommunicationCallAdapterGeneric = <
             locator,
             userId: userId as CommunicationUserIdentifier,
             /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-            /* @conditional-compile-remove(rooms) */ options
+            /* @conditional-compile-remove(video-background-effects) */ options
           })) as Adapter;
         } else if (adapterKind === 'Teams') {
           if (creatingAdapterRef.current) {
@@ -1423,7 +1418,6 @@ const useAzureCommunicationCallAdapterGeneric = <
       displayName,
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
-      /* @conditional-compile-remove(rooms) */
       /* @conditional-compile-remove(teams-identity-support) */
       options
     ]
@@ -1536,7 +1530,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
+  /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
 ) => Promise<CallAdapter> = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
@@ -1555,7 +1549,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
     locator,
     callAgent,
     deviceManager,
-    /* @conditional-compile-remove(rooms) */ options
+    /* @conditional-compile-remove(video-background-effects) */ options
   );
 };
 
