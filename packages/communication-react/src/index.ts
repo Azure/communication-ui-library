@@ -36,9 +36,11 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers,
-  VideoEffectBackGroundDependency
+  CommonCallingHandlers
 } from '../../calling-component-bindings/src';
+
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoEffectBackgroundDependency } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';

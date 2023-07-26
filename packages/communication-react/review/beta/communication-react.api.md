@@ -385,7 +385,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
-    onResolveVideoEffectDependency?: () => Promise<VideoBackGroundDependency>;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -1028,7 +1028,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
-    onResolveVideoEffectDependency?: () => Promise<VideoBackGroundDependency>;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1641,7 +1641,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 export type CommonCallAdapterOptions = {
     videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
-        onResolveDependency?: () => Promise<VideoBackGroundDependency>;
+        onResolveDependency?: () => Promise<VideoBackgroundDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
 };
@@ -2033,7 +2033,7 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {
-    onResolveVideoBackGroundDependency?: (() => Promise<VideoEffectBackGroundDependency>) | undefined;
+    onResolveVideoBackgroundDependency?: (() => Promise<VideoEffectBackgroundDependency>) | undefined;
 } | undefined) => CallingHandlers;
 
 // @public
@@ -2041,7 +2041,7 @@ export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThr
 
 // @beta
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
-    onResolveVideoBackGroundDependency?: (() => Promise<VideoEffectBackGroundDependency>) | undefined;
+    onResolveVideoBackgroundDependency?: (() => Promise<VideoEffectBackgroundDependency>) | undefined;
 } | undefined) => never | TeamsCallingHandlers;
 
 // @public
@@ -3120,11 +3120,11 @@ export type OnRenderAvatarCallback = (
 userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
-// @public (undocumented)
-export const onResolveVideoEffectDependency: () => Promise<VideoBackGroundDependency>;
+// @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundDependency>;
 
-// @public (undocumented)
-export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackGroundDependency>;
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundDependency>;
 
 // @beta
 export interface OptimalVideoCountFeatureState {
@@ -3746,7 +3746,7 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 }
 
 // @beta (undocumented)
-export type VideoBackGroundDependency = {
+export type VideoBackgroundDependency = {
     createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
     createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
@@ -3772,8 +3772,8 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
     key?: string;
 }
 
-// @beta (undocumented)
-export type VideoEffectBackGroundDependency = {
+// @beta
+export type VideoEffectBackgroundDependency = {
     createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
     createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };

@@ -16,7 +16,7 @@ import {
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackGroundDependency } from './AzureCommunicationCallAdapter';
+import { VideoBackgroundDependency } from './AzureCommunicationCallAdapter';
 
 /**
  * @private
@@ -37,7 +37,7 @@ export const createHandlers = <AgentType extends CallAgent | TeamsCallAgent>(
   call: CallCommon | undefined,
   options?: {
     /* @conditional-compile-remove(video-background-effects) */
-    onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+    onResolveVideoBackgroundDependency?: () => Promise<VideoBackgroundDependency>;
   }
 ): CallHandlersOf<AgentType> => {
   // Call can be either undefined or ACS Call

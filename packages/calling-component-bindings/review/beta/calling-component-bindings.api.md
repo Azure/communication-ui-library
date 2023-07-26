@@ -202,12 +202,12 @@ export interface CommonCallingHandlers {
 
 // @public
 export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {
-    onResolveVideoBackGroundDependency?: (() => Promise<VideoEffectBackGroundDependency>) | undefined;
+    onResolveVideoBackgroundDependency?: (() => Promise<VideoEffectBackgroundDependency>) | undefined;
 } | undefined) => CallingHandlers;
 
 // @beta
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
-    onResolveVideoBackGroundDependency?: (() => Promise<VideoEffectBackGroundDependency>) | undefined;
+    onResolveVideoBackgroundDependency?: (() => Promise<VideoEffectBackgroundDependency>) | undefined;
 } | undefined) => never | TeamsCallingHandlers;
 
 // @public
@@ -340,8 +340,8 @@ export const useTeamsCall: () => undefined | /* @conditional-compile-remove(team
 // @beta
 export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
 
-// @beta (undocumented)
-export type VideoEffectBackGroundDependency = {
+// @beta
+export type VideoEffectBackgroundDependency = {
     createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
     createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };

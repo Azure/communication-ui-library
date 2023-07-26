@@ -10,7 +10,7 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackGroundDependency } from '../adapter/AzureCommunicationCallAdapter';
+import { VideoBackgroundDependency } from '../adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -430,7 +430,7 @@ export const createParticipantModifier = (
 /** @private */
 export const getBackgroundEffectFromSelectedEffect = (
   selectedEffect: VideoBackgroundEffect | undefined,
-  videoBackgroundDependency: VideoBackGroundDependency
+  videoBackgroundDependency: VideoBackgroundDependency
 ): VideoEffectProcessor | undefined =>
   selectedEffect?.effectName === 'blur'
     ? videoBackgroundDependency.createBackgroundBlurEffect()

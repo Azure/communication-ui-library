@@ -238,7 +238,7 @@ export type CallAdapterClientState = {
     roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
-    onResolveVideoEffectDependency?: () => Promise<VideoBackGroundDependency>;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -734,7 +734,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
-    onResolveVideoEffectDependency?: () => Promise<VideoBackGroundDependency>;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1011,7 +1011,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 export type CommonCallAdapterOptions = {
     videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
-        onResolveDependency?: () => Promise<VideoBackGroundDependency>;
+        onResolveDependency?: () => Promise<VideoBackgroundDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
 };
@@ -1486,11 +1486,11 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 // @beta
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
-// @public (undocumented)
-export const onResolveVideoEffectDependency: () => Promise<VideoBackGroundDependency>;
+// @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundDependency>;
 
-// @public (undocumented)
-export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackGroundDependency>;
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundDependency>;
 
 // @public
 export type ParticipantsAddedListener = (event: {
@@ -1577,7 +1577,7 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 }
 
 // @beta (undocumented)
-export type VideoBackGroundDependency = {
+export type VideoBackgroundDependency = {
     createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
     createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };

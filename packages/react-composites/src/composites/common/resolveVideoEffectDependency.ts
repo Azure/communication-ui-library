@@ -8,29 +8,24 @@ import {
   BackgroundReplacementEffect
 } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackGroundDependency } from '../CallComposite';
+import { VideoBackgroundDependency } from '../CallComposite';
 
-/**
- *
- * @public
- */
 /* @conditional-compile-remove(video-background-effects) */
-// eslint-disable-next-line jsdoc/require-jsdoc
-export const onResolveVideoEffectDependency = async (): Promise<VideoBackGroundDependency> => {
-  // eslint-disable-next-line jsdoc/require-jsdoc
+/**
+ * Dependency resolution for video background effects.
+ *
+ * @beta
+ */
+export const onResolveVideoEffectDependency = async (): Promise<VideoBackgroundDependency> => {
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {
     return new BackgroundBlurEffect(config);
   };
-  // eslint-disable-next-line jsdoc/require-jsdoc
   const createBackgroundReplacementEffect = (config: BackgroundReplacementConfig): BackgroundReplacementEffect => {
     return new BackgroundReplacementEffect(config);
   };
-  // eslint-disable-next-line jsdoc/require-jsdoc
-  const videoBackGroundDependency: VideoBackGroundDependency = {
+  const videoBackgroundDependency: VideoBackgroundDependency = {
     createBackgroundBlurEffect,
     createBackgroundReplacementEffect
   };
-  return videoBackGroundDependency;
+  return videoBackgroundDependency;
 };
-
-export {};

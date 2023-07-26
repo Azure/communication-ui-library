@@ -130,7 +130,7 @@ class CallContext {
       /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
-        onResolveDependency?: () => Promise<VideoBackGroundDependency>;
+        onResolveDependency?: () => Promise<VideoBackgroundDependency>;
       };
     }
   ) {
@@ -331,7 +331,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private emitter: EventEmitter = new EventEmitter();
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(video-background-effects) */
-  private onResolveVideoBackGroundDependency?: () => Promise<VideoBackGroundDependency>;
+  private onResolveVideoBackgroundDependency?: () => Promise<VideoBackgroundDependency>;
 
   private get call(): CallCommon | undefined {
     return this._call;
@@ -365,7 +365,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       options = { ...options, roleHint: 'Consumer' };
     }
     /* @conditional-compile-remove(video-background-effects) */
-    this.onResolveVideoBackGroundDependency = options?.videoBackgroundOptions?.onResolveDependency;
+    this.onResolveVideoBackgroundDependency = options?.videoBackgroundOptions?.onResolveDependency;
 
     this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
 
@@ -425,7 +425,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       deviceManager,
       undefined,
       /* @conditional-compile-remove(video-background-effects) */ {
-        onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+        onResolveVideoBackgroundDependency: this.onResolveVideoBackgroundDependency
       }
     );
 
@@ -709,7 +709,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.deviceManager,
       undefined,
       /* @conditional-compile-remove(video-background-effects) */ {
-        onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+        onResolveVideoBackgroundDependency: this.onResolveVideoBackgroundDependency
       }
     );
     // We set the adapter.call object to undefined immediately when a call is ended.
@@ -746,11 +746,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         {
           const selectedEffect = this.getState().selectedVideoBackgroundEffect;
           const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-          if (selectedEffect && selectedCamera && this.onResolveVideoBackGroundDependency) {
+          if (selectedEffect && selectedCamera && this.onResolveVideoBackgroundDependency) {
             const stream = new SDKLocalVideoStream(selectedCamera);
             const effect = getBackgroundEffectFromSelectedEffect(
               selectedEffect,
-              await this.onResolveVideoBackGroundDependency()
+              await this.onResolveVideoBackgroundDependency()
             );
 
             if (effect) {
@@ -884,7 +884,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.deviceManager,
       this.call,
       /* @conditional-compile-remove(video-background-effects) */ {
-        onResolveVideoBackGroundDependency: this.onResolveVideoBackGroundDependency
+        onResolveVideoBackgroundDependency: this.onResolveVideoBackgroundDependency
       }
     );
     this.subscribeCallEvents();
@@ -1217,7 +1217,7 @@ export type CommonCallAdapterOptions = {
    */
   videoBackgroundOptions?: {
     videoBackgroundImages?: VideoBackgroundImage[];
-    onResolveDependency?: () => Promise<VideoBackGroundDependency>;
+    onResolveDependency?: () => Promise<VideoBackgroundDependency>;
   };
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
@@ -1231,7 +1231,7 @@ export type CommonCallAdapterOptions = {
 /**
  * @beta
  */
-export type VideoBackGroundDependency = {
+export type VideoBackgroundDependency = {
   createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };

@@ -40,7 +40,7 @@ import type {
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackGroundDependency } from './AzureCommunicationCallAdapter';
+import { VideoBackgroundDependency } from './AzureCommunicationCallAdapter';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -135,7 +135,7 @@ export type CallAdapterClientState = {
   /**
    * Dependency to be injected for video background effect.
    */
-  onResolveVideoEffectDependency?: () => Promise<VideoBackGroundDependency>;
+  onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * State to track the selected video background effect.
