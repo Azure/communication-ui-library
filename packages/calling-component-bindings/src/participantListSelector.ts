@@ -18,6 +18,9 @@ import { memoizedConvertAllremoteParticipants } from './utils/participantListSel
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(communication-common-beta-v3) */
+import { isMicrosoftBotIdentifier } from '@azure/communication-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[]
@@ -26,14 +29,20 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   const conversionCallback = (memoizeFn) => {
     return (
       remoteParticipants
+        // Filter out MicrosoftBot participants
+        .filter((participant: RemoteParticipantState) => {
+          /* @conditional-compile-remove(communication-common-beta-v3) */
+          return !isMicrosoftBotIdentifier(participant.identifier);
+          return true;
+        })
         /**
          * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
          * phone users will be in the connecting state until they are connected to the call.
          */
-        .filter((participant: RemoteParticipantState) => {
+        .filter((participant) => {
           return (
             !['InLobby', 'Idle', 'Connecting', 'Disconnected'].includes(participant.state) ||
-            participant.identifier.kind === 'phoneNumber'
+            isPhoneNumberIdentifier(participant.identifier)
           );
         })
         .map((participant: RemoteParticipantState) => {

@@ -12,6 +12,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
         'calling-beta-sdk',
+        // Flag to add API only available in the communication-common beta v3
+        'communication-common-beta-v3',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
         // Close captions feature
