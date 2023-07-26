@@ -17,7 +17,7 @@
   "devDependencies": {
     "@octokit/rest": "~19.0.3",
     "@rollup/plugin-commonjs": "~17.1.0",
-    "@types/node": "^16.11.7",
+    "@types/node": "^20.4.5",
     "beachball": "2.31.13",
     "rollup": "~2.42.4",
     "rollup-plugin-sourcemaps": "~0.6.3",
