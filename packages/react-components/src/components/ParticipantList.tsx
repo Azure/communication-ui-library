@@ -19,9 +19,10 @@ import {
   BaseCustomStyles,
   CallParticipantListParticipant,
   OnRenderAvatarCallback,
-  ParticipantListParticipant,
-  Role
+  ParticipantListParticipant
 } from '../types';
+/* @conditional-compile-remove(rooms) */
+import { Role } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 import { _formatString } from '@internal/acs-ui-common';
@@ -231,7 +232,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
-  /* @conditional-compile-remove(rooms) */
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
