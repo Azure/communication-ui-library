@@ -10,15 +10,14 @@ import {
   useAzureCommunicationCallAdapter,
   CommonCallAdapter,
   CallAdapter,
-  toFlatCommunicationIdentifier,
-  onResolveVideoEffectDependencyLazy
+  toFlatCommunicationIdentifier
 } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
-import { TeamsAdapterOptions } from '@azure/communication-react';
+import { TeamsAdapterOptions, onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */
 import { Role } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
