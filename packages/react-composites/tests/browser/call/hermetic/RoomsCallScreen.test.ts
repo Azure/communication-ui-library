@@ -14,7 +14,7 @@ import {
 import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
-  test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
+  test.only('All devices are shown for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -23,7 +23,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
   });
 
-  test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
+  test.only('All devices are shown for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -34,21 +34,21 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
 });
 
 test.describe('Rooms CallScreen tests for different roles', async () => {
-  test('All CallControls are enabled for Presenter', async ({ page, serverUrl }) => {
+  test.only('All CallControls are enabled for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter');
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
   });
 
-  test('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
+  test.only('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee');
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
 
-  test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
+  test.only('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
@@ -61,7 +61,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
 
 /* @conditional-compile-remove(rooms) */
 test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
-  test('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
+  test.only('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Presenter');
@@ -72,7 +72,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     );
   });
 
-  test('No ellipses button for remote participant items for Attendee', async ({ page, serverUrl }, testInfo) => {
+  test.only('No ellipses button for remote participant items for Attendee', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Attendee');
@@ -80,7 +80,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     await expectNoRemoveParticipantMenuItem(page, testInfo);
   });
 
-  test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }, testInfo) => {
+  test.only('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants, 'Consumer');
