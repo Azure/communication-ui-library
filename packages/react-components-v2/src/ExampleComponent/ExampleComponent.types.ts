@@ -3,12 +3,20 @@
 
 import type { ComponentProps, Slot } from '@fluentui/react-utilities';
 
-/** @private */
+/**
+ * Available slots in the {@link ExampleComponent}.
+ *
+ * @internal
+ */
 export type ExampleComponentSlots = {
   root: NonNullable<Slot<'div'>>;
 };
 
-/** @private */
+/**
+ * Props of the {@link ExampleComponent}.
+ *
+ * @internal
+ */
 export type ExampleComponentProps = ComponentProps<ExampleComponentSlots> & {
   exampleProp?: string;
 };
