@@ -20,4 +20,4 @@ export type CommunicationParticipant = {
  * @public
  * The role of a call participant.
  */
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';

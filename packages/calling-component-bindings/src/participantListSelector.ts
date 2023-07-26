@@ -98,6 +98,8 @@ export type ParticipantListSelector = (
   participants: CallParticipantListParticipant[];
   myUserId: string;
   totalParticipantCount?: number;
+  /* @conditional-compile-remove(rooms) */
+  myRole?: Role;
 };
 
 /**
@@ -127,6 +129,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
+    /* @conditional-compile-remove(rooms) */
+    myRole?: Role;
   } => {
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
@@ -149,7 +153,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       participants: participants,
       myUserId: userId,
       /* @conditional-compile-remove(total-participant-count) */
-      totalParticipantCount: totalParticipantCount
+      totalParticipantCount: totalParticipantCount,
+      /* @conditional-compile-remove(rooms) */
+      myRole: role as Role
     };
   }
 );

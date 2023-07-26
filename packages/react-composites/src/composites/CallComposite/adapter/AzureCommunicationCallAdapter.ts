@@ -343,13 +343,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = 'roomId' in this.locator;
-    // /* @conditional-compile-remove(rooms) */
-    // // to prevent showing components that depend on role such as local video tile, camera button, etc. in a rooms call
-    // // we set the default roleHint as 'Consumer' when roleHint is undefined since it has the lowest level of permissions
-    // if (isRoomsCall && options?.roleHint === undefined) {
-    //   options = { ...options, roleHint: 'Consumer' };
-    // }
-    console.log(isRoomsCall);
+
     this.context = new CallContext(
       callClient.getState(),
       isTeamsMeeting,

@@ -3199,6 +3199,7 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
+    myRole?: Role;
 };
 
 // @public
@@ -3206,6 +3207,7 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
+    myRole?: Role;
 };
 
 // @beta
@@ -3350,7 +3352,7 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @public
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
+export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

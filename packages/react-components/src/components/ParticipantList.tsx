@@ -19,7 +19,8 @@ import {
   BaseCustomStyles,
   CallParticipantListParticipant,
   OnRenderAvatarCallback,
-  ParticipantListParticipant
+  ParticipantListParticipant,
+  Role
 } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
@@ -107,6 +108,9 @@ export type ParticipantListProps = {
   strings?: ParticipantListStrings;
   /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
+  /* @conditional-compile-remove(rooms) */
+  /** Optional Role for the local participant in a rooms call */
+  myRole?: Role;
 };
 
 const onRenderParticipantDefault = (
@@ -214,7 +218,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     totalParticipantCount,
     /* @conditional-compile-remove(total-participant-count) */
     strings,
-    participantAriaLabelledBy
+    participantAriaLabelledBy,
+    /* @conditional-compile-remove(rooms) */
+    myRole
   } = props;
 
   const ids = useIdentifiers();
@@ -226,13 +232,12 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
   /* @conditional-compile-remove(rooms) */
-  const myRole = participants.find((p) => p.userId === myUserId)?.role;
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
       let participantIsRemovable = participant.isRemovable;
       /* @conditional-compile-remove(rooms) */
-      participantIsRemovable = (myRole === 'Presenter' || myRole === undefined) && participantIsRemovable;
+      participantIsRemovable = (myRole === 'Presenter' || myRole === 'Unknown') && participantIsRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
