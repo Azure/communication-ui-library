@@ -1,7 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './public.index';
-
-// Internal only exports
 export * from './ExampleComponent';
+export * from './ExampleComponent.types';

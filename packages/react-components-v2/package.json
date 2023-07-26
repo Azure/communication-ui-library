@@ -34,9 +34,12 @@
     "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
+    "@fluentui/react-aria": "^9.3.27",
     "@fluentui/react-components": "^9.26.2",
+    "@fluentui/react-conformance": "^0.17.1",
     "@fluentui/react-file-type-icons": "8.8.13",
     "@fluentui/react-icons": "~2.0.194",
+    "@fluentui/react-utilities": "^9.10.1",
     "@fluentui/react-window-provider": "~2.2.3",
     "@internal/acs-ui-common": "2.0.0-beta.0",
     "copy-to-clipboard": "~3.3.1",

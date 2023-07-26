@@ -70,7 +70,8 @@ module.exports = {
         ]
       }
     ],
-    curly: 'error'
+    curly: 'error',
+    'react/prop-types': 'off'
   },
   root: true,
   settings: {
