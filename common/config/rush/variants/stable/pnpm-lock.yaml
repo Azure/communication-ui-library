@@ -823,7 +823,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.12.9)
       '@babel/plugin-transform-parameters': 7.22.5(@babel/core@7.12.9)
     dev: false
@@ -3465,7 +3465,7 @@ packages:
     dependencies:
       '@fluentui/set-version': 8.2.11
       '@fluentui/theme': 2.6.34(@types/react@18.2.16)(react@18.2.0)
-      tslib: 2.5.3
+      tslib: 2.6.1
     transitivePeerDependencies:
       - '@types/react'
       - react
@@ -3525,7 +3525,7 @@ packages:
       '@fluentui/react': 8.110.11(@types/react-dom@18.2.7)(@types/react@18.2.16)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/scheme-utilities': 8.3.35(@types/react@18.2.16)(react@18.2.0)
       '@fluentui/set-version': 8.2.11
-      tslib: 2.5.3
+      tslib: 2.6.1
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
@@ -4004,50 +4004,55 @@ packages:
     resolution: {integrity: sha512-H1rQc1ZOHANWBvPcW+JpGwr+juXSxM8Q8YCkm3GhZd8REu1fHR3z99CErO1p9pkcfcxZnMdIZdIsXkOHY0NilA==}
     dev: false
 
-  /@microsoft/api-documenter@7.12.22:
-    resolution: {integrity: sha512-AETOoj8y4fnZyB9wRfoFIxPzrVc4kLp2t+lk9dBKOkwWKNFJSYEcBeInk4qbQdsAeCG7EyxsbsQRZ+0QfbMNwA==}
+  /@microsoft/api-documenter@7.22.30(@types/node@20.4.5):
+    resolution: {integrity: sha512-Bo9rv7uj6UXARwvVbugg+NrT3/UVA5PnagvoTG9N5PNTPeH0Ag5Om0gzadc3ForBIW9ZtrDfaOuZU3yNoYxvhA==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.12.5
-      '@microsoft/tsdoc': 0.12.24
-      '@rushstack/node-core-library': 3.36.2
-      '@rushstack/ts-command-line': 4.7.10
+      '@microsoft/api-extractor-model': 7.27.5(@types/node@20.4.5)
+      '@microsoft/tsdoc': 0.14.2
+      '@rushstack/node-core-library': 3.59.6(@types/node@20.4.5)
+      '@rushstack/ts-command-line': 4.15.1
       colors: 1.2.5
       js-yaml: 3.13.1
-      resolve: 1.17.0
+      resolve: 1.22.2
+    transitivePeerDependencies:
+      - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor-model@7.12.5:
-    resolution: {integrity: sha512-oeHZW83JWjIVoCDvdwI5nsZGPxThbq4gZTLAYNeJGZE/mKEO0iayMPGmI3EllJBjwQsFvNVU+O/HGULhB2to/g==}
+  /@microsoft/api-extractor-model@7.17.3:
+    resolution: {integrity: sha512-ETslFxVEZTEK6mrOARxM34Ll2W/5H2aTk9Pe9dxsMCnthE8O/CaStV4WZAGsvvZKyjelSWgPVYGowxGVnwOMlQ==}
     dependencies:
-      '@microsoft/tsdoc': 0.12.24
-      '@rushstack/node-core-library': 3.36.2
+      '@microsoft/tsdoc': 0.14.1
+      '@microsoft/tsdoc-config': 0.16.2
+      '@rushstack/node-core-library': 3.45.5
     dev: false
 
-  /@microsoft/api-extractor-model@7.13.18:
-    resolution: {integrity: sha512-Oo9hhidRk9bFa17xkdNWso0Ry/wW6jlxD+5N2ilk1CnvZ50s6SLbZpFQJmVownM2tkHc1REdyEeQSyoApSB6Hw==}
+  /@microsoft/api-extractor-model@7.27.5(@types/node@20.4.5):
+    resolution: {integrity: sha512-9/tBzYMJitR+o+zkPr1lQh2+e8ClcaTF6eZo7vZGDqRt2O5XmXWPbYJZmxyM3wb5at6lfJNEeGZrQXLjsQ0Nbw==}
     dependencies:
-      '@microsoft/tsdoc': 0.13.2
-      '@microsoft/tsdoc-config': 0.15.2
-      '@rushstack/node-core-library': 3.44.1
+      '@microsoft/tsdoc': 0.14.2
+      '@microsoft/tsdoc-config': 0.16.2
+      '@rushstack/node-core-library': 3.59.6(@types/node@20.4.5)
+    transitivePeerDependencies:
+      - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor@7.18.21:
-    resolution: {integrity: sha512-jRtT4ZPCUOVYlNjxsszXJQdXFu8lmdkSz8wZNVQzBkBFh5kn8Ej66p8b/KecQKpVnzUcTgPOKr1RcWR+0Fmgew==}
+  /@microsoft/api-extractor@7.23.2:
+    resolution: {integrity: sha512-0LABOAmsHDomKihjoqLvY0mR1dh7R7fqB0O6qrjqAgQGBPxlRJCDH1tzFzlDS2OdeCxhMtFB3xd8EAr44huujg==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.13.18
-      '@microsoft/tsdoc': 0.13.2
-      '@microsoft/tsdoc-config': 0.15.2
-      '@rushstack/node-core-library': 3.44.1
-      '@rushstack/rig-package': 0.3.6
-      '@rushstack/ts-command-line': 4.10.5
+      '@microsoft/api-extractor-model': 7.17.3
+      '@microsoft/tsdoc': 0.14.1
+      '@microsoft/tsdoc-config': 0.16.2
+      '@rushstack/node-core-library': 3.45.5
+      '@rushstack/rig-package': 0.3.11
+      '@rushstack/ts-command-line': 4.11.0
       colors: 1.2.5
       lodash: 4.17.21
       resolve: 1.17.0
       semver: 7.3.8
       source-map: 0.6.1
-      typescript: 4.4.4
+      typescript: 4.6.4
     dev: false
 
   /@microsoft/applicationinsights-analytics-js@2.6.5:
@@ -4169,21 +4174,21 @@ packages:
     resolution: {integrity: sha512-W+IzEBw8a6LOOfRJM02dTT7BDZijxm+Z7lhtOAz1+y9vQm1Kdz9jlAO+qCEKsfxtUOmKilW8DIRqFw2aUgKeGg==}
     dev: false
 
-  /@microsoft/tsdoc-config@0.15.2:
-    resolution: {integrity: sha512-mK19b2wJHSdNf8znXSMYVShAHktVr/ib0Ck2FA3lsVBSEhSI/TfXT7DJQkAYgcztTuwazGcg58ZjYdk0hTCVrA==}
+  /@microsoft/tsdoc-config@0.16.2:
+    resolution: {integrity: sha512-OGiIzzoBLgWWR0UdRJX98oYO+XKGf7tiK4Zk6tQ/E4IJqGCe7dvkTvgDZV5cFJUzLGDOjeAXrnZoA6QkVySuxw==}
     dependencies:
-      '@microsoft/tsdoc': 0.13.2
+      '@microsoft/tsdoc': 0.14.2
       ajv: 6.12.6
       jju: 1.4.0
       resolve: 1.19.0
     dev: false
 
-  /@microsoft/tsdoc@0.12.24:
-    resolution: {integrity: sha512-Mfmij13RUTmHEMi9vRUhMXD7rnGR2VvxeNYtaGtaJ4redwwjT4UXYJ+nzmVJF7hhd4pn/Fx5sncDKxMVFJSWPg==}
+  /@microsoft/tsdoc@0.14.1:
+    resolution: {integrity: sha512-6Wci+Tp3CgPt/B9B0a3J4s3yMgLNSku6w5TV6mN+61C71UqsRBv2FUibBf3tPGlNxebgPHMEUzKpb1ggE8KCKw==}
     dev: false
 
-  /@microsoft/tsdoc@0.13.2:
-    resolution: {integrity: sha512-WrHvO8PDL8wd8T2+zBGKrMwVL5IyzR3ryWUsl0PXgEV0QHup4mTLi0QcATefGI6Gx9Anu7vthPyyyLpY0EpiQg==}
+  /@microsoft/tsdoc@0.14.2:
+    resolution: {integrity: sha512-9b8mPpKrfeGRuhFH5iO1iwCLeIIsV6+H1sRfxbkoGXIyQE2BTsPd9zqSqQJ+pv5sJ/hT5M1zvOFL02MnEezFug==}
     dev: false
 
   /@mrmlnc/readdir-enhanced@2.2.1:
@@ -4478,22 +4483,8 @@ packages:
       rollup: 2.42.4
     dev: false
 
-  /@rushstack/node-core-library@3.36.2:
-    resolution: {integrity: sha512-5J8xSY/PuCKR+yfxS497l0PP43kBUeD86S4eS3RzrmMle04J4522MWal8mk1T1EIDpYpgi8qScannU9oVxoStA==}
-    dependencies:
-      '@types/node': 10.17.13
-      colors: 1.2.5
-      fs-extra: 7.0.1
-      import-lazy: 4.0.0
-      jju: 1.4.0
-      resolve: 1.17.0
-      semver: 7.3.8
-      timsort: 0.3.0
-      z-schema: 3.18.4
-    dev: false
-
-  /@rushstack/node-core-library@3.44.1:
-    resolution: {integrity: sha512-qK2BKuRoy6Vh83qjXxilafsUJ1soXzEX0rtkxmAC+GsKOdEVav74Df5859bvY2Ap0JNnYfGfXukX/8o3vqODyw==}
+  /@rushstack/node-core-library@3.45.5:
+    resolution: {integrity: sha512-KbN7Hp9vH3bD3YJfv6RnVtzzTAwGYIBl7y2HQLY4WEQqRbvE3LgI78W9l9X+cTAXCX//p0EeoiUYNTFdqJrMZg==}
     dependencies:
       '@types/node': 12.20.24
       colors: 1.2.5
@@ -4503,18 +4494,36 @@ packages:
       resolve: 1.17.0
       semver: 7.3.8
       timsort: 0.3.0
-      z-schema: 3.18.4
+      z-schema: 5.0.5
     dev: false
 
-  /@rushstack/rig-package@0.3.6:
-    resolution: {integrity: sha512-H/uFsAT6cD4JCYrlQXYMZg+wPVECByFoJLGqfGRiTwSS5ngQw9QxnFV2mPG2LrxFUsMjLQ2lsrYr523700XzfA==}
+  /@rushstack/node-core-library@3.59.6(@types/node@20.4.5):
+    resolution: {integrity: sha512-bMYJwNFfWXRNUuHnsE9wMlW/mOB4jIwSUkRKtu02CwZhQdmzMsUbxE0s1xOLwTpNIwlzfW/YT7OnOHgDffLgYg==}
+    peerDependencies:
+      '@types/node': '*'
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+    dependencies:
+      '@types/node': 20.4.5
+      colors: 1.2.5
+      fs-extra: 7.0.1
+      import-lazy: 4.0.0
+      jju: 1.4.0
+      resolve: 1.22.2
+      semver: 7.5.4
+      z-schema: 5.0.5
+    dev: false
+
+  /@rushstack/rig-package@0.3.11:
+    resolution: {integrity: sha512-uI1/g5oQPtyrT9nStoyX/xgZSLa2b+srRFaDk3r1eqC7zA5th4/bvTGl2QfV3C9NcP+coSqmk5mFJkUfH6i3Lw==}
     dependencies:
       resolve: 1.17.0
       strip-json-comments: 3.1.1
     dev: false
 
-  /@rushstack/ts-command-line@4.10.5:
-    resolution: {integrity: sha512-5fVlTDbKsJ5WyT6L7NrnOlLG3uoITKxoqTPP2j0QZEi95kPbVT4+VPZaXXDJtkrao9qrIyig8pLK9WABY1bb3w==}
+  /@rushstack/ts-command-line@4.11.0:
+    resolution: {integrity: sha512-ptG9L0mjvJ5QtK11GsAFY+jGfsnqHDS6CY6Yw1xT7a9bhjfNYnf6UPwjV+pF6UgiucfNcMDNW9lkDLxvZKKxMg==}
     dependencies:
       '@types/argparse': 1.0.38
       argparse: 1.0.10
@@ -4522,8 +4531,8 @@ packages:
       string-argv: 0.3.2
     dev: false
 
-  /@rushstack/ts-command-line@4.7.10:
-    resolution: {integrity: sha512-8t042g8eerypNOEcdpxwRA3uCmz0duMo21rG4Z2mdz7JxJeylDmzjlU3wDdef2t3P1Z61JCdZB6fbm1Mh0zi7w==}
+  /@rushstack/ts-command-line@4.15.1:
+    resolution: {integrity: sha512-EL4jxZe5fhb1uVL/P/wQO+Z8Rc8FMiWJ1G7VgnPDvdIt5GVjRfK7vwzder1CZQiX3x0PY6uxENYLNGTFd1InRQ==}
     dependencies:
       '@types/argparse': 1.0.38
       argparse: 1.0.10
@@ -6052,7 +6061,7 @@ packages:
       flat-cache: 3.0.4
       micromatch: 4.0.5
       react-docgen-typescript: 2.2.2(typescript@4.3.5)
-      tslib: 2.5.3
+      tslib: 2.6.1
       typescript: 4.3.5
       webpack: 5.76.0(webpack-cli@4.10.0)
     transitivePeerDependencies:
@@ -6554,13 +6563,13 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.44.1
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.1
     dev: false
 
   /@types/eslint@8.44.1:
     resolution: {integrity: sha512-XpNDc4Z5Tb4x+SW1MriMVeIsMoONHCkWFMkR/aPJbzEsxqHy+4Glu/BqTdPrApfDeMaXbtNh6bseNgl5KaWrSg==}
     dependencies:
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.1
       '@types/json-schema': 7.0.12
     dev: false
 
@@ -6744,10 +6753,6 @@ packages:
       '@types/node': 20.4.5
     dev: false
 
-  /@types/node@10.17.13:
-    resolution: {integrity: sha512-pMCcqU2zT4TjqYFrWtYHKal7Sl30Ims6ulZ4UFXxI4xbtQqK/qqKwkDoBFCfooRqqmRu9vY3xaJRwxSh673aYg==}
-    dev: false
-
   /@types/node@12.20.24:
     resolution: {integrity: sha512-yxDeaQIAJlMav7fH5AQqPH1u8YIuhYJXYBzxaQ4PifsU0GDO38MSdmEDeRlIxrKbC6NbEaaEHDanWb+y30U8SQ==}
     dev: false
@@ -6805,13 +6810,13 @@ packages:
   /@types/react-dom@18.2.7:
     resolution: {integrity: sha512-GRaAEriuT4zp9N4p1i8BDBYmEyfo+xQ3yHjJU4eiK5NDa1RmUZG+unZABUTK4/Ox/M+GaHwb6Ow8rUITrtjszA==}
     dependencies:
-      '@types/react': 18.2.16
+      '@types/react': 18.2.17
     dev: false
 
   /@types/react-linkify@1.0.1:
     resolution: {integrity: sha512-qPxYwjB41ezoKdLXs0MrQ1FnhF3apyyxf3J7WVQQCBu/GyZQAW7Y3TY4317jdh0450QJ4fLqj0rnhIJvFZOamQ==}
     dependencies:
-      '@types/react': 18.2.16
+      '@types/react': 18.2.17
     dev: false
 
   /@types/react@18.2.16:
@@ -7977,7 +7982,7 @@ packages:
     resolution: {integrity: sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==}
     engines: {node: '>=4'}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: false
 
   /astral-regex@2.0.0:
@@ -8018,7 +8023,7 @@ packages:
     resolution: {integrity: sha512-eM9d/swFopRt5gdJ7jrpCwgvEMIayITpojhkkSMRsFHYuH5bkSQ4p/9qTEHtmNudUZh22Tehu7I6CxAW0IXTKA==}
     hasBin: true
     dependencies:
-      browserslist: 4.20.4
+      browserslist: 4.21.9
       caniuse-lite: 1.0.30001517
       normalize-range: 0.1.2
       num2fraction: 1.2.2
@@ -9184,6 +9189,13 @@ packages:
     resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
     engines: {node: '>= 12'}
     dev: false
+
+  /commander@9.5.0:
+    resolution: {integrity: sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==}
+    engines: {node: ^12.20.0 || >=14}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /comment-parser@1.2.4:
     resolution: {integrity: sha512-pm0b+qv+CkWNriSTMsfnjChF9kH0kxz55y44Wo5le9qLxMj5xDQAaEd9ZN1ovSuk9CsrncWaFwgpOMg7ClJwkw==}
@@ -10542,7 +10554,7 @@ packages:
       remark-mdx: 1.6.22
       remark-parse: 8.0.3
       remark-stringify: 8.1.1
-      tslib: 2.5.3
+      tslib: 2.6.1
       unified: 9.2.2
     transitivePeerDependencies:
       - supports-color
@@ -10671,7 +10683,7 @@ packages:
       eslint-mdx: 1.17.1(eslint@8.45.0)
       eslint-plugin-markdown: 2.2.1(eslint@8.45.0)
       synckit: 0.4.1
-      tslib: 2.5.3
+      tslib: 2.6.1
       vfile: 4.2.1
     transitivePeerDependencies:
       - supports-color
@@ -11096,7 +11108,7 @@ packages:
     engines: {node: '>= 10.17.0'}
     hasBin: true
     dependencies:
-      debug: 4.3.1
+      debug: 4.3.4(supports-color@5.5.0)
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -12449,7 +12461,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.1
+      debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -16383,7 +16395,7 @@ packages:
     dependencies:
       object-assign: 4.1.1
       react: 18.2.0
-      react-is: 17.0.2
+      react-is: 18.2.0
     dev: false
 
   /react-test-renderer@17.0.2(react@18.2.0):
@@ -18080,7 +18092,7 @@ packages:
     resolution: {integrity: sha512-ngUh0+s+DOqEc0sGnrLaeNjbXp0CWHjSGFBqPlQmQ+oN/OfoDoYDBXPh+b4qs1M5QTk5nuQ3AmVz9+2xiY/ldw==}
     engines: {node: '>=12'}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.6.1
       uuid: 8.3.2
     dev: false
 
@@ -18724,8 +18736,8 @@ packages:
     hasBin: true
     dev: false
 
-  /typescript@4.4.4:
-    resolution: {integrity: sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==}
+  /typescript@4.6.4:
+    resolution: {integrity: sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: false
@@ -19136,8 +19148,8 @@ packages:
       spdx-expression-parse: 3.0.1
     dev: false
 
-  /validator@8.2.0:
-    resolution: {integrity: sha512-Yw5wW34fSv5spzTXNkokD6S6/Oq92d8q/t14TqsS3fAiA1RYnxSFSIZ+CY3n6PGGRCq5HhJTSepQvFUS2QUDxA==}
+  /validator@13.9.0:
+    resolution: {integrity: sha512-B+dGG8U3fdtM0/aNK4/X8CXq/EcxU2WPrPEkJGslb47qyHsxmbggTWK0yEA4qnYVNF+nxNlN88o14hIcPmSIEA==}
     engines: {node: '>= 0.10'}
     dev: false
 
@@ -19972,15 +19984,16 @@ packages:
     engines: {node: '>=10'}
     dev: false
 
-  /z-schema@3.18.4:
-    resolution: {integrity: sha512-DUOKC/IhbkdLKKiV89gw9DUauTV8U/8yJl1sjf6MtDmzevLKOF2duNJ495S3MFVjqZarr+qNGCPbkg4mu4PpLw==}
+  /z-schema@5.0.5:
+    resolution: {integrity: sha512-D7eujBWkLa3p2sIpJA0d1pr7es+a7m0vFAnZLlCEKq/Ij2k0MLi9Br2UPxoxdYystm5K1yeBGzub0FlYUEWj2Q==}
+    engines: {node: '>=8.0.0'}
     hasBin: true
     dependencies:
       lodash.get: 4.4.2
       lodash.isequal: 4.5.0
-      validator: 8.2.0
+      validator: 13.9.0
     optionalDependencies:
-      commander: 2.20.3
+      commander: 9.5.0
     dev: false
 
   /zwitch@1.0.5:
@@ -19988,7 +20001,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz(@types/node@20.4.5)(ts-node@10.9.1):
-    resolution: {integrity: sha512-kA9Hq4bV/aljBBP92LCl6+mnZWZL0Psk0XVt9aPfIUIT2b5Y5gcN4C1otJXoCCfO5bMyw3PGA7/r8z1tW3xhqw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-7efWff3xImOH4TUzOPVSZyHza9PmeLHi8Sw+gZmgn5wj2vfdNKNO7ot5UdZoLPMUhrKqoleGFhEbEVaDnwOOSw==, tarball: file:projects/acs-ui-common.tgz}
     id: file:projects/acs-ui-common.tgz
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
@@ -19997,8 +20010,8 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.22.9(@babel/core@7.22.9)
       '@babel/core': 7.22.9
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@types/jest': 29.5.3
       '@types/react': 18.2.16
       '@typescript-eslint/eslint-plugin': 6.2.0(@typescript-eslint/parser@6.2.0)(eslint@8.45.0)(typescript@4.3.5)
@@ -20034,7 +20047,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz(@types/node@20.4.5)(ts-node@10.9.1):
-    resolution: {integrity: sha512-cjsriZAGtnSLAojyeyUIGP/zBlHoG6lu+IwaqIvYK5U5XCZr11bhRSgRoEhah1f42D9nt7VRE9QPSato9lvy8A==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-1bn5AsT95/FseQNwenePyzXPr4Wn/mzPSK6rO04MfzLY10+dKXX16G56vLRyiNuHKPhCSUhu+fTRrOZDQL54CA==, tarball: file:projects/calling-component-bindings.tgz}
     id: file:projects/calling-component-bindings.tgz
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
@@ -20044,8 +20057,8 @@ packages:
       '@azure/communication-common': 2.2.1
       '@babel/cli': 7.22.9(@babel/core@7.22.9)
       '@babel/core': 7.22.9
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@types/jest': 29.5.3
       '@types/react': 18.2.16
       '@typescript-eslint/eslint-plugin': 6.2.0(@typescript-eslint/parser@6.2.0)(eslint@8.45.0)(typescript@4.3.5)
@@ -20083,7 +20096,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz(@types/node@20.4.5)(ts-node@10.9.1):
-    resolution: {integrity: sha512-Ti1A7voOZ47v2iy9sb71WnIKWLf/QNsKL3XjifN9xNhVJ2XfHLyKBr6tjv43o2pfIrOzr7anIrG5ViT1z7PGRQ==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-il/6hN5KIO6W+T55BnI/3EjK9KWE9N0FQQ9BDBGwib9yxOfdVz040AGBLNAnQAj52ee6ujcy5dq0mjwsdRQTCw==, tarball: file:projects/calling-stateful-client.tgz}
     id: file:projects/calling-stateful-client.tgz
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
@@ -20094,8 +20107,8 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.22.9(@babel/core@7.22.9)
       '@babel/core': 7.22.9
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@types/jest': 29.5.3
       '@types/react': 18.2.16
       '@typescript-eslint/eslint-plugin': 6.2.0(@typescript-eslint/parser@6.2.0)(eslint@8.45.0)(typescript@4.3.5)
@@ -20312,7 +20325,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz(@types/node@20.4.5)(ts-node@10.9.1):
-    resolution: {integrity: sha512-DxN2FUFOoevkZ/JkGCfsiM7RI5KZ/eQy0CV93ZyoTXfeqhjpoMhMqrMfNwLpkl/zntmJaEkEI0AAELrLKAfkPg==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-5ZJwPMMbH7pV+RX6W2l3PNjEGhZ+S2DX8KVJRwg9M3j4DTUAGZuckNPuYkSCxJ0jLNMLWpfdEyKyg+5u2YSz1w==, tarball: file:projects/chat-component-bindings.tgz}
     id: file:projects/chat-component-bindings.tgz
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
@@ -20322,8 +20335,8 @@ packages:
       '@azure/core-paging': 1.5.0
       '@babel/cli': 7.22.9(@babel/core@7.22.9)
       '@babel/core': 7.22.9
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@types/jest': 29.5.3
       '@types/react': 18.2.16
       '@zerollup/ts-transform-paths': 1.7.18(typescript@4.3.5)
@@ -20356,7 +20369,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz(@types/node@20.4.5)(ts-node@10.9.1):
-    resolution: {integrity: sha512-lMgwtw/HyjzOp3oZZAnoR5Hws1nnEwwg1hciJ+8nDn5SBgzib9QBCS1+7hrcdcTK7vEUsFpV6nFNhCeR3T8RWQ==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-okGoziQ8fhLvYliOzYK9vn2f+MJsvtSS7Mzdn26aX33WA3CPRzMZfa7W6IKQybTBcC6qcwXfqu0C7Ji98lrRkg==, tarball: file:projects/chat-stateful-client.tgz}
     id: file:projects/chat-stateful-client.tgz
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
@@ -20368,8 +20381,8 @@ packages:
       '@azure/logger': 1.0.4
       '@babel/cli': 7.22.9(@babel/core@7.22.9)
       '@babel/core': 7.22.9
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@types/jest': 29.5.3
       '@types/react': 18.2.16
       '@typescript-eslint/eslint-plugin': 6.2.0(@typescript-eslint/parser@6.2.0)(eslint@8.45.0)(typescript@4.3.5)
@@ -20538,7 +20551,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-AkWyOl3OGDyr8jZsAKZ8AUeFRWSSl0HfXjUg3Q49en5JGzBDsh9JBDi0+vGJYSIvhPIiDx/J+uMEmXsgnFtP8g==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-pwhShUG46EL/c7TYdgKTaJ1V/3P/lOC6Jmn0sUc+c7DXv4AJS76RQ88NB1prW/0cAhl8MEIvIDwpLYbarJv+eA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20563,8 +20576,8 @@ packages:
       '@fluentui/react-northstar': 0.61.0(@types/react-dom@18.2.7)(@types/react@18.2.16)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-utilities': 9.10.1(@types/react@18.2.16)(react@18.2.0)
       '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.16)(react@18.2.0)
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@rollup/plugin-json': 4.1.0(rollup@2.42.4)
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -20725,7 +20738,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz(@types/node@20.4.5)(ts-node@10.9.1)(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-D/Qo79lN6RMAUQGXZOi/+FcgjMetP4zlfZQkHoT8si4JI+nu3y2eNEGWqzFHvW02xTIkQ/KR6p2+yrFK72soIw==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-l7acSJRecUYITKeYA7p0DSEFMpP8hz85tlkq1upDOAatXPEf/LdRegGjRkzSYtXeWV4EQW6RY52qM5EKm1xLuA==, tarball: file:projects/fake-backends.tgz}
     id: file:projects/fake-backends.tgz
     name: '@rush-temp/fake-backends'
     version: 0.0.0
@@ -20737,7 +20750,7 @@ packages:
       '@babel/cli': 7.22.9(@babel/core@7.22.9)
       '@babel/core': 7.22.9
       '@babel/preset-env': 7.13.10(@babel/core@7.22.9)
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-extractor': 7.23.2
       '@types/jest': 29.5.3
       '@typescript-eslint/eslint-plugin': 6.2.0(@typescript-eslint/parser@6.2.0)(eslint@8.45.0)(typescript@4.3.5)
       '@typescript-eslint/parser': 6.2.0(eslint@8.45.0)(typescript@4.3.5)
@@ -20779,12 +20792,12 @@ packages:
     dev: false
 
   file:projects/northstar-wrapper.tgz:
-    resolution: {integrity: sha512-VHLarR8sjeLu+zY2xRl1yOTW97Epl58zKzBDLg9zBvN/zcHsJKT867s8zJbqiW1VOF4TcFh5NzfzWiSdAwYwtA==, tarball: file:projects/northstar-wrapper.tgz}
+    resolution: {integrity: sha512-bsFsrEZo0wnVXSnQvpoW5d4gaXKbseqRZuHEnmmjo5XONa+1IvYQJbazO9H03EcDkQifsbx6/y5eUnAOAcK/+A==, tarball: file:projects/northstar-wrapper.tgz}
     name: '@rush-temp/northstar-wrapper'
     version: 0.0.0
     dependencies:
       '@fluentui/react-northstar': 0.61.0(@types/react-dom@18.2.7)(@types/react@18.2.16)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-extractor': 7.23.2
       '@types/react': 18.2.16
       '@types/react-dom': 18.2.7
       '@typescript-eslint/parser': 6.2.0(eslint@8.45.0)(typescript@4.3.5)
@@ -20814,7 +20827,7 @@ packages:
     dev: false
 
   file:projects/react-components-v2.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-8kB5PjrxJp4Yu8EQxlcCh7uBg2CQJ/4RLKtvwJnbq9Vj6eFB5Jt/KpLx4G+3OdtTKkL8hKwoIR4jW1iYJAGFaQ==, tarball: file:projects/react-components-v2.tgz}
+    resolution: {integrity: sha512-IxN1SSb7pPGrJDUejocov50qC+yj/9ZQdgZVLF6PuAFALEK5h0bUbtuMg5sBFEHlewpwdobwgeJtt2ANdDfd7w==, tarball: file:projects/react-components-v2.tgz}
     id: file:projects/react-components-v2.tgz
     name: '@rush-temp/react-components-v2'
     version: 0.0.0
@@ -20829,8 +20842,8 @@ packages:
       '@fluentui/react-icons': 2.0.208(react@18.2.0)
       '@fluentui/react-utilities': 9.10.1(@types/react@18.2.16)(react@18.2.0)
       '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.16)(react@18.2.0)
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@rollup/plugin-json': 4.1.0(rollup@2.42.4)
       '@testing-library/dom': 9.3.1
       '@testing-library/jest-dom': 5.17.0
@@ -20916,7 +20929,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-clbEiCnMaO21Qg9ROOcYCN8W2nxkWuCmfruCppsMlsSk+gPptAZSS8eojs+5qzioS+ejTS2JIHNeLJhCKild0w==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-Xte/HF3MUKte97PWJnT5bKPhk4bUYIM2SXyZZo/m2rkJ4V3P+dT3CEXyE2jXZyAd/TxTSql4+ZVdW0syQfbnYA==, tarball: file:projects/react-components.tgz}
     id: file:projects/react-components.tgz
     name: '@rush-temp/react-components'
     version: 0.0.0
@@ -20929,8 +20942,8 @@ packages:
       '@fluentui/react-hooks': 8.6.29(@types/react@18.2.16)(react@18.2.0)
       '@fluentui/react-icons': 2.0.208(react@18.2.0)
       '@fluentui/react-window-provider': 2.2.15(@types/react@18.2.16)(react@18.2.0)
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@rollup/plugin-json': 4.1.0(rollup@2.42.4)
       '@testing-library/dom': 9.3.1
       '@testing-library/jest-dom': 5.17.0
@@ -21016,7 +21029,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-AFxEckLdj6an1iSuRjKUmBMeUWgm9ZlcepWb4O2zpwOn4sgQb1HIQvTEfTzQpXdkhbpmqoISYCCIPmQsHbKcDQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-E9awWzyTmvEv4fkqK5f/3PMNREziQxjOEjDdiJlHjTy63Y7NbbvQ9Wv3tbh26nvnEac9iT1nOg1ve1IgAZ5jcw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -21036,8 +21049,8 @@ packages:
       '@fluentui/react-file-type-icons': 8.10.0(@types/react@18.2.16)(react@18.2.0)
       '@fluentui/react-hooks': 8.6.29(@types/react@18.2.16)(react@18.2.0)
       '@fluentui/react-icons': 2.0.208(react@18.2.0)
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@playwright/test': 1.35.1
       '@testing-library/jest-dom': 5.17.0
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -21285,7 +21298,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-XFxEUYOzc9nl4jNX0gWp4bhuvBu3kvxAIJ/ACICca9zj+GBNpcVNxUKMazWkR9duIUthJnYDCsd2zg+ozko0Aw==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-3fNMgHpm1eCaaPqwHnutGDgKiaexz9pgEHeNMkAffyqVfUgDesl/4sIgLcQlgruFhLRxhUQoZx7RaAz6o122vg==, tarball: file:projects/storybook.tgz}
     id: file:projects/storybook.tgz
     name: '@rush-temp/storybook'
     version: 0.0.0
@@ -21303,8 +21316,8 @@ packages:
       '@fluentui/react-northstar': 0.61.0(@types/react-dom@18.2.7)(@types/react@18.2.16)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/theme-samples': 8.1.5(@types/react-dom@18.2.7)(@types/react@18.2.16)(react-dom@18.2.0)(react@18.2.0)
       '@mdx-js/react': 1.6.22(react@18.2.0)
-      '@microsoft/api-documenter': 7.12.22
-      '@microsoft/api-extractor': 7.18.21
+      '@microsoft/api-documenter': 7.22.30(@types/node@20.4.5)
+      '@microsoft/api-extractor': 7.23.2
       '@microsoft/applicationinsights-react-js': 3.0.5(react@18.2.0)(tslib@2.5.3)
       '@microsoft/applicationinsights-web': 2.6.5
       '@storybook/addon-actions': 6.5.16(react-dom@18.2.0)(react@18.2.0)
