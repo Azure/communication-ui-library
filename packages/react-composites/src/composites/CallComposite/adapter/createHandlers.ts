@@ -30,16 +30,16 @@ export type CallHandlersOf<AgentType extends CallAgent | TeamsCallAgent> = Agent
  *
  * This is used to create correct handler for generic agent type
  */
-export const createHandlers = <AgentType extends CallAgent | TeamsCallAgent>(
+export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
   callClient: StatefulCallClient,
   callAgent: AgentType,
   deviceManager: StatefulDeviceManager | undefined,
   call: CallCommon | undefined,
+  /* @conditional-compile-remove(video-background-effects) */
   options?: {
-    /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoBackgroundDependency?: () => Promise<VideoBackgroundDependency>;
   }
-): CallHandlersOf<AgentType> => {
+): CallHandlersOf<AgentType> {
   // Call can be either undefined or ACS Call
   if (_isACSCallAgent(callAgent) && (!call || (call && _isACSCall(call)))) {
     return createDefaultCallingHandlers(
@@ -47,6 +47,7 @@ export const createHandlers = <AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
+      /* @conditional-compile-remove(video-background-effects) */
       options
     ) as CallHandlersOf<AgentType>;
   }
@@ -62,4 +63,4 @@ export const createHandlers = <AgentType extends CallAgent | TeamsCallAgent>(
     ) as CallHandlersOf<AgentType>;
   }
   throw new Error('Unhandled agent type');
-};
+}
