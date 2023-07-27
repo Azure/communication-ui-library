@@ -92,6 +92,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.enableVideoEffect) {
+    options = {
+      ...options,
+      localVideoTile: { position: queryArgs.localVideoTilePosition }
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}

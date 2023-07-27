@@ -22,6 +22,7 @@ export interface QueryArgs {
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
   localVideoTilePosition?: false | ('grid' | 'floating');
+  enableVideoEffect?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.

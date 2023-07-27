@@ -768,6 +768,11 @@ export interface CallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
+// @beta
+export type CallingHandlersOptions = {
+    onResolveVideoBackgroundDependency?: () => Promise<VideoEffectBackgroundDependency>;
+};
+
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
@@ -2032,9 +2037,7 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 }): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {
-    onResolveVideoBackgroundDependency?: (() => Promise<VideoEffectBackgroundDependency>) | undefined;
-} | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: (this: any, callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions | undefined) => CallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;

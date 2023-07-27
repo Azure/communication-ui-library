@@ -35,6 +35,8 @@ export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
 export type { VideoEffectBackgroundDependency } from './handlers/createCommonHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+export type { CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 

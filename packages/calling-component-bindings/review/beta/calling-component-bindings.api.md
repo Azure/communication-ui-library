@@ -88,6 +88,11 @@ export interface CallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
+// @beta
+export type CallingHandlersOptions = {
+    onResolveVideoBackgroundDependency?: () => Promise<VideoEffectBackgroundDependency>;
+};
+
 // @public
 export const CallProvider: (props: CallProviderProps) => JSX.Element;
 
@@ -201,9 +206,7 @@ export interface CommonCallingHandlers {
 }
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: {
-    onResolveVideoBackgroundDependency?: (() => Promise<VideoEffectBackgroundDependency>) | undefined;
-} | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: (this: any, callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions | undefined) => CallingHandlers;
 
 // @beta
 export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
