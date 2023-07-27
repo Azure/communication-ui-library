@@ -59,6 +59,9 @@ export type {
   ParticipantMenuItemsCallback
 } from './ParticipantList';
 
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from './ParticipantList';
+
 export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 

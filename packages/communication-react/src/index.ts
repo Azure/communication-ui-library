@@ -154,6 +154,9 @@ export type {
   MicrophoneSitePermissionsProps
 } from '../../react-components/src';
 
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from '../../react-components/src';
+
 /* @conditional-compile-remove(mention) */
 export type {
   MentionOptions,
