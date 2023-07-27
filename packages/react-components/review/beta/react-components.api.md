@@ -1232,6 +1232,10 @@ export interface ImageGalleryImageProps {
     downloadFileName: string;
     // (undocumented)
     imageUrl: string;
+    // (undocumented)
+    title?: string;
+    // (undocumented)
+    titleIcon?: JSX.Element;
 }
 
 // @beta
@@ -1245,10 +1249,6 @@ export interface ImageGalleryProps {
     // (undocumented)
     onImageDownloadButtonClicked: (imageUrl: string, downloadFileName: string) => void;
     styles?: ImageGalleryStylesProps;
-    // (undocumented)
-    title?: string;
-    // (undocumented)
-    titleIcon?: JSX.Element;
 }
 
 // @beta
