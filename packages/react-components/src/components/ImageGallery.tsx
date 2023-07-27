@@ -116,12 +116,11 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         titleAriaId={image.title}
         isOpen={images.length > 0}
         onDismiss={onDismiss}
-        isBlocking={false}
         overlay={{ styles: { ...overlayStyles, ...styles?.overlay } }}
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
-        <img src={image.imageUrl} className={mergeStyles(imageStyle, styles?.image)} />
+        <img src={image.imageUrl} className={mergeStyles(imageStyle, styles?.image)} alt={image.altText} />
       </Modal>
       <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
