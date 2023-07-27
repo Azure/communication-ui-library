@@ -59,6 +59,7 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
+      /* @conditional-compile-remove(video-background-effects) */
       options
     ) as CallHandlersOf<AgentType>;
   }
