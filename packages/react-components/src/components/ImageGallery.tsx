@@ -72,6 +72,8 @@ export interface ImageGalleryImageProps {
   imageUrl: string;
   downloadFileName: string;
   altText?: string;
+  title?: string;
+  titleIcon?: JSX.Element;
 }
 
 /**
@@ -84,8 +86,6 @@ export interface ImageGalleryProps {
   onDismiss: () => void;
   onImageDownloadButtonClicked: (imageUrl: string, downloadFileName: string) => void;
   modalLayerHostId?: string;
-  title?: string;
-  titleIcon?: JSX.Element;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -100,16 +100,20 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, title, titleIcon, styles } = props;
+  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, styles } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
   const downloadButtonTitleString = 'Download';
   const closeString = 'Close';
+  if (images.length <= 0) {
+    return <></>;
+  }
+  const image = images[0];
   return (
     <Layer hostId={modalLayerHostId}>
       <Modal
-        titleAriaId={title}
+        titleAriaId={image.title}
         isOpen={images.length > 0}
         onDismiss={onDismiss}
         isBlocking={false}
@@ -117,20 +121,20 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
-        <img src={images[0].imageUrl} className={mergeStyles(imageStyle, styles?.image)} />
+        <img src={image.imageUrl} className={mergeStyles(imageStyle, styles?.image)} />
       </Modal>
       <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
-          {titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme), styles?.title)} aria-label={title}>
-            {title}
+          {image.titleIcon}
+          <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme), styles?.title)} aria-label={image.title}>
+            {image.title}
           </Stack.Item>
         </Stack>
         <Stack className={mergeStyles(controlBarContainerStyle, styles?.controlBarContainer)}>
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme, isDarkTheme), styles?.downloadButton)}
             text={downloadButtonTitleString}
-            onClick={() => onImageDownloadButtonClicked(images[0].imageUrl, images[0].downloadFileName)}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.downloadFileName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={downloadIconStyle} />}
             aria-live={'polite'}
             aria-label={downloadButtonTitleString}
