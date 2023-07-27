@@ -40,7 +40,6 @@ import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
-import { Role } from '@internal/react-components';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
@@ -273,7 +272,7 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
-    myRole?: Role;
+    canRemoveOthers?: boolean;
 };
 
 // @public

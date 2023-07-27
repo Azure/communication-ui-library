@@ -184,20 +184,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const onDismissDialpad = (): void => {
     setShowDialpad(false);
   };
-  /* @conditional-compile-remove(rooms) */
-  const role = adapter.getState().call?.role;
 
-  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
-  /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = role === 'Presenter' && screenShareButtonIsEnabled;
+  const screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
 
-  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
-  /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = role !== 'Consumer' && microphoneButtonIsEnabled;
+  const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = role !== 'Consumer' && cameraButtonIsEnabled;
+  const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>

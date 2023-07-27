@@ -1614,7 +1614,7 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
-    myRole?: Role;
+    canRemoveOthers?: boolean;
 };
 
 // @beta
