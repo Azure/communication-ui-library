@@ -13,6 +13,8 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
@@ -50,6 +52,13 @@ export const getDeviceManager = (state: CallAdapterState): DeviceManagerState =>
  * @private
  */
 export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.call?.isScreenSharingOn ?? false;
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * @private
+ */
+export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHandState | undefined =>
+  state.call?.raiseHand.localParticipantRaisedHand;
 
 /**
  * @private

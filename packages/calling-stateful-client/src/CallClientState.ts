@@ -16,8 +16,6 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
-import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -349,7 +347,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
-  raisedHand?: RaisedHand;
+  raisedHand?: RaisedHandState;
 }
 
 /**

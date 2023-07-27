@@ -18,6 +18,8 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
+/* @conditional-compile-remove(raise-hand) */
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
@@ -62,7 +64,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIdentifier,
     getDominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
-    getOptimalVideoCount
+    getOptimalVideoCount,
+    /* @conditional-compile-remove(raise-hand) */
+    getLocalParticipantRaisedHand
   ],
   (
     screenShareRemoteParticipantId,
@@ -74,7 +78,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     identifier: string,
     dominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
-    optimalVideoCount
+    optimalVideoCount,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -102,7 +108,15 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.displayName
           )
         : undefined,
-      localParticipant: memoizeLocalParticipant(identifier, displayName, isMuted, isScreenSharingOn, localVideoStream),
+      localParticipant: memoizeLocalParticipant(
+        identifier,
+        displayName,
+        isMuted,
+        isScreenSharingOn,
+        localVideoStream,
+        /* @conditional-compile-remove(raise-hand) */
+        raisedHand
+      ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),

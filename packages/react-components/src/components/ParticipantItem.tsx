@@ -206,7 +206,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     [theme.palette.neutralLighterAlt, styles?.menu]
   );
   const infoContainerStyle = useMemo(
-    () => mergeStyles(iconContainerStyle, { color: theme.palette.neutralTertiary }, styles?.iconContainer),
+    () =>
+      mergeStyles(
+        iconContainerStyle,
+        { color: theme.palette.neutralTertiary, marginLeft: 'auto' },
+        styles?.iconContainer
+      ),
     [theme.palette.neutralTertiary, styles?.iconContainer]
   );
 

@@ -376,7 +376,7 @@ export class CallContext {
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
-          participant.raisedHand = raisedHand;
+          participant.raisedHand = raisedHand ? convertFromSDKToRaisedHandState(raisedHand) : raisedHand;
         }
       }
     });

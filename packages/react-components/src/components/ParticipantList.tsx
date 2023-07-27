@@ -124,19 +124,18 @@ const onRenderParticipantDefault = (
     /* @conditional-compile-remove(raise-hand) */ callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-            {callingParticipant.isScreenSharing && (
-              <Icon
-                iconName="ParticipantItemScreenShareStart"
-                className={iconStyles}
-                ariaLabel={strings.sharingIconLabel}
-              />
-            )}
-            {callingParticipant.isMuted && (
-              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            )}
             {
               /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
-                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
+                <Stack
+                  horizontal={true}
+                  tokens={{ childrenGap: '0.2rem' }}
+                  style={{
+                    alignItems: 'center',
+                    padding: '0.2rem',
+                    backgroundColor: 'ghostwhite',
+                    borderRadius: '1rem'
+                  }}
+                >
                   <Stack.Item>
                     <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                   </Stack.Item>
@@ -150,6 +149,16 @@ const onRenderParticipantDefault = (
                 </Stack>
               )
             }
+            {callingParticipant.isScreenSharing && (
+              <Icon
+                iconName="ParticipantItemScreenShareStart"
+                className={iconStyles}
+                ariaLabel={strings.sharingIconLabel}
+              />
+            )}
+            {callingParticipant.isMuted && (
+              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+            )}
           </Stack>
         )
       : () => null;
@@ -206,8 +215,10 @@ const sortParticipants = (participants: CallParticipantListParticipant[]): CallP
       return a.raisedHand.raisedHandOrderPosition - b.raisedHand.raisedHandOrderPosition;
     } else if (a.raisedHand) {
       return -1;
+    } else if (b.raisedHand) {
+      return 1;
     }
-    return 1;
+    return 0;
   });
   return participants;
 };

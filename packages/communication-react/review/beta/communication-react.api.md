@@ -71,7 +71,6 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
-import { RaisedHand as RaisedHand_2 } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -3397,7 +3396,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand_2;
+    raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -3837,7 +3836,9 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand: RaisedHand;
+}
 
 // @public
 export type VideoGalleryParticipant = {
