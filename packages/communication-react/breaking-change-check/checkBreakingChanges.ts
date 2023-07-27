@@ -79,6 +79,7 @@ type BreakingChangeCallClientStateTest = CheckBreakingChanges<
 
 // Stateful client test start
 
+// eslint-disable-next-line @typescript-eslint/no-unnecessary-type-constraint
 type StatefulClientTestFunction<Client extends any> = (client: NestedPartial<OmitState<Partial<Client>>>) => Client;
 
 type BreakingChangeStatefulCallClientTest = CheckBreakingChanges<

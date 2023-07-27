@@ -27,7 +27,7 @@ export const CUSTOM_BUTTON_OPTIONS = {
 
 /** @private */
 export type CustomButtons = {
-  [key in CustomCallControlButtonPlacement]: typeof ControlBarButton[] | undefined;
+  [key in CustomCallControlButtonPlacement]: (typeof ControlBarButton)[] | undefined;
 };
 
 /** @private */
@@ -48,7 +48,7 @@ export const generateCustomCallControlBarButton = (
 const generateCustomControlBarButtons = (
   placement: CustomCallControlButtonPlacement,
   customButtons?: CustomCallControlButtonProps[]
-): typeof ControlBarButton[] =>
+): (typeof ControlBarButton)[] =>
   customButtons
     ? customButtons
         .filter((buttonProps) => buttonProps.placement === placement)

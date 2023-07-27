@@ -14,16 +14,15 @@ import {
  *
  * @public
  */
-export type CallControlOptions =
-  | CommonCallControlOptions & {
-      /**
-       * Show, Hide or Disable participants button during a call. This is the option only work for legacyControl bar.
-       * @defaultValue true
-       */
-      participantsButton?: boolean | { disabled: boolean };
-      /* @conditional-compile-remove(new-call-control-bar) */
-      legacyControlBarExperience?: boolean;
-    };
+export type CallControlOptions = CommonCallControlOptions & {
+  /**
+   * Show, Hide or Disable participants button during a call. This is the option only work for legacyControl bar.
+   * @defaultValue true
+   */
+  participantsButton?: boolean | { disabled: boolean };
+  /* @conditional-compile-remove(new-call-control-bar) */
+  legacyControlBarExperience?: boolean;
+};
 
 /**
  * While the API for the legacyControlBarExperience is in beta. Use this type to access the internal

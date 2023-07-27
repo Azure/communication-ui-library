@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import React from 'react';
+
 import {
   CallEnd20Filled,
   CallMissed20Filled,
@@ -22,7 +24,6 @@ import {
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
-import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing) */
@@ -30,7 +31,7 @@ import { Attach20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 
-const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
+const SpinnerIcon = (): React.JSX.Element => <Spinner size={SpinnerSize.large} />;
 
 /**
  * The default set of icons used by the composites directly (i.e. not via the components defined in this library).
@@ -96,20 +97,20 @@ export type CompositeIconProps<Icons> = IIconProps & { iconName: keyof Icons };
  * @public
  */
 export type ChatCompositeIcons = {
-  EditBoxCancel?: JSX.Element;
-  EditBoxSubmit?: JSX.Element;
-  MessageDelivered?: JSX.Element;
-  MessageEdit?: JSX.Element;
-  MessageFailed?: JSX.Element;
-  MessageRemove?: JSX.Element;
-  MessageSeen?: JSX.Element;
-  MessageSending?: JSX.Element;
-  ParticipantItemOptions?: JSX.Element;
-  ParticipantItemOptionsHovered?: JSX.Element;
-  SendBoxSend?: JSX.Element;
-  SendBoxSendHovered?: JSX.Element;
+  EditBoxCancel?: React.JSX.Element;
+  EditBoxSubmit?: React.JSX.Element;
+  MessageDelivered?: React.JSX.Element;
+  MessageEdit?: React.JSX.Element;
+  MessageFailed?: React.JSX.Element;
+  MessageRemove?: React.JSX.Element;
+  MessageSeen?: React.JSX.Element;
+  MessageSending?: React.JSX.Element;
+  ParticipantItemOptions?: React.JSX.Element;
+  ParticipantItemOptionsHovered?: React.JSX.Element;
+  SendBoxSend?: React.JSX.Element;
+  SendBoxSendHovered?: React.JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
-  SendBoxAttachFile?: JSX.Element;
+  SendBoxAttachFile?: React.JSX.Element;
 };
 
 /**
@@ -119,7 +120,7 @@ export type ChatCompositeIcons = {
  *
  * @private
  */
-export const ChatCompositeIcon = (props: CompositeIconProps<ChatCompositeIcons>): JSX.Element => (
+export const ChatCompositeIcon = (props: CompositeIconProps<ChatCompositeIcons>): React.JSX.Element => (
   <FontIcon {...props} />
 );
 
@@ -129,63 +130,63 @@ export const ChatCompositeIcon = (props: CompositeIconProps<ChatCompositeIcons>)
  * @public
  */
 export type CallCompositeIcons = {
-  ControlBarPeopleButton?: JSX.Element;
-  ControlButtonCameraOff?: JSX.Element;
-  ControlButtonCameraOn?: JSX.Element;
-  ControlButtonEndCall?: JSX.Element;
-  ControlButtonMicOff?: JSX.Element;
-  ControlButtonMicOn?: JSX.Element;
-  ControlButtonOptions?: JSX.Element;
-  ControlButtonParticipants?: JSX.Element;
-  ControlButtonScreenShareStart?: JSX.Element;
-  ControlButtonScreenShareStop?: JSX.Element;
-  ErrorBarCallCameraAccessDenied?: JSX.Element;
-  ErrorBarCallCameraAlreadyInUse?: JSX.Element;
-  ErrorBarCallLocalVideoFreeze?: JSX.Element;
-  ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
-  ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
-  ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
-  ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
-  ErrorBarCallMicrophoneUnmutedBySystem?: JSX.Element;
-  ErrorBarCallNetworkQualityLow?: JSX.Element;
-  ErrorBarCallNoMicrophoneFound?: JSX.Element;
-  ErrorBarCallNoSpeakerFound?: JSX.Element;
-  ErrorBarClear?: JSX.Element;
-  HorizontalGalleryLeftButton?: JSX.Element;
-  HorizontalGalleryRightButton?: JSX.Element;
-  LobbyScreenConnectingToCall?: JSX.Element;
-  LobbyScreenWaitingToBeAdmitted?: JSX.Element;
-  LocalDeviceSettingsCamera?: JSX.Element;
-  LocalDeviceSettingsMic?: JSX.Element;
-  LocalDeviceSettingsSpeaker?: JSX.Element;
-  LocalPreviewPlaceholder?: JSX.Element;
-  Muted?: JSX.Element;
-  NetworkReconnectIcon?: JSX.Element;
-  NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
-  NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
-  NoticePageLeftCall?: JSX.Element;
-  NoticePageRemovedFromCall?: JSX.Element;
-  OptionsCamera?: JSX.Element;
-  OptionsMic?: JSX.Element;
-  OptionsSpeaker?: JSX.Element;
-  ParticipantItemMicOff?: JSX.Element;
-  ParticipantItemOptions?: JSX.Element;
-  ParticipantItemOptionsHovered?: JSX.Element;
-  ParticipantItemScreenShareStart?: JSX.Element;
-  VideoTileMicOff?: JSX.Element;
-  LocalCameraSwitch?: JSX.Element;
+  ControlBarPeopleButton?: React.JSX.Element;
+  ControlButtonCameraOff?: React.JSX.Element;
+  ControlButtonCameraOn?: React.JSX.Element;
+  ControlButtonEndCall?: React.JSX.Element;
+  ControlButtonMicOff?: React.JSX.Element;
+  ControlButtonMicOn?: React.JSX.Element;
+  ControlButtonOptions?: React.JSX.Element;
+  ControlButtonParticipants?: React.JSX.Element;
+  ControlButtonScreenShareStart?: React.JSX.Element;
+  ControlButtonScreenShareStop?: React.JSX.Element;
+  ErrorBarCallCameraAccessDenied?: React.JSX.Element;
+  ErrorBarCallCameraAlreadyInUse?: React.JSX.Element;
+  ErrorBarCallLocalVideoFreeze?: React.JSX.Element;
+  ErrorBarCallMacOsCameraAccessDenied?: React.JSX.Element;
+  ErrorBarCallMacOsMicrophoneAccessDenied?: React.JSX.Element;
+  ErrorBarCallMicrophoneAccessDenied?: React.JSX.Element;
+  ErrorBarCallMicrophoneMutedBySystem?: React.JSX.Element;
+  ErrorBarCallMicrophoneUnmutedBySystem?: React.JSX.Element;
+  ErrorBarCallNetworkQualityLow?: React.JSX.Element;
+  ErrorBarCallNoMicrophoneFound?: React.JSX.Element;
+  ErrorBarCallNoSpeakerFound?: React.JSX.Element;
+  ErrorBarClear?: React.JSX.Element;
+  HorizontalGalleryLeftButton?: React.JSX.Element;
+  HorizontalGalleryRightButton?: React.JSX.Element;
+  LobbyScreenConnectingToCall?: React.JSX.Element;
+  LobbyScreenWaitingToBeAdmitted?: React.JSX.Element;
+  LocalDeviceSettingsCamera?: React.JSX.Element;
+  LocalDeviceSettingsMic?: React.JSX.Element;
+  LocalDeviceSettingsSpeaker?: React.JSX.Element;
+  LocalPreviewPlaceholder?: React.JSX.Element;
+  Muted?: React.JSX.Element;
+  NetworkReconnectIcon?: React.JSX.Element;
+  NoticePageAccessDeniedTeamsMeeting?: React.JSX.Element;
+  NoticePageJoinCallFailedDueToNoNetwork?: React.JSX.Element;
+  NoticePageLeftCall?: React.JSX.Element;
+  NoticePageRemovedFromCall?: React.JSX.Element;
+  OptionsCamera?: React.JSX.Element;
+  OptionsMic?: React.JSX.Element;
+  OptionsSpeaker?: React.JSX.Element;
+  ParticipantItemMicOff?: React.JSX.Element;
+  ParticipantItemOptions?: React.JSX.Element;
+  ParticipantItemOptionsHovered?: React.JSX.Element;
+  ParticipantItemScreenShareStart?: React.JSX.Element;
+  VideoTileMicOff?: React.JSX.Element;
+  LocalCameraSwitch?: React.JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
-  PeoplePaneAddPerson?: JSX.Element;
+  PeoplePaneAddPerson?: React.JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
-  PeoplePaneOpenDialpad?: JSX.Element;
+  PeoplePaneOpenDialpad?: React.JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
-  DialpadStartCall?: JSX.Element;
+  DialpadStartCall?: React.JSX.Element;
   /* @conditional-compile-remove(rooms) */
-  NoticePageInvalidRoom?: JSX.Element;
+  NoticePageInvalidRoom?: React.JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
-  BlurVideoBackground?: JSX.Element;
+  BlurVideoBackground?: React.JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
-  RemoveVideoBackgroundEffect?: JSX.Element;
+  RemoveVideoBackgroundEffect?: React.JSX.Element;
 };
 
 /**
@@ -195,7 +196,7 @@ export type CallCompositeIcons = {
  *
  * @private
  */
-export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>): JSX.Element => (
+export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>): React.JSX.Element => (
   <FontIcon {...props} />
 );
 
@@ -206,82 +207,82 @@ export const CallCompositeIcon = (props: CompositeIconProps<CallCompositeIcons>)
  */
 export type CallWithChatCompositeIcons = {
   // CallWithChat Specific Icons
-  ChevronLeft?: JSX.Element;
-  ControlBarChatButtonActive?: JSX.Element;
-  ControlBarChatButtonInactive?: JSX.Element;
-  ControlBarPeopleButton?: JSX.Element;
-  Link?: JSX.Element;
-  MoreDrawerMicrophones?: JSX.Element;
-  MoreDrawerPeople?: JSX.Element;
-  MoreDrawerSelectedMicrophone?: JSX.Element;
-  MoreDrawerSelectedSpeaker?: JSX.Element;
-  MoreDrawerSpeakers?: JSX.Element;
+  ChevronLeft?: React.JSX.Element;
+  ControlBarChatButtonActive?: React.JSX.Element;
+  ControlBarChatButtonInactive?: React.JSX.Element;
+  ControlBarPeopleButton?: React.JSX.Element;
+  Link?: React.JSX.Element;
+  MoreDrawerMicrophones?: React.JSX.Element;
+  MoreDrawerPeople?: React.JSX.Element;
+  MoreDrawerSelectedMicrophone?: React.JSX.Element;
+  MoreDrawerSelectedSpeaker?: React.JSX.Element;
+  MoreDrawerSpeakers?: React.JSX.Element;
 
   // Call icons
-  ControlButtonCameraOff?: JSX.Element;
-  ControlButtonCameraOn?: JSX.Element;
-  ControlButtonEndCall?: JSX.Element;
-  ControlButtonMicOff?: JSX.Element;
-  ControlButtonMicOn?: JSX.Element;
-  ControlButtonOptions?: JSX.Element;
-  ControlButtonScreenShareStart?: JSX.Element;
-  ControlButtonScreenShareStop?: JSX.Element;
-  ErrorBarCallCameraAccessDenied?: JSX.Element;
-  ErrorBarCallCameraAlreadyInUse?: JSX.Element;
-  ErrorBarCallLocalVideoFreeze?: JSX.Element;
-  ErrorBarCallMacOsCameraAccessDenied?: JSX.Element;
-  ErrorBarCallMacOsMicrophoneAccessDenied?: JSX.Element;
-  ErrorBarCallMicrophoneAccessDenied?: JSX.Element;
-  ErrorBarCallMicrophoneMutedBySystem?: JSX.Element;
-  ErrorBarCallMicrophoneUnmutedBySystem?: JSX.Element;
-  ErrorBarCallNetworkQualityLow?: JSX.Element;
-  ErrorBarCallNoMicrophoneFound?: JSX.Element;
-  ErrorBarCallNoSpeakerFound?: JSX.Element;
-  ErrorBarClear?: JSX.Element;
-  HorizontalGalleryLeftButton?: JSX.Element;
-  HorizontalGalleryRightButton?: JSX.Element;
-  LobbyScreenConnectingToCall?: JSX.Element;
-  LobbyScreenWaitingToBeAdmitted?: JSX.Element;
-  LocalDeviceSettingsCamera?: JSX.Element;
-  LocalDeviceSettingsMic?: JSX.Element;
-  LocalDeviceSettingsSpeaker?: JSX.Element;
-  LocalPreviewPlaceholder?: JSX.Element;
-  Muted?: JSX.Element;
-  NetworkReconnectIcon?: JSX.Element;
-  NoticePageAccessDeniedTeamsMeeting?: JSX.Element;
-  NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
-  NoticePageLeftCall?: JSX.Element;
-  NoticePageRemovedFromCall?: JSX.Element;
-  OptionsCamera?: JSX.Element;
-  OptionsMic?: JSX.Element;
-  OptionsSpeaker?: JSX.Element;
-  ParticipantItemMicOff?: JSX.Element;
-  ParticipantItemScreenShareStart?: JSX.Element;
-  VideoTileMicOff?: JSX.Element;
-  LocalCameraSwitch?: JSX.Element;
+  ControlButtonCameraOff?: React.JSX.Element;
+  ControlButtonCameraOn?: React.JSX.Element;
+  ControlButtonEndCall?: React.JSX.Element;
+  ControlButtonMicOff?: React.JSX.Element;
+  ControlButtonMicOn?: React.JSX.Element;
+  ControlButtonOptions?: React.JSX.Element;
+  ControlButtonScreenShareStart?: React.JSX.Element;
+  ControlButtonScreenShareStop?: React.JSX.Element;
+  ErrorBarCallCameraAccessDenied?: React.JSX.Element;
+  ErrorBarCallCameraAlreadyInUse?: React.JSX.Element;
+  ErrorBarCallLocalVideoFreeze?: React.JSX.Element;
+  ErrorBarCallMacOsCameraAccessDenied?: React.JSX.Element;
+  ErrorBarCallMacOsMicrophoneAccessDenied?: React.JSX.Element;
+  ErrorBarCallMicrophoneAccessDenied?: React.JSX.Element;
+  ErrorBarCallMicrophoneMutedBySystem?: React.JSX.Element;
+  ErrorBarCallMicrophoneUnmutedBySystem?: React.JSX.Element;
+  ErrorBarCallNetworkQualityLow?: React.JSX.Element;
+  ErrorBarCallNoMicrophoneFound?: React.JSX.Element;
+  ErrorBarCallNoSpeakerFound?: React.JSX.Element;
+  ErrorBarClear?: React.JSX.Element;
+  HorizontalGalleryLeftButton?: React.JSX.Element;
+  HorizontalGalleryRightButton?: React.JSX.Element;
+  LobbyScreenConnectingToCall?: React.JSX.Element;
+  LobbyScreenWaitingToBeAdmitted?: React.JSX.Element;
+  LocalDeviceSettingsCamera?: React.JSX.Element;
+  LocalDeviceSettingsMic?: React.JSX.Element;
+  LocalDeviceSettingsSpeaker?: React.JSX.Element;
+  LocalPreviewPlaceholder?: React.JSX.Element;
+  Muted?: React.JSX.Element;
+  NetworkReconnectIcon?: React.JSX.Element;
+  NoticePageAccessDeniedTeamsMeeting?: React.JSX.Element;
+  NoticePageJoinCallFailedDueToNoNetwork?: React.JSX.Element;
+  NoticePageLeftCall?: React.JSX.Element;
+  NoticePageRemovedFromCall?: React.JSX.Element;
+  OptionsCamera?: React.JSX.Element;
+  OptionsMic?: React.JSX.Element;
+  OptionsSpeaker?: React.JSX.Element;
+  ParticipantItemMicOff?: React.JSX.Element;
+  ParticipantItemScreenShareStart?: React.JSX.Element;
+  VideoTileMicOff?: React.JSX.Element;
+  LocalCameraSwitch?: React.JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
-  PeoplePaneAddPerson?: JSX.Element;
+  PeoplePaneAddPerson?: React.JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
-  PeoplePaneOpenDialpad?: JSX.Element;
+  PeoplePaneOpenDialpad?: React.JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
-  DialpadStartCall?: JSX.Element;
+  DialpadStartCall?: React.JSX.Element;
 
   // Chat icons
-  EditBoxCancel?: JSX.Element;
-  EditBoxSubmit?: JSX.Element;
-  MessageDelivered?: JSX.Element;
-  MessageEdit?: JSX.Element;
-  MessageFailed?: JSX.Element;
-  MessageRemove?: JSX.Element;
-  MessageSeen?: JSX.Element;
-  MessageSending?: JSX.Element;
-  SendBoxSend?: JSX.Element;
-  SendBoxSendHovered?: JSX.Element;
-  SendBoxAttachFile?: JSX.Element;
+  EditBoxCancel?: React.JSX.Element;
+  EditBoxSubmit?: React.JSX.Element;
+  MessageDelivered?: React.JSX.Element;
+  MessageEdit?: React.JSX.Element;
+  MessageFailed?: React.JSX.Element;
+  MessageRemove?: React.JSX.Element;
+  MessageSeen?: React.JSX.Element;
+  MessageSending?: React.JSX.Element;
+  SendBoxSend?: React.JSX.Element;
+  SendBoxSendHovered?: React.JSX.Element;
+  SendBoxAttachFile?: React.JSX.Element;
 
   // Icons common to Call and Chat.
-  ParticipantItemOptions?: JSX.Element;
-  ParticipantItemOptionsHovered?: JSX.Element;
+  ParticipantItemOptions?: React.JSX.Element;
+  ParticipantItemOptionsHovered?: React.JSX.Element;
 };
 
 /**
@@ -291,7 +292,7 @@ export type CallWithChatCompositeIcons = {
  *
  * @private
  */
-export const CallWithChatCompositeIcon = (props: CompositeIconProps<CallWithChatCompositeIcons>): JSX.Element => (
+export const CallWithChatCompositeIcon = (props: CompositeIconProps<CallWithChatCompositeIcons>): React.JSX.Element => (
   <FontIcon {...props} />
 );
 

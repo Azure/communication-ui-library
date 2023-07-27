@@ -273,7 +273,7 @@ export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
 export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
 
 // @public
-export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, React_2.JSX.Element>;
 
 // @public
 export interface ComponentLocale {
@@ -381,58 +381,58 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
-    ChatMessageOptions: JSX.Element;
-    ControlButtonCameraOff: JSX.Element;
-    ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element;
-    ControlButtonMicOff: JSX.Element;
-    ControlButtonMicOn: JSX.Element;
-    ControlButtonOptions: JSX.Element;
-    ControlButtonParticipants: JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element;
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element;
-    ErrorBarClear: JSX.Element;
-    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
-    ErrorBarCallVideoStoppedBySystem: JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageResend: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
-    OptionsCamera: JSX.Element;
-    OptionsMic: JSX.Element;
-    OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
-    VideoTileMicOff: JSX.Element;
-    SplitButtonPrimaryActionCameraOn: JSX.Element;
-    SplitButtonPrimaryActionCameraOff: JSX.Element;
-    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
-    SplitButtonPrimaryActionMicMuted: JSX.Element;
-    ContextMenuCameraIcon: JSX.Element;
-    ContextMenuMicIcon: JSX.Element;
-    ContextMenuSpeakerIcon: JSX.Element;
+    ChatMessageOptions: React_2.JSX.Element;
+    ControlButtonCameraOff: React_2.JSX.Element;
+    ControlButtonCameraOn: React_2.JSX.Element;
+    ControlButtonEndCall: React_2.JSX.Element;
+    ControlButtonMicOff: React_2.JSX.Element;
+    ControlButtonMicOn: React_2.JSX.Element;
+    ControlButtonOptions: React_2.JSX.Element;
+    ControlButtonParticipants: React_2.JSX.Element;
+    ControlButtonScreenShareStart: React_2.JSX.Element;
+    ControlButtonScreenShareStop: React_2.JSX.Element;
+    EditBoxCancel: React_2.JSX.Element;
+    EditBoxSubmit: React_2.JSX.Element;
+    ErrorBarCallCameraAccessDenied: React_2.JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: React_2.JSX.Element;
+    ErrorBarCallLocalVideoFreeze: React_2.JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: React_2.JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: React_2.JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: React_2.JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: React_2.JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: React_2.JSX.Element;
+    ErrorBarCallNetworkQualityLow: React_2.JSX.Element;
+    ErrorBarCallNoMicrophoneFound: React_2.JSX.Element;
+    ErrorBarCallNoSpeakerFound: React_2.JSX.Element;
+    ErrorBarClear: React_2.JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
+    HorizontalGalleryLeftButton: React_2.JSX.Element;
+    HorizontalGalleryRightButton: React_2.JSX.Element;
+    MessageDelivered: React_2.JSX.Element;
+    MessageEdit: React_2.JSX.Element;
+    MessageFailed: React_2.JSX.Element;
+    MessageRemove: React_2.JSX.Element;
+    MessageResend: React_2.JSX.Element;
+    MessageSeen: React_2.JSX.Element;
+    MessageSending: React_2.JSX.Element;
+    OptionsCamera: React_2.JSX.Element;
+    OptionsMic: React_2.JSX.Element;
+    OptionsSpeaker: React_2.JSX.Element;
+    ParticipantItemMicOff: React_2.JSX.Element;
+    ParticipantItemOptions: React_2.JSX.Element;
+    ParticipantItemOptionsHovered: React_2.JSX.Element;
+    ParticipantItemScreenShareStart: React_2.JSX.Element;
+    SendBoxSend: React_2.JSX.Element;
+    SendBoxSendHovered: React_2.JSX.Element;
+    VideoTileMicOff: React_2.JSX.Element;
+    SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
+    SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
+    ContextMenuCameraIcon: React_2.JSX.Element;
+    ContextMenuMicIcon: React_2.JSX.Element;
+    ContextMenuSpeakerIcon: React_2.JSX.Element;
 };
 
 // @internal
@@ -865,7 +865,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
-}) => JSX.Element>;
+}) => React_2.JSX.Element>;
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -1258,7 +1258,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isPinned?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
-}) => JSX.Element>;
+}) => React_2.JSX.Element>;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
