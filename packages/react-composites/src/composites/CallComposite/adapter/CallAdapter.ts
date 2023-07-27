@@ -265,6 +265,31 @@ export interface VideoBackgroundImage {
   tooltipText?: string;
 }
 
+/**
+ * Options for setting microphone and camera state when joining a call
+ * true = turn on the device when joining call
+ * false = turn off the device when joining call
+ * 'keep'/undefined = retain devices' precall state
+ *
+ * @public
+ */
+export interface JoinCallOptions {
+  /**
+   * microphone state when joining call
+   * true: turn on
+   * false: turn off
+   * 'keep': maintain precall state
+   */
+  microphoneOn?: boolean | 'keep';
+  /**
+   * camera state when joining call
+   * true: turn on
+   * false: turn off
+   * 'keep': maintain precall state
+   */
+  cameraOn?: boolean | 'keep';
+}
+
 /* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
@@ -787,7 +812,7 @@ export interface CallAdapterSubscribers {
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
@@ -795,13 +820,16 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   joinCall(microphoneOn?: boolean): Call | undefined;
 
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
    *
-   * @param options - param to set microphone/camera initially on/off.
+   * @param options - param to set microphone/camera initially on/off/use precall state.
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Start the call.
    *
@@ -833,20 +861,23 @@ export interface CommonCallAdapter
     CallAdapterSubscribers {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
    */
   joinCall(microphoneOn?: boolean): void;
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
    *
-   * @param options - param to set microphone/camera initially on/off.
+   * @param options - param to set microphone/camera initially on/off/use precall state.
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): void;
+  joinCall(options?: JoinCallOptions): void;
   /**
    * Start the call.
    *
@@ -872,7 +903,7 @@ export interface CommonCallAdapter
 export interface CallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
@@ -880,13 +911,16 @@ export interface CallAdapter extends CommonCallAdapter {
   joinCall(microphoneOn?: boolean): Call | undefined;
 
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
    *
-   * @param options - param to set microphone/camera initially on/off.
+   * @param options - param to set microphone/camera initially on/off/use precall state.
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined;
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Start the call.
    *
@@ -913,20 +947,23 @@ export interface CallAdapter extends CommonCallAdapter {
 export interface TeamsCallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @beta
    */
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
   /**
-   * Join the call with options bag to set microphone/camera initially on/off.
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
    *
    * @param options - param to set microphone/camera initially on/off.
    *
    * @public
    */
-  joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): TeamsCall | undefined;
+  joinCall(options?: JoinCallOptions): TeamsCall | undefined;
   /**
    * Start the call.
    *

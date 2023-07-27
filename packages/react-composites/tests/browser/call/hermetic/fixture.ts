@@ -78,6 +78,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       remoteParticipantsEnded: {},
       /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
+      totalParticipantCount: Object.values(remoteParticipants).length + 1,
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
