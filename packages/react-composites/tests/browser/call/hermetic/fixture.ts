@@ -80,7 +80,7 @@ export function defaultMockCallAdapterState(
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
-      role,
+      role: role ?? 'Unknown',
       totalParticipantCount: Object.values(remoteParticipants).length + 1,
       captionsFeature: {
         captions: [],
