@@ -7,6 +7,7 @@ import {
   DeviceAccess,
   DominantSpeakersInfo,
   ScalingMode,
+  StreamSize,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
@@ -507,6 +508,21 @@ export class CallContext {
           const stream = participant.videoStreams[streamId];
           if (stream) {
             stream.isReceiving = isReceiving;
+          }
+        }
+      }
+    });
+  }
+
+  public setRemoteVideoStreamSize(callId: string, participantKey: string, streamId: number, size: StreamSize): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream) {
+            stream.streamSize = size;
           }
         }
       }

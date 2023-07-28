@@ -32,6 +32,7 @@ export class RemoteVideoStreamSubscriber {
     this._remoteVideoStream.on('isAvailableChanged', this.isAvailableChanged);
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     this._remoteVideoStream.on('isReceivingChanged', this.isReceivingChanged);
+    this._remoteVideoStream.on('sizeChanged', this.isSizeChanged);
     this.checkAndUpdateScreenShareState();
   };
 
@@ -39,6 +40,7 @@ export class RemoteVideoStreamSubscriber {
     this._remoteVideoStream.off('isAvailableChanged', this.isAvailableChanged);
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     this._remoteVideoStream.off('isReceivingChanged', this.isReceivingChanged);
+    this._remoteVideoStream.off('sizeChanged', this.isSizeChanged);
   };
 
   private includesActiveScreenShareStream = (streams: { [key: number]: RemoteVideoStreamState }): boolean => {
@@ -110,6 +112,15 @@ export class RemoteVideoStreamSubscriber {
       this._participantKey,
       this._remoteVideoStream.id,
       this._remoteVideoStream.isReceiving
+    );
+  };
+
+  private isSizeChanged = (): void => {
+    this._context.setRemoteVideoStreamSize(
+      this._callIdRef.callId,
+      this._participantKey,
+      this._remoteVideoStream.id,
+      this._remoteVideoStream.size
     );
   };
 }
