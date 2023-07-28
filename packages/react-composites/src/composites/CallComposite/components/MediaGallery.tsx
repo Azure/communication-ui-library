@@ -30,6 +30,8 @@ import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 /* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileOptions } from '../CallComposite';
+/* @conditional-compile-remove(rooms) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 const VideoGalleryStyles = {
   root: {
@@ -73,6 +75,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const cameraSwitcherCameras = useSelector(localVideoCameraCycleButtonSelector);
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
+
+  /* @conditional-compile-remove(rooms) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
+  const userRole = adapter.getState().call?.role;
 
   /* @conditional-compile-remove(vertical-gallery) */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -144,9 +151,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
-        /* @conditional-compile-remove(click-to-call) */
+        /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
-          props.localVideoTileOptions === false
+          props.localVideoTileOptions === false || userRole === 'Consumer'
             ? 'hidden'
             : props.isMobile && containerAspectRatio < 1
             ? '9:16'
@@ -156,15 +163,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [
     videoGalleryProps,
+    layoutBasedOnTilePosition,
     props.isMobile,
     props.onRenderAvatar,
-    onRenderAvatar,
+    props.localVideoTileOptions,
     cameraSwitcherProps,
-    /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions,
-    layoutBasedOnTilePosition,
-    /* @conditional-compile-remove(click-to-call) */
+    onRenderAvatar,
+    remoteVideoTileMenuOptions,
+    overflowGalleryPosition,
+    /* @conditional-compile-remove(rooms) */
+    userRole,
     containerAspectRatio
   ]);
 

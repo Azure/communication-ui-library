@@ -468,7 +468,6 @@ export interface CommonSitePermissionsProps {
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
-    role?: Role;
 };
 
 // @internal
@@ -1614,7 +1613,7 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
-    myRole?: Role;
+    canRemoveOthers?: boolean;
 };
 
 // @beta
@@ -1746,9 +1745,6 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
-
-// @public
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2098,7 +2094,6 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
-    role?: Role;
 };
 
 // @public

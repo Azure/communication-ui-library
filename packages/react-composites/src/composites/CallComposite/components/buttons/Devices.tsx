@@ -3,7 +3,7 @@
 
 import { ControlBarButtonStyles, DevicesButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
-import { DevicesButtonStrings, Role } from '@internal/react-components';
+import { DevicesButtonStrings } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
@@ -11,8 +11,10 @@ import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '
 import { CompositeLocale, useLocale } from '../../../localization';
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 
 /** @private */
 export const Devices = (props: {
@@ -25,7 +27,7 @@ export const Devices = (props: {
   /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
-  const role = adapter.getState().call?.role;
+  const role: ParticipantRole = adapter.getState().call?.role ?? 'Unknown';
 
   const augmentedDeviceButtonProps = useMemo(
     () => ({
@@ -69,7 +71,7 @@ export const Devices = (props: {
       data-ui-id="calling-composite-devices-button"
       disabled={props.disabled}
       /* @conditional-compile-remove(rooms) */
-      strings={getLabelFromPermissions(role as Role, locale)}
+      strings={getLabelFromRole(role as ParticipantRole, locale)}
       /* @conditional-compile-remove(rooms) */
       onRenderIcon={onlyManageSpeakers ? onRenderDevicesIcon : undefined}
     />
@@ -77,7 +79,10 @@ export const Devices = (props: {
 };
 
 /* @conditional-compile-remove(rooms) */
-const getLabelFromPermissions = (role: Role, locale: CompositeLocale): Partial<DevicesButtonStrings> | undefined => {
+const getLabelFromRole = (
+  role: ParticipantRole,
+  locale: CompositeLocale
+): Partial<DevicesButtonStrings> | undefined => {
   if (role === 'Consumer') {
     return { label: locale.component.strings.microphoneButton.speakerMenuTitle };
   }

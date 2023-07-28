@@ -31,8 +31,6 @@ import {
 } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
@@ -41,6 +39,8 @@ import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import { CallState } from '@internal/calling-stateful-client';
@@ -507,7 +507,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role as Role
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
@@ -555,7 +555,9 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   );
 };
 
-const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
+const getQueryOptions = (options: {
+  /* @conditional-compile-remove(rooms) */ role?: ParticipantRole;
+}): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {

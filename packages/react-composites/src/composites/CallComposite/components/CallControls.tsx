@@ -32,7 +32,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(new-call-control-bar) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
@@ -66,7 +66,7 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(new-call-control-bar) */
   const adapter = useAdapter();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -184,20 +184,12 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const onDismissDialpad = (): void => {
     setShowDialpad(false);
   };
-  /* @conditional-compile-remove(rooms) */
-  const role = adapter.getState().call?.role;
 
-  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
-  /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = role === 'Presenter' && screenShareButtonIsEnabled;
+  const screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
 
-  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
-  /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = role !== 'Consumer' && microphoneButtonIsEnabled;
+  const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = role !== 'Consumer' && cameraButtonIsEnabled;
+  const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>

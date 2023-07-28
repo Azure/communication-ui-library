@@ -52,7 +52,7 @@ export const ModalLocalAndRemotePIP = (props: {
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
-    if (!(role === 'Consumer') && pictureInPictureProps.dominantRemoteParticipant?.userId) {
+    if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return (
         <_RemoteVideoTile
           {...pictureInPictureProps.dominantRemoteParticipant}

@@ -14,8 +14,6 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { getRole } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
@@ -64,8 +62,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             state,
             participant.isMuted,
             isScreenSharing,
-            participant.isSpeaking,
-            /* @conditional-compile-remove(rooms) */ participant.role
+            participant.isSpeaking
           );
         })
         .sort((a, b) => {
@@ -99,7 +96,7 @@ export type ParticipantListSelector = (
   myUserId: string;
   totalParticipantCount?: number;
   /* @conditional-compile-remove(rooms) */
-  myRole?: Role;
+  canRemoveOthers?: boolean;
 };
 
 /**
@@ -129,8 +126,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
-    /* @conditional-compile-remove(rooms) */
-    myRole?: Role;
   } => {
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
@@ -144,8 +139,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       isMuted: isMuted,
       state: 'Connected',
       // Local participant can never remove themselves.
-      isRemovable: false,
-      /* @conditional-compile-remove(rooms) */ role: role as Role
+      isRemovable: false
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;
@@ -153,9 +147,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       participants: participants,
       myUserId: userId,
       /* @conditional-compile-remove(total-participant-count) */
-      totalParticipantCount: totalParticipantCount,
-      /* @conditional-compile-remove(rooms) */
-      myRole: role as Role
+      totalParticipantCount: totalParticipantCount
     };
   }
 );

@@ -18,8 +18,6 @@ import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-reac
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { TeamsAdapterOptions } from '@azure/communication-react';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
@@ -34,8 +32,6 @@ export interface CallScreenProps {
   displayName: string;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */
-  roleHint?: Role;
   /* @conditional-compile-remove(teams-identity-support) */
   isTeamsIdentityCall?: boolean;
 }
@@ -141,8 +137,6 @@ type AzureCommunicationCallScreenProps = CallScreenProps & {
 
 const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {
   const { afterCreate, callLocator: locator, userId, ...adapterArgs } = props;
-  /* @conditional-compile-remove(rooms) */
-  const { roleHint } = props;
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
@@ -151,12 +145,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
-      /* @conditional-compile-remove(rooms) */
-      roleHint,
       /* @conditional-compile-remove(video-background-effects) */
       videoBackgroundImages
     };
-  }, [/* @conditional-compile-remove(rooms) */ roleHint]);
+  }, []);
 
   const adapter = useAzureCommunicationCallAdapter(
     {

@@ -14,7 +14,6 @@ export type {
   CallParticipantListParticipant,
   ChatMessage,
   CommunicationParticipant,
-  Role,
   ComponentSlotStyle,
   ContentSystemMessage,
   CreateVideoStreamViewResult,

@@ -21,8 +21,6 @@ import {
   OnRenderAvatarCallback,
   ParticipantListParticipant
 } from '../types';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 import { _formatString } from '@internal/acs-ui-common';
@@ -110,8 +108,8 @@ export type ParticipantListProps = {
   /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
   /* @conditional-compile-remove(rooms) */
-  /** Optional Role for the local participant in a rooms call */
-  myRole?: Role;
+  /** Property for indicating that they can remove other participants in the call */
+  canRemoveOthers?: boolean;
 };
 
 const onRenderParticipantDefault = (
@@ -219,9 +217,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     totalParticipantCount,
     /* @conditional-compile-remove(total-participant-count) */
     strings,
-    participantAriaLabelledBy,
-    /* @conditional-compile-remove(rooms) */
-    myRole
+    participantAriaLabelledBy
   } = props;
 
   const ids = useIdentifiers();
@@ -235,9 +231,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
-      let participantIsRemovable = participant.isRemovable;
-      /* @conditional-compile-remove(rooms) */
-      participantIsRemovable = (myRole === 'Presenter' || myRole === 'Unknown') && participantIsRemovable;
+      console.log('participant.isRemovable', participant.isRemovable);
+      const participantIsRemovable = participant.isRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
@@ -258,8 +253,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     },
     [
       ids.participantListRemoveParticipantButton,
-      /* @conditional-compile-remove(rooms) */
-      myRole,
       myUserId,
       onFetchParticipantMenuItems,
       onRemoveParticipant,

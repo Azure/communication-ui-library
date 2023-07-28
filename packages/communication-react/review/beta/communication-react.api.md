@@ -1751,7 +1751,6 @@ export interface CommonSitePermissionsProps {
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
-    role?: Role;
 };
 
 // @public
@@ -3199,7 +3198,7 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
-    myRole?: Role;
+    canRemoveOthers?: boolean;
 };
 
 // @public
@@ -3207,7 +3206,7 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
-    myRole?: Role;
+    canRemoveOthers?: boolean;
 };
 
 // @beta
@@ -3350,9 +3349,6 @@ export interface RemoteVideoStreamState {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
-
-// @public
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -3775,7 +3771,6 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
-    role?: Role;
 };
 
 // @public

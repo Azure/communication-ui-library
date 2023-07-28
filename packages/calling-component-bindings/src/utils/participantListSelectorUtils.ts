@@ -5,8 +5,6 @@ import { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 
 /**
  * @private
@@ -65,8 +63,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean,
-    role: Role
+    isSpeaking: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -74,8 +71,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking,
-      role
+      isSpeaking
     );
   }
 );
@@ -87,8 +83,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean,
-  role: Role
+  isSpeaking: boolean
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -98,7 +93,6 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       isMuted,
       isScreenSharing,
       isSpeaking
-    ),
-    role
+    )
   };
 };

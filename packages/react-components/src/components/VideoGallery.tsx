@@ -257,7 +257,7 @@ export interface VideoGalleryProps {
    * @defaultValue 'HorizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
-  /* @conditional-compile-remove(click-to-call) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
    * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
@@ -333,7 +333,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
-    /* @conditional-compile-remove(click-to-call) */
+    /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
 
@@ -376,11 +376,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
-    /* @conditional-compile-remove(rooms) */
-    if (
-      localParticipant.role === 'Consumer' ||
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize === 'hidden'
-    ) {
+    /* @conditional-compile-remove(click-to-call) */
+    if (localVideoTileSize === 'hidden') {
       return undefined;
     }
     if (onRenderLocalVideoTile) {
@@ -419,7 +416,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showLabel={
             !(
               (shouldFloatLocalVideo && isNarrow) ||
-              /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16'
+              /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
+                '9:16'
             )
           }
           showMuteIndicator={showMuteIndicator}
