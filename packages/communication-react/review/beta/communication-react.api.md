@@ -2937,7 +2937,6 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
 export type MessageThreadProps = {
-    onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage)[];
     participantCount?: number;
