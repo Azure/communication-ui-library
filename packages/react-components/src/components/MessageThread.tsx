@@ -537,6 +537,8 @@ export type CancelEditCallback = (messageId: string) => void;
  * @public
  */
 export type MessageThreadProps = {
+  onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
+
   /**
    * UserId of the current user.
    */
@@ -815,7 +817,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
-    mentionOptions
+    mentionOptions,
+    onInlineImageClicked
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -1127,6 +1130,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onDisplayDateTimeString={onDisplayDateTimeString}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
+            onInlineImageClicked={onInlineImageClicked}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments}
             /* @conditional-compile-remove(mention) */
@@ -1150,6 +1154,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onDisplayDateTimeString,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
+      onInlineImageClicked,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,
       /* @conditional-compile-remove(mention) */

@@ -34,6 +34,7 @@ type ChatMessageContentProps = {
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
+  onInlineImageClicked?: (attachmentId: string) => void;
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -207,12 +208,15 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
       props.message.attachedFilesMetadata?.find(isImageNode)
     );
   },
-  processNode: (node, children, index): HTMLElement => {
+  processNode: (node, children, index): JSX.Element => {
     // logic to check id in map/list
     if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
       node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
     }
-    return processNodeDefinitions.processDefaultNode(node, children, index);
+    const handleOnClick = (): void => {
+      props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
+    };
+    return <div onClick={handleOnClick}>{processNodeDefinitions.processDefaultNode(node, children, index)}</div>;
   }
 });
 
