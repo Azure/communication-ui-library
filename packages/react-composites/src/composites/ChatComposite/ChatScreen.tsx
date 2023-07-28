@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { mergeStyles, PersonaSize, Stack } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -16,7 +16,7 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
 
 import { useAdapter } from './adapter/ChatAdapterProvider';
@@ -49,6 +49,7 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 import { _FileDownloadCards } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
+import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 
 /**
  * @private
@@ -59,6 +60,7 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  modalLayerHostId?: string;
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
@@ -123,6 +125,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
+  const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -208,6 +212,56 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter]
   );
 
+  const onInlineImageClicked = useCallback(
+    async (attachment: FileMetadata, imageName?: string, senderId?: string): Promise<void> => {
+      const titleIcon = (
+        <AvatarPersona
+          userId={senderId}
+          hidePersonaDetails={true}
+          size={PersonaSize.size32}
+          text={imageName}
+          showOverflowTooltip={false}
+          dataProvider={onFetchAvatarPersonaData}
+        />
+      );
+      const galleryImage: ImageGalleryImageProps = {
+        title: imageName,
+        titleIcon: titleIcon,
+        downloadFileName: attachment.id
+      };
+
+      if (attachment.id in fullSizeAttachments) {
+        setGalleryImages([
+          {
+            ...galleryImage,
+            imageUrl: fullSizeAttachments[attachment.id]
+          }
+        ]);
+        return;
+      }
+
+      if (attachment.attachmentType === 'inlineImage' && attachment.url) {
+        const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.url] });
+        if (blob[0]) {
+          const blobUrl = blob[0].blobUrl;
+          setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));
+          setGalleryImages([
+            {
+              ...galleryImage,
+              imageUrl: blobUrl
+            }
+          ]);
+        }
+      }
+    },
+    [adapter, fullSizeAttachments, onFetchAvatarPersonaData]
+  );
+
+  const handleOnDownloadImage = (blobUrl: string, filename: string): void => {
+    // Place holder function for download handler
+    console.log(blobUrl, filename);
+  };
+
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
       return null;
@@ -243,6 +297,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onRenderInlineAttachment}
+            onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
           />
@@ -286,6 +341,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           )
         }
       </Stack>
+      {galleryImages && galleryImages.length > 0 && (
+        <ImageGallery
+          modalLayerHostId={props.modalLayerHostId}
+          images={galleryImages}
+          onDismiss={() => setGalleryImages(undefined)}
+          onDownloadImage={handleOnDownloadImage}
+        />
+      )}
     </Stack>
   );
 };
