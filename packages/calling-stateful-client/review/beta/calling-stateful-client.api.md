@@ -35,6 +35,7 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftBotKind } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
+import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -106,6 +107,7 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.fea
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    capabilities?: CapabilitiesCallFeature;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -131,6 +133,11 @@ export interface CallState {
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
+}
+
+// @beta
+export interface CapabilitiesCallFeature {
+    capabilities: ParticipantCapabilities;
 }
 
 // @beta (undocumented)
@@ -165,7 +172,7 @@ export type CreateViewResult = {
 };
 
 // @beta
-export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
+export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
 // @beta
 export type DeclarativeIncomingCall = IncomingCall;

@@ -2021,7 +2021,7 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, /* @conditional-compile-remove(file-sharing) */ metadata?: Record<string, string>, /* @conditional-compile-remove(file-sharing) */ options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
     attachedFilesMetadata?: FileMetadata[];
 }) => Promise<void>;
 
