@@ -52,7 +52,8 @@ const usePage = async ({ browser }, use) => {
  */
 export function defaultMockCallAdapterState(
   participants?: MockRemoteParticipantState[],
-  role?: ParticipantRole
+  role?: ParticipantRole,
+  isRoomsCall?: boolean
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
@@ -117,7 +118,7 @@ export function defaultMockCallAdapterState(
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
-    isRoomsCall: false,
+    isRoomsCall: isRoomsCall ?? false,
     latestErrors: {}
   };
 }
@@ -256,7 +257,11 @@ export const test = base.extend<TestFixture>({
  * Sets up the default state for the configuration screen.
  */
 export const defaultMockConfigurationPageState = (role?: ParticipantRole): MockCallAdapterState => {
-  const state = defaultMockCallAdapterState([], role);
+  let isRoomsCall = false;
+  if (role && role !== 'Unknown') {
+    isRoomsCall = true;
+  }
+  const state = defaultMockCallAdapterState([], role, isRoomsCall);
   state.page = 'configuration';
   state.call = undefined;
   return state;
