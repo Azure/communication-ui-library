@@ -154,7 +154,7 @@ export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseS
 export const devicesButtonSelector: DevicesButtonSelector;
 
 // @internal (undocumented)
-export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo | undefined) => undefined | string[];
+export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo) => undefined | string[];
 
 // @public
 export type EmptySelector = () => Record<string, never>;
@@ -171,7 +171,7 @@ export type GetCallingSelector<Component extends (props: any) => JSX.Element | u
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
 
 // @internal
-export const _isInCall: (callStatus?: CallState | undefined) => boolean;
+export const _isInCall: (callStatus?: CallState) => boolean;
 
 // @internal
 export const _isInLobbyOrConnecting: (callStatus: CallState | undefined) => boolean;

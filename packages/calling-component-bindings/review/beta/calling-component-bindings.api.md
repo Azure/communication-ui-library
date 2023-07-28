@@ -218,7 +218,7 @@ export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseS
 export const devicesButtonSelector: DevicesButtonSelector;
 
 // @internal (undocumented)
-export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo | undefined) => undefined | string[];
+export const _dominantSpeakersWithFlatId: (dominantSpeakers?: DominantSpeakersInfo) => undefined | string[];
 
 // @public
 export type EmptySelector = () => Record<string, never>;
@@ -246,7 +246,7 @@ export type HoldButtonSelector = (state: CallClientState, props: CallingBaseSele
 export const holdButtonSelector: HoldButtonSelector;
 
 // @internal
-export const _isInCall: (callStatus?: CallState | undefined) => boolean;
+export const _isInCall: (callStatus?: CallState) => boolean;
 
 // @internal
 export const _isInLobbyOrConnecting: (callStatus: CallState | undefined) => boolean;

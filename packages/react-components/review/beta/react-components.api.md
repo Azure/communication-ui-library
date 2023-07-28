@@ -1119,7 +1119,7 @@ export interface FluentThemeProviderProps {
 }
 
 // @internal (undocumented)
-export const _getPermissions: (role?: Role | undefined) => _Permissions;
+export const _getPermissions: (role?: Role) => _Permissions;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -1254,7 +1254,7 @@ export interface LocalVideoCameraCycleButtonProps {
 // @internal
 export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     userId?: string | undefined;
-    onCreateLocalStreamView?: ((options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateLocalStreamView?: ((options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeLocalStreamView?: (() => void) | undefined;
     isAvailable?: boolean | undefined;
     isMuted?: boolean | undefined;
@@ -1747,7 +1747,7 @@ export type ReadReceiptsBySenderId = {
 export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     userId: string;
     remoteParticipant: VideoGalleryRemoteParticipant;
-    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions | undefined) => Promise<void | CreateVideoStreamViewResult>) | undefined;
+    onCreateRemoteStreamView?: ((userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>) | undefined;
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
