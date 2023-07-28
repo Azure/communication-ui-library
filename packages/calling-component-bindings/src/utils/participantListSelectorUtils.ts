@@ -16,7 +16,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean
+    isSpeaking: boolean,
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -24,7 +25,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      localUserCanRemoveOthers
     );
   }
 );
@@ -35,7 +37,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean
+  isSpeaking: boolean,
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -48,7 +51,9 @@ const convertRemoteParticipantToParticipantListParticipant = (
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
-      getIdentifierKind(identifier).kind === 'communicationUser' || getIdentifierKind(identifier).kind === 'phoneNumber'
+      (getIdentifierKind(identifier).kind === 'communicationUser' ||
+        getIdentifierKind(identifier).kind === 'phoneNumber') &&
+      localUserCanRemoveOthers
   };
 };
 
@@ -63,7 +68,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean
+    isSpeaking: boolean,
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -71,7 +77,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      localUserCanRemoveOthers
     );
   }
 );
@@ -83,7 +90,8 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean
+  isSpeaking: boolean,
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -92,7 +100,8 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      localUserCanRemoveOthers
     )
   };
 };

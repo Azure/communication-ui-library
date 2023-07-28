@@ -63,7 +63,7 @@ export interface MediaGalleryProps {
   drawerMenuHostId?: string;
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
 }
 
@@ -80,6 +80,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const userRole = adapter.getState().call?.role;
+  /* @conditional-compile-remove(rooms) */
+  const isRoomsCall = adapter.getState().isRoomsCall;
 
   /* @conditional-compile-remove(vertical-gallery) */
   const containerRef = useRef<HTMLDivElement>(null);
@@ -153,7 +155,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
-          props.localVideoTileOptions === false || userRole === 'Consumer'
+          props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
             : props.isMobile && containerAspectRatio < 1
             ? '9:16'
@@ -166,7 +168,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     layoutBasedOnTilePosition,
     props.isMobile,
     props.onRenderAvatar,
-    /* @conditional-compile-remove(click-to-call) */
+    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(click-to-call) */
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
@@ -175,9 +177,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
     /* @conditional-compile-remove(rooms) */
+    isRoomsCall,
+    /* @conditional-compile-remove(rooms) */
     userRole,
-    /* @conditional-compile-remove(click-to-call) */
-    containerAspectRatio
+    /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ containerAspectRatio
   ]);
 
   return (

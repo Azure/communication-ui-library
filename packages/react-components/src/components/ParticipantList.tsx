@@ -107,9 +107,6 @@ export type ParticipantListProps = {
   strings?: ParticipantListStrings;
   /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
-  /* @conditional-compile-remove(rooms) */
-  /** Property for indicating that they can remove other participants in the call */
-  canRemoveOthers?: boolean;
 };
 
 const onRenderParticipantDefault = (
@@ -231,7 +228,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
-      console.log('participant.isRemovable', participant.isRemovable);
+
       const participantIsRemovable = participant.isRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
