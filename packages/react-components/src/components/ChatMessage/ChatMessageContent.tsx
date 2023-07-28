@@ -216,7 +216,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     const handleOnClick = (): void => {
       props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
     };
-    return <div onClick={handleOnClick}>{processNodeDefinitions.processDefaultNode(node, children, index)}</div>;
+    return <span onClick={handleOnClick}>{processNodeDefinitions.processDefaultNode(node, children, index)}</span>;
   }
 });
 
