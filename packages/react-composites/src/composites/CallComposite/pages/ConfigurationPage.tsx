@@ -124,7 +124,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(rooms) */
-  if (role !== 'Consumer') {
+  if (role === 'Consumer') {
     // If user's role permissions do not allow access to the microphone button then DO NOT disable the start call button
     // because microphone device permission is not needed for the user's role
     disableStartCallButton = false;
