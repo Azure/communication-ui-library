@@ -13,8 +13,7 @@ import type {
   MockVideoStreamRendererViewState
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
-import type { CallKind } from '@azure/communication-calling';
-import { Role } from '@internal/react-components';
+import type { CallKind, ParticipantRole } from '@azure/communication-calling';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -53,7 +52,7 @@ const usePage = async ({ browser }, use) => {
  */
 export function defaultMockCallAdapterState(
   participants?: MockRemoteParticipantState[],
-  role?: Role
+  role?: ParticipantRole
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
@@ -256,7 +255,7 @@ export const test = base.extend<TestFixture>({
 /**
  * Sets up the default state for the configuration screen.
  */
-export const defaultMockConfigurationPageState = (role?: Role): MockCallAdapterState => {
+export const defaultMockConfigurationPageState = (role?: ParticipantRole): MockCallAdapterState => {
   const state = defaultMockCallAdapterState([], role);
   state.page = 'configuration';
   state.call = undefined;

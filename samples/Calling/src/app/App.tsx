@@ -3,7 +3,7 @@
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
-import { Role } from '@azure/communication-react';
+import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -62,7 +62,7 @@ const App = (): JSX.Element => {
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
   /* @conditional-compile-remove(rooms) */
-  const [role, setRole] = useState<Role>();
+  const [role, setRole] = useState<ParticipantRole>();
 
   /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
@@ -148,8 +148,12 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
-                setRole(callDetails.role as Role);
-                await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
+                setRole(callDetails.role as ParticipantRole);
+                await addUserToRoom(
+                  userId.communicationUserId,
+                  callLocator.roomId,
+                  callDetails.role as ParticipantRole
+                );
               } else {
                 throw 'Invalid userId!';
               }

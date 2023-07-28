@@ -1751,7 +1751,6 @@ export interface CommonSitePermissionsProps {
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
-    role?: Role;
 };
 
 // @public
@@ -3352,9 +3351,6 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @public
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -3775,7 +3771,6 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
-    role?: Role;
 };
 
 // @public

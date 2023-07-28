@@ -468,7 +468,6 @@ export interface CommonSitePermissionsProps {
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
-    role?: Role;
 };
 
 // @internal
@@ -1748,9 +1747,6 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @public
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
@@ -2098,7 +2094,6 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
-    role?: Role;
 };
 
 // @public

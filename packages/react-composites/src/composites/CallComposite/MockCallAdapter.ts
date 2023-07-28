@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { AudioDeviceInfo, Call, DtmfTone, PermissionConstraints, VideoDeviceInfo } from '@azure/communication-calling';
+import {
+  AudioDeviceInfo,
+  Call,
+  DtmfTone,
+  ParticipantRole,
+  PermissionConstraints,
+  VideoDeviceInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { Role } from '@internal/react-components';
 import { EventEmitter } from 'stream';
 import type { CallAdapter, CallAdapterState } from './adapter';
 
@@ -17,7 +23,7 @@ import type { CallAdapter, CallAdapterState } from './adapter';
 export class MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
-    localParticipantRole?: Role;
+    localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
       ...createDefaultCallAdapterState(/* @conditional-compile-remove(rooms) */ testState.localParticipantRole)
@@ -184,7 +190,7 @@ export class MockCallAdapter implements CallAdapter {
 /**
  * Default call adapter state that the {@link MockCallAdapter} class is initialized with an optional role.
  */
-const createDefaultCallAdapterState = (role?: Role): CallAdapterState => {
+const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState => {
   return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,

@@ -5,8 +5,6 @@ import React from 'react';
 import { ParticipantList } from './ParticipantList';
 import { registerIcons } from '@fluentui/react';
 import { render } from '@testing-library/react';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '../types/CommunicationParticipant';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
 const dummyOnRemoveParticipantCallback = () => {};
@@ -31,7 +29,7 @@ describe('ParticipantList tests for different roles', () => {
   test('ParticipantList should have enabled remove menu item for Presenter role', async () => {
     const { container } = render(
       <ParticipantList
-        participants={[mockMyUser, { displayName: 'User1', userId: '1', isRemovable: true, role: 'Presenter' }]}
+        participants={[mockMyUser, { displayName: 'User1', userId: '1', isRemovable: true }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
         myUserId={'0'}
       />
@@ -46,7 +44,7 @@ describe('ParticipantList tests for different roles', () => {
   test('ParticipantList should have disabled remove menu item for Attendee role', async () => {
     const { container } = render(
       <ParticipantList
-        participants={[{ displayName: 'User1', userId: '1', isRemovable: true, role: 'Attendee' }]}
+        participants={[{ displayName: 'User1', userId: '1', isRemovable: false }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />
     );
@@ -59,7 +57,7 @@ describe('ParticipantList tests for different roles', () => {
   test('ParticipantList should have disabled remove menu item for Consumer role', async () => {
     const { container } = render(
       <ParticipantList
-        participants={[{ displayName: 'User1', userId: '1', isRemovable: true, role: 'Consumer' }]}
+        participants={[{ displayName: 'User1', userId: '1', isRemovable: false }]}
         onRemoveParticipant={dummyOnRemoveParticipantCallback}
       />
     );
@@ -78,4 +76,4 @@ const getRemoveParticipantButton = (container: HTMLElement): HTMLButtonElement =
 };
 
 /* @conditional-compile-remove(rooms) */
-const mockMyUser = { userId: '0', displayName: 'me', role: 'Presenter' as Role, isRemovable: false };
+const mockMyUser = { userId: '0', displayName: 'me', isRemovable: false };

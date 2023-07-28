@@ -376,11 +376,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
-    /* @conditional-compile-remove(rooms) */
-    if (
-      localParticipant.role === 'Consumer' ||
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize === 'hidden'
-    ) {
+    /* @conditional-compile-remove(click-to-call) */
+    if (localVideoTileSize === 'hidden') {
       return undefined;
     }
     if (onRenderLocalVideoTile) {
