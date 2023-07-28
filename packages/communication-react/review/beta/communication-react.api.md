@@ -3198,7 +3198,6 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
-    canRemoveOthers?: boolean;
 };
 
 // @public
@@ -3206,7 +3205,6 @@ export type ParticipantListSelector = (state: CallClientState, props: CallingBas
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
-    canRemoveOthers?: boolean;
 };
 
 // @beta

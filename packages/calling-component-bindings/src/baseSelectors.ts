@@ -3,7 +3,6 @@
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -31,12 +30,14 @@ export type CallingBaseSelectorProps = {
  */
 export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManager;
 
-/* @conditional-compile-remove(rooms) */
 /**
  * @private
  */
-export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined =>
-  state.calls[props.callId]?.role;
+export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined => {
+  /* @conditional-compile-remove(rooms) */
+  return state.calls[props.callId]?.role;
+  return 'Unknown';
+};
 
 /**
  * @private

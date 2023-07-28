@@ -1613,7 +1613,6 @@ export type ParticipantListProps = {
     totalParticipantCount?: number;
     strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
-    canRemoveOthers?: boolean;
 };
 
 // @beta
