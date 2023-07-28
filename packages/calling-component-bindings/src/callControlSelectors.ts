@@ -45,9 +45,9 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
   (callExists, isMuted, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     /* @conditional-compile-remove(capabilities) */
-    const capable = capabilities?.muteUnmuteMic.isPresent;
+    const incapable = capabilities?.muteUnmuteMic.isPresent === false;
     return {
-      disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ !capable,
+      disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ incapable,
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
@@ -84,13 +84,13 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
     /* @conditional-compile-remove(capabilities) */
-    const capable = capabilities?.turnVideoOnOff.isPresent;
+    const incapable = capabilities?.turnVideoOnOff.isPresent === false;
     return {
       disabled:
         !deviceManager.selectedCamera ||
         !permission ||
         !deviceManager.cameras.length ||
-        /* @conditional-compile-remove(capabilities) */ !capable,
+        /* @conditional-compile-remove(capabilities) */ incapable,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
@@ -129,12 +129,12 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
     /* @conditional-compile-remove(capabilities) */ capabilities
   ) => {
     /* @conditional-compile-remove(capabilities) */
-    const capable = capabilities?.shareScreen.isPresent;
+    const incapable = capabilities?.shareScreen.isPresent === false;
     return {
       checked: isScreenSharingOn,
       /* @conditional-compile-remove(PSTN-calls) */
       disabled:
-        ['InLobby', 'Connecting'].includes(callState) || /* @conditional-compile-remove(capabilities) */ !capable
+        ['InLobby', 'Connecting'].includes(callState) || /* @conditional-compile-remove(capabilities) */ incapable
     };
   }
 );
