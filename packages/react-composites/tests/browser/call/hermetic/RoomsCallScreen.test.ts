@@ -24,7 +24,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
   });
 
   test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
+    const initialState = defaultMockCallAdapterState([], 'Attendee');
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     await waitForSelector(page, dataUiId(IDS.deviceButton));
