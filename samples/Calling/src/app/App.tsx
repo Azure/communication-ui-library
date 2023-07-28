@@ -61,8 +61,6 @@ const App = (): JSX.Element => {
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
-  /* @conditional-compile-remove(rooms) */
-  const [role, setRole] = useState<ParticipantRole>();
 
   /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
@@ -148,7 +146,6 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
-                setRole(callDetails.role as ParticipantRole);
                 await addUserToRoom(
                   userId.communicationUserId,
                   callLocator.roomId,
@@ -214,8 +211,6 @@ const App = (): JSX.Element => {
             callLocator={callLocator}
             /* @conditional-compile-remove(PSTN-calls) */
             alternateCallerId={alternateCallerId}
-            /* @conditional-compile-remove(rooms) */
-            roleHint={role}
             /* @conditional-compile-remove(teams-identity-support) */
             isTeamsIdentityCall={isTeamsCall}
           />
