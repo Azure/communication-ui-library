@@ -106,6 +106,8 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
 
   const downloadButtonTitleString = 'Download';
   const closeString = 'Close';
+  const defaultAltText = 'image';
+
   if (images.length <= 0) {
     return <></>;
   }
@@ -120,7 +122,11 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
-        <img src={image.imageUrl} className={mergeStyles(imageStyle, styles?.image)} alt={image.altText} />
+        <img
+          src={image.imageUrl}
+          className={mergeStyles(imageStyle, styles?.image)}
+          alt={image.altText || defaultAltText}
+        />
       </Modal>
       <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
