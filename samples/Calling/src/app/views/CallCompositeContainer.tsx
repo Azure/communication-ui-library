@@ -25,7 +25,7 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       onPermissionsTroubleshootingClick,
       onNetworkingTroubleShootingClick,
       callControls: {
-        legacyControlBarExperience: true
+        legacyControlBarExperience: false
       }
     }),
     []
