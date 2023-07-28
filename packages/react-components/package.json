@@ -49,11 +49,12 @@
     "textarea-caret-ts": "^4.1.1",
     "use-debounce": "^9.0.4",
     "uuid": "^9.0.0",
-    "roosterjs-editor-core": "^7.16.0",
-    "roosterjs-editor-dom": "^7.16.0",
-    "roosterjs-editor-plugins": "^7.16.0",
-    "roosterjs-editor-types": "^7.16.0",
-    "roosterjs-editor-api": "^7.16.0"
+    "roosterjs-editor-core": "~8.51.1",
+    "roosterjs-editor-dom": "~8.51.1",
+    "roosterjs-editor-plugins": "~8.51.1",
+    "roosterjs-editor-types": "~8.51.1",
+    "roosterjs-editor-api": "~8.51.1",
+    "roosterjs-react": "~8.50.1"
   },
   "peerDependencies": {
     "@types/react": ">=16.8.0 <19.0.0",

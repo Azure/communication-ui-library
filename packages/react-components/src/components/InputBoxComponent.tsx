@@ -36,6 +36,7 @@ import { useTheme } from '../theming';
 import { MentionLookupOptions } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
 import { TextFieldWithMention, TextFieldWithMentionProps } from './TextFieldWithMention/TextFieldWithMention';
+import RichTextEditor from './Editor/Editor';
 
 /**
  * @private
@@ -140,7 +141,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const renderTextField = (): JSX.Element => {
     const textFieldProps: ITextFieldProps = {
       autoFocus: props.autoFocus === 'sendBoxTextField',
-      multiline: true,
+      multiline: false,
       autoAdjustHeight: true,
       multiple: false,
       resizable: false,
@@ -172,19 +173,20 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <TextField
-        {...textFieldProps}
-        data-ui-id={dataUiId}
-        value={textValue}
-        onChange={onChange}
-        onKeyDown={onTextFieldKeyDown}
-        onFocus={(e) => {
-          // Fix for setting the cursor to the correct position when multiline is true
-          // This approach should be reviewed during migration to FluentUI v9
-          e.currentTarget.value = '';
-          e.currentTarget.value = textValue;
-        }}
-      />
+      <RichTextEditor />
+      // <TextField
+      //   {...textFieldProps}
+      //   data-ui-id={dataUiId}
+      //   value={textValue}
+      //   onChange={onChange}
+      //   onKeyDown={onTextFieldKeyDown}
+      //   onFocus={(e) => {
+      //     // Fix for setting the cursor to the correct position when multiline is true
+      //     // This approach should be reviewed during migration to FluentUI v9
+      //     e.currentTarget.value = '';
+      //     e.currentTarget.value = textValue;
+      //   }}
+      // />
     );
   };
 

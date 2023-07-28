@@ -41,12 +41,5 @@
     "typescript": "3.8.3",
     "webpack": "5.76.0",
     "webpack-cli": "~4.10.0"
-  },
-  "dependencies": {
-    "roosterjs-editor-core": "^7.16.0",
-    "roosterjs-editor-dom": "^7.16.0",
-    "roosterjs-editor-plugins": "^7.16.0",
-    "roosterjs-editor-types": "^7.16.0",
-    "roosterjs-editor-api": "^7.16.0"
   }
 }
