@@ -119,7 +119,7 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "type-fest": "~2.19.0",
-    "typescript": "4.3.5",
+    "typescript": "4.7.4",
     "webpack": "5.76.0",
     "jest-environment-jsdom": "^29.5.0"
   }
