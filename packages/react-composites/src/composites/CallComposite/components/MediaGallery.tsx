@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
-/* @conditional-compile-remove(vertical-gallery) */
+/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
 import {
   VideoGallery,
@@ -12,7 +12,7 @@ import {
   Announcer,
   VideoGalleryLayout
 } from '@internal/react-components';
-/* @conditional-compile-remove(vertical-gallery) */
+/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 /* @conditional-compile-remove(pinned-participants) */
 import { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '@internal/react-components';
@@ -28,7 +28,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -83,13 +83,13 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
 
-  /* @conditional-compile-remove(vertical-gallery) */
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerRef = useRef<HTMLDivElement>(null);
-  /* @conditional-compile-remove(vertical-gallery) */
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerWidth = _useContainerWidth(containerRef);
-  /* @conditional-compile-remove(vertical-gallery) */
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
-  /* @conditional-compile-remove(click-to-call) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
