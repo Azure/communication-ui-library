@@ -1261,9 +1261,6 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
 }) => JSX.Element>;
 
 // @public
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer' | 'Unknown';
-
-// @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
 
 // @public
