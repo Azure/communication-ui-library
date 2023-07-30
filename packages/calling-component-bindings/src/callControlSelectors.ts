@@ -128,13 +128,14 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
     /* @conditional-compile-remove(PSTN-calls) */ callState,
     /* @conditional-compile-remove(capabilities) */ capabilities
   ) => {
+    let disabled: boolean | undefined = undefined;
     /* @conditional-compile-remove(capabilities) */
-    const incapable = capabilities?.shareScreen.isPresent === false;
+    disabled = disabled || capabilities?.shareScreen.isPresent === false;
+    /* @conditional-compile-remove(PSTN-calls) */
+    disabled = disabled || ['InLobby', 'Connecting'].includes(callState);
     return {
       checked: isScreenSharingOn,
-      /* @conditional-compile-remove(PSTN-calls) */
-      disabled:
-        ['InLobby', 'Connecting'].includes(callState) || /* @conditional-compile-remove(capabilities) */ incapable
+      disabled
     };
   }
 );
