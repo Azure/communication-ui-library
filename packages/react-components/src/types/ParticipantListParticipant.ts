@@ -17,9 +17,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
-  /* @conditional-compile-remove(rooms) */
-  /** Role of participant in Rooms call */
-  role?: Role;
   /* @conditional-compile-remove(raise-hand) */
   /** Whether calling participant is raised hand */
   raisedHand?: RaisedHand;

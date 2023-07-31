@@ -275,7 +275,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       if (remoteParticipant.raisedHand && onLowerParticipantHand) {
         menuItems.push({
           key: 'lowerHand',
-          text: strings.lowerParticipantHandButtonLabel,
+          text: participantItemStrings.lowerParticipantHandButtonLabel,
           onClick: () => onLowerParticipantHand(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
@@ -298,10 +298,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onLowerParticipantHand,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
       /* @conditional-compile-remove(raise-hand) */
-      strings.removeButtonLabel,
+      participantItemStrings.removeButtonLabel,
       /* @conditional-compile-remove(raise-hand) */
-      strings.lowerParticipantHandButtonLabel
-      participantItemStrings.removeButtonLabel
+      participantItemStrings.lowerParticipantHandButtonLabel
     ]
   );
 

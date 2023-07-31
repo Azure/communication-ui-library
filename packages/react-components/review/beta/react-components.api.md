@@ -172,7 +172,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
     raisedHand?: RaisedHand;
 };
 
