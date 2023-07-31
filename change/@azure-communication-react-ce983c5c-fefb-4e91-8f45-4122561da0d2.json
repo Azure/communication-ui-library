@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "remove wrong log",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "patch"
+}
