@@ -233,7 +233,7 @@ export abstract class ProxyCallAgentCommon {
        * 2. Get the incoming call from the new state and it's ID
        * 3. Use `callAgent.incomingCalls` and filter an incoming call ID to get a declarative incoming call object
        */
-      case 'incomingCalls' as any: {
+      case 'incomingCalls': {
         return Array.from(this._declarativeIncomingCalls.values());
       }
       default:
