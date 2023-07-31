@@ -99,8 +99,22 @@ export const downloadIconStyle = mergeStyles({
 /**
  * @private
  */
+export const imageContainer = mergeStyles({
+  display: 'flex',
+  alignItems: 'center',
+  width: '100%',
+  height: '100%',
+  overflow: 'hidden',
+  margin: '4.5rem 3rem 2rem'
+});
+
+/**
+ * @private
+ */
 export const imageStyle = mergeStyles({
-  objectFit: 'none'
+  objectFit: 'scale-down',
+  width: '100%',
+  height: '100%',
 });
 
 /**

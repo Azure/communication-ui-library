@@ -28,6 +28,7 @@ import {
   downloadIconStyle,
   focusTrapZoneStyle,
   headerStyle,
+  imageContainer,
   imageStyle,
   overlayStyles,
   scrollableContentStyle,
@@ -125,11 +126,13 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
-        <img
-          src={image.imageUrl}
-          className={mergeStyles(imageStyle, styles?.image)}
-          alt={image.altText || defaultAltText}
-        />
+        <div className={mergeStyles(imageContainer)}>
+          <img
+            src={image.imageUrl}
+            className={mergeStyles(imageStyle, styles?.image)}
+            alt={image.altText || defaultAltText}
+          />
+        </div>
       </Modal>
       <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
