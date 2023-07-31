@@ -8,13 +8,15 @@ import { useSelector } from '../CallComposite/hooks/useSelector';
 import { localAndRemotePIPSelector } from '../CallComposite/selectors/localAndRemotePIPSelector';
 import { _ModalClone, _ICoordinates } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
-import { _RemoteVideoTile, _usePermissions } from '@internal/react-components';
+import { _RemoteVideoTile } from '@internal/react-components';
 import {
   hiddenStyle,
   ModalLocalAndRemotePIPStyles,
   modalStyle,
   PIPContainerStyle
 } from './styles/ModalLocalAndRemotePIP.styles';
+/* @conditional-compile-remove(rooms) */
+import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
@@ -41,14 +43,16 @@ export const ModalLocalAndRemotePIP = (props: {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
+  const role = adapter.getState().call?.role;
 
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
-    if (!rolePermissions.cameraButton && pictureInPictureProps.dominantRemoteParticipant?.userId) {
+    if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return (
         <_RemoteVideoTile
           {...pictureInPictureProps.dominantRemoteParticipant}
@@ -57,14 +61,10 @@ export const ModalLocalAndRemotePIP = (props: {
       );
     }
     return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
-  }, [
-    pictureInPictureProps,
-    pictureInPictureHandlers,
-    /* @conditional-compile-remove(rooms) */ rolePermissions.cameraButton
-  ]);
+  }, [pictureInPictureProps, pictureInPictureHandlers, /* @conditional-compile-remove(rooms) */ role]);
 
   /* @conditional-compile-remove(rooms) */
-  if (!rolePermissions.cameraButton && !pictureInPictureProps.dominantRemoteParticipant) {
+  if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
     return null;
   }
 

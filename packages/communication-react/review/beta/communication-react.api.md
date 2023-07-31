@@ -172,9 +172,7 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @beta
-export type AzureCommunicationCallAdapterOptions = {
-    roleHint?: Role;
-} & CommonCallAdapterOptions;
+export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 // @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
@@ -378,10 +376,10 @@ export type CallAdapterClientState = {
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
+    isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
@@ -786,7 +784,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
 };
 
 // @beta
@@ -1024,6 +1021,7 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
@@ -3358,9 +3356,6 @@ export interface RemoteVideoStreamState {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
-
-// @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;

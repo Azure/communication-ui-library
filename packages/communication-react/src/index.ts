@@ -265,8 +265,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
-/* @conditional-compile-remove(rooms) */
-export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
@@ -300,7 +298,7 @@ export type {
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';

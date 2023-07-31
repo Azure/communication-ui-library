@@ -15,8 +15,6 @@ import { Text } from '@fluentui/react';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -227,13 +225,11 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
-
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
-      let participantIsRemovable = participant.isRemovable;
-      /* @conditional-compile-remove(rooms) */
-      participantIsRemovable = _usePermissions().removeParticipantButton && participantIsRemovable;
+
+      const participantIsRemovable = participant.isRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
