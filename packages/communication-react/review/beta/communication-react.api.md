@@ -71,7 +71,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
-import { RaisedHand } from '@azure/communication-calling';
+import { RaisedHand as RaisedHand_2 } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -784,7 +784,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
     raisedHand?: RaisedHand;
 };
 
@@ -3204,7 +3203,7 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
-    onLowerHands?: (userIds: string[]) => void;
+    onLowerParticipantHand?: (userIds: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
@@ -3263,7 +3262,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     excludeMe?: boolean;
     myUserId?: string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-    onLowerHands?: (userId: string[]) => void;
+    onLowerParticipantHand?: (userId: string) => void;
     onMuteAll?: () => void;
     onRemoveParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -3323,7 +3322,7 @@ export type Profile = {
 
 // @public
 export type RaisedHand = {
-    order: number;
+    raisedHandOrderPosition: number;
 };
 
 // @public
@@ -3341,9 +3340,10 @@ export interface RaiseHandButtonStrings {
     tooltipOnContent?: string;
 }
 
+// @public
 export interface RaiseHandCallFeature {
-    localParticipantRaisedHand?: RaisedHand;
-    raisedHands: RaisedHand[];
+    localParticipantRaisedHand?: RaisedHand_2;
+    raisedHands: RaisedHand_2[];
 }
 
 // @public
@@ -3366,7 +3366,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand;
+    raisedHand?: RaisedHand_2;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
