@@ -59,6 +59,9 @@ export type {
   ParticipantMenuItemsCallback
 } from './ParticipantList';
 
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from './ParticipantList';
+
 export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
@@ -68,7 +71,7 @@ export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoG
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 

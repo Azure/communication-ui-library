@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(rooms) */
-import { Role } from '../permissions';
 import { CommunicationParticipant } from './CommunicationParticipant';
 
 /**

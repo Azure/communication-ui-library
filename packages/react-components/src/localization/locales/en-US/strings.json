@@ -11,6 +11,9 @@
     "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
     "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} more"
+  },
   "typingIndicator": {
     "singleUser": "{user} is typing ...",
     "multipleUsers": "{users} are typing ...",

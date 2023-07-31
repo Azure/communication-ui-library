@@ -130,7 +130,14 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
 
 /** @private */
 export const memoizeLocalParticipant = memoizeOne(
-  (identifier, displayName, isMuted, isScreenSharingOn, localVideoStream) => ({
+  (
+    identifier,
+    displayName,
+    isMuted,
+    isScreenSharingOn,
+    localVideoStream,
+    /* @conditional-compile-remove(rooms) */ role
+  ) => ({
     userId: identifier,
     displayName: displayName ?? '',
     isMuted: isMuted,
@@ -139,6 +146,8 @@ export const memoizeLocalParticipant = memoizeOne(
       isAvailable: !!localVideoStream,
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
-    }
+    },
+    /* @conditional-compile-remove(rooms) */
+    role
   })
 );
