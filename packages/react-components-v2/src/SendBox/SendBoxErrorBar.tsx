@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Alert } from '@fluentui/react-components/unstable';
 import { _Announcer } from '../Announcer';
 
@@ -29,12 +29,12 @@ export interface SendBoxErrorBarProps {
  */
 export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   const { error, dismissAfterMs, onDismiss } = props;
-  const [errorMessage, setErrorMessage] = React.useState(error?.message);
+  const [errorMessage, setErrorMessage] = useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const timeoutRef = React.useRef<any>();
+  const timeoutRef = useRef<any>();
 
-  React.useEffect(() => {
+  useEffect(() => {
     setErrorMessage(error?.message);
   }, [error]);
 

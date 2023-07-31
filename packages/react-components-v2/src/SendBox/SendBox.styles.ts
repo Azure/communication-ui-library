@@ -15,7 +15,7 @@ const useRootStyles = makeStyles({
  *
  * @private
  */
-export const useExampleComponentStyles = (props: SendBoxProps): string => {
+export const useSendBoxStyles = (props: SendBoxProps): string => {
   const internalStyles = useRootStyles();
   return mergeClasses(internalStyles.root, props.className);
 };

@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { SendBoxProps } from './SendBox.types';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
-import { useExampleComponentStyles } from './SendBox.styles';
+
+import { SendBoxProps } from './SendBox.types';
+import { useSendBoxStyles } from './SendBox.styles';
 
 /**
  * Component for typing and sending messages.
@@ -15,7 +16,7 @@ import { useExampleComponentStyles } from './SendBox.styles';
  * @public
  */
 export const SendBox: ForwardRefComponent<SendBoxProps> = React.forwardRef((props, ref) => {
-  const className = useExampleComponentStyles(props);
+  const className = useSendBoxStyles(props);
   return (
     <div {...props} className={className} ref={ref}>
       SendBox v2 Component
@@ -23,4 +24,4 @@ export const SendBox: ForwardRefComponent<SendBoxProps> = React.forwardRef((prop
   );
 });
 
-SendBox.displayName = 'ExampleComponent';
+SendBox.displayName = 'SendBox';
