@@ -104,7 +104,7 @@ export function defaultMockCallAdapterState(
         maxRemoteVideoStreams: 4
       },
       /* @conditional-compile-remove(capabilities) */
-      capabilities: role ? getCapabiltiiesFromRole(role) : undefined
+      capabilities: role ? getCapabilitiesFromRole(role) : undefined
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
@@ -289,7 +289,7 @@ export const stubLocalCameraName = async (page: Page): Promise<void> => {
 };
 
 /* @conditional-compile-remove(capabilities) */
-const getCapabiltiiesFromRole = (role: ParticipantRole): CapabilitiesCallFeature => {
+const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesCallFeature => {
   switch (role) {
     case 'Attendee':
       return {
