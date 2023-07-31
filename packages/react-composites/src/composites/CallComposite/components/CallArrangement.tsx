@@ -15,8 +15,6 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useEffect } from 'react';
@@ -227,11 +225,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const role = adapter.getState().call?.role;
 
   let canUnmute = true;
   /* @conditional-compile-remove(rooms) */
-  canUnmute = rolePermissions.microphoneButton;
+  canUnmute = role !== 'Consumer' ? true : false;
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
 
@@ -240,7 +238,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
-  if (!rolePermissions.cameraButton && props.errorBarProps) {
+  if (role === 'Consumer' && props.errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );

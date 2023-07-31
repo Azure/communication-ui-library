@@ -44,7 +44,7 @@ describe('CallComposite device permission test for different roles', () => {
   test('Audio and video device permission should be requested for Presenter role', async () => {
     const adapter = new MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
-      options: { roleHint: 'Presenter' }
+      localParticipantRole: 'Presenter'
     });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
@@ -55,7 +55,7 @@ describe('CallComposite device permission test for different roles', () => {
   test('Audio and video device permission should be requested for Attendee role', async () => {
     const adapter = new MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
-      options: { roleHint: 'Attendee' }
+      localParticipantRole: 'Attendee'
     });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
@@ -66,7 +66,7 @@ describe('CallComposite device permission test for different roles', () => {
   test('Only audio device permission should be requested for Consumer role', async () => {
     const adapter = new MockCallAdapter({
       askDevicePermission: countDevicePermissionRequests,
-      options: { roleHint: 'Consumer' }
+      localParticipantRole: 'Consumer'
     });
     render(<CallComposite adapter={adapter} />);
     expect(audioDevicePermissionRequests).toBe(1);
