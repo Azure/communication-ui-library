@@ -63,7 +63,8 @@ import {
   ParticipantsLeftListener,
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
-  CallAdapter
+  CallAdapter,
+  JoinCallOptions
 } from './CallAdapter';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
@@ -82,8 +83,6 @@ import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
   CommunicationTokenCredential,
@@ -117,8 +116,9 @@ class CallContext {
   constructor(
     clientState: CallClientState,
     isTeamsCall: boolean,
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall: boolean,
     options?: {
-      /* @conditional-compile-remove(rooms) */ roleHint?: Role;
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages?: VideoBackgroundImage[];
@@ -133,10 +133,10 @@ class CallContext {
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
+      /* @conditional-compile-remove(rooms) */ isRoomsCall,
       /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId: clientState.alternateCallerId,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
-      /* @conditional-compile-remove(rooms) */ roleHint: options?.roleHint,
       /* @conditional-compile-remove(video-background-effects) */ videoBackgroundImages: options?.videoBackgroundImages,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined
@@ -343,14 +343,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     /* @conditional-compile-remove(rooms) */
     const isRoomsCall = 'roomId' in this.locator;
-    /* @conditional-compile-remove(rooms) */
-    // to prevent showing components that depend on role such as local video tile, camera button, etc. in a rooms call
-    // we set the default roleHint as 'Consumer' when roleHint is undefined since it has the lowest level of permissions
-    if (isRoomsCall && options?.roleHint === undefined) {
-      options = { ...options, roleHint: 'Consumer' };
-    }
 
-    this.context = new CallContext(callClient.getState(), isTeamsMeeting, options);
+    this.context = new CallContext(
+      callClient.getState(),
+      isTeamsMeeting,
+      /* @conditional-compile-remove(rooms) */ isRoomsCall,
+      /* @conditional-compile-remove(video-background-effects) */ options
+    );
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -461,7 +460,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.getState.bind(this);
     this.dispose.bind(this);
     this.joinCall.bind(this);
-    this.joinCallWithOptions.bind(this);
     this.leaveCall.bind(this);
     this.setCamera.bind(this);
     this.setMicrophone.bind(this);
@@ -556,47 +554,43 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  public joinCall(microphoneOn?: boolean): CallTypeOf<AgentType> | undefined {
+  public joinCall(options?: boolean | JoinCallOptions): CallTypeOf<AgentType> | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
       throw new Error('You are already in the call!');
     }
 
     return this.teeErrorToEventEmitter(() => {
-      const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-      // TODO: find a way to expose stream to here
-      const videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-      /* @conditional-compile-remove(teams-adhoc-call) */
-      /* @conditional-compile-remove(PSTN-calls) */
-      if (isOutboundCall(this.locator)) {
-        const phoneNumber = this.getState().alternateCallerId;
-        return this.startCall(this.locator.participantIds, {
-          alternateCallerId: phoneNumber ? { phoneNumber: phoneNumber } : undefined,
-          audioOptions,
-          videoOptions
-        });
+      let audioOptions: AudioOptions;
+      let videoOptions: VideoOptions;
+      // if using the deprecated joinCall API
+      if (typeof options !== 'object') {
+        const microphoneOn = options;
+        audioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
+        // TODO: find a way to expose stream to here
+        videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+      } else {
+        // if using the options bag
+        // undefined = keep = use precall state
+        // true = turn on
+        // false = turn off
+        const microphoneState = options.microphoneOn ?? 'keep';
+        const cameraState = options.cameraOn ?? 'keep';
+
+        audioOptions = {
+          muted: !(microphoneState === 'keep' ? this.getState().isLocalPreviewMicrophoneEnabled : microphoneState)
+        };
+        const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+        const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
+        const precallVideoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+
+        videoOptions =
+          cameraState === 'keep'
+            ? precallVideoOptions
+            : localStream && options?.cameraOn
+            ? { localVideoStreams: [localStream] }
+            : {};
       }
-      const call = this._joinCall(audioOptions, videoOptions);
 
-      this.processNewCall(call);
-      return call;
-    });
-  }
-
-  public joinCallWithOptions(options?: {
-    microphoneOn?: boolean;
-    cameraOn?: boolean;
-  }): CallTypeOf<AgentType> | undefined {
-    if (_isInCall(this.getState().call?.state ?? 'None')) {
-      throw new Error('You are already in the call!');
-    }
-
-    const { microphoneOn, cameraOn } = options ?? {};
-
-    return this.teeErrorToEventEmitter(() => {
-      const audioOptions: AudioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-      const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
-      const videoOptions = localStream && cameraOn ? { localVideoStreams: [localStream] } : {};
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
       if (isOutboundCall(this.locator)) {
@@ -1190,15 +1184,7 @@ export type CommonCallAdapterOptions = {
  *
  * @beta
  */
-export type AzureCommunicationCallAdapterOptions = {
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
-   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
-   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
-   */
-  roleHint?: Role;
-} & CommonCallAdapterOptions;
+export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 /**
  * Arguments for creating the Azure Communication Services implementation of {@link CallAdapter}.
@@ -1218,7 +1204,7 @@ export type AzureCommunicationCallAdapterArgs = {
    * E.164 numbers are formatted as [+] [country code] [phone number including area code]. For example, +14255550123 for a US phone number.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
+  /* @conditional-compile-remove(video-background-effects) */
   /**
    * Optional parameters for the {@link AzureCommunicationCallAdapter} created
    */
@@ -1330,7 +1316,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   const displayName = 'displayName' in args ? args.displayName : undefined;
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(video-background-effects) */
   const options = 'options' in args ? args.options : undefined;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -1376,11 +1362,6 @@ const useAzureCommunicationCallAdapterGeneric = <
           if (!displayName) {
             throw new Error('Unreachable code, displayName already checked above.');
           }
-          // This is just the type check to ensure that roleHint is defined.
-          /* @conditional-compile-remove(rooms) */
-          if (options && !('roleHint' in options)) {
-            throw new Error('Unreachable code, provided a options without roleHint.');
-          }
           if (creatingAdapterRef.current) {
             console.warn(
               'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
@@ -1394,7 +1375,7 @@ const useAzureCommunicationCallAdapterGeneric = <
             locator,
             userId: userId as CommunicationUserIdentifier,
             /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-            /* @conditional-compile-remove(rooms) */ options
+            /* @conditional-compile-remove(video-background-effects) */ options
           })) as Adapter;
         } else if (adapterKind === 'Teams') {
           if (creatingAdapterRef.current) {
@@ -1437,7 +1418,6 @@ const useAzureCommunicationCallAdapterGeneric = <
       displayName,
       /* @conditional-compile-remove(PSTN-calls) */
       alternateCallerId,
-      /* @conditional-compile-remove(rooms) */
       /* @conditional-compile-remove(teams-identity-support) */
       options
     ]
@@ -1550,7 +1530,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
   locator: CallAdapterLocator,
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
+  /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
 ) => Promise<CallAdapter> = async (
   callClient: StatefulCallClient,
   callAgent: CallAgent,
@@ -1569,7 +1549,7 @@ export const createAzureCommunicationCallAdapterFromClient: (
     locator,
     callAgent,
     deviceManager,
-    /* @conditional-compile-remove(rooms) */ options
+    /* @conditional-compile-remove(video-background-effects) */ options
   );
 };
 
