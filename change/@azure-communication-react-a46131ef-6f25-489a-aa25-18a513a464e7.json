@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Introduce total participant counts to participant list and people pane in composites",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
