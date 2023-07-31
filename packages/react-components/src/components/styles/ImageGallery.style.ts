@@ -151,19 +151,19 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): string
  * @private
  */
 export const smallDownloadButtonContainerStyle = (theme: Theme, isDarkThemed: boolean): string =>
-mergeStyles({
-  marginRight: '0.5rem',
-  color: isDarkThemed ? theme.palette.black : theme.palette.white,
-  whiteSpace: 'nowrap',
-  ':hover': {
+  mergeStyles({
+    marginRight: '0.5rem',
     color: isDarkThemed ? theme.palette.black : theme.palette.white,
-    backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
-  },
-  ':active': {
-    color: isDarkThemed ? theme.palette.black : theme.palette.white,
-    backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
-  },
-  '@media (min-width: 25rem)': {
-    display: 'none'
-  }
-});
+    whiteSpace: 'nowrap',
+    ':hover': {
+      color: isDarkThemed ? theme.palette.black : theme.palette.white,
+      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+    },
+    ':active': {
+      color: isDarkThemed ? theme.palette.black : theme.palette.white,
+      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+    },
+    '@media (min-width: 25rem)': {
+      display: 'none'
+    }
+  });
