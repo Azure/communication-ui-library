@@ -1331,7 +1331,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
   /* @conditional-compile-remove(rooms) */
-  const options = 'options' in args ? args.options : undefined;
+  const options: AzureCommunicationCallAdapterOptions | undefined = 'options' in args ? args.options : undefined;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<Adapter | undefined>(undefined);
@@ -1344,7 +1344,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
-  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  // useEffect blocks, and a new adapter creation / destruction is not triggered.
   afterCreateRef.current = afterCreate;
   beforeDisposeRef.current = beforeDispose;
 

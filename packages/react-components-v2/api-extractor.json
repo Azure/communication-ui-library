@@ -1,3 +1,10 @@
 {
-  "extends": "../../common/config/api-extractor/api-extractor.json"
+  "extends": "../../common/config/api-extractor/api-extractor.json",
+  "messages": {
+    "extractorMessageReporting": {
+      "ae-wrong-input-file-type": {
+        "logLevel": "error"
+      }
+    }
+  }
 }
