@@ -31,6 +31,7 @@ import {
   imageStyle,
   overlayStyles,
   scrollableContentStyle,
+  smallDownloadButtonContainerStyle,
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
@@ -57,6 +58,8 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
   controlBarContainer?: IStyle;
   /** Styles for the download button. */
   downloadButton?: IStyle;
+  /** Styles for the small download button when screen width is smaller than 25 rem. */
+  smallDownloadButton?: IStyle;
   /** Styles for the close modal icon. */
   closeIcon?: IStyle;
   /** Styles for the image. */
@@ -143,6 +146,13 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={downloadIconStyle} />}
             aria-live={'polite'}
             aria-label={downloadButtonTitleString}
+          />
+          <IconButton
+            iconProps={downloadIcon}
+            className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme), styles?.smallDownloadButton)}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.downloadFileName)}
+            aria-label={downloadButtonTitleString}
+            aria-live={'polite'}
           />
           <IconButton
             iconProps={cancelIcon}

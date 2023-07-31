@@ -61,7 +61,6 @@ export const titleBarContainerStyle = mergeStyles({
   flexWrap: 'wrap',
   alignContent: 'center',
   alignItems: 'center',
-  paddingLeft: '0.75rem'
 });
 
 /**
@@ -109,9 +108,7 @@ export const imageStyle = mergeStyles({
  */
 export const closeButtonStyles = (theme: Theme, isDarkThemed: boolean): string =>
   mergeStyles({
-    margin: '0 0.5rem',
     color: isDarkThemed ? theme.palette.black : theme.palette.white,
-    padding: '0.25rem',
     ':hover': {
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
@@ -134,8 +131,9 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): string
     fontWeight: 600,
     padding: '0.38rem 0.75rem',
     borderRadius: '4px',
-    backgroundColor: isDarkThemed ? theme.palette.neutralLight : theme.palette.neutralPrimary,
+    backgroundColor: isDarkThemed ? theme.palette.neutralLighterAlt : theme.palette.neutralPrimary,
     color: isDarkThemed ? undefined : theme.palette.white,
+    whiteSpace: 'nowrap',
     ':hover': {
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
@@ -143,5 +141,29 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): string
     ':active': {
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+    },
+    '@media (max-width: 25rem)': {
+      display: 'none'
     }
   });
+
+/**
+ * @private
+ */
+export const smallDownloadButtonContainerStyle = (theme: Theme, isDarkThemed: boolean): string =>
+mergeStyles({
+  marginRight: '0.5rem',
+  color: isDarkThemed ? theme.palette.black : theme.palette.white,
+  whiteSpace: 'nowrap',
+  ':hover': {
+    color: isDarkThemed ? theme.palette.black : theme.palette.white,
+    backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+  },
+  ':active': {
+    color: isDarkThemed ? theme.palette.black : theme.palette.white,
+    backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+  },
+  '@media (min-width: 25rem)': {
+    display: 'none'
+  }
+});
