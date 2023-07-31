@@ -31,6 +31,7 @@ export interface QueryArgs {
   token: string;
   displayName: string;
   mockRemoteParticipantCount: number;
+  enableVideoEffects?: boolean;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -67,6 +68,7 @@ export function parseQueryArgs(): QueryArgs {
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined,
-    localVideoTilePosition
+    localVideoTilePosition,
+    enableVideoEffects: Boolean(params.enableVideoEffects)
   };
 }

@@ -31,7 +31,9 @@ test.describe('Video background effects tests in call screen', async () => {
     const participants = [paul];
 
     const initialState = defaultMockCallAdapterState(participants);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', enableVideoEffects: `true` })
+    );
 
     await waitForSelector(page, '.camera-split-button');
     await pageClick(page, '.camera-split-button');
@@ -46,7 +48,10 @@ test.describe('Video background effects tests in call screen', async () => {
   test('blur video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     await page.goto(
-      buildUrlWithMockAdapter(serverUrl, videoEnabledInitialState(), { newControlBarExperience: 'true' })
+      buildUrlWithMockAdapter(serverUrl, videoEnabledInitialState(), {
+        newControlBarExperience: 'true',
+        enableVideoEffects: 'true'
+      })
     );
     await waitForSelector(page, '.camera-split-button');
     await pageClick(page, '.camera-split-button');
@@ -66,7 +71,9 @@ test.describe('Video background effects tests in call screen', async () => {
 test.describe('Video background effects tests in config screen', async () => {
   test('blur video effect is not enabled when camera if off', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
-    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { enableVideoEffects: 'true' })
+    );
     await waitForCallCompositeToLoad(page);
     await waitForSelector(page, dataUiId('call-config-video-effects-button'));
     await pageClick(page, dataUiId('call-config-video-effects-button'));
@@ -80,7 +87,7 @@ test.describe('Video background effects tests in config screen', async () => {
     test.skip(isTestProfileMobile(testInfo));
     const state = defaultMockConfigurationPageState();
     state.devices.unparentedViews = deviceManagerWithUnparentedView();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state, { enableVideoEffects: 'true' }));
     await waitForCallCompositeToLoad(page);
     await waitForSelector(page, dataUiId('call-config-video-effects-button'));
     await pageClick(page, dataUiId('call-config-video-effects-button'));
@@ -100,7 +107,9 @@ test.describe('Custom video background effects tests in call screen', async () =
     test.skip(isTestProfileMobile(testInfo));
 
     const initialState = videoBackgroundImagesInitialState();
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', enableVideoEffects: 'true' })
+    );
 
     await waitForSelector(page, '.camera-split-button');
     await pageClick(page, '.camera-split-button');
@@ -116,7 +125,9 @@ test.describe('Custom video background effects tests in call screen', async () =
     test.skip(isTestProfileMobile(testInfo));
     const initialState = videoBackgroundImagesInitialState();
     addDefaultMockLocalVideoStreamState(initialState);
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', enableVideoEffects: 'true' })
+    );
     await waitForSelector(page, '.camera-split-button');
     await pageClick(page, '.camera-split-button');
     await waitForSelector(page, dataUiId('camera-split-button-video-effects'));
@@ -144,7 +155,7 @@ test.describe('Custom Video background effects tests in config screen', async ()
     test.skip(isTestProfileMobile(testInfo));
     const state = defaultMockConfigurationPageState();
     state.videoBackgroundImages = videoBackgroundImages;
-    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state, { enableVideoEffects: 'true' }));
     await waitForCallCompositeToLoad(page);
     await waitForSelector(page, dataUiId('call-config-video-effects-button'));
     await pageClick(page, dataUiId('call-config-video-effects-button'));
@@ -159,7 +170,7 @@ test.describe('Custom Video background effects tests in config screen', async ()
     const state = defaultMockConfigurationPageState();
     state.devices.unparentedViews = deviceManagerWithUnparentedView();
     state.videoBackgroundImages = videoBackgroundImages;
-    await page.goto(buildUrlWithMockAdapter(serverUrl, state));
+    await page.goto(buildUrlWithMockAdapter(serverUrl, state, { enableVideoEffects: 'true' }));
     await waitForCallCompositeToLoad(page);
     await waitForSelector(page, dataUiId('call-config-video-effects-button'));
     await pageClick(page, dataUiId('call-config-video-effects-button'));
@@ -195,7 +206,9 @@ test.describe('Video background effects error tests', async () => {
         innerError: new Error('Unable to apply video effect')
       }
     };
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', enableVideoEffects: 'true' })
+    );
     expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-closed.png');
   });
 
@@ -212,7 +225,9 @@ test.describe('Video background effects error tests', async () => {
         innerError: new Error('Unable to apply video effect')
       }
     };
-    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', enableVideoEffects: 'true' })
+    );
     await waitForSelector(page, '.camera-split-button');
     await pageClick(page, '.camera-split-button');
     await waitForSelector(page, dataUiId('camera-split-button-video-effects'));

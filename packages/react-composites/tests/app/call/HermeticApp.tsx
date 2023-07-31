@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { CallAdapter } from '../../../src';
+import { CallAdapter, VideoBackgroundDependency } from '../../../src';
 import { MockCallAdapter } from '../lib/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
@@ -52,8 +52,14 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
         console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
         setCallAdapter(new MockCallAdapter(queryArgs.mockCallAdapterState));
       }
+      if (queryArgs.enableVideoEffects && queryArgs.mockCallAdapterState) {
+        queryArgs.mockCallAdapterState.onResolveVideoEffectDependency = async () => {
+          const videoEffectDependency = {} as VideoBackgroundDependency;
+          return Promise.resolve(videoEffectDependency);
+        };
+      }
     })();
-  }, [queryArgs.mockCallAdapterState, queryArgs.mockRemoteParticipantCount]);
+  }, [queryArgs.enableVideoEffects, queryArgs.mockCallAdapterState, queryArgs.mockRemoteParticipantCount]);
 
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
 }
