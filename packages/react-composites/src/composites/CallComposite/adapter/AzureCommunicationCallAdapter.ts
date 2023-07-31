@@ -145,8 +145,8 @@ class CallContext {
     this.bindPublicMethods();
     this.displayNameModifier = options?.onFetchProfile
       ? createProfileStateModifier(options.onFetchProfile, () => {
-          this.setState(this.getState());
-        })
+        this.setState(this.getState());
+      })
       : undefined;
   }
 
@@ -233,7 +233,7 @@ class CallContext {
         latestErrors: clientState.latestErrors,
         cameraStatus:
           call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') ||
-          clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
+            clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
             ? 'On'
             : 'Off',
         /* @conditional-compile-remove(call-transfer) */ acceptedTransferCallState: transferCall
@@ -302,8 +302,7 @@ export type AdapterStateModifier = (state: CallAdapterState) => CallAdapterState
  * @private
  */
 export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTeamsCallAgent = CallAgent>
-  implements CommonCallAdapter
-{
+  implements CommonCallAdapter {
   private callClient: StatefulCallClient;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
@@ -1241,8 +1240,8 @@ export type TeamsCallAdapterArgs = {
   userId: MicrosoftTeamsUserIdentifier;
   credential: CommunicationTokenCredential;
   locator:
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
+  | TeamsMeetingLinkLocator
+  | /* @conditional-compile-remove(teams-adhoc-call) */ /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator;
   /**
    * Optional parameters for the {@link TeamsCallAdapter} created
    */
@@ -1331,7 +1330,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = 'alternateCallerId' in args ? args.alternateCallerId : undefined;
   /* @conditional-compile-remove(rooms) */
-  const options = 'options' in args ? args.options : undefined;
+  const options: AzureCommunicationCallAdapterOptions | undefined = 'options' in args ? args.options : undefined;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<Adapter | undefined>(undefined);
@@ -1344,7 +1343,7 @@ const useAzureCommunicationCallAdapterGeneric = <
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
-  // useEffect blocks, and a new adapter creation / distruction is not triggered.
+  // useEffect blocks, and a new adapter creation / destruction is not triggered.
   afterCreateRef.current = afterCreate;
   beforeDisposeRef.current = beforeDispose;
 
@@ -1557,21 +1556,21 @@ export const createAzureCommunicationCallAdapterFromClient: (
   locator: CallAdapterLocator,
   options?
 ): Promise<CallAdapter> => {
-  const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
-  await Promise.all([deviceManager.getCameras(), deviceManager.getMicrophones()]);
-  if (deviceManager.isSpeakerSelectionAvailable) {
-    await deviceManager.getSpeakers();
-  }
-  /* @conditional-compile-remove(unsupported-browser) */
-  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
-  return new AzureCommunicationCallAdapter(
-    callClient,
-    locator,
-    callAgent,
-    deviceManager,
+    const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
+    await Promise.all([deviceManager.getCameras(), deviceManager.getMicrophones()]);
+    if (deviceManager.isSpeakerSelectionAvailable) {
+      await deviceManager.getSpeakers();
+    }
+    /* @conditional-compile-remove(unsupported-browser) */
+    await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
+    return new AzureCommunicationCallAdapter(
+      callClient,
+      locator,
+      callAgent,
+      deviceManager,
     /* @conditional-compile-remove(rooms) */ options
-  );
-};
+    );
+  };
 
 /* @conditional-compile-remove(teams-identity-support) */
 /**
