@@ -176,7 +176,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
 };
 
 // @beta
@@ -634,11 +633,6 @@ export interface ComponentStrings {
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const consumerPermissions: _Permissions;
 
 // @public
 export interface ContentSystemMessage extends SystemMessageCommon {
@@ -1122,9 +1116,6 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
-
-// @internal (undocumented)
-export const _getPermissions: (role?: Role | undefined) => _Permissions;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -1743,24 +1734,6 @@ export type _PermissionConstraints = {
     video: boolean;
 };
 
-// @internal (undocumented)
-export type _Permissions = {
-    cameraButton: boolean;
-    microphoneButton: boolean;
-    screenShare: boolean;
-    removeParticipantButton: boolean;
-    role?: Role;
-};
-
-// @internal (undocumented)
-export const _PermissionsProvider: (props: _PermissionsProviderProps) => JSX.Element;
-
-// @internal
-export type _PermissionsProviderProps = {
-    permissions: _Permissions;
-    children: React_2.ReactNode;
-};
-
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1784,11 +1757,6 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
-
-// Warning: (ae-internal-missing-underscore) The name "presenterPermissions" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const presenterPermissions: _Permissions;
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1823,9 +1791,6 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
-
-// @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2077,9 +2042,6 @@ export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => numb
 
 // @internal
 export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
-
-// @internal
-export const _usePermissions: () => _Permissions;
 
 // @public
 export const useTheme: () => Theme;
