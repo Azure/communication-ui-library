@@ -6542,13 +6542,6 @@ packages:
       '@types/node': 20.4.5
     dev: false
 
-  /@types/classnames@2.3.1:
-    resolution: {integrity: sha512-zeOWb0JGBoVmlQoznvqXbE0tEC/HONsnoUNH19Hc96NFsTAwTXbTqb8FMYkru1F/iqp7a18Ws3nWJvtA1sHD1A==}
-    deprecated: This is a stub types definition. classnames provides its own type definitions, so you do not need this installed.
-    dependencies:
-      classnames: 2.3.2
-    dev: false
-
   /@types/connect-history-api-fallback@1.5.0:
     resolution: {integrity: sha512-4x5FkPpLipqwthjPsF7ZRbOv3uoLUFkTA9G9v583qi4pACvq0uTELrB8OLUzPWUI4IJIyvM85vzkV1nyiI2Lig==}
     dependencies:
@@ -21299,7 +21292,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz(webpack-cli@5.1.4):
-    resolution: {integrity: sha512-0V1AQ3HnUmTRXQK0OgGAh+W2N3+j/o+tXUQJx+YxVOTzSpJ4Um7cvYNlfGIxEtm2kyL+ggLGiUD9EC/yhLUiIA==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-wZPpawT8neMng+U9p1oa8U1/p1OK+Ulrh3aLsaxtHgfsj8IpDyXQRMaZhaqHcQT4iEQF45jsTg02xTlzCgzjAQ==, tarball: file:projects/storybook.tgz}
     id: file:projects/storybook.tgz
     name: '@rush-temp/storybook'
     version: 0.0.0
@@ -21338,7 +21331,6 @@ packages:
       '@storybook/storybook-deployer': 2.8.16
       '@storybook/theming': 6.5.16(react-dom@18.2.0)(react@18.2.0)
       '@testing-library/jest-dom': 5.17.0
-      '@types/classnames': 2.3.1
       '@types/jest': 29.5.3
       '@types/json-stringify-safe': 5.0.0
       '@types/node': 20.4.5
