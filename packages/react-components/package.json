@@ -59,7 +59,7 @@
   "devDependencies": {
     "@babel/cli": "~7.22.9",
     "@babel/core": "~7.22.9",
-    "@babel/preset-env": "7.22.9",
+    "@babel/preset-env": "7.13.10",
     "@microsoft/api-documenter": "~7.22.32",
     "@microsoft/api-extractor": "~7.36.3",
     "@rollup/plugin-json": "~4.1.0",
