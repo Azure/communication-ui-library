@@ -8,4 +8,5 @@ export * from './public.index';
 /* @conditional-compile-remove(version-2) */
 export * from './ExampleComponent';
 
-export {};
+/** Stable build must export something for rollup. Putting in a placeholder. @internal */
+export const _stable_build_placeholder = 0;

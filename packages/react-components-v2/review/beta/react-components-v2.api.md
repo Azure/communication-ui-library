@@ -60,6 +60,9 @@ export type LocalizationProviderProps = {
     children: React.ReactNode;
 };
 
+// @internal
+export const _stable_build_placeholder = 0;
+
 // @public
 export const useLocale: () => ComponentLocale;
 

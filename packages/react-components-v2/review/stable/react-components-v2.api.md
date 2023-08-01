@@ -4,28 +4,8 @@
 
 ```ts
 
-import type { ComponentProps } from '@fluentui/react-utilities';
-import type { ForwardRefComponent } from '@fluentui/react-utilities';
-import type { Slot } from '@fluentui/react-utilities';
-
-// Warning: (ae-internal-missing-underscore) The name "ExampleComponent" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export const ExampleComponent: ForwardRefComponent<ExampleComponentProps>;
-
-// Warning: (ae-internal-missing-underscore) The name "ExampleComponentProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type ExampleComponentProps = ComponentProps<ExampleComponentSlots> & {
-    exampleProp?: string;
-};
-
-// Warning: (ae-internal-missing-underscore) The name "ExampleComponentSlots" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal
-export type ExampleComponentSlots = {
-    root: NonNullable<Slot<'div'>>;
-};
+export const _stable_build_placeholder = 0;
 
 // (No @packageDocumentation comment for this package)
 
