@@ -7,7 +7,7 @@ import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
-import { useTheme } from '../theming';
+import { CallingTheme, useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
@@ -340,6 +340,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -353,7 +354,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           '&::after': {
             content: `''`,
             position: 'absolute',
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : theme.palette.orangeLighter}`,
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : callingPalette.raiseHandGold}`,
             borderRadius: theme.effects.roundedCorner4,
             width: '100%',
             height: '100%',
