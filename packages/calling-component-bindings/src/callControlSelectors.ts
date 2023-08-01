@@ -108,8 +108,7 @@ export type ScreenShareButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
-  disabled?: boolean;
+  /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
 };
 
 /**
