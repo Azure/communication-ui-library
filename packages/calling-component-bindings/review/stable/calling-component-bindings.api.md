@@ -138,10 +138,10 @@ export interface CommonCallingHandlers {
 }
 
 // @public
-export const createDefaultCallingHandlers: DefaultCallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
-export type DefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
