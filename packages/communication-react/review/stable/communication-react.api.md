@@ -1413,7 +1413,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (this: any, callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export const createDefaultCallingHandlers: DefaultCallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -1595,6 +1595,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
 };
+
+// @public
+export type DefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
 
 // @public
 export type DeviceManagerState = {

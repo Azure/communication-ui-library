@@ -43,6 +43,20 @@ export type CallingHandlersOptions = {
 };
 
 /**
+ * Type of {@link createDefaultCallingHandlers}.
+ *
+ * @public
+ */
+export type CreateDefaultCallingHandlers = (
+  callClient: StatefulCallClient,
+  callAgent: CallAgent | undefined,
+  deviceManager: StatefulDeviceManager | undefined,
+  call: Call | undefined,
+  /* @conditional-compile-remove(video-background-effects) */
+  options?: CallingHandlersOptions
+) => CallingHandlers;
+
+/**
  * Create the default implementation of {@link CallingHandlers} for teams call.
  *
  * Useful when implementing a custom component that utilizes the providers
@@ -50,14 +64,14 @@ export type CallingHandlersOptions = {
  *
  * @public
  */
-export const createDefaultCallingHandlers = memoizeOne(function (
-  callClient: StatefulCallClient,
-  callAgent: CallAgent | undefined,
-  deviceManager: StatefulDeviceManager | undefined,
-  call: Call | undefined,
-  /* @conditional-compile-remove(video-background-effects) */
-  options?: CallingHandlersOptions
-): CallingHandlers {
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
+  const [
+    callClient,
+    callAgent,
+    deviceManager,
+    call,
+    /* @conditional-compile-remove(video-background-effects) */ options
+  ] = args;
   return {
     ...createDefaultCommonCallingHandlers(
       callClient,
@@ -94,59 +108,3 @@ export const createDefaultCallingHandlers = memoizeOne(function (
     }
   };
 });
-
-//  * Create the default implementation of {@link CallingHandlers} for teams call.
-//  *
-//  * Useful when implementing a custom component that utilizes the providers
-//  * exported from this library.
-//  *
-//  * @public
-//  */
-// export const createDefaultCallingHandlers: (
-//   callClient: StatefulCallClient,
-//   callAgent: CallAgent | undefined,
-//   deviceManager: StatefulDeviceManager | undefined,
-//   call: Call | undefined,
-//   /* @conditional-compile-remove(video-background-effects) */
-//   options?: CallingHandlersOptions
-// ) => CallingHandlers = memoizeOne(
-//   (
-//     callClient: StatefulCallClient,
-//     callAgent: CallAgent | undefined,
-//     deviceManager: StatefulDeviceManager | undefined,
-//     call: Call | undefined,
-//     /* @conditional-compile-remove(video-background-effects) */
-//     options?: CallingHandlersOptions
-//   ): CallingHandlers => {
-//     return {
-//       ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
-//       // FIXME: onStartCall API should use string, not the underlying SDK types.
-//       onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
-//         /* @conditional-compile-remove(teams-adhoc-call) */
-//         return callAgent?.startCall(participants, options);
-//         if (!isACSCallParticipants(participants)) {
-//           throw new Error('TeamsUserIdentifier in Teams call is not supported!');
-//         }
-//         return callAgent?.startCall(participants, options);
-//       },
-//       /* @conditional-compile-remove(PSTN-calls) */
-//       onAddParticipant: async (
-//         userId: string | CommunicationIdentifier,
-//         options?: AddPhoneNumberOptions
-//       ): Promise<void> => {
-//         const participant = _toCommunicationIdentifier(userId);
-//         if (isPhoneNumberIdentifier(participant)) {
-//           call?.addParticipant(participant, options);
-//         } else if (isCommunicationUserIdentifier(participant) || isMicrosoftTeamsUserIdentifier(participant)) {
-//           call?.addParticipant(participant);
-//         }
-//       },
-//       onRemoveParticipant: async (
-//         userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-//       ): Promise<void> => {
-//         const participant = _toCommunicationIdentifier(userId);
-//         await call?.removeParticipant(participant);
-//       }
-//     };
-//   }
-// );

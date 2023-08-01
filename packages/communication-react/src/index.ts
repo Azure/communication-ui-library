@@ -84,7 +84,8 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';

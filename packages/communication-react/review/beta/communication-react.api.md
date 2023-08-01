@@ -2038,7 +2038,10 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 }): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (this: any, callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions | undefined) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+
+// @public
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
