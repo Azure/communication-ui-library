@@ -19,10 +19,10 @@ export const _FileCardGroup = (props: _FileCardGroupProps): JSX.Element => {
     return <></>;
   }
 
-  const internalStyles = _fileCardGroupClassName();
+  const internalStyles = _fileCardGroupClassName(props);
 
   return (
-    <div className={mergeClasses(internalStyles.root, props.className)} aria-label={ariaLabel}>
+    <div className={mergeClasses(internalStyles, props.className)} aria-label={ariaLabel}>
       {children}
     </div>
   );
