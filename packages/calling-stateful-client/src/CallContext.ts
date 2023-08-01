@@ -51,7 +51,7 @@ import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
-/* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
 
 enableMapSet();
