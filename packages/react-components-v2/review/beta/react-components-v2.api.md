@@ -4,9 +4,25 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import type { ComponentProps } from '@fluentui/react-utilities';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import { default as React_2 } from 'react';
 import type { Slot } from '@fluentui/react-utilities';
+
+// @public (undocumented)
+export const COMPONENT_LOCALE_EN_US: ComponentLocale;
+
+// @public
+export interface ComponentLocale {
+    strings: ComponentStrings;
+}
+
+// @public
+export interface ComponentStrings {
+    exampleComponent: ExampleComponentStrings;
+}
 
 // Warning: (ae-internal-missing-underscore) The name "ExampleComponent" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -26,6 +42,26 @@ export type ExampleComponentProps = ComponentProps<ExampleComponentSlots> & {
 export type ExampleComponentSlots = {
     root: NonNullable<Slot<'div'>>;
 };
+
+// @public
+export interface ExampleComponentStrings {
+    label: string;
+}
+
+// @public
+export const LocaleContext: React_2.Context<ComponentLocale>;
+
+// @public
+export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
+
+// @public
+export type LocalizationProviderProps = {
+    locale: ComponentLocale;
+    children: React.ReactNode;
+};
+
+// @public
+export const useLocale: () => ComponentLocale;
 
 // (No @packageDocumentation comment for this package)
 
