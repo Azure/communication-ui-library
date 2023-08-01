@@ -36,7 +36,6 @@
   "dependencies": {
     "@fluentui/react-aria": "^9.3.27",
     "@fluentui/react-components": "^9.27.0",
-    "@fluentui/react-conformance": "^0.17.1",
     "@fluentui/react-file-type-icons": "8.10.0",
     "@fluentui/react-icons": "~2.0.209",
     "@fluentui/react-utilities": "^9.10.1",
@@ -121,6 +120,8 @@
     "type-fest": "~3.9.0",
     "typescript": "4.7.4",
     "webpack": "5.88.2",
-    "jest-environment-jsdom": "^29.5.0"
+    "jest-environment-jsdom": "^29.5.0",
+    "@fluentui/react-conformance": "^0.17.1",
+    "@fluentui/react-conformance-griffel": "^9.0.1"
   }
 }

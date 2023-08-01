@@ -16,6 +16,11 @@ const config =
           }
         }
       }
-    : { ...commonConfig };
+    : {
+        ...commonConfig,
+
+        // Setup code to run after the environment has been setup. This runs before each test file in the suite.
+        setupFilesAfterEnv: ['./../jestSetup.js']
+      };
 
 module.exports = config;

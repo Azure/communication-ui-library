@@ -3,7 +3,8 @@
 
 /* @conditional-compile-remove(isConformant-v9) */
 import { isConformant as baseIsConformant } from '@fluentui/react-conformance';
-import type { IsConformantOptions } from '@fluentui/react-conformance';
+import type { IsConformantOptions, TestObject } from '@fluentui/react-conformance';
+import griffelTests from '@fluentui/react-conformance-griffel';
 
 /**
  * Wrapper around isConformant that adds/disables some tests that are specific to our usage.
@@ -31,7 +32,8 @@ export function isConformant<TProps = Record<string, unknown>>(
     const defaultOptions: Partial<IsConformantOptions<TProps>> = {
       componentPath: testInfo.componentPath ?? defaultComponentPath,
       displayName: testInfo.displayName ?? defaultDisplayName,
-      disabledTests: testInfo.disabledTests ?? defaultFluentDisabledTests
+      disabledTests: testInfo.disabledTests ?? defaultFluentDisabledTests,
+      extraTests: griffelTests as TestObject<TProps>
     };
 
     return baseIsConformant(defaultOptions, testInfo);
@@ -46,9 +48,4 @@ export function isConformant<TProps = Record<string, unknown>>(
 }
 
 /** @private */
-export const defaultFluentDisabledTests = [
-  'component-has-static-classnames-object',
-  'exported-top-level',
-  'exports-component',
-  'has-top-level-file'
-];
+export const defaultFluentDisabledTests = ['component-has-static-classnames-object'];
