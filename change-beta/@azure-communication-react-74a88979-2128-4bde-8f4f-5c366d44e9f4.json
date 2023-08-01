@@ -1,7 +1,7 @@
 {
-  "type": "minor",
+  "type": "none",
   "comment": "Add localization infrastructure for 2.0.0",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
