@@ -4,9 +4,61 @@
 
 ```ts
 
+/// <reference types="react" />
+
+import { Button } from '@fluentui/react-components';
 import type { ComponentProps } from '@fluentui/react-utilities';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import { MenuItem } from '@fluentui/react-components';
 import type { Slot } from '@fluentui/react-utilities';
+
+// @public (undocumented)
+export const CameraButton: ForwardRefComponent<CameraButtonProps>;
+
+// @public
+export const CameraButtonMenuGroupHeader: ForwardRefComponent<CameraButtonMenuGroupHeaderProps>;
+
+// @public
+export type CameraButtonMenuGroupHeaderProps = ComponentProps<CameraButtonMenuGroupHeaderSlots, 'menuItem'>;
+
+// @public
+export type CameraButtonMenuGroupHeaderSlots = {
+    menuItem?: Slot<typeof MenuItem>;
+};
+
+// @public
+export interface CameraButtonMenuGroupHeaderStrings {
+    label: string;
+}
+
+// @public (undocumented)
+export type CameraButtonProps = Omit<ComponentProps<Partial<ChatMessageSlots>>, 'children'> & {
+    defaultChecked?: boolean;
+    checked?: boolean;
+    disabled?: boolean;
+    hideLabel?: boolean;
+    onToggleCamera?: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, payload: {
+        isChecked: boolean;
+    }) => Promise<void>;
+};
+
+// @public
+export interface CameraButtonStrings {
+    cameraActionTurnedOffAnnouncement?: string;
+    cameraActionTurnedOnAnnouncement?: string;
+    label: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+    tooltipVideoLoadingContent?: string;
+}
+
+// @public (undocumented)
+export type ChatMessageSlots = {
+    root: NonNullable<Slot<'div'>>;
+    button: NonNullable<Slot<typeof Button>>;
+    tooltip: NonNullable<Slot<any>>;
+};
 
 // Warning: (ae-internal-missing-underscore) The name "ExampleComponent" should be prefixed with an underscore because the declaration is marked as @internal
 //

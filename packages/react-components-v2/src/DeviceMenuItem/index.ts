@@ -1,4 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './CameraButton';
+export * from './DeviceMenuItem.types';
+export * from './DeviceMenuItem';

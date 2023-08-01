@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
 import {

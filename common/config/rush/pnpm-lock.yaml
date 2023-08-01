@@ -811,7 +811,7 @@ packages:
       '@babel/core': ^7.0.0-0
     dependencies:
       '@babel/core': 7.12.9
-      '@babel/helper-plugin-utils': 7.10.4
+      '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.12.9)
       '@babel/plugin-transform-parameters': 7.22.5(@babel/core@7.12.9)
     dev: false
@@ -3352,7 +3352,7 @@ packages:
     dependencies:
       '@fluentui/set-version': 8.2.11
       '@fluentui/theme': 2.6.34(@types/react@18.2.17)(react@18.2.0)
-      tslib: 2.5.3
+      tslib: 2.6.1
     transitivePeerDependencies:
       - '@types/react'
       - react
@@ -3398,7 +3398,7 @@ packages:
       '@fluentui/react': 8.110.11(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/scheme-utilities': 8.3.35(@types/react@18.2.17)(react@18.2.0)
       '@fluentui/set-version': 8.2.11
-      tslib: 2.5.3
+      tslib: 2.6.1
     transitivePeerDependencies:
       - '@types/react'
       - '@types/react-dom'
@@ -5907,7 +5907,7 @@ packages:
       flat-cache: 3.0.4
       micromatch: 4.0.5
       react-docgen-typescript: 2.2.2(typescript@4.7.4)
-      tslib: 2.5.3
+      tslib: 2.6.1
       typescript: 4.7.4
       webpack: 5.76.0(webpack-cli@4.10.0)
     transitivePeerDependencies:
@@ -6409,13 +6409,13 @@ packages:
     resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
     dependencies:
       '@types/eslint': 8.44.1
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.1
     dev: false
 
   /@types/eslint@8.44.1:
     resolution: {integrity: sha512-XpNDc4Z5Tb4x+SW1MriMVeIsMoONHCkWFMkR/aPJbzEsxqHy+4Glu/BqTdPrApfDeMaXbtNh6bseNgl5KaWrSg==}
     dependencies:
-      '@types/estree': 0.0.51
+      '@types/estree': 1.0.1
       '@types/json-schema': 7.0.12
     dev: false
 
@@ -7831,7 +7831,7 @@ packages:
     resolution: {integrity: sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==}
     engines: {node: '>=4'}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.6.1
     dev: false
 
   /astral-regex@2.0.0:
@@ -7872,7 +7872,7 @@ packages:
     resolution: {integrity: sha512-eM9d/swFopRt5gdJ7jrpCwgvEMIayITpojhkkSMRsFHYuH5bkSQ4p/9qTEHtmNudUZh22Tehu7I6CxAW0IXTKA==}
     hasBin: true
     dependencies:
-      browserslist: 4.20.4
+      browserslist: 4.21.9
       caniuse-lite: 1.0.30001517
       normalize-range: 0.1.2
       num2fraction: 1.2.2
@@ -8220,6 +8220,7 @@ packages:
 
   /bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
+    requiresBuild: true
     dependencies:
       file-uri-to-path: 1.0.0
     dev: false
@@ -10398,7 +10399,7 @@ packages:
     dependencies:
       debug: 3.2.7
       is-core-module: 2.12.1
-      resolve: 1.22.3
+      resolve: 1.22.2
     dev: false
 
   /eslint-mdx@1.17.1(eslint@8.46.0):
@@ -10412,7 +10413,7 @@ packages:
       remark-mdx: 1.6.22
       remark-parse: 8.0.3
       remark-stringify: 8.1.1
-      tslib: 2.5.3
+      tslib: 2.6.1
       unified: 9.2.2
     transitivePeerDependencies:
       - supports-color
@@ -10544,7 +10545,7 @@ packages:
       eslint-mdx: 1.17.1(eslint@8.46.0)
       eslint-plugin-markdown: 2.2.1(eslint@8.46.0)
       synckit: 0.4.1
-      tslib: 2.5.3
+      tslib: 2.6.1
       vfile: 4.2.1
     transitivePeerDependencies:
       - supports-color
@@ -10969,7 +10970,7 @@ packages:
     engines: {node: '>= 10.17.0'}
     hasBin: true
     dependencies:
-      debug: 4.3.1
+      debug: 4.3.4(supports-color@5.5.0)
       get-stream: 5.2.0
       yauzl: 2.10.0
     optionalDependencies:
@@ -11190,6 +11191,7 @@ packages:
 
   /file-uri-to-path@1.0.0:
     resolution: {integrity: sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -12322,7 +12324,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.1
+      debug: 4.3.4(supports-color@5.5.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -17974,7 +17976,7 @@ packages:
     resolution: {integrity: sha512-ngUh0+s+DOqEc0sGnrLaeNjbXp0CWHjSGFBqPlQmQ+oN/OfoDoYDBXPh+b4qs1M5QTk5nuQ3AmVz9+2xiY/ldw==}
     engines: {node: '>=12'}
     dependencies:
-      tslib: 2.5.3
+      tslib: 2.6.1
       uuid: 8.3.2
     dev: false
 
@@ -21200,7 +21202,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-DoaIdKvTEsuErwVJvhSEUfrdGz5dKy9IvA1cRVnBN+3ZrWfUCGQ0SNQmEU07R5sJmc4bkFX87sBLqMMASlLOHw==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-QJgdTUO9r9rm9J1RYLgTthFWPPR7ayYYfCOHydcGHWJrN/hTa7TQmDkm3SbfMz+xLrrIG/J99Y3dAsVbEmoZYQ==, tarball: file:projects/storybook.tgz}
     id: file:projects/storybook.tgz
     name: '@rush-temp/storybook'
     version: 0.0.0
@@ -21212,6 +21214,7 @@ packages:
       '@babel/core': 7.22.9
       '@babel/preset-env': 7.13.10(@babel/core@7.22.9)
       '@fluentui/react': 8.110.11(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0)(react@18.2.0)
+      '@fluentui/react-components': 9.27.1(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.10.0(@types/react@18.2.17)(react@18.2.0)
       '@fluentui/react-hooks': 8.6.29(@types/react@18.2.17)(react@18.2.0)
       '@fluentui/react-icons': 2.0.209(react@18.2.0)
