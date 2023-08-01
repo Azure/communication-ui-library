@@ -83,7 +83,8 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rooms) */
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
@@ -164,7 +165,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   private bindPublicMethods(): void {
     this.joinCall.bind(this);
-    this.joinCallWithOptions.bind(this);
     this.leaveCall.bind(this);
     this.startCall.bind(this);
     this.onStateChange.bind(this);
@@ -244,13 +244,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /** Join existing Call. */
-  public joinCall(microphoneOn?: boolean): Call | undefined {
-    return this.callAdapter.joinCall(microphoneOn);
-  }
-
-  /** Join existing Call. */
-  public joinCallWithOptions(options?: { microphoneOn?: boolean; cameraOn?: boolean }): Call | undefined {
-    return this.callAdapter.joinCallWithOptions(options);
+  public joinCall(options?: boolean | JoinCallOptions): Call | undefined {
+    if (typeof options === 'boolean') {
+      return this.callAdapter.joinCall(options);
+    } else {
+      return this.callAdapter.joinCall(options);
+    }
   }
   /** Leave current Call. */
   public async leaveCall(forEveryone?: boolean): Promise<void> {
@@ -729,7 +728,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(video-background-effects) */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -746,7 +745,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   endpoint,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
+  /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
@@ -755,7 +754,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     credential,
     locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ options: callAdapterOptions
+    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
@@ -815,7 +814,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
     locator,
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ callAdapterOptions
+    /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
   } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -860,7 +859,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           locator,
           userId,
           /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-          /* @conditional-compile-remove(rooms) */ callAdapterOptions
+          /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -880,7 +879,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
       endpoint,
       locator,
       userId,
-      /* @conditional-compile-remove(rooms) */ callAdapterOptions
+      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
     ]
   );
 

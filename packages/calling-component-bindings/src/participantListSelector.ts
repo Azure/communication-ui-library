@@ -13,6 +13,7 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
+import { getRole } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
@@ -21,12 +22,14 @@ import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantLis
 /* @conditional-compile-remove(rooms) */
 import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { getParticipantCount } from './baseSelectors';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(communication-common-beta-v3) */
 import { isMicrosoftBotIdentifier } from '@azure/communication-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
-  remoteParticipants: RemoteParticipantState[]
+  remoteParticipants: RemoteParticipantState[],
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant[] => {
   /* eslint-disable @typescript-eslint/explicit-function-return-type */
   const conversionCallback = (memoizeFn) => {
@@ -65,7 +68,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             isScreenSharing,
             participant.isSpeaking,
             /* @conditional-compile-remove(raise-hand) */ participant.raisedHand,
-            /* @conditional-compile-remove(rooms) */ participant.role
+            /* @conditional-compile-remove(rooms) */ participant.role,
+            localUserCanRemoveOthers
           );
         })
         .sort((a, b) => {
@@ -99,6 +103,7 @@ export type ParticipantListSelector = (
 ) => {
   participants: CallParticipantListParticipant[];
   myUserId: string;
+  totalParticipantCount?: number;
 };
 
 /**
@@ -113,7 +118,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipants,
     getIsScreenSharingOn,
     getIsMuted,
-    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand
+    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
+    getRole,
+    getParticipantCount
   ],
   (
     userId,
@@ -122,14 +129,19 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isScreenSharingOn,
     isMuted,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand
+    raisedHand,
+    role,
+    partitipantCount
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
+    totalParticipantCount?: number;
   } => {
+    const localUserCanRemoveOthers = localUserCanRemoveOthersTrampoline(role);
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
-          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants))
+          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
+          localUserCanRemoveOthers
         )
       : [];
     participants.push({
@@ -143,9 +155,13 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false
     });
+    /* @conditional-compile-remove(total-participant-count) */
+    const totalParticipantCount = partitipantCount;
     return {
       participants: participants,
-      myUserId: userId
+      myUserId: userId,
+      /* @conditional-compile-remove(total-participant-count) */
+      totalParticipantCount: totalParticipantCount
     };
   }
 );
@@ -154,4 +170,10 @@ const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantS
   /* @conditional-compile-remove(PSTN-calls) */
   return _updateUserDisplayNames(remoteParticipants);
   return remoteParticipants;
+};
+
+const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  return role === 'Presenter' || role === 'Unknown' || role === undefined;
+  return true;
 };

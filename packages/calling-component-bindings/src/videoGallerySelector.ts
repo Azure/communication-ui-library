@@ -16,6 +16,8 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
 /* @conditional-compile-remove(raise-hand) */
@@ -66,7 +68,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(optimal-video-count) */
     getOptimalVideoCount,
     /* @conditional-compile-remove(raise-hand) */
-    getLocalParticipantRaisedHand
+    getLocalParticipantRaisedHand,
+    /* @conditional-compile-remove(rooms) */
+    getRole
   ],
   (
     screenShareRemoteParticipantId,
@@ -80,7 +84,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand
+    raisedHand,
+    /* @conditional-compile-remove(rooms) */
+    role
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -115,7 +121,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         isScreenSharingOn,
         localVideoStream,
         /* @conditional-compile-remove(raise-hand) */
-        raisedHand
+        raisedHand,
+        /* @conditional-compile-remove(rooms) */
+        role
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)

@@ -27,8 +27,6 @@ import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 import { useIdentifiers } from '../identifiers';
@@ -151,7 +149,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  */
 export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
  * different modes of the local video tile
  *
@@ -259,7 +257,7 @@ export interface VideoGalleryProps {
    * @defaultValue 'HorizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
-  /* @conditional-compile-remove(click-to-call) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
    * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
@@ -335,7 +333,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
-    /* @conditional-compile-remove(click-to-call) */
+    /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
 
@@ -374,15 +372,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
-
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
-    /* @conditional-compile-remove(rooms) */
-    if (!permissions.cameraButton || /* @conditional-compile-remove(click-to-call) */ localVideoTileSize === 'hidden') {
+    /* @conditional-compile-remove(click-to-call) */
+    if (localVideoTileSize === 'hidden') {
       return undefined;
     }
     if (onRenderLocalVideoTile) {
@@ -421,7 +416,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           showLabel={
             !(
               (shouldFloatLocalVideo && isNarrow) ||
-              /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16'
+              /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
+                '9:16'
             )
           }
           showMuteIndicator={showMuteIndicator}
@@ -453,8 +449,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /* @conditional-compile-remove(rooms) */ permissions.cameraButton,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    /*@conditional-compile-remove(click-to-call) */
+    localVideoTileSize
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */

@@ -214,7 +214,8 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
-    /* @conditional-compile-remove(raise-hand) */ raisedHand
+    /* @conditional-compile-remove(raise-hand) */ raisedHand,
+    /* @conditional-compile-remove(rooms) */ role
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -226,6 +227,8 @@ export const memoizeLocalParticipant = memoizeOne(
       renderElement: localVideoStream?.view?.target
     },
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: raisedHand
+    raisedHand: raisedHand,
+    /* @conditional-compile-remove(rooms) */
+    role
   })
 );

@@ -11,12 +11,11 @@ import {
   Stack
 } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(total-participant-count) */
 import { Text } from '@fluentui/react';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 import {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -25,6 +24,7 @@ import {
 } from '../types';
 import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Styles for the {@link ParticipantList} {@link ParticipantItem}.
@@ -44,6 +44,19 @@ export interface ParticipantListItemStyles extends ParticipantItemStyles {
 export interface ParticipantListStyles extends BaseCustomStyles {
   /** Styles for the {@link ParticipantList} {@link ParticipantItem}. */
   participantItemStyles?: ParticipantListItemStyles;
+}
+
+/* @conditional-compile-remove(total-participant-count) */
+/**
+ * Strings for the {@link ParticipantList}.
+ *
+ * @beta
+ */
+export interface ParticipantListStrings {
+  /**
+   * String for rendering the count of participants not contained in the displayed participant list
+   */
+  overflowParticipantCount?: string;
 }
 
 /**
@@ -90,6 +103,12 @@ export type ParticipantListProps = {
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
+  /* @conditional-compile-remove(total-participant-count) */
+  /** Total number of people in the call. This number can be larger than the remote participant count. */
+  totalParticipantCount?: number;
+  /* @conditional-compile-remove(total-participant-count) */
+  /** Strings for the participant list */
+  strings?: ParticipantListStrings;
   /** Optional aria-lablledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
 };
@@ -242,11 +261,17 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     onRenderParticipant,
     onFetchParticipantMenuItems,
     showParticipantOverflowTooltip,
+    /* @conditional-compile-remove(total-participant-count) */
+    totalParticipantCount,
+    /* @conditional-compile-remove(total-participant-count) */
+    strings,
     participantAriaLabelledBy
   } = props;
 
   const ids = useIdentifiers();
-  const strings = useLocale().strings.participantItem;
+  const participantItemStrings = useLocale().strings.participantItem;
+  /* @conditional-compile-remove(total-participant-count) */
+  const participantListStrings = useLocale().strings.ParticipantList;
 
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
@@ -257,13 +282,12 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
-      let participantIsRemovable = participant.isRemovable;
-      /* @conditional-compile-remove(rooms) */
-      participantIsRemovable = _usePermissions().removeParticipantButton && participantIsRemovable;
+
+      const participantIsRemovable = participant.isRemovable;
       if (participant.userId !== myUserId && onRemoveParticipant && participantIsRemovable) {
         menuItems.push({
           key: 'remove',
-          text: strings.removeButtonLabel,
+          text: participantItemStrings.removeButtonLabel,
           onClick: () => onRemoveParticipant(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
@@ -281,7 +305,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       if (remoteParticipant.raisedHand && onLowerParticipantHand) {
         menuItems.push({
           key: 'lowerHand',
-          text: strings.lowerParticipantHandButtonLabel,
+          text: participantItemStrings.lowerParticipantHandButtonLabel,
           onClick: () => onLowerParticipantHand(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
@@ -304,9 +328,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onLowerParticipantHand,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
       /* @conditional-compile-remove(raise-hand) */
-      strings.removeButtonLabel,
+      participantItemStrings.removeButtonLabel,
       /* @conditional-compile-remove(raise-hand) */
-      strings.lowerParticipantHandButtonLabel
+      participantItemStrings.lowerParticipantHandButtonLabel
     ]
   );
 
@@ -314,6 +338,11 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     () => merge(participantListItemStyle, props.styles?.participantItemStyles),
     [props.styles?.participantItemStyles]
   );
+
+  /* @conditional-compile-remove(total-participant-count) */
+  const overflowParticipantCountString =
+    strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
+
   return (
     <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
       {displayedParticipants.map((participant: ParticipantListParticipant) =>
@@ -321,7 +350,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           ? onRenderParticipant(participant)
           : onRenderParticipantDefault(
               participant,
-              strings,
+              participantItemStrings,
               myUserId,
               onRenderAvatar,
               createParticipantMenuItems,
@@ -331,6 +360,17 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               participantAriaLabelledBy
             )
       )}
+      {
+        /* @conditional-compile-remove(total-participant-count) */ overflowParticipantCountString &&
+          totalParticipantCount &&
+          totalParticipantCount > displayedParticipants.length && (
+            <Text style={{ fontWeight: 400, margin: '0.5rem' }}>
+              {_formatString(overflowParticipantCountString, {
+                overflowCount: `${totalParticipantCount - displayedParticipants.length}`
+              })}
+            </Text>
+          )
+      }
     </Stack>
   );
 };

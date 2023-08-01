@@ -14,6 +14,7 @@ export interface CallingTheme {
     callRedDark: string;
     callRedDarker: string;
     iconWhite: string;
+    raiseHandGold: string;
   };
 }
 
@@ -51,7 +52,8 @@ export const lightTheme: PartialTheme & CallingTheme = {
     callRed: '#a42e43',
     callRedDark: '#8b2c3d',
     callRedDarker: '#772a38',
-    iconWhite: '#ffffff'
+    iconWhite: '#ffffff',
+    raiseHandGold: '#eaa300'
   },
   semanticColors: {
     errorText: '#a80000'
@@ -92,7 +94,8 @@ export const darkTheme: PartialTheme & CallingTheme = {
     callRed: '#c4314b',
     callRedDark: '#a42e43',
     callRedDarker: '#8b2c3d',
-    iconWhite: '#ffffff'
+    iconWhite: '#ffffff',
+    raiseHandGold: '#eaa300'
   },
   semanticColors: {
     errorText: '#f1707b'

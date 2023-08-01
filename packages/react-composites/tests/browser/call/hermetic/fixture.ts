@@ -13,7 +13,7 @@ import type {
   MockVideoStreamRendererViewState
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
-import type { CallKind } from '@azure/communication-calling';
+import type { CallKind, ParticipantRole } from '@azure/communication-calling';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -50,7 +50,11 @@ const usePage = async ({ browser }, use) => {
 /**
  * Create the default {@link MockCallAdapterState}for hermetic e2e tests.
  */
-export function defaultMockCallAdapterState(participants?: MockRemoteParticipantState[]): MockCallAdapterState {
+export function defaultMockCallAdapterState(
+  participants?: MockRemoteParticipantState[],
+  role?: ParticipantRole,
+  isRoomsCall?: boolean
+): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
     remoteParticipants[toFlatCommunicationIdentifier(p.identifier)] = p;
@@ -78,6 +82,8 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       remoteParticipantsEnded: {},
       /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
+      role: role ?? 'Unknown',
+      totalParticipantCount: Object.values(remoteParticipants).length + 1,
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],
@@ -114,6 +120,7 @@ export function defaultMockCallAdapterState(participants?: MockRemoteParticipant
       deviceAccess: { video: true, audio: true }
     },
     isTeamsCall: false,
+    isRoomsCall: isRoomsCall ?? false,
     latestErrors: {}
   };
 }
@@ -251,8 +258,12 @@ export const test = base.extend<TestFixture>({
 /**
  * Sets up the default state for the configuration screen.
  */
-export const defaultMockConfigurationPageState = (): MockCallAdapterState => {
-  const state = defaultMockCallAdapterState();
+export const defaultMockConfigurationPageState = (role?: ParticipantRole): MockCallAdapterState => {
+  let isRoomsCall = false;
+  if (role && role !== 'Unknown') {
+    isRoomsCall = true;
+  }
+  const state = defaultMockCallAdapterState([], role, isRoomsCall);
   state.page = 'configuration';
   state.call = undefined;
   return state;
