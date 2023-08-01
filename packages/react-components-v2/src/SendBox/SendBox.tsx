@@ -17,6 +17,10 @@ import { useSendBoxStyles } from './SendBox.styles';
  */
 export const SendBox: ForwardRefComponent<SendBoxProps> = React.forwardRef((props, ref) => {
   const className = useSendBoxStyles(props);
+
+  // const localeStrings = useLocale().strings.sendBox;
+  const strings = { /*...localeStrings, */ ...props.strings };
+
   return (
     <div {...props} className={className} ref={ref}>
       SendBox v2 Component

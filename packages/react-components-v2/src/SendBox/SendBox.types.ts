@@ -79,25 +79,30 @@ export type SendBoxProps = ComponentProps<SendBoxSlots> & {
    */
   activeFileUploads?: ActiveFileUpload[];
   /**
-   * Optional boolean to disable text box
+   * Whether to auto focus the send box on mount
+   * @defaultValue false
+   */
+  autoFocus?: boolean;
+  /**
+   * Optional boolean to disable the control
    * @defaultValue false
    */
   disabled?: boolean;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to remove the file upload before sending by clicking on
+   * Callback triggered by clicking on the file upload
    * cancel icon.
    * @beta
    */
-  onCancelFileUpload?: (fileId: string) => void;
+  onCancelFileUpload?: (event: React.UIEvent<HTMLButtonElement>, fileId: string) => void;
   /**
    * Optional callback called when message is sent
    */
-  onSubmit?: (content: string) => Promise<void>;
+  onSubmit?: (event: React.UIEvent<HTMLButtonElement>, content: string) => void;
   /**
    * Optional callback called when user is typing
    */
-  onTyping?: () => Promise<void>;
+  onTyping?: (event: React.UIEvent<HTMLTextAreaElement>, typingState: boolean) => void;
   /**
    * Optional strings to override in component
    */

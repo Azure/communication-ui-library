@@ -13,3 +13,20 @@ export interface SendBoxErrorBarError {
    */
   timestamp: number;
 }
+
+/**
+ * @private
+ */
+export interface SendBoxErrorBarProps {
+  /** Error to render */
+  error?: SendBoxErrorBarError;
+  /**
+   * Automatically dismisses the error bar after the specified delay in ms.
+   * Example: `10 * 1000` would be 10 seconds
+   */
+  dismissAfterMs?: number;
+  /**
+   * Callback to invoke when the error bar is dismissed
+   */
+  onDismiss?: () => void;
+}
