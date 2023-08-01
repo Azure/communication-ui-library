@@ -10,7 +10,7 @@ import {
   OnRenderAvatarCallback,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
-import React from 'react';
+import React, { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -76,6 +76,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const drawerMenuHostId = useId('drawerMenuHost');
 
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<
+    'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
+  >('HorizontalBottom');
+
   return (
     <CallArrangement
       id={drawerMenuHostId}
@@ -106,6 +110,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               drawerMenuHostId={drawerMenuHostId}
               /* @conditional-compile-remove(click-to-call) */
               localVideoTileOptions={options?.localVideoTile}
+              userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -119,6 +124,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       dataUiId={'call-page'}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
+      onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
     />
   );
 };

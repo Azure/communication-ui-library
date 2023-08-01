@@ -42,6 +42,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
+  onSetUserSetOverflowGalleryPosition: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
 }
 
 /**
@@ -180,6 +181,36 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       disabled: props.disableButtonsForHoldScreen
     });
   }
+
+  moreButtonContextualMenuItems.push({
+    key: 'overflowGalleryPositionKey',
+    text: 'Overflow Gallery Position',
+    subMenuProps: {
+      items: [
+        {
+          key: 'topKey',
+          text: 'Top',
+          onClick: () => {
+            props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
+          }
+        },
+        {
+          key: 'bottomKey',
+          text: 'Bottom',
+          onClick: () => {
+            props.onSetUserSetOverflowGalleryPosition('HorizontalBottom');
+          }
+        },
+        {
+          key: 'rightKey',
+          text: 'Right',
+          onClick: () => {
+            props.onSetUserSetOverflowGalleryPosition('VerticalRight');
+          }
+        }
+      ]
+    }
+  });
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(

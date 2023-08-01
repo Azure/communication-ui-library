@@ -220,7 +220,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
-
+  console.log(props.overflowGalleryPosition);
   return (
     <Stack styles={rootLayoutStyle}>
       {wrappedLocalVideoComponent}
@@ -231,6 +231,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
+        {props.overflowGalleryPosition === 'HorizontalTop' ? overflowGallery : <></>}
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -238,7 +239,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {overflowGallery}
+        {props.overflowGalleryPosition === 'HorizontalBottom' ? overflowGallery : <></>}
       </Stack>
     </Stack>
   );

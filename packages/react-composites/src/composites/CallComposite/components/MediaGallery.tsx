@@ -65,6 +65,7 @@ export interface MediaGalleryProps {
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
+  userSetOverflowGalleryPosition?: 'VerticalRight' | 'HorizontalTop' | 'HorizontalBottom';
 }
 
 /**
@@ -134,7 +135,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     () =>
       containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
         ? 'VerticalRight'
-        : 'HorizontalBottom',
+        : 'HorizontalTop',
     [containerWidth, containerHeight]
   );
 
@@ -152,7 +153,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
-        overflowGalleryPosition={overflowGalleryPosition}
+        overflowGalleryPosition={
+          props.userSetOverflowGalleryPosition ? props.userSetOverflowGalleryPosition : overflowGalleryPosition
+        }
         /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
@@ -168,19 +171,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     layoutBasedOnTilePosition,
     props.isMobile,
     props.onRenderAvatar,
-    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(click-to-call) */
+    props.userSetOverflowGalleryPosition,
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
-    /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
-    /* @conditional-compile-remove(rooms) */
-    isRoomsCall,
-    /* @conditional-compile-remove(rooms) */
     userRole,
-    /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ containerAspectRatio
+    isRoomsCall,
+    containerAspectRatio
   ]);
 
   return (
