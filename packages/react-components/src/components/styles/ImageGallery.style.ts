@@ -116,7 +116,7 @@ export const imageContainer = mergeStyles({
 export const imageStyle = mergeStyles({
   objectFit: 'contain',
   height: '100%',
-  width: '100%',
+  width: '100%'
 });
 
 /**
