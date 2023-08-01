@@ -84,6 +84,8 @@ export function defaultMockCallAdapterState(
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
+      /** @conditional-compile-remove(raise-hand) */
+      raiseHand: { raisedHands: [] },
       role: role ?? 'Unknown',
       totalParticipantCount: Object.values(remoteParticipants).length + 1,
       captionsFeature: {

@@ -212,6 +212,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       isScreenSharingOn: false,
       remoteParticipants: {},
       remoteParticipantsEnded: {},
+      /* @conditional-compile-remove(raise-hand) */
+      raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(rooms) */
       role,
       /* @conditional-compile-remove(close-captions) */
