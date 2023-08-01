@@ -27,7 +27,8 @@ export const overlayStyles = {
  */
 export const focusTrapZoneStyle = mergeStyles({
   boxShadow: 'none',
-  background: 'transparent'
+  background: 'transparent',
+  display: 'flex'
 });
 
 /**
@@ -36,7 +37,8 @@ export const focusTrapZoneStyle = mergeStyles({
 export const scrollableContentStyle = mergeStyles({
   overflowY: 'hidden',
   display: 'flex',
-  flexFlow: 'column wrap'
+  flexFlow: 'column wrap',
+  maxHeight: '100%'
 });
 
 /**
@@ -60,7 +62,7 @@ export const titleBarContainerStyle = mergeStyles({
   justifyContent: 'start',
   flexWrap: 'wrap',
   alignContent: 'center',
-  alignItems: 'center',
+  alignItems: 'center'
 });
 
 /**
@@ -105,16 +107,16 @@ export const imageContainer = mergeStyles({
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  margin: '4.5rem 3rem 2rem'
+  margin: '4rem 3rem 2rem'
 });
 
 /**
  * @private
  */
 export const imageStyle = mergeStyles({
-  objectFit: 'scale-down',
-  width: '100%',
+  objectFit: 'contain',
   height: '100%',
+  width: '100%',
 });
 
 /**
