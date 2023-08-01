@@ -1504,7 +1504,7 @@ export type Profile = {
     displayName?: string;
 };
 
-// @beta
+// @public
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }

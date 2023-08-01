@@ -104,7 +104,7 @@ export interface DeviceCheckOptions {
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface RemoteVideoTileMenuOptions {
   /**

@@ -2181,12 +2181,12 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @beta
+// @public
 export interface VideoTileContextualMenuProps {
     kind: 'contextual';
 }
 
-// @beta
+// @public
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
     kind: 'drawer';

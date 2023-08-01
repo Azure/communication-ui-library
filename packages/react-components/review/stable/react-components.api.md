@@ -8,6 +8,7 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
@@ -426,6 +427,12 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
     SplitButtonPrimaryActionCameraOn: JSX.Element;
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
@@ -1570,10 +1577,14 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onUnpinParticipant?: (userId: string) => void;
+    pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
@@ -1594,17 +1605,26 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     isReceiving?: boolean;
     renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
 }
 
 // @public
 export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
+    fillRemoteParticipantFrame: string;
+    fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinnedParticipantAnnouncementAriaLabel: string;
+    pinParticipantForMe: string;
+    pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinnedParticipantAnnouncementAriaLabel: string;
+    unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
 }
 
 // @public
@@ -1624,14 +1644,28 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
+export interface VideoTileContextualMenuProps {
+    kind: 'contextual';
+}
+
+// @public
+export interface VideoTileDrawerMenuProps {
+    hostId?: string;
+    kind: 'drawer';
+}
+
+// @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
+    contextualMenu?: IContextualMenuProps;
     displayName?: string;
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isPinned?: boolean;
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
+    onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     personaMaxSize?: number;
     personaMinSize?: number;

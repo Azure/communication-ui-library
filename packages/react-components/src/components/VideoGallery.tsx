@@ -141,7 +141,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   verticalGallery?: VerticalGalleryStyles;
 }
 
-/* @conditional-compile-remove(vertical-gallery) */
+/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(pinned-participants) */
 /**
  * Different modes and positions of the overflow gallery in the VideoGallery
  *
@@ -271,7 +271,7 @@ export interface VideoGalleryProps {
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface VideoTileContextualMenuProps {
   /**
@@ -284,7 +284,7 @@ export interface VideoTileContextualMenuProps {
 /**
  * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface VideoTileDrawerMenuProps {
   /**

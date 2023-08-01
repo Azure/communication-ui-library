@@ -40,7 +40,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(pinned-participants) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -124,7 +124,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */ isShort,
     overflowGalleryTiles,
     styles?.horizontalGallery,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
+    /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(pinned-participants) */ overflowGalleryPosition,
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);

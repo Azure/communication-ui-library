@@ -3352,7 +3352,7 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @beta
+// @public
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
@@ -3882,12 +3882,12 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @beta
+// @public
 export interface VideoTileContextualMenuProps {
     kind: 'contextual';
 }
 
-// @beta
+// @public
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
     kind: 'drawer';
