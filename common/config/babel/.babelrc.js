@@ -71,6 +71,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'optimal-video-count',
         // Feature for capabilities
         'capabilities',
+        // version 2 feature flag
+        'version-2',
         // v9 isConformant tests - currently broken in stable
         'isConformant-v9',
       ],      
@@ -83,6 +85,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'in-progress-beta-feature-demo',
         // Feature for capabilities
         'capabilities',
+        // version 2 feature flag
+        'version-2',
         // v9 isConformant tests - currently broken in stable
         'isConformant-v9',
       ],
