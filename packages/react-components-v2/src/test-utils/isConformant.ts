@@ -3,7 +3,10 @@
 
 /* @conditional-compile-remove(isConformant-v9) */
 import { isConformant as baseIsConformant } from '@fluentui/react-conformance';
-import type { IsConformantOptions, TestObject } from '@fluentui/react-conformance';
+import type { IsConformantOptions } from '@fluentui/react-conformance';
+/* @conditional-compile-remove(isConformant-v9) */
+import type { TestObject } from '@fluentui/react-conformance';
+/* @conditional-compile-remove(isConformant-v9) */
 import griffelTests from '@fluentui/react-conformance-griffel';
 
 /**
