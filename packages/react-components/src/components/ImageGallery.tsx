@@ -119,6 +119,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const defaultAltText = 'image';
 
   if (images.length <= startIndex) {
+    console.log('Unable to display Image Gallery due to startIndex is out of range.');
     return <></>;
   }
   const image = images[startIndex];
