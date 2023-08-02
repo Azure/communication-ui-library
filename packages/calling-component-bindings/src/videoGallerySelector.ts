@@ -20,8 +20,6 @@ import {
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
-/* @conditional-compile-remove(raise-hand) */
-import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
@@ -30,9 +28,6 @@ import {
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
-
-/* @conditional-compile-remove(raise-hand) */
-import { convertRemoteParticipantToVideoGalleryRemoteParticipantBeta } from './utils/videoGalleryUtils';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -67,8 +62,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getDominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
     getOptimalVideoCount,
-    /* @conditional-compile-remove(raise-hand) */
-    getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(rooms) */
     getRole
   ],
@@ -83,8 +76,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     dominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount,
-    /* @conditional-compile-remove(raise-hand) */
-    raisedHand,
     /* @conditional-compile-remove(rooms) */
     role
   ) => {
@@ -98,17 +89,12 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants = [];
-    let convert = convertRemoteParticipantToVideoGalleryRemoteParticipant as any;
-    /* @conditional-compile-remove(raise-hand) */
-    convert = convertRemoteParticipantToVideoGalleryRemoteParticipantBeta;
     return {
       screenShareParticipant: screenShareRemoteParticipant
-        ? convert(
+        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
             toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
             checkIsSpeaking(screenShareRemoteParticipant),
-            /* @conditional-compile-remove(raise-hand) */
-            screenShareRemoteParticipant.raisedHand,
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName
@@ -120,8 +106,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         isMuted,
         isScreenSharingOn,
         localVideoStream,
-        /* @conditional-compile-remove(raise-hand) */
-        raisedHand,
         /* @conditional-compile-remove(rooms) */
         role
       ),

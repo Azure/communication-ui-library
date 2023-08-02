@@ -12,20 +12,13 @@ import {
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
 
-/* @conditional-compile-remove(raise-hand) */
-import { RaisedHand } from '@internal/react-components';
-
 import { useLocale } from '../../localization';
 
 /**
  * @private
  */
 export interface LocalAndRemotePIPProps {
-  localParticipant: {
-    displayName?: string;
-    videoStream?: VideoGalleryStream;
-    /* @conditional-compile-remove(raise-hand) */ raisedHand: RaisedHand;
-  };
+  localParticipant: { displayName?: string; videoStream?: VideoGalleryStream };
   dominantRemoteParticipant?: {
     userId: string;
     displayName?: string;
@@ -69,18 +62,14 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       showMuteIndicator: false,
       showCameraSwitcherInLocalPreview: false,
       isAvailable: localParticipant.videoStream?.isAvailable,
-      renderElement: localParticipant.videoStream?.renderElement,
-      /* @conditional-compile-remove(raise-hand) */
-      raisedHand: localParticipant.raisedHand
+      renderElement: localParticipant.videoStream?.renderElement
     }),
     [
       localParticipant.displayName,
       localParticipant.videoStream?.isAvailable,
       localParticipant.videoStream?.renderElement,
       onCreateLocalStreamView,
-      onDisposeLocalStreamView,
-      /* @conditional-compile-remove(raise-hand) */
-      localParticipant.raisedHand
+      onDisposeLocalStreamView
     ]
   );
 
