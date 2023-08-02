@@ -13,7 +13,7 @@ import {
   getLocalVideoStreams
 } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
-import { getCapabilites } from './baseSelectors';
+import { getCapabilites, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
@@ -41,11 +41,25 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [getCallExists, getIsMuted, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
-  (callExists, isMuted, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
+  [
+    getCallExists,
+    getIsMuted,
+    getDeviceManager,
+    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getRole
+  ],
+  (
+    callExists,
+    isMuted,
+    deviceManager,
+    /* @conditional-compile-remove(capabilities) */ capabilities,
+    /* @conditional-compile-remove(capabilities) */ role
+  ) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     /* @conditional-compile-remove(capabilities) */
-    const incapable = capabilities?.muteUnmuteMic.isPresent === false;
+    const incapable =
+      (capabilities?.muteUnmuteMic.isPresent === false && capabilities?.muteUnmuteMic.reason !== 'NotInitialized') ||
+      role === 'Consumer';
     return {
       disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ incapable,
       checked: callExists ? !isMuted : false,
@@ -78,13 +92,27 @@ export type CameraButtonSelector = (
  * @public
  */
 export const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
-  [getLocalVideoStreams, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
-  (localVideoStreams, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
+  [
+    getLocalVideoStreams,
+    getDeviceManager,
+    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getRole
+  ],
+  (
+    localVideoStreams,
+    deviceManager,
+    /* @conditional-compile-remove(capabilities) */ capabilities,
+    /* @conditional-compile-remove(capabilities) */ role
+  ) => {
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
-    /* @conditional-compile-remove(capabilities) */
-    const incapable = capabilities?.turnVideoOnOff.isPresent === false;
+    const incapable =
+      (capabilities?.turnVideoOnOff.isPresent === false &&
+        capabilities?.turnVideoOnOff.reason !== 'NotInitialized' &&
+        /* TODO: Remove this when bug from the Calling SDK setting capabilities.turnVideoOnOff to be MeetingRestricted by default */
+        capabilities?.turnVideoOnOff.reason !== 'MeetingRestricted') ||
+      role === 'Consumer';
     return {
       disabled:
         !deviceManager.selectedCamera ||
@@ -120,16 +148,22 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
   [
     getIsScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites
+    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
     isScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ callState,
-    /* @conditional-compile-remove(capabilities) */ capabilities
+    /* @conditional-compile-remove(capabilities) */ capabilities,
+    /* @conditional-compile-remove(capabilities) */ role
   ) => {
     let disabled: boolean | undefined = undefined;
     /* @conditional-compile-remove(capabilities) */
-    disabled = disabled || capabilities?.shareScreen.isPresent === false;
+    disabled =
+      disabled ||
+      (capabilities?.shareScreen.isPresent === false && capabilities?.shareScreen.reason !== 'NotInitialized') ||
+      role === 'Consumer' ||
+      role === 'Attendee';
     /* @conditional-compile-remove(PSTN-calls) */
     disabled = disabled || ['InLobby', 'Connecting'].includes(callState);
     return {
