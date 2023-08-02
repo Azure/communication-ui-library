@@ -111,7 +111,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const incapable =
       (capabilities?.turnVideoOnOff.isPresent === false &&
         capabilities?.turnVideoOnOff.reason !== 'NotInitialized' &&
-        /* TODO: Remove this when bug from the Calling SDK setting capabilities.turnVideoOnOff to be MeetingRestricted by default */
+        /* TODO: Remove this when Calling SDK fixes bug that sets capabilities.turnVideoOnOff to be MeetingRestricted by default */
         capabilities?.turnVideoOnOff.reason !== 'MeetingRestricted') ||
       role === 'Consumer';
     return {
