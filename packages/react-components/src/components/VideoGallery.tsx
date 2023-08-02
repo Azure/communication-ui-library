@@ -426,6 +426,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={localParticipant.raisedHand}
         />
       </Stack>
     );

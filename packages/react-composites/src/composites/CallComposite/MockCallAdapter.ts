@@ -94,6 +94,19 @@ export class MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
+  /* @conditional-compile-remove(raise-hand) */
+  raiseHand(): Promise<void> {
+    throw Error('raiseHand not implemented');
+  }
+  /* @conditional-compile-remove(raise-hand) */
+  lowerHand(): Promise<void> {
+    throw Error('lowerHand not implemented');
+  }
+  /* @conditional-compile-remove(raise-hand) */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  lowerHands(userIds: string[]): Promise<void> {
+    throw Error('lowerHand not implemented');
+  }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
   }

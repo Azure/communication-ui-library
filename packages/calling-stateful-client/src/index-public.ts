@@ -25,7 +25,7 @@ export type {
 } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 /* @conditional-compile-remove(raise-hand) */
-export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
+export type { RaiseHandCallFeatureState as RaiseHandCallFeature, RaisedHandState } from './CallClientState';
 /* @conditional-compile-remove(one-to-n-calling) */
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
 /* @conditional-compile-remove(one-to-n-calling) */

@@ -11,6 +11,8 @@ import {
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
   CallState,
@@ -22,6 +24,9 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from './CallClientState';
 
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isACSCall } from './TypeGuards';
@@ -195,5 +200,15 @@ export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
 ): LocalVideoStreamVideoEffectsState {
   return {
     activeEffects: videoEffects
+  };
+}
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * @private
+ */
+export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedHandState {
+  return {
+    raisedHandOrderPosition: raisedHand.order
   };
 }

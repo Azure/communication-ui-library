@@ -1,0 +1,7 @@
+{
+  "type": "minor",
+  "comment": "add raise hand feature composite",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "patch"
+}

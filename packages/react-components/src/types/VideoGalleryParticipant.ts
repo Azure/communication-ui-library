@@ -89,7 +89,11 @@ export interface CreateVideoStreamViewResult {
  *
  * @public
  */
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+  /* @conditional-compile-remove(raise-hand) */
+  /** Whether local participant is raised a hand */
+  raisedHand?: RaisedHand;
+}
 
 /**
  * The state of a remote participant in the {@link VideoGallery}.

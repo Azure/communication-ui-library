@@ -86,6 +86,9 @@ export type {
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
+/* @conditional-compile-remove(raise-hand) */
+export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
+
 export {
   ChatClientProvider,
   ChatThreadClientProvider,
@@ -128,7 +131,8 @@ export {
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
-
+/* @conditional-compile-remove(raise-hand) */
+export { RaiseHandButton } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 

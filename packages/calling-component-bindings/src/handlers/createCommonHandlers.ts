@@ -51,6 +51,14 @@ export interface CommonCallingHandlers {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: (forEveryone?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onRaiseHand: () => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onLowerHand: () => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onLowerHands: (userId: string[]) => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -266,6 +274,36 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
     const onToggleScreenShare = async (): Promise<void> =>
       call?.isScreenSharingOn ? await onStopScreenShare() : await onStartScreenShare();
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onLowerHands = async (userIds: string[]): Promise<void> => {
+      if (userIds.length > 0) {
+        await call?.feature(Features.RaiseHand)?.lowerHands([]);
+      }
+    };
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onToggleRaiseHand = async (): Promise<void> => {
+      const raiseHandFeature = call?.feature(Features.RaiseHand);
+      const localUserId = callClient.getState().userId;
+      const isLocalRaisedHand = raiseHandFeature
+        ?.getRaisedHands()
+        .find(
+          (publishedState) =>
+            toFlatCommunicationIdentifier(publishedState.identifier) === toFlatCommunicationIdentifier(localUserId)
+        );
+      if (isLocalRaisedHand) {
+        await raiseHandFeature?.lowerHand();
+      } else {
+        await raiseHandFeature?.raiseHand();
+      }
+    };
 
     const onHangUp = async (forEveryone?: boolean): Promise<void> =>
       await call?.hangUp({ forEveryone: forEveryone === true ? true : false });
@@ -517,6 +555,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
+      /* @conditional-compile-remove(raise-hand) */
+      onRaiseHand,
+      /* @conditional-compile-remove(raise-hand) */
+      onLowerHand,
+      /* @conditional-compile-remove(raise-hand) */
+      onLowerHands,
+      /* @conditional-compile-remove(raise-hand) */
+      onToggleRaiseHand,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
