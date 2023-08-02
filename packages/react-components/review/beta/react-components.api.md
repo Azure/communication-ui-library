@@ -1269,7 +1269,6 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
-    raisedHand: RaisedHand;
 }) => JSX.Element>;
 
 // @beta
@@ -2118,9 +2117,7 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
-    raisedHand: RaisedHand;
-}
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 // @public
 export type VideoGalleryParticipant = {

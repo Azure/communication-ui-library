@@ -12,8 +12,6 @@ import {
   LocalVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
-/* @conditional-compile-remove(raise-hand) */
-import { RaisedHand } from '../types';
 
 /**
  * A memoized version of VideoTile for rendering local participant.
@@ -40,8 +38,6 @@ export const _LocalVideoTile = React.memo(
     localVideoSelectedDescription?: string;
     styles?: VideoTileStylesProps;
     personaMinSize?: number;
-    /* @conditional-compile-remove(raise-hand) */
-    raisedHand: RaisedHand;
   }) => {
     const {
       isAvailable,
@@ -60,9 +56,7 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview,
       localVideoCameraCycleButtonProps,
       localVideoCameraSwitcherLabel,
-      localVideoSelectedDescription,
-      /* @conditional-compile-remove(raise-hand) */
-      raisedHand
+      localVideoSelectedDescription
     } = props;
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
@@ -125,8 +119,6 @@ export const _LocalVideoTile = React.memo(
         styles={styles}
         onRenderPlaceholder={onRenderAvatar}
         isMuted={isMuted}
-        /* @conditional-compile-remove(raise-hand) */
-        raisedHand={raisedHand}
         showMuteIndicator={showMuteIndicator}
         personaMinSize={props.personaMinSize}
       />
