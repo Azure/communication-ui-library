@@ -63,7 +63,6 @@
     "@typescript-eslint/eslint-plugin": "^6.2.0",
     "@typescript-eslint/parser": "^6.2.0",
     "ajv": "^6.9.1",
-    "babel-eslint": "^10.0.0",
     "babel-jest": "^29.5.0",
     "babel-loader": "8.1.0",
     "concurrently": "^5.3.0",
