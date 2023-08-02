@@ -107,6 +107,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
+    /* @conditional-compile-remove(capabilities) */
     const incapable =
       (capabilities?.turnVideoOnOff.isPresent === false &&
         capabilities?.turnVideoOnOff.reason !== 'NotInitialized' &&
