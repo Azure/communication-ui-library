@@ -71,6 +71,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
