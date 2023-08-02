@@ -8,6 +8,7 @@ import { MockCallAdapter } from '../lib/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
 import { initializeIconsForUITests } from '../lib/utils';
+import type { MockCallAdapterState, MockRemoteParticipantState } from '../../common';
 
 initializeIconsForUITests();
 
@@ -22,11 +23,37 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
   const [callAdapter, setCallAdapter] = useState<CallAdapter | undefined>(undefined);
 
   useEffect(() => {
-    (async (): Promise<void> => {
-      console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
-      setCallAdapter(new MockCallAdapter(queryArgs.mockCallAdapterState));
+    ((): void => {
+      if (queryArgs.mockRemoteParticipantCount && queryArgs.mockCallAdapterState?.call) {
+        const participants: { [keys: string]: MockRemoteParticipantState } = {};
+        const call = queryArgs.mockCallAdapterState.call;
+        for (let i = 0; i < queryArgs.mockRemoteParticipantCount; i++) {
+          participants[i] = {
+            identifier: { communicationUserId: `user${i}`, kind: 'communicationUser' },
+            displayName: `User ${i}`,
+            state: 'Connected',
+            isMuted: false,
+            isSpeaking: false,
+            videoStreams: {}
+          };
+        }
+        const callAdapterState: MockCallAdapterState = {
+          ...queryArgs.mockCallAdapterState,
+          call: {
+            ...call,
+            localVideoStreams: [],
+            remoteParticipants: participants,
+            totalParticipantCount: Object.values(participants).length + 1
+          }
+        };
+        console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
+        setCallAdapter(new MockCallAdapter(callAdapterState));
+      } else {
+        console.log('Creating mock adapter with args', queryArgs.mockCallAdapterState);
+        setCallAdapter(new MockCallAdapter(queryArgs.mockCallAdapterState));
+      }
     })();
-  }, [queryArgs.mockCallAdapterState]);
+  }, [queryArgs.mockCallAdapterState, queryArgs.mockRemoteParticipantCount]);
 
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
 }

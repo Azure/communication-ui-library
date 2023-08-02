@@ -44,7 +44,7 @@ export type {
   CallAdapterCallOperations
 } from './adapter';
 
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
 /* @conditional-compile-remove(video-background-effects) */
@@ -82,7 +82,8 @@ export type {
   MediaDiagnosticChangedEvent,
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener
+  ParticipantsLeftListener,
+  JoinCallOptions
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
