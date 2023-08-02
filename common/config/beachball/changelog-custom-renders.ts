@@ -2,10 +2,6 @@ import { ChangelogEntry, PackageChangelogRenderInfo } from 'beachball';
 import { getPrNumber, repoDetails } from './github-functions';
 
 const repoUrl = `https://github.com/${repoDetails.owner}/${repoDetails.repo}`;
-let features: ChangelogEntry[] = [];
-let improvements: ChangelogEntry[] = [];
-let bugs: ChangelogEntry[] = [];
-let unknowns: ChangelogEntry[] = [];
 
 function renderHeader(renderInfo: PackageChangelogRenderInfo): string {
   const {
@@ -57,6 +53,10 @@ function filterUnknown(list: ChangelogEntry[]) {
 
 export async function renderPackageChangelog(renderInfo: PackageChangelogRenderInfo): Promise<string> {
   let changelog = '';
+  let features: ChangelogEntry[] = [];
+  let improvements: ChangelogEntry[] = [];
+  let bugs: ChangelogEntry[] = [];
+  let unknowns: ChangelogEntry[] = [];
 
   changelog = renderHeader(renderInfo) + '\n\n';
   for (const [changetype, entries] of Object.entries(renderInfo.newVersionChangelog.comments)) {
