@@ -28,6 +28,7 @@ import {
   downloadIconStyle,
   focusTrapZoneStyle,
   headerStyle,
+  imageContainer,
   imageStyle,
   overlayStyles,
   scrollableContentStyle,
@@ -62,6 +63,8 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
   smallDownloadButton?: IStyle;
   /** Styles for the close modal icon. */
   closeIcon?: IStyle;
+  /** Styles for the image container. */
+  imageContainer?: IStyle;
   /** Styles for the image. */
   image?: IStyle;
 }
@@ -73,7 +76,7 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
  */
 export interface ImageGalleryImageProps {
   imageUrl: string;
-  downloadFileName: string;
+  fileName: string;
   altText?: string;
   title?: string;
   titleIcon?: JSX.Element;
@@ -87,8 +90,12 @@ export interface ImageGalleryImageProps {
 export interface ImageGalleryProps {
   images: Array<ImageGalleryImageProps>;
   onDismiss: () => void;
-  onImageDownloadButtonClicked: (imageUrl: string, downloadFileName: string) => void;
+  onImageDownloadButtonClicked: (imageUrl: string, fileName: string) => void;
   modalLayerHostId?: string;
+  /**
+   * Indicating which index of the images array to start with.
+   */
+  startIndex?: number;
   /**
    * Allows users to pass in an object contains custom CSS styles.
    * @Example
@@ -103,7 +110,7 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, styles } = props;
+  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, styles, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
@@ -111,10 +118,10 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const closeString = 'Close';
   const defaultAltText = 'image';
 
-  if (images.length <= 0) {
+  if (images.length <= startIndex) {
     return <></>;
   }
-  const image = images[0];
+  const image = images[startIndex];
   return (
     <Layer hostId={modalLayerHostId}>
       <Modal
@@ -125,11 +132,13 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
-        <img
-          src={image.imageUrl}
-          className={mergeStyles(imageStyle, styles?.image)}
-          alt={image.altText || defaultAltText}
-        />
+        <div className={mergeStyles(imageContainer, styles?.imageContainer)}>
+          <img
+            src={image.imageUrl}
+            className={mergeStyles(imageStyle, styles?.image)}
+            alt={image.altText || defaultAltText}
+          />
+        </div>
       </Modal>
       <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
@@ -142,7 +151,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme, isDarkTheme), styles?.downloadButton)}
             text={downloadButtonTitleString}
-            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.downloadFileName)}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.fileName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={downloadIconStyle} />}
             aria-live={'polite'}
             aria-label={downloadButtonTitleString}
@@ -150,7 +159,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme), styles?.smallDownloadButton)}
-            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.downloadFileName)}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.fileName)}
             aria-label={downloadButtonTitleString}
             aria-live={'polite'}
           />

@@ -40,6 +40,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
+        // raise hands feature
+        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -79,6 +81,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
+        // raise hands feature
+        'raise-hand',
         // Feature for capabilities
         'capabilities'
       ],

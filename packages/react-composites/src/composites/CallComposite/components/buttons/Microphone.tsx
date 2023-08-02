@@ -10,6 +10,8 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+/* @conditional-compile-remove(rooms) */
+import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
  * @private
@@ -24,6 +26,10 @@ export const Microphone = (props: {
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const strings = useLocale().strings.call;
+  /* @conditional-compile-remove(rooms) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
+  const isRoomsCall = adapter.getState().isRoomsCall;
 
   /**
    * When call is in Lobby, microphone button should be disabled.
@@ -54,7 +60,11 @@ export const Microphone = (props: {
       styles={styles}
       {...microphoneButtonStrings}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
-      disabled={microphoneButtonProps.disabled || props.disabled}
+      disabled={
+        microphoneButtonProps.disabled ||
+        props.disabled ||
+        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+      }
     />
   );
 };
