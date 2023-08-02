@@ -322,7 +322,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
 
   const tileInfoStyle = useMemo(
     () =>
@@ -340,7 +343,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -448,7 +450,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               style={{
                 alignItems: 'center',
                 padding: '0.2rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                backgroundColor: theme.palette.white,
+                opacity: 0.9,
                 borderRadius: '1rem',
                 margin: '0.5rem',
                 width: 'fit-content',
@@ -459,7 +462,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 <Text>{raisedHand.raisedHandOrderPosition}</Text>
               </Stack.Item>
               <Stack.Item>
-                <Icon iconName="ParticipantItemRaisedHand" className="icon-raise-hand" ariaLabel="" />
+                <Icon
+                  iconName="ParticipantItemRaisedHand"
+                  className="icon-raise-hand"
+                  ariaLabel=""
+                  style={raiseHandIconStyle}
+                />
               </Stack.Item>
             </Stack>
           )

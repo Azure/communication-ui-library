@@ -12,7 +12,9 @@ import {
 } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 /* @conditional-compile-remove(total-participant-count) */
-import { Text } from '@fluentui/react';
+import { Text, Theme } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hand) */
+import { useTheme, CallingTheme } from '../theming';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -122,9 +124,16 @@ const onRenderParticipantDefault = (
   styles?: ParticipantListItemStyles,
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
-  participantAriaLabelledBy?: string
+  participantAriaLabelledBy?: string,
+  /* @conditional-compile-remove(raise-hand) */
+  theme?: Theme
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
+
+  /* @conditional-compile-remove(raise-hand) */
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
 
   let presence: PersonaPresence | undefined = undefined;
   if (callingParticipant) {
@@ -151,7 +160,7 @@ const onRenderParticipantDefault = (
                   style={{
                     alignItems: 'center',
                     padding: '0.2rem',
-                    backgroundColor: 'ghostwhite',
+                    backgroundColor: theme?.palette.neutralLighter,
                     borderRadius: '1rem'
                   }}
                 >
@@ -163,6 +172,7 @@ const onRenderParticipantDefault = (
                       iconName="ParticipantItemRaisedHand"
                       className={iconStyles}
                       ariaLabel={strings.raisedHandIconLabel}
+                      style={raiseHandIconStyle}
                     />
                   </Stack.Item>
                 </Stack>
@@ -268,6 +278,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     participantAriaLabelledBy
   } = props;
 
+  /* @conditional-compile-remove(raise-hand) */
+  const theme = useTheme();
   const ids = useIdentifiers();
   const participantItemStrings = useLocale().strings.participantItem;
   /* @conditional-compile-remove(total-participant-count) */
@@ -357,7 +369,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               participantItemStyles,
               props.onParticipantClick,
               showParticipantOverflowTooltip,
-              participantAriaLabelledBy
+              participantAriaLabelledBy,
+              /* @conditional-compile-remove(raise-hand) */
+              theme
             )
       )}
       {
