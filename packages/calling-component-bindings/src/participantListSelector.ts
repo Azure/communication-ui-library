@@ -11,6 +11,7 @@ import {
   getIsMuted,
   CallingBaseSelectorProps
 } from './baseSelectors';
+import { getRole } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
@@ -23,7 +24,8 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { isMicrosoftBotIdentifier } from '@azure/communication-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
-  remoteParticipants: RemoteParticipantState[]
+  remoteParticipants: RemoteParticipantState[],
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant[] => {
   /* eslint-disable @typescript-eslint/explicit-function-return-type */
   const conversionCallback = (memoizeFn) => {
@@ -61,7 +63,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
-            /* @conditional-compile-remove(rooms) */ participant.role
+            localUserCanRemoveOthers
           );
         })
         .sort((a, b) => {
@@ -102,22 +104,33 @@ export type ParticipantListSelector = (
  * @public
  */
 export const participantListSelector: ParticipantListSelector = createSelector(
-  [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted, getParticipantCount],
+  [
+    getIdentifier,
+    getDisplayName,
+    getRemoteParticipants,
+    getIsScreenSharingOn,
+    getIsMuted,
+    getRole,
+    getParticipantCount
+  ],
   (
     userId,
     displayName,
     remoteParticipants,
     isScreenSharingOn,
     isMuted,
+    role,
     partitipantCount
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
     totalParticipantCount?: number;
   } => {
+    const localUserCanRemoveOthers = localUserCanRemoveOthersTrampoline(role);
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
-          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants))
+          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
+          localUserCanRemoveOthers
         )
       : [];
     participants.push({
@@ -144,4 +157,10 @@ const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantS
   /* @conditional-compile-remove(PSTN-calls) */
   return _updateUserDisplayNames(remoteParticipants);
   return remoteParticipants;
+};
+
+const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  return role === 'Presenter' || role === 'Unknown' || role === undefined;
+  return true;
 };

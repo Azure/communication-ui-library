@@ -6,6 +6,8 @@ import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+/* @conditional-compile-remove(rooms) */
+import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
  * @private
@@ -20,6 +22,10 @@ export const Camera = (props: {
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
+  /* @conditional-compile-remove(rooms) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
+  const isRoomsCall = adapter.getState().isRoomsCall;
   return (
     <CameraButton
       data-ui-id="call-composite-camera-button"
@@ -27,7 +33,11 @@ export const Camera = (props: {
       showLabel={props.displayType !== 'compact'}
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
-      disabled={cameraButtonProps.disabled || props.disabled}
+      disabled={
+        cameraButtonProps.disabled ||
+        props.disabled ||
+        /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+      }
       /* @conditional-compile-remove(video-background-effects) */
       onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
     />
