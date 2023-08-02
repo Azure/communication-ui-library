@@ -1212,33 +1212,24 @@ export interface ImageFileMetadata extends BaseFileMetadata {
     previewUrl?: string;
 }
 
-// @beta (undocumented)
+// @beta
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
 // @beta
 export interface ImageGalleryImageProps {
-    // (undocumented)
     altText?: string;
-    // (undocumented)
-    fileName: string;
-    // (undocumented)
     imageUrl: string;
-    // (undocumented)
+    saveAsName: string;
     title?: string;
-    // (undocumented)
     titleIcon?: JSX.Element;
 }
 
 // @beta
 export interface ImageGalleryProps {
-    // (undocumented)
     images: Array<ImageGalleryImageProps>;
-    // (undocumented)
     modalLayerHostId?: string;
-    // (undocumented)
     onDismiss: () => void;
-    // (undocumented)
-    onImageDownloadButtonClicked: (imageUrl: string, fileName: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
     styles?: ImageGalleryStylesProps;
 }
@@ -1248,6 +1239,7 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
     closeIcon?: IStyle;
     controlBarContainer?: IStyle;
     downloadButton?: IStyle;
+    downloadButtonIcon?: IStyle;
     header?: IStyle;
     image?: IStyle;
     imageContainer?: IStyle;
