@@ -13,7 +13,7 @@ import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
 
 /**
  * @private
