@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { ExampleComponentStrings } from '../../ExampleComponent/ExampleComponent.strings';
+import { SendBoxStrings } from '../../SendBox';
 
 /**
  * Strings used by all components exported from this library.
@@ -11,6 +12,7 @@ import { ExampleComponentStrings } from '../../ExampleComponent/ExampleComponent
 export interface ComponentStrings {
   /** Example. To be removed before release. */
   exampleComponent: ExampleComponentStrings;
+  sendBox: SendBoxStrings;
 }
 
 /**

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Button } from '@fluentui/react-components';
-import { ComponentProps, Slot } from '@fluentui/react-utilities';
+import { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
 import { _FileUploadCardsStrings } from './FileUploadCards.strings';
 
 /**
@@ -16,7 +16,7 @@ export type _FileCardSlots = {
   /**
    * Icon to display for actions like download, upload, etc. along the file name.
    */
-  actionIcon: NonNullable<Slot<typeof Button>>;
+  actionIcon: Slot<typeof Button>;
 };
 
 /**
@@ -24,11 +24,14 @@ export type _FileCardSlots = {
  *
  * @internal
  */
-export type _FileCardProps = ComponentProps<_FileCardSlots> & {
+export type _FileCardProps = Omit<
+  ComponentProps<Partial<_FileCardSlots>, 'root'>,
+  'className' | 'style' | 'ref' | 'id' | 'tabIndex'
+> & {
   /**
-   * Function that runs when actionIcon is clicked
+   * Event sent when actionIcon is clicked
    */
-  actionHandler?: () => void;
+  actionHandler?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, fileName: string) => void;
   /**
    * Extension of the file used for rendering the file icon.
    */
@@ -48,3 +51,13 @@ export type _FileCardProps = ComponentProps<_FileCardSlots> & {
    */
   strings?: _FileUploadCardsStrings;
 };
+
+/**
+ * State used in rendering _FileCard
+ * @internal
+ */
+export type _FileCardState = ComponentState<_FileCardSlots> &
+  Pick<_FileCardProps, 'actionHandler' | 'fileName' | 'progress'> & {
+    announcerString?: string;
+    showProgressIndicator: boolean;
+  };

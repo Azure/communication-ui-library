@@ -1,5 +1,14 @@
 {
   "exampleComponent": {
     "label": "Example string for the example component"
+  },
+  "sendBox": {
+  "placeholderText": "Enter a message",
+  "textTooLong": "Your message length is over the maximum limit.",
+  "sendButtonAriaLabel": "Send message",
+  "fileUploadsPendingError": "Uploading... Please wait.",
+  "removeFile": "Remove file",
+  "uploading": "Uploading",
+  "uploadCompleted": "Upload completed"
   }
 }

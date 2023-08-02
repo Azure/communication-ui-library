@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 import { isConformant } from '../test-utils/isConformant';
-import { ExampleComponent } from './ExampleComponent';
+import { _FileUploadCards } from './FileUploadCards';
 
-describe('ExampleComponent', () => {
+describe('_FileUploadCards', () => {
   isConformant({
-    Component: ExampleComponent
+    Component: _FileUploadCards
   });
 });

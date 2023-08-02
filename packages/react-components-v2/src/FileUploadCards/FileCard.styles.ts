@@ -1,18 +1,28 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { makeStyles, mergeClasses, tokens } from '@fluentui/react-components';
+import { makeStyles, tokens } from '@fluentui/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import { _FileCardProps } from './FileCard.types';
 
-const useRootStyles = makeStyles({
+const defaultStack = makeStyles({
   root: {
-    width: '12rem',
-    backgroundColor: tokens.colorNeutralBackground2,
-    // borderRadius: tokens.borderRadiusSmall,
-    // border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
-    cursor: 'pointer'
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    width: 'auto',
+    height: 'auto',
+    boxSizing: 'border-box',
+    '> *': {
+      textOverflow: 'ellipsis'
+    },
+    '> :not(:first-child)': {
+      marginTop: '0px'
+    },
+    '> *:not(.ms-StackItem)': {
+      flexShrink: 1
+    }
   }
 });
 
@@ -23,7 +33,49 @@ const useRootStyles = makeStyles({
  *
  * @internal
  */
-export const _fileCardClassName = (props: _FileCardProps): string => {
-  const internalStyles = useRootStyles();
-  return mergeClasses(internalStyles.root, props.className);
-};
+export const _fileCardContainerStyles = makeStyles({
+  actionItem: {
+    ...defaultStack,
+    justifyContent: 'center',
+    cursor: 'pointer'
+  },
+  container: {
+    ...defaultStack,
+    width: '12rem',
+    boxSizing: 'border-box',
+    '> *': {
+      textOverflow: 'ellipsis'
+    },
+    '> :not(:first-child)': {
+      marginTop: '0px'
+    },
+    '> *:not(.ms-StackItem)': {
+      flexShrink: 1
+    },
+    backgroundColor: tokens.colorNeutralBackground2,
+    // borderRadius: tokens.borderRadiusSmall,
+    // border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
+    cursor: 'pointer'
+  },
+  fileInfo: {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+    // padding: shorthands.padding(_pxToRem(12))
+  },
+  fileNameTextContainer: {
+    ...defaultStack,
+    paddingLeft: _pxToRem(4),
+    minWidth: '75%',
+    maxWidth: '75%'
+  },
+  fileNameText: {
+    // overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    lineHeight: 'normal',
+    whiteSpace: 'nowrap',
+    paddingRight: _pxToRem(4)
+  }
+})();

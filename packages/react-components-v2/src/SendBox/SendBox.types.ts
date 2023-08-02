@@ -19,7 +19,7 @@ export interface ActiveFileUpload {
   /**
    * File name to be rendered for uploaded file.
    */
-  filename: string;
+  fileName: string;
   /**
    * Unique identifier for the file upload.
    */
