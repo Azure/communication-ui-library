@@ -1,9 +1,13 @@
-import { PackageChangelogRenderInfo, ChangelogEntry } from 'beachball';
+import { ChangelogEntry, PackageChangelogRenderInfo } from 'beachball';
 import { getPrNumber, repoDetails } from './github-functions';
 
 const repoUrl = `https://github.com/${repoDetails.owner}/${repoDetails.repo}`;
+let features: ChangelogEntry[] = [];
+let improvements: ChangelogEntry[] = [];
+let bugs: ChangelogEntry[] = [];
+let unknowns: ChangelogEntry[] = [];
 
-export async function renderHeader(renderInfo: PackageChangelogRenderInfo): Promise<string> {
+function renderHeader(renderInfo: PackageChangelogRenderInfo): string {
   const {
     newVersionChangelog: { tag, version, date },
     previousJson
@@ -19,11 +23,63 @@ export async function renderHeader(renderInfo: PackageChangelogRenderInfo): Prom
   return `## ${header}\n\n${date.toUTCString()}${compareLink}`;
 }
 
-export async function renderEntry(entry: ChangelogEntry): Promise<string> {
+async function renderEntry(entry: ChangelogEntry): Promise<string> {
   // Link to the PR for this changelog entry (or the commit if PR isn't found)
-  const prNumber = await getPrNumber(entry.commit);
-  const commitLink = prNumber
-    ? `[PR #${prNumber}](${repoUrl}/pull/${prNumber})`
-    : `[commit](${repoUrl}/commit/${entry.commit})`;
-  return `- ${entry.comment} (${commitLink} by ${entry.author})`;
+  const prNumber = await getPrNumber(entry['commit']);
+  const commitLink = prNumber ? `[PR #${prNumber}](${repoUrl}/pull/${prNumber})` : `[commit](${repoUrl}/commit/${entry['commit']})`;
+  const commitComment = `- ${entry['comment']} (${commitLink} by ${entry['author']})\n`
+  return commitComment;
 }
+
+async function renderSubsection(title: string, entries: ChangelogEntry[]): Promise<string> {
+  let subsection = `### ${title}\n`;
+  for (const entry of entries) {
+    subsection += await renderEntry(entry);
+  }
+  return subsection;
+}
+
+function filterByArea(list: ChangelogEntry[], area: string) {
+  let filteredByArea = list.filter((entry) => { 
+    return entry['area'] === area 
+  });
+
+  return filteredByArea;
+}
+
+function filterUnknown(list: ChangelogEntry[]) {
+  let unknown = list.filter((entry) => { 
+    return entry['area'] === undefined 
+  });
+
+  return unknown;
+}
+
+export async function renderPackageChangelog(renderInfo: PackageChangelogRenderInfo): Promise<string> {
+  let changelog = '';
+
+  changelog = renderHeader(renderInfo) + '\n\n';
+  for (const [changetype, entries] of Object.entries(renderInfo.newVersionChangelog.comments)) {
+    if (entries.length > 0) {
+      features = features.concat(filterByArea(entries, 'feature'));
+      improvements = improvements.concat(filterByArea(entries, 'improvement'));
+      bugs = bugs.concat(filterByArea(entries, 'fix'));
+      unknowns = unknowns.concat(filterUnknown(entries));
+    }
+  }
+
+  if (features.length > 0) {
+    changelog += await renderSubsection('Features', features);
+  }
+  if (improvements.length > 0) {
+    changelog += await renderSubsection('Improvements', improvements);
+  }
+  if (bugs.length > 0) {
+    changelog += await renderSubsection('Bug Fixes', bugs);
+  }
+  if (unknowns.length > 0) {
+    changelog += await renderSubsection('Other Changes', unknowns);
+  }
+  
+  return changelog;
+};

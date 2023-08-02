@@ -1,12 +1,12 @@
 import { BeachballConfig } from 'beachball';
-import { renderHeader, renderEntry } from './changelog-custom-renders';
+import { renderPackageChangelog } from './changelog-custom-renders';
 
 export const config: BeachballConfig = {
   changeFilePrompt: {
-  changePrompt: prompt => {
-    const changeAreaPrompt = {
-      type: 'select',
-      name: 'area',
+    changePrompt: prompt => {
+      const changeAreaPrompt = {
+        type: 'select',
+        name: 'area',
         message: 'Change area',
         choices: [
           { value: 'fix', title: 'Bug fix' },
@@ -23,10 +23,7 @@ export const config: BeachballConfig = {
     },
   },
   changelog: {
-    customRenderers: {
-      renderHeader,
-      renderEntry
-    },
+    renderPackageChangelog: renderPackageChangelog,
     groups: [{
       masterPackageName: '@azure/communication-react',
       include: 'packages/*',
