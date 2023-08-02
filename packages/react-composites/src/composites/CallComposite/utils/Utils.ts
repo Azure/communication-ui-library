@@ -10,7 +10,7 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundDependency } from '../adapter/AzureCommunicationCallAdapter';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { VideoDeviceInfo } from '@azure/communication-calling';
@@ -430,12 +430,12 @@ export const createParticipantModifier = (
 /** @private */
 export const getBackgroundEffectFromSelectedEffect = (
   selectedEffect: VideoBackgroundEffect | undefined,
-  videoBackgroundDependency: VideoBackgroundDependency
+  VideoBackgroundEffectsDependency: VideoBackgroundEffectsDependency
 ): VideoEffectProcessor | undefined =>
   selectedEffect?.effectName === 'blur'
-    ? videoBackgroundDependency.createBackgroundBlurEffect()
+    ? VideoBackgroundEffectsDependency.createBackgroundBlurEffect()
     : selectedEffect?.effectName === 'replacement'
-    ? videoBackgroundDependency.createBackgroundReplacementEffect({
+    ? VideoBackgroundEffectsDependency.createBackgroundReplacementEffect({
         backgroundImageUrl: selectedEffect.backgroundImageUrl
       })
     : undefined;

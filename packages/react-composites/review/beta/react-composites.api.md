@@ -8,9 +8,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
-import type { BackgroundBlurEffect } from '@azure/communication-calling';
 import type { BackgroundReplacementConfig } from '@azure/communication-calling';
-import type { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -60,6 +58,7 @@ import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -235,7 +234,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
-    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -732,7 +731,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
-    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundDependency>;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1009,7 +1008,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 export type CommonCallAdapterOptions = {
     videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
-        onResolveDependency?: () => Promise<VideoBackgroundDependency>;
+        onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
 };
@@ -1485,10 +1484,10 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @beta
-export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundDependency>;
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @beta
-export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundDependency>;
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @public
 export type ParticipantsAddedListener = (event: {
@@ -1573,12 +1572,6 @@ export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCre
 export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
     effectName: 'blur';
 }
-
-// @beta (undocumented)
-export type VideoBackgroundDependency = {
-    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
-    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
-};
 
 // @beta
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;

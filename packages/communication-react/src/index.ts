@@ -40,7 +40,7 @@ export type {
 } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(video-background-effects) */
-export type { VideoEffectBackgroundDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
+export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
 
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';

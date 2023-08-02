@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { CallAdapter, VideoBackgroundDependency } from '../../../src';
+import { CallAdapter, VideoBackgroundEffectsDependency } from '../../../src';
 import { MockCallAdapter } from '../lib/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
@@ -54,7 +54,7 @@ export function HermeticApp(props: { queryArgs: QueryArgs }): JSX.Element {
       }
       if (queryArgs.enableVideoEffects && queryArgs.mockCallAdapterState) {
         queryArgs.mockCallAdapterState.onResolveVideoEffectDependency = async () => {
-          const videoEffectDependency = {} as VideoBackgroundDependency;
+          const videoEffectDependency = {} as VideoBackgroundEffectsDependency;
           return Promise.resolve(videoEffectDependency);
         };
       }

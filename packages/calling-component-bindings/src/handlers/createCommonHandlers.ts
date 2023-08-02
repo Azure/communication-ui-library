@@ -114,7 +114,7 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
  *
  * @beta
  */
-export type VideoEffectBackgroundDependency = {
+export type VideoBackgroundEffectsDependency = {
   createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
@@ -130,7 +130,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
     options?: {
-      onResolveVideoBackgroundDependency?: () => Promise<VideoEffectBackgroundDependency>;
+      onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     }
   ): CommonCallingHandlers => {
     const onStartLocalVideo = async (): Promise<void> => {
@@ -464,7 +464,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        if (!options?.onResolveVideoBackgroundDependency) {
+        if (!options?.onResolveVideoBackgroundEffectsDependency) {
           throw new Error(`Video background effects dependency not resolved`);
         } else {
           return stream.feature(Features.VideoEffects).stopEffects();
@@ -478,12 +478,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        if (!options?.onResolveVideoBackgroundDependency) {
+        if (!options?.onResolveVideoBackgroundEffectsDependency) {
           throw new Error(`Video background effects dependency not resolved`);
         }
         const createEffect =
-          options?.onResolveVideoBackgroundDependency &&
-          (await options.onResolveVideoBackgroundDependency())?.createBackgroundBlurEffect;
+          options?.onResolveVideoBackgroundEffectsDependency &&
+          (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundBlurEffect;
         return createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundBlurConfig));
       }
     };
@@ -496,12 +496,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         call?.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video') ||
         deviceManager?.getUnparentedVideoStreams().find((stream) => stream.mediaStreamType === 'Video');
       if (stream) {
-        if (!options?.onResolveVideoBackgroundDependency) {
+        if (!options?.onResolveVideoBackgroundEffectsDependency) {
           throw new Error(`Video background effects dependency not resolved`);
         }
         const createEffect =
-          options?.onResolveVideoBackgroundDependency &&
-          (await options.onResolveVideoBackgroundDependency())?.createBackgroundReplacementEffect;
+          options?.onResolveVideoBackgroundEffectsDependency &&
+          (await options.onResolveVideoBackgroundEffectsDependency())?.createBackgroundReplacementEffect;
         return (
           createEffect && stream.feature(Features.VideoEffects).startEffects(createEffect(backgroundReplacementConfig))
         );

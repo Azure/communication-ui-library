@@ -34,7 +34,7 @@ export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
-export type { VideoEffectBackgroundDependency } from './handlers/createCommonHandlers';
+export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
 export type { CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */

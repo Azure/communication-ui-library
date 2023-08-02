@@ -19,7 +19,7 @@ import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectBackgroundDependency } from './createCommonHandlers';
+import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -39,7 +39,7 @@ export interface CallingHandlers extends CommonCallingHandlers {
  * @beta
  */
 export type CallingHandlersOptions = {
-  onResolveVideoBackgroundDependency?: () => Promise<VideoEffectBackgroundDependency>;
+  onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
 };
 
 /**

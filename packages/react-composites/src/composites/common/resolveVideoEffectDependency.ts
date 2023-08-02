@@ -8,7 +8,7 @@ import {
   BackgroundReplacementEffect
 } from '@azure/communication-calling-effects';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundDependency } from '../CallComposite';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -16,16 +16,16 @@ import { VideoBackgroundDependency } from '../CallComposite';
  *
  * @beta
  */
-export const onResolveVideoEffectDependency = async (): Promise<VideoBackgroundDependency> => {
+export const onResolveVideoEffectDependency = async (): Promise<VideoBackgroundEffectsDependency> => {
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {
     return new BackgroundBlurEffect(config);
   };
   const createBackgroundReplacementEffect = (config: BackgroundReplacementConfig): BackgroundReplacementEffect => {
     return new BackgroundReplacementEffect(config);
   };
-  const videoBackgroundDependency: VideoBackgroundDependency = {
+  const VideoBackgroundEffectsDependency: VideoBackgroundEffectsDependency = {
     createBackgroundBlurEffect,
     createBackgroundReplacementEffect
   };
-  return videoBackgroundDependency;
+  return VideoBackgroundEffectsDependency;
 };

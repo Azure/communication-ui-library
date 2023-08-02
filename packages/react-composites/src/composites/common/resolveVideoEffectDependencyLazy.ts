@@ -9,7 +9,7 @@ import type {
   BackgroundReplacementEffect
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoBackgroundDependency } from '../CallComposite';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -17,7 +17,7 @@ import { VideoBackgroundDependency } from '../CallComposite';
  * Dependency resolution for video background effects using lazy loading.
  * @beta
  */
-export const onResolveVideoEffectDependencyLazy = async (): Promise<VideoBackgroundDependency> => {
+export const onResolveVideoEffectDependencyLazy = async (): Promise<VideoBackgroundEffectsDependency> => {
   const module = await import('@azure/communication-calling-effects');
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {
     return new module.BackgroundBlurEffect(config);
@@ -25,9 +25,9 @@ export const onResolveVideoEffectDependencyLazy = async (): Promise<VideoBackgro
   const createBackgroundReplacementEffect = (config: BackgroundReplacementConfig): BackgroundReplacementEffect => {
     return new module.BackgroundReplacementEffect(config);
   };
-  const videoBackgroundDependency: VideoBackgroundDependency = {
+  const VideoBackgroundEffectsDependency: VideoBackgroundEffectsDependency = {
     createBackgroundBlurEffect,
     createBackgroundReplacementEffect
   };
-  return videoBackgroundDependency;
+  return VideoBackgroundEffectsDependency;
 };
