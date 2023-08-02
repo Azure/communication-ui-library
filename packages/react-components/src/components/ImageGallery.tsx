@@ -59,6 +59,8 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
   controlBarContainer?: IStyle;
   /** Styles for the download button. */
   downloadButton?: IStyle;
+  /** Styles for the icon within the download button. */
+  downloadButtonIcon?: IStyle;
   /** Styles for the small download button when screen width is smaller than 25 rem. */
   smallDownloadButton?: IStyle;
   /** Styles for the close modal icon. */
@@ -75,10 +77,15 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
  * @beta
  */
 export interface ImageGalleryImageProps {
+  /** Image Url used to display the image in a large scale. */
   imageUrl: string;
-  fileName: string;
+  /** String used as a file name when downloading this image to user's local device. */
+  saveAsName: string;
+  /** Optional string used as a alt text for the image. @default 'image' */
   altText?: string;
+  /** Optional string used as the title of the image and displayed on the top left corner of the ImageGallery. */
   title?: string;
+  /** Optional JSX element used as a title icon and displayed to the left of the title element. */
   titleIcon?: JSX.Element;
 }
 
@@ -88,9 +95,21 @@ export interface ImageGalleryImageProps {
  * @beta
  */
 export interface ImageGalleryProps {
+  /**
+   * Array of images used to populate the ImageGallery
+   */
   images: Array<ImageGalleryImageProps>;
+  /**
+   * Callback to invoke when the ImageGallery modal is dismissed
+   */
   onDismiss: () => void;
-  onImageDownloadButtonClicked: (imageUrl: string, fileName: string) => void;
+  /**
+   * Callback called when the download button is clicked.
+   */
+  onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+  /** Optional id property provided on a LayerHost that this Layer should render within.
+   *  If an id is not provided, we will render the Layer content in a fixed position element rendered at the end of the document.
+   */
   modalLayerHostId?: string;
   /**
    * Indicating which index of the images array to start with.
@@ -107,6 +126,8 @@ export interface ImageGalleryProps {
 }
 
 /**
+ * Component to render a fullscreen modal for a selected image.
+ *
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
@@ -119,6 +140,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const defaultAltText = 'image';
 
   if (images.length <= startIndex) {
+    console.log('Unable to display Image Gallery due to startIndex is out of range.');
     return <></>;
   }
   const image = images[startIndex];
@@ -128,7 +150,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         titleAriaId={image.title}
         isOpen={images.length > 0}
         onDismiss={onDismiss}
-        overlay={{ styles: { ...overlayStyles, ...styles?.overlay } }}
+        overlay={{ styles: { ...overlayStyles(theme), ...styles?.overlay } }}
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
@@ -151,15 +173,20 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme, isDarkTheme), styles?.downloadButton)}
             text={downloadButtonTitleString}
-            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.fileName)}
-            onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={downloadIconStyle} />}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
+            onRenderIcon={() => (
+              <Icon
+                iconName={downloadIcon.iconName}
+                className={mergeStyles(downloadIconStyle, styles?.downloadButtonIcon)}
+              />
+            )}
             aria-live={'polite'}
             aria-label={downloadButtonTitleString}
           />
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme), styles?.smallDownloadButton)}
-            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.fileName)}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             aria-label={downloadButtonTitleString}
             aria-live={'polite'}
           />
