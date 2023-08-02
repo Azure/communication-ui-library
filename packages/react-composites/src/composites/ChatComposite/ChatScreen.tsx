@@ -227,7 +227,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const galleryImage: ImageGalleryImageProps = {
         title: imageName,
         titleIcon: titleIcon,
-        downloadFileName: attachment.id
+        saveAsName: attachment.id,
+        imageUrl: ''
       };
 
       if (attachment.id in fullSizeAttachments) {
@@ -346,7 +347,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           modalLayerHostId={props.modalLayerHostId}
           images={galleryImages}
           onDismiss={() => setGalleryImages(undefined)}
-          onDownloadImage={handleOnDownloadImage}
+          onImageDownloadButtonClicked={handleOnDownloadImage}
         />
       )}
     </Stack>
