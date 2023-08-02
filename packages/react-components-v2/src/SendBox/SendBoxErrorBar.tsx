@@ -8,9 +8,9 @@ import { _Announcer } from '../Announcer';
 import { SendBoxErrorBarProps } from './SendBoxErrorBar.types';
 
 /**
- * @private
+ * @internal
  */
-export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
+export const _SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   const { error, dismissAfterMs, onDismiss } = props;
   const [errorMessage, setErrorMessage] = useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.

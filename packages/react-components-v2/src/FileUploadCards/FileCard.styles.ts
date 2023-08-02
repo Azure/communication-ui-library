@@ -33,7 +33,7 @@ const defaultStack = makeStyles({
  *
  * @internal
  */
-export const _fileCardContainerStyles = makeStyles({
+export const use_fileCardContainerStyles = makeStyles({
   actionItem: {
     ...defaultStack,
     justifyContent: 'center',
@@ -78,4 +78,4 @@ export const _fileCardContainerStyles = makeStyles({
     whiteSpace: 'nowrap',
     paddingRight: _pxToRem(4)
   }
-})();
+});

@@ -8,7 +8,7 @@ import { ForwardRefComponent, getSlots, resolveShorthand } from '@fluentui/react
 
 import { useLocale } from '../localization';
 import { _Announcer } from '../Announcer';
-import { _fileCardContainerStyles } from './FileCard.styles';
+import { use_fileCardContainerStyles } from './FileCard.styles';
 import { _FileCardProps, _FileCardSlots, _FileCardState } from './FileCard.types';
 import { SendBoxStrings } from '../SendBox';
 
@@ -24,9 +24,7 @@ export const _FileCard: ForwardRefComponent<_FileCardProps> = React.forwardRef((
   useEffect(() => {
     setState(use_FileCard(props, ref, localeStrings));
   }, [localeStrings, props, ref]);
-  if (!state) {
-    return <></>;
-  }
+
   return render_FileCard(state);
 });
 
@@ -62,19 +60,24 @@ const use_FileCard = (
   return state;
 };
 
-const render_FileCard = (state: _FileCardState): React.JSX.Element => {
+const render_FileCard = (state?: _FileCardState): React.JSX.Element => {
+  const styles = use_fileCardContainerStyles();
+  if (!state) {
+    return <></>;
+  }
   const { slots, slotProps } = getSlots<_FileCardSlots>(state);
   const { announcerString, actionHandler, fileName, progress, showProgressIndicator } = state;
+
   return (
     <div data-is-focusable={true}>
       <_Announcer announcementString={announcerString} ariaLive={'polite'} />
       <div
-        className={_fileCardContainerStyles.container}
+        className={styles.container}
         onClick={(e) => {
           actionHandler?.(e, fileName);
         }}
       >
-        <div className={_fileCardContainerStyles.fileInfo}>
+        <div className={styles.fileInfo}>
           <Document24Regular />
           {/* <Icon
               data-ui-id={'filetype-icon'}
@@ -86,12 +89,10 @@ const render_FileCard = (state: _FileCardState): React.JSX.Element => {
                 }).iconName
               }
             /> */}
-          <div className={_fileCardContainerStyles.fileNameTextContainer}>
-            <Text className={_fileCardContainerStyles.fileNameText}>{fileName}</Text>
+          <div className={styles.fileNameTextContainer}>
+            <Text className={styles.fileNameText}>{fileName}</Text>
           </div>
-          <div className={_fileCardContainerStyles.actionItem}>
-            {slots.actionIcon && <slots.actionIcon {...slotProps.actionIcon} />}
-          </div>
+          <div className={styles.actionItem}>{slots.actionIcon && <slots.actionIcon {...slotProps.actionIcon} />}</div>
         </div>
       </div>
       {showProgressIndicator && <ProgressBar value={progress} />}

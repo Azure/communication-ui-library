@@ -19,7 +19,7 @@ export const SendBox: ForwardRefComponent<SendBoxProps> = React.forwardRef((prop
   const className = useSendBoxStyles(props);
 
   // const localeStrings = useLocale().strings.sendBox;
-  const strings = { /*...localeStrings, */ ...props.strings };
+  // const strings = { /*...localeStrings, */ ...props.strings };
 
   return (
     <div {...props} className={className} ref={ref}>

@@ -14,7 +14,7 @@ import { _DefaultFileUploaderProps } from './SendBoxDefaultFileUploader.types';
  */
 export const _SendBoxDefaultFileUploader: ForwardRefComponent<_DefaultFileUploaderProps> = React.forwardRef(
   (props, ref) => {
-    const { activeFileUploads } = props;
+    // const { activeFileUploads } = props;
 
     return (
       <div className="">

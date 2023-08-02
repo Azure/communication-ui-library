@@ -23,7 +23,7 @@ const useRootStyles = makeStyles({
  *
  * @returns classname
  *
- * @private
+ * @internal
  */
 export const useFileUploadCardsStyles = (props: _FileUploadCardsProps): string => {
   const internalStyles = useRootStyles();

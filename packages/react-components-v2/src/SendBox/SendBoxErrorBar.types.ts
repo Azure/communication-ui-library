@@ -15,7 +15,7 @@ export interface SendBoxErrorBarError {
 }
 
 /**
- * @private
+ * @internal
  */
 export interface SendBoxErrorBarProps {
   /** Error to render */

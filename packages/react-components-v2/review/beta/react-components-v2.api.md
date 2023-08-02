@@ -6,10 +6,21 @@
 
 /// <reference types="react" />
 
-import type { ComponentProps } from '@fluentui/react-utilities';
-import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import { Button } from '@fluentui/react-components';
+import { ComponentProps } from '@fluentui/react-utilities';
+import { ComponentState } from '@fluentui/react-utilities';
+import { ForwardRefComponent } from '@fluentui/react-utilities';
 import { default as React_2 } from 'react';
-import type { Slot } from '@fluentui/react-utilities';
+import { Slot } from '@fluentui/react-utilities';
+
+// @beta
+export interface ActiveFileUpload {
+    error?: SendBoxErrorBarError;
+    fileName: string;
+    id: string;
+    progress: number;
+    uploadComplete?: boolean;
+}
 
 // @public (undocumented)
 export const COMPONENT_LOCALE_EN_US: ComponentLocale;
@@ -22,6 +33,8 @@ export interface ComponentLocale {
 // @public
 export interface ComponentStrings {
     exampleComponent: ExampleComponentStrings;
+    // (undocumented)
+    sendBox: SendBoxStrings;
 }
 
 // Warning: (ae-internal-missing-underscore) The name "ExampleComponent" should be prefixed with an underscore because the declaration is marked as @internal
@@ -48,6 +61,52 @@ export interface ExampleComponentStrings {
     label: string;
 }
 
+// @internal
+export const _FileCard: ForwardRefComponent<_FileCardProps>;
+
+// @internal
+export type _FileCardProps = Omit<ComponentProps<Partial<_FileCardSlots>, 'root'>, 'className' | 'style' | 'ref' | 'id' | 'tabIndex'> & {
+    actionHandler?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>, fileName: string) => void;
+    fileExtension: string;
+    fileName: string;
+    progress?: number;
+    strings?: _FileUploadCardsStrings;
+};
+
+// @internal
+export type _FileCardSlots = {
+    root: NonNullable<Slot<'div'>>;
+    actionIcon: Slot<typeof Button>;
+};
+
+// @internal
+export type _FileCardState = ComponentState<_FileCardSlots> & Pick<_FileCardProps, 'actionHandler' | 'fileName' | 'progress'> & {
+    announcerString?: string;
+    showProgressIndicator: boolean;
+};
+
+// @internal
+export const _FileUploadCards: ForwardRefComponent<_FileUploadCardsProps>;
+
+// @internal
+export type _FileUploadCardsProps = ComponentProps<_FileUploadCardsSlots> & {
+    activeFileUploads?: ActiveFileUpload[];
+    onCancelFileUpload?: (fileId: string) => void;
+    strings?: _FileUploadCardsStrings;
+};
+
+// @internal
+export type _FileUploadCardsSlots = {
+    root: NonNullable<Slot<'div'>>;
+};
+
+// @internal
+export interface _FileUploadCardsStrings {
+    removeFile: string;
+    uploadCompleted: string;
+    uploading: string;
+}
+
 // @public
 export const LocaleContext: React_2.Context<ComponentLocale>;
 
@@ -60,8 +119,66 @@ export type LocalizationProviderProps = {
     children: React.ReactNode;
 };
 
+// @public
+export const SendBox: ForwardRefComponent<SendBoxProps>;
+
+// @beta
+export interface SendBoxErrorBarError {
+    message: string;
+    timestamp: number;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "SendBoxErrorBarProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal (undocumented)
+export interface SendBoxErrorBarProps {
+    dismissAfterMs?: number;
+    error?: SendBoxErrorBarError;
+    onDismiss?: () => void;
+}
+
+// @public
+export type SendBoxProps = ComponentProps<SendBoxSlots> & {
+    activeFileUploads?: ActiveFileUpload[];
+    autoFocus?: boolean;
+    disabled?: boolean;
+    onCancelFileUpload?: (event: React.UIEvent<HTMLButtonElement>, fileId: string) => void;
+    onSubmit?: (event: React.UIEvent<HTMLButtonElement>, content: string) => void;
+    onTyping?: (event: React.UIEvent<HTMLTextAreaElement>, typingState: boolean) => void;
+    strings?: Partial<SendBoxStrings>;
+};
+
+// @public
+export type SendBoxSlots = {
+    fileUploadRenderer?: NonNullable<Slot<'div'>>;
+    root: NonNullable<Slot<'div'>>;
+    sendButton: NonNullable<Slot<typeof Button>>;
+    systemMessage: NonNullable<Slot<'div'>>;
+};
+
+// @public
+export interface SendBoxStrings {
+    fileUploadsPendingError: string;
+    placeholderText: string;
+    removeFile: string;
+    sendButtonAriaLabel: string;
+    textTooLong: string;
+    uploadCompleted: string;
+    uploading: string;
+}
+
 // @internal
 export const _stable_build_placeholder = 0;
+
+// Warning: (ae-internal-missing-underscore) The name "use_fileCardContainerStyles" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const use_fileCardContainerStyles: () => Record<"container" | "actionItem" | "fileInfo" | "fileNameTextContainer" | "fileNameText", string>;
+
+// Warning: (ae-internal-missing-underscore) The name "useFileUploadCardsStyles" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const useFileUploadCardsStyles: (props: _FileUploadCardsProps) => string;
 
 // @public
 export const useLocale: () => ComponentLocale;
