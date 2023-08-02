@@ -72,6 +72,7 @@ export type CommonCallControlOptions = {
   screenShareButton?: boolean | { disabled: boolean };
   /* @conditional-compile-remove(PSTN-calls) */
   /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Show, Hide or disable the more button during a call.
    * @defaultValue true

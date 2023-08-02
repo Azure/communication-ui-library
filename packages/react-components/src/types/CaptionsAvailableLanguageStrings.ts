@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /**
- * @beta
+ * @public
  * strings for captions setting modal
  */
 export interface CaptionsAvailableLanguageStrings {

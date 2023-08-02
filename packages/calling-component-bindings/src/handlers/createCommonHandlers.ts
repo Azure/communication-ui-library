@@ -29,7 +29,7 @@ import {
   BackgroundReplacementConfig,
   BackgroundReplacementEffect
 } from '@azure/communication-calling-effects';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */
 import { Features } from '@azure/communication-calling';
  /* @conditional-compile-remove(close-captions) */
 import {TeamsCaptions} from "@azure/communication-calling"
@@ -101,7 +101,7 @@ export interface CommonCallingHandlers {
 /**
  * options bag to start captions
  *
- * @beta
+ * @public
  */
 export type CaptionsOptions = {
   spokenLanguage: string;

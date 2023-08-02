@@ -12,10 +12,10 @@ import React from 'react';
 import { useMemo, useCallback } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) *//* @conditional-compile-remove(close-captions) */
 import { buttonFlyoutIncreasedSizeStyles } from '../../CallComposite/styles/Buttons.styles';
 import { MoreButton } from '../MoreButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) *//* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../../localization';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';

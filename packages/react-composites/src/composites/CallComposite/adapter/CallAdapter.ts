@@ -294,7 +294,7 @@ export interface JoinCallOptions {
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
  *
- * @beta
+ * @public
  */
 export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) => void;
 
@@ -302,7 +302,7 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
  *
- * @beta
+ * @public
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
@@ -310,7 +310,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
  *
- * @beta
+ * @public
  */
 export type CaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
 
@@ -318,7 +318,7 @@ export type CaptionLanguageChangedListener = (event: { activeCaptionLanguage: st
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
  *
- * @beta
+ * @public
  */
 export type SpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
 
