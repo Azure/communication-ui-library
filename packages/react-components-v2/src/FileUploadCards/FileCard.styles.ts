@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { makeStyles, tokens } from '@fluentui/react-components';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { _pxToRem } from '@internal/acs-ui-common';
 
 import { _FileCardProps } from './FileCard.types';
@@ -35,47 +35,37 @@ const defaultStack = makeStyles({
  */
 export const use_fileCardContainerStyles = makeStyles({
   actionItem: {
-    ...defaultStack,
     justifyContent: 'center',
     cursor: 'pointer'
   },
   container: {
     ...defaultStack,
     width: '12rem',
-    boxSizing: 'border-box',
-    '> *': {
-      textOverflow: 'ellipsis'
-    },
-    '> :not(:first-child)': {
-      marginTop: '0px'
-    },
-    '> *:not(.ms-StackItem)': {
-      flexShrink: 1
-    },
-    backgroundColor: tokens.colorNeutralBackground2,
-    // borderRadius: tokens.borderRadiusSmall,
-    // border: `${_pxToRem(1)} solid ${theme.palette.neutralQuaternary}`,
-    cursor: 'pointer'
+    backgroundColor: tokens.colorNeutralBackground4,
+    ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    ...shorthands.border(_pxToRem(1), 'solid', tokens.colorNeutralBackground3Pressed),
+    cursor: 'pointer',
+    position: 'relative'
   },
   fileInfo: {
+    ...shorthands.padding(_pxToRem(12)),
+    alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
-    justifyContent: 'space-between',
-    alignItems: 'center'
-    // padding: shorthands.padding(_pxToRem(12))
-  },
-  fileNameTextContainer: {
-    ...defaultStack,
-    paddingLeft: _pxToRem(4),
-    minWidth: '75%',
-    maxWidth: '75%'
+    justifyContent: 'space-between'
   },
   fileNameText: {
-    // overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    ...shorthands.overflow('hidden'),
+    boxSizing: 'border-box',
     lineHeight: 'normal',
-    whiteSpace: 'nowrap',
-    paddingRight: _pxToRem(4)
+    paddingRight: _pxToRem(4),
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap'
+  },
+  progressBar: {
+    ...shorthands.borderRadius(0, 0, tokens.borderRadiusMedium, tokens.borderRadiusMedium),
+    bottom: 0,
+    position: 'absolute'
   }
 });

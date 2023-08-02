@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Button } from '@fluentui/react-components';
+// import { Button } from '@fluentui/react-components';
 import { ComponentProps, ComponentState, Slot } from '@fluentui/react-utilities';
 import { _FileUploadCardsStrings } from './FileUploadCards.strings';
 
@@ -16,7 +16,7 @@ export type _FileCardSlots = {
   /**
    * Icon to display for actions like download, upload, etc. along the file name.
    */
-  actionIcon: Slot<typeof Button>;
+  actionIcon: Slot<'div'>;
 };
 
 /**

@@ -6,7 +6,7 @@
 
 /// <reference types="react" />
 
-import { Button } from '@fluentui/react-components';
+import type { Button } from '@fluentui/react-components';
 import { ComponentProps } from '@fluentui/react-utilities';
 import { ComponentState } from '@fluentui/react-utilities';
 import { ForwardRefComponent } from '@fluentui/react-utilities';
@@ -76,7 +76,7 @@ export type _FileCardProps = Omit<ComponentProps<Partial<_FileCardSlots>, 'root'
 // @internal
 export type _FileCardSlots = {
     root: NonNullable<Slot<'div'>>;
-    actionIcon: Slot<typeof Button>;
+    actionIcon: Slot<'div'>;
 };
 
 // @internal
@@ -173,7 +173,7 @@ export const _stable_build_placeholder = 0;
 // Warning: (ae-internal-missing-underscore) The name "use_fileCardContainerStyles" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal
-export const use_fileCardContainerStyles: () => Record<"container" | "actionItem" | "fileInfo" | "fileNameTextContainer" | "fileNameText", string>;
+export const use_fileCardContainerStyles: () => Record<"container" | "actionItem" | "fileInfo" | "fileNameTextContainer" | "fileNameText" | "progressBar", string>;
 
 // Warning: (ae-internal-missing-underscore) The name "useFileUploadCardsStyles" should be prefixed with an underscore because the declaration is marked as @internal
 //

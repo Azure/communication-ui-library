@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
-import { CalendarCancel20Regular } from '@fluentui/react-icons';
+import { Dismiss20Regular } from '@fluentui/react-icons';
 import { _FileCard } from '@internal/react-components-v2';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -13,7 +13,7 @@ const FileCardStory = (args): JSX.Element => {
   return (
     <FluentProvider theme={webLightTheme}>
       <_FileCard
-        actionIcon={<CalendarCancel20Regular />}
+        actionIcon={<Dismiss20Regular />}
         fileName={args.fileName}
         fileExtension={args.fileExtension}
         progress={args.progress}

@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { ProgressBar, Text } from '@fluentui/react-components';
-import { Document24Regular } from '@fluentui/react-icons';
+import { Document20Regular } from '@fluentui/react-icons';
 import { ForwardRefComponent, getSlots, resolveShorthand } from '@fluentui/react-utilities';
 
 import { useLocale } from '../localization';
@@ -50,7 +50,7 @@ const use_FileCard = (
     announcerString,
     components: {
       root: 'div',
-      actionIcon: 'button'
+      actionIcon: 'div'
     },
     root: {
       ref
@@ -78,24 +78,32 @@ const render_FileCard = (state?: _FileCardState): React.JSX.Element => {
         }}
       >
         <div className={styles.fileInfo}>
-          <Document24Regular />
-          {/* <Icon
-              data-ui-id={'filetype-icon'}
-              iconName={
-                getFileTypeIconProps({
-                  extension: fileExtension,
-                  size: 24,
-                  imageFileType: 'svg'
-                }).iconName
-              }
-            /> */}
-          <div className={styles.fileNameTextContainer}>
-            <Text className={styles.fileNameText}>{fileName}</Text>
+          <div>
+            <Document20Regular data-ui-id={'filetype-icon'} />
+            {/* TODO: FIGURE THIS BIT OUT: */}
+            {/* <Icon
+                data-ui-id={'filetype-icon'}
+                iconName={
+                  getFileTypeIconProps({
+                    extension: fileExtension,
+                    size: 24,
+                    imageFileType: 'svg'
+                  }).iconName
+                }
+              /> */}
           </div>
-          <div className={styles.actionItem}>{slots.actionIcon && <slots.actionIcon {...slotProps.actionIcon} />}</div>
+          <Text className={styles.fileNameText}>{fileName}</Text>
+          {slots.actionIcon && <slots.actionIcon {...slotProps.actionIcon} className={styles.actionItem} />}
         </div>
+        {showProgressIndicator && (
+          <ProgressBar
+            className={styles.progressBar}
+            // hidden={!showProgressIndicator}
+            thickness="large"
+            value={progress}
+          />
+        )}
       </div>
-      {showProgressIndicator && <ProgressBar value={progress} />}
     </div>
   );
 };
