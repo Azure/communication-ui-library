@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -162,6 +164,25 @@ export interface RecordingCallFeatureState {
    */
   isRecordingActive: boolean;
 }
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * State only version of {@link @azure/communication-calling#RaiseHandCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ *
+ * @public
+ */
+export interface RaiseHandCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
+   */
+  raisedHands: RaisedHand[];
+  /**
+   * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
+   */
+  localParticipantRaisedHand?: RaisedHand;
+}
+``;
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
@@ -314,6 +335,12 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
    */
   role?: ParticipantRole;
+
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
+   */
+  raisedHand?: RaisedHand;
 }
 
 /**
@@ -396,6 +423,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeatureState;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
+   */
+  raiseHand: RaiseHandCallFeatureState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.

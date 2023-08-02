@@ -12,6 +12,8 @@ import {
   getIsScreenSharingOn,
   getLocalVideoStreams
 } from './baseSelectors';
+/* @conditional-compile-remove(capabilities) */
+import { getCapabilites } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
@@ -39,11 +41,13 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [getCallExists, getIsMuted, getDeviceManager],
-  (callExists, isMuted, deviceManager) => {
+  [getCallExists, getIsMuted, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
+  (callExists, isMuted, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
+    /* @conditional-compile-remove(capabilities) */
+    const incapable = capabilities?.muteUnmuteMic.isPresent === false;
     return {
-      disabled: !callExists || !permission,
+      disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ incapable,
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
@@ -74,14 +78,19 @@ export type CameraButtonSelector = (
  * @public
  */
 export const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
-  [getLocalVideoStreams, getDeviceManager],
-  (localVideoStreams, deviceManager) => {
+  [getLocalVideoStreams, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
+  (localVideoStreams, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
-
+    /* @conditional-compile-remove(capabilities) */
+    const incapable = capabilities?.turnVideoOnOff.isPresent === false;
     return {
-      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length,
+      disabled:
+        !deviceManager.selectedCamera ||
+        !permission ||
+        !deviceManager.cameras.length ||
+        /* @conditional-compile-remove(capabilities) */ incapable,
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
@@ -99,8 +108,7 @@ export type ScreenShareButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
-  disabled?: boolean;
+  /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
 };
 
 /**
@@ -109,12 +117,24 @@ export type ScreenShareButtonSelector = (
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
-  (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
+  [
+    getIsScreenSharingOn,
+    /* @conditional-compile-remove(PSTN-calls) */ getCallState,
+    /* @conditional-compile-remove(capabilities) */ getCapabilites
+  ],
+  (
+    isScreenSharingOn,
+    /* @conditional-compile-remove(PSTN-calls) */ callState,
+    /* @conditional-compile-remove(capabilities) */ capabilities
+  ) => {
+    let disabled: boolean | undefined = undefined;
+    /* @conditional-compile-remove(capabilities) */
+    disabled = disabled || capabilities?.shareScreen.isPresent === false;
+    /* @conditional-compile-remove(PSTN-calls) */
+    disabled = disabled || ['InLobby', 'Connecting'].includes(callState);
     return {
       checked: isScreenSharingOn,
-      /* @conditional-compile-remove(PSTN-calls) */
-      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
+      disabled
     };
   }
 );
