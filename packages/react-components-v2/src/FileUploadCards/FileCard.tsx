@@ -95,14 +95,12 @@ const render_FileCard = (state?: _FileCardState): React.JSX.Element => {
           <Text className={styles.fileNameText}>{fileName}</Text>
           {slots.actionIcon && <slots.actionIcon {...slotProps.actionIcon} className={styles.actionItem} />}
         </div>
-        {showProgressIndicator && (
-          <ProgressBar
-            className={styles.progressBar}
-            // hidden={!showProgressIndicator}
-            thickness="large"
-            value={progress}
-          />
-        )}
+        <ProgressBar
+          className={styles.progressBar}
+          hidden={!showProgressIndicator}
+          thickness="large"
+          value={progress}
+        />
       </div>
     </div>
   );

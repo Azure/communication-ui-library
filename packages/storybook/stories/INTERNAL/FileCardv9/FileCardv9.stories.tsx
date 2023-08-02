@@ -33,7 +33,6 @@ export default {
   argTypes: {
     fileName: { control: 'text', defaultValue: 'SampleFileName.pdf' },
     fileExtension: { control: 'text', defaultValue: 'pdf' },
-    actionIconName: { control: 'text', defaultValue: 'CancelFileUpload' },
     progress: { control: 'number', defaultValue: 0.5 },
     // Hiding auto-generated controls
     onClick: hiddenControl,
