@@ -185,6 +185,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(video-background-effects) */
+  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
+
+  /* @conditional-compile-remove(video-background-effects) */
   const { openVideoEffectsPane } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
@@ -302,7 +305,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={isTeamsCall && hasJoinedCall}
                   /* @conditional-compile-remove(video-background-effects) */
-                  onShowVideoEffectsPicker={openVideoEffectsPane}
+                  onShowVideoEffectsPicker={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
