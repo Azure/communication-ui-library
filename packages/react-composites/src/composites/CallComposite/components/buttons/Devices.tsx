@@ -3,7 +3,7 @@
 
 import { ControlBarButtonStyles, DevicesButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */
-import { _usePermissions, _Permissions, DevicesButtonStrings } from '@internal/react-components';
+import { DevicesButtonStrings } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '../../styles/Buttons.styles';
@@ -11,6 +11,10 @@ import { concatButtonBaseStyles, devicesButtonWithIncreasedTouchTargets } from '
 import { CompositeLocale, useLocale } from '../../../localization';
 import { _HighContrastAwareIcon } from '@internal/react-components';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
+/* @conditional-compile-remove(rooms) */
+import { useAdapter } from '../../adapter/CallAdapterProvider';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 
 /** @private */
 export const Devices = (props: {
@@ -21,20 +25,22 @@ export const Devices = (props: {
 }): JSX.Element => {
   const devicesButtonProps = usePropsFor(DevicesButton);
   /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
+  const role: ParticipantRole = adapter.getState().call?.role ?? 'Unknown';
 
   const augmentedDeviceButtonProps = useMemo(
     () => ({
       ...devicesButtonProps,
       /* @conditional-compile-remove(rooms) */
-      microphones: !permissions.microphoneButton ? [] : devicesButtonProps.microphones,
+      microphones: role === 'Consumer' ? [] : devicesButtonProps.microphones,
       /* @conditional-compile-remove(rooms) */
-      cameras: !permissions.cameraButton ? [] : devicesButtonProps.cameras
+      cameras: role === 'Consumer' ? [] : devicesButtonProps.cameras
     }),
     [
       devicesButtonProps,
       /* @conditional-compile-remove(rooms) */
-      permissions
+      role
     ]
   );
   const styles = useMemo(
@@ -48,7 +54,7 @@ export const Devices = (props: {
   /* @conditional-compile-remove(rooms) */
   const locale = useLocale();
   /* @conditional-compile-remove(rooms) */
-  const onlyManageSpeakers = !permissions.microphoneButton && !permissions.cameraButton;
+  const onlyManageSpeakers = role === 'Consumer';
 
   /* @conditional-compile-remove(rooms) */
   const onRenderDevicesIcon = (): JSX.Element => {
@@ -65,7 +71,7 @@ export const Devices = (props: {
       data-ui-id="calling-composite-devices-button"
       disabled={props.disabled}
       /* @conditional-compile-remove(rooms) */
-      strings={getLabelFromPermissions(permissions, locale)}
+      strings={getLabelFromRole(role as ParticipantRole, locale)}
       /* @conditional-compile-remove(rooms) */
       onRenderIcon={onlyManageSpeakers ? onRenderDevicesIcon : undefined}
     />
@@ -73,11 +79,11 @@ export const Devices = (props: {
 };
 
 /* @conditional-compile-remove(rooms) */
-const getLabelFromPermissions = (
-  permissions: _Permissions,
+const getLabelFromRole = (
+  role: ParticipantRole,
   locale: CompositeLocale
 ): Partial<DevicesButtonStrings> | undefined => {
-  if (!permissions.cameraButton && !permissions.microphoneButton) {
+  if (role === 'Consumer') {
     return { label: locale.component.strings.microphoneButton.speakerMenuTitle };
   }
   return undefined;

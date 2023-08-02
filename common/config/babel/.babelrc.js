@@ -12,6 +12,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
         'calling-beta-sdk',
+        // Flag to add API only available in the communication-common beta v3
+        'communication-common-beta-v3',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
         // Close captions feature
@@ -38,6 +40,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
+        // raise hands feature
+        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -66,7 +70,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for call transfer
         'call-transfer',
         // Optimal Video Count
-        'optimal-video-count'
+        'optimal-video-count',
+        // Feature for capabilities
+        'capabilities'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -74,7 +80,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
       inProgressFeatures: [
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
-        'in-progress-beta-feature-demo'
+        'in-progress-beta-feature-demo',
+        // raise hands feature
+        'raise-hand',
+        // Feature for capabilities
+        'capabilities'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -95,4 +105,4 @@ plugins.push([
   }
 ]);
 
-module.exports = { plugins };
+module.exports = { plugins, ignore: ["**/*.d.ts"] };

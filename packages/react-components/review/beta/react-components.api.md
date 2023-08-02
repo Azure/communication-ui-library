@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -73,6 +71,15 @@ export interface AttachmentDownloadResult {
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
 }
 
 // @beta
@@ -165,7 +172,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
 };
 
 // @beta
@@ -345,6 +351,7 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    formFactor?: 'default' | 'compact';
     // (undocumented)
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -610,6 +617,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
+    ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -621,11 +629,6 @@ export interface ComponentStrings {
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const consumerPermissions: _Permissions;
 
 // @public
 export interface ContentSystemMessage extends SystemMessageCommon {
@@ -1080,20 +1083,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1111,9 +1112,6 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
-
-// @internal (undocumented)
-export const _getPermissions: (role?: Role | undefined) => _Permissions;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -1200,6 +1198,14 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    previewUrl?: string;
 }
 
 // @public
@@ -1604,8 +1610,15 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
+    totalParticipantCount?: number;
+    strings?: ParticipantListStrings;
     participantAriaLabelledBy?: string;
 };
+
+// @beta
+export interface ParticipantListStrings {
+    overflowParticipantCount?: string;
+}
 
 // @public
 export interface ParticipantListStyles extends BaseCustomStyles {
@@ -1674,24 +1687,6 @@ export type _PermissionConstraints = {
     video: boolean;
 };
 
-// @internal (undocumented)
-export type _Permissions = {
-    cameraButton: boolean;
-    microphoneButton: boolean;
-    screenShare: boolean;
-    removeParticipantButton: boolean;
-    role?: Role;
-};
-
-// @internal (undocumented)
-export const _PermissionsProvider: (props: _PermissionsProviderProps) => JSX.Element;
-
-// @internal
-export type _PermissionsProviderProps = {
-    permissions: _Permissions;
-    children: React_2.ReactNode;
-};
-
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1715,11 +1710,6 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
-
-// Warning: (ae-internal-missing-underscore) The name "presenterPermissions" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const presenterPermissions: _Permissions;
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1754,9 +1744,6 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
-
-// @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2008,9 +1995,6 @@ export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => numb
 
 // @internal
 export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
-
-// @internal
-export const _usePermissions: () => _Permissions;
 
 // @public
 export const useTheme: () => Theme;

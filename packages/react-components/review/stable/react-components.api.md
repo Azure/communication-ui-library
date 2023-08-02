@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -56,6 +54,13 @@ export type AnnouncerProps = {
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export interface BaseFileMetadata {
+    extension: string;
+    name: string;
+    url: string;
 }
 
 // @public
@@ -716,10 +721,10 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    extension: string;
-    name: string;
-    url: string;
+export type FileMetadata = FileSharingMetadata;
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
 }
 
 // @internal

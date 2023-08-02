@@ -79,6 +79,7 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             onClick={onChatButtonClicked}
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'chat'}
+            aria-selected={activeTab === 'chat'}
             role={'tab'}
             disabled={props.disableChatButton}
           >
@@ -92,6 +93,7 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
             onClick={onPeopleButtonClicked}
             styles={mobilePaneButtonStylesThemed}
             checked={activeTab === 'people'}
+            aria-selected={activeTab === 'people'}
             role={'tab'}
             disabled={props.disablePeopleButton}
           >

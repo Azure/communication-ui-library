@@ -15,8 +15,6 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useEffect } from 'react';
@@ -224,11 +222,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const drawerContainerStylesValue = useMemo(() => drawerContainerStyles(DRAWER_Z_INDEX), []);
 
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const role = adapter.getState().call?.role;
 
   let canUnmute = true;
   /* @conditional-compile-remove(rooms) */
-  canUnmute = rolePermissions.microphoneButton;
+  canUnmute = role !== 'Consumer' ? true : false;
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.errorBarProps !== false ? props.latestErrors : [];
 
@@ -237,7 +235,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   /* @conditional-compile-remove(rooms) */
   // TODO: move this logic to the error bar selector once role is plumbed from the headless SDK
-  if (!rolePermissions.cameraButton && props.errorBarProps) {
+  if (role === 'Consumer' && props.errorBarProps) {
     filteredLatestErrors = filteredLatestErrors.filter(
       (e) => e.type !== 'callCameraAccessDenied' && e.type !== 'callCameraAccessDeniedSafari'
     );
@@ -257,12 +255,26 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
+  const verticalControlBar =
+    props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
-        <Stack grow styles={callArrangementContainerStyles}>
+        <Stack
+          reversed
+          horizontal={verticalControlBar}
+          grow
+          styles={callArrangementContainerStyles(verticalControlBar)}
+        >
           {props.callControlProps?.options !== false && !isMobileWithActivePane && (
-            <Stack.Item className={mergeStyles({ zIndex: CONTROL_BAR_Z_INDEX })}>
+            <Stack
+              verticalAlign={'center'}
+              className={mergeStyles({
+                zIndex: CONTROL_BAR_Z_INDEX,
+                padding: verticalControlBar ? '0.25rem' : 'unset'
+              })}
+            >
               {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
                 <CallControls
                   {...props.callControlProps}
@@ -273,6 +285,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   /* @conditional-compile-remove(one-to-n-calling) */
                   onPeopleButtonClicked={togglePeoplePane}
+                  displayVertical={verticalControlBar}
                 />
               ) : (
                 <CommonCallControlBar
@@ -292,9 +305,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onShowVideoEffectsPicker={openVideoEffectsPane}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
+                  displayVertical={verticalControlBar}
                 />
               )}
-            </Stack.Item>
+            </Stack>
           )}
           {props.callControlProps?.options !== false && showDrawer && (
             <Stack styles={drawerContainerStylesValue}>

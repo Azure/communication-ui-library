@@ -4,7 +4,7 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { ActiveErrorMessage, _VideoEffectsItemProps } from '@internal/react-components';
@@ -49,6 +49,8 @@ export const VideoEffectsPaneContent = (props: {
   const adapter = useAdapter();
   /* @conditional-compile-remove(video-background-effects) */
   const strings = locale.strings.call;
+  /* @conditional-compile-remove(video-background-effects) */
+  const activeVideoEffects = useSelector(localVideoSelector).activeVideoEffects?.activeEffects;
   /* @conditional-compile-remove(video-background-effects) */
   const selectableVideoEffects: _VideoEffectsItemProps[] = useMemo(() => {
     const videoEffects: _VideoEffectsItemProps[] = [
@@ -98,18 +100,18 @@ export const VideoEffectsPaneContent = (props: {
         const blurEffect: VideoBackgroundBlurEffect = {
           effectName: effectKey
         };
-        adapter.updateSelectedVideoBackgroundEffect(blurEffect);
         activeVideoEffectChange({
           type: 'blur',
           timestamp: new Date(Date.now())
         });
         await adapter.startVideoBackgroundEffect(blurEffect);
+        adapter.updateSelectedVideoBackgroundEffect(blurEffect);
       } else if (effectKey === 'none') {
         const noneEffect: VideoBackgroundNoEffect = {
           effectName: effectKey
         };
-        adapter.updateSelectedVideoBackgroundEffect(noneEffect);
         await adapter.stopVideoBackgroundEffects();
+        adapter.updateSelectedVideoBackgroundEffect(noneEffect);
       } else {
         const backgroundImg = selectableVideoEffects.find((effect) => {
           return effect.itemKey === effectKey;
@@ -120,17 +122,25 @@ export const VideoEffectsPaneContent = (props: {
             key: effectKey,
             backgroundImageUrl: backgroundImg.backgroundProps.url
           };
-          adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
           activeVideoEffectChange({
             type: 'replacement',
             timestamp: new Date(Date.now())
           });
           await adapter.startVideoBackgroundEffect(replaceEffect);
+          adapter.updateSelectedVideoBackgroundEffect(replaceEffect);
         }
       }
     },
     [adapter, activeVideoEffectChange, selectableVideoEffects]
   );
+
+  /* @conditional-compile-remove(video-background-effects) */
+  if (activeVideoEffectError && activeVideoEffects && activeVideoEffects.length === 0) {
+    const noneEffect: VideoBackgroundNoEffect = {
+      effectName: 'none'
+    };
+    adapter.updateSelectedVideoBackgroundEffect(noneEffect);
+  }
   return VideoEffectsPaneTrampoline(
     onDismissError,
     activeVideoEffectError,
@@ -158,7 +168,7 @@ const VideoEffectsPaneTrampoline = (
 
   /* @conditional-compile-remove(video-background-effects) */
   return (
-    <Stack horizontalAlign="center">
+    <Stack className={mergeStyles({ paddingLeft: '0.5rem' })}>
       {activeVideoEffectError && isCameraOn && (
         <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(activeVideoEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}
