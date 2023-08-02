@@ -1220,7 +1220,7 @@ export interface ImageGalleryImageProps {
     // (undocumented)
     altText?: string;
     // (undocumented)
-    downloadFileName: string;
+    fileName: string;
     // (undocumented)
     imageUrl: string;
     // (undocumented)
@@ -1238,7 +1238,8 @@ export interface ImageGalleryProps {
     // (undocumented)
     onDismiss: () => void;
     // (undocumented)
-    onImageDownloadButtonClicked: (imageUrl: string, downloadFileName: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, fileName: string) => void;
+    startIndex?: number;
     styles?: ImageGalleryStylesProps;
 }
 
@@ -1249,8 +1250,10 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
     downloadButton?: IStyle;
     header?: IStyle;
     image?: IStyle;
+    imageContainer?: IStyle;
     modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
     overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+    smallDownloadButton?: IStyle;
     title?: IStyle;
     titleBarContainer?: IStyle;
 }
