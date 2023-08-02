@@ -3,12 +3,13 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { CallAdapter, VideoBackgroundEffectsDependency } from '../../../src';
+import { CallAdapter } from '../../../src';
 import { MockCallAdapter } from '../lib/MockCallAdapter';
 import { QueryArgs } from './QueryArgs';
 import { BaseApp } from './BaseApp';
 import { initializeIconsForUITests } from '../lib/utils';
 import type { MockCallAdapterState, MockRemoteParticipantState } from '../../common';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 initializeIconsForUITests();
 
