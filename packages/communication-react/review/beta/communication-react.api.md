@@ -6,8 +6,10 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import { BackgroundBlurEffect } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -382,6 +384,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -764,6 +767,11 @@ export interface CallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
+// @beta
+export type CallingHandlersOptions = {
+    onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+};
+
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
@@ -1025,6 +1033,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1635,7 +1644,10 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 
 // @beta
 export type CommonCallAdapterOptions = {
-    videoBackgroundImages?: VideoBackgroundImage[];
+    videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    };
     onFetchProfile?: OnFetchProfileCallback;
 };
 
@@ -2026,13 +2038,18 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 }): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+
+// @public
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
 // @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
+    onResolveVideoBackgroundEffectsDependency?: (() => Promise<VideoBackgroundEffectsDependency>) | undefined;
+} | undefined) => never | TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -3111,6 +3128,12 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
@@ -3743,6 +3766,12 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 
 // @beta
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+
+// @beta
+export type VideoBackgroundEffectsDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
 
 // @beta
 export interface VideoBackgroundImage {
