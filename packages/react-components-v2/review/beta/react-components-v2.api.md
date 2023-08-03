@@ -6,10 +6,124 @@
 
 /// <reference types="react" />
 
+import { Button } from '@fluentui/react-components';
 import type { ComponentProps } from '@fluentui/react-utilities';
+import { ComponentProps as ComponentProps_2 } from '@fluentui/react-components';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import { ForwardRefComponent as ForwardRefComponent_2 } from '@fluentui/react-components';
+import { MenuGroupHeader } from '@fluentui/react-components';
+import { MenuItemProps } from '@fluentui/react-components';
+import { MenuItemRadioProps } from '@fluentui/react-components';
 import { default as React_2 } from 'react';
 import type { Slot } from '@fluentui/react-utilities';
+import { Slot as Slot_2 } from '@fluentui/react-components';
+import { SplitButtonSlots } from '@fluentui/react-components';
+
+// @public (undocumented)
+export const CameraButton: ForwardRefComponent<CameraButtonProps>;
+
+// @public (undocumented)
+export type CameraButtonProps = Omit<ComponentProps<Partial<CameraButtonSlots>>, 'children'> & {
+    cameraOn: boolean;
+    onToggleCamera: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, payload: {
+        cameraOn: boolean;
+    }) => Promise<void>;
+    disabled?: boolean;
+    hideLabel?: boolean;
+};
+
+// @public (undocumented)
+export type CameraButtonSlots = {
+    root: NonNullable<Slot<'div'>>;
+    button: NonNullable<Slot<typeof Button>>;
+    tooltip: NonNullable<Slot<CameraButtonTooltipProps>>;
+};
+
+// @public
+export interface CameraButtonStrings {
+    cameraActionTurnedOffAnnouncement?: string;
+    cameraActionTurnedOnAnnouncement?: string;
+    label: string;
+}
+
+// @public
+export const CameraButtonTooltip: ForwardRefComponent_2<CameraButtonTooltipProps>;
+
+// @public
+export type CameraButtonTooltipProps = TooltipProps & {
+    cameraState: 'on' | 'off' | 'disabled' | 'loading';
+};
+
+// @public
+export interface CameraButtonTooltipStrings {
+    cameraButtonDisabledContent: string;
+    cameraButtonVideoLoadingContent: string;
+    cameraOffContent: string;
+    cameraOnContent: string;
+}
+
+// @public
+export const CameraSelectionMenuGroup: ForwardRefComponent_2<CameraSelectionMenuGroupProps>;
+
+// @public
+export type CameraSelectionMenuGroupProps = Omit<ComponentProps_2<CameraSelectionMenuGroupSlots>, 'children'> & {
+    availableCameras: DeviceDefinition[];
+    selectedCamera: DeviceDefinition;
+    onSelectCamera: (ev: React_2.MouseEvent<HTMLDivElement, MouseEvent>, camera: DeviceDefinition) => void;
+    children?: React_2.ReactNode;
+};
+
+// @public
+export type CameraSelectionMenuGroupSlots = {
+    root: NonNullable<Slot_2<'div'>>;
+    menuGroupHeader?: Slot_2<typeof MenuGroupHeader>;
+};
+
+// @public
+export interface CameraSelectionMenuGroupStrings {
+    label: string;
+}
+
+// @public (undocumented)
+export const CameraSplitButton: ForwardRefComponent<CameraSplitButtonProps>;
+
+// @public (undocumented)
+export type CameraSplitButtonProps = Omit<ComponentProps<CameraSplitButtonSlots>, 'children'> & {
+    cameraOn: boolean;
+    onToggleCamera: (ev: React.MouseEvent<HTMLButtonElement, MouseEvent>, payload: {
+        cameraOn: boolean;
+    }) => Promise<void>;
+    disabled?: boolean;
+};
+
+// @public (undocumented)
+export type CameraSplitButtonSlots = SplitButtonSlots & {
+    tooltip?: Slot<CameraButtonTooltipProps>;
+};
+
+// @public
+export interface CameraSplitButtonStrings extends CameraButtonStrings {
+    cameraOffSplitButtonAriaLabel: string;
+    cameraOnSplitButtonAriaLabel: string;
+    menuTriggerRoleDescription: string;
+}
+
+// @public
+export const CameraToggleMenuItem: ForwardRefComponent_2<CameraToggleMenuItemProps>;
+
+// @public
+export type CameraToggleMenuItemProps = MenuItemProps & {
+    cameraOn: boolean;
+    onToggleCamera: (ev: React.MouseEvent<HTMLDivElement, MouseEvent>, payload: {
+        cameraOn: boolean;
+    }) => Promise<void>;
+};
+
+// @public
+export interface CameraToggleMenuItemStrings {
+    cameraOffLabel: string;
+    cameraOnLabel: string;
+}
 
 // @public (undocumented)
 export const COMPONENT_LOCALE_EN_US: ComponentLocale;
@@ -21,8 +135,46 @@ export interface ComponentLocale {
 
 // @public
 export interface ComponentStrings {
+    // (undocumented)
+    cameraButton: CameraButtonStrings;
+    // (undocumented)
+    cameraButtonTooltip: CameraButtonTooltipStrings;
+    // (undocumented)
+    cameraSelectionMenuGroup: CameraSelectionMenuGroupStrings;
+    // (undocumented)
+    cameraSplitButton: CameraSplitButtonStrings;
+    // (undocumented)
+    cameraToggleMenuItem: CameraToggleMenuItemStrings;
     exampleComponent: ExampleComponentStrings;
 }
+
+// @public
+export interface DeviceDefinition {
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    name: string;
+}
+
+// @public
+export const DeviceMenuItemRadio: React_2.FC<DeviceMenuItemRadioProps>;
+
+// @public
+export type DeviceMenuItemRadioProps = {
+    children?: DeviceMenuItemRadioRenderFunction;
+};
+
+// @public
+export type DeviceMenuItemRadioRenderFunction = (state: DeviceMenuItemRadioRenderState) => React.ReactNode;
+
+// @public
+export type DeviceMenuItemRadioRenderFunctionProps = Partial<MenuItemRadioProps>;
+
+// @public
+export type DeviceMenuItemRadioRenderState = {
+    device: DeviceDefinition;
+    renderDeviceMenuItemRadio: (props?: DeviceMenuItemRadioRenderFunctionProps) => React.ReactNode;
+};
 
 // Warning: (ae-internal-missing-underscore) The name "ExampleComponent" should be prefixed with an underscore because the declaration is marked as @internal
 //
@@ -62,6 +214,9 @@ export type LocalizationProviderProps = {
 
 // @internal
 export const _stable_build_placeholder = 0;
+
+// @public (undocumented)
+export type TooltipProps = any;
 
 // @public
 export const useLocale: () => ComponentLocale;

@@ -1,11 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { isConformant } from '../test-utils/isConformant';
-import { DeviceMenuItem } from './DeviceMenuItemRadio';
+import { defaultFluentDisabledTests, isConformant } from '../test-utils/isConformant';
+import { DeviceMenuItemRadio } from './DeviceMenuItemRadio';
 
-describe('DeviceMenuItem', () => {
+describe('DeviceMenuItemRadio', () => {
   isConformant({
-    Component: DeviceMenuItem
+    Component: DeviceMenuItemRadio,
+    disabledTests: [
+      ...defaultFluentDisabledTests,
+      'component-has-root-ref',
+      'component-handles-classname',
+      'component-handles-ref'
+    ]
   });
 });

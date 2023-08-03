@@ -31,5 +31,7 @@ export const DeviceMenuItemRadio: React.FC<DeviceMenuItemRadioProps> = (props) =
     <MenuItemRadio {...defaultProps} {...(props || {})} />
   );
 
-  return props.children?.({ device, renderDeviceMenuItemRadio: renderFunction }) ?? renderFunction();
+  return <>{props.children?.({ device, renderDeviceMenuItemRadio: renderFunction }) ?? renderFunction()}</>;
 };
+
+DeviceMenuItemRadio.displayName = 'DeviceMenuItemRadio';

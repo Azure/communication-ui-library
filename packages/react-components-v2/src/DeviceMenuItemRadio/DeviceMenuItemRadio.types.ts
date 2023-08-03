@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { MenuItemRadioProps, Slot } from '@fluentui/react-components';
+import { MenuItemRadioProps } from '@fluentui/react-components';
 
 /**
  * Details of a device such as a camera, microphone or speaker.
