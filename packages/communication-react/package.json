@@ -153,7 +153,6 @@
     "rollup": "~2.42.4",
     "scheduler": "^0.23.0",
     "source-map-explorer": "^2.5.0",
-    "styled-components": "~5.2.1",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "ttypescript": "~1.5.15",

@@ -19,7 +19,7 @@ dependencies:
     version: file:projects/acs-ui-common.tgz(@types/node@20.4.5)(ts-node@10.9.1)
   '@rush-temp/calling':
     specifier: file:./projects/calling.tgz
-    version: file:projects/calling.tgz(ts-node@10.9.1)
+    version: file:projects/calling.tgz(babel-eslint@10.1.0)(ts-node@10.9.1)
   '@rush-temp/calling-component-bindings':
     specifier: file:./projects/calling-component-bindings.tgz
     version: file:projects/calling-component-bindings.tgz(@types/node@20.4.5)(ts-node@10.9.1)
@@ -28,10 +28,10 @@ dependencies:
     version: file:projects/calling-stateful-client.tgz(@types/node@20.4.5)(ts-node@10.9.1)
   '@rush-temp/callwithchat':
     specifier: file:./projects/callwithchat.tgz
-    version: file:projects/callwithchat.tgz(ts-node@10.9.1)
+    version: file:projects/callwithchat.tgz(babel-eslint@10.1.0)(ts-node@10.9.1)
   '@rush-temp/chat':
     specifier: file:./projects/chat.tgz
-    version: file:projects/chat.tgz(@types/node@20.4.5)(ts-node@10.9.1)
+    version: file:projects/chat.tgz(@types/node@20.4.5)(babel-eslint@10.1.0)(ts-node@10.9.1)
   '@rush-temp/chat-component-bindings':
     specifier: file:./projects/chat-component-bindings.tgz
     version: file:projects/chat-component-bindings.tgz(@types/node@20.4.5)(ts-node@10.9.1)
@@ -49,7 +49,7 @@ dependencies:
     version: file:projects/communication-react.tgz
   '@rush-temp/component-examples':
     specifier: file:./projects/component-examples.tgz
-    version: file:projects/component-examples.tgz
+    version: file:projects/component-examples.tgz(babel-eslint@10.1.0)
   '@rush-temp/config':
     specifier: file:./projects/config.tgz
     version: file:projects/config.tgz
@@ -79,7 +79,7 @@ dependencies:
     version: file:projects/server.tgz(@babel/core@7.22.9)
   '@rush-temp/storybook':
     specifier: file:./projects/storybook.tgz
-    version: file:projects/storybook.tgz(webpack-cli@5.1.4)
+    version: file:projects/storybook.tgz(styled-components@5.2.3)(webpack-cli@5.1.4)
 
 packages:
 
@@ -2282,6 +2282,24 @@ packages:
       scheduler: 0.23.0
     dev: false
 
+  /@fluentui/react-conformance-griffel@9.0.1(@fluentui/react-conformance@0.17.1)(@types/react-dom@18.2.7)(@types/react@18.2.17)(react@18.2.0)(typescript@4.7.4):
+    resolution: {integrity: sha512-uaMfmTvn0GpUcKANv0KjeEUc3fwqhygg30MD/Vf48kdkyM+RGj+O4i9+PSJ+ZzPGvf+pYz3QwnNHvL5Sp7Uw1g==}
+    peerDependencies:
+      '@fluentui/react-conformance': ^0.17.1
+      '@types/react': '>=16.8.0 <19.0.0'
+      '@types/react-dom': '>=16.8.0 <19.0.0'
+      typescript: ^4.3.0
+    dependencies:
+      '@fluentui/react-conformance': 0.17.1(@testing-library/react@14.0.0)(@types/react-dom@18.2.7)(@types/react@18.2.18)(jest@29.6.2)(react-dom@18.2.0)(react@18.2.0)(typescript@4.7.4)
+      '@griffel/react': 1.5.14(react@18.2.0)
+      '@swc/helpers': 0.4.14
+      '@types/react': 18.2.17
+      '@types/react-dom': 18.2.7
+      typescript: 4.7.4
+    transitivePeerDependencies:
+      - react
+    dev: false
+
   /@fluentui/react-conformance@0.17.1(@testing-library/react@14.0.0)(@types/react-dom@18.2.7)(@types/react@18.2.17)(jest@29.6.2)(react-dom@18.2.0)(react@18.2.0)(typescript@4.7.4):
     resolution: {integrity: sha512-7Q3vSkaG5h0R8PAkAa6G8KpluxjBH+UiGi+bzKUp9aoSQiDR0BUuaK/lGJTn4rDwQ+lmnosSNm53gGgd0cJLyQ==}
     peerDependencies:
@@ -2296,6 +2314,31 @@ packages:
       '@swc/helpers': 0.4.14
       '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.17
+      '@types/react-dom': 18.2.7
+      chalk: 2.4.2
+      jest: 29.6.2(@types/node@20.4.5)(ts-node@10.9.1)
+      lodash: 4.17.21
+      react: 18.2.0
+      react-docgen-typescript: 2.2.2(typescript@4.7.4)
+      react-dom: 18.2.0(react@18.2.0)
+      react-is: 17.0.2
+      typescript: 4.7.4
+    dev: false
+
+  /@fluentui/react-conformance@0.17.1(@testing-library/react@14.0.0)(@types/react-dom@18.2.7)(@types/react@18.2.18)(jest@29.6.2)(react-dom@18.2.0)(react@18.2.0)(typescript@4.7.4):
+    resolution: {integrity: sha512-7Q3vSkaG5h0R8PAkAa6G8KpluxjBH+UiGi+bzKUp9aoSQiDR0BUuaK/lGJTn4rDwQ+lmnosSNm53gGgd0cJLyQ==}
+    peerDependencies:
+      '@testing-library/react': ^12.0.0
+      '@types/react': '>=16.8.0 <19.0.0'
+      '@types/react-dom': '>=16.8.0 <19.0.0'
+      jest: ^26.0.0
+      react: '>=16.8.0 <19.0.0'
+      react-dom: '>=16.8.0 <19.0.0'
+      typescript: ^4.3.0
+    dependencies:
+      '@swc/helpers': 0.4.14
+      '@testing-library/react': 14.0.0(react-dom@18.2.0)(react@18.2.0)
+      '@types/react': 18.2.18
       '@types/react-dom': 18.2.7
       chalk: 2.4.2
       jest: 29.6.2(@types/node@20.4.5)(ts-node@10.9.1)
@@ -20064,8 +20107,8 @@ packages:
       - ts-node
     dev: false
 
-  file:projects/calling.tgz(ts-node@10.9.1):
-    resolution: {integrity: sha512-zYN+PF6vVfQso9a6BcqMzjPsiMXImsmpaztpCDlbt60kdi9sgOEdB992jrFEBIaLb8FEBD5f7ELuIsmAroXNng==, tarball: file:projects/calling.tgz}
+  file:projects/calling.tgz(babel-eslint@10.1.0)(ts-node@10.9.1):
+    resolution: {integrity: sha512-3CGkhw8zqA6OYFvCwOEE9nUulXubeLz335Fo1BIGW+24wURnf1zYI8T82glFZ9izG+pPnw013eLU8vyeMceFqQ==, tarball: file:projects/calling.tgz}
     id: file:projects/calling.tgz
     name: '@rush-temp/calling'
     version: 0.0.0
@@ -20090,7 +20133,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 6.2.1(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 6.2.1(eslint@8.46.0)(typescript@4.7.4)
       ajv: 6.12.6
-      babel-eslint: 10.1.0(eslint@8.46.0)
       babel-jest: 29.6.2(@babel/core@7.22.9)
       babel-loader: 8.1.0(@babel/core@7.22.9)(webpack@5.88.2)
       concurrently: 5.3.0
@@ -20139,6 +20181,7 @@ packages:
       - '@swc/core'
       - '@types/eslint'
       - '@webpack-cli/generators'
+      - babel-eslint
       - babel-plugin-macros
       - bufferutil
       - debug
@@ -20155,8 +20198,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  file:projects/callwithchat.tgz(ts-node@10.9.1):
-    resolution: {integrity: sha512-LAPOlz7qHr7avEI/4pIbm0KzUB65EzfUzpigW/THPrD2kuCxWCIi/zm2afF6pKcwVS1z8ZlEm3APB11WRCabaw==, tarball: file:projects/callwithchat.tgz}
+  file:projects/callwithchat.tgz(babel-eslint@10.1.0)(ts-node@10.9.1):
+    resolution: {integrity: sha512-kUjJ3ah305Zj4Veo+AN7So+rCUjaZHTke8N3ITykdzgTRepgXdRr3AYVNBq8s8Xg4N5SDn06y8RBeRv58WJR+Q==, tarball: file:projects/callwithchat.tgz}
     id: file:projects/callwithchat.tgz
     name: '@rush-temp/callwithchat'
     version: 0.0.0
@@ -20181,7 +20224,6 @@ packages:
       '@typescript-eslint/eslint-plugin': 6.2.1(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 6.2.1(eslint@8.46.0)(typescript@4.7.4)
       ajv: 6.12.6
-      babel-eslint: 10.1.0(eslint@8.46.0)
       babel-jest: 29.6.2(@babel/core@7.22.9)
       babel-loader: 8.1.0(@babel/core@7.22.9)(webpack@5.88.2)
       concurrently: 5.3.0
@@ -20228,6 +20270,7 @@ packages:
       - '@swc/core'
       - '@types/eslint'
       - '@webpack-cli/generators'
+      - babel-eslint
       - babel-plugin-macros
       - bufferutil
       - debug
@@ -20342,8 +20385,8 @@ packages:
       - ts-node
     dev: false
 
-  file:projects/chat.tgz(@types/node@20.4.5)(ts-node@10.9.1):
-    resolution: {integrity: sha512-g27lEt+r2quqqWQZWX3CzH3V3tVpSuwpO7IkTmCHRPhNZqyhnuStkBfvlxaBw6Z2kHs58oFQJyWHWx48BS49eQ==, tarball: file:projects/chat.tgz}
+  file:projects/chat.tgz(@types/node@20.4.5)(babel-eslint@10.1.0)(ts-node@10.9.1):
+    resolution: {integrity: sha512-riuCGQVc6EEpdhDPwTr100vOS4LFSx3J+e/jlipSnBCVIe1DWIx263pWEswrUNO8qyX9Wp30JwVxZXCMoNz+vQ==, tarball: file:projects/chat.tgz}
     id: file:projects/chat.tgz
     name: '@rush-temp/chat'
     version: 0.0.0
@@ -20365,7 +20408,6 @@ packages:
       '@types/react-linkify': 1.0.1
       '@typescript-eslint/eslint-plugin': 6.2.1(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 6.2.1(eslint@8.46.0)(typescript@4.7.4)
-      babel-eslint: 10.1.0(eslint@8.46.0)
       babel-loader: 8.1.0(@babel/core@7.22.9)(webpack@5.88.2)
       concurrently: 5.3.0
       copyfiles: 2.4.1
@@ -20409,6 +20451,7 @@ packages:
       - '@types/eslint'
       - '@types/node'
       - '@webpack-cli/generators'
+      - babel-eslint
       - babel-plugin-macros
       - bufferutil
       - debug
@@ -20472,7 +20515,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-xj1wn1gaHekUJNJFQIercN6vdmo/e980oZ2RHMgjlIiPGRqzipD+w8v28gbItlSQe2uVaPOYeFqFhOH/toc66g==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-e5Ixnp1kAUU+Z/V0kcsSGI6aNjhrd9FmN0O0y6kHQwok3mL+0QuXXKfyAeSp7kjtohWXNY6qSejgXfeBMX6DBA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -20575,8 +20618,9 @@ packages:
       - supports-color
     dev: false
 
-  file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-PtVgBJjXLM3/YwhBcArC9OKZSKSzRs/rOUTuyrfmcG7yeT+x65WUeBavZu6eUDjaJq0XwUxmsf76aDZ/bqQuJQ==, tarball: file:projects/component-examples.tgz}
+  file:projects/component-examples.tgz(babel-eslint@10.1.0):
+    resolution: {integrity: sha512-ssSbuOe1A4EAkAeRP5RUzPs1GJ9KBIjhzCYs9nBDN9JBaRhdHwaeKVlFnmpjewduvR+P3AtiDd/NFgrBsrIRyg==, tarball: file:projects/component-examples.tgz}
+    id: file:projects/component-examples.tgz
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -20591,7 +20635,6 @@ packages:
       '@types/uuid': 9.0.2
       '@typescript-eslint/eslint-plugin': 6.2.1(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@4.7.4)
       '@typescript-eslint/parser': 6.2.1(eslint@8.46.0)(typescript@4.7.4)
-      babel-eslint: 10.1.0(eslint@8.46.0)
       babel-loader: 8.1.0(@babel/core@7.22.9)(webpack@5.88.2)
       concurrently: 5.3.0
       css-loader: 4.3.0(webpack@5.88.2)
@@ -20626,6 +20669,7 @@ packages:
       - '@swc/core'
       - '@types/eslint'
       - '@webpack-cli/generators'
+      - babel-eslint
       - bufferutil
       - debug
       - encoding
@@ -20751,7 +20795,7 @@ packages:
     dev: false
 
   file:projects/react-components-v2.tgz(webpack-cli@5.1.4):
-    resolution: {integrity: sha512-5lj7ULtZ7xQk1q1vBVl/gPRcChC5WP2JSPL3QKC2eE5HOC9DQJNBWSVYd5rEvo41NzjB9y726JwN0Uk9JX+j1A==, tarball: file:projects/react-components-v2.tgz}
+    resolution: {integrity: sha512-UZ+anciqkjXcYevRud5TzfTz3bPRQznRU3Ln2CSiZb8GfuMCEAc+FqvwY3+Ymq04iKcDiUq4cxyuZYB7xybxog==, tarball: file:projects/react-components-v2.tgz}
     id: file:projects/react-components-v2.tgz
     name: '@rush-temp/react-components-v2'
     version: 0.0.0
@@ -20761,7 +20805,8 @@ packages:
       '@babel/preset-env': 7.13.10(@babel/core@7.22.9)
       '@fluentui/react-aria': 9.3.27(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0)(react@18.2.0)
       '@fluentui/react-components': 9.27.3(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
-      '@fluentui/react-conformance': 0.17.1(@testing-library/react@14.0.0)(@types/react-dom@18.2.7)(@types/react@18.2.17)(jest@29.6.2)(react-dom@18.2.0)(react@18.2.0)(typescript@4.7.4)
+      '@fluentui/react-conformance': 0.17.1(@testing-library/react@14.0.0)(@types/react-dom@18.2.7)(@types/react@18.2.18)(jest@29.6.2)(react-dom@18.2.0)(react@18.2.0)(typescript@4.7.4)
+      '@fluentui/react-conformance-griffel': 9.0.1(@fluentui/react-conformance@0.17.1)(@types/react-dom@18.2.7)(@types/react@18.2.17)(react@18.2.0)(typescript@4.7.4)
       '@fluentui/react-context-selector': 9.1.26(@types/react-dom@18.2.7)(@types/react@18.2.17)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0)
       '@fluentui/react-file-type-icons': 8.10.0(@types/react@18.2.17)(react@18.2.0)
       '@fluentui/react-icons': 2.0.209(react@18.2.0)
@@ -20855,7 +20900,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz(webpack-cli@5.1.4):
-    resolution: {integrity: sha512-/X+kGdQPt33CMixxIc8pUEV6B4VYDB5jxNa2sr3VAUpIjaVJcV4IMeJAOfK0NOlUuo6Y0s2BcZ7EC4n2MmMs+Q==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-vyxWK20OVAApVKIeFqmydcP6a74wYtqlN0KzGAF06aW8LCo0GZrz0DzFN3f1f2EXEzcwLw7qkV+pim8rfMYqCQ==, tarball: file:projects/react-components.tgz}
     id: file:projects/react-components.tgz
     name: '@rush-temp/react-components'
     version: 0.0.0
@@ -20956,7 +21001,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-/YLNs92Vn6mgJqRDr/Y+/fyWKUbBkOtX3Wa/XwieeFQNbrU7XwlYR6oWkHCCLeyuU753asgE8qd6SZnP+RaqCQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-qwn7UGiHJZOSrB7E3ArPKomHam4/NrFM/fts6Q8gNOlBDAxBFgUi8WTu5VxcENx9PF8U8wno6Dekiki7s3nIkA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -21102,7 +21147,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz(@types/react-dom@18.2.7)(@types/react@18.2.18):
-    resolution: {integrity: sha512-M53ptaA1TkWyweuAlo5ELkBlAVFhHGv74V9V+6C+KvgaywTx2fSzOSt6KpCroCmVVz1Lzkna+nUaB+v2Rr/VWQ==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-xYm6Q+Yyqfm+5Am97QsDXNBJ5F+F6C0fggXRlRUNRfcAYyt+O+wI+PO/sr6gKrC6r7aSLtmwCWCy2C5vcyQecA==, tarball: file:projects/sample-static-html-composites.tgz}
     id: file:projects/sample-static-html-composites.tgz
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
@@ -21223,8 +21268,8 @@ packages:
       - webpack-dev-server
     dev: false
 
-  file:projects/storybook.tgz(webpack-cli@5.1.4):
-    resolution: {integrity: sha512-AJmOITVquCRNV4snCRc4MsACdExu4UMTC5H0IAQJ1xKXxm2tiXlSitmxwJBb3yRoeBVxPuEGd1hQEg85XK8RFg==, tarball: file:projects/storybook.tgz}
+  file:projects/storybook.tgz(styled-components@5.2.3)(webpack-cli@5.1.4):
+    resolution: {integrity: sha512-xZ25+YLwm0HaIFdTSUlhgVEyV8URzU7nOHBNDSq/RPbpH3A+ieyxlIrqlu5S1Tl1nm6rcRWvTyI5sILj1Qv1CQ==, tarball: file:projects/storybook.tgz}
     id: file:projects/storybook.tgz
     name: '@rush-temp/storybook'
     version: 0.0.0
@@ -21280,7 +21325,6 @@ packages:
       concurrently: 5.3.0
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
-      core-js: 3.32.0
       eslint: 8.46.0
       eslint-config-prettier: 8.9.0(eslint@8.46.0)
       eslint-plugin-header: 3.1.1(eslint@8.46.0)
@@ -21311,7 +21355,6 @@ packages:
       shell-quote: 1.8.1
       source-map-explorer: 2.5.3
       storybook-docs-toc: 1.7.0(@storybook/addon-docs@6.5.16)(react-dom@18.2.0)(react@18.2.0)(styled-components@5.2.3)
-      styled-components: 5.2.3(@babel/core@7.22.9)(react-dom@18.2.0)(react-is@18.2.0)(react@18.2.0)
       ts-jest: 29.1.1(@babel/core@7.22.9)(babel-jest@29.6.2)(jest@29.6.2)(typescript@4.7.4)
       ts-node: 10.9.1(@types/node@20.4.5)(typescript@4.7.4)
       tslib: 2.5.3
@@ -21348,6 +21391,7 @@ packages:
       - node-notifier
       - rxjs
       - sockjs-client
+      - styled-components
       - supports-color
       - svelte
       - sveltedoc-parser
