@@ -19,8 +19,6 @@ import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/call
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(rooms) */
-import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -87,8 +85,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   };
   /* @conditional-compile-remove(raise-hand) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
-  /* @conditional-compile-remove(rooms) */
-  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 

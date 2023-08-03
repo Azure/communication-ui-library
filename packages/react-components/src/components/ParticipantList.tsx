@@ -12,7 +12,9 @@ import {
 } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 /* @conditional-compile-remove(total-participant-count) */
-import { Text } from '@fluentui/react';
+import { Text, Image } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hand) */
+import raisedHandSVG from './assets/raisedHand.svg';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -92,9 +94,6 @@ export type ParticipantListProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onRemoveParticipant?: (userId: string) => void;
-  /* @conditional-compile-remove(raise-hand) */
-  /** Optional callback when to update raised hand states for participants  */
-  onLowerParticipantHand?: (userIds: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
@@ -135,6 +134,8 @@ const onRenderParticipantDefault = (
     }
   }
 
+  const imageProps = { src: raisedHandSVG.toString() };
+
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
@@ -159,11 +160,8 @@ const onRenderParticipantDefault = (
                     <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                   </Stack.Item>
                   <Stack.Item>
-                    <Icon
-                      iconName="ParticipantItemRaisedHand"
-                      className={iconStyles}
-                      ariaLabel={strings.raisedHandIconLabel}
-                    />
+                    <Image {...imageProps} />
+                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} />
                   </Stack.Item>
                 </Stack>
               )
@@ -255,8 +253,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     myUserId,
     participants,
     onRemoveParticipant,
-    /* @conditional-compile-remove(raise-hand) */
-    onLowerParticipantHand,
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
@@ -296,23 +292,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         });
       }
 
-      /* This block is depend on capabilities implementation because only organizer and presenter can lower hand */
-      /* @conditional-compile-remove(raise-hand) */
-      /* @conditional-compile-remove(capabilities) */
-      const remoteParticipant = participant as CallParticipantListParticipant;
-      /* @conditional-compile-remove(raise-hand) */
-      /* @conditional-compile-remove(capabilities) */
-      if (remoteParticipant.raisedHand && onLowerParticipantHand) {
-        menuItems.push({
-          key: 'lowerHand',
-          text: participantItemStrings.lowerParticipantHandButtonLabel,
-          onClick: () => onLowerParticipantHand(participant.userId),
-          itemProps: {
-            styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
-          }
-        });
-      }
-
       if (onFetchParticipantMenuItems) {
         menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
       }
@@ -324,13 +303,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       myUserId,
       onFetchParticipantMenuItems,
       onRemoveParticipant,
-      /* @conditional-compile-remove(raise-hand) */
-      onLowerParticipantHand,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
       /* @conditional-compile-remove(raise-hand) */
-      participantItemStrings.removeButtonLabel,
-      /* @conditional-compile-remove(raise-hand) */
-      participantItemStrings.lowerParticipantHandButtonLabel
+      participantItemStrings.removeButtonLabel
     ]
   );
 

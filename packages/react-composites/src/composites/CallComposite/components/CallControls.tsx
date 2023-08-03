@@ -191,15 +191,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
+  const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+
   /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonIsEnabled = true;
-
-  /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
-
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>

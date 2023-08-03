@@ -41,7 +41,7 @@ export const _LocalVideoTile = React.memo(
     styles?: VideoTileStylesProps;
     personaMinSize?: number;
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: RaisedHand;
+    raisedHand?: RaisedHand;
   }) => {
     const {
       isAvailable,
