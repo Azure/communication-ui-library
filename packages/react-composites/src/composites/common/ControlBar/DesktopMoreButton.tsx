@@ -42,7 +42,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
-  onSetUserSetOverflowGalleryPosition: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
+  onSetUserSetOverflowGalleryPosition?: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
 }
 
 /**
@@ -182,35 +182,38 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
   }
 
-  moreButtonContextualMenuItems.push({
-    key: 'overflowGalleryPositionKey',
-    text: 'Overflow Gallery Position',
-    subMenuProps: {
-      items: [
-        {
-          key: 'topKey',
-          text: 'Top',
-          onClick: () => {
-            props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
+  if (props.onSetUserSetOverflowGalleryPosition) {
+    moreButtonContextualMenuItems.push({
+      key: 'overflowGalleryPositionKey',
+      text: 'Overflow Gallery Position',
+      subMenuProps: {
+        items: [
+          {
+            key: 'topKey',
+            text: 'Top',
+            onClick: () => {
+              props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
+            }
+          },
+          {
+            key: 'bottomKey',
+            text: 'Bottom',
+            onClick: () => {
+              props.onSetUserSetOverflowGalleryPosition &&
+                props.onSetUserSetOverflowGalleryPosition('HorizontalBottom');
+            }
+          },
+          {
+            key: 'rightKey',
+            text: 'Right',
+            onClick: () => {
+              props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('VerticalRight');
+            }
           }
-        },
-        {
-          key: 'bottomKey',
-          text: 'Bottom',
-          onClick: () => {
-            props.onSetUserSetOverflowGalleryPosition('HorizontalBottom');
-          }
-        },
-        {
-          key: 'rightKey',
-          text: 'Right',
-          onClick: () => {
-            props.onSetUserSetOverflowGalleryPosition('VerticalRight');
-          }
-        }
-      ]
-    }
-  });
+        ]
+      }
+    });
+  }
 
   /* @conditional-compile-remove(control-bar-button-injection) */
   const customDrawerButtons = useMemo(

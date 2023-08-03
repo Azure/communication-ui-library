@@ -50,7 +50,7 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   displayVertical?: boolean;
-  onSetUserSetOverflowGalleryPosition: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
+  onSetUserSetOverflowGalleryPosition?: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
 }
 
 const inferCommonCallControlOptions = (

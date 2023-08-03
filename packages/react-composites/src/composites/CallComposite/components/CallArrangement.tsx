@@ -93,7 +93,7 @@ export interface CallArrangementProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
-  onSetUserSetOverflowGalleryPosition: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
+  onSetUserSetOverflowGalleryPosition?: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
 }
 
 /**
