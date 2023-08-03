@@ -8,7 +8,6 @@ import { PeopleButton } from './PeopleButton';
 import {
   concatStyleSets,
   IButton,
-  IRefObject,
   IStyle,
   ITheme,
   mergeStyles,
