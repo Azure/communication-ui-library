@@ -29,7 +29,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
  * @public
  */
 export type RaisedHand = {
-  raisedHandOrderPosition: number;
+  order: number;
 };
 
 /**

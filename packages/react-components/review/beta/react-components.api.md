@@ -1720,7 +1720,7 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 
 // @public
 export type RaisedHand = {
-    raisedHandOrderPosition: number;
+    order: number;
 };
 
 // @public
@@ -2114,9 +2114,7 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
-    raisedHand?: RaisedHand;
-}
+export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
 
 // @public
 export type VideoGalleryParticipant = {

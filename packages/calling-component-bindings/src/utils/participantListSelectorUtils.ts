@@ -6,7 +6,7 @@ import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
-import { RaisedHandState } from '@internal/calling-stateful-client';
+import { RaisedHand } from '@azure/communication-calling';
 
 /**
  * @private
@@ -71,7 +71,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
-    raisedHand: RaisedHandState | undefined,
+    raisedHand: RaisedHand | undefined,
     localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
@@ -95,7 +95,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
-  raisedHand: RaisedHandState | undefined,
+  raisedHand: RaisedHand | undefined,
   localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   return {

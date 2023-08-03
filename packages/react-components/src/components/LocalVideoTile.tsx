@@ -12,7 +12,8 @@ import {
   LocalVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '../types';
 /**
  * A memoized version of VideoTile for rendering local participant.
  *

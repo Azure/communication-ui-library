@@ -13,8 +13,6 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 /* @conditional-compile-remove(total-participant-count) */
 import { Text, Image } from '@fluentui/react';
-/* @conditional-compile-remove(raise-hand) */
-import raisedHandSVG from './assets/raisedHand.svg';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -134,7 +132,8 @@ const onRenderParticipantDefault = (
     }
   }
 
-  const imageProps = { src: raisedHandSVG.toString() };
+  /* @conditional-compile-remove(raise-hand) */
+  const imageProps = { src: 'assets/raisedHand.svg' };
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
@@ -158,7 +157,7 @@ const onRenderParticipantDefault = (
               /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
                 <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
                   <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                    <Text>{callingParticipant.raisedHand?.order}</Text>
                   </Stack.Item>
                   <Stack.Item>
                     <Image {...imageProps} />
