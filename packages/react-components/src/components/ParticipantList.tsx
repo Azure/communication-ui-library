@@ -12,10 +12,11 @@ import {
 } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 /* @conditional-compile-remove(total-participant-count) */
-import { Text, Theme } from '@fluentui/react';
+import { Text, Theme, Image } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
-import { useTheme, CallingTheme } from '../theming';
-import { Text, Image } from '@fluentui/react';
+import { useTheme } from '../theming';
+/* @conditional-compile-remove(raise-hand) */
+import raiseHandSVG from './assets/raisedHand.svg';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -128,11 +129,6 @@ const onRenderParticipantDefault = (
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
-  /* @conditional-compile-remove(raise-hand) */
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-  /* @conditional-compile-remove(raise-hand) */
-  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
-
   let presence: PersonaPresence | undefined = undefined;
   if (callingParticipant) {
     if (callingParticipant.state === 'Connected') {
@@ -141,9 +137,6 @@ const onRenderParticipantDefault = (
       presence = PersonaPresence.away;
     }
   }
-
-  /* @conditional-compile-remove(raise-hand) */
-  const imageProps = { src: 'assets/raisedHand.svg' };
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
@@ -166,15 +159,10 @@ const onRenderParticipantDefault = (
                   }}
                 >
                   <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                    <Text>{callingParticipant.raisedHand?.order}</Text>
                   </Stack.Item>
                   <Stack.Item>
-                    <Icon
-                      iconName="ParticipantItemRaisedHand"
-                      className={iconStyles}
-                      ariaLabel={strings.raisedHandIconLabel}
-                      style={raiseHandIconStyle}
-                    />
+                    <Image src={raiseHandSVG.toString()} />
                   </Stack.Item>
                 </Stack>
               )
@@ -189,19 +177,6 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
-            {
-              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
-                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
-                  <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.order}</Text>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Image {...imageProps} />
-                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} />
-                  </Stack.Item>
-                </Stack>
-              )
-            }
           </Stack>
         )
       : () => null;

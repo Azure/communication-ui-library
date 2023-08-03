@@ -11,8 +11,6 @@ import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
-import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare';

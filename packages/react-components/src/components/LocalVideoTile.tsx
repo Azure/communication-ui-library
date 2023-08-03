@@ -59,7 +59,9 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview,
       localVideoCameraCycleButtonProps,
       localVideoCameraSwitcherLabel,
-      localVideoSelectedDescription
+      localVideoSelectedDescription,
+      /* @conditional-compile-remove(raise-hand) */
+      raisedHand
     } = props;
 
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
@@ -124,6 +126,8 @@ export const _LocalVideoTile = React.memo(
         isMuted={isMuted}
         showMuteIndicator={showMuteIndicator}
         personaMinSize={props.personaMinSize}
+        /* @conditional-compile-remove(raise-hand) */
+        raisedHand={raisedHand}
       />
     );
   }

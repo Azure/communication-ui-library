@@ -11,6 +11,10 @@ import { CallingTheme, useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { Image } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hand) */
+import raiseHandSVG from './assets/raisedHand.svg';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
@@ -325,7 +329,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
-  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
 
   const tileInfoStyle = useMemo(
     () =>
@@ -458,15 +461,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               }}
             >
               <Stack.Item>
-                <Text>{raisedHand.raisedHandOrderPosition}</Text>
+                <Text>{raisedHand.order}</Text>
               </Stack.Item>
               <Stack.Item>
-                <Icon
-                  iconName="ParticipantItemRaisedHand"
-                  className="icon-raise-hand"
-                  ariaLabel=""
-                  style={raiseHandIconStyle}
-                />
+                <Image src={raiseHandSVG.toString()} />
               </Stack.Item>
             </Stack>
           )
