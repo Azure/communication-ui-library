@@ -241,7 +241,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     if (disabled || textValueOverflow) {
       return;
     }
-
     // Don't send message until all files have been uploaded successfully
     setFileUploadsPendingError(undefined);
 
@@ -252,11 +251,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     const message = textValue;
+    console.log('sendMessageOnClick::::' + message);
+
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
     if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(message));
-      setTextValue('');
+      // setTextValue('');
     }
     sendTextFieldRef.current?.focus();
   };
@@ -372,7 +373,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           id="sendbox"
           placeholderText={strings.placeholderText}
           textValue={textValue}
-          onChange={(_, newValue) => setText(newValue)}
+          onChange={(newValue) => setText(newValue)}
           onKeyDown={(ev) => {
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
             if (!keyWasSendingMessage) {

@@ -4,62 +4,114 @@
 import * as React from 'react';
 import { ContentEdit } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import { EditorOptions, EditorPlugin, IEditor } from 'roosterjs-editor-types';
-// import { useTheme } from '@fluentui/react/lib/Theme';
+import { EditorOptions, EditorPlugin, IEditor, ClearFormatMode } from 'roosterjs-editor-types';
+import {
+  Rooster,
+  createRibbonPlugin,
+  RibbonPlugin,
+  createPasteOptionPlugin,
+  createEmojiPlugin,
+  createUpdateContentPlugin,
+  Ribbon,
+  RibbonButton,
+  getButtons,
+  KnownRibbonButtonKey,
+  OnContentChangedEvent,
+  UpdateMode
+} from 'roosterjs-react';
+import { InputBoxButton } from '../InputBoxComponent';
+import { IconButton } from '@fluentui/react';
+import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
+import EditorViewState from './EditorViewState';
+
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   //   editorCreator?: (div: HTMLDivElement, options: EditorOptions) => IEditor;
+  children: ReactNode;
+  onChange: (newValue?: string) => void;
 }
 export default function RichTextEditor(props: RichTextEditorProps) {
+  const { children, onChange } = props;
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
+  const ribbonPlugin = React.useRef(createRibbonPlugin());
 
-  React.useEffect(() => {
-    if (editorDiv.current) {
-      editor.current = defaultEditorCreator(editorDiv.current);
-    }
-
-    return () => {
-      if (editor.current) {
-        editor.current.dispose();
-        editor.current = null;
-      }
+  function renderRibbon() {
+    const buttons = getButtons([KnownRibbonButtonKey.Bold, KnownRibbonButtonKey.Italic]);
+    const ribbonStyle = {
+      backgroundColor: '#f5f5f5', // The color you want
+      height: '50px' // The height you want
     };
-  }, []);
 
-  return <div ref={editorDiv} tabIndex={0} />;
+    return (
+      <div style={ribbonStyle}>
+        <Ribbon buttons={buttons} plugin={ribbonPlugin.current} />
+      </div>
+    );
+  }
+  function renderBottomButtons() {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <IconButton
+          iconProps={{ iconName: 'ClearFormatting' }}
+          onClick={() => {
+            clearFormatApi(editor.current, ClearFormatMode.AutoDetect);
+          }}
+        />
+        <IconButton
+          iconProps={{ iconName: 'Bold' }}
+          onClick={() => {
+            toggleBold(editor.current);
+            return true;
+          }}
+        />
+        <div style={{ flex: 1 }} />
+        {children()}
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      {renderRibbon()}
+      <Rooster plugins={[ribbonPlugin.current]} editorCreator={defaultEditorCreator} />
+      {renderBottomButtons()}
+    </div>
+  );
+
+  function defaultEditorCreator(div: HTMLDivElement) {
+    const contentPlugin = createUpdateContentPlugin(UpdateMode.OnContentChangedEvent, (html, mode) => {
+      onChange(html);
+    });
+
+    const options: EditorOptions = {
+      plugins: [ribbonPlugin.current, contentPlugin],
+      trustedHTMLHandler: preserveImagesHandler
+    };
+    editor.current = new Editor(div, options);
+    return editor.current;
+  }
 }
 
-function defaultEditorCreator(div: HTMLDivElement) {
-  const plugins = [new ContentEdit()];
+const preserveImagesHandler = (html: string) => {
+  console.log('preserveImagesHandler input html:: /n ', html);
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_ALL);
 
-  const preserveImagesHandler = (html: string) => {
-    console.log('preserveImagesHandler input html:: /n ', html);
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_ALL);
-
-    let node = walker.nextNode();
-    while (node) {
-      if (node.nodeType === Node.TEXT_NODE) {
-        node.textContent = node.textContent.trim();
-      } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'IMG') {
-        if (node.textContent) {
-          const textNode = doc.createTextNode(node.textContent.trim());
-          node.parentNode.replaceChild(textNode, node);
-        } else {
-          node.parentNode.removeChild(node);
-        }
+  let node = walker.nextNode();
+  while (node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.textContent = node.textContent.trim();
+    } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'IMG') {
+      if (node.textContent) {
+        const textNode = doc.createTextNode(node.textContent.trim());
+        node.parentNode.replaceChild(textNode, node);
+      } else {
+        node.parentNode.removeChild(node);
       }
-      node = walker.nextNode();
     }
+    node = walker.nextNode();
+  }
 
-    console.log('output::: ', doc.body.innerHTML);
-    return doc.body.innerHTML;
-  };
-
-  const options: EditorOptions = {
-    plugins: []
-    // trustedHTMLHandler: preserveImagesHandler
-  };
-
-  return new Editor(div, options);
-}
+  // console.log('output::: ', doc.body.innerHTML);
+  return html;
+};

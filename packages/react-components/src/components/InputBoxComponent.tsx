@@ -61,7 +61,7 @@ type InputBoxComponentProps = {
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
+  onChange: (newValue?: string) => void;
   textFieldRef?: React.RefObject<ITextField>;
   inputClassName?: string;
   placeholderText?: string;
@@ -173,7 +173,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <RichTextEditor />
+      <RichTextEditor onChange={onChange}>{onRenderChildren}</RichTextEditor>
       // <TextField
       //   {...textFieldProps}
       //   data-ui-id={dataUiId}
