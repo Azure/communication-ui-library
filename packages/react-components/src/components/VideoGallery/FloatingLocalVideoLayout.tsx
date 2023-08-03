@@ -174,7 +174,11 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           {localVideoComponent}
         </Stack>
       ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent))}>
+        <Stack
+          className={mergeStyles(
+            localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent, overflowGalleryPosition)
+          )}
+        >
           {localVideoComponent}
         </Stack>
       ) : (
@@ -239,7 +243,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {props.overflowGalleryPosition === 'HorizontalBottom' ? overflowGallery : <></>}
+        {props.overflowGalleryPosition !== 'HorizontalTop' ? overflowGallery : <></>}
       </Stack>
     </Stack>
   );
