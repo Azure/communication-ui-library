@@ -77,8 +77,8 @@ export const RaiseHandButton = (props: RaiseHandButtonProps): JSX.Element => {
       {...props}
       className={mergeStyles(styles, props.styles)}
       onClick={props.onToggleRaiseHand ?? props.onClick}
-      onRenderOnIcon={props.onRenderOnIcon ?? onRenderRaiseHandIcon}
-      onRenderOffIcon={props.onRenderOffIcon ?? onRenderLowerHandIcon}
+      onRenderOnIcon={props.onRenderOnIcon ?? onRenderLowerHandIcon}
+      onRenderOffIcon={props.onRenderOffIcon ?? onRenderRaiseHandIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'raiseHandButtonLabel'}
       disabled={props.disabled}

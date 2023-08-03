@@ -322,7 +322,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
+  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
 
   const tileInfoStyle = useMemo(
     () =>
@@ -340,7 +343,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -439,6 +441,36 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
+        {
+          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
+            <Stack
+              horizontal={true}
+              tokens={{ childrenGap: '0.2rem' }}
+              style={{
+                alignItems: 'center',
+                padding: '0.2rem',
+                backgroundColor: theme.palette.white,
+                opacity: 0.9,
+                borderRadius: '1rem',
+                margin: '0.5rem',
+                width: 'fit-content',
+                position: 'absolute'
+              }}
+            >
+              <Stack.Item>
+                <Text>{raisedHand.raisedHandOrderPosition}</Text>
+              </Stack.Item>
+              <Stack.Item>
+                <Icon
+                  iconName="ParticipantItemRaisedHand"
+                  className="icon-raise-hand"
+                  ariaLabel=""
+                  style={raiseHandIconStyle}
+                />
+              </Stack.Item>
+            </Stack>
+          )
+        }
       </div>
     </Stack>
   );
