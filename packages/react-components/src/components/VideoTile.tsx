@@ -441,7 +441,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-
         {
           /* @conditional-compile-remove(raise-hand) */ raisedHand && (
             <Stack
