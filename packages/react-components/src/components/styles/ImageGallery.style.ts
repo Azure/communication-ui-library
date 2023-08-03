@@ -18,10 +18,10 @@ export const downloadIcon: IIconProps = {
 /**
  * @private
  */
-export const overlayStyles = (theme: Theme): IOverlayStyles => {
+export const overlayStyles = (theme: Theme, isDarkThemed: boolean): IOverlayStyles => {
   return {
     root: {
-      background: theme.palette.white,
+      background: isDarkThemed ? theme.palette.white : theme.palette.black,
       opacity: '0.85'
     }
   };
@@ -111,6 +111,7 @@ export const downloadIconStyle: IStyle = {
 export const imageContainer: IStyle = {
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   width: '100%',
   height: '100%',
   overflow: 'hidden',
@@ -120,10 +121,19 @@ export const imageContainer: IStyle = {
 /**
  * @private
  */
-export const imageStyle: IStyle = {
+export const normalImageStyle: IStyle = {
   objectFit: 'contain',
   height: '100%',
   width: '100%'
+};
+
+/**
+ * @private
+ */
+export const brokenImageStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+  return {
+    color: isDarkThemed ? theme.palette.black : theme.palette.white
+  };
 };
 
 /**

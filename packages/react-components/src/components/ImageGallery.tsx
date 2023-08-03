@@ -17,9 +17,10 @@ import {
   mergeStyles
 } from '@fluentui/react';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { BaseCustomStyles } from '../types';
 import {
+  brokenImageStyle,
   cancelIcon,
   closeButtonStyles,
   controlBarContainerStyle,
@@ -30,6 +31,7 @@ import {
   headerStyle,
   imageContainer,
   imageStyle,
+  normalImageStyle,
   overlayStyles,
   scrollableContentStyle,
   smallDownloadButtonContainerStyle,
@@ -139,6 +141,10 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const closeString = 'Close';
   const defaultAltText = 'image';
 
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
+
+  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme, isDarkTheme);
+
   if (images.length <= startIndex) {
     console.log('Unable to display Image Gallery due to startIndex is out of range.');
     return <></>;
@@ -150,7 +156,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         titleAriaId={image.title}
         isOpen={images.length > 0}
         onDismiss={onDismiss}
-        overlay={{ styles: { ...overlayStyles(theme), ...styles?.overlay } }}
+        overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
@@ -159,6 +165,10 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             src={image.imageUrl}
             className={mergeStyles(imageStyle, styles?.image)}
             alt={image.altText || defaultAltText}
+            onError={() => {
+              console.log('Unable to load Image');
+              setIsImageLoaded(false);
+            }}
           />
         </div>
       </Modal>
