@@ -144,28 +144,6 @@ const onRenderParticipantDefault = (
     /* @conditional-compile-remove(raise-hand) */ callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-            {
-              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
-                <Stack
-                  horizontal={true}
-                  tokens={{ childrenGap: '0.2rem' }}
-                  style={{
-                    alignItems: 'center',
-                    padding: '0.2rem',
-                    backgroundColor: 'ghostwhite',
-                    borderRadius: '1rem'
-                  }}
-                >
-                  <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Image {...imageProps} />
-                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} />
-                  </Stack.Item>
-                </Stack>
-              )
-            }
             {callingParticipant.isScreenSharing && (
               <Icon
                 iconName="ParticipantItemScreenShareStart"
@@ -176,6 +154,19 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
+            {
+              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
+                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
+                  <Stack.Item>
+                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Image {...imageProps} />
+                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} />
+                  </Stack.Item>
+                </Stack>
+              )
+            }
           </Stack>
         )
       : () => null;
@@ -223,24 +214,6 @@ const getParticipantsForDefaultRender = (
 };
 
 /**
- * Sort participants by raised hand order position
- */
-const sortParticipants = (participants: CallParticipantListParticipant[]): CallParticipantListParticipant[] => {
-  /* @conditional-compile-remove(raise-hand) */
-  participants.sort((a, b) => {
-    if (a.raisedHand && b.raisedHand) {
-      return a.raisedHand.raisedHandOrderPosition - b.raisedHand.raisedHandOrderPosition;
-    } else if (a.raisedHand) {
-      return -1;
-    } else if (b.raisedHand) {
-      return 1;
-    }
-    return 0;
-  });
-  return participants;
-};
-
-/**
  * Component to render all calling or chat participants.
  *
  * By default, each participant is rendered with {@link ParticipantItem}. See {@link ParticipantListProps.onRenderParticipant} to override.
@@ -272,9 +245,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
-
-  sortParticipants(displayedParticipants as CallParticipantListParticipant[]);
-
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
