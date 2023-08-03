@@ -79,9 +79,13 @@ export default function RichTextEditor(props: RichTextEditorProps) {
   );
 
   function defaultEditorCreator(div: HTMLDivElement) {
-    const contentPlugin = createUpdateContentPlugin(UpdateMode.OnContentChangedEvent, (html, mode) => {
-      onChange(html);
-    });
+    const contentPlugin = createUpdateContentPlugin(
+      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
+      (html, mode) => {
+        onChange(html);
+        console.log('onChange::: ', html);
+      }
+    );
 
     const options: EditorOptions = {
       plugins: [ribbonPlugin.current, contentPlugin],
@@ -112,6 +116,5 @@ const preserveImagesHandler = (html: string) => {
     node = walker.nextNode();
   }
 
-  // console.log('output::: ', doc.body.innerHTML);
   return html;
 };
