@@ -60,6 +60,7 @@ export interface CommonCallControlBarProps {
   isCaptionsSupported?: boolean;
   displayVertical?: boolean;
   peopleButtonRef?: React.RefObject<IButton>;
+  cameraButtonRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -281,6 +282,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         /* @conditional-compile-remove(video-background-effects) */
                         onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                        componentRef={props.cameraButtonRef}
                       />
                     )}
                     {screenShareButtonIsEnabled && (
