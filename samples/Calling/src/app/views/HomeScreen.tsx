@@ -180,6 +180,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-adhoc-call) */
   const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
 
+  let showDisplayNameField = true;
+  /* @conditional-compile-remove(teams-adhoc-call) */
+  showDisplayNameField = !teamsIdentityChosen;
+
   return (
     <Stack
       horizontal
