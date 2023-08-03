@@ -537,8 +537,6 @@ export type CancelEditCallback = (messageId: string) => void;
  * @public
  */
 export type MessageThreadProps = {
-  onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
-
   /**
    * UserId of the current user.
    */
@@ -713,6 +711,12 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
+  onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
 };
 
 /**
@@ -818,6 +822,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onInlineImageClicked
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -1130,6 +1135,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onDisplayDateTimeString={onDisplayDateTimeString}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onInlineImageClicked={onInlineImageClicked}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments}
@@ -1154,6 +1160,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onDisplayDateTimeString,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onInlineImageClicked,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,

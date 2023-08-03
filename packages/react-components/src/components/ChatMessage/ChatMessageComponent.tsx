@@ -90,6 +90,11 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
   onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
@@ -156,6 +161,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         strings={props.strings}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onInlineImageClicked={props.onInlineImageClicked}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}

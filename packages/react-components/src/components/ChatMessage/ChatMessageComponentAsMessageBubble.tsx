@@ -81,6 +81,11 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function to fetch attachments.
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
   onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
@@ -137,6 +142,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onInlineImageClicked
   } = props;
 
@@ -219,6 +225,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const handleOnInlineImageClicked = useCallback(
     async (attachmentId: string): Promise<void> => {
       if (onInlineImageClicked === undefined) {
@@ -253,13 +260,21 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(inline-image-gallery) */
+          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [defaultOnRenderFileDownloads, handleOnInlineImageClicked, message, props, strings, userId]);
+  }, [
+    defaultOnRenderFileDownloads,
+    message,
+    props,
+    strings,
+    userId,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    handleOnInlineImageClicked
+  ]);
 
   const chatMessage = (
     <>
