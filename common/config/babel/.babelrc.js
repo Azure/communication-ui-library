@@ -34,8 +34,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'file-sharing',
         // Mention feature
         'mention',
-        // feature for enabling new call control bar in CallComposite
-        'new-call-control-bar',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 
@@ -94,6 +92,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // feature for enabling new call control bar in CallComposite
+        'new-call-control-bar'
       ]
     }
   ]);
