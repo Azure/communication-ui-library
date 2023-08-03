@@ -43,7 +43,7 @@ import {
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
-import { HandLeft20Filled, HandLeft20Regular } from '@fluentui/react-icons';
+import { HandRight20Filled, HandRightOff20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(close-captions) */
 import {
   ClosedCaption20Regular,
@@ -238,9 +238,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   /* @conditional-compile-remove(raise-hand) */
-  ControlButtonRaiseHand: <HandLeft20Regular />,
+  ControlButtonRaiseHand: <HandRight20Filled />,
   /* @conditional-compile-remove(raise-hand) */
-  ControlButtonLowerHand: <HandLeft20Filled />,
+  ControlButtonLowerHand: <HandRightOff20Filled />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
@@ -280,7 +280,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ParticipantItemOptionsHovered: <MoreHorizontal20Filled />,
   ParticipantItemScreenShareStart: <ShareScreenStart20Filled />,
   /* @conditional-compile-remove(raise-hand) */
-  ParticipantItemRaisedHand: <HandLeft20Regular />,
+  ParticipantItemRaisedHand: <HandRight20Filled />,
   /* @conditional-compile-remove(PSTN-calls) */
   HoldCallContextualMenuItem: <CallPause20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
