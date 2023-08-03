@@ -15,6 +15,8 @@ import {
 import { Text, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme, CallingTheme } from '../theming';
+/* @conditional-compile-remove(raise-hand) */
+import raisedHandSVG from './assets/raisedHand.svg';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -94,9 +96,6 @@ export type ParticipantListProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
   /** Optional callback to render the context menu for each participant  */
   onRemoveParticipant?: (userId: string) => void;
-  /* @conditional-compile-remove(raise-hand) */
-  /** Optional callback when to update raised hand states for participants  */
-  onLowerParticipantHand?: (userIds: string) => void;
   /** Optional callback to render custom menu items for each participant. */
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
@@ -144,6 +143,8 @@ const onRenderParticipantDefault = (
     }
   }
 
+  const imageProps = { src: raisedHandSVG.toString() };
+
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
@@ -188,6 +189,19 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
+            {
+              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
+                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
+                  <Stack.Item>
+                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                  </Stack.Item>
+                  <Stack.Item>
+                    <Image {...imageProps} />
+                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} />
+                  </Stack.Item>
+                </Stack>
+              )
+            }
           </Stack>
         )
       : () => null;
@@ -235,24 +249,6 @@ const getParticipantsForDefaultRender = (
 };
 
 /**
- * Sort participants by raised hand order position
- */
-const sortParticipants = (participants: CallParticipantListParticipant[]): CallParticipantListParticipant[] => {
-  /* @conditional-compile-remove(raise-hand) */
-  participants.sort((a, b) => {
-    if (a.raisedHand && b.raisedHand) {
-      return a.raisedHand.raisedHandOrderPosition - b.raisedHand.raisedHandOrderPosition;
-    } else if (a.raisedHand) {
-      return -1;
-    } else if (b.raisedHand) {
-      return 1;
-    }
-    return 0;
-  });
-  return participants;
-};
-
-/**
  * Component to render all calling or chat participants.
  *
  * By default, each participant is rendered with {@link ParticipantItem}. See {@link ParticipantListProps.onRenderParticipant} to override.
@@ -265,8 +261,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     myUserId,
     participants,
     onRemoveParticipant,
-    /* @conditional-compile-remove(raise-hand) */
-    onLowerParticipantHand,
     onRenderAvatar,
     onRenderParticipant,
     onFetchParticipantMenuItems,
@@ -288,9 +282,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
-
-  sortParticipants(displayedParticipants as CallParticipantListParticipant[]);
-
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
@@ -308,23 +299,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
         });
       }
 
-      /* This block is depend on capabilities implementation because only organizer and presenter can lower hand */
-      /* @conditional-compile-remove(raise-hand) */
-      /* @conditional-compile-remove(capabilities) */
-      const remoteParticipant = participant as CallParticipantListParticipant;
-      /* @conditional-compile-remove(raise-hand) */
-      /* @conditional-compile-remove(capabilities) */
-      if (remoteParticipant.raisedHand && onLowerParticipantHand) {
-        menuItems.push({
-          key: 'lowerHand',
-          text: participantItemStrings.lowerParticipantHandButtonLabel,
-          onClick: () => onLowerParticipantHand(participant.userId),
-          itemProps: {
-            styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
-          }
-        });
-      }
-
       if (onFetchParticipantMenuItems) {
         menuItems = onFetchParticipantMenuItems(participant.userId, myUserId, menuItems);
       }
@@ -336,13 +310,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       myUserId,
       onFetchParticipantMenuItems,
       onRemoveParticipant,
-      /* @conditional-compile-remove(raise-hand) */
-      onLowerParticipantHand,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
       /* @conditional-compile-remove(raise-hand) */
-      participantItemStrings.removeButtonLabel,
-      /* @conditional-compile-remove(raise-hand) */
-      participantItemStrings.lowerParticipantHandButtonLabel
+      participantItemStrings.removeButtonLabel
     ]
   );
 

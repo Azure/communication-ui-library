@@ -16,6 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -174,22 +176,13 @@ export interface RaiseHandCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  raisedHands: RaisedHandState[];
+  raisedHands: RaisedHand[];
   /**
    * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  localParticipantRaisedHand?: RaisedHandState;
+  localParticipantRaisedHand?: RaisedHand;
 }
-
-/* @conditional-compile-remove(raise-hand) */
-/**
- * Raised hand state with order
- *
- * @public
- */
-export type RaisedHandState = {
-  raisedHandOrderPosition: number;
-};
+``;
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
@@ -347,7 +340,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
-  raisedHand?: RaisedHandState;
+  raisedHand?: RaisedHand;
 }
 
 /**

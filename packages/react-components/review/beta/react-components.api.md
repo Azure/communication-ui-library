@@ -1576,12 +1576,10 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     displayNamePlaceholder?: string;
     isMeText: string;
-    lowerParticipantHandButtonLabel: string;
     menuTitle: string;
     mutedIconLabel: string;
     participantStateHold?: string;
     participantStateRinging?: string;
-    raisedHandIconLabel: string;
     removeButtonLabel: string;
     sharingIconLabel: string;
 }
@@ -1615,7 +1613,6 @@ export type ParticipantListProps = {
     onRenderParticipant?: (participant: ParticipantListParticipant) => JSX.Element | null;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRemoveParticipant?: (userId: string) => void;
-    onLowerParticipantHand?: (userIds: string) => void;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
@@ -1661,7 +1658,6 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
     excludeMe?: boolean;
     myUserId?: string;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-    onLowerParticipantHand?: (userId: string) => void;
     onMuteAll?: () => void;
     onRemoveParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;

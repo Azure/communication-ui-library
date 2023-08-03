@@ -76,12 +76,6 @@ export interface ParticipantItemStrings {
   /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Hold` */
   participantStateHold?: string;
-  /* @conditional-compile-remove(raise-hand) */
-  /** Label for the remove button in participant menu  */
-  lowerParticipantHandButtonLabel: string;
-  /* @conditional-compile-remove(raise-hand) */
-  /** Label for the raised hand icon in participant state stack  */
-  raisedHandIconLabel: string;
 }
 
 /**
@@ -206,12 +200,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     [theme.palette.neutralLighterAlt, styles?.menu]
   );
   const infoContainerStyle = useMemo(
-    () =>
-      mergeStyles(
-        iconContainerStyle,
-        { color: theme.palette.neutralTertiary, marginLeft: 'auto' },
-        styles?.iconContainer
-      ),
+    () => mergeStyles(iconContainerStyle, { color: theme.palette.neutralTertiary }, styles?.iconContainer),
     [theme.palette.neutralTertiary, styles?.iconContainer]
   );
 
