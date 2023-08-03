@@ -1,5 +1,33 @@
 {
   "exampleComponent": {
     "label": "Example string for the example component"
+  },
+  "cameraButton": {
+    "label": "Camera",
+    "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
+  },
+  "cameraButtonTooltip": {
+    "cameraButtonDisabledContent": "Camera is disabled",
+    "cameraOnContent": "Turn off camera",
+    "cameraOffContent": "Turn on camera",
+    "cameraButtonVideoLoadingContent": "Camera is loading"
+  },
+  "cameraSplitButton": {
+    "label": "Camera",
+    "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
+    "cameraOnSplitButtonAriaLabel": "Turn off camera and camera options",
+    "cameraOffSplitButtonAriaLabel": "Turn on camera and camera options",
+    "menuTriggerRoleDescription": "Split button"
+  },
+  "cameraSelectionMenuGroup": {
+    "label": "Camera"
+  },
+  "cameraToggleMenuItem": {
+    "cameraOnLabel": "Turn on camera",
+    "cameraOffLabel": "Turn off camera",
+    "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off"
   }
 }

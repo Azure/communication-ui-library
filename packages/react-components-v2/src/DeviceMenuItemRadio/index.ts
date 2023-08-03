@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-export * from './CameraButton';
+export * from './DeviceMenuItemRadio.types';
 export * from './DeviceMenuItemRadio';
-export * from './localization';

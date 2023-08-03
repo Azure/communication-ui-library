@@ -1,6 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { CameraButtonStrings } from '../../CameraButton/CameraButton/CameraButton.strings';
+import { CameraButtonTooltipStrings } from '../../CameraButton/CameraButtonTooltip/CameraButtonTooltip.strings';
+import { CameraSelectionMenuGroupStrings } from '../../CameraButton/CameraSelectionMenuGroup/CameraSelectionMenuGroup.strings';
+import { CameraSplitButtonStrings } from '../../CameraButton/CameraSplitButton/CameraSplitButton.strings';
+import { CameraToggleMenuItemStrings } from '../../CameraButton/CameraToggleMenuItem/CameraToggleMenuItem.strings';
 import { ExampleComponentStrings } from '../../ExampleComponent/ExampleComponent.strings';
 
 /**
@@ -11,6 +16,12 @@ import { ExampleComponentStrings } from '../../ExampleComponent/ExampleComponent
 export interface ComponentStrings {
   /** Example. To be removed before release. */
   exampleComponent: ExampleComponentStrings;
+
+  cameraButton: CameraButtonStrings;
+  cameraButtonTooltip: CameraButtonTooltipStrings;
+  cameraSelectionMenuGroup: CameraSelectionMenuGroupStrings;
+  cameraSplitButton: CameraSplitButtonStrings;
+  cameraToggleMenuItem: CameraToggleMenuItemStrings;
 }
 
 /**

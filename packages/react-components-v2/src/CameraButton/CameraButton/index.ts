@@ -2,5 +2,5 @@
 // Licensed under the MIT license.
 
 export * from './CameraButton';
-export * from './DeviceMenuItemRadio';
-export * from './localization';
+export * from './CameraButton.types';
+export * from './CameraButton.strings';
