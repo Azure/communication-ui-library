@@ -181,7 +181,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
 
   let showDisplayNameField = true;
-  /* @conditional-compile-remove(teams-adhoc-call) */
+  /* @conditional-compile-remove(teams-identity-support) */
   showDisplayNameField = !teamsIdentityChosen;
 
   return (
