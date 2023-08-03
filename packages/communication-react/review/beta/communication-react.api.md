@@ -1272,7 +1272,7 @@ export interface CapabilitiesCallFeature {
     capabilities: ParticipantCapabilities;
 }
 
-// @beta
+// @public
 export interface CaptionsAvailableLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -1358,7 +1358,7 @@ export interface CaptionsAvailableLanguageStrings {
     'zh-tw': string;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -1369,7 +1369,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
@@ -1380,12 +1380,12 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @beta
+// @public
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
 
-// @beta
+// @public
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -2750,7 +2750,7 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;

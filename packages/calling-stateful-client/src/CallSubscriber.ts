@@ -212,16 +212,14 @@ export class CallSubscriber {
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
     if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
-      if (this._call.feature(Features.Captions).captions.captionsType === 'TeamsCaptions'){
+      if (this._call.feature(Features.Captions).captions.captionsType === 'TeamsCaptions') {
         this._captionsSubscriber = new CaptionsSubscriber(
           this._callIdRef,
           this._context,
           this._call.feature(Features.Captions).captions as TeamsCaptions
         );
         this._call.off('stateChanged', this.initCaptionSubscriber);
-
       }
-      
     }
   };
 

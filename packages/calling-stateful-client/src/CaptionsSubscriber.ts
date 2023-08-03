@@ -2,7 +2,12 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(close-captions) */
-import { PropertyChangedEvent, TeamsCaptions,TeamsCaptionsHandler, TeamsCaptionsInfo } from '@azure/communication-calling';
+import {
+  PropertyChangedEvent,
+  TeamsCaptions,
+  TeamsCaptionsHandler,
+  TeamsCaptionsInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(close-captions) */
@@ -25,9 +30,10 @@ export class CaptionsSubscriber {
       this._context.setIsCaptionActive(this._callIdRef.callId, this._captions.isCaptionsFeatureActive);
     }
     this._context.setAvailableSpokenLanguages(this._callIdRef.callId, this._captions.supportedSpokenLanguages);
-    if ('availableSubtitleLanguages' in this._captions) {
+    if ('supportedCaptionLanguages' in this._captions) {
       this._context.setAvailableCaptionLanguages(this._callIdRef.callId, this._captions.supportedCaptionLanguages);
     }
+    this._context.setSelectedSpokenLanguage(this._callIdRef.callId, this._captions.activeSpokenLanguage);
 
     this.subscribe();
   }
@@ -57,12 +63,10 @@ export class CaptionsSubscriber {
     this._context.setIsCaptionActive(this._callIdRef.callId, this._captions.isCaptionsFeatureActive);
   };
   private isCaptionLanguageChanged: PropertyChangedEvent = (): void => {
-    this._context.setSelectedCaptionLanguage(this._callIdRef.callId, this._captions.activeCaptionLanguage)
+    this._context.setSelectedCaptionLanguage(this._callIdRef.callId, this._captions.activeCaptionLanguage);
   };
   private isSpokenLanguageChanged: PropertyChangedEvent = (): void => {
-
-    this._context.setSelectedSpokenLanguage(this._callIdRef.callId, this._captions.activeSpokenLanguage)
-   
+    this._context.setSelectedSpokenLanguage(this._callIdRef.callId, this._captions.activeSpokenLanguage);
   };
 }
 

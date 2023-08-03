@@ -124,7 +124,7 @@ export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBas
 // @internal
 export const _captionsBannerSelector: _CaptionsBannerSelector;
 
-// @beta
+// @public
 export type CaptionsOptions = {
     spokenLanguage: string;
 };

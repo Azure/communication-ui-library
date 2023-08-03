@@ -262,7 +262,7 @@ export interface _CaptionProps extends _CaptionsInfo {
     onRenderAvatar?: OnRenderAvatarCallback;
 }
 
-// @beta
+// @public
 export interface CaptionsAvailableLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -1877,7 +1877,6 @@ export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Ele
 // @internal (undocumented)
 export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
     currentSpokenLanguage: string;
-    onSetSpokenLanguage: (language: string) => Promise<void>;
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     onStopCaptions: () => Promise<void>;
     strings?: _StartCaptionsButtonStrings;

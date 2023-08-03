@@ -22,7 +22,7 @@ import {
   generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) *//* @conditional-compile-remove(close-captions) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { DesktopMoreButton } from './DesktopMoreButton';
 import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
@@ -307,7 +307,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       />
                     )}
                     {
-                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */isEnabled(
+                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
                         options?.moreButton
                       ) &&
                         /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
@@ -317,7 +317,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           <DesktopMoreButton
                             disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                             styles={commonButtonStyles}
-                            /*@conditional-compile-remove(PSTN-calls) */ 
+                            /*@conditional-compile-remove(PSTN-calls) */
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}

@@ -4,7 +4,7 @@
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
 /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(call-transfer) */
-import { CaptionsCallFeature, Features } from '@azure/communication-calling';
+import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
