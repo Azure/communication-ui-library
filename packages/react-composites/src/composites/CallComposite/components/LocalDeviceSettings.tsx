@@ -101,8 +101,10 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
+  /* @conditional-compile-remove(video-background-effects) */
+  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
@@ -220,14 +222,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             </Label>
             {
               /* @conditional-compile-remove(video-background-effects) */
-              <DefaultButton
-                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                styles={effectsButtonStyles(theme)}
-                onClick={props.onVideoEffectsClick}
-                data-ui-id={'call-config-video-effects-button'}
-              >
-                {locale.strings.call.configurationPageVideoEffectsButtonLabel}
-              </DefaultButton>
+              onResolveVideoEffectDependency && (
+                <DefaultButton
+                  iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
+                  styles={effectsButtonStyles(theme)}
+                  onClick={props.onVideoEffectsClick}
+                  data-ui-id={'call-config-video-effects-button'}
+                >
+                  {locale.strings.call.configurationPageVideoEffectsButtonLabel}
+                </DefaultButton>
+              )
             }
           </Stack>
           <ConfigurationPageCameraDropdown
