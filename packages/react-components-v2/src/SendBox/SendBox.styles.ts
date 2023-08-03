@@ -1,12 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { SendBoxProps } from './SendBox.types';
-import { makeStyles, mergeClasses } from '@fluentui/react-components';
-
-const useRootStyles = makeStyles({
-  root: {}
-});
+import { makeStyles, shorthands } from '@fluentui/react-components';
 
 /**
  * Styles for the {@link SendBox}.
@@ -15,7 +10,34 @@ const useRootStyles = makeStyles({
  *
  * @private
  */
-export const useSendBoxStyles = (props: SendBoxProps): string => {
-  const internalStyles = useRootStyles();
-  return mergeClasses(internalStyles.root, props.className);
-};
+export const use_SendBoxStyles = makeStyles({
+  root: {
+    ...shorthands.overflow('visible'),
+    ...shorthands.margin('0.25rem'),
+    ...shorthands.overflow('hidden'),
+    /**
+     * margin-top set for all the child components of SendBox except first
+     */
+    ':not(:first-child)': {
+      marginTop: '0.25rem'
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    width: 'auto',
+    height: 'auto',
+    boxSizing: 'border-box',
+    '> *': {
+      textOverflow: 'ellipsis'
+    },
+    '> :not(:first-child)': {
+      marginTop: '0px'
+    },
+    '> *:not(.ms-StackItem)': {
+      flexShrink: 1
+    }
+  },
+  input: {
+
+  }
+});
