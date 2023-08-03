@@ -83,8 +83,6 @@ import {
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
-/* @conditional-compile-remove(close-captions) */
-import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
@@ -1004,7 +1002,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private subscribeToCaptionEvents(): void {
-    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
+    if (this.call && this.call.state === 'Connected' && this.context.getState().isTeamsCall) {
       const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
       captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
@@ -1015,7 +1013,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private unsubscribeFromCaptionEvents(): void {
-    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
+    if (this.call && this.call.state === 'Connected' && this.context.getState().isTeamsCall) {
       const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
       captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));

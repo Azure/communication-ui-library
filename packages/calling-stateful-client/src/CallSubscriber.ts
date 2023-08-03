@@ -19,8 +19,6 @@ import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
-/* @conditional-compile-remove(close-captions) */
-import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
@@ -211,7 +209,7 @@ export class CallSubscriber {
   /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
+    if (this._call.state === 'Connected' && !this._captionsSubscriber) {
       if (this._call.feature(Features.Captions).captions.captionsType === 'TeamsCaptions') {
         this._captionsSubscriber = new CaptionsSubscriber(
           this._callIdRef,
