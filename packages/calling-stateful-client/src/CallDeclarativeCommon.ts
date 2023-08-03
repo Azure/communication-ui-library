@@ -85,9 +85,9 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
           /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.Captions) {
-            const captionsFeature = target.feature(Features.Captions);
+            const captionsFeature = target.feature(Features.Captions).captions as TeamsCaptions;
             const proxyFeature = new ProxyTeamsCaptionsFeature(this._context, target);
-            return new Proxy( captionsFeature, proxyFeature);
+            return new Proxy(captionsFeature, proxyFeature);
           }
           /* @conditional-compile-remove(call-transfer) */
           if (args[0] === Features.Transfer) {
@@ -108,7 +108,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
 /**
  * @private
  */
-class ProxyTeamsCaptionsFeature implements ProxyHandler<CaptionsCallFeature> {
+class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptions> {
   private _context: CallContext;
   private _call: CallCommon;
 
@@ -117,34 +117,28 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<CaptionsCallFeature> {
     this._call = call;
   }
 
-  public get<P extends keyof TeamsCaptions>(target: CaptionsCallFeature, prop: P): any {
+  public get<P extends keyof TeamsCaptions>(target: TeamsCaptions, prop: P): any {
     switch (prop) {
       case 'startCaptions':
-        return this._context.withAsyncErrorTeedToState(
-          async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
-            this._context.setStartCaptionsInProgress(this._call.id, true);
-            const ret = await target.captions.startCaptions(...args);
-            this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
-
-            return ret;
-          },
-          'Call.feature'
-        );
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['startCaptions']>) => {
+          this._context.setStartCaptionsInProgress(this._call.id, true);
+          const ret = await target.startCaptions(...args);
+          this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
+          return ret;
+        }, 'Call.feature');
         break;
       case 'stopCaptions':
-        return this._context.withAsyncErrorTeedToState(
-          async (...args: Parameters<TeamsCaptions['stopCaptions']>) => {
-            const ret = await target.captions.stopCaptions(...args);
-            this._context.setIsCaptionActive(this._call.id, false);
-            this._context.setStartCaptionsInProgress(this._call.id, false);
-            return ret;
-          },
-          'Call.feature'
-        );
+        return this._context.withAsyncErrorTeedToState(async (...args: Parameters<TeamsCaptions['stopCaptions']>) => {
+          const ret = await target.stopCaptions(...args);
+          this._context.setIsCaptionActive(this._call.id, false);
+          this._context.setStartCaptionsInProgress(this._call.id, false);
+          this._context.clearCaption(this._call.id);
+          return ret;
+        }, 'Call.feature');
       case 'setSpokenLanguage':
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<TeamsCaptions['setSpokenLanguage']>) => {
-            const ret = await target.captions.setSpokenLanguage(...args);
+            const ret = await target.setSpokenLanguage(...args);
             this._context.setSelectedSpokenLanguage(this._call.id, args[0]);
             return ret;
           },
@@ -153,8 +147,7 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<CaptionsCallFeature> {
       case 'setCaptionLanguage':
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<TeamsCaptions['setCaptionLanguage']>) => {
-            const captions = target.captions as TeamsCaptions
-            const ret = await captions.setCaptionLanguage(...args);
+            const ret = await target.setCaptionLanguage(...args);
             this._context.setSelectedCaptionLanguage(this._call.id, args[0]);
             return ret;
           },
