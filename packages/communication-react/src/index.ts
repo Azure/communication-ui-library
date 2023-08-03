@@ -39,6 +39,9 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
+
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -81,7 +84,8 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';

@@ -17,6 +17,7 @@ import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-reac
 /* @conditional-compile-remove(rooms) */
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
+import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
 import { TeamsAdapterOptions } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
@@ -113,7 +114,9 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const teamsAdapterOptions: TeamsAdapterOptions = useMemo(
     () => ({
-      videoBackgroundImages
+      videoBackgroundOptions: {
+        videoBackgroundImages
+      }
     }),
     []
   );
@@ -146,7 +149,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
       /* @conditional-compile-remove(video-background-effects) */
-      videoBackgroundImages
+      videoBackgroundOptions: {
+        videoBackgroundImages,
+        onResolveDependency: onResolveVideoEffectDependencyLazy
+      }
     };
   }, []);
 
