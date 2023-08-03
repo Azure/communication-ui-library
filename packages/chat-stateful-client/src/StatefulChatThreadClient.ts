@@ -19,6 +19,25 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
   }
 
   public get<P extends keyof ChatThreadClient>(chatThreadClient: ChatThreadClient, prop: P): any {
+    const mockUploadLogicFromChatSDK = async (images: string[], message: ChatMessageWithStatus): Promise<void> => {
+      if (images.length === 0) {
+        return;
+      }
+      const promises = images.map((image) => {
+        return fetch('http://localhost:27813/api/v1/images/bytearraybase64', {
+          method: 'POST',
+          body: JSON.stringify({
+            file: image
+          })
+        }).then(async (response) => {
+          const content = await response.json();
+          console.log(content);
+          message.content?.message?.replace(image, content.id);
+        });
+      });
+      await Promise.all(promises);
+    };
+
     switch (prop) {
       case 'listMessages': {
         return createDecoratedListMessages(chatThreadClient, this._context);
@@ -53,6 +72,9 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
 
           let result: SendChatMessageResult | undefined = undefined;
           try {
+            const regex = /<img[^>]+src="([^">]+)/g;
+            const images = content.match(regex)?.map((match) => match.replace('<img src="', ''));
+            await mockUploadLogicFromChatSDK(images ?? [], newMessage);
             result = await chatThreadClient.sendMessage(...args);
           } catch (e) {
             this._context.setChatMessage(chatThreadClient.threadId, { ...newMessage, status: 'failed' });

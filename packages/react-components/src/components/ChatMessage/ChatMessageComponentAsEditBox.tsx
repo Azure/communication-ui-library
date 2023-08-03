@@ -191,7 +191,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   return <Chat.Message styles={chatMessageEditContainerStyle} content={getContent()} />;
 };
 
-const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
+const isMessageTooLong = false; //(messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
 const isMessageEmpty = (messageText: string, attachedFilesMetadata: FileMetadata[]): boolean =>
   messageText.trim().length === 0 && attachedFilesMetadata.length === 0;
 const getMessageState = (messageText: string, attachedFilesMetadata: FileMetadata[]): MessageState =>
