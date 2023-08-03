@@ -30,7 +30,6 @@ import {
   focusTrapZoneStyle,
   headerStyle,
   imageContainer,
-  imageStyle,
   normalImageStyle,
   overlayStyles,
   scrollableContentStyle,
