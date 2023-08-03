@@ -350,8 +350,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {<DisplayNameField defaultName={displayName} setName={setDisplayName} /> &&
-            /* @conditional-compile-remove(teams-identity-support) */ !teamsIdentityChosen}
+          {showDisplayNameField && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
