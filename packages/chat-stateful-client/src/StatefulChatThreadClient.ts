@@ -35,12 +35,15 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
         }).then(async (response) => {
           const content = await response.json();
           console.log(content);
-          sendMessageRequest.content = sendMessageRequest.content?.replace(image, "\" id=\"" + content.id + "");
+          sendMessageRequest.content = sendMessageRequest.content?.replace(image, mockGWLogic(content.id));
         });
       });
       await Promise.all(promises);
     };
 
+    const mockGWLogic = (id: string): string => {
+    }
+    
     switch (prop) {
       case 'listMessages': {
         return createDecoratedListMessages(chatThreadClient, this._context);
@@ -79,6 +82,11 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             const regex = /<img[^>]+src="([^">]+)/g;
             const images = content.match(regex)?.map((match) => match.replace('<img src="', ''));
             await mockUploadLogicFromChatSDK(images ?? [], args[0]);
+         
+            args[1] = {
+              type: "html"
+            }
+          
             console.log(args);
             result = await chatThreadClient.sendMessage(...args);
           } catch (e) {
