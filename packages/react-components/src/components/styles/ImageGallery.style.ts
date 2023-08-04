@@ -135,6 +135,8 @@ export const normalImageStyle: IStyle = {
  */
 export const brokenImageStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
+    // The color should be white in dark theme.
+    // In dark theme, theme.palette.black is actually white.
     color: isDarkThemed ? theme.palette.black : theme.palette.white
   };
 };
@@ -144,6 +146,8 @@ export const brokenImageStyle = (theme: Theme, isDarkThemed: boolean): IStyle =>
  */
 export const closeButtonStyles = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
+    // The color should be white in dark theme.
+    // In dark theme, theme.palette.black is actually white.
     color: isDarkThemed ? theme.palette.black : theme.palette.white,
     ':hover': {
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
@@ -172,10 +176,14 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle
     color: isDarkThemed ? undefined : theme.palette.white,
     whiteSpace: 'nowrap',
     ':hover': {
+      // The color should be white in dark theme.
+      // In dark theme, theme.palette.black is actually white.
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
     },
     ':active': {
+      // The color should be white in dark theme.
+      // In dark theme, theme.palette.black is actually white.
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
     },
@@ -191,6 +199,8 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle
 export const smallDownloadButtonContainerStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
     marginRight: '0.5rem',
+    // The color should be white in dark theme.
+    // In dark theme, theme.palette.black is actually white.
     color: isDarkThemed ? theme.palette.black : theme.palette.white,
     whiteSpace: 'nowrap',
     ':hover': {
