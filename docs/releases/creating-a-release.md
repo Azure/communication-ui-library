@@ -74,7 +74,6 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 
 After finishing creating release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
-Follow these steps to create a snapshot PR:
 1. Create a new branch based on the release branch you just created in Step 1.2
 2. trigger the UI snapshot update for the new branch branch: ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
 3. Wait for snapshot update
