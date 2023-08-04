@@ -12,8 +12,9 @@ import {
   Theme
 } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
+import { Image } from '@fluentui/react';
 /* @conditional-compile-remove(total-participant-count) */
-import { Text, Image } from '@fluentui/react';
+import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
