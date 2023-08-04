@@ -119,7 +119,7 @@ const App = (): JSX.Element => {
             let callLocator: CallAdapterLocator | undefined = callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
 
             /* @conditional-compile-remove(rooms) */
-            callLocator = callLocator  || getRoomIdFromUrl();
+            callLocator = callLocator || getRoomIdFromUrl();
 
             /* @conditional-compile-remove(PSTN-calls) */
             callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
