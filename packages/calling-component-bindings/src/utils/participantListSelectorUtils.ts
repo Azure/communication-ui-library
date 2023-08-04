@@ -5,8 +5,6 @@ import { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 
 /**
  * @private
@@ -18,7 +16,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean
+    isSpeaking: boolean,
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -26,7 +25,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      localUserCanRemoveOthers
     );
   }
 );
@@ -37,7 +37,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean
+  isSpeaking: boolean,
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -50,7 +51,9 @@ const convertRemoteParticipantToParticipantListParticipant = (
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
-      getIdentifierKind(identifier).kind === 'communicationUser' || getIdentifierKind(identifier).kind === 'phoneNumber'
+      (getIdentifierKind(identifier).kind === 'communicationUser' ||
+        getIdentifierKind(identifier).kind === 'phoneNumber') &&
+      localUserCanRemoveOthers
   };
 };
 
@@ -66,7 +69,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
-    role: Role
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -75,7 +78,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
-      role
+      localUserCanRemoveOthers
     );
   }
 );
@@ -88,7 +91,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
-  role: Role
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -97,8 +100,8 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
-    ),
-    role
+      isSpeaking,
+      localUserCanRemoveOthers
+    )
   };
 };

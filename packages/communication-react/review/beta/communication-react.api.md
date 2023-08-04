@@ -6,8 +6,10 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import { BackgroundBlurEffect } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -71,6 +73,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
+import { RaisedHand } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -171,9 +174,7 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @beta
-export type AzureCommunicationCallAdapterOptions = {
-    roleHint?: Role;
-} & CommonCallAdapterOptions;
+export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 // @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
@@ -377,12 +378,13 @@ export type CallAdapterClientState = {
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
+    isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -553,7 +555,7 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
-    NoticePageInvalidRoom?: JSX.Element;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
 };
@@ -765,6 +767,11 @@ export interface CallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
+// @beta
+export type CallingHandlersOptions = {
+    onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+};
+
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
@@ -785,7 +792,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
 };
 
 // @beta
@@ -820,6 +826,7 @@ export interface CallState {
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -1022,9 +1029,11 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1635,7 +1644,10 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 
 // @beta
 export type CommonCallAdapterOptions = {
-    videoBackgroundImages?: VideoBackgroundImage[];
+    videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    };
     onFetchProfile?: OnFetchProfileCallback;
 };
 
@@ -2026,13 +2038,18 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 }): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+
+// @public
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
 // @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
+    onResolveVideoBackgroundEffectsDependency?: (() => Promise<VideoBackgroundEffectsDependency>) | undefined;
+} | undefined) => never | TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -2276,7 +2293,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
-    NoticePageInvalidRoom?: JSX.Element | undefined;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -3111,6 +3128,12 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
@@ -3309,6 +3332,12 @@ export type Profile = {
 };
 
 // @public
+export interface RaiseHandCallFeature {
+    localParticipantRaisedHand?: RaisedHand;
+    raisedHands: RaisedHand[];
+}
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -3328,6 +3357,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    raisedHand?: RaisedHand;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -3354,9 +3384,6 @@ export interface RemoteVideoStreamState {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
-
-// @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -3744,6 +3771,12 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 
 // @beta
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
+
+// @beta
+export type VideoBackgroundEffectsDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
 
 // @beta
 export interface VideoBackgroundImage {

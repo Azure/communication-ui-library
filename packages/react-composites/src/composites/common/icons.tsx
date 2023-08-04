@@ -70,7 +70,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
   /* @conditional-compile-remove(rooms) */
-  NoticePageInvalidRoom: <Info20Filled />,
+  NoticePageAccessDeniedRoomsCall: <Info20Filled />,
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
@@ -181,7 +181,7 @@ export type CallCompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
-  NoticePageInvalidRoom?: JSX.Element;
+  NoticePageAccessDeniedRoomsCall?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */

@@ -7,8 +7,8 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -47,7 +47,6 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
-import { Role } from '@internal/react-components';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -59,6 +58,7 @@ import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -105,9 +105,7 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @beta
-export type AzureCommunicationCallAdapterOptions = {
-    roleHint?: Role;
-} & CommonCallAdapterOptions;
+export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 // @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
@@ -230,12 +228,13 @@ export type CallAdapterClientState = {
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
+    isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -357,7 +356,7 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
-    NoticePageInvalidRoom?: JSX.Element;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
 };
@@ -728,9 +727,11 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1005,7 +1006,10 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 
 // @beta
 export type CommonCallAdapterOptions = {
-    videoBackgroundImages?: VideoBackgroundImage[];
+    videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    };
     onFetchProfile?: OnFetchProfileCallback;
 };
 
@@ -1250,7 +1254,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
-    NoticePageInvalidRoom?: JSX.Element | undefined;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -1478,6 +1482,12 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 
 // @beta
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+
+// @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @public
 export type ParticipantsAddedListener = (event: {

@@ -5,14 +5,21 @@ import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react'
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
+import {
+  concatStyleSets,
+  IButton,
+  IStyle,
+  ITheme,
+  mergeStyles,
+  mergeStyleSets,
+  Stack,
+  useTheme
+} from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
 import { ScreenShare } from '../../CallComposite/components/buttons/ScreenShare';
@@ -52,6 +59,8 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   displayVertical?: boolean;
+  peopleButtonRef?: React.RefObject<IButton>;
+  cameraButtonRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -205,23 +214,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     return <></>;
   }
 
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
-
   const sideButtonsPresent =
     isEnabled(options.peopleButton) || isEnabled(options.chatButton) || customButtons['secondary'] !== undefined;
 
-  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
-  /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+  const screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
 
-  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
-  /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
+  const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+  const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
   return (
     <div ref={controlBarSizeRef}>
@@ -282,6 +282,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         /* @conditional-compile-remove(video-background-effects) */
                         onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                        componentRef={props.cameraButtonRef}
                       />
                     )}
                     {screenShareButtonIsEnabled && (
@@ -363,6 +364,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
+                    componentRef={props.peopleButtonRef}
                   />
                 )}
                 {customButtons['secondary']
