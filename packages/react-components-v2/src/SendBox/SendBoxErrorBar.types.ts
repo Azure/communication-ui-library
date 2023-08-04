@@ -2,10 +2,10 @@
 // Licensed under the MIT license.
 
 /**
- * @beta
+ * @internal
  * Error to be displayed to the user in an error bar above SendBox.
  */
-export interface SendBoxErrorBarError {
+export interface _SendBoxErrorBarError {
   /** Error Message to be displayed */
   message: string;
   /**
@@ -17,9 +17,9 @@ export interface SendBoxErrorBarError {
 /**
  * @internal
  */
-export interface SendBoxErrorBarProps {
+export interface _SendBoxErrorBarProps {
   /** Error to render */
-  error?: SendBoxErrorBarError;
+  error?: _SendBoxErrorBarError;
   /**
    * Automatically dismisses the error bar after the specified delay in ms.
    * Example: `10 * 1000` would be 10 seconds

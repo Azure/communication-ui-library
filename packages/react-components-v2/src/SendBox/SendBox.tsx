@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
 import { Button, Input, Tooltip } from '@fluentui/react-components';
 
@@ -10,6 +10,7 @@ import { use_SendBoxStyles } from './SendBox.styles';
 import { useLocale } from '../localization';
 import { Send24Regular } from '@fluentui/react-icons';
 import { useIdentifiers } from '../identifiers';
+import { _SendBoxErrors } from './SendBoxErrors';
 
 /**
  * Component for typing and sending messages.
@@ -23,11 +24,27 @@ export const SendBox: ForwardRefComponent<SendBoxProps> = React.forwardRef((prop
   const styles = use_SendBoxStyles();
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings.sendBox;
+  const { activeFileUploads } = props;
   // const strings = { /*...localeStrings, */ ...props.strings };
+  const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
+
+  // Ensure that errors are cleared when there are no files in sendBox
+  React.useEffect(() => {
+    if (!activeFileUploads?.filter((upload) => !upload.error).length) {
+      setFileUploadsPendingError(undefined);
+    }
+  }, [activeFileUploads]);
+
+  const sendBoxErrorsProps = useMemo(() => {
+    return {
+      fileUploadsPendingError: fileUploadsPendingError,
+      fileUploadError: activeFileUploads?.filter((fileUpload) => fileUpload.error).pop()?.error
+    };
+  }, [activeFileUploads, fileUploadsPendingError]);
 
   return (
     <div className={styles.root}>
-      {/* <SendBoxErrors {...sendBoxErrorsProps} /> */}
+      <_SendBoxErrors {...sendBoxErrorsProps} />
       <Input
         aria-label={localeStrings.sendButtonAriaLabel}
         className={styles.input}

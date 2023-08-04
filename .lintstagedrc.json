@@ -1,4 +1,3 @@
 {
-  "*.ts": "prettier --fix",
-  "*.tsx": "prettier --fix"
+  "*": "prettier --ignore-unknown --fix"
 }
