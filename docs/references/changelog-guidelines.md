@@ -26,6 +26,8 @@ Text field entry to describe the changes. The changelog entry to be in present t
 ### Examples
 ```md
 - Adds functionality to open image gallery when user taps on an inline image
+- Starting new `workstream` or `feature` 
+- Adding to `workstream` or `feature` 
 - Fixes app crash when user taps on call button
 - Improves performance of the app by reducing the number of API calls
 ```
