@@ -21,6 +21,8 @@ export const downloadIcon: IIconProps = {
 export const overlayStyles = (theme: Theme, isDarkThemed: boolean): IOverlayStyles => {
   return {
     root: {
+      // The overlay background color should always be black in both light and dark theme.
+      // In dark theme, theme.palette.white is actually black.
       background: isDarkThemed ? theme.palette.white : theme.palette.black,
       opacity: '0.85'
     }
