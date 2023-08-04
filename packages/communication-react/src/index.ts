@@ -128,9 +128,10 @@ export {
   StreamMedia,
   TypingIndicator,
   VideoGallery,
-  VideoTile,
-  ImageGallery
+  VideoTile
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export { ImageGallery } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
@@ -266,11 +267,10 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode,
-  ImageGalleryProps,
-  ImageGalleryImageProps,
-  ImageGalleryStylesProps
+  ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStylesProps } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
