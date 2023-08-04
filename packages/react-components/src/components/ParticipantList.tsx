@@ -268,7 +268,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
 
   return (
-    <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
+    <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)} role={'menu'}>
       {displayedParticipants.map((participant: ParticipantListParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
