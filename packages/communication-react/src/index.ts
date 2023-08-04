@@ -128,7 +128,8 @@ export {
   StreamMedia,
   TypingIndicator,
   VideoGallery,
-  VideoTile
+  VideoTile,
+  ImageGallery
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
@@ -265,7 +266,10 @@ export type {
   VideoStreamOptions,
   VideoTileProps,
   VideoTileStylesProps,
-  ViewScalingMode
+  ViewScalingMode,
+  ImageGalleryProps,
+  ImageGalleryImageProps,
+  ImageGalleryStylesProps
 } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
