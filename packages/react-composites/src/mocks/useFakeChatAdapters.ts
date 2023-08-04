@@ -10,6 +10,8 @@ import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 import { useEffect, useState } from 'react';
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(communication-common-beta-v3) */
+import { isMicrosoftBotIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { RestError } from '@azure/core-rest-pipeline';
@@ -39,6 +41,11 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         throw new Error(
           `Local participant must have display name defined, got ${JSON.stringify(args.localParticipant)}`
         );
+      }
+
+      /* @conditional-compile-remove(communication-common-beta-v3) */
+      if (isMicrosoftBotIdentifier(args.localParticipant.id)) {
+        throw new Error('Local participant cannot be a bot');
       }
 
       const chatClientModel = new Model({ asyncDelivery: false });
@@ -89,6 +96,10 @@ const initializeAdapters = async (
 ): Promise<ChatAdapter[]> => {
   const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
+    /* @conditional-compile-remove(communication-common-beta-v3) */
+    if (isMicrosoftBotIdentifier(participant.id)) {
+      throw new Error('Creating an adapter with a Bot participant is not supported');
+    }
     if (!participant.displayName) {
       throw new Error(`All participants must have displayName defined, got ${JSON.stringify(participant)}`);
     }
@@ -122,7 +133,7 @@ const initializeAdapter = async (
   return await createAzureCommunicationChatAdapterFromClient(
     statefulChatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(teams-inline-images) */
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     { credential: fakeToken }
   );
 };

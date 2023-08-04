@@ -8,6 +8,24 @@ import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../com
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
+  test('Show loading banner when start captions is clicked but captions is not started yet', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState();
+    if (initialState?.call) {
+      initialState.isTeamsCall = true;
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: true
+      };
+    }
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
+  });
+
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
@@ -48,7 +66,11 @@ test.describe('Closed Captions Banner tests', async () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
-      initialState.call.captionsFeature = { ...captionsFeatureState, isCaptionsFeatureActive: false };
+      initialState.call.captionsFeature = {
+        ...captionsFeatureState,
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: false
+      };
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -110,7 +132,7 @@ test.describe('Captions buttons in call control', () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
-      initialState.call.captionsFeature.isCaptionsFeatureActive = true;
+      initialState.call.captionsFeature = captionsFeatureState;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));

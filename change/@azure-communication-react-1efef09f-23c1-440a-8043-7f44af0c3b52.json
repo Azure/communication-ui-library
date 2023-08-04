@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Video effect errors test",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

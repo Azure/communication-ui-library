@@ -44,8 +44,8 @@
     "tooltipContent": "Poistu puhelusta"
   },
   "cameraButton": {
-    "onLabel": "Poista käytöstä",
-    "offLabel": "Ota käyttöön",
+    "onLabel": "Kamera",
+    "offLabel": "Kamera",
     "tooltipDisabledContent": "Kamera on poissa käytöstä",
     "tooltipOnContent": "Poista kamera käytöstä",
     "tooltipOffContent": "Käynnistä kamera",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Tehosteet"
   },
   "microphoneButton": {
-    "onLabel": "Mykistä",
-    "offLabel": "Poista mykistys",
+    "onLabel": "Mikrofoni",
+    "offLabel": "Mikrofoni",
     "tooltipDisabledContent": "Mikrofoni on poissa käytöstä",
     "tooltipOnContent": "Mykistä mikrofoni",
     "tooltipOffContent": "Poista mikrofonin mykistys",
@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Mikrofonisi on poistettu käytöstä",
     "offSplitButtonMicrophonePrimaryAction": "Poista mikrofonin mykistys",
     "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
-    "micPrimaryActionSplitButtonTitle": "Käytä mikrofonia"
+    "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia"
   },
   "devicesButton": {
     "label": "Laitteet",
@@ -138,7 +138,8 @@
     "actionMenuMoreOptions": "Lisää vaihtoehtoja",
     "downloadFile": "Lataa tiedosto",
     "blockedWarningText": "Tämä viesti poistettiin organisaation käytännön vuoksi.",
-    "blockedWarningLinkText": "Lisätiedot"
+    "blockedWarningLinkText": "Lisätiedot",
+    "fileCardGroupMessage": "Viestissä on {fileCount} liite"
   },
   "errorBar": {
     "unableToReachChatService": "Olet offline-tilassa",
@@ -152,7 +153,7 @@
     "muteGeneric": "Mikrofonin mykistäminen epäonnistui",
     "unmuteGeneric": "Mikrofonin mykistyksen poistaminen epäonnistui",
     "speakingWhileMuted": "Mikrofonisi on mykistetty",
-    "startScreenShareGeneric": "Näytön jakamisen aloittaminen epäonnistui",
+    "startScreenShareGeneric": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
     "stopScreenShareGeneric": "Näytön jakamisen lopettaminen epäonnistui",
     "callNetworkQualityLow": "Verkkoyhteyden laatu on huono.",
     "callNoSpeakerFound": "Kaiuttimia tai kuulokkeita ei löytynyt. Yhdistä äänilaite voidaksesi kuulla puhelun.",
@@ -173,7 +174,6 @@
     "dismissButtonAriaLabel": "Sulje",
     "failedToJoinCallGeneric": "Puheluun liittyminen epäonnistui.",
     "failedToJoinCallInvalidMeetingLink": "Kokoukseen liittyminen ei onnistu. Linkki on virheellinen.",
-    "startScreenSharingGeneric": "Näytön jakamisen aloittamisessa ilmeni ongelma.",
     "cameraFrozenForRemoteParticipants": "Puhelun käyttäjillä on videokuvan näkymiseen liittyviä ongelmia. Tarkista laitteesi ja verkkosi.",
     "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu."
   },

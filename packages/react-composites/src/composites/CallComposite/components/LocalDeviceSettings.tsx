@@ -17,9 +17,7 @@ import {
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
-/* @conditional-compile-remove(call-readiness) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
@@ -103,25 +101,28 @@ export interface LocalDeviceSettingsType {
 export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element => {
   const theme = useTheme();
   const locale = useLocale();
-  /* @conditional-compile-remove(call-readiness) */
+  /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
+  /* @conditional-compile-remove(video-background-effects) */
+  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
   const cameraLabel = locale.strings.call.cameraLabel;
   const soundLabel = locale.strings.call.soundLabel;
   const noSpeakersLabel = locale.strings.call.noSpeakersLabel;
   const noCameraLabel = locale.strings.call.noCamerasLabel;
   const noMicLabel = locale.strings.call.noMicrophonesLabel;
+  /* @conditional-compile-remove(rooms) */
+  const role = adapter.getState().call?.role;
 
   const cameraPermissionGranted = props.cameraPermissionGranted;
   const micPermissionGranted = props.microphonePermissionGranted;
   let roleCanUseCamera = true;
   let roleCanUseMic = true;
+
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  roleCanUseCamera = role === 'Consumer' ? false : true;
   /* @conditional-compile-remove(rooms) */
-  roleCanUseCamera = rolePermissions.cameraButton;
-  /* @conditional-compile-remove(rooms) */
-  roleCanUseMic = rolePermissions.microphoneButton;
+  roleCanUseMic = role === 'Consumer' ? false : true;
 
   // TODO: speaker permission is tied to microphone permission (when you request 'audio' permission using the SDK) its
   // actually granting access to query both microphone and speaker. However the browser popup asks you explicity for
@@ -221,14 +222,16 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             </Label>
             {
               /* @conditional-compile-remove(video-background-effects) */
-              <DefaultButton
-                iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
-                styles={effectsButtonStyles(theme)}
-                onClick={props.onVideoEffectsClick}
-                data-ui-id={'call-config-video-effects-button'}
-              >
-                {locale.strings.call.configurationPageVideoEffectsButtonLabel}
-              </DefaultButton>
+              onResolveVideoEffectDependency && (
+                <DefaultButton
+                  iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
+                  styles={effectsButtonStyles(theme)}
+                  onClick={props.onVideoEffectsClick}
+                  data-ui-id={'call-config-video-effects-button'}
+                >
+                  {locale.strings.call.configurationPageVideoEffectsButtonLabel}
+                </DefaultButton>
+              )
             }
           </Stack>
           <ConfigurationPageCameraDropdown

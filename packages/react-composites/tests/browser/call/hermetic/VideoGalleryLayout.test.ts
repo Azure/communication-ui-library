@@ -10,8 +10,6 @@ import {
 } from './fixture';
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot, isTestProfileMobile, pageClick } from '../../common/utils';
-/* @conditional-compile-remove(pinned-participants) */
-import { screenshotOnFailure, perStepLocalTimeout } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGalleryLayout tests', async () => {
@@ -26,16 +24,17 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
-    await waitForSelector(page, dataUiId(IDS.videoTile));
-    await page.hover(dataUiId(IDS.videoTile));
-    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
-    // not using 'pageclick' method as it brings page to front and we need the focus on video tile
-    await screenshotOnFailure(
-      page,
-      async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
-    );
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fit-to-frame.png');
+    for (let i = 1; i < 2; i++) {
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+      await videoTile.hover();
+      const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+      await moreButton.hover();
+      await moreButton.click();
+
+      expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fit-to-frame.png');
+    }
   });
   /* @conditional-compile-remove(pinned-participants) */
   test('VideoTile contextual menu shows "Fill frame" when scaling mode set to Fit', async ({
@@ -50,16 +49,19 @@ test.describe('VideoGalleryLayout tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    await waitForSelector(page, dataUiId(IDS.videoTile));
-    await page.hover(dataUiId(IDS.videoTile));
-    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
-    await screenshotOnFailure(
-      page,
-      async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
-    );
+    for (let i = 1; i < 2; i++) {
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+      await videoTile.hover();
+      const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+      await moreButton.hover();
+      await moreButton.click();
+      // click pin menu button in contextual menu
+      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fill-frame.png');
+      expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fill-frame.png');
+    }
   });
   /* @conditional-compile-remove(pinned-participants) */
   test('VideoTile pin/unpin the remote participant for Desktop', async ({ page, serverUrl }, testInfo) => {
@@ -71,26 +73,26 @@ test.describe('VideoGalleryLayout tests', async () => {
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
+    let videoTile;
+    let moreButton;
 
-    await waitForSelector(page, dataUiId(IDS.videoTile));
-    await page.hover(dataUiId(IDS.videoTile));
-    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
-    await screenshotOnFailure(
-      page,
-      async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
-    );
+    for (let i = 1; i < 2; i++) {
+      videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
+      await videoTile.hover();
+      moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+      await moreButton.hover();
+      await moreButton.click();
 
-    await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
-    await pageClick(page, dataUiId('video-tile-pin-participant-button'));
-
+      await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
+      await pageClick(page, dataUiId('video-tile-pin-participant-button'));
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
 
-    await page.hover(dataUiId(IDS.videoTile));
-    await waitForSelector(page, dataUiId(IDS.videoTileMoreOptionsButton));
-    await screenshotOnFailure(
-      page,
-      async () => await page.click(dataUiId(IDS.videoTileMoreOptionsButton), { timeout: perStepLocalTimeout() })
-    );
+    await videoTile.hover();
+    moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.hover();
+    await moreButton.click();
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
   });

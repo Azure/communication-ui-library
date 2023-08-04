@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Resolve overlap of tooltip and list of devices on mobile configuration page",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -29,9 +29,8 @@ export const sendBoxWrapperStyles = mergeStyles({
  * @private
  */
 export const sendButtonStyle = mergeStyles({
-  height: '1.25rem',
-  width: '1.25rem',
-  marginRight: '0.313rem' // 5px
+  height: '2.25rem',
+  width: '2.25rem'
 });
 
 /**

@@ -96,7 +96,7 @@ export const OverflowGallery = (props: {
         onFetchTilesToRender={onFetchTilesToRender}
         onChildrenPerPageChange={onChildrenPerPageChange}
       >
-        {overflowGalleryElements}
+        {overflowGalleryElements ? overflowGalleryElements : [<></>]}
       </ResponsiveVerticalGallery>
     );
   }
@@ -108,7 +108,7 @@ export const OverflowGallery = (props: {
     onChildrenPerPageChange?.(3);
     return (
       <ScrollableHorizontalGallery
-        horizontalGalleryElements={overflowGalleryElements}
+        horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
       />
@@ -125,7 +125,7 @@ export const OverflowGallery = (props: {
       gapWidthRem={HORIZONTAL_GALLERY_GAP}
       onChildrenPerPageChange={onChildrenPerPageChange}
     >
-      {overflowGalleryElements}
+      {overflowGalleryElements ? overflowGalleryElements : [<></>]}
     </ResponsiveHorizontalGallery>
   );
 };

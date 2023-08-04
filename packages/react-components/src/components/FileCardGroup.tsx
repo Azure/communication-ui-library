@@ -10,6 +10,7 @@ import React from 'react';
  */
 export interface _FileCardGroupProps {
   children: React.ReactNode;
+  ariaLabel?: string;
 }
 
 /**
@@ -17,6 +18,7 @@ export interface _FileCardGroupProps {
  * an extra margin is added to the left of each line.
  * This is a workaround to avoid this issue.
  */
+
 const fileCardGroupClassName = mergeStyles({
   flexFlow: 'row wrap',
   '& > *': {
@@ -36,14 +38,13 @@ const fileCardGroupClassName = mergeStyles({
  * Renders the children equally spaced in multiple rows.
  */
 export const _FileCardGroup = (props: _FileCardGroupProps): JSX.Element => {
-  const { children } = props;
-
+  const { children, ariaLabel } = props;
   if (!children) {
     return <></>;
   }
 
   return (
-    <Stack horizontal className={fileCardGroupClassName}>
+    <Stack horizontal className={fileCardGroupClassName} aria-label={ariaLabel}>
       {children}
     </Stack>
   );

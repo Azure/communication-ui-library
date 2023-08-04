@@ -3,7 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import { dataUiId, isTestProfileMobile, pageClick, waitForSelector } from '../../common/utils';
+import { dataUiId, isTestProfileMobile, pageClick, waitForSelector, waitForSelectorCount } from '../../common/utils';
 import {
   addVideoStream,
   buildUrlWithMockAdapter,
@@ -87,13 +87,13 @@ test.describe('Height gallery resizing tests', async () => {
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
 
     // check initial tile number to be correct.
-    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(2);
+    await waitForSelectorCount(page, dataUiId(IDS.horizontalGalleryVideoTile), 2);
 
     // resize the window.
     await page.setViewportSize({ width: 800, height: 600 });
 
     // verify that we added a tile with the extra spacing.
-    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(3);
+    await waitForSelectorCount(page, dataUiId(IDS.horizontalGalleryVideoTile), 3);
   });
   test('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -125,13 +125,13 @@ test.describe('Height gallery resizing tests', async () => {
     await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
 
     // check initial tile number to be correct.
-    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(3);
+    await waitForSelectorCount(page, dataUiId(IDS.horizontalGalleryVideoTile), 3);
 
     // resize the window.
     await page.setViewportSize({ width: 600, height: 600 });
 
     // verify that we added a tile with the extra spacing.
-    expect(await page.locator(dataUiId(IDS.horizontalGalleryVideoTile)).count()).toBe(2);
+    await waitForSelectorCount(page, dataUiId(IDS.horizontalGalleryVideoTile), 2);
   });
   test('single user on last page should use largest size', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));

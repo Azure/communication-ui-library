@@ -16,6 +16,10 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -33,6 +37,8 @@ import {
   UnknownIdentifierKind,
   CommunicationIdentifierKind
 } from '@azure/communication-common';
+/* @conditional-compile-remove(communication-common-beta-v3) */
+import { MicrosoftBotKind } from '@azure/communication-common';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -102,6 +108,10 @@ export interface CaptionsCallFeatureState {
    */
   isCaptionsFeatureActive: boolean;
   /**
+   * whether start captions button is clicked or now
+   */
+  startCaptionsInProgress: boolean;
+  /**
    * supported caption languages
    */
   supportedCaptionLanguages: string[];
@@ -129,6 +139,19 @@ export interface TranscriptionCallFeatureState {
   isTranscriptionActive: boolean;
 }
 
+/* @conditional-compile-remove(capabilities) */
+/**
+ * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
+ *
+ * @beta
+ */
+export interface CapabilitiesFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
+   */
+  capabilities: ParticipantCapabilities;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RecordingCallFeature}. {@link StatefulCallClient} will
  * automatically listen for recording state of the call and update the state exposed by {@link StatefulCallClient} accordingly.
@@ -141,6 +164,25 @@ export interface RecordingCallFeatureState {
    */
   isRecordingActive: boolean;
 }
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * State only version of {@link @azure/communication-calling#RaiseHandCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ *
+ * @public
+ */
+export interface RaiseHandCallFeatureState {
+  /**
+   * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
+   */
+  raisedHands: RaisedHand[];
+  /**
+   * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
+   */
+  localParticipantRaisedHand?: RaisedHand;
+}
+``;
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
@@ -180,6 +222,19 @@ export interface LocalVideoStreamVideoEffectsState {
    * List of effects if any are active.
    */
   activeEffects?: VideoEffectName[];
+}
+
+/* @conditional-compile-remove(optimal-video-count) */
+/**
+ * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+ *
+ * @beta
+ */
+export interface OptimalVideoCountFeatureState {
+  /**
+   * State of the current optimal video count.
+   */
+  maxRemoteVideoStreams: number;
 }
 
 /**
@@ -244,7 +299,12 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.identifier}.
    */
-  identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
+  identifier:
+    | CommunicationUserKind
+    | PhoneNumberKind
+    | MicrosoftTeamsUserKind
+    | UnknownIdentifierKind
+    | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */
@@ -275,6 +335,12 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.role}.
    */
   role?: ParticipantRole;
+
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
+   */
+  raisedHand?: RaisedHand;
 }
 
 /**
@@ -348,10 +414,20 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(optimal-video-count) */
+  /**
+   * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
+   */
+  optimalVideoCount: OptimalVideoCountFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeatureState;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
+   */
+  raiseHand: RaiseHandCallFeatureState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
@@ -388,6 +464,46 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.totalParticipantCount}.
    */
   totalParticipantCount?: number;
+  /* @conditional-compile-remove(call-transfer) */
+  /**
+   * Transfer state of call
+   */
+  transfer: TransferFeatureState;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
+   */
+  capabilities?: CapabilitiesFeatureState;
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface TransferFeatureState {
+  /**
+   * Accepted transfer requests
+   */
+  acceptedTransfers: { [key: string]: AcceptedTransfer };
+}
+
+/* @conditional-compile-remove(call-transfer) */
+/**
+ * Transfer feature state
+ *
+ * @beta
+ */
+export interface AcceptedTransfer {
+  /**
+   * Stores call id of accepted transfer
+   */
+  callId: string;
+  /**
+   * Stores timestamp when transfer was accepted
+   */
+  timestamp: Date;
 }
 
 /**

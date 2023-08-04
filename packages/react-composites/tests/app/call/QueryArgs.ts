@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Role } from '@internal/react-components';
+import { ParticipantRole } from '@azure/communication-calling';
 import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
 import { jsonDateDeserializer } from '../lib/utils';
@@ -14,13 +14,15 @@ export interface QueryArgs {
   injectParticipantMenuItems: boolean;
   injectCustomButtons: boolean;
   newControlBarExperience?: boolean;
-  role?: Role;
+  role?: ParticipantRole;
   callInvitationUrl?: string;
   showParticipantItemIcon: boolean;
   customCallCompositeOptions?: CallCompositeOptions;
   useEnvironmentInfoTroubleshootingOptions?: boolean;
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
+  localVideoTilePosition?: false | ('grid' | 'floating');
+  enableVideoEffect?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -28,11 +30,20 @@ export interface QueryArgs {
   groupId: string;
   token: string;
   displayName: string;
+  mockRemoteParticipantCount: number;
+  enableVideoEffects?: boolean;
 }
 
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
+  const localVideoTilePosition = !params.localVideoTilePosition
+    ? undefined
+    : params.localVideoTilePosition === 'false'
+    ? false
+    : params.localVideoTilePosition === 'floating'
+    ? 'floating'
+    : 'grid';
 
   return {
     mockCallAdapterState: params.mockCallAdapterState
@@ -50,11 +61,14 @@ export function parseQueryArgs(): QueryArgs {
     groupId: params.groupId ?? '',
     token: params.token ?? '',
     displayName: params.displayName ?? '',
-    role: (params.role as Role) ?? undefined,
+    role: (params.role as ParticipantRole) ?? undefined,
     rtl: Boolean(params.rtl),
     callInvitationUrl: params.callInvitationUrl,
+    mockRemoteParticipantCount: Number(params.mockRemoteParticipantCount),
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
-      : undefined
+      : undefined,
+    localVideoTilePosition,
+    enableVideoEffects: Boolean(params.enableVideoEffects)
   };
 }

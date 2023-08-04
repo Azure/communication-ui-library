@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update Adapters storybook page to include transfer API changes",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "none"
+}

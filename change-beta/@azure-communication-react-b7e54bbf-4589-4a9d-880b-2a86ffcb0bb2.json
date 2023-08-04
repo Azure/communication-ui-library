@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update configuration page side pane styles and close on starting a call",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

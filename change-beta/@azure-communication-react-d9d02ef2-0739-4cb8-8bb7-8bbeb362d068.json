@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update the logic when one is talking over another",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "patch"
-}

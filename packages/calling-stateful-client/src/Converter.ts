@@ -85,7 +85,9 @@ export function convertSdkParticipantToDeclarativeParticipant(
     callEndReason: participant.callEndReason,
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
-    isSpeaking: participant.isSpeaking
+    isSpeaking: participant.isSpeaking,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand: undefined
   };
 }
 
@@ -122,6 +124,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
@@ -135,7 +139,16 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       supportedCaptionLanguages: [],
       currentCaptionLanguage: '',
       currentSpokenLanguage: '',
-      isCaptionsFeatureActive: false
+      isCaptionsFeatureActive: false,
+      startCaptionsInProgress: false
+    },
+    /* @conditional-compile-remove(call-transfer) */
+    transfer: {
+      acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount: {
+      maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
     }
   };
 }

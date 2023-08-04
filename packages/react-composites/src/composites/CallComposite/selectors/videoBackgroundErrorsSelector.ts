@@ -1,14 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(video-background-effects) */
 import * as reselect from 'reselect';
-/* @conditional-compile-remove(video-background-effects) */
 import { getLatestErrors } from './baseSelectors';
-/* @conditional-compile-remove(video-background-effects) */
 import { AdapterErrors } from '../../common/adapters';
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @private
  */

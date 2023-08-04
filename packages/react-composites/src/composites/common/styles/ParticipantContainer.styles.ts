@@ -38,8 +38,9 @@ export const sidePaneContainerTokens: IStackTokens = {
  */
 export const sidePaneHeaderStyles: IStackItemStyles = {
   root: {
-    lineHeight: '1.25rem',
-    padding: '0.25rem',
+    lineHeight: '1.5rem',
+    fontSize: '1.125rem',
+    padding: '0.75rem 0.75rem 0.75rem 0.25rem',
     fontWeight: '600'
   }
 };
@@ -76,6 +77,10 @@ export const scrollableContainerContents: IStackItemStyles = {
   }
 };
 
+/**
+ * @private
+ */
+export const containerContextStyles: IStackStyles = { root: { position: 'absolute', height: '100%', width: '100%' } };
 /**
  * @private
  */

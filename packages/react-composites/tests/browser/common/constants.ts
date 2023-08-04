@@ -123,7 +123,8 @@ export const captionsFeatureState = {
   supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'en-us',
   currentSpokenLanguage: 'en-us',
-  isCaptionsFeatureActive: true
+  isCaptionsFeatureActive: true,
+  startCaptionsInProgress: true
 };
 
 export const captionsFeatureStateArabic = {
@@ -163,5 +164,6 @@ export const captionsFeatureStateArabic = {
   supportedCaptionLanguages: captionsAvailableLanguageStrings,
   currentCaptionLanguage: 'ar-ae',
   currentSpokenLanguage: 'ar-ae',
-  isCaptionsFeatureActive: true
+  isCaptionsFeatureActive: true,
+  startCaptionsInProgress: true
 };

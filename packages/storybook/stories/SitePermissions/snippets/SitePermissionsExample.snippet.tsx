@@ -4,25 +4,17 @@
 import {
   CameraAndMicrophoneSitePermissions,
   CameraSitePermissions,
+  DEFAULT_COMPONENT_ICONS,
   MicrophoneSitePermissions
 } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
+import { Stack, registerIcons } from '@fluentui/react';
 import React from 'react';
-import { useLocale } from '../../../../react-components/src/localization';
+
+registerIcons({
+  icons: DEFAULT_COMPONENT_ICONS
+});
 
 export const SitePermissionsExample: () => JSX.Element = () => {
-  const micCameralocaleRequest = useLocale().strings.CameraAndMicrophoneSitePermissionsRequest;
-  const cameraLocaleRequest = useLocale().strings.CameraSitePermissionsRequest;
-  const microphoneLocaleRequest = useLocale().strings.MicrophoneSitePermissionsRequest;
-
-  const micCameralocaleCheck = useLocale().strings.CameraAndMicrophoneSitePermissionsCheck;
-  const cameraLocaleCheck = useLocale().strings.CameraSitePermissionsCheck;
-  const microphoneLocaleCheck = useLocale().strings.MicrophoneSitePermissionsCheck;
-
-  const micCameralocaleDenied = useLocale().strings.CameraAndMicrophoneSitePermissionsDenied;
-  const cameraLocaleDenied = useLocale().strings.CameraSitePermissionsDenied;
-  const microphoneLocaleDenied = useLocale().strings.MicrophoneSitePermissionsDenied;
-
   return (
     <Stack>
       <Stack horizontal>
@@ -32,7 +24,6 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            strings={micCameralocaleRequest}
             kind={'request'}
           />
         </Stack>
@@ -42,7 +33,6 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            strings={microphoneLocaleRequest}
             kind={'request'}
           />
         </Stack>
@@ -53,9 +43,8 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             onContinueAnywayClick={() => {
-              alert('clicked continuec anyway');
+              alert('clicked continue anyway');
             }}
-            strings={cameraLocaleRequest}
             kind={'request'}
           />
         </Stack>
@@ -67,7 +56,6 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            strings={micCameralocaleDenied}
             kind={'denied'}
           />
         </Stack>
@@ -77,7 +65,6 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            strings={microphoneLocaleDenied}
             kind={'denied'}
           />
         </Stack>
@@ -88,9 +75,8 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             onContinueAnywayClick={() => {
-              alert('clicked continuec anyway');
+              alert('clicked continue anyway');
             }}
-            strings={cameraLocaleDenied}
             kind={'denied'}
           />
         </Stack>
@@ -102,7 +88,6 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            strings={micCameralocaleCheck}
             kind={'check'}
           />
         </Stack>
@@ -112,7 +97,6 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            strings={microphoneLocaleCheck}
             kind={'check'}
           />
         </Stack>
@@ -123,9 +107,8 @@ export const SitePermissionsExample: () => JSX.Element = () => {
               alert('clicked trouble shooting');
             }}
             onContinueAnywayClick={() => {
-              alert('clicked continuec anyway');
+              alert('clicked continue anyway');
             }}
-            strings={cameraLocaleCheck}
             kind={'check'}
           />
         </Stack>

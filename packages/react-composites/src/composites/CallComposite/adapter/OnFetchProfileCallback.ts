@@ -47,8 +47,8 @@ export const createProfileStateModifier = (
         const profile = await onFetchProfile(key, { displayName: originalParticipants[key].displayName });
         if (profile?.displayName && originalParticipants[key].displayName !== profile?.displayName) {
           cachedDisplayName[key] = profile?.displayName;
+          shouldNotifyUpdates = true;
         }
-        shouldNotifyUpdates = true;
       }
       // notify update only when there is a change, which most likely will trigger modifier and setState again
       shouldNotifyUpdates && notifyUpdate();

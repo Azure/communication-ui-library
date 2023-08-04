@@ -9,8 +9,6 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import React, { useCallback, useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -21,6 +19,7 @@ import { participantListContainerStyles, peoplePaneContainerStyle } from './styl
 import { convertContextualMenuItemToDrawerMenuItem } from './ConvertContextualMenuItemToDrawerMenuItem';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { CallCompositeStrings } from '../CallComposite';
+import { CommonCallAdapter } from '../CallComposite';
 import { AddPeopleButton } from './AddPeopleButton';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PhoneNumberIdentifier } from '@azure/communication-common';
@@ -71,7 +70,7 @@ export const PeoplePaneContent = (props: {
   const alternateCallerId = adapter.getState().alternateCallerId;
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
-  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline();
+  const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline(adapter);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -202,9 +201,9 @@ const createDefaultContextualMenuItems = (
 /**
  * @private
  */
-const hasRemoveParticipantsPermissionTrampoline = (): boolean => {
+const hasRemoveParticipantsPermissionTrampoline = (adapter: CommonCallAdapter): boolean => {
   /* @conditional-compile-remove(rooms) */
-  return _usePermissions().removeParticipantButton;
+  return adapter.getState().call?.role === 'Presenter';
   // Return true if stable.
   return true;
 };

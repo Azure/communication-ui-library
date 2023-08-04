@@ -9,6 +9,10 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -39,6 +43,8 @@ import {
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
+/* @conditional-compile-remove(call-transfer) */
+import { AcceptedTransfer } from './CallClientState';
 import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
@@ -152,7 +158,13 @@ export class CallContext {
         existingCall.localVideoStreams = call.localVideoStreams;
         existingCall.remoteParticipants = call.remoteParticipants;
         existingCall.transcription.isTranscriptionActive = call.transcription.isTranscriptionActive;
+        /* @conditional-compile-remove(optimal-video-count) */
+        existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
+        /* @conditional-compile-remove(raise-hand) */
+        existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
+        /* @conditional-compile-remove(raise-hand) */
+        existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;
         /* @conditional-compile-remove(total-participant-count) */
@@ -334,11 +346,48 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(raise-hand) */
+  public setCallRaisedHands(callId: string, raisedHands: RaisedHand[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.raiseHand.raisedHands = raisedHands;
+        call.raiseHand.localParticipantRaisedHand = raisedHands.find(
+          (raisedHand) =>
+            toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)
+        );
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(raise-hand) */
+  public setParticipantIsRaisedHand(callId: string, participantKey: string, raisedHand: RaisedHand | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          participant.raisedHand = raisedHand;
+        }
+      }
+    });
+  }
+
   public setCallTranscriptionActive(callId: string, isTranscriptionActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.transcription.isTranscriptionActive = isTranscriptionActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(capabilities) */
+  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.capabilities = { capabilities: capabilities };
       }
     });
   }
@@ -383,6 +432,16 @@ export class CallContext {
         if (participant) {
           participant.isMuted = muted;
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(optimal-video-count) */
+  public setOptimalVideoCount(callId: string, optimalVideoCount: number): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.optimalVideoCount.maxRemoteVideoStreams = optimalVideoCount;
       }
     });
   }
@@ -739,6 +798,16 @@ export class CallContext {
       }
     });
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  setStartCaptionsInProgress(callId: string, startCaptionsInProgress: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.startCaptionsInProgress = startCaptionsInProgress;
+      }
+    });
+  }
   /* @conditional-compile-remove(close-captions) */
   setSelectedSpokenLanguage(callId: string, spokenLanguage: string): void {
     this.modifyState((draft: CallClientState) => {
@@ -772,6 +841,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.supportedSpokenLanguages = spokenLanguages;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(call-transfer) */
+  setAcceptedTransfer(callId: string, acceptedTransfer: AcceptedTransfer): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.transfer.acceptedTransfers[acceptedTransfer.callId] = acceptedTransfer;
       }
     });
   }

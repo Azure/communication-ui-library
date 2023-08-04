@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Revert \"[Bug Fix] local video tile css fix mobile (#2708)\"",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

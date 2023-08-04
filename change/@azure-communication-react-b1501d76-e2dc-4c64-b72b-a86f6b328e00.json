@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update release validation for new security requirements",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

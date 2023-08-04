@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Added VideoGallery unit tests for vertical overflow gallery",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

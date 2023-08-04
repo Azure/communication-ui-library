@@ -4,7 +4,7 @@
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
+import { ComponentSlotStyle } from '../../types';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -129,6 +129,10 @@ export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle =>
     maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
     height: 'auto !important'
   },
+  '& video': {
+    maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
+    height: 'auto !important'
+  },
   '& p': {
     // Deal with awkward padding seen in messages from Teams.
     // For more info see https://github.com/Azure/communication-ui-library/pull/1507
@@ -204,7 +208,7 @@ export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlot
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
-  width: `${AVATAR_WIDTH_REM}`,
+  width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
   display: 'block',

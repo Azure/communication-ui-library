@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update ci to support beta-release api snapshot and e2e snapshot",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}

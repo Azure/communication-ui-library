@@ -11,6 +11,7 @@ import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/rea
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -33,8 +34,8 @@ export const _videoGalleryRemoteParticipantsMemo = (
          */
         .filter((participant: RemoteParticipantState) => {
           return (
-            (participant.state !== 'InLobby' && participant.state !== 'Idle' && participant.state !== 'Connecting') ||
-            participant.identifier.kind === 'phoneNumber'
+            !['InLobby', 'Idle', 'Connecting', 'Disconnected'].includes(participant.state) ||
+            isPhoneNumberIdentifier(participant.identifier)
           );
         })
         .map((participant: RemoteParticipantState) => {
@@ -129,7 +130,14 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
 
 /** @private */
 export const memoizeLocalParticipant = memoizeOne(
-  (identifier, displayName, isMuted, isScreenSharingOn, localVideoStream) => ({
+  (
+    identifier,
+    displayName,
+    isMuted,
+    isScreenSharingOn,
+    localVideoStream,
+    /* @conditional-compile-remove(rooms) */ role
+  ) => ({
     userId: identifier,
     displayName: displayName ?? '',
     isMuted: isMuted,
@@ -138,6 +146,8 @@ export const memoizeLocalParticipant = memoizeOne(
       isAvailable: !!localVideoStream,
       isMirrored: localVideoStream?.view?.isMirrored,
       renderElement: localVideoStream?.view?.target
-    }
+    },
+    /* @conditional-compile-remove(rooms) */
+    role
   })
 );

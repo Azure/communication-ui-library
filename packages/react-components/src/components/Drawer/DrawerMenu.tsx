@@ -37,6 +37,12 @@ export interface _DrawerMenuProps {
    */
   heading?: string;
 
+  /**
+   * By default, maxHeight value is set to 75%.
+   * Set value to true for no default maxHeight to be applied on drawerSurface
+   */
+  disableMaxHeight?: boolean;
+
   styles?: _DrawerMenuStyles;
 }
 
@@ -93,6 +99,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
 
   return (
     <_DrawerSurface
+      disableMaxHeight={props.disableMaxHeight}
       styles={props.styles?.drawerSurfaceStyles}
       onLightDismiss={props.onLightDismiss}
       heading={props.heading}

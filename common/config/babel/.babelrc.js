@@ -12,6 +12,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
         'calling-beta-sdk',
+        // Flag to add API only available in the communication-common beta v3
+        'communication-common-beta-v3',
         // Participant pane in the `ChatComposite`.
         'chat-composite-participant-pane',
         // Close captions feature
@@ -38,14 +40,16 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
+        // raise hands feature
+        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
-        // Chat teams interop to display images in chat messages
-        'teams-inline-images',
+        // Chat teams interop to display images and file attachments in chat messages
+        'teams-inline-images-and-file-sharing',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
@@ -62,7 +66,13 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for updates needed for Click to Call (C2C) scenarios
         'click-to-call',
         // a demo feature flag for those beta feature not ready for beta release
-        'in-progress-beta-feature-demo'
+        'in-progress-beta-feature-demo',
+        // Feature for call transfer
+        'call-transfer',
+        // Optimal Video Count
+        'optimal-video-count',
+        // Feature for capabilities
+        'capabilities'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -71,10 +81,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for updates needed for Click to Call (C2C) scenarios
-        'click-to-call',
-        // Mention feature
-        'mention'
+        // raise hands feature
+        'raise-hand',
+        // Feature for capabilities
+        'capabilities'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -95,4 +105,4 @@ plugins.push([
   }
 ]);
 
-module.exports = { plugins };
+module.exports = { plugins, ignore: ["**/*.d.ts"] };

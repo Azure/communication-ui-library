@@ -83,15 +83,17 @@ async function runStress(testRoot, args) {
 
 async function runAll(testRoot, args) {
   let success = true;
-  for (const composite of args.composites) {
-    try {
-      await runOne(testRoot, args, composite, 'hermetic');
-    } catch (e) {
-      if (args.failFast) {
-        throw e;
+  if (!args.liveOnly) {
+    for (const composite of args.composites) {
+      try {
+        await runOne(testRoot, args, composite, 'hermetic');
+      } catch (e) {
+        if (args.failFast) {
+          throw e;
+        }
+        console.error(`Hermetic tests failed for ${composite} composite: `, e);
+        success = false;
       }
-      console.error(`Hermetic tests failed for ${composite} composite: `, e);
-      success = false;
     }
   }
   if (!args.hermeticOnly) {
@@ -246,6 +248,11 @@ function parseArgs(argv) {
         type: 'boolean',
         default: false,
         describe: 'Run only hermetic tests. By default both hermetic and live tests will be run.\n'
+      },
+      liveOnly: {
+        type: 'boolean',
+        default: false,
+        describe: 'Run only live tests. By default both hermetic and live tests will be run.\n'
       },
       projects: {
         alias: 'p',

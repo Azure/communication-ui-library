@@ -5,14 +5,13 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-import { ChatMessage, OnRenderAvatarCallback } from '../../types';
+import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
-import { ComponentSlotStyle } from '../../types/ComponentSlotStyle';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -28,7 +27,7 @@ type ChatMessageComponentProps = {
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
-  onCancelMessageEdit?: (messageId: string) => void;
+  onCancelEditMessage?: (messageId: string) => void;
   /**
    * Callback to delete a message. Also called before resending a message that failed to send.
    * @param messageId ID of the message to delete
@@ -85,13 +84,13 @@ type ChatMessageComponentProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional function to fetch attachments.
    * @beta
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -136,7 +135,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
           setIsEditing(false);
         }}
         onCancel={(messageId) => {
-          props.onCancelMessageEdit && props.onCancelMessageEdit(messageId);
+          props.onCancelEditMessage && props.onCancelEditMessage(messageId);
           setIsEditing(false);
         }}
         /* @conditional-compile-remove(mention) */
@@ -154,9 +153,9 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
-        /* @conditional-compile-remove(teams-inline-images) */
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
-        /* @conditional-compile-remove(teams-inline-images) */
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}

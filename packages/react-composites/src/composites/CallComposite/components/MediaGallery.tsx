@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
-/* @conditional-compile-remove(vertical-gallery) */
+/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
 import {
   VideoGallery,
@@ -12,7 +12,7 @@ import {
   Announcer,
   VideoGalleryLayout
 } from '@internal/react-components';
-/* @conditional-compile-remove(vertical-gallery) */
+/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 /* @conditional-compile-remove(pinned-participants) */
 import { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '@internal/react-components';
@@ -28,8 +28,10 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 import { LocalVideoTileOptions } from '../CallComposite';
+/* @conditional-compile-remove(rooms) */
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 const VideoGalleryStyles = {
   root: {
@@ -61,8 +63,8 @@ export interface MediaGalleryProps {
   drawerMenuHostId?: string;
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */
-  localVideoTileOptions?: LocalVideoTileOptions;
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  localVideoTileOptions?: boolean | LocalVideoTileOptions;
 }
 
 /**
@@ -74,15 +76,24 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
 
-  /* @conditional-compile-remove(vertical-gallery) */
+  /* @conditional-compile-remove(rooms) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(rooms) */
+  const userRole = adapter.getState().call?.role;
+  /* @conditional-compile-remove(rooms) */
+  const isRoomsCall = adapter.getState().isRoomsCall;
+
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerRef = useRef<HTMLDivElement>(null);
-  /* @conditional-compile-remove(vertical-gallery) */
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerWidth = _useContainerWidth(containerRef);
-  /* @conditional-compile-remove(vertical-gallery) */
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
-    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions?.position
+    /* @conditional-compile-remove(click-to-call) */ (props.localVideoTileOptions as LocalVideoTileOptions)?.position
   );
 
   const cameraSwitcherProps = useMemo(() => {
@@ -97,7 +108,9 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
-            <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            {options?.coinSize && (
+              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+            )}
           </Stack>
         </Stack>
       );
@@ -135,30 +148,39 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout={layoutBasedOnTilePosition}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
+        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
-        /* @conditional-compile-remove(click-to-call) */
+        /* @conditional-compile-remove(rooms) */
         localVideoTileSize={
-          props.localVideoTileOptions?.position === 'hidden'
+          props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
-            : props.isMobile
-            ? 'followDeviceOrientation'
+            : props.isMobile && containerAspectRatio < 1
+            ? '9:16'
             : '16:9'
         }
       />
     );
   }, [
     videoGalleryProps,
+    layoutBasedOnTilePosition,
     props.isMobile,
-    onRenderAvatar,
+    props.onRenderAvatar,
+    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(click-to-call) */
+    props.localVideoTileOptions,
     cameraSwitcherProps,
-    /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-    /* @conditional-compile-remove(click-to-call) */ props.localVideoTileOptions,
-    layoutBasedOnTilePosition
+    onRenderAvatar,
+    /* @conditional-compile-remove(pinned-participants) */
+    remoteVideoTileMenuOptions,
+    /* @conditional-compile-remove(vertical-gallery) */
+    overflowGalleryPosition,
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall,
+    /* @conditional-compile-remove(rooms) */
+    userRole,
+    /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ containerAspectRatio
   ]);
 
   return (

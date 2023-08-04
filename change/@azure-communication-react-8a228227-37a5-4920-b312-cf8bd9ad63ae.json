@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix component names in images of UI Component Overview page",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

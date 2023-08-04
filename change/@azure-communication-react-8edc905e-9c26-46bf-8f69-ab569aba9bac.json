@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Center more button in video tile",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}

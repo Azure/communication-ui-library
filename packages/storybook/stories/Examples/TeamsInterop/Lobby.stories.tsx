@@ -7,7 +7,7 @@ import React from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd } from '../../controlsUtils';
 import { Lobby as LobbyComponent } from './snippets/Lobby.snippet';
-import { getDocs } from './TeamsInteropDocs';
+import { getLobbyDocs } from './TeamsInteropDocs';
 
 const LobbyStory: (args) => JSX.Element = (args) => {
   return <LobbyComponent {...args} />;
@@ -26,7 +26,7 @@ export default {
   },
   parameters: {
     docs: {
-      page: () => getDocs()
+      page: () => getLobbyDocs()
     }
   }
 } as Meta;

@@ -3,7 +3,7 @@
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
-import { dataUiId, isTestProfileMobile, pageClick, waitForSelector } from '../../common/utils';
+import { dataUiId, isTestProfileMobile, pageClick, waitForSelectorCount, waitForSelector } from '../../common/utils';
 import {
   addVideoStream,
   buildUrlWithMockAdapter,
@@ -87,7 +87,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
     // check initial tile number to be correct.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
+    await waitForSelectorCount(page, dataUiId(IDS.verticalGalleryVideoTile), 2);
 
     // resize the window.
     await page.setViewportSize({ width: 1200, height: 600 });
@@ -97,7 +97,7 @@ test.describe('Vertical gallery resizing tests', async () => {
     await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
     // verify that we added a tile with the extra spacing.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
+    await waitForSelectorCount(page, dataUiId(IDS.verticalGalleryVideoTile), 3);
   });
   test('resize should appropriately remove tiles if needed', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -129,14 +129,14 @@ test.describe('Vertical gallery resizing tests', async () => {
     await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
     // check initial tile number to be correct.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(3);
+    await waitForSelectorCount(page, dataUiId(IDS.verticalGalleryVideoTile), 3);
 
     // resize the window.
     await page.setViewportSize({ width: 1200, height: 500 });
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     // verify that we added a tile with the extra spacing.
-    expect(await page.locator(dataUiId(IDS.verticalGalleryVideoTile)).count()).toBe(2);
+    await waitForSelectorCount(page, dataUiId(IDS.verticalGalleryVideoTile), 2);
   });
   test('resize should remove pages appropriately', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
