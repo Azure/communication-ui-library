@@ -14,7 +14,7 @@ import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle /*, chatMessageEditContainerStyle */ } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle, chatMessageEditContainerStyle } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -120,6 +120,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return (
       <Stack
         className={mergeStyles(
+          chatMessageEditContainerStyle,
           borderAndBoxShadowStyle({
             theme,
             hasErrorMessage: message.failureReason !== undefined,
@@ -188,7 +189,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  return <ChatMyMessage /*styles={chatMessageEditContainerStyle}*/ body={getContent()} />;
+  return <ChatMyMessage body={getContent()} />;
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;

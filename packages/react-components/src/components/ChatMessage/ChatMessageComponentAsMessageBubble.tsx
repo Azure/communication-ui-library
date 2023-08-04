@@ -129,7 +129,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onResendClick,
     disableEditing,
     showDate,
-    // messageContainerStyle,
+    messageContainerStyle,
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
@@ -255,7 +255,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           <ChatMyMessage
             attached={attached}
             data-ui-id="chat-composite-message"
-            // className={mergeStyles(messageContainerStyle as IStyle)}
             // styles={messageContainerStyle}
             body={getContent()}
             author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
