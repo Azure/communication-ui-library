@@ -9,7 +9,7 @@ import { expect } from '@playwright/test';
 import { dataUiId, stableScreenshot } from '../../common/utils';
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-test.describe.only('ImageGallery Modal tests', () => {
+test.describe('ImageGallery Modal tests', () => {
   test('ImageGallery Modal loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
