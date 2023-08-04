@@ -5,12 +5,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Alert } from '@fluentui/react-components/unstable';
 import { _Announcer } from '../Announcer';
 
-import { SendBoxErrorBarProps } from './SendBoxErrorBar.types';
+import { _SendBoxErrorBarProps } from './SendBoxErrorBar.types';
 
 /**
  * @internal
  */
-export const _SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
+export const _SendBoxErrorBar = (props: _SendBoxErrorBarProps): JSX.Element => {
   const { error, dismissAfterMs, onDismiss } = props;
   const [errorMessage, setErrorMessage] = useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
