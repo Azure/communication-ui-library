@@ -39,6 +39,9 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
+
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -81,7 +84,8 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
@@ -150,6 +154,9 @@ export type {
   MicrophoneSitePermissionsStrings,
   MicrophoneSitePermissionsProps
 } from '../../react-components/src';
+
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from '../../react-components/src';
 
 /* @conditional-compile-remove(mention) */
 export type {
@@ -262,8 +269,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
-/* @conditional-compile-remove(rooms) */
-export type { Role } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
@@ -276,7 +281,13 @@ export type {
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { FileMetadata } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { FileMetadataAttachmentType, AttachmentDownloadResult } from '../../react-components/src';
+export type {
+  BaseFileMetadata,
+  FileMetadataAttachmentType,
+  AttachmentDownloadResult,
+  FileSharingMetadata,
+  ImageFileMetadata
+} from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonProps, HoldButtonStrings, VideoTileStrings } from '../../react-components/src';
 /* @conditional-compile-remove(call-readiness) */
@@ -291,7 +302,7 @@ export type {
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from '../../react-components/src';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from '../../react-components/src';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from '../../react-components/src';
 export * from '../../react-components/src/localization/locales';
 export * from '../../react-components/src/theming';

@@ -47,7 +47,8 @@ export const suggestionListContainerStyle = mergeStyles({
  */
 export const suggestionListStyle = mergeStyles({
   padding: '0.25rem 0rem 0',
-  overflow: 'visible'
+  overflow: 'visible',
+  overflowY: 'scroll'
 });
 
 /**

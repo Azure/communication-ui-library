@@ -6,14 +6,23 @@ import { IconGridWithSearch } from './IconGrid';
 
 # Icons
 
-Both the Composites and the Components use a set of default icons from the Fluent UI library. All the icons used in Components and Composites are displayed below with their names.
+Icons used in the Composites and the Components primarily come from the Fluent UI `react-icons` library.
+Composites and Components have a set of default icons that are used and are displayed below with their names.
+
+A small number of icons that are built into the base components of Fluent are derivied from the [Fluent icons CDN](https://developer.microsoft.com/en-us/fluentui#/styles/web/icons).
+To initialize these icons you must call `initializeIcons`. This should be called once in your application.
 
 **All the default icons can be replaced with a custom icon by providing a custom JSX element.**
 The method for providing custom icons differs between composites and components. Please read below for more details about each.
 
 ## Composites
 
-There is no setup required for rendering icons inside the Composites.
+To ensure the base set of Fluent CDN icons are initialized, you must call `initializeIcons` before rendering any composites. This should be called once in your application.
+
+```tsx
+import { initializeIcons } from '@fluentui/react';
+initializeIcons();
+```
 
 ### Custom Icons
 
@@ -43,7 +52,14 @@ Below is a list of all the default icons you can override in Composites with the
 
 ## Components
 
-Before you can render icons in Components, you will need to setup the icons using the `registerIcons` method as shown below.
+Similar to Composites, to ensure the base set of Fluent CDN icons are initialized, you must call `initializeIcons` before rendering any components. This should be called once in your application.
+
+```tsx
+import { initializeIcons } from '@fluentui/react';
+initializeIcons();
+```
+
+Further to the `initializeIcons` call, you will also need to setup the component icons you wish to use using the `registerIcons` method as shown below.
 
 <Source
   language="tsx"

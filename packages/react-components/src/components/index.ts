@@ -14,6 +14,9 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export { ImageGallery } from './ImageGallery';
+
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(mention) */
@@ -25,6 +28,9 @@ export type {
   Mention,
   MentionPopoverStrings
 } from './MentionPopover';
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ImageGalleryProps, ImageGalleryStylesProps, ImageGalleryImageProps } from './ImageGallery';
 
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
@@ -59,6 +65,9 @@ export type {
   ParticipantMenuItemsCallback
 } from './ParticipantList';
 
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from './ParticipantList';
+
 export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
@@ -68,7 +77,7 @@ export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoG
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 

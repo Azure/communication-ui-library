@@ -2,8 +2,14 @@
 // Licensed under the MIT license.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import { OnRenderAvatarCallback, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
-import React, { useEffect, useMemo, useRef } from 'react';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback,
+  useTheme
+} from '@internal/react-components';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
@@ -15,8 +21,6 @@ import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
 import { getEndedCall, getPage } from './selectors/baseSelectors';
-/* @conditional-compile-remove(rooms) */
-import { getRole } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferPage } from './pages/TransferPage';
@@ -27,8 +31,6 @@ import {
 } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
 
-/* @conditional-compile-remove(rooms) */
-import { _PermissionsProvider, Role, _getPermissions } from '@internal/react-components';
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
@@ -37,9 +39,14 @@ import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
 import { PermissionConstraints } from '@azure/communication-calling';
+/* @conditional-compile-remove(rooms) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import { CallState } from '@internal/calling-stateful-client';
+import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
+import { TrackedErrors } from './types/ErrorTracking';
+import { usePropsFor } from './hooks/usePropsFor';
 
 /**
  * Props for {@link CallComposite}.
@@ -108,7 +115,7 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -221,8 +228,6 @@ type MainScreenProps = {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
-  /* @conditional-compile-remove(rooms) */
-  roleHint?: Role;
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
@@ -256,13 +261,23 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
+  // This works by tracking the most recent timestamp of any active error type.
+  // And then tracking when that error type was last dismissed.
+  const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
+  const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
+  useEffect(() => {
+    setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
+  }, [activeErrors]);
+  const onDismissError = useCallback((error: ActiveErrorMessage) => {
+    setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+  }, []);
+  const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
+
   const adapter = useAdapter();
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
-
-  /* @conditional-compile-remove(rooms) */
-  const role = useSelector(getRole);
 
   let pageElement: JSX.Element | undefined;
   /* @conditional-compile-remove(rooms) */
@@ -270,7 +285,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'roomNotFound':
       pageElement = (
         <NoticePage
-          iconName="NoticePageInvalidRoom"
+          iconName="NoticePageAccessDeniedRoomsCall"
           title={locale.strings.call.roomNotFoundTitle}
           moreDetails={locale.strings.call.roomNotFoundDetails}
           dataUiId={'room-not-found-page'}
@@ -280,7 +295,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'deniedPermissionToRoom':
       pageElement = (
         <NoticePage
-          iconName="NoticePageInvalidRoom"
+          iconName="NoticePageAccessDeniedRoomsCall"
           title={locale.strings.call.deniedPermissionToRoomTitle}
           moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
           dataUiId={'not-invited-to-room-page'}
@@ -297,6 +312,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             adapter.joinCall();
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
           deviceChecks={props.options?.deviceChecks}
@@ -368,6 +385,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -382,6 +401,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           onRenderAvatar={onRenderAvatar}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -397,6 +418,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          latestErrors={latestErrors}
+          onDismissError={onDismissError}
         />
       );
       break;
@@ -411,6 +434,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               options={props.options}
               updateSidePaneRenderer={setSidePaneRenderer}
               mobileChatTabHeader={props.mobileChatTabHeader}
+              latestErrors={latestErrors}
+              onDismissError={onDismissError}
             />
           }
         </>
@@ -439,17 +464,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     throw new Error('Invalid call composite page');
   }
 
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _getPermissions(role === 'Unknown' || role === undefined ? props.roleHint : role);
-
-  // default retElement for stable version
-  let retElement = pageElement;
-  /* @conditional-compile-remove(rooms) */
-  retElement = <_PermissionsProvider permissions={permissions}>{pageElement}</_PermissionsProvider>;
-
   return (
     <SidePaneProvider sidePaneRenderer={sidePaneRenderer} overrideSidePane={injectedSidePaneProps}>
-      {retElement}
+      {pageElement}
     </SidePaneProvider>
   );
 };
@@ -487,20 +504,17 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     formFactor = 'desktop'
   } = props;
 
-  /* @conditional-compile-remove(rooms) */
-  const roleHint = adapter.getState().roleHint;
-
   useEffect(() => {
     (async () => {
       const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: roleHint
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
       });
       await adapter.askDevicePermission(constrain);
       adapter.queryCameras();
       adapter.queryMicrophones();
       adapter.querySpeakers();
     })();
-  }, [adapter, /* @conditional-compile-remove(rooms) */ roleHint]);
+  }, [adapter]);
 
   const mobileView = formFactor === 'mobile';
 
@@ -520,8 +534,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             mobileView={mobileView}
             modalLayerHostId={modalLayerHostId}
             options={options}
-            /* @conditional-compile-remove(rooms) */
-            roleHint={roleHint}
             onSidePaneIdChange={props.onSidePaneIdChange}
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
@@ -543,7 +555,9 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
   );
 };
 
-const getQueryOptions = (options: { /* @conditional-compile-remove(rooms) */ role?: Role }): PermissionConstraints => {
+const getQueryOptions = (options: {
+  /* @conditional-compile-remove(rooms) */ role?: ParticipantRole;
+}): PermissionConstraints => {
   /* @conditional-compile-remove(rooms) */
   if (options.role === 'Consumer') {
     return {

@@ -9,13 +9,13 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { AdapterStateModifier } from '../adapter/AzureCommunicationCallAdapter';
-import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurEffect, BackgroundReplacementEffect } from '@azure/communication-calling-effects';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoDeviceInfo, VideoEffectProcessor } from '@azure/communication-calling';
+import { VideoEffectProcessor } from '@azure/communication-calling';
 
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
@@ -426,40 +426,20 @@ export const createParticipantModifier = (
   };
 };
 
-/**
- * @private
- */
-export interface DismissedError {
-  dismissedAt: Date;
-  activeSince?: Date;
-}
-
-/**
- * @private
- */
-export const dismissVideoEffectsError = (toDismiss: AdapterError): DismissedError => {
-  const now = new Date(Date.now());
-  const toDismissTimestamp = toDismiss.timestamp ?? now;
-
-  // Record that this error was dismissed for the first time right now.
-  return {
-    dismissedAt: now > toDismissTimestamp ? now : toDismissTimestamp,
-    activeSince: toDismiss.timestamp
-  };
-};
-
 /* @conditional-compile-remove(video-background-effects) */
 /** @private */
 export const getBackgroundEffectFromSelectedEffect = (
-  selectedEffect: VideoBackgroundEffect | undefined
+  selectedEffect: VideoBackgroundEffect | undefined,
+  VideoBackgroundEffectsDependency: VideoBackgroundEffectsDependency
 ): VideoEffectProcessor | undefined =>
   selectedEffect?.effectName === 'blur'
-    ? new BackgroundBlurEffect()
+    ? VideoBackgroundEffectsDependency.createBackgroundBlurEffect()
     : selectedEffect?.effectName === 'replacement'
-    ? new BackgroundReplacementEffect({ backgroundImageUrl: selectedEffect.backgroundImageUrl })
+    ? VideoBackgroundEffectsDependency.createBackgroundReplacementEffect({
+        backgroundImageUrl: selectedEffect.backgroundImageUrl
+      })
     : undefined;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * @remarks this logic should mimic the onToggleCamera in the common call handlers.
  * @private

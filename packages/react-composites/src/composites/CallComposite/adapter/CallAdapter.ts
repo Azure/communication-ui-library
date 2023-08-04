@@ -5,7 +5,7 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -26,8 +26,6 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
 import type { CommunicationIdentifierKind } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -39,6 +37,8 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -98,6 +98,11 @@ export type CallAdapterClientState = {
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * State to track whether the call is a rooms call.
+   */
+  isRoomsCall: boolean;
   /**
    * Latest error encountered for each operation performed via the adapter.
    */
@@ -112,13 +117,6 @@ export type CallAdapterClientState = {
    * Environment information about system the adapter is made on
    */
   environmentInfo?: EnvironmentInfo;
-  /* @conditional-compile-remove(rooms) */
-  /**
-   * Use this to hint the role of the user when the role is not available before a Rooms call is started. This value
-   * should be obtained using the Rooms API. This role will determine permissions in the configuration page of the
-   * {@link CallComposite}. The true role of the user will be synced with ACS services when a Rooms call starts.
-   */
-  roleHint?: Role;
   /**
    * State to track whether the local participant's camera is on. To be used when creating a custom
    * control bar with the CallComposite.
@@ -129,6 +127,11 @@ export type CallAdapterClientState = {
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Dependency to be injected for video background effect.
+   */
+  onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * State to track the selected video background effect.
@@ -265,6 +268,31 @@ export interface VideoBackgroundImage {
   tooltipText?: string;
 }
 
+/**
+ * Options for setting microphone and camera state when joining a call
+ * true = turn on the device when joining call
+ * false = turn off the device when joining call
+ * 'keep'/undefined = retain devices' precall state
+ *
+ * @public
+ */
+export interface JoinCallOptions {
+  /**
+   * microphone state when joining call
+   * true: turn on
+   * false: turn off
+   * 'keep': maintain precall state
+   */
+  microphoneOn?: boolean | 'keep';
+  /**
+   * camera state when joining call
+   * true: turn on
+   * false: turn off
+   * 'keep': maintain precall state
+   */
+  cameraOn?: boolean | 'keep';
+}
+
 /* @conditional-compile-remove(close-captions) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
@@ -300,7 +328,6 @@ export type VideoBackgroundEffect =
   | VideoBackgroundBlurEffect
   | VideoBackgroundReplacementEffect;
 
-/* @conditional-compile-remove(video-background-effects) */
 /**
  * Contains the attibutes to remove video background effect
  *
@@ -788,12 +815,24 @@ export interface CallAdapterSubscribers {
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
+
+  /**
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
+   *
+   * @param options - param to set microphone/camera initially on/off/use precall state.
+   *
+   * @public
+   */
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Start the call.
    *
@@ -825,12 +864,23 @@ export interface CommonCallAdapter
     CallAdapterSubscribers {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
    */
   joinCall(microphoneOn?: boolean): void;
+  /**
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
+   *
+   * @param options - param to set microphone/camera initially on/off/use precall state.
+   *
+   * @public
+   */
+  joinCall(options?: JoinCallOptions): void;
   /**
    * Start the call.
    *
@@ -856,12 +906,24 @@ export interface CommonCallAdapter
 export interface CallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
+
+  /**
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
+   *
+   * @param options - param to set microphone/camera initially on/off/use precall state.
+   *
+   * @public
+   */
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Start the call.
    *
@@ -888,12 +950,23 @@ export interface CallAdapter extends CommonCallAdapter {
 export interface TeamsCallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @beta
    */
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+  /**
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
+   *
+   * @param options - param to set microphone/camera initially on/off.
+   *
+   * @public
+   */
+  joinCall(options?: JoinCallOptions): TeamsCall | undefined;
   /**
    * Start the call.
    *

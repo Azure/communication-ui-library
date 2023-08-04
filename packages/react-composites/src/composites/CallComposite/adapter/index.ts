@@ -18,7 +18,7 @@ export type { TeamsCallAdapterArgs, TeamsAdapterOptions } from './AzureCommunica
 /* @conditional-compile-remove(teams-identity-support) */
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(video-background-effects) */
 export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 export type { CommonCallAdapterOptions } from './AzureCommunicationCallAdapter';
@@ -48,7 +48,8 @@ export type {
   MediaDiagnosticChangedEvent,
   NetworkDiagnosticChangedEvent,
   ParticipantsJoinedListener,
-  ParticipantsLeftListener
+  ParticipantsLeftListener,
+  JoinCallOptions
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */

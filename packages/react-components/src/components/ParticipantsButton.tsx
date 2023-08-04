@@ -27,8 +27,6 @@ import { OnRenderAvatarCallback } from '../types/OnRender';
 import { ParticipantListParticipant } from '../types';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions/PermissionsProvider';
 import { Announcer } from './Announcer';
 
 /**
@@ -149,7 +147,7 @@ export interface ParticipantsButtonProps extends ControlBarButtonProps {
    * Optional strings to override in component
    */
   strings?: Partial<ParticipantsButtonStrings>;
-  /** prop to determine if we should show tooltip for participants or not */
+  /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
 }
 

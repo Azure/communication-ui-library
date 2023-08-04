@@ -18,7 +18,13 @@ import {
   RoomLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, PushNotificationData } from '@azure/communication-calling';
+import {
+  GroupChatCallLocator,
+  MeetingLocator,
+  PushNotificationData,
+  ConnectionStateChangedEvent,
+  ConnectionState
+} from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import EventEmitter from 'events';
 import { callAgentDeclaratify } from './CallAgentDeclarative';
@@ -67,6 +73,8 @@ const mockCallId = 'b';
 class MockCallAgent implements CallAgent {
   calls: MockCall[] = [];
   displayName = undefined;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
@@ -105,11 +113,15 @@ class MockCallAgent implements CallAgent {
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   off(event: any, listener: any): void {
     this.emitter.off(event, listener);
   }

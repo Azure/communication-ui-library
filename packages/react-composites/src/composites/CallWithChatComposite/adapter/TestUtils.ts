@@ -15,6 +15,7 @@ import {
   StartCallOptions,
   TeamsMeetingLinkLocator,
   VideoDeviceInfo,
+  AudioDeviceInfo,
   RoomLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -30,7 +31,13 @@ import {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, PushNotificationData } from '@azure/communication-calling';
+import {
+  GroupChatCallLocator,
+  MeetingLocator,
+  PushNotificationData,
+  ConnectionState,
+  ConnectionStateChangedEvent
+} from '@azure/communication-calling';
 import {
   CallState,
   CallClientState,
@@ -73,7 +80,7 @@ export class MockCallClient {
     return Promise.resolve(new MockCallAgent());
   }
   getDeviceManager(): Promise<DeviceManager> {
-    return Promise.resolve(createMockDeviceManagerWithCameras());
+    return Promise.resolve(createMockDeviceManager());
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   feature<TFeature extends CallFeature>(factory: CallFeatureFactory<TFeature>): TFeature {
@@ -112,9 +119,15 @@ interface MockDeviceManager extends Mutable<DeviceManager> {
   emit(event: any, data?: any);
 }
 
-const createMockDeviceManagerWithCameras = (): MockDeviceManager => {
+const createMockDeviceManager = (): MockDeviceManager => {
   return addMockEmitter({
     async getCameras(): Promise<VideoDeviceInfo[]> {
+      return [];
+    },
+    async getMicrophones(): Promise<AudioDeviceInfo[]> {
+      return [];
+    },
+    async getSpeakers(): Promise<AudioDeviceInfo[]> {
       return [];
     }
   }) as MockDeviceManager;
@@ -225,6 +238,8 @@ function createMockCall(mockCallId: string): CallState {
     startTime: new Date(),
     endTime: undefined,
     dominantSpeakers: undefined,
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(close-captions) */
     captionsFeature: {
       captions: [],
@@ -253,6 +268,8 @@ function createMockCall(mockCallId: string): CallState {
 export class MockCallAgent implements CallAgent {
   calls: Call[] = [];
   displayName = undefined;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  connectionState = 'Disconnected' as ConnectionState;
   kind = 'CallAgent' as CallAgentKind;
   emitter = new EventEmitter();
   feature;
@@ -285,12 +302,16 @@ export class MockCallAgent implements CallAgent {
   }
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {
     this.emitter.off(event, listener);

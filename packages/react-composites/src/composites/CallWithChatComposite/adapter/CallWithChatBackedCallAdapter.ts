@@ -26,6 +26,7 @@ import {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
@@ -84,8 +85,12 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public getState = (): CallAdapterState =>
     callAdapterStateFromCallWithChatAdapterState(this.callWithChatAdapter.getState());
   public dispose = (): void => this.callWithChatAdapter.dispose();
-  public joinCall = (microphoneOn?: boolean): Call | undefined => {
-    return this.callWithChatAdapter.joinCall(microphoneOn);
+  public joinCall = (options?: boolean | JoinCallOptions): Call | undefined => {
+    if (typeof options === 'boolean') {
+      return this.callWithChatAdapter.joinCall(options);
+    } else {
+      return this.callWithChatAdapter.joinCall(options);
+    }
   };
   public leaveCall = async (forEveryone?: boolean): Promise<void> =>
     await this.callWithChatAdapter.leaveCall(forEveryone);
@@ -223,6 +228,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     call: callWithChatAdapterState.call,
     devices: callWithChatAdapterState.devices,
     isTeamsCall: callWithChatAdapterState.isTeamsCall,
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall: callWithChatAdapterState.isRoomsCall,
     latestErrors: callWithChatAdapterState.latestCallErrors,
     /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
@@ -230,6 +237,8 @@ function callAdapterStateFromCallWithChatAdapterState(
     environmentInfo: callWithChatAdapterState.environmentInfo,
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect
   };
