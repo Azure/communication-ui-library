@@ -37,13 +37,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   function renderRibbon() {
     const buttons = getButtons([KnownRibbonButtonKey.Bold, KnownRibbonButtonKey.Italic]);
-    const ribbonStyle = {
-      backgroundColor: '#f5f5f5', // The color you want
-      height: '50px' // The height you want
-    };
 
     return (
-      <div style={ribbonStyle}>
+      <div>
         <Ribbon buttons={buttons} plugin={ribbonPlugin.current} />
       </div>
     );
@@ -80,10 +76,10 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   function defaultEditorCreator(div: HTMLDivElement) {
     const contentPlugin = createUpdateContentPlugin(
-      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
+      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInputq,
       (html, mode) => {
         onChange(html);
-        console.log('onChange::: ', html);
+        // console.log('onChange::: ', html);
       }
     );
 
@@ -97,7 +93,7 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 }
 
 const preserveImagesHandler = (html: string) => {
-  console.log('preserveImagesHandler input html:: /n ', html);
+  console.log('paste html:: /n ', html);
   const doc = new DOMParser().parseFromString(html, 'text/html');
   const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_ALL);
 

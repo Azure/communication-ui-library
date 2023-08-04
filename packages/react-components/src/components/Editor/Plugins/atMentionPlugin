@@ -1,0 +1,109 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+import * as React from 'react';
+import { PickerDataProvider. PickerPlugin } from 'roosterjs-editor-plugins';
+import { MentionLookupOptions, _MentionPopover, Mention } from '../../MentionPopover';
+import {
+ReactEditorPlugin, UIUtilities
+} from 'roosterjs-react';
+
+export class AtMentionPluginDataProvider implements PickerDataProvider {
+    const mentionLookupOptions?: MentionLookupOptions;
+
+    constructor(mentionLookupOptions?: MentionLookupOptions) {
+        this.mentionLookupOptions = mentionLookupOptions;
+    }
+
+    onInitalize: (
+        insertNodeCallback: (nodeToInsert: HTMLElement) => void,
+        setIsSuggestingCallback: (isSuggesting: boolean) => void,
+        editor?: IEditor
+    ) => void {
+    }
+
+    /**
+     * Function called when the plugin is disposed for the data provider to do any cleanup.
+     */
+    onDispose: () => void {
+    }
+
+    /**
+     * Function called when the picker changes suggesting state
+     * (isSuggesting - true: Plugin is being shown; false: Plugin is being hidden).
+     */
+    onIsSuggestingChanged: (isSuggesting: boolean) => void {
+    }
+
+    /**
+     * Function called when the query string (text after the trigger symbol) is updated.
+     */
+    queryStringUpdated: (queryString: string, isExactMatch: boolean) => void {
+
+    }
+
+    /**
+     * Function called when a keypress is issued that would "select" a currently highlighted option.
+     */
+    selectOption?: () => void { 
+    }
+
+    /**
+     * Function called when a keypress is issued that would move the highlight on any picker UX.
+     */
+    shiftHighlight?: (isIncrement: boolean) => void {
+        // Implementation here
+    }
+
+    /**
+     * Function that is called when a delete command is issued.
+     * Returns the intended replacement node (if partial delete) or null (if full delete)
+     */
+    onRemove: (nodeRemoved: Node, isBackwards: boolean) => Node {
+    }
+
+
+    /**
+     * Function that is called by the plugin to set the current cursor position as an
+     * anchor point for where to show UX.
+     */
+    setCursorPoint?: (targetPoint: { x: number; y: number }, buffer: number) => void {
+    }
+
+
+    /**
+     * Function that is called when the plugin detects the editor's content has changed.
+     * Provides a list of current picker placed elements in the document.
+     */
+    onContentChanged?: (elementIds: string[]) => void {
+    }
+
+
+    /**
+     * Function that returns the index of the option currently selected in the picker.
+     */
+    getSelectedIndex?: () => number {
+    }
+
+
+    /**
+     * Handler of scroll event from scroll container of editor
+     */
+    onScroll?: (scrollContainer: HTMLElement) => void {
+    }
+
+}
+
+
+export default class AtMentionPlugin extends PickerPlugin<AtMentionDataProvider> implements ReactEditorPlugin{
+    const uiUtilities: UIUtilities | null = null;
+
+    constructor(pickerOptions: PickerPluginOptions) {
+        // Create an instance of AtMentionDataProvider and pass it to the base class
+        const atMentionDataProvider = new AtMentionDataProvider();
+        super(atMentionDataProvider, pickerOptions);
+    }
+
+    setUIUtilities(uiUtilities: UIUtilities): void {
+        
+    }
+}
