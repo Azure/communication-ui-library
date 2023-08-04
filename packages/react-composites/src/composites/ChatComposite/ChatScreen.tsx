@@ -3,7 +3,7 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { PersonaSize } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -66,6 +66,7 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   modalLayerHostId?: string;
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField';
@@ -222,19 +223,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onInlineImageClicked = useCallback(
-    async (attachment: FileMetadata, imageName?: string, senderId?: string): Promise<void> => {
-      const titleIcon = (
-        <AvatarPersona
-          userId={senderId}
-          hidePersonaDetails={true}
-          size={PersonaSize.size32}
-          text={imageName}
-          showOverflowTooltip={false}
-          dataProvider={onFetchAvatarPersonaData}
-        />
-      );
+    async (
+      attachment: FileMetadata,
+      onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
+    ): Promise<void> => {
+      const titleIcon = onRenderTitleIcon && onRenderTitleIcon();
       const galleryImage: ImageGalleryImageProps = {
-        title: imageName,
+        title: attachment.name,
         titleIcon: titleIcon,
         saveAsName: attachment.id,
         imageUrl: ''
@@ -264,7 +259,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       }
     },
-    [adapter, fullSizeAttachments, onFetchAvatarPersonaData]
+    [adapter, fullSizeAttachments]
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */

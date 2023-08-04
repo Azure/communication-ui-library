@@ -20,6 +20,7 @@ import { IModalStyleProps } from '@fluentui/react';
 import { IModalStyles } from '@fluentui/react';
 import { IOverlayStyleProps } from '@fluentui/react';
 import { IOverlayStyles } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -1425,7 +1426,6 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 
 // @public
 export type MessageThreadProps = {
-    onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
     userId: string;
     messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage)[];
     participantCount?: number;
@@ -1452,6 +1452,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
+    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
 };
 
 // @public

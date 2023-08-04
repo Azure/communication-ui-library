@@ -39,6 +39,8 @@ import {
   IPersona,
   Theme
 } from '@fluentui/react';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { IPersonaProps } from '@fluentui/react';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -716,7 +718,10 @@ export type MessageThreadProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (attachment: FileMetadata, imageName?: string, senderId?: string) => Promise<void>;
+  onInlineImageClicked?: (
+    attachment: FileMetadata,
+    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
+  ) => Promise<void>;
 };
 
 /**

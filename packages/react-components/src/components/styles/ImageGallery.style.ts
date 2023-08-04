@@ -77,6 +77,7 @@ export const titleBarContainerStyle: IStyle = {
 export const titleStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
     paddingLeft: '0.5rem',
+    marginLeft: '0.5rem',
     color: isDarkThemed ? undefined : theme.palette.white,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
