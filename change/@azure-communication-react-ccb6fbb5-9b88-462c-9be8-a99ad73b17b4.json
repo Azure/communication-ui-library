@@ -1,8 +1,8 @@
 {
-  "type": "none",
+  "type": "minor",
   "area": "feature",
   "workstream": "ImageGallery",
-  "comment": "Adds functionality to open image gallery when tap on an inline image",
+  "comment": "Add functionality to open image gallery when user taps on an inline image",
   "packageName": "@azure/communication-react",
   "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
   "dependentChangeType": "none"
