@@ -4,13 +4,11 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundBlurConfig } from '@azure/communication-calling';
+import type { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -49,7 +47,6 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
-import { Role } from '@internal/react-components';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -61,6 +58,7 @@ import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoStreamOptions } from '@internal/react-components';
 
@@ -107,9 +105,7 @@ export type AzureCommunicationCallAdapterArgs = {
 };
 
 // @beta
-export type AzureCommunicationCallAdapterOptions = {
-    roleHint?: Role;
-} & CommonCallAdapterOptions;
+export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 // @public
 export type AzureCommunicationCallWithChatAdapterArgs = {
@@ -158,7 +154,9 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 
 // @public
 export interface CallAdapter extends CommonCallAdapter {
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -171,7 +169,9 @@ export type CallAdapterCallEndedEvent = {
 
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined;
@@ -185,6 +185,10 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    disposeLocalVideoStreamView(): Promise<void>;
+    disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+    disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+    // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
     holdCall(): Promise<void>;
@@ -224,12 +228,13 @@ export type CallAdapterClientState = {
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
+    isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
-    roleHint?: Role;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -351,7 +356,7 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
-    NoticePageInvalidRoom?: JSX.Element;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
 };
@@ -460,6 +465,10 @@ export interface CallCompositeStrings {
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
+    participantCouldNotBeReachedMoreDetails?: string;
+    participantCouldNotBeReachedTitle?: string;
+    participantIdIsMalformedMoreDetails?: string;
+    participantIdIsMalformedTitle?: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
     peopleButtonLabel: string;
@@ -468,6 +477,8 @@ export interface CallCompositeStrings {
     peoplePaneAddPeopleButtonLabel: string;
     peoplePaneSubTitle: string;
     peoplePaneTitle: string;
+    permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
+    permissionToReachTargetParticipantNotAllowedTitle?: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
@@ -491,12 +502,15 @@ export interface CallCompositeStrings {
     startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
+    transferPageNoticeString: string;
     transferPageTransferorText: string;
     transferPageTransferTargetText: string;
     transferPageUnknownTransferorDisplayName: string;
     transferPageUnknownTransferTargetDisplayName: string;
     twoParticipantJoinedNoticeString: string;
     twoParticipantLeftNoticeString: string;
+    unableToResolveTenantMoreDetails?: string;
+    unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
@@ -545,6 +559,9 @@ export interface CallWithChatAdapterManagement {
     clearFileUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
+    disposeLocalVideoStreamView(): Promise<void>;
+    disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+    disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
@@ -553,7 +570,9 @@ export interface CallWithChatAdapterManagement {
     fetchInitialData(): Promise<void>;
     // @beta
     holdCall: () => Promise<void>;
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -708,9 +727,11 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -975,7 +996,9 @@ export type _ChatThreadRestError = {
 
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    // @deprecated
     joinCall(microphoneOn?: boolean): void;
+    joinCall(options?: JoinCallOptions): void;
     startCall(participants: string[], options?: StartCallOptions): void;
     // @beta
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
@@ -983,7 +1006,11 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 
 // @beta
 export type CommonCallAdapterOptions = {
-    videoBackgroundImages?: VideoBackgroundImage[];
+    videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    };
+    onFetchProfile?: OnFetchProfileCallback;
 };
 
 // @public
@@ -1017,6 +1044,9 @@ export type CommonCallControlOptions = {
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -1121,7 +1151,7 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 export const createTeamsCallAdapter: ({ userId, credential, locator, options }: TeamsCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @beta
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: TeamsAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator, options?: CommonCallAdapterOptions | undefined) => Promise<TeamsCallAdapter>;
 
 // @beta
 type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
@@ -1224,7 +1254,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
-    NoticePageInvalidRoom?: JSX.Element | undefined;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
@@ -1273,6 +1303,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @beta
@@ -1404,6 +1437,12 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
+// @public
+export interface JoinCallOptions {
+    cameraOn?: boolean | 'keep';
+    microphoneOn?: boolean | 'keep';
+}
+
 // @beta
 export interface LocalVideoTileOptions {
     position?: 'grid' | 'floating';
@@ -1433,6 +1472,7 @@ export type _MockFileUpload = FileMetadata & {
     uploadComplete?: boolean;
     error?: string;
     progress?: number;
+    attachmentType: string;
 };
 
 // @public
@@ -1442,6 +1482,12 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 
 // @beta
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+
+// @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @public
 export type ParticipantsAddedListener = (event: {
@@ -1476,13 +1522,14 @@ export interface RemoteVideoTileMenuOptions {
 }
 
 // @beta
-export type TeamsAdapterOptions = {
-    onFetchProfile?: OnFetchProfileCallback;
-} & CommonCallAdapterOptions;
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
 export interface TeamsCallAdapter extends CommonCallAdapter {
+    // @deprecated
     joinCall(microphoneOn?: boolean): TeamsCall | undefined;
+    // @public
+    joinCall(options?: JoinCallOptions): TeamsCall | undefined;
     startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "beta version bump",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "patch"
+}

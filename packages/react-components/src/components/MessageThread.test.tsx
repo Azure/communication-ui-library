@@ -201,7 +201,7 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedImgSrc1
@@ -209,7 +209,7 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: imgId2,
           name: imgId2,
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: expectedImgSrc2,
           previewUrl: expectedImgSrc2
@@ -218,9 +218,10 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
+      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
       return [
         {
-          blobUrl: attachment.previewUrl ?? ''
+          blobUrl: url
         }
       ];
     };
@@ -238,8 +239,8 @@ describe.only('Message should display image and attachment correctly', () => {
 
   test('Message richtext/html fileSharing and inline image attachment should display correctly', async () => {
     const fildId1 = 'SomeFileId1';
-    const fildId2 = 'SomeFileId2';
     const fildName1 = 'SomeFileId1.txt';
+    const fildId2 = 'SomeFileId2';
     const fildName2 = 'SomeFileId2.pdf';
     const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
     const expectedFileSrc2 = 'http://localhost/someFileSrcUrl2';
@@ -263,10 +264,10 @@ describe.only('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'teamsInlineImage',
+          attachmentType: 'inlineImage',
           extension: 'png',
           url: expectedImgSrc1,
-          previewUrl: expectedImgSrc1
+          previewUrl: expectedFilePreviewSrc1
         },
         {
           id: fildId1,
@@ -274,7 +275,7 @@ describe.only('Message should display image and attachment correctly', () => {
           attachmentType: 'fileSharing',
           extension: 'txt',
           url: expectedFileSrc1,
-          previewUrl: expectedFilePreviewSrc1
+          payload: { teamsFileAttachment: 'true' }
         },
         {
           id: fildId2,
@@ -287,9 +288,10 @@ describe.only('Message should display image and attachment correctly', () => {
     };
     const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
+      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
       return [
         {
-          blobUrl: attachment.previewUrl ?? ''
+          blobUrl: url
         }
       ];
     };
@@ -306,12 +308,12 @@ describe.only('Message should display image and attachment correctly', () => {
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
 
-      // Second attachment: previewUrl === undefined, will show DownloadFile Icon
+      // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
 
       // Inline Image attachment
-      expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedImgSrc1);
+      expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedFilePreviewSrc1);
       expect(onFetchAttachmentCount).toEqual(expectedOnFetchInlineImageAttachmentCount);
     });
   });
@@ -345,7 +347,7 @@ describe('Message should display Mention correctly', () => {
         senderId: user1Id,
         senderDisplayName: 'Kat Larsson',
         messageId: generateGUID(),
-        content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}">${user2Name}</msft-mention>, can you help me with my internet connection?`,
+        content: `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention>, can you help me with my internet connection?`,
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
         attached: false,
@@ -385,7 +387,7 @@ describe('Message should display Mention correctly', () => {
         senderId: user1Id,
         senderDisplayName: 'Kat Larsson',
         messageId: generateGUID(),
-        content: `Hey <msft-mention id="${user2Id}" displayText="${user2Name}">${user2Name}</msft-mention>, can you help me with my internet connection?`,
+        content: `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention>, can you help me with my internet connection?`,
         createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
         mine: false,
         attached: false,
@@ -411,7 +413,7 @@ describe('Message should display Mention correctly', () => {
     expect(container.querySelector(`#${user2Id}`)?.textContent).toEqual(user2Name);
 
     // edit message
-    const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}" displayText="${user2Name}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}" displayText="${user3Name}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
+    const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
     messages[0].content = message1ContentAfterEdit;
     messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;

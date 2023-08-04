@@ -34,6 +34,8 @@ function createMockCallWithChatAdapter(): CallWithChatAdapter {
         unparentedViews: []
       },
       isTeamsCall: true,
+      /* @conditional-compile-remove(rooms) */
+      isRoomsCall: false,
       call: undefined,
       chat: undefined,
       latestCallErrors: { test: new Error() as AdapterError },

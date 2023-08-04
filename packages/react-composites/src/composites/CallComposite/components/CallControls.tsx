@@ -10,8 +10,6 @@ import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
@@ -34,10 +32,11 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(new-call-control-bar) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
+import { CommonCallAdapter } from '../adapter';
 
 /**
  * @private
@@ -56,6 +55,7 @@ export type CallControlsProps = {
    */
   increaseFlyoutItemSize?: boolean;
   isMobile?: boolean;
+  displayVertical?: boolean;
 };
 
 // Enforce a background color on control bar to ensure it matches the composite background color.
@@ -66,6 +66,8 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
+  /* @conditional-compile-remove(new-call-control-bar) */
+  const adapter = useAdapter();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   const localeStrings = useLocale();
@@ -128,7 +130,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     }
 
     /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
-    if (!isRoomsCallTrampoline()) {
+    if (!isRoomsCallTrampoline(adapter)) {
       items.push({
         key: 'holdButtonKey',
         text: localeStrings.component.strings.holdButton.tooltipOffContent,
@@ -183,20 +185,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     setShowDialpad(false);
   };
 
-  /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
+  const screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
 
-  let screenShareButtonIsEnabled = isEnabled(options?.screenShareButton);
-  /* @conditional-compile-remove(rooms) */
-  screenShareButtonIsEnabled = rolePermissions.screenShare && screenShareButtonIsEnabled;
+  const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
-  let microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
-  /* @conditional-compile-remove(rooms) */
-  microphoneButtonIsEnabled = rolePermissions.microphoneButton && microphoneButtonIsEnabled;
-
-  let cameraButtonIsEnabled = isEnabled(options?.cameraButton);
-  /* @conditional-compile-remove(rooms) */
-  cameraButtonIsEnabled = rolePermissions.cameraButton && cameraButtonIsEnabled;
+  const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>
@@ -217,7 +210,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             dockedBottom it has position absolute and would therefore float on top of the media gallery,
             occluding some of its content.
          */}
-        <ControlBar layout="horizontal" styles={controlBarStyles(theme.semanticColors.bodyBackground)}>
+        <ControlBar
+          layout={props.displayVertical ? 'vertical' : 'horizontal'}
+          styles={controlBarStyles(theme.semanticColors.bodyBackground)}
+        >
           {microphoneButtonIsEnabled && (
             <Microphone displayType={options?.displayType} disabled={isDisabled(options?.microphoneButton)} />
           )}
@@ -285,11 +281,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 const isEnabled = (option: unknown): boolean => option !== false;
 
 /** @private */
-export const isRoomsCallTrampoline = (): boolean => {
+export const isRoomsCallTrampoline = (adapter: CommonCallAdapter): boolean => {
   /* @conditional-compile-remove(rooms) */
-  const rolePermissions = _usePermissions();
-  /* @conditional-compile-remove(rooms) */
-  return !!rolePermissions.role;
+  return adapter.getState().isRoomsCall;
 
   return false;
 };

@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "fixed an issue where typing indicator event being sent multiple times",
-  "packageName": "@azure/communication-react",
-  "email": "109105353+jpeng-ms@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

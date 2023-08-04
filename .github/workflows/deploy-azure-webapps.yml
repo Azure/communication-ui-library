@@ -15,6 +15,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  # Needed for Azure login
+  id-token: write
+
 jobs:
   build-and-deploy-samples:
     name: Build and Deploy samples
@@ -23,10 +27,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Use Node.js 16.x
+      - name: Use Node.js 18.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 18.x
 
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -35,13 +39,20 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
 
       - name: Install Rush
-        run: npm install -g @microsoft/rush@5.47.0
+        run: npm install -g @microsoft/rush@5.100.1
 
       - name: Install Dependencies
         run: rush install --max-install-attempts 3
 
       - name: Build Projects
         run: rush build
+
+      - name: Log in with Azure
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Package Calling Sample Artifact
         run: rushx package
@@ -51,7 +62,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-calling-hero
-          publish-profile: ${{ secrets.AZURE_GROUPCALLING_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Calling/dist
 
       - name: Package Chat Sample Artifact
@@ -62,7 +72,6 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-chat-hero
-          publish-profile: ${{ secrets.AZURE_GROUPCHAT_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/Chat/dist
 
       - name: Package CallWithChat Sample Artifact
@@ -73,5 +82,25 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: acs-ui-dev-web-meeting-hero
-          publish-profile: ${{ secrets.AZURE_MEETING_WEBAPP_PUBLISH_PROFILE }}
           package: ./samples/CallWithChat/dist
+
+  check_failure:
+    runs-on: ubuntu-latest
+    needs: [build-and-deploy-samples]
+    if: failure() && github.ref == 'refs/heads/main'
+    name: File issue if Azure Deployment failed
+    steps:
+      # Create a GitHub issue if the Azure Deployment failed when running on the `main` branch
+      - name: Create issue if Azure Deployment failed
+        id: create-issue
+        run: |
+          # check for an issue that is already open
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/search/issues?q=org:Azure+repo:communication-ui-library+label:AZURE_DEPLOY_FAILURE+state:open > $HOME/ci_issues.json
+          issue_count=$(jq -r '.total_count' $HOME/ci_issues.json)
+          if [ $issue_count -gt 0 ]; then
+            echo "No need to create new issue, one already exists"
+          else
+            curl -X POST -H 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/Azure/communication-ui-library/issues -d '{"title":"Main branch AZURE DEPLOY Failed", "body": "Main AZURE DEPLOY Pipeline has failed. Please investigate: https://github.com/Azure/communication-ui-library/actions/runs/${{ github.run_id }}", "labels":["AZURE_DEPLOY_FAILURE", "status:triage"]}'
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -8,6 +8,7 @@ import svg from 'rollup-plugin-svg';
 
 export default (packageJson) => ({
   context: 'window',
+  inlineDynamicImports: true,
   external: [
     ...(packageJson.dependencies ? Object.keys(packageJson.dependencies) : []),
     ...(packageJson.peerDependencies ? Object.keys(packageJson.peerDependencies) : [])

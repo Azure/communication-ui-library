@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update FileUploadAdapter to include the download of authenticated attachments",
-  "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
-  "dependentChangeType": "patch"
-}

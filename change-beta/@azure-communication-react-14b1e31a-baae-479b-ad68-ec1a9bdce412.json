@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "CC tool improvements: show error when eslint fail",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

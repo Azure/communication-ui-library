@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update to Calling 1.12.0-beta.2 for beta dependency.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

@@ -98,7 +98,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const onRenderFileUploads = useCallback(() => {
     return (
-      attachedFilesMetadata?.length && (
+      !!attachedFilesMetadata &&
+      attachedFilesMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_FileUploadCards
             activeFileUploads={attachedFilesMetadata?.map((file) => ({
@@ -134,6 +135,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           placeholderText={strings.editBoxPlaceholderText}
           textValue={textValue}
           onChange={setText}
+          onKeyDown={(ev) => {
+            if (ev.key === 'ArrowUp' || ev.key === 'ArrowDown') {
+              ev.stopPropagation();
+            }
+          }}
           onEnterKeyDown={() => {
             submitEnabled &&
               onSubmit(textValue, message.metadata, {

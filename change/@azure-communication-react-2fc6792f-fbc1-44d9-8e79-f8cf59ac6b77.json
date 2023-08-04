@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fixed join call error bug and bug when participants can not receive latest spoken language",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

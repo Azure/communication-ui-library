@@ -44,8 +44,8 @@
     "tooltipContent": "Gesprek verlaten"
   },
   "cameraButton": {
-    "onLabel": "Uitschakelen",
-    "offLabel": "Inschakelen",
+    "onLabel": "Camera",
+    "offLabel": "Camera",
     "tooltipDisabledContent": "Camera is uitgeschakeld",
     "tooltipOnContent": "Camera uitschakelen",
     "tooltipOffContent": "Camera inschakelen",
@@ -63,8 +63,8 @@
     "videoEffectsMenuItemTitle": "Effecten"
   },
   "microphoneButton": {
-    "onLabel": "Dempen",
-    "offLabel": "Dempen opheffen",
+    "onLabel": "Microfoon",
+    "offLabel": "Microfoon",
     "tooltipDisabledContent": "Microfoon is uitgeschakeld",
     "tooltipOnContent": "Microfoon uitschakelen",
     "tooltipOffContent": "Microfoon inschakelen",
@@ -79,7 +79,7 @@
     "microphoneActionTurnedOffAnnouncement": "Uw microfoon is uitgeschakeld",
     "offSplitButtonMicrophonePrimaryAction": "Microfoon inschakelen",
     "onSplitButtonMicrophonePrimaryAction": "Microfoon uitschakelen",
-    "micPrimaryActionSplitButtonTitle": "Microfoon gebruiken"
+    "microphonePrimaryActionSplitButtonTitle": "Microfoon gebruiken"
   },
   "devicesButton": {
     "label": "Apparaten",
@@ -139,7 +139,7 @@
     "downloadFile": "Bestand downloaden",
     "blockedWarningText": "Dit bericht is verwijderd vanwege organisatiebeleid.",
     "blockedWarningLinkText": "Details",
-    "fileCardGroupMessage": "The message has {fileCount} attachment"
+    "fileCardGroupMessage": "Het bericht heeft {fileCount} bijlage"
   },
   "errorBar": {
     "unableToReachChatService": "U bent offline",
@@ -153,7 +153,7 @@
     "muteGeneric": "Kan microfoon niet dempen",
     "unmuteGeneric": "Kan dempen van microfoon niet opheffen",
     "speakingWhileMuted": "De microfoon is gedempt",
-    "startScreenShareGeneric": "Kan scherm delen niet starten",
+    "startScreenShareGeneric": "Er is een probleem opgetreden bij het starten van scherm delen.",
     "stopScreenShareGeneric": "Kan scherm delen niet stoppen",
     "callNetworkQualityLow": "De netwerkkwaliteit is laag.",
     "callNoSpeakerFound": "Geen luidsprekers of hoofdtelefoon gevonden. Sluit een audioapparaat aan om het gesprek te beluisteren.",
@@ -174,7 +174,6 @@
     "dismissButtonAriaLabel": "Sluiten",
     "failedToJoinCallGeneric": "Deelnemen aan gesprek mislukt.",
     "failedToJoinCallInvalidMeetingLink": "Kan niet deelnemen aan vergadering. Ongeldige koppeling.",
-    "startScreenSharingGeneric": "Er is een probleem opgetreden bij het starten van scherm delen.",
     "cameraFrozenForRemoteParticipants": "Gebruikers in het gesprek ondervinden problemen bij het zien van uw video. Controleer uw apparaten en netwerk.",
     "unableToStartVideoEffect": "Kan video-effect niet toepassen."
   },

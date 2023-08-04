@@ -47,7 +47,8 @@ export const suggestionListContainerStyle = mergeStyles({
  */
 export const suggestionListStyle = mergeStyles({
   padding: '0.25rem 0rem 0',
-  overflow: 'visible'
+  overflow: 'visible',
+  overflowY: 'scroll'
 });
 
 /**
@@ -55,7 +56,7 @@ export const suggestionListStyle = mergeStyles({
  */
 export const suggestionItemWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    margin: '0.05rem 0.1rem',
+    margin: '0.05rem 0',
     '&:focus-visible': {
       outline: `${theme.palette.black} solid 0.1rem`
     }
@@ -71,7 +72,7 @@ export const suggestionItemStackStyle = (theme: Theme, isSuggestionHovered: bool
     alignItems: 'center',
     height: '36px',
     padding: '0 0.75rem',
-    background: isSuggestionHovered ? theme.palette.neutralLight : theme.palette.white,
-    border: activeBorder ? `0.0625rem solid ${theme.palette.neutralSecondary}` : 'none'
+    background: isSuggestionHovered ? theme.palette.neutralLighter : theme.palette.white,
+    outline: activeBorder ? `0.0625rem solid ${theme.palette.neutralSecondary}` : 'none'
   });
 };

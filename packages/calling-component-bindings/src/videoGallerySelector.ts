@@ -16,6 +16,10 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './baseSelectors';
+/* @conditional-compile-remove(optimal-video-count) */
+import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
 import { checkIsSpeaking } from './utils/SelectorUtils';
 import {
@@ -38,6 +42,8 @@ export type VideoGallerySelector = (
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
+  /* @conditional-compile-remove(optimal-video-count) */
+  optimalVideoCount?: number;
 };
 
 /**
@@ -53,7 +59,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIsScreenSharingOn,
     getDisplayName,
     getIdentifier,
-    getDominantSpeakers
+    getDominantSpeakers,
+    /* @conditional-compile-remove(optimal-video-count) */
+    getOptimalVideoCount,
+    /* @conditional-compile-remove(rooms) */
+    getRole
   ],
   (
     screenShareRemoteParticipantId,
@@ -63,7 +73,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isScreenSharingOn,
     displayName: string | undefined,
     identifier: string,
-    dominantSpeakers
+    dominantSpeakers,
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount,
+    /* @conditional-compile-remove(rooms) */
+    role
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -86,11 +100,21 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.displayName
           )
         : undefined,
-      localParticipant: memoizeLocalParticipant(identifier, displayName, isMuted, isScreenSharingOn, localVideoStream),
+      localParticipant: memoizeLocalParticipant(
+        identifier,
+        displayName,
+        isMuted,
+        isScreenSharingOn,
+        localVideoStream,
+        /* @conditional-compile-remove(rooms) */
+        role
+      ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),
-      dominantSpeakers: dominantSpeakerIds
+      dominantSpeakers: dominantSpeakerIds,
+      /* @conditional-compile-remove(optimal-video-count) */
+      maxRemoteVideoStreams: optimalVideoCount
     };
   }
 );

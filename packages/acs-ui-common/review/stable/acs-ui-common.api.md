@@ -52,6 +52,9 @@ export interface _IObjectMap<T> {
 }
 
 // @internal
+export const _isValidIdentifier: (identifier: CommunicationIdentifier) => boolean;
+
+// @internal
 export const _logEvent: (logger: AzureLogger, event: TelemetryEvent) => void;
 
 // @internal

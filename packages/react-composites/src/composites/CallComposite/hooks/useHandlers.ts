@@ -13,7 +13,7 @@ import { isCameraOn } from '../utils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
 
 /**
  * @private
@@ -88,10 +88,16 @@ const createCompositeHandlers = memoizeOne(
       }
     },
     onDisposeLocalStreamView: async () => {
-      return adapter.disposeStreamView();
+      return adapter.disposeLocalVideoStreamView();
     },
     onDisposeRemoteStreamView: async (userId) => {
       return adapter.disposeStreamView(userId);
+    },
+    onDisposeRemoteScreenShareStreamView: async (userId) => {
+      return adapter.disposeScreenShareStreamView(userId);
+    },
+    onDisposeRemoteVideoStreamView: async (userId) => {
+      return adapter.disposeRemoteVideoStreamView(userId);
     },
     /* @conditional-compile-remove(call-readiness) */
     askDevicePermission: async (constrain) => {

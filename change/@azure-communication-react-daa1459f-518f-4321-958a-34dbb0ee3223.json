@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adapter API changes for start/stop video effects",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

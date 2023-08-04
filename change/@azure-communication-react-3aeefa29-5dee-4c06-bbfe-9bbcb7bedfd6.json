@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Adapter API changes to add preset backgrounds to adapter",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

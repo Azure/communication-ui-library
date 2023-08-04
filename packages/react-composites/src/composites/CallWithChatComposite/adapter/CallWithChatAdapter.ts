@@ -37,6 +37,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -77,12 +78,23 @@ export interface CallWithChatAdapterManagement {
   // Call Interface Methods
   /**
    * Join the call with microphone initially on/off.
-   *
+   * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
    *
    * @public
    */
   joinCall(microphoneOn?: boolean): Call | undefined;
+  /**
+   * Join the call with options bag to set microphone/camera initial state when joining call
+   * true = turn on the device when joining call
+   * false = turn off the device when joining call
+   * 'keep'/undefined = retain devices' precall state
+   *
+   * @param options - param to set microphone/camera initially on/off/use precall state.
+   *
+   * @public
+   */
+  joinCall(options?: JoinCallOptions): Call | undefined;
   /**
    * Leave the call.
    *
@@ -172,6 +184,31 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /**
+   * Dispose the html view for a screen share stream
+   *
+   * @remarks
+   * this method is implemented for composite
+   *
+   * @param remoteUserId - Id of the participant to dispose the screen share stream view for.
+   *
+   * @public
+   */
+  disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a remote video stream
+   *
+   * @param remoteUserId - Id of the participant to dispose
+   *
+   * @public
+   */
+  disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+  /**
+   * Dispose the html view for a local video stream
+   *
+   * @public
+   */
+  disposeLocalVideoStreamView(): Promise<void>;
   /**
    * Ask for permissions of devices.
    *

@@ -1,12 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useState } from 'react';
-import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
-/* @conditional-compile-remove(PSTN-calls) */
-import { Callout, mergeStyles, Link } from '@fluentui/react';
+import React, { /* useEffect, */ useState } from 'react';
+import {
+  Stack,
+  PrimaryButton,
+  Image,
+  ChoiceGroup,
+  IChoiceGroupOption,
+  Text,
+  TextField,
+  Callout,
+  mergeStyles,
+  Link
+} from '@fluentui/react';
 /* @conditional-compile-remove(teams-adhoc-call) */
-import { IconButton, ITextFieldProps, IStackTokens, IButtonStyles, IStackStyles } from '@fluentui/react';
+import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { registerIcons } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
@@ -40,6 +49,8 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { RoomLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { getRoomIdFromUrl } from '../utils/AppUtils';
+/* @conditional-compile-remove(teams-identity-support) */
+import { getIsCTE } from '../utils/AppUtils';
 /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@azure/communication-react';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -91,7 +102,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     /* @conditional-compile-remove(PSTN-calls) */
     { key: 'PSTN', text: 'Start a PSTN Call' },
     /* @conditional-compile-remove(teams-adhoc-call) */
-    { key: 'TeamsAdhoc', text: 'Call Teams User(s)' }
+    { key: 'TeamsAdhoc', text: 'Call a Teams User' }
   ];
   /* @conditional-compile-remove(rooms) */
   const roomIdLabel = 'Room ID';
@@ -169,6 +180,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-adhoc-call) */
   const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
 
+  let showDisplayNameField = true;
+  /* @conditional-compile-remove(teams-identity-support) */
+  showDisplayNameField = !teamsIdentityChosen;
+
   return (
     <Stack
       horizontal
@@ -204,7 +219,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               />
             )}
             {
-              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+              /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
+                getIsCTE()) && (
                 <Stack>
                   <TextField
                     className={teamsItemStyle}
@@ -216,7 +232,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
             {
-              /* @conditional-compile-remove(teams-identity-support) */ chosenCallOption.key === 'TeamsIdentity' && (
+              /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
+                getIsCTE()) && (
                 <Stack>
                   <TextField
                     className={teamsItemStyle}
@@ -269,8 +286,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <Stack>
                   <TextField
                     className={outboundTextField}
-                    label={"Teams user ID's"}
-                    placeholder={"Comma seperated Teams user ID's"}
+                    label={'Teams user ID'}
+                    placeholder={'Enter a Teams user ID'}
                     onChange={(_, newValue) => setOutboundTeamsUsers(newValue)}
                     onRenderLabel={(props?: ITextFieldProps) => (
                       <TeamsUserIdsTextFieldLabel id={outboundTeamsUsersTextFieldLabelId} {...props} />
@@ -333,9 +350,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {chosenCallOption.key !== 'TeamsIdentity' && (
-            <DisplayNameField defaultName={displayName} setName={setDisplayName} />
-          )}
+          {showDisplayNameField && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
@@ -406,13 +421,18 @@ const TeamsUserIdsTextFieldLabel = (props: ITextFieldProps): JSX.Element => {
     maxWidth: '18.75rem'
   };
   const calloutStackStyles: Partial<IStackStyles> = { root: { padding: 10 } };
-  const iconButtonStyles: Partial<IButtonStyles> = { root: { marginBottom: '-0.1875rem' } };
+  const iconButtonStyles: Partial<IButtonStyles> = { root: { height: '1.625rem' } };
   const iconProps = { iconName: 'Info' };
 
   return (
     <>
       <Stack horizontal verticalAlign="center">
-        <span id={props.id}>{props.label}</span>
+        <label
+          className={mergeStyles({ fontWeight: 600, paddingTop: '0.3125rem', paddingBottom: '0.3125rem' })}
+          id={props.id}
+        >
+          {props.label}
+        </label>
         <IconButton
           id={iconButtonId}
           iconProps={iconProps}

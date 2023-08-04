@@ -22,6 +22,12 @@ import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 /* @conditional-compile-remove(close-captions) */
 import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandSubscriber } from './RaiseHandSubscriber';
+/* @conditional-compile-remove(optimal-video-count) */
+import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -38,10 +44,16 @@ export class CallSubscriber {
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
   private _recordingSubscriber: RecordingSubscriber;
   private _transcriptionSubscriber: TranscriptionSubscriber;
+  /* @conditional-compile-remove(optimal-video-count) */
+  private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
   private _captionsSubscriber?: CaptionsSubscriber;
+  /* @conditional-compile-remove(raise-hand) */
+  private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
+  /* @conditional-compile-remove(capabilities) */
+  private _capabilitiesSubscriber: CapabilitiesSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -65,8 +77,27 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
+    /* @conditional-compile-remove(raise-hand) */
+    this._raiseHandSubscriber = new RaiseHandSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RaiseHand)
+    );
+    /* @conditional-compile-remove(optimal-video-count) */
+    this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
+      callIdRef: this._callIdRef,
+      context: this._context,
+      localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
+    });
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
+
+    /* @conditional-compile-remove(capabilities) */
+    this._capabilitiesSubscriber = new CapabilitiesSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.Capabilities)
+    );
 
     this.subscribe();
   }
@@ -145,8 +176,14 @@ export class CallSubscriber {
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
     this._transcriptionSubscriber.unsubscribe();
+    /* @conditional-compile-remove(optimal-video-count) */
+    this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(raise-hand) */
+    this._raiseHandSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(capabilities) */
+    this._capabilitiesSubscriber.unsubscribe();
   };
 
   private addParticipantListener(participant: RemoteParticipant): void {

@@ -83,7 +83,8 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rooms) */
+import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
@@ -186,6 +187,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    this.disposeScreenShareStreamView.bind(this);
     this.fetchInitialData.bind(this);
     this.sendMessage.bind(this);
     this.sendReadReceipt.bind(this);
@@ -236,8 +238,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
 
   /** Join existing Call. */
-  public joinCall(microphoneOn?: boolean): Call | undefined {
-    return this.callAdapter.joinCall(microphoneOn);
+  public joinCall(options?: boolean | JoinCallOptions): Call | undefined {
+    if (typeof options === 'boolean') {
+      return this.callAdapter.joinCall(options);
+    } else {
+      return this.callAdapter.joinCall(options);
+    }
   }
   /** Leave current Call. */
   public async leaveCall(forEveryone?: boolean): Promise<void> {
@@ -349,6 +355,18 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Dispose of a created stream view of a remote participants video feed. */
   public async disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void> {
     await this.callAdapter.disposeStreamView(remoteUserId, options);
+  }
+  /** Dispose of a remote screen share */
+  public async disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
+    await this.callAdapter.disposeScreenShareStreamView(remoteUserId);
+  }
+  /** Dispose of a remote video stream */
+  public async disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
+    await this.callAdapter.disposeRemoteVideoStreamView(remoteUserId);
+  }
+  /** Dispose of the local video stream */
+  public async disposeLocalVideoStreamView(): Promise<void> {
+    await this.callAdapter.disposeLocalVideoStreamView();
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
@@ -689,7 +707,7 @@ export type AzureCommunicationCallWithChatAdapterArgs = {
   locator: CallAndChatLocator | TeamsMeetingLinkLocator;
   /* @conditional-compile-remove(PSTN-calls) */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(video-background-effects) */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
 };
 
@@ -706,7 +724,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   endpoint,
   locator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
+  /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
   const createCallAdapterPromise = createAzureCommunicationCallAdapter({
@@ -715,7 +733,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     credential,
     locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ options: callAdapterOptions
+    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
@@ -775,7 +793,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
     locator,
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(rooms) */ callAdapterOptions
+    /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
   } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
@@ -820,7 +838,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
           locator,
           userId,
           /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-          /* @conditional-compile-remove(rooms) */ callAdapterOptions
+          /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -840,7 +858,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
       endpoint,
       locator,
       userId,
-      /* @conditional-compile-remove(rooms) */ callAdapterOptions
+      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
     ]
   );
 

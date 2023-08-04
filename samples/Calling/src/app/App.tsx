@@ -3,7 +3,7 @@
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
-import { Role } from '@azure/communication-react';
+import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { fromFlatCommunicationIdentifier } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -61,8 +61,6 @@ const App = (): JSX.Element => {
   // Call details to join a call - these are collected from the user on the home screen
   const [callLocator, setCallLocator] = useState<CallAdapterLocator>(createGroupId());
   const [displayName, setDisplayName] = useState<string>('');
-  /* @conditional-compile-remove(rooms) */
-  const [role, setRole] = useState<Role>();
 
   /* @conditional-compile-remove(teams-identity-support) */
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
@@ -148,8 +146,11 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(rooms) */
             if ('roomId' in callLocator) {
               if (userId && 'communicationUserId' in userId) {
-                setRole(callDetails.role as Role);
-                await addUserToRoom(userId.communicationUserId, callLocator.roomId, callDetails.role as Role);
+                await addUserToRoom(
+                  userId.communicationUserId,
+                  callLocator.roomId,
+                  callDetails.role as ParticipantRole
+                );
               } else {
                 throw 'Invalid userId!';
               }
@@ -158,7 +159,13 @@ const App = (): JSX.Element => {
 
             // Update window URL to have a joinable link
             if (!joiningExistingCall) {
-              window.history.pushState({}, document.title, window.location.origin + getJoinParams(callLocator));
+              window.history.pushState(
+                {},
+                document.title,
+                window.location.origin +
+                  getJoinParams(callLocator) +
+                  getIsCTEParam(/* @conditional-compile-remove(teams-identity-support) */ !!callDetails.teamsToken)
+              );
             }
             /* @conditional-compile-remove(teams-identity-support) */
             setIsTeamsCall(!!callDetails.teamsToken);
@@ -204,8 +211,6 @@ const App = (): JSX.Element => {
             callLocator={callLocator}
             /* @conditional-compile-remove(PSTN-calls) */
             alternateCallerId={alternateCallerId}
-            /* @conditional-compile-remove(rooms) */
-            roleHint={role}
             /* @conditional-compile-remove(teams-identity-support) */
             isTeamsIdentityCall={isTeamsCall}
           />
@@ -216,6 +221,10 @@ const App = (): JSX.Element => {
       document.title = `error - ${WEB_APP_TITLE}`;
       return <>Invalid page</>;
   }
+};
+
+const getIsCTEParam = (isCTE?: boolean): string => {
+  return isCTE ? '&isCTE=true' : '';
 };
 
 const getJoinParams = (locator: CallAdapterLocator): string => {

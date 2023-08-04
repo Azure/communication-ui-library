@@ -5,7 +5,6 @@ import React from 'react';
 import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../localization/LocalizationProvider';
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';
 import { PartialDeep } from 'type-fest';
-import { _PermissionsProvider, _getPermissions, _Permissions } from '../../permissions';
 import { render } from '@testing-library/react';
 import LiveAnnouncer from '../Announcer/LiveAnnouncer';
 
@@ -47,23 +46,6 @@ export const renderWithLocalization = (
   };
 };
 
-/** @private */
-export const renderWithPermissions = (
-  node: React.ReactElement,
-  permissions: _Permissions
-): {
-  rerender: (node: React.ReactElement) => void;
-  container: HTMLElement;
-} => {
-  const { rerender, container } = render(<_PermissionsProvider permissions={permissions}>{node}</_PermissionsProvider>);
-  return {
-    // wrap rerender in a function that will re-wrap the node with the Provider
-    rerender: (node: React.ReactElement) =>
-      rerender(<_PermissionsProvider permissions={permissions}>{node}</_PermissionsProvider>),
-    container
-  };
-};
-
 /**
  * @private
  */
@@ -73,4 +55,15 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Co
     strings[key] = { ...strings[key], ...testStrings[key] };
   });
   return { strings };
+};
+
+/** @private */
+// Trigger a mouse event manually to fix mouseDown event in userEvent
+// when `document` become null unexpectedly
+// https://github.com/jestjs/jest/issues/12670
+export const triggerMouseEvent = (node: HTMLElement, eventType: string): void => {
+  const clickEvent = new MouseEvent(eventType, {
+    view: window
+  });
+  node.dispatchEvent(clickEvent);
 };

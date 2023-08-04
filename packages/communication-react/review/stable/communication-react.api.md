@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
@@ -170,7 +168,9 @@ export interface BaseCustomStyles {
 
 // @public
 export interface CallAdapter extends CommonCallAdapter {
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
@@ -181,13 +181,19 @@ export type CallAdapterCallEndedEvent = {
 
 // @public @deprecated
 export interface CallAdapterCallManagement extends CallAdapterCallOperations {
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
 }
 
 // @public
 export interface CallAdapterCallOperations {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    disposeLocalVideoStreamView(): Promise<void>;
+    disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+    disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
+    // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
@@ -562,9 +568,14 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
+    disposeLocalVideoStreamView(): Promise<void>;
+    disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
+    disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
+    joinCall(options?: JoinCallOptions): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     mute(): Promise<void>;
@@ -1085,7 +1096,9 @@ export type Common<A, B> = Pick<A, CommonProperties<A, B>>;
 
 // @public
 export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Disposable, CallAdapterCallOperations, CallAdapterDeviceManagement, CallAdapterSubscribers {
+    // @deprecated
     joinCall(microphoneOn?: boolean): void;
+    joinCall(options?: JoinCallOptions): void;
     startCall(participants: string[], options?: StartCallOptions): void;
 }
 
@@ -1114,7 +1127,11 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeLocalStreamView: () => Promise<void>;
     // (undocumented)
+    onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
+    // (undocumented)
+    onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -1154,6 +1171,9 @@ export type CommunicationParticipant = {
 
 // @public
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
@@ -1245,6 +1265,9 @@ export interface ComponentStrings {
 
 // @public
 export const COMPOSITE_LOCALE_AR_SA: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_CS_CZ: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_DE_DE: CompositeLocale;
@@ -1390,7 +1413,10 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+
+// @public
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
@@ -1488,6 +1514,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1565,6 +1594,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @public
@@ -1675,6 +1707,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 
@@ -1705,7 +1738,6 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
-    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1820,6 +1852,12 @@ export type IsSpeakingChangedListener = (event: {
 }) => void;
 
 // @public
+export interface JoinCallOptions {
+    cameraOn?: boolean | 'keep';
+    microphoneOn?: boolean | 'keep';
+}
+
+// @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
     text: string;
@@ -1892,7 +1930,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1966,7 +2004,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
@@ -2058,12 +2096,12 @@ export type MicrophoneButtonSelector = (state: CallClientState, props: CallingBa
 
 // @public
 export interface MicrophoneButtonStrings {
-    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
+    microphonePrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
     offSplitButtonMicrophonePrimaryAction?: string;
@@ -2117,6 +2155,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
+    ariaLabelledBy?: string;
     displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
@@ -2173,12 +2212,14 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
+    participantAriaLabelledBy?: string;
 };
 
 // @public
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     participants: CallParticipantListParticipant[];
     myUserId: string;
+    totalParticipantCount?: number;
 };
 
 // @public
@@ -2557,7 +2598,10 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
+    onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;

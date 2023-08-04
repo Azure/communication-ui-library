@@ -371,7 +371,7 @@ const memoizeAllMessages = memoizeFnAll(
     readCount?: number,
     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
     onUpdateMessage?: UpdateMessageCallback,
-    onCancelMessageEdit?: CancelEditCallback,
+    onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
@@ -381,7 +381,7 @@ const memoizeAllMessages = memoizeFnAll(
       strings,
       showDate: showMessageDate,
       onUpdateMessage,
-      onCancelMessageEdit,
+      onCancelEditMessage,
       onDeleteMessage,
       onSendMessage,
       disableEditing
@@ -658,7 +658,7 @@ export type MessageThreadProps = {
    *
    * @param messageId - message id from chatClient
    */
-  onCancelMessageEdit?: CancelEditCallback;
+  onCancelEditMessage?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -760,7 +760,7 @@ export type MessageProps = {
    *
    * @param messageId - message id from chatClient
    */
-  onCancelMessageEdit?: CancelEditCallback;
+  onCancelEditMessage?: CancelEditCallback;
   /**
    * Optional callback to delete a message.
    *
@@ -807,7 +807,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onRenderJumpToNewMessageButton,
     onRenderMessage,
     onUpdateMessage,
-    onCancelMessageEdit,
+    onCancelEditMessage,
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
@@ -843,17 +843,17 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata): Promise<void> => {
-      if (
-        !onFetchAttachments ||
-        attachment.id in inlineAttachments ||
-        attachment.attachmentType !== 'teamsInlineImage'
-      ) {
+      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage' || attachment.id in inlineAttachments) {
         return;
       }
+
       setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
       const attachmentDownloadResult = await onFetchAttachments(attachment);
       if (attachmentDownloadResult[0]) {
-        setInlineAttachments((prev) => ({ ...prev, [attachment.id]: attachmentDownloadResult[0].blobUrl }));
+        setInlineAttachments((prev) => ({
+          ...prev,
+          [attachment.id]: attachmentDownloadResult[0].blobUrl
+        }));
       }
     },
     [inlineAttachments, onFetchAttachments]
@@ -1247,7 +1247,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             readCountForHoveredIndicator,
             onRenderMessage,
             onUpdateMessage,
-            onCancelMessageEdit,
+            onCancelEditMessage,
             onDeleteMessage,
             onSendMessage,
             props.disableEditing
@@ -1270,7 +1270,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       readCountForHoveredIndicator,
       onRenderMessage,
       onUpdateMessage,
-      onCancelMessageEdit,
+      onCancelEditMessage,
       onDeleteMessage,
       onSendMessage,
       lastSeenChatMessage,

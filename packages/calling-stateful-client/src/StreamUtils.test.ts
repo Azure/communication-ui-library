@@ -86,6 +86,8 @@ function createMockCall(mockCallId: string): CallState {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
@@ -104,6 +106,10 @@ function createMockCall(mockCallId: string): CallState {
     /* @conditional-compile-remove(call-transfer) */
     transfer: {
       acceptedTransfers: {}
+    },
+    /* @conditional-compile-remove(optimal-video-count) */
+    optimalVideoCount: {
+      maxRemoteVideoStreams: 4
     }
   };
   return call;

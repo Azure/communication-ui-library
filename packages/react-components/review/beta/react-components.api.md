@@ -4,8 +4,6 @@
 
 ```ts
 
-/// <reference types="react" />
-
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -18,6 +16,10 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
+import { IModalStyleProps } from '@fluentui/react';
+import { IModalStyles } from '@fluentui/react';
+import { IOverlayStyleProps } from '@fluentui/react';
+import { IOverlayStyles } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -73,6 +75,15 @@ export interface AttachmentDownloadResult {
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
+}
+
+// @beta
+export interface BaseFileMetadata {
+    attachmentType: FileMetadataAttachmentType;
+    extension: string;
+    id: string;
+    name: string;
+    url: string;
 }
 
 // @beta
@@ -165,7 +176,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
-    role?: Role;
 };
 
 // @beta
@@ -345,6 +355,7 @@ export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
 export interface _CaptionsBannerProps {
     // (undocumented)
     captions: _CaptionsInfo[];
+    formFactor?: 'default' | 'compact';
     // (undocumented)
     isCaptionsOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -511,6 +522,9 @@ export interface _ComplianceBannerStrings {
 export const COMPONENT_LOCALE_AR_SA: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_CS_CZ: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_DE_DE: ComponentLocale;
 
 // @public
@@ -607,6 +621,7 @@ export interface ComponentStrings {
     MicrophoneSitePermissionsDeniedSafari: SitePermissionsStrings;
     MicrophoneSitePermissionsRequest: SitePermissionsStrings;
     participantItem: ParticipantItemStrings;
+    ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -618,11 +633,6 @@ export interface ComponentStrings {
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
-
-// Warning: (ae-internal-missing-underscore) The name "consumerPermissions" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const consumerPermissions: _Permissions;
 
 // @public
 export interface ContentSystemMessage extends SystemMessageCommon {
@@ -785,6 +795,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ContextMenuCameraIcon: JSX.Element;
+    ContextMenuMicIcon: JSX.Element;
+    ContextMenuSpeakerIcon: JSX.Element;
 };
 
 // @internal
@@ -971,6 +984,7 @@ export const ErrorBar: (props: ErrorBarProps) => JSX.Element;
 export interface ErrorBarProps extends IMessageBarProps {
     activeErrorMessages: ActiveErrorMessage[];
     ignorePremountErrors?: boolean;
+    onDismissError?: (dismissedError: ActiveErrorMessage) => void;
     strings?: ErrorBarStrings;
 }
 
@@ -1001,7 +1015,6 @@ export interface ErrorBarStrings {
     sendMessageGeneric: string;
     sendMessageNotInChatThread: string;
     startScreenShareGeneric: string;
-    startScreenSharingGeneric?: string;
     startVideoGeneric: string;
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
@@ -1074,20 +1087,18 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export interface FileMetadata {
-    // (undocumented)
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    // (undocumented)
-    id: string;
-    name: string;
-    // (undocumented)
-    previewUrl?: string;
-    url: string;
-}
+export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'teamsInlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
+// @beta
+export interface FileSharingMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'fileSharing';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1105,9 +1116,6 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
-
-// @internal (undocumented)
-export const _getPermissions: (role?: Role | undefined) => _Permissions;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -1194,6 +1202,52 @@ export interface _Identifiers {
     verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
+}
+
+// @beta
+export interface ImageFileMetadata extends BaseFileMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    // (undocumented)
+    previewUrl?: string;
+}
+
+// @beta
+export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+
+// @beta
+export interface ImageGalleryImageProps {
+    altText?: string;
+    imageUrl: string;
+    saveAsName: string;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @beta
+export interface ImageGalleryProps {
+    images: Array<ImageGalleryImageProps>;
+    modalLayerHostId?: string;
+    onDismiss: () => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    startIndex?: number;
+    styles?: ImageGalleryStylesProps;
+}
+
+// @beta
+export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    closeIcon?: IStyle;
+    controlBarContainer?: IStyle;
+    downloadButton?: IStyle;
+    downloadButtonIcon?: IStyle;
+    header?: IStyle;
+    image?: IStyle;
+    imageContainer?: IStyle;
+    modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
+    overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+    smallDownloadButton?: IStyle;
+    title?: IStyle;
+    titleBarContainer?: IStyle;
 }
 
 // @public
@@ -1330,7 +1384,7 @@ export type MessageProps = {
     showDate?: boolean;
     disableEditing?: boolean;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
 };
@@ -1389,7 +1443,7 @@ export type MessageThreadProps = {
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
     onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
-    onCancelMessageEdit?: CancelEditCallback;
+    onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (content: string) => Promise<void>;
     disableEditing?: boolean;
@@ -1472,12 +1526,12 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
 
 // @public
 export interface MicrophoneButtonStrings {
-    micPrimaryActionSplitButtonTitle?: string;
     microphoneActionTurnedOffAnnouncement?: string;
     microphoneActionTurnedOnAnnouncement?: string;
     microphoneButtonSplitRoleDescription?: string;
     microphoneMenuTitle?: string;
     microphoneMenuTooltip?: string;
+    microphonePrimaryActionSplitButtonTitle?: string;
     offLabel: string;
     offSplitButtonAriaLabel?: string;
     offSplitButtonMicrophonePrimaryAction?: string;
@@ -1538,6 +1592,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 
 // @public
 export interface ParticipantItemProps {
+    ariaLabelledBy?: string;
     displayName?: string;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
@@ -1597,7 +1652,15 @@ export type ParticipantListProps = {
     onParticipantClick?: (participant?: ParticipantListParticipant) => void;
     styles?: ParticipantListStyles;
     showParticipantOverflowTooltip?: boolean;
+    totalParticipantCount?: number;
+    strings?: ParticipantListStrings;
+    participantAriaLabelledBy?: string;
 };
+
+// @beta
+export interface ParticipantListStrings {
+    overflowParticipantCount?: string;
+}
 
 // @public
 export interface ParticipantListStyles extends BaseCustomStyles {
@@ -1666,24 +1729,6 @@ export type _PermissionConstraints = {
     video: boolean;
 };
 
-// @internal (undocumented)
-export type _Permissions = {
-    cameraButton: boolean;
-    microphoneButton: boolean;
-    screenShare: boolean;
-    removeParticipantButton: boolean;
-    role?: Role;
-};
-
-// @internal (undocumented)
-export const _PermissionsProvider: (props: _PermissionsProviderProps) => JSX.Element;
-
-// @internal
-export type _PermissionsProviderProps = {
-    permissions: _Permissions;
-    children: React_2.ReactNode;
-};
-
 // @internal
 export const _PictureInPictureInPicture: (props: _PictureInPictureInPictureProps) => JSX.Element;
 
@@ -1707,11 +1752,6 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
-
-// Warning: (ae-internal-missing-underscore) The name "presenterPermissions" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const presenterPermissions: _Permissions;
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1746,9 +1786,6 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
 }) => JSX.Element>;
-
-// @beta
-export type Role = 'Presenter' | 'Attendee' | 'Consumer' | 'Organizer' | 'Co-organizer';
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2001,9 +2038,6 @@ export const _useContainerHeight: (containerRef: RefObject<HTMLElement>) => numb
 // @internal
 export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => number | undefined;
 
-// @internal
-export const _usePermissions: () => _Permissions;
-
 // @public
 export const useTheme: () => Theme;
 
@@ -2115,7 +2149,10 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
+    onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
+    onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;

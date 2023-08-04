@@ -4,7 +4,12 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ErrorBar, OnRenderAvatarCallback, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  ErrorBar,
+  OnRenderAvatarCallback,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
@@ -37,6 +42,8 @@ export interface CallPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   options?: CallCompositeOptions;
+  latestErrors: ActiveErrorMessage[];
+  onDismissError: (error: ActiveErrorMessage) => void;
 }
 
 /**
@@ -73,8 +80,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     <CallArrangement
       id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
-      // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
-      errorBarProps={options?.errorBar !== false && { ...errorBarProps, ignorePremountErrors: true }}
+      errorBarProps={options?.errorBar !== false && errorBarProps}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,
@@ -85,7 +91,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
-      modalLayerHostId={drawerMenuHostId}
+      modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
         _isInCall(callStatus) ? (
           isNetworkHealthy(networkReconnectTileProps.networkReconnectValue) ? (
@@ -111,6 +117,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
       dataUiId={'call-page'}
+      latestErrors={props.latestErrors}
+      onDismissError={props.onDismissError}
     />
   );
 };

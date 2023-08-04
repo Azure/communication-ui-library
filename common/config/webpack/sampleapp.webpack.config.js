@@ -9,11 +9,17 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
-    entry: './src/index.tsx',
+    entry: {
+      build: './src/index.tsx'
+    },
+    mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
-    resolve: {
+    resolve:  {
       extensions: ['.ts', '.tsx', '.js'],
-      alias: {
+      alias: env.production ? {
+        // read dist folder from package to simulate production environment
+        '@azure/communication-react': path.resolve(sampleAppDir, '../../packages/communication-react'),
+      } : {
         // reference internal packlets src directly for hot reloading when developing
         '@azure/communication-react': path.resolve(sampleAppDir, '../../packages/communication-react/src'),
         '@internal/react-components': path.resolve(sampleAppDir, '../../packages/react-components/src'),
@@ -28,7 +34,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     },
     output: {
       path: path.join(sampleAppDir, env.production ? '/dist/build' : 'dist'),
-      filename: 'build.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [

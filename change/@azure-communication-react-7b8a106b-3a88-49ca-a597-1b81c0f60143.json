@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updates LocalVideo tile to be 9:16 aspect ratio to show whole feed. fixes CallWithChat flashing issue with scrollable gallery.",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

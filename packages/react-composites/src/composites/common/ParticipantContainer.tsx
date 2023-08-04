@@ -17,6 +17,8 @@ import {
 } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
+import { useId } from '@fluentui/react-hooks';
+import { _formatString } from '@internal/acs-ui-common';
 
 type ParticipantContainerProps = {
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -51,7 +53,10 @@ export const ParticipantListWithHeading = (props: {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
 }): JSX.Element => {
   const { onFetchAvatarPersonaData, onFetchParticipantMenuItems, title, participantListProps } = props;
+  const subheadingUniqueId = useId();
   const theme = useTheme();
+  /* @conditional-compile-remove(total-participant-count) */
+  const totalParticipantCount = participantListProps.totalParticipantCount;
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
@@ -65,8 +70,11 @@ export const ParticipantListWithHeading = (props: {
 
   return (
     <Stack className={participantListStack}>
-      <Stack.Item styles={subheadingStyleThemed} aria-label={title}>
-        {title}
+      <Stack.Item styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
+        {paneTitleTrampoline(
+          title ?? '',
+          /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
+        )}
       </Stack.Item>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
@@ -90,8 +98,19 @@ export const ParticipantListWithHeading = (props: {
           )}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           showParticipantOverflowTooltip={!props.isMobile}
+          participantAriaLabelledBy={subheadingUniqueId}
         />
       </FocusZone>
     </Stack>
   );
+};
+
+const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number): string => {
+  /* @conditional-compile-remove(total-participant-count) */
+  const participantCountString = totalParticipantCount
+    ? { numberOfPeople: `(${totalParticipantCount})` }
+    : { numberOfPeople: '' };
+  /* @conditional-compile-remove(total-participant-count) */
+  return _formatString(paneTitle, participantCountString);
+  return paneTitle;
 };

@@ -259,11 +259,10 @@ const participantListInitialState = (): MockCallAdapterState => {
   const paul = defaultMockRemoteParticipant('Paul Bridges');
   addVideoStream(paul, true);
   paul.isSpeaking = true;
-  const initialState = defaultMockCallAdapterState([
-    paul,
-    defaultMockRemoteParticipant('Eryka Klein'),
-    defaultMockRemoteParticipant('Fiona Harper')
-  ]);
+  const initialState = defaultMockCallAdapterState(
+    [paul, defaultMockRemoteParticipant('Eryka Klein'), defaultMockRemoteParticipant('Fiona Harper')],
+    'Unknown'
+  );
   addDefaultMockLocalVideoStreamState(initialState);
   return initialState;
 };

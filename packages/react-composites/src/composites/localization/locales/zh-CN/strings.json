@@ -37,6 +37,7 @@
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "未在通话中向你授予条目。如果这是一个错误，请重新加入呼叫。",
     "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "已从大厅中关闭",
     "learnMore": "了解详细信息",
+    "leavingCallTitle": "正在退出...",
     "leftCallMoreDetails": "如果这是一个错误，请重新加入呼叫。",
     "leftCallTitle": "你已离开通话",
     "lobbyScreenConnectingToCallTitle": "加入通话",
@@ -150,7 +151,20 @@
       "sk-sk": "斯洛伐克语",
       "zh-tw": "中文 – 台湾"
     },
-    "captionsBannerSpinnerText": "正在启动字幕..."
+    "captionsBannerSpinnerText": "正在启动字幕...",
+    "transferPageTransferorText": "正在转接...",
+    "transferPageTransferTargetText": "正在连接...",
+    "transferPageUnknownTransferorDisplayName": "未知",
+    "transferPageUnknownTransferTargetDisplayName": "未知",
+    "transferPageNoticeString": "正在转接中",
+    "participantCouldNotBeReachedTitle": "目标参与者当前不可用",
+    "participantCouldNotBeReachedMoreDetails": "当参与者可用时，请联系他们",
+    "permissionToReachTargetParticipantNotAllowedTitle": "不允许访问目标参与者的权限",
+    "permissionToReachTargetParticipantNotAllowedMoreDetails": "请检查目标参与者位于同一租户中",
+    "unableToResolveTenantTitle": "无法解析目标参与者的租户 ID",
+    "unableToResolveTenantMoreDetails": "请检查正确输入参与者 ID",
+    "participantIdIsMalformedTitle": "参与者 ID 的格式不正确",
+    "participantIdIsMalformedMoreDetails": "请检查参与者 ID 的格式正确"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

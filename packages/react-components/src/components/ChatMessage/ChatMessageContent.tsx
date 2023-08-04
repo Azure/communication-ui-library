@@ -74,12 +74,15 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     props.message.attachedFilesMetadata?.map((fileMetadata) => {
-      if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+      if (
+        props.onFetchAttachment &&
+        props.attachmentsMap &&
+        fileMetadata.attachmentType === 'inlineImage' &&
+        props.attachmentsMap[fileMetadata.id] === undefined
+      ) {
         props.onFetchAttachment(fileMetadata);
       }
     });
@@ -88,7 +91,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       content={processHtmlToReact(props)}
     />
@@ -96,11 +99,10 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
 };
 
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
   return (
     <MessageContentWithLiveAria
       message={props.message}
-      liveMessage={`${props.message.mine ? '' : liveAuthor} ${extractContent(props.message.content || '')}`}
+      liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       content={
         <Linkify
@@ -162,6 +164,14 @@ const extractContent = (s: string): string => {
   return span.textContent || span.innerText;
 };
 
+const generateLiveMessage = (props: ChatMessageContentProps): string => {
+  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+
+  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
+    props.message.mine ? '' : liveAuthor
+  } ${extractContent(props.message.content || '')} `;
+};
+
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {
   // Strip all html tags from the content for aria.
 
@@ -184,13 +194,17 @@ const htmlToReactParser = Parser();
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
+    function isImageNode(file: FileMetadata): boolean {
+      return file.attachmentType === 'inlineImage' && file.id === node.attribs.id;
+    }
+
     // Process img node with id in attachments list
     return (
       node.name &&
       node.name === 'img' &&
       node.attribs &&
       node.attribs.id &&
-      props.message.attachedFilesMetadata?.find((f) => f.id === node.attribs.id)
+      props.message.attachedFilesMetadata?.find(isImageNode)
     );
   },
   processNode: (node, children, index): HTMLElement => {
@@ -213,10 +227,10 @@ const processMention = (props: ChatMessageContentProps): ProcessingInstructionTy
   },
   processNode: (node) => {
     if (props.mentionDisplayOptions?.onRenderMention) {
-      const { id, displaytext } = node.attribs;
+      const { id } = node.attribs;
       const mention: Mention = {
         id: id,
-        displayText: displaytext
+        displayText: node.children[0]?.data ?? ''
       };
       return props.mentionDisplayOptions.onRenderMention(mention, defaultOnMentionRender);
     }

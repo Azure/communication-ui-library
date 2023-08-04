@@ -9,17 +9,6 @@ export { LocalizationProvider } from './localization';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
 
-/* @conditional-compile-remove(rooms) */
-export {
-  _PermissionsProvider,
-  presenterPermissions,
-  consumerPermissions,
-  _usePermissions,
-  _getPermissions
-} from './permissions';
-/* @conditional-compile-remove(rooms) */
-export type { _Permissions, _PermissionsProviderProps, Role } from './permissions';
-
 export type {
   BaseCustomStyles,
   CallParticipantListParticipant,

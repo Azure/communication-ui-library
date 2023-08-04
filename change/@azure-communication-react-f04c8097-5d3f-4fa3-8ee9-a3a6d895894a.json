@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fixed bug where captions keep scrolling to the bottom when new captions are received ",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "patch"
+}
