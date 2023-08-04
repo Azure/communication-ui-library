@@ -37,6 +37,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
+import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -1230,6 +1231,7 @@ export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     modalLayerHostId?: string;
     onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
     styles?: ImageGalleryStylesProps;
