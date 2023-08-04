@@ -8,11 +8,12 @@ import {
   merge,
   mergeStyles,
   PersonaPresence,
-  Stack
+  Stack,
+  Theme
 } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 /* @conditional-compile-remove(total-participant-count) */
-import { Text, Theme, Image } from '@fluentui/react';
+import { Text, Image } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
@@ -124,7 +125,6 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  /* @conditional-compile-remove(raise-hand) */
   theme?: Theme
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
