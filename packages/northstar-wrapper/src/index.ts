@@ -1,19 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  Chat,
-  ChatItemProps,
-  Flex,
-  MenuProps,
-  Provider,
-  Ref,
-  ShorthandValue,
-  Text,
-  mergeStyles,
-  mergeThemes,
-  teamsTheme
-} from '@fluentui/react-northstar';
+import { Chat, ChatItemProps, MenuProps, ShorthandValue } from '@fluentui/react-northstar';
 
-export { Chat, Flex, Provider, Ref, Text, mergeStyles, mergeThemes, teamsTheme };
+export { Chat };
 export type { ChatItemProps, MenuProps, ShorthandValue };

@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Icon, mergeStyles, Theme } from '@fluentui/react';
-import { MenuProps, Ref } from '@internal/northstar-wrapper';
+import { MenuProps } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React from 'react';
 import { chatActionsCSS, iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
@@ -25,7 +25,7 @@ export const chatMessageActionMenuProps = (menuProps: {
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
   forceShow: boolean;
-  menuButtonRef: React.MutableRefObject<HTMLElement | null>;
+  menuButtonRef: React.MutableRefObject<HTMLDivElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
 }): ChatMessageActionMenuProps | undefined => {
@@ -46,14 +46,14 @@ export const chatMessageActionMenuProps = (menuProps: {
     items: [
       {
         children: (
-          <Ref innerRef={menuProps.menuButtonRef}>
+          <div ref={menuProps.menuButtonRef}>
             <Icon
               iconName="ChatMessageOptions"
               data-ui-id="chat-composite-message-action-icon"
               aria-label={menuProps.ariaLabel}
               styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
             />
-          </Ref>
+          </div>
         ),
 
         key: 'menuButton',
