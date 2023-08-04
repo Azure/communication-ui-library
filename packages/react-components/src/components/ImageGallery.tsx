@@ -17,7 +17,7 @@ import {
   mergeStyles
 } from '@fluentui/react';
 
-import React, { useState } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { BaseCustomStyles } from '../types';
 import {
   brokenImageStyle,
@@ -108,6 +108,10 @@ export interface ImageGalleryProps {
    * Callback called when the download button is clicked.
    */
   onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+  /**
+   * Callback called when there's an error loading the image.
+   */
+  onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
   /** Optional id property provided on a LayerHost that this Layer should render within.
    *  If an id is not provided, we will render the Layer content in a fixed position element rendered at the end of the document.
    */
@@ -132,7 +136,7 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, styles, startIndex = 0 } = props;
+  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
@@ -164,9 +168,10 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             src={image.imageUrl}
             className={mergeStyles(imageStyle, styles?.image)}
             alt={image.altText || defaultAltText}
-            onError={() => {
+            onError={(event) => {
               console.log('Unable to load Image');
               setIsImageLoaded(false);
+              onError && onError(event);
             }}
           />
         </div>
