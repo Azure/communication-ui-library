@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
+import { ChatThreadClient, SendChatMessageResult, SendMessageRequest } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { ChatMessageWithStatus } from './types/ChatMessageWithStatus';
 import { ChatContext } from './ChatContext';
@@ -19,20 +19,23 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
   }
 
   public get<P extends keyof ChatThreadClient>(chatThreadClient: ChatThreadClient, prop: P): any {
-    const mockUploadLogicFromChatSDK = async (images: string[], message: ChatMessageWithStatus): Promise<void> => {
+    const mockUploadLogicFromChatSDK = async (images: string[], sendMessageRequest: SendMessageRequest): Promise<void> => {
       if (images.length === 0) {
         return;
       }
       const promises = images.map((image) => {
-        return fetch('http://localhost:27813/api/v1/images/bytearraybase64', {
+        return fetch('http://localhost:27813/api/v1/images/base64byteArray', {
           method: 'POST',
           body: JSON.stringify({
-            file: image
-          })
+            file: image.replace("data:image/png;base64,", "")
+          }),
+          headers: {
+            "Content-Type": "application/json"
+          }
         }).then(async (response) => {
           const content = await response.json();
           console.log(content);
-          message.content?.message?.replace(image, content.id);
+          sendMessageRequest.content = sendMessageRequest.content?.replace(image, "\" id=\"" + content.id + "");
         });
       });
       await Promise.all(promises);
@@ -68,13 +71,15 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             sender: this._context.getState().userId,
             metadata: options?.metadata
           };
+          // render sending state
           this._context.setChatMessage(chatThreadClient.threadId, newMessage);
 
           let result: SendChatMessageResult | undefined = undefined;
           try {
             const regex = /<img[^>]+src="([^">]+)/g;
             const images = content.match(regex)?.map((match) => match.replace('<img src="', ''));
-            await mockUploadLogicFromChatSDK(images ?? [], newMessage);
+            await mockUploadLogicFromChatSDK(images ?? [], args[0]);
+            console.log(args);
             result = await chatThreadClient.sendMessage(...args);
           } catch (e) {
             this._context.setChatMessage(chatThreadClient.threadId, { ...newMessage, status: 'failed' });
