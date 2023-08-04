@@ -129,7 +129,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onResendClick,
     disableEditing,
     showDate,
-    messageContainerStyle,
+    // messageContainerStyle,
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
