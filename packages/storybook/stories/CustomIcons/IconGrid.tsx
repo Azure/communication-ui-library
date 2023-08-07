@@ -60,10 +60,41 @@ const SearchBar = (props: { onChange: (newValue?: string) => void }): JSX.Elemen
 export const IconGridWithSearch = (props: { icons: Record<string, JSX.Element> }): JSX.Element => {
   const { icons } = props;
   const [searchText, setSearchText] = useState<string | undefined>(undefined);
+
+  const iconGroups = groupIcons(icons);
+
   return (
     <Stack>
       <SearchBar onChange={(val) => setSearchText(val)} />
-      <IconGrid allIcons={icons} searchText={searchText} />
+      {Object.keys(iconGroups).map((key) => (
+        <React.Fragment key={key}>
+          <IconGrid allIcons={iconGroups[key]} searchText={searchText} />
+        </React.Fragment>
+      ))}
     </Stack>
   );
 };
+
+const groupIcons = (icons: Record<string, JSX.Element>): Record<string, Record<string, JSX.Element>> => {
+  const iconGroups: Record<string, Record<string, JSX.Element>> = { general: {}, callReadiness: {} };
+
+  Object.keys(icons).forEach((key) => {
+    if (callReadinessIconKeys.includes(key)) {
+      iconGroups.callReadiness[key] = icons[key];
+    } else {
+      iconGroups.general[key] = icons[key];
+    }
+  });
+
+  return iconGroups;
+};
+
+const callReadinessIconKeys = [
+  'BrowserPermissionDeniedError',
+  'SitePermissionCamera',
+  'SitePermissionCameraDenied',
+  'SitePermissionMic',
+  'SitePermissionMicDenied',
+  'SitePermissionsSparkle',
+  'UnsupportedEnvironmentWarning'
+];
