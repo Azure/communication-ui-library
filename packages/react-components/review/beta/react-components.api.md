@@ -16,6 +16,11 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
+import { IModalStyleProps } from '@fluentui/react';
+import { IModalStyles } from '@fluentui/react';
+import { IOverlayStyleProps } from '@fluentui/react';
+import { IOverlayStyles } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -32,6 +37,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
+import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -1209,6 +1215,45 @@ export interface ImageFileMetadata extends BaseFileMetadata {
     previewUrl?: string;
 }
 
+// @beta
+export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+
+// @beta
+export interface ImageGalleryImageProps {
+    altText?: string;
+    imageUrl: string;
+    saveAsName: string;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @beta
+export interface ImageGalleryProps {
+    images: Array<ImageGalleryImageProps>;
+    modalLayerHostId?: string;
+    onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    startIndex?: number;
+    styles?: ImageGalleryStylesProps;
+}
+
+// @beta
+export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    closeIcon?: IStyle;
+    controlBarContainer?: IStyle;
+    downloadButton?: IStyle;
+    downloadButtonIcon?: IStyle;
+    header?: IStyle;
+    image?: IStyle;
+    imageContainer?: IStyle;
+    modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
+    overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+    smallDownloadButton?: IStyle;
+    title?: IStyle;
+    titleBarContainer?: IStyle;
+}
+
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
@@ -1410,6 +1455,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
+    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
 };
 
 // @public
