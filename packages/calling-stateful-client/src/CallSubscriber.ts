@@ -304,6 +304,7 @@ export class CallSubscriber {
       }
     }
     if (event.removed.length > 0) {
+      console.log(event.removed);
       /* @conditional-compile-remove(video-background-effects) */
       {
         const localVideoStreamKey = event.removed[0].source.id;

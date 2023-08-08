@@ -154,6 +154,7 @@ export class InternalCallContext {
   }
 
   public deleteLocalRenderInfo(callId: string): void {
+    console.log('deleteLocalRenderInfo', this._localRenderInfos);
     this._localRenderInfos.delete(this._callIdHistory.latestCallId(callId));
   }
 
