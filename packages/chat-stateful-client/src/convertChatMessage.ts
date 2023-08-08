@@ -13,6 +13,24 @@ export const convertChatMessage = (
   status: MessageStatus = 'delivered',
   clientMessageId?: string
 ): ChatMessageWithStatus => {
+
+  if (message.content?.message?.includes('')) {
+    var div = document.createElement('div');
+    div.innerHTML = message.content?.message;
+    var images = [...div.getElementsByTagName('img')];
+    images.forEach(element => {
+      message.content?.attachments?.push(
+        {
+          "id": element.id,
+          "name": "image",
+          "attachmentType": "teamsInlineImage",
+          "url": "" + "/chat/threads/123456789/messages/123456789/teamsInterop/images/" + element.id + "/views/original?api-version=2023-04-01-preview",
+          "previewUrl": "" + "/chat/threads/123456789/messages/123456789/teamsInterop/images/" + element.id + "/views/small?api-version=2023-04-01-preview"
+        }
+      )
+    });
+  }
+
   return {
     ...message,
     clientMessageId: clientMessageId,
