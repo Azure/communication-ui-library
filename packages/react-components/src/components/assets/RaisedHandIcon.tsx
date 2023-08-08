@@ -283,8 +283,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(16.6796 10.8658) rotate(161.935) scale(13.4702 20.3408)"
         >
-          <stop offset="0.817521" stop-color="#E99329" stop-opacity="0" />
-          <stop offset="0.961397" stop-color="#E99329" />
+          <stop offset="0.817521" stopColor="#E99329" stopOpacity="0" />
+          <stop offset="0.961397" stopColor="#E99329" />
         </radialGradient>
         <radialGradient
           id="paint1_radial_10246_159312"
@@ -294,8 +294,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.7464 4.86265) rotate(103.662) scale(15.5522 10.8511)"
         >
-          <stop offset="0.750766" stop-color="#F88456" stop-opacity="0" />
-          <stop offset="1" stop-color="#F88456" />
+          <stop offset="0.750766" stopColor="#F88456" stopOpacity="0" />
+          <stop offset="1" stopColor="#F88456" />
         </radialGradient>
         <radialGradient
           id="paint2_radial_10246_159312"
@@ -305,8 +305,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(10.8862 4.86067) rotate(98.3094) scale(14.3189 9.99881)"
         >
-          <stop offset="0.937186" stop-color="#F27A74" stop-opacity="0" />
-          <stop offset="1" stop-color="#F27A74" />
+          <stop offset="0.937186" stopColor="#F27A74" stopOpacity="0" />
+          <stop offset="1" stopColor="#F27A74" />
         </radialGradient>
         <radialGradient
           id="paint3_radial_10246_159312"
@@ -316,8 +316,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(17.3363 11.238) rotate(-144.906) scale(1.08553 4.6268)"
         >
-          <stop offset="0.0636767" stop-color="#EAB170" />
-          <stop offset="1" stop-color="#F6B44B" stop-opacity="0" />
+          <stop offset="0.0636767" stopColor="#EAB170" />
+          <stop offset="1" stopColor="#F6B44B" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint4_radial_10246_159312"
@@ -327,8 +327,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(17.1484 8.75) rotate(129.452) scale(4.85649 1.57945)"
         >
-          <stop stop-color="#FFC748" />
-          <stop offset="1" stop-color="#FFC64A" stop-opacity="0" />
+          <stop stopColor="#FFC748" />
+          <stop offset="1" stopColor="#FFC64A" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint5_radial_10246_159312"
@@ -338,8 +338,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(17.6953 8.75) rotate(135) scale(1.1601 1.07723)"
         >
-          <stop stop-color="#FFE964" />
-          <stop offset="1" stop-color="#FFE65F" stop-opacity="0" />
+          <stop stopColor="#FFE964" />
+          <stop offset="1" stopColor="#FFE65F" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint6_radial_10246_159312"
@@ -349,8 +349,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(15.7422 8.47656) rotate(128.853) scale(3.61154 0.774997)"
         >
-          <stop offset="0.251132" stop-color="#EDB019" />
-          <stop offset="1" stop-color="#EEB018" stop-opacity="0" />
+          <stop offset="0.251132" stopColor="#EDB019" />
+          <stop offset="1" stopColor="#EEB018" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint7_radial_10246_159312"
@@ -360,8 +360,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(15.6055 8.04687) rotate(125.92) scale(3.06292 0.505665)"
         >
-          <stop offset="0.0171863" stop-color="#D29E4C" />
-          <stop offset="1" stop-color="#DAA23E" stop-opacity="0" />
+          <stop offset="0.0171863" stopColor="#D29E4C" />
+          <stop offset="1" stopColor="#DAA23E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint8_radial_10246_159312"
@@ -371,8 +371,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(14.2578 9.47266) rotate(-56.3099) scale(1.05631 0.227513)"
         >
-          <stop offset="0.297381" stop-color="#FFD260" />
-          <stop offset="1" stop-color="#FFD361" stop-opacity="0" />
+          <stop offset="0.297381" stopColor="#FFD260" />
+          <stop offset="1" stopColor="#FFD361" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint9_radial_10246_159312"
@@ -382,8 +382,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(12.4609 9.62891) rotate(107.216) scale(1.45176 3.15212)"
         >
-          <stop offset="0.251132" stop-color="#FFCF48" />
-          <stop offset="1" stop-color="#FFD04B" stop-opacity="0" />
+          <stop offset="0.251132" stopColor="#FFCF48" />
+          <stop offset="1" stopColor="#FFD04B" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint10_radial_10246_159312"
@@ -393,8 +393,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(12.3242 9.02344) rotate(144.638) scale(0.742444 1.38192)"
         >
-          <stop offset="0.420068" stop-color="#F2AA23" />
-          <stop offset="1" stop-color="#F2AA23" stop-opacity="0" />
+          <stop offset="0.420068" stopColor="#F2AA23" />
+          <stop offset="1" stopColor="#F2AA23" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint11_linear_10246_159312"
@@ -404,8 +404,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="9.68081"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.376446" stop-color="#FFC23E" />
-          <stop offset="1" stop-color="#FFC23E" stop-opacity="0" />
+          <stop offset="0.376446" stopColor="#FFC23E" />
+          <stop offset="1" stopColor="#FFC23E" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint12_radial_10246_159312"
@@ -415,8 +415,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(3.32031 8.28125) rotate(85.0032) scale(7.17571 2.51091)"
         >
-          <stop stop-color="#E6943A" />
-          <stop offset="1" stop-color="#E7943A" stop-opacity="0" />
+          <stop stopColor="#E6943A" />
+          <stop offset="1" stopColor="#E7943A" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint13_radial_10246_159312"
@@ -426,9 +426,9 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(5.46875 6.17188) rotate(87.0391) scale(6.80596 1.61557)"
         >
-          <stop stop-color="#FFCF50" />
-          <stop offset="0.741378" stop-color="#FFB847" />
-          <stop offset="1" stop-color="#FFB848" stop-opacity="0" />
+          <stop stopColor="#FFCF50" />
+          <stop offset="0.741378" stopColor="#FFB847" />
+          <stop offset="1" stopColor="#FFB848" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint14_radial_10246_159312"
@@ -438,8 +438,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(6.69922 6.95312) rotate(85.2393) scale(4.00062 0.583904)"
         >
-          <stop stop-color="#E79F08" />
-          <stop offset="1" stop-color="#E79F08" stop-opacity="0" />
+          <stop stopColor="#E79F08" />
+          <stop offset="1" stopColor="#E79F08" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint15_radial_10246_159312"
@@ -449,8 +449,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(5.82031 7.76306) rotate(83.1071) scale(3.90579 0.814298)"
         >
-          <stop stop-color="#FFD14D" />
-          <stop offset="1" stop-color="#FFD04E" stop-opacity="0" />
+          <stop stopColor="#FFD14D" />
+          <stop offset="1" stopColor="#FFD04E" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint16_radial_10246_159312"
@@ -460,8 +460,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(6.69922 9.17969) rotate(136.548) scale(1.53355 0.783563)"
         >
-          <stop offset="0.426346" stop-color="#FFD260" />
-          <stop offset="1" stop-color="#FFD361" stop-opacity="0" />
+          <stop offset="0.426346" stopColor="#FFD260" />
+          <stop offset="1" stopColor="#FFD361" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint17_radial_10246_159312"
@@ -471,8 +471,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(5.46875 5.48828) rotate(80.3401) scale(0.931172 0.709009)"
         >
-          <stop stop-color="#FFDA62" />
-          <stop offset="1" stop-color="#FFDA60" stop-opacity="0" />
+          <stop stopColor="#FFDA62" />
+          <stop offset="1" stopColor="#FFDA60" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint18_linear_10246_159312"
@@ -482,8 +482,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="7.03125"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#DE890D" />
-          <stop offset="1" stop-color="#F9B23D" />
+          <stop stopColor="#DE890D" />
+          <stop offset="1" stopColor="#F9B23D" />
         </linearGradient>
         <linearGradient
           id="paint19_linear_10246_159312"
@@ -493,8 +493,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="7.83625"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.405208" stop-color="#FFC23E" />
-          <stop offset="1" stop-color="#FFC23E" stop-opacity="0" />
+          <stop offset="0.405208" stopColor="#FFC23E" />
+          <stop offset="1" stopColor="#FFC23E" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint20_radial_10246_159312"
@@ -504,8 +504,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(9.90363 2.31009) rotate(56.3221) scale(2.85335 11.4486)"
         >
-          <stop stop-color="#E1AE3F" />
-          <stop offset="1" stop-color="#E8AD3C" stop-opacity="0" />
+          <stop stopColor="#E1AE3F" />
+          <stop offset="1" stopColor="#E8AD3C" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint21_radial_10246_159312"
@@ -515,9 +515,9 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(8.35938 5.19531) rotate(86.2538) scale(6.57655 1.44733)"
         >
-          <stop stop-color="#FFCE4C" />
-          <stop offset="0.621882" stop-color="#FFBA49" />
-          <stop offset="1" stop-color="#FEB848" stop-opacity="0" />
+          <stop stopColor="#FFCE4C" />
+          <stop offset="0.621882" stopColor="#FFBA49" />
+          <stop offset="1" stopColor="#FEB848" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint22_linear_10246_159312"
@@ -527,8 +527,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="7.06055"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.168836" stop-color="#FFC23E" />
-          <stop offset="1" stop-color="#FFC23E" stop-opacity="0" />
+          <stop offset="0.168836" stopColor="#FFC23E" />
+          <stop offset="1" stopColor="#FFC23E" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint23_radial_10246_159312"
@@ -538,8 +538,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(5.82031 5.97656) rotate(78.518) scale(5.10211 0.93429)"
         >
-          <stop offset="0.425088" stop-color="#BD6606" />
-          <stop offset="1" stop-color="#C77122" stop-opacity="0" />
+          <stop offset="0.425088" stopColor="#BD6606" />
+          <stop offset="1" stopColor="#C77122" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint24_radial_10246_159312"
@@ -549,8 +549,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(8.24219 5.89844) rotate(83.5653) scale(5.22825 0.629818)"
         >
-          <stop stop-color="#FFCB4F" />
-          <stop offset="1" stop-color="#FFCD4C" stop-opacity="0" />
+          <stop stopColor="#FFCB4F" />
+          <stop offset="1" stopColor="#FFCD4C" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint25_radial_10246_159312"
@@ -560,8 +560,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(9.29687 8.20313) rotate(154.799) scale(1.46784 0.851345)"
         >
-          <stop offset="0.426346" stop-color="#FFD260" />
-          <stop offset="1" stop-color="#FFD361" stop-opacity="0" />
+          <stop offset="0.426346" stopColor="#FFD260" />
+          <stop offset="1" stopColor="#FFD361" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint26_radial_10246_159312"
@@ -571,8 +571,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(9.33594 4.98047) rotate(88.915) scale(5.15717 0.762321)"
         >
-          <stop offset="0.342657" stop-color="#E29E07" />
-          <stop offset="1" stop-color="#DF9906" stop-opacity="0" />
+          <stop offset="0.342657" stopColor="#E29E07" />
+          <stop offset="1" stopColor="#DF9906" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint27_linear_10246_159312"
@@ -582,8 +582,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="6.26984"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#B76001" />
-          <stop offset="0.647059" stop-color="#E59714" stop-opacity="0" />
+          <stop stopColor="#B76001" />
+          <stop offset="0.647059" stopColor="#E59714" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint28_radial_10246_159312"
@@ -593,8 +593,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(8.125 3.51562) rotate(86.1859) scale(1.17448 1.07205)"
         >
-          <stop stop-color="#FFDA62" />
-          <stop offset="1" stop-color="#FFDA60" stop-opacity="0" />
+          <stop stopColor="#FFDA62" />
+          <stop offset="1" stopColor="#FFDA60" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint29_linear_10246_159312"
@@ -604,8 +604,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="5.72531"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#D5850A" />
-          <stop offset="1" stop-color="#F9B343" stop-opacity="0" />
+          <stop stopColor="#D5850A" />
+          <stop offset="1" stopColor="#F9B343" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint30_linear_10246_159312"
@@ -615,8 +615,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="5.6712"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#B76001" />
-          <stop offset="1" stop-color="#E59714" stop-opacity="0" />
+          <stop stopColor="#B76001" />
+          <stop offset="1" stopColor="#E59714" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint31_radial_10246_159312"
@@ -626,8 +626,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.3014 4.55861) rotate(90) scale(5.01272 0.983716)"
         >
-          <stop stop-color="#FFCB45" />
-          <stop offset="1" stop-color="#FFC44A" stop-opacity="0" />
+          <stop stopColor="#FFCB45" />
+          <stop offset="1" stopColor="#FFC44A" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint32_linear_10246_159312"
@@ -637,8 +637,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="7.2461"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.210964" stop-color="#FFC23E" />
-          <stop offset="0.80669" stop-color="#FFC23E" stop-opacity="0" />
+          <stop offset="0.210964" stopColor="#FFC23E" />
+          <stop offset="0.80669" stopColor="#FFC23E" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint33_radial_10246_159312"
@@ -648,8 +648,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.7188 8.04687) rotate(166.996) scale(1.16638 0.888873)"
         >
-          <stop offset="0.426346" stop-color="#FFCA5B" />
-          <stop offset="1" stop-color="#FFCF60" stop-opacity="0" />
+          <stop offset="0.426346" stopColor="#FFCA5B" />
+          <stop offset="1" stopColor="#FFCF60" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint34_radial_10246_159312"
@@ -659,8 +659,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.9922 4.76563) rotate(92.1409) scale(4.18261 0.38546)"
         >
-          <stop offset="0.342657" stop-color="#E29E07" />
-          <stop offset="1" stop-color="#DF9906" stop-opacity="0" />
+          <stop offset="0.342657" stopColor="#E29E07" />
+          <stop offset="1" stopColor="#DF9906" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint35_radial_10246_159312"
@@ -670,9 +670,9 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(10.9766 4.51172) rotate(90) scale(9.27734 1.28906)"
         >
-          <stop stop-color="#FFCE4C" />
-          <stop offset="0.621882" stop-color="#FFBA49" />
-          <stop offset="1" stop-color="#FEB848" stop-opacity="0" />
+          <stop stopColor="#FFCE4C" />
+          <stop offset="0.621882" stopColor="#FFBA49" />
+          <stop offset="1" stopColor="#FEB848" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint36_linear_10246_159312"
@@ -682,8 +682,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="5.93971"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#E59714" />
-          <stop offset="1" stop-color="#E59714" stop-opacity="0" />
+          <stop stopColor="#E59714" />
+          <stop offset="1" stopColor="#E59714" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint37_linear_10246_159312"
@@ -693,8 +693,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="8.00715"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#FFC23E" />
-          <stop offset="1" stop-color="#FFC23E" stop-opacity="0" />
+          <stop stopColor="#FFC23E" />
+          <stop offset="1" stopColor="#FFC23E" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint38_radial_10246_159312"
@@ -704,8 +704,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(12.2847 7.66848) rotate(-113.448) scale(6.85723 7.32906)"
         >
-          <stop offset="0.869582" stop-color="#D8A13D" stop-opacity="0" />
-          <stop offset="1" stop-color="#D8A13D" />
+          <stop offset="0.869582" stopColor="#D8A13D" stopOpacity="0" />
+          <stop offset="1" stopColor="#D8A13D" />
         </radialGradient>
         <radialGradient
           id="paint39_radial_10246_159312"
@@ -715,8 +715,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.2891 1.91406) rotate(93.0128) scale(1.48643 1.29895)"
         >
-          <stop stop-color="#FFE763" />
-          <stop offset="1" stop-color="#FFE55D" stop-opacity="0" />
+          <stop stopColor="#FFE763" />
+          <stop offset="1" stopColor="#FFE55D" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint40_radial_10246_159312"
@@ -726,8 +726,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.8164 8.53516) rotate(168.022) scale(1.41758 0.903842)"
         >
-          <stop offset="0.426346" stop-color="#FFD260" />
-          <stop offset="1" stop-color="#FFD361" stop-opacity="0" />
+          <stop offset="0.426346" stopColor="#FFD260" />
+          <stop offset="1" stopColor="#FFD361" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint41_radial_10246_159312"
@@ -737,9 +737,9 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(13.4766 5.89844) rotate(92.6574) scale(9.26778 2.30713)"
         >
-          <stop stop-color="#FFCE4C" />
-          <stop offset="0.431711" stop-color="#FFBA49" />
-          <stop offset="1" stop-color="#FEB848" stop-opacity="0" />
+          <stop stopColor="#FFCE4C" />
+          <stop offset="0.431711" stopColor="#FFBA49" />
+          <stop offset="1" stopColor="#FEB848" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint42_linear_10246_159312"
@@ -749,8 +749,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="6.42645"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0662431" stop-color="#E08F13" />
-          <stop offset="0.602743" stop-color="#E7981B" stop-opacity="0" />
+          <stop offset="0.0662431" stopColor="#E08F13" />
+          <stop offset="0.602743" stopColor="#E7981B" stopOpacity="0" />
         </linearGradient>
         <linearGradient
           id="paint43_linear_10246_159312"
@@ -760,8 +760,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="6.33379"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0662431" stop-color="#C2681D" />
-          <stop offset="0.602743" stop-color="#E69717" stop-opacity="0" />
+          <stop offset="0.0662431" stopColor="#C2681D" />
+          <stop offset="0.602743" stopColor="#E69717" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint44_radial_10246_159312"
@@ -771,8 +771,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(14.9907 8.54439) rotate(-115.482) scale(6.44971 7.3339)"
         >
-          <stop offset="0.869582" stop-color="#D8A13D" stop-opacity="0" />
-          <stop offset="1" stop-color="#D8A13D" />
+          <stop offset="0.869582" stopColor="#D8A13D" stopOpacity="0" />
+          <stop offset="1" stopColor="#D8A13D" />
         </radialGradient>
         <radialGradient
           id="paint45_radial_10246_159312"
@@ -782,8 +782,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(14.0625 5.66406) rotate(91.8841) scale(5.94071 1.40501)"
         >
-          <stop stop-color="#FFDC3F" />
-          <stop offset="1" stop-color="#FFDA3C" stop-opacity="0" />
+          <stop stopColor="#FFDC3F" />
+          <stop offset="1" stopColor="#FFDA3C" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint46_radial_10246_159312"
@@ -793,8 +793,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(14.1016 3.51563) rotate(99.1412) scale(1.27667 1.12346)"
         >
-          <stop stop-color="#FFE966" />
-          <stop offset="1" stop-color="#FFE966" stop-opacity="0" />
+          <stop stopColor="#FFE966" />
+          <stop offset="1" stopColor="#FFE966" stopOpacity="0" />
         </radialGradient>
         <radialGradient
           id="paint47_radial_10246_159312"
@@ -804,8 +804,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(11.7139 8.84766) rotate(124.509) scale(0.853264 2.02461)"
         >
-          <stop offset="0.251132" stop-color="#F0A623" />
-          <stop offset="1" stop-color="#F2AA23" stop-opacity="0" />
+          <stop offset="0.251132" stopColor="#F0A623" />
+          <stop offset="1" stopColor="#F2AA23" stopOpacity="0" />
         </radialGradient>
         <linearGradient
           id="paint48_linear_10246_159312"
@@ -815,8 +815,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           y2="9.05273"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0912498" stop-color="#FFCD47" />
-          <stop offset="1" stop-color="#FFCD52" stop-opacity="0" />
+          <stop offset="0.0912498" stopColor="#FFCD47" />
+          <stop offset="1" stopColor="#FFCD52" stopOpacity="0" />
         </linearGradient>
         <radialGradient
           id="paint49_radial_10246_159312"
@@ -826,8 +826,8 @@ export const RaisedHandIcon = (): JSX.Element => {
           gradientUnits="userSpaceOnUse"
           gradientTransform="translate(14.8059 9.14063) rotate(99.1613) scale(2.21576 0.860587)"
         >
-          <stop offset="0.251132" stop-color="#D69211" />
-          <stop offset="1" stop-color="#DAA23E" stop-opacity="0" />
+          <stop offset="0.251132" stopColor="#D69211" />
+          <stop offset="1" stopColor="#DAA23E" stopOpacity="0" />
         </radialGradient>
       </defs>
     </svg>
