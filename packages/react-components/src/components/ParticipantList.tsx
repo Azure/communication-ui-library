@@ -11,14 +11,12 @@ import {
   Stack,
   Theme
 } from '@fluentui/react';
-/* @conditional-compile-remove(raise-hand) */
-import { Image } from '@fluentui/react';
 /* @conditional-compile-remove(total-participant-count) */
 import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
-import raiseHandSVG from './assets/raisedHand.svg';
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -163,7 +161,7 @@ const onRenderParticipantDefault = (
                     <Text>{callingParticipant.raisedHand?.order}</Text>
                   </Stack.Item>
                   <Stack.Item>
-                    <Image src={raiseHandSVG.toString()} />
+                    <RaisedHandIcon />
                   </Stack.Item>
                 </Stack>
               )
