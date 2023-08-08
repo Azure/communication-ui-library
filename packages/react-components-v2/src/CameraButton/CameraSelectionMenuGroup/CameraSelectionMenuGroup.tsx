@@ -11,6 +11,7 @@ import {
   MenuList,
   MenuPopover,
   MenuTrigger,
+  mergeClasses,
   resolveShorthand
 } from '@fluentui/react-components';
 import { _Announcer } from '../../Announcer/Announcer';
@@ -42,7 +43,7 @@ export const CameraSelectionMenuGroup: ForwardRefComponent<CameraSelectionMenuGr
     const icon = <Video16Regular />;
 
     return (
-      <div {...restOfProps} ref={ref}>
+      <div {...restOfProps} className={mergeClasses(restOfProps.className)} ref={ref}>
         <MenuGroupHeader {...menuGroupHeaderProps} />
         <Menu>
           <MenuTrigger disableButtonEnhancement>

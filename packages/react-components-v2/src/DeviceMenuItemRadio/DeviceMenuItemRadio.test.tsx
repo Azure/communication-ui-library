@@ -11,7 +11,9 @@ describe('DeviceMenuItemRadio', () => {
       ...defaultFluentDisabledTests,
       'component-has-root-ref',
       'component-handles-classname',
-      'component-handles-ref'
+      'component-handles-ref',
+      // Does not use mergeClassnames
+      'griffelTests'
     ]
   });
 });

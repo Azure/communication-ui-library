@@ -36,7 +36,10 @@ export function isConformant<TProps = Record<string, unknown>>(
       componentPath: testInfo.componentPath ?? defaultComponentPath,
       displayName: testInfo.displayName ?? defaultDisplayName,
       disabledTests: testInfo.disabledTests ?? defaultFluentDisabledTests,
-      extraTests: griffelTests as TestObject<TProps>
+      // Check if griffelTests are set to disabled
+      extraTests: testInfo.disabledTests?.find((el) => el === 'griffelTests')
+        ? undefined
+        : (griffelTests as TestObject<TProps>)
     };
 
     return baseIsConformant(defaultOptions, testInfo);
@@ -51,4 +54,4 @@ export function isConformant<TProps = Record<string, unknown>>(
 }
 
 /** @private */
-export const defaultFluentDisabledTests = ['component-has-static-classnames-object'];
+export const defaultFluentDisabledTests = ['component-has-static-classnames-object', 'has-top-level-file'];

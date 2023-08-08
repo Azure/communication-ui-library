@@ -2,13 +2,15 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useState } from 'react';
+import { SplitButton, mergeClasses, resolveShorthand } from '@fluentui/react-components';
+import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
+
+import { CameraButtonTooltip } from '../CameraButtonTooltip';
 import { CameraSplitButtonProps } from './CameraSplitButton.types';
 import type { ForwardRefComponent } from '@fluentui/react-utilities';
-import { SplitButton, resolveShorthand } from '@fluentui/react-components';
-import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
 import { _Announcer } from '../../Announcer/Announcer';
+import { useCameraSplitButtonStyles } from './CameraSplitButton.styles';
 import { useLocale } from '../../localization';
-import { CameraButtonTooltip } from '../CameraButtonTooltip';
 
 /** @public */
 export const CameraSplitButton: ForwardRefComponent<CameraSplitButtonProps> = React.forwardRef((props, ref) => {
@@ -72,9 +74,11 @@ export const CameraSplitButton: ForwardRefComponent<CameraSplitButtonProps> = Re
     }
   });
 
+  const styles = useCameraSplitButtonStyles();
+
   return (
     <CameraButtonTooltip {...tooltipProps}>
-      <div {...restOfProps} ref={ref}>
+      <div {...restOfProps} className={mergeClasses(styles.root, restOfProps.className)} ref={ref}>
         <SplitButton primaryActionButton={{ ...buttonProps }} menuButton={{ ...menuButtonProps }} />
         <_Announcer announcementString={announcerString} ariaLive={'polite'} />
       </div>

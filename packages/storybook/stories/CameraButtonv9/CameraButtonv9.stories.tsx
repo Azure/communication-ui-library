@@ -1,18 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  Divider,
-  FluentProvider,
-  Menu,
-  MenuButtonProps,
-  MenuList,
-  MenuPopover,
-  MenuTrigger,
-  Subtitle2,
-  makeStyles,
-  webLightTheme
-} from '@fluentui/react-components';
 import { Airplane20Filled, Video20Filled } from '@fluentui/react-icons';
 // eslint-disable-next-line no-restricted-imports
 import {
@@ -23,10 +11,24 @@ import {
   DeviceDefinition,
   DeviceMenuItemRadio
 } from '@internal/react-components-v2';
-import { Canvas, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Source, Subheading, Title } from '@storybook/addon-docs';
+import {
+  Divider,
+  FluentProvider,
+  Menu,
+  MenuButtonProps,
+  MenuList,
+  MenuPopover,
+  MenuTrigger,
+  Subtitle2,
+  makeStyles,
+  shorthands,
+  webLightTheme
+} from '@fluentui/react-components';
+
+import { COMPONENT_FOLDER_PREFIX } from '../constants';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
 const cameras = [
   { id: '0', name: 'camera0' },
@@ -38,6 +40,91 @@ const useStyles = makeStyles({
   green: { backgroundColor: 'green' },
   blue: { backgroundColor: 'blue' }
 });
+
+const BasicUsageStory = (): JSX.Element => {
+  const [cameraOn, setCameraOn] = React.useState(true);
+  const toggleCamera = React.useCallback(
+    async (ev, data: { cameraOn: boolean }) => {
+      if (!cameraOn) {
+        // mock delay to simulate camera turning on
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+      setCameraOn(!data.cameraOn);
+    },
+    [cameraOn]
+  );
+
+  return (
+    <FluentProvider theme={webLightTheme}>
+      <CameraButton cameraOn={cameraOn} onToggleCamera={toggleCamera} />
+    </FluentProvider>
+  );
+};
+
+const CustomizationBasicUsageStory = (): JSX.Element => {
+  const [cameraOn, setCameraOn] = React.useState(true);
+  const toggleCamera = React.useCallback(
+    async (ev, data: { cameraOn: boolean }) => {
+      if (!cameraOn) {
+        // mock delay to simulate camera turning on
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+      setCameraOn(!data.cameraOn);
+    },
+    [cameraOn]
+  );
+
+  return (
+    <FluentProvider theme={webLightTheme}>
+      <CameraButton
+        cameraOn={cameraOn}
+        onToggleCamera={toggleCamera}
+        button={{
+          appearance: 'primary',
+          onClick: () => alert('hi'),
+          icon: <Airplane20Filled />,
+          children: 'Toggle airplane mode'
+        }}
+      />
+    </FluentProvider>
+  );
+};
+
+const useCameraButtonStyles = makeStyles({
+  mobile: {
+    ...shorthands.padding('1rem'),
+    minWidth: 'unset',
+    maxWidth: 'unset'
+  }
+});
+
+const BasicMobileUsageStory = (): JSX.Element => {
+  const [cameraOn, setCameraOn] = React.useState(true);
+  const toggleCamera = React.useCallback(
+    async (ev, data: { cameraOn: boolean }) => {
+      if (!cameraOn) {
+        // mock delay to simulate camera turning on
+        await new Promise((resolve) => setTimeout(resolve, 500));
+      }
+      setCameraOn(!data.cameraOn);
+    },
+    [cameraOn]
+  );
+
+  return (
+    <FluentProvider theme={webLightTheme}>
+      <CameraButton
+        cameraOn={cameraOn}
+        onToggleCamera={toggleCamera}
+        hideLabel
+        button={{
+          appearance: 'subtle',
+          className: useCameraButtonStyles().mobile
+        }}
+      />
+    </FluentProvider>
+  );
+};
 
 const CameraComposedStory = (): JSX.Element => {
   const [cameraOn, setCameraOn] = React.useState(true);
@@ -56,6 +143,7 @@ const CameraComposedStory = (): JSX.Element => {
   return (
     <FluentProvider theme={webLightTheme}>
       <div style={{ display: 'flex', gap: '1rem' }}>
+        <CameraButton cameraOn={cameraOn} onToggleCamera={toggleCamera} />
         <Menu>
           <MenuTrigger>
             {(triggerProps: MenuButtonProps) => (
@@ -189,10 +277,52 @@ const CameraTestStory = (): JSX.Element => {
   );
 };
 
+const importStatement = `import { CameraButton } from '@azure/communication-react';`;
+
 const getDocs: () => JSX.Element = () => {
   return (
     <>
       <Title>CameraButton</Title>
+      <Description>
+        The CameraButton is a button that toggles the camera on and off. It can be used as a standalone button or as
+        part of a split button.
+      </Description>
+      <Canvas>
+        <CameraComposedStory />
+      </Canvas>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Basic Usage</Heading>
+      <Description>
+        The CameraButton can be used as a standalone button. It has default label, icon and tooltip that can be
+        overridden.
+      </Description>
+      <Canvas>
+        <BasicUsageStory />
+      </Canvas>
+
+      <Subheading>Applying Customizations</Subheading>
+      <Canvas>
+        <CustomizationBasicUsageStory />
+      </Canvas>
+
+      <Subheading>Mobile Optimization</Subheading>
+      <Description>
+        On mobile there is less space available and we must ensure to suport touch screen users. To optimize for this,
+        we hide the label, increase the size of the button and use a more subtle appearance.
+      </Description>
+      <Canvas>
+        <BasicMobileUsageStory />
+      </Canvas>
+
+      <Heading>Split Button Usage</Heading>
+      <Description>
+        To get the most of out the camera button we recommend using a split button. This includes components for
+        changing the selected camera. For a11y, you should also include the primary action (toggling the camera) inside
+        the split menu actions.
+      </Description>
       <Canvas>
         <CameraComposedStory />
       </Canvas>

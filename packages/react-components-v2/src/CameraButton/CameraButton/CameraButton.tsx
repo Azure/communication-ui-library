@@ -1,14 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+import { Button, mergeClasses, resolveShorthand } from '@fluentui/react-components';
 import React, { useCallback, useState } from 'react';
-import { CameraButtonProps } from './CameraButton.types';
-import type { ForwardRefComponent } from '@fluentui/react-utilities';
-import { Button, resolveShorthand } from '@fluentui/react-components';
 import { Video20Filled, VideoOff20Filled } from '@fluentui/react-icons';
-import { _Announcer } from '../../Announcer/Announcer';
-import { useLocale } from '../../localization';
+
+import { CameraButtonProps } from './CameraButton.types';
 import { CameraButtonTooltip } from '../CameraButtonTooltip';
+import type { ForwardRefComponent } from '@fluentui/react-utilities';
+import { _Announcer } from '../../Announcer/Announcer';
+import { useCameraButtonStyles } from './CameraButton.styles';
+import { useLocale } from '../../localization';
 
 /** @public */
 export const CameraButton: ForwardRefComponent<CameraButtonProps> = React.forwardRef((props, ref) => {
@@ -65,9 +67,11 @@ export const CameraButton: ForwardRefComponent<CameraButtonProps> = React.forwar
     }
   });
 
+  const styles = useCameraButtonStyles();
+
   return (
     <CameraButtonTooltip {...tooltipProps}>
-      <div {...restOfProps} ref={ref}>
+      <div {...restOfProps} className={mergeClasses(styles.root, restOfProps.className)} ref={ref}>
         <Button {...buttonProps} />
         <_Announcer announcementString={announcerString} ariaLive={'polite'} />
       </div>
