@@ -39,6 +39,9 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
+
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -81,7 +84,8 @@ export type {
   ErrorBarSelector as CallErrorBarSelector,
   ParticipantListSelector,
   MicrophoneButtonSelector,
-  ParticipantsButtonSelector
+  ParticipantsButtonSelector,
+  CreateDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
@@ -126,6 +130,8 @@ export {
   VideoGallery,
   VideoTile
 } from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export { ImageGallery } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
 
@@ -265,6 +271,8 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStylesProps } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */

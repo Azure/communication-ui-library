@@ -7,6 +7,8 @@ import { ChatThreadClientState } from '@internal/chat-stateful-client';
 import { CallAdapter, CallAdapterState, CallCompositePage } from '../../CallComposite';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { ChatAdapter, ChatAdapterState } from '../../ChatComposite';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from '../../ChatComposite';
@@ -87,6 +89,9 @@ export interface CallWithChatClientState {
   /** Default set of background images for background replacement effect */
   videoBackgroundImages?: VideoBackgroundImage[];
   /* @conditional-compile-remove(video-background-effects) */
+  /** Dependency to be injected for video background effects */
+  onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /* @conditional-compile-remove(video-background-effects) */
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
 }
@@ -131,6 +136,8 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
     /* @conditional-compile-remove(video-background-effects) */
+    onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
+    /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
 }
@@ -170,6 +177,8 @@ export function mergeCallAdapterStateIntoCallWithChatAdapterState(
     latestCallErrors: callAdapterState.latestErrors,
     /* @conditional-compile-remove(video-background-effects) */
     videoBackgroundImages: callAdapterState.videoBackgroundImages,
+    /* @conditional-compile-remove(video-background-effects) */
+    onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
     selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
   };
