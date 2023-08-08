@@ -168,6 +168,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             src={image.imageUrl}
             className={mergeStyles(imageStyle, styles?.image)}
             alt={image.altText || defaultAltText}
+            data-testid="image-gallery-main-image"
             onError={(event) => {
               setIsImageLoaded(false);
               onError && onError(event);
