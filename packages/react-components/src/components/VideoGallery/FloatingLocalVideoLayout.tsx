@@ -28,7 +28,7 @@ import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 /* @conditional-compile-remove(click-to-call) */
-import { LocalVideoTileSize } from '../VideoGallery';
+import { LocalVideoTileSize, OverflowGalleryPosition } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
@@ -235,7 +235,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
-        {props.overflowGalleryPosition === 'HorizontalTop' ? overflowGallery : <></>}
+        {
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'HorizontalTop' ? (
+            overflowGallery
+          ) : (
+            <></>
+          )
+        }
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -243,8 +249,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {props.overflowGalleryPosition !== 'HorizontalTop' ? overflowGallery : <></>}
+        {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
       </Stack>
     </Stack>
   );
+};
+
+const overflowGalleryTrampoline = (
+  gallery: JSX.Element | null,
+  galleryPosition?: OverflowGalleryPosition
+): JSX.Element | null => {
+  /* @conditional-compile-remove(gallery-layouts) */
+  return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
+  return gallery;
 };
