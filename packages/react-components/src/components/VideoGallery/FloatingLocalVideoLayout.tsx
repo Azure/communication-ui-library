@@ -224,7 +224,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
   ]);
-  console.log(props.overflowGalleryPosition);
+
   return (
     <Stack styles={rootLayoutStyle}>
       {wrappedLocalVideoComponent}

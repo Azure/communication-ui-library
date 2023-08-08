@@ -8,6 +8,8 @@ import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
+/* @conditional-compile-remove(gallery-layouts) */
+import { useState } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -42,7 +44,8 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
-  onSetUserSetOverflowGalleryPosition?: (position: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -64,6 +67,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
@@ -182,6 +188,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
   }
 
+  /* @conditional-compile-remove(gallery-layouts) */
   if (props.onSetUserSetOverflowGalleryPosition) {
     moreButtonContextualMenuItems.push({
       key: 'overflowGalleryPositionKey',
@@ -190,24 +197,16 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         items: [
           {
             key: 'topKey',
-            text: 'Top',
+            text: 'Move Gallery to Top',
+            canCheck: true,
             onClick: () => {
-              props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
-            }
-          },
-          {
-            key: 'bottomKey',
-            text: 'Bottom',
-            onClick: () => {
-              props.onSetUserSetOverflowGalleryPosition &&
-                props.onSetUserSetOverflowGalleryPosition('HorizontalBottom');
-            }
-          },
-          {
-            key: 'rightKey',
-            text: 'Right',
-            onClick: () => {
-              props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('VerticalRight');
+              if (galleryPositionTop === false) {
+                props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
+                setGalleryPositionTop(true);
+              } else {
+                props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('Responsive');
+                setGalleryPositionTop(false);
+              }
             }
           }
         ]

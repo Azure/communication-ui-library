@@ -76,9 +76,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const drawerMenuHostId = useId('drawerMenuHost');
 
-  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<
-    'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
-  >('HorizontalBottom');
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
+    'Responsive'
+  );
 
   return (
     <CallArrangement
