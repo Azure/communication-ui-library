@@ -17,7 +17,8 @@ import { getCapabilites, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
-
+/* @conditional-compile-remove(raise-hand) */
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 /**
  * Selector type for {@link MicrophoneButton} component.
  *
@@ -139,6 +140,38 @@ export type ScreenShareButtonSelector = (
   checked?: boolean;
   /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
 };
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Selector type for {@link RaiseHandButton} component.
+ *
+ * @public
+ */
+export type RaiseHandButtonSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  checked?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  disabled?: boolean;
+};
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Selector for {@link RaiseHandButton} component.
+ *
+ * @public
+ */
+export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createSelector(
+  [getLocalParticipantRaisedHand, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
+  (raisedHand, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
+    return {
+      checked: raisedHand ? true : false,
+      /* @conditional-compile-remove(PSTN-calls) */
+      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
+    };
+  }
+);
 
 /**
  * Selector for {@link ScreenShareButton} component.

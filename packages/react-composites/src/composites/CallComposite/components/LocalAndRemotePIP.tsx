@@ -24,7 +24,7 @@ export interface LocalAndRemotePIPProps {
   localParticipant: {
     displayName?: string;
     videoStream?: VideoGalleryStream;
-    /* @conditional-compile-remove(raise-hand) */ raisedHand: RaisedHand;
+    /* @conditional-compile-remove(raise-hand) */ raisedHand?: RaisedHand;
   };
   dominantRemoteParticipant?: {
     userId: string;

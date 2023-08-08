@@ -21,7 +21,7 @@ import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(raise-hand) */
-import { RaisedHandState } from '@internal/calling-stateful-client';
+import { RaisedHand } from '@azure/communication-calling';
 /**
  * @private
  */
@@ -56,7 +56,7 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
 /**
  * @private
  */
-export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHandState | undefined =>
+export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHand | undefined =>
   state.call?.raiseHand.localParticipantRaisedHand;
 
 /**
