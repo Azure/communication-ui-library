@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { _MentionPopover, _ModalClone } from '.';
 import { ImageGallery, ImageGalleryImageProps, ImageGalleryStylesProps } from './ImageGallery';
 import { render, screen } from '@testing-library/react';
 
