@@ -20,6 +20,7 @@ import { IModalStyleProps } from '@fluentui/react';
 import { IModalStyles } from '@fluentui/react';
 import { IOverlayStyleProps } from '@fluentui/react';
 import { IOverlayStyles } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -36,6 +37,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
+import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -1229,6 +1231,7 @@ export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     modalLayerHostId?: string;
     onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
     styles?: ImageGalleryStylesProps;
@@ -1451,6 +1454,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
+    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
 };
 
 // @public

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { IButton, mergeStyles, Stack } from '@fluentui/react';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   _ComplianceBanner,
@@ -109,6 +109,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  const peopleButtonRef = useRef<IButton>(null);
+  const cameraButtonRef = useRef<IButton>(null);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
@@ -137,7 +140,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
-      mobileView: props.mobileView
+      mobileView: props.mobileView,
+      peopleButtonRef
     }),
     [
       updateSidePaneRenderer,
@@ -145,7 +149,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.callControlProps?.onFetchParticipantMenuItems,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       props.onFetchAvatarPersonaData,
-      props.mobileView
+      props.mobileView,
+      peopleButtonRef
     ]
   );
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
@@ -192,7 +197,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     props.updateSidePaneRenderer,
     props.mobileView,
     props.latestErrors,
-    props.onDismissError
+    props.onDismissError,
+    cameraButtonRef
   );
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
@@ -309,6 +315,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
+                  peopleButtonRef={peopleButtonRef}
+                  cameraButtonRef={cameraButtonRef}
                 />
               )}
             </Stack>

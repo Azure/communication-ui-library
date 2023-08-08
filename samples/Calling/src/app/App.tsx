@@ -116,11 +116,10 @@ const App = (): JSX.Element => {
             setDisplayName(callDetails.displayName);
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
-            let callLocator: CallAdapterLocator | undefined =
-              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
+            let callLocator: CallAdapterLocator | undefined = getTeamsLinkFromUrl() || getGroupIdFromUrl();
 
             /* @conditional-compile-remove(rooms) */
-            callLocator = callLocator || getRoomIdFromUrl();
+            callLocator = callDetails.callLocator || getRoomIdFromUrl();
 
             /* @conditional-compile-remove(PSTN-calls) */
             callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);

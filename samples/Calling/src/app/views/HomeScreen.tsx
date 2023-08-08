@@ -2,22 +2,11 @@
 // Licensed under the MIT license.
 
 import React, { /* useEffect, */ useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Callout,
-  mergeStyles,
-  Link
-} from '@fluentui/react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { registerIcons } from '@fluentui/react';
+import { registerIcons, Callout, mergeStyles, Link } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -179,6 +168,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-adhoc-call) */
   const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
+
+  let showDisplayNameField = true;
+  /* @conditional-compile-remove(teams-identity-support) */
+  showDisplayNameField = !teamsIdentityChosen;
 
   return (
     <Stack
@@ -346,8 +339,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {<DisplayNameField defaultName={displayName} setName={setDisplayName} /> &&
-            /* @conditional-compile-remove(teams-identity-support) */ !teamsIdentityChosen}
+          {showDisplayNameField && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}
@@ -364,6 +356,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 props.startCallHandler({
                   //TODO: This needs to be updated after we change arg types of TeamsCall
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
+                  /* @conditional-compile-remove(rooms) */
                   callLocator: callLocator,
                   /* @conditional-compile-remove(rooms) */
                   option: chosenCallOption.key,

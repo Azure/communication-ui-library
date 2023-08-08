@@ -5,7 +5,16 @@ import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react'
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
+import {
+  concatStyleSets,
+  IButton,
+  IStyle,
+  ITheme,
+  mergeStyles,
+  mergeStyleSets,
+  Stack,
+  useTheme
+} from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
@@ -50,6 +59,8 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   displayVertical?: boolean;
+  peopleButtonRef?: React.RefObject<IButton>;
+  cameraButtonRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -271,6 +282,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         /* @conditional-compile-remove(video-background-effects) */
                         onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                        componentRef={props.cameraButtonRef}
                       />
                     )}
                     {screenShareButtonIsEnabled && (
@@ -353,6 +365,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
+                    componentRef={props.peopleButtonRef}
                   />
                 )}
                 {customButtons['secondary']
