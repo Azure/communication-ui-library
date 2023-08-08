@@ -297,7 +297,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             key={props.message.messageId}
             avatar={
               onRenderAvatar ? (
-                onRenderAvatar?.()
+                onRenderAvatar?.(message.senderId)
               ) : (
                 <Persona
                   hidePersonaDetails
@@ -305,7 +305,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                   text={message.senderDisplayName}
                   showOverflowTooltip={false}
                   style={chatAvatarStyle}
-                  // imageUrl={message.senderImageUrl}
                 />
               )
             }
