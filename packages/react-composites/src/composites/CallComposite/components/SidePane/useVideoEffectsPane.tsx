@@ -8,6 +8,7 @@ import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { ActiveErrorMessage } from '@internal/react-components';
+import { IButton } from '@fluentui/react';
 
 /** @private */
 export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
@@ -20,7 +21,8 @@ export const useVideoEffectsPane = (
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void,
   mobileView: boolean,
   latestErrors: ActiveErrorMessage[],
-  onDismissError: (error: ActiveErrorMessage) => void
+  onDismissError: (error: ActiveErrorMessage) => void,
+  cameraButtonRef?: React.RefObject<IButton>
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;
@@ -29,7 +31,8 @@ export const useVideoEffectsPane = (
 } => {
   const closePane = useCallback(() => {
     updateSidePaneRenderer(undefined);
-  }, [updateSidePaneRenderer]);
+    cameraButtonRef?.current?.focus();
+  }, [cameraButtonRef, updateSidePaneRenderer]);
 
   /* @conditional-compile-remove(video-background-effects) */
   const locale = useLocale();

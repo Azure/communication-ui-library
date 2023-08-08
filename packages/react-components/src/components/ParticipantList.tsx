@@ -10,13 +10,12 @@ import {
   PersonaPresence,
   Stack
 } from '@fluentui/react';
-/* @conditional-compile-remove(raise-hand) */
 /* @conditional-compile-remove(total-participant-count) */
 import { Text, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme, CallingTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
-import raisedHandSVG from './assets/raisedHand.svg';
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -143,8 +142,6 @@ const onRenderParticipantDefault = (
     }
   }
 
-  const imageProps = { src: raisedHandSVG.toString() };
-
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
@@ -166,15 +163,10 @@ const onRenderParticipantDefault = (
                   }}
                 >
                   <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                    <Text>{callingParticipant.raisedHand?.order}</Text>
                   </Stack.Item>
                   <Stack.Item>
-                    <Icon
-                      iconName="ParticipantItemRaisedHand"
-                      className={iconStyles}
-                      ariaLabel={strings.raisedHandIconLabel}
-                      style={raiseHandIconStyle}
-                    />
+                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} style={raiseHandIconStyle} />
                   </Stack.Item>
                 </Stack>
               )
@@ -189,19 +181,6 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
-            {
-              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
-                <Stack horizontal={true} tokens={{ childrenGap: '0.2rem' }}>
-                  <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
-                  </Stack.Item>
-                  <Stack.Item>
-                    <Image {...imageProps} />
-                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} />
-                  </Stack.Item>
-                </Stack>
-              )
-            }
           </Stack>
         )
       : () => null;

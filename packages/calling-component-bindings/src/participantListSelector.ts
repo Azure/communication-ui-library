@@ -63,6 +63,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
+            /* @conditional-compile-remove(raise-hand) */
+            participant.raisedHand,
             localUserCanRemoveOthers
           );
         })

@@ -11,6 +11,8 @@ import { CallingTheme, useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
@@ -441,7 +443,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-
         {
           /* @conditional-compile-remove(raise-hand) */ raisedHand && (
             <Stack
@@ -459,15 +460,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               }}
             >
               <Stack.Item>
-                <Text>{raisedHand.raisedHandOrderPosition}</Text>
+                <Text>{raisedHand.order}</Text>
               </Stack.Item>
               <Stack.Item>
-                <Icon
-                  iconName="ParticipantItemRaisedHand"
-                  className="icon-raise-hand"
-                  ariaLabel=""
-                  style={raiseHandIconStyle}
-                />
+                <RaisedHandIcon />
               </Stack.Item>
             </Stack>
           )
