@@ -13,7 +13,7 @@ import {
 /* @conditional-compile-remove(total-participant-count) */
 import { Text, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
-import { useTheme, CallingTheme } from '../theming';
+import { useTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
@@ -128,11 +128,6 @@ const onRenderParticipantDefault = (
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
-  /* @conditional-compile-remove(raise-hand) */
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-  /* @conditional-compile-remove(raise-hand) */
-  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
-
   let presence: PersonaPresence | undefined = undefined;
   if (callingParticipant) {
     if (callingParticipant.state === 'Connected') {
@@ -166,7 +161,7 @@ const onRenderParticipantDefault = (
                     <Text>{callingParticipant.raisedHand?.order}</Text>
                   </Stack.Item>
                   <Stack.Item>
-                    <Icon iconName="ParticipantItemRaisedHand" className={iconStyles} style={raiseHandIconStyle} />
+                    <RaisedHandIcon />
                   </Stack.Item>
                 </Stack>
               )
