@@ -327,7 +327,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
-  const raiseHandIconStyle = { color: callingPalette.raiseHandGold };
 
   const tileInfoStyle = useMemo(
     () =>

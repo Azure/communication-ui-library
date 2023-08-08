@@ -418,6 +418,29 @@ export interface CallAdapterCallOperations {
    * @public
    */
   startScreenShare(): Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Raise hand for current user
+   *
+   * @public
+   */
+  raiseHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * lower hand for current user
+   *
+   * @public
+   */
+  lowerHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Lower hand for participants from the call.
+   *
+   * @param userId - List of Ids of the participant
+   *
+   * @public
+   */
+  lowerHands(userIds: string[]): Promise<void>;
   /**
    * Stop sharing the screen
    *

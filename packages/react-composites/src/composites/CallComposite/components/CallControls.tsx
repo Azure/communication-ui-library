@@ -37,7 +37,8 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
 import { CommonCallAdapter } from '../adapter';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHand } from './buttons/RaiseHand';
 /**
  * @private
  */
@@ -191,6 +192,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonIsEnabled = true;
+
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>
       {
@@ -220,6 +224,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
+          {
+            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && (
+              <RaiseHand displayType={options?.displayType} />
+            )
+          }
           {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
