@@ -585,4 +585,12 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when target participant id is malformed
    */
   participantIdIsMalformedMoreDetails?: string;
+  /**
+   * Controls label to move the overflow gallery around
+   */
+  moreButtonGalleryControlLabel?: string;
+  /**
+   * Label for the toggle to move the overflow gallery to the top
+   */
+  moreButtonGalleryPositionToggleLabel?: string;
 }

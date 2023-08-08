@@ -192,13 +192,18 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   if (props.onSetUserSetOverflowGalleryPosition) {
     moreButtonContextualMenuItems.push({
       key: 'overflowGalleryPositionKey',
-      text: 'Overflow Gallery Position',
+      iconProps: {
+        iconName: 'GalleryOptions',
+        styles: { root: { lineHeight: 0 } }
+      },
+      text: localeStrings.strings.call.moreButtonGalleryControlLabel,
       subMenuProps: {
         items: [
           {
             key: 'topKey',
-            text: 'Move Gallery to Top',
+            text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
             canCheck: true,
+            isChecked: galleryPositionTop,
             onClick: () => {
               if (galleryPositionTop === false) {
                 props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
