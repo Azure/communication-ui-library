@@ -176,7 +176,12 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
         <Stack
           className={mergeStyles(
-            localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent, overflowGalleryPosition)
+            localVideoTileContainerStyle(
+              theme,
+              localVideoSizeRem,
+              !!screenShareComponent,
+              /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
+            )
           )}
         >
           {localVideoComponent}
@@ -249,7 +254,10 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
+        {overflowGalleryTrampoline(
+          overflowGallery,
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
+        )}
       </Stack>
     </Stack>
   );
@@ -257,7 +265,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
 const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
-  galleryPosition?: OverflowGalleryPosition
+  galleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
 ): JSX.Element | null => {
   /* @conditional-compile-remove(gallery-layouts) */
   return galleryPosition !== 'HorizontalTop' ? gallery : <></>;

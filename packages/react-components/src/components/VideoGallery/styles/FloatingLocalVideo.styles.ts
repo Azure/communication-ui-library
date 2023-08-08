@@ -14,7 +14,6 @@ import {
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { VideoTileStylesProps } from '../../VideoTile';
-import { OverflowGalleryPosition } from '../../VideoGallery';
 
 /**
  * @private
@@ -63,7 +62,7 @@ export const localVideoTileContainerStyle = (
   theme: Theme,
   localVideoTileSizeRem: { width: number; height: number },
   screenSharePresent?: boolean,
-  overflowGalleryPosition?: OverflowGalleryPosition
+  overflowGalleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
 ): IStyle => {
   return {
     width: screenSharePresent ? `${localVideoTileSizeRem.width}rem` : '',

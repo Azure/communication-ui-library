@@ -172,13 +172,19 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     layoutBasedOnTilePosition,
     props.isMobile,
     props.onRenderAvatar,
+    /* @conditional-compile-remove(rooms) */
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
+    /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenuOptions,
+    /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
+    /* @conditional-compile-remove(rooms) */
     userRole,
+    /* @conditional-compile-remove(rooms) */
     isRoomsCall,
+    /* @conditional-compile-remove(vertical-gallery) */
     containerAspectRatio
   ]);
 
