@@ -28,7 +28,7 @@ import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 /* @conditional-compile-remove(click-to-call) */
-import { LocalVideoTileSize, OverflowGalleryPosition } from '../VideoGallery';
+import { LocalVideoTileSize } from '../VideoGallery';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
