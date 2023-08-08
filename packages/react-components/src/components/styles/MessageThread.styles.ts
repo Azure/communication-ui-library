@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
+import { makeStyles, shorthands } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
@@ -48,15 +49,18 @@ export const noMessageStatusStyle = mergeStyles({
 /**
  * @private
  */
-export const chatStyle: ComponentSlotStyle = {
-  paddingBottom: '0.5rem',
-  paddingTop: '0.8rem',
-  border: 'none',
-  overflow: 'auto',
-  // `height: 100%` ensures that the Chat component covers 100% of it's parents height
-  // to prevent intermittent scrollbars when gifs are present in the chat.
-  height: '100%'
-};
+export const useChatStyles = makeStyles({
+  root: {
+    paddingLeft: '0',
+    paddingBottom: '0.5rem',
+    paddingTop: '0.8rem',
+    ...shorthands.border('none'),
+    ...shorthands.overflow('auto'),
+    // `height: 100%` ensures that the Chat component covers 100% of it's parents height
+    // to prevent intermittent scrollbars when GIFs are present in the chat.
+    height: '100%'
+  }
+});
 
 /**
  * @private
@@ -85,7 +89,7 @@ export const chatMessageDateStyle: CSSProperties = {
 /**
  * @private
  */
-export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
+const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
   const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
   return {
     marginRight: '0rem',
@@ -98,6 +102,8 @@ export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean
     }
   };
 };
+// export const defaultChatItemMessageContainerNoOverlap: String = makeStyles(defaultChatItemMessageContainer(false));
+// export const defaultChatItemMessageContainerOverlap: String = makeStyles(defaultChatItemMessageContainer(true));
 
 /**
  * @private
@@ -139,7 +145,7 @@ export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle =>
     marginBlock: '0.125rem'
   },
   '& blockquote': {
-    backgroundColor: theme.palette.white,
+    backgroundColor: 'white',
     clear: 'left',
     minHeight: '2.25rem',
     width: 'fit-content',

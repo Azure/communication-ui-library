@@ -1387,6 +1387,7 @@ export type MessageProps = {
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
     onSendMessage?: (messageId: string) => Promise<void>;
+    messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
 };
 
 // @public

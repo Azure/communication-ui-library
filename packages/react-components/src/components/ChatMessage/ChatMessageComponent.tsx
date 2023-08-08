@@ -12,6 +12,7 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
+import { MessageStatus } from '@internal/acs-ui-common';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -40,6 +41,7 @@ type ChatMessageComponentProps = {
   onSendMessage?: (content: string) => Promise<void>;
   strings: MessageThreadStrings;
   messageStatus?: string;
+  messageStatusRenderer?: (messageStatus: MessageStatus) => JSX.Element | null;
   /**
    * Optional text to display when the message status is 'failed'.
    */

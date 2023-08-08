@@ -33,12 +33,7 @@ export const chatMessageActionMenuProps = (menuProps: {
     return undefined;
   }
 
-  // const menuClass = mergeStyles(chatActionsCSS, {
-  //   'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
-  // });
-
   const actionMenuProps: ChatMessageActionMenuProps = {
-    showActionMenu: menuProps.forceShow === true ? true : undefined,
     children: (
       <div
         key="menuButton"

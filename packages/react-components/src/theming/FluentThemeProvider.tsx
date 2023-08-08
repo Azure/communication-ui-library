@@ -51,41 +51,6 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   // merge in rtl from FluentThemeProviderProps
   fluentUITheme = mergeThemes(fluentUITheme, { rtl });
 
-  // const _fluentNorthstarTheme = {
-  //   componentVariables: {
-  //     Chat: {
-  //       backgroundColor: fluentUITheme.palette.white
-  //     },
-  //     ChatMessage: {
-  //       root: {
-  //         lineHeight: '1.4286'
-  //       },
-  //       authorColor: fluentUITheme.palette.neutralPrimary,
-  //       contentColor: fluentUITheme.palette.neutralPrimary,
-  //       backgroundColor: fluentUITheme.palette.neutralLighter,
-  //       backgroundColorMine: fluentUITheme.palette.themeLight
-  //     }
-  //   },
-  //   componentStyles: {
-  //     ChatMessage: {
-  //       timestamp: {
-  //         WebkitTextFillColor: fluentUITheme.palette.neutralSecondary
-  //       }
-  //     }
-  //   },
-  //   fontFaces: [], // suppressing font faces from teamsTheme as recommended by FluentUI N* to avoid font styling to other elements
-  //   siteVariables: {
-  //     // suppressing body styles from teamsTheme to avoid inherited styling to other elements
-  //     bodyPadding: undefined,
-  //     bodyFontSize: undefined,
-  //     bodyFontFamily: undefined,
-  //     bodyBackground: undefined,
-  //     bodyColor: undefined,
-  //     bodyLineHeight: undefined
-  //   }
-  //   // add more northstar components to align with Fluent UI theme
-  // };
-
   return (
     <ThemeContext.Provider value={fluentUITheme}>
       <FluentProvider theme={createV9Theme(fluentUITheme)}>

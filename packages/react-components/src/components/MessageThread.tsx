@@ -3,20 +3,17 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chat } from '@fluentui-contrib/react-chat';
-import { Flex } from '@fluentui/react-migration-v0-v9';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
-  messageThreadContainerStyle,
-  chatStyle,
   buttonWithIconStyles,
   newMessageButtonStyle,
-  messageStatusContainerStyle,
   noMessageStatusStyle,
-  // defaultChatItemMessageContainer,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
-  FailedMyChatMessageContainer
+  FailedMyChatMessageContainer,
+  useChatStyles,
+  messageThreadContainerStyle
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
@@ -56,6 +53,7 @@ import LiveAnnouncer from './Announcer/LiveAnnouncer';
 import { MentionOptions } from './MentionPopover';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+import { mergeClasses } from '@fluentui/react-components';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -332,8 +330,6 @@ const memoizeAllMessages = memoizeFnAll(
     message: Message,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    onRenderAvatar: OnRenderAvatarCallback | undefined,
-    shouldOverlapAvatarAndMessage: boolean,
     styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -373,79 +369,22 @@ const memoizeAllMessages = memoizeFnAll(
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
     ): JSX.Element => {
+      const messageStatusRenderer =
+        showMessageStatus && statusToRender
+          ? onRenderMessageStatus
+            ? (status: MessageStatus) => onRenderMessageStatus({ status })
+            : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
+          : () => <div className={mergeStyles(noMessageStatusStyle)} />;
       const chatMessageComponent =
         onRenderMessage === undefined
-          ? defaultChatMessageRenderer(messageProps)
+          ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
           : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
-      // const chatItemMessageStyle =
-      //   (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
-      //   defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
-
-      return (
-        <Flex key={_messageKey} hAlign={message.mine ? 'end' : 'start'} vAlign="end">
-          {chatMessageComponent}
-          <div
-            className={mergeStyles(
-              messageStatusContainerStyle(message.mine ?? false),
-              styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-            )}
-          >
-            {showMessageStatus && statusToRender ? (
-              onRenderMessageStatus ? (
-                onRenderMessageStatus({ status: statusToRender })
-              ) : (
-                defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
-              )
-            ) : (
-              <div className={mergeStyles(noMessageStatusStyle)} />
-            )}
-          </div>
-        </Flex>
-      );
-      // return {
-      //   gutter: {
-      //     styles: chatGutterStyles,
-      //     content: message.mine ? (
-      //       ''
-      //     ) : onRenderAvatar ? (
-      //       onRenderAvatar(message.senderId ?? '', personaOptions)
-      //     ) : (
-      //       <Persona {...personaOptions} />
-      //     )
-      //   },
-      //   contentPosition: message.mine ? 'end' : 'start',
-      //   message: {
-      //     styles: chatItemMessageStyle,
-      //     content: (
-      //       <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
-      //         {chatMessageComponent}
-      //         <div
-      //           className={mergeStyles(
-      //             messageStatusContainerStyle(message.mine ?? false),
-      //             styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-      //           )}
-      //         >
-      //           {showMessageStatus && statusToRender ? (
-      //             onRenderMessageStatus ? (
-      //               onRenderMessageStatus({ status: statusToRender })
-      //             ) : (
-      //               defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
-      //             )
-      //           ) : (
-      //             <div className={mergeStyles(noMessageStatusStyle)} />
-      //           )}
-      //         </div>
-      //       </Flex>
-      //     )
-      //   },
-      //   attached: message.attached,
-      //   key: _messageKey
-      // };
+      return chatMessageComponent;
     };
 
     /* @conditional-compile-remove(data-loss-prevention) */
-    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stablize)
+    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stabilize)
     if (message.messageType === 'blocked') {
       const myChatMessageStyle =
         message.status === 'failed'
@@ -763,6 +702,10 @@ export type MessageProps = {
    *
    */
   onSendMessage?: (messageId: string) => Promise<void>;
+  /**
+   * Render the message status indicator.
+   */
+  messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
 };
 
 /**
@@ -772,7 +715,7 @@ export type MessageProps = {
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
  * Users can also customize `MessageThread` by passing in their own Avatar, `MessageStatusIndicator` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
- * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+ * `MessageThread` internally uses the `Chat` component from `@fluentui-contrib/chat`. You can checkout the details about these components [here](https://microsoft.github.io/fluentui-contrib/react-chat/).
  *
  * @public
  */
@@ -1215,8 +1158,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message,
             showMessageDate,
             showMessageStatus,
-            onRenderAvatar,
-            isNarrow,
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
@@ -1266,16 +1207,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       props.disableEditing
     ]
   );
-
+  const classes = useChatStyles();
   const chatBody = useMemo(() => {
     return (
       <LiveAnnouncer>
-        <Chat className={mergeStyles(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}>
-          {messagesToDisplay}
-        </Chat>
+        <Chat className={mergeClasses(classes.root)}>{messagesToDisplay}</Chat>
       </LiveAnnouncer>
     );
-  }, [theme, styles?.chatContainer, messagesToDisplay]);
+  }, [theme, classes, messagesToDisplay]);
 
   return (
     <div ref={chatThreadRef}>
@@ -1307,19 +1246,19 @@ const onRenderFileDownloadsTrampoline = (
   return undefined;
 };
 
-const linkStyles = (theme: Theme): ComponentSlotStyle => {
-  return {
-    '& a:link': {
-      color: theme.palette.themePrimary
-    },
-    '& a:visited': {
-      color: theme.palette.themeDarker
-    },
-    '& a:hover': {
-      color: theme.palette.themeDarker
-    },
-    '& a:selected': {
-      color: theme.palette.themeDarker
-    }
-  };
-};
+// const linkStyles = (theme: Theme): ComponentSlotStyle => {
+//   return {
+//     '& a:link': {
+//       color: theme.palette.themePrimary
+//     },
+//     '& a:visited': {
+//       color: theme.palette.themeDarker
+//     },
+//     '& a:hover': {
+//       color: theme.palette.themeDarker
+//     },
+//     '& a:selected': {
+//       color: theme.palette.themeDarker
+//     }
+//   };
+// };

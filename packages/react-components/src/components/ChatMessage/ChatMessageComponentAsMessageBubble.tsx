@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { /*IStyle, mergeStyles, */ Persona, PersonaSize, Text } from '@fluentui/react';
+import { Persona, PersonaSize, Text } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -30,6 +30,7 @@ import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
+import { MessageStatus } from '@internal/acs-ui-common';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -46,6 +47,8 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
+  messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -134,6 +137,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onEditClick,
     remoteParticipantsCount = 0,
     onRenderAvatar,
+    messageStatusRenderer,
     showMessageStatus,
     messageStatus,
     fileDownloadHandler
@@ -248,12 +252,18 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatAvatarStyle =
     message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
+  let renderedStatusIcon =
+    showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
+  renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
+
   const chatMessage = (
     <>
-      <div ref={messageRef}>
+      <div key={message.messageId} ref={messageRef}>
         {message.mine ? (
           <ChatMyMessage
+            key={props.message.messageId}
             attached={attached}
+            // className={defaultChatItemMessageContainerOverlap}
             data-ui-id="chat-composite-message"
             // styles={messageContainerStyle}
             body={getContent()}
@@ -280,9 +290,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 props.onActionButtonClick(message, setMessageReadBy);
               }
             }}
+            statusIcon={renderedStatusIcon}
           />
         ) : (
           <FluentChatMessage
+            key={props.message.messageId}
             avatar={
               onRenderAvatar ? (
                 onRenderAvatar?.()
@@ -293,6 +305,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                   text={message.senderDisplayName}
                   showOverflowTooltip={false}
                   style={chatAvatarStyle}
+                  // imageUrl={message.senderImageUrl}
                 />
               )
             }
@@ -300,6 +313,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
             data-ui-id="chat-composite-message"
             body={getContent()}
+            // className={defaultChatItemMessageContainerNoOverlap}
             // className={mergeStyles(messageContainerStyle as IStyle)}
             // styles={messageContainerStyle}
             onTouchStart={() => setWasInteractionByTouch(true)}
