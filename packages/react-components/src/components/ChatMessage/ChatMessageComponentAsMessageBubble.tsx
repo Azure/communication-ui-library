@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { IPersonaProps, Persona, PersonaSize } from '@fluentui/react';
 import { Chat, Text } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -83,6 +85,15 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
+  onInlineImageClicked?: (
+    attachment: FileMetadata,
+    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
+  ) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
    * Optional map of attachment ids to blob urls.
    */
   attachmentsMap?: Record<string, string>;
@@ -135,7 +146,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    fileDownloadHandler
+    fileDownloadHandler,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onInlineImageClicked
   } = props;
 
   const defaultTimeStamp = message.createdOn
@@ -217,6 +230,33 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  const handleOnInlineImageClicked = useCallback(
+    async (attachmentId: string): Promise<void> => {
+      if (onInlineImageClicked === undefined) {
+        return;
+      }
+      (message as ChatMessage).attachedFilesMetadata?.forEach(async (attachment) => {
+        if (attachment.id === attachmentId) {
+          const onRenderTitleIcon = (personaProps?: IPersonaProps): JSX.Element => {
+            return (
+              <Persona
+                text={message.senderDisplayName}
+                imageAlt={message.senderDisplayName}
+                size={PersonaSize.size32}
+                hidePersonaDetails={true}
+                showOverflowTooltip={false}
+                {...personaProps}
+              />
+            );
+          };
+          await onInlineImageClicked({ ...attachment, name: message.senderDisplayName || '' }, onRenderTitleIcon);
+        }
+      });
+    },
+    [message, onInlineImageClicked]
+  );
+
   const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
@@ -237,11 +277,21 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
+          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+          onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [defaultOnRenderFileDownloads, message, props, strings, userId]);
+  }, [
+    defaultOnRenderFileDownloads,
+    message,
+    props,
+    strings,
+    userId,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    handleOnInlineImageClicked
+  ]);
 
   const chatMessage = (
     <>
@@ -296,7 +346,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       )}
     </>
   );
-
   return chatMessage;
 };
 

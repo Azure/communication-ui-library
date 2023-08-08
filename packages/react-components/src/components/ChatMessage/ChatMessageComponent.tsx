@@ -12,6 +12,8 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { IPersonaProps } from '@fluentui/react';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -92,6 +94,15 @@ type ChatMessageComponentProps = {
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
+  onInlineImageClicked?: (
+    attachment: FileMetadata,
+    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
+  ) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
    * Optional map of attachment ids to blob urls.
    */
   attachmentsMap?: Record<string, string>;
@@ -155,6 +166,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         strings={props.strings}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        onInlineImageClicked={props.onInlineImageClicked}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
