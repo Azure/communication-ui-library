@@ -3,6 +3,8 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { LayerHost } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
@@ -181,6 +183,8 @@ type CallWithChatScreenProps = {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  modalLayerHostId?: string;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -383,12 +387,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           fileSharing: props.fileSharing
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        modalLayerHostId={props.modalLayerHostId}
       />
     ),
     [
       chatProps,
       /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
       props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ props.modalLayerHostId,
       theme
     ]
   );
@@ -468,8 +475,15 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
   const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  const modalLayerHostId = useId('modalLayerHost');
   return (
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
+      {
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        // This layer host is for ImageGallery Modal and any other full screen modals that might be added in the future.
+        <LayerHost id={modalLayerHostId} />
+      }
       <CallWithChatScreen
         {...props}
         /* @conditional-compile-remove(call-readiness) */
@@ -481,6 +495,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         fluentTheme={fluentTheme}
         /* @conditional-compile-remove(file-sharing) */
         fileSharing={options?.fileSharing}
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        modalLayerHostId={modalLayerHostId}
       />
     </BaseProvider>
   );

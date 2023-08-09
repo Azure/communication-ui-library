@@ -52,14 +52,21 @@ export const scrollableContentStyle: IStyle = {
 /**
  * @private
  */
-export const headerStyle: IStyle = {
-  fontSize: 'inherit',
-  margin: '0',
-  width: '100%',
-  height: '3.5rem',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  padding: '0 0.75rem'
+export const headerStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+  return {
+    // The overlay background color should always be black in both light and dark theme.
+    // In dark theme, theme.palette.white is actually black.
+    background: isDarkThemed ? theme.palette.white : theme.palette.black,
+    opacity: '0.85',
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    fontSize: 'inherit',
+    margin: '0',
+    width: '100%',
+    height: '3.5rem',
+    padding: '0 0.75rem'
+  };
 };
 
 /**

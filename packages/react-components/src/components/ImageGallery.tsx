@@ -154,7 +154,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   }
   const image = images[startIndex];
   return (
-    <Layer hostId={modalLayerHostId}>
+    <>
       <Modal
         titleAriaId={image.title}
         isOpen={images.length > 0}
@@ -175,7 +175,13 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
         </div>
       </Modal>
-      <Stack className={mergeStyles(headerStyle, styles?.header)}>
+      <Layer
+        id={modalLayerHostId}
+        insertFirst={true}
+        styles={{
+          content: mergeStyles(headerStyle(theme, isDarkTheme), styles?.header)
+        }}
+      >
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
           {image.titleIcon}
           <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme), styles?.title)} aria-label={image.title}>
@@ -211,7 +217,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             aria-live={'polite'}
           />
         </Stack>
-      </Stack>
-    </Layer>
+      </Layer>
+    </>
   );
 };
