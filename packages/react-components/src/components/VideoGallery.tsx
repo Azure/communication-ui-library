@@ -426,6 +426,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
+          raisedHand={localParticipant.raisedHand}
         />
       </Stack>
     );
