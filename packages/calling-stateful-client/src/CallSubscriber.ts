@@ -317,6 +317,9 @@ export class CallSubscriber {
         undefined,
         convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
       );
+      if (event.removed[0].mediaStreamType === 'ScreenSharing') {
+        return;
+      }
       this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
     }
