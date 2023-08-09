@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Fixes issue where when local participant stops screen share their local stream would disappear but still be showing to others in the call",
-  "comment": "fix found?",
+  "workstream": "Bug",
+  "comment": "Fixes issue where when local participant stops screen share their local stream would disappear but still be showing to others in the call",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
