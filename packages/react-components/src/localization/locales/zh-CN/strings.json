@@ -7,7 +7,9 @@
     "mutedIconLabel": "已静音",
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "待机音乐"
+    "participantStateHold": "待机音乐",
+    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
+    "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
@@ -108,6 +110,13 @@
     "tooltipDisabledContent": "已禁用演示。",
     "tooltipOnContent": "演示屏幕",
     "tooltipOffContent": "演示您的屏幕"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise Hand",
+    "onLabel": "Lower Hand",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "昨天",
