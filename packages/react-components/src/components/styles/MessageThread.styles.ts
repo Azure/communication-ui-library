@@ -6,7 +6,7 @@ import { makeStyles, shorthands } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
-import { MessageStatus } from '../../../../acs-ui-common/dist/acs-ui-common';
+import { MessageStatus } from '@internal/acs-ui-common';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
