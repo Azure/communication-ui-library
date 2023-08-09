@@ -16,7 +16,7 @@ import {
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, PrimaryButton, Stack, Theme } from '@fluentui/react';
+import { Icon, IPersonaProps, IStyle, mergeStyles, PrimaryButton, Stack, Theme } from '@fluentui/react';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -636,6 +636,15 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
+  onInlineImageClicked?: (
+    attachment: FileMetadata,
+    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
+  ) => Promise<void>;
 };
 
 /**
@@ -750,7 +759,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
-    mentionOptions
+    mentionOptions,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onInlineImageClicked
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -1063,6 +1074,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            onInlineImageClicked={onInlineImageClicked}
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
@@ -1085,6 +1098,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onDisplayDateTimeString,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      onInlineImageClicked,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,
       /* @conditional-compile-remove(mention) */

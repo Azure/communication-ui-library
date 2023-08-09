@@ -17,9 +17,10 @@ import {
   mergeStyles
 } from '@fluentui/react';
 
-import React from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { BaseCustomStyles } from '../types';
 import {
+  brokenImageStyle,
   cancelIcon,
   closeButtonStyles,
   controlBarContainerStyle,
@@ -29,7 +30,7 @@ import {
   focusTrapZoneStyle,
   headerStyle,
   imageContainer,
-  imageStyle,
+  normalImageStyle,
   overlayStyles,
   scrollableContentStyle,
   smallDownloadButtonContainerStyle,
@@ -107,6 +108,10 @@ export interface ImageGalleryProps {
    * Callback called when the download button is clicked.
    */
   onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+  /**
+   * Callback called when there's an error loading the image.
+   */
+  onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
   /** Optional id property provided on a LayerHost that this Layer should render within.
    *  If an id is not provided, we will render the Layer content in a fixed position element rendered at the end of the document.
    */
@@ -131,13 +136,17 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, styles, startIndex = 0 } = props;
+  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
   const downloadButtonTitleString = 'Download';
   const closeString = 'Close';
   const defaultAltText = 'image';
+
+  const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
+
+  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme, isDarkTheme);
 
   if (images.length <= startIndex) {
     console.log('Unable to display Image Gallery due to startIndex is out of range.');
@@ -150,7 +159,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         titleAriaId={image.title}
         isOpen={images.length > 0}
         onDismiss={onDismiss}
-        overlay={{ styles: { ...overlayStyles(theme), ...styles?.overlay } }}
+        overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
         layerProps={{ id: modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
@@ -159,6 +168,10 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             src={image.imageUrl}
             className={mergeStyles(imageStyle, styles?.image)}
             alt={image.altText || defaultAltText}
+            onError={(event) => {
+              setIsImageLoaded(false);
+              onError && onError(event);
+            }}
           />
         </div>
       </Modal>

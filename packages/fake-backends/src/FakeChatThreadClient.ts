@@ -74,7 +74,10 @@ export class FakeChatThreadClient implements IChatThreadClient {
       getThreadEventTargets(this.checkedGetThread(), this.userId),
       {
         ...this.baseChatThreadEvent(),
-        properties: { topic: topic },
+        properties: {
+          topic: topic,
+          metadata: {}
+        },
         updatedOn: new Date(Date.now()),
         updatedBy: chatToSignalingParticipant(this.checkedGetMe())
       }
