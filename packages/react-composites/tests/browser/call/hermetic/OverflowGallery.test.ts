@@ -7,6 +7,7 @@ import {
   dataUiId,
   dragToRight,
   existsOnPage,
+  isTestProfileDesktop,
   isTestProfileLandscapeMobile,
   pageClick,
   stableScreenshot,
@@ -262,5 +263,32 @@ test.describe('Overflow gallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-joining-1-hold-participants.png');
+  });
+
+  test.only('Overflow gallery can be moved to the top along with the local tile', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    addVideoStream(reina, true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+
+    const participants = [reina, paul];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls.png');
+    await page.locator('button:has-text("Gallery options")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls-open.png');
+    await page.locator('button:has-text("Move gallery to top")').click();
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-moved-to-top.png');
   });
 });
