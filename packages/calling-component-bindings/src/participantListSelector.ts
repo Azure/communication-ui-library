@@ -15,7 +15,9 @@ import { getRole } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(rooms) */
+import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(raise-hand) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
@@ -81,8 +83,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(raise-hand) */
+  /* @conditional-compile-remove(raise-hand) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
+  /* @conditional-compile-remove(rooms) */
+  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
