@@ -481,7 +481,6 @@ export function disposeView(
   stream: LocalVideoStreamState | RemoteVideoStreamState
 ): void {
   const streamType = stream.mediaStreamType;
-  console.log('disposing view', streamType);
   if (callId) {
     disposeViewVideo(context, internalContext, callId, stream, participantId);
   } else if (!('id' in stream) && !callId) {
