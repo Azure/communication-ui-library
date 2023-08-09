@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
-import { makeStyles, shorthands, Slot } from '@fluentui/react-components';
+import { makeStyles, shorthands } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
@@ -159,7 +159,9 @@ export const chatBlockedMyMessageClasses = makeStyles({
 /**
  * @private
  */
-export const useChatMyMessageClasses: () => Record<Slot, string> = (messageState?: MessageStatus) => {
+export const useChatMyMessageClasses: (messageState?: MessageStatus) => Record<'root', string> = (
+  messageState?: MessageStatus
+) => {
   const failedClasses = useChatFailedMyMessageClasses();
   const normalClasses = chatNormalMyMessageClasses();
   return messageState === 'failed' ? failedClasses : normalClasses;
@@ -175,7 +177,9 @@ export const chatBlockedMessageClasses = makeStyles({
 /**
  * @private
  */
-export const useChatMessageClasses: () => Record<Slot, string> = (messageState?: MessageStatus) => {
+export const useChatMessageClasses: (messageState?: MessageStatus) => Record<'root', string> = (
+  messageState?: MessageStatus
+) => {
   const failedClasses = useChatFailedMessageClasses();
   const normalClasses = chatNormalMessageClasses();
   return messageState === 'failed' ? failedClasses : normalClasses;
