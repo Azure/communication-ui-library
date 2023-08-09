@@ -16,7 +16,9 @@ import {
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
-import { Icon, IPersonaProps, IStyle, mergeStyles, PrimaryButton, Stack, Theme } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, PrimaryButton, Stack, Theme } from '@fluentui/react';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { IPersonaProps } from '@fluentui/react';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
