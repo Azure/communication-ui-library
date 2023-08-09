@@ -3,11 +3,17 @@ import {
   MessageThread,
   Message,
   FileMetadata,
-  AttachmentDownloadResult
+  AttachmentDownloadResult,
+  ImageGalleryImageProps,
+  ImageGallery
 } from '@azure/communication-react';
-import React from 'react';
+import { LayerHost } from '@fluentui/react';
+import { useId } from '@fluentui/react-hooks';
+import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
@@ -20,6 +26,17 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : ''
       }
     ];
+  };
+
+  const setImage = (attachment: FileMetadata): Promise<void> => {
+    const title = 'ASDFASDF';
+    const galleryImage: ImageGalleryImageProps = {
+      title: title,
+      saveAsName: attachment.id,
+      imageUrl: attachment.url
+    };
+    setGalleryImages([galleryImage]);
+    return Promise.resolve();
   };
 
   const messages: Message[] = [
@@ -65,10 +82,27 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       contentType: 'text'
     }
   ];
-
+  const chatCompositeModalLayerHostId = useId('modalLayerHost');
   return (
     <FluentThemeProvider>
-      <MessageThread userId={'1'} messages={messages} onFetchAttachments={onFetchAttachment} />
+      <LayerHost id={chatCompositeModalLayerHostId}>
+        <MessageThread
+          userId={'1'}
+          messages={messages}
+          onFetchAttachments={onFetchAttachment}
+          onInlineImageClicked={setImage}
+        />
+      </LayerHost>
+      {galleryImages && galleryImages.length > 0 && (
+        <ImageGallery
+          images={galleryImages}
+          modalLayerHostId={chatCompositeModalLayerHostId}
+          onDismiss={() => setGalleryImages(undefined)}
+          onImageDownloadButtonClicked={() => {
+            alert('Download button clicked');
+          }}
+        />
+      )}
     </FluentThemeProvider>
   );
 };

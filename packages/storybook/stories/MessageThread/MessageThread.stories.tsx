@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   FileMetadata,
-  AttachmentDownloadResult
+  AttachmentDownloadResult,
+  ImageGalleryImageProps,
+  ImageGallery
 } from '@azure/communication-react';
 import {
   Persona,
@@ -18,7 +20,8 @@ import {
   PrimaryButton,
   Stack,
   Dropdown,
-  IDropdownOption
+  IDropdownOption,
+  LayerHost
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
@@ -57,6 +60,7 @@ import { MessageWithFile } from './snippets/MessageWithFile.snippet';
 import { MessageThreadWithSystemMessagesExample } from './snippets/SystemMessages.snippet';
 import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
+import { useId } from '@fluentui/react-hooks';
 
 const MessageThreadWithBlockedMessagesExampleText =
   require('!!raw-loader!./snippets/BlockedMessages.snippet.tsx').default;
@@ -346,6 +350,18 @@ const MessageThreadStory = (args): JSX.Element => {
       ];
     });
   };
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+
+  const setImage = (attachment: FileMetadata): Promise<void> => {
+    const title = 'Message Thread Image';
+    const galleryImage: ImageGalleryImageProps = {
+      title: title,
+      saveAsName: attachment.id,
+      imageUrl: attachment.url
+    };
+    setGalleryImages([galleryImage]);
+    return Promise.resolve();
+  };
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
@@ -371,32 +387,46 @@ const MessageThreadStory = (args): JSX.Element => {
         console.log('Invalid message type');
     }
   };
+  const chatCompositeModalLayerHostId = useId('modalLayerHost');
 
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
-      <MessageThreadComponent
-        userId={UserOne.senderId}
-        messages={chatMessages}
-        showMessageDate={args.showMessageDate}
-        showMessageStatus={args.showMessageStatus}
-        disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
-        onLoadPreviousChatMessages={onLoadPreviousMessages}
-        onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachment}
-        onUpdateMessage={onUpdateMessageCallback}
-        onRenderAvatar={(userId?: string) => {
-          return (
-            <Persona
-              size={PersonaSize.size32}
-              hidePersonaDetails
-              presence={PersonaPresence.online}
-              text={userId}
-              imageUrl={GetAvatarUrlByUserId(userId ?? '')}
-              showOverflowTooltip={false}
-            />
-          );
-        }}
-      />
+      <LayerHost id={chatCompositeModalLayerHostId}>
+        <MessageThreadComponent
+          userId={UserOne.senderId}
+          messages={chatMessages}
+          showMessageDate={args.showMessageDate}
+          showMessageStatus={args.showMessageStatus}
+          disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
+          onLoadPreviousChatMessages={onLoadPreviousMessages}
+          onRenderMessage={onRenderMessage}
+          onFetchAttachments={onFetchAttachment}
+          onInlineImageClicked={setImage}
+          onUpdateMessage={onUpdateMessageCallback}
+          onRenderAvatar={(userId?: string) => {
+            return (
+              <Persona
+                size={PersonaSize.size32}
+                hidePersonaDetails
+                presence={PersonaPresence.online}
+                text={userId}
+                imageUrl={GetAvatarUrlByUserId(userId ?? '')}
+                showOverflowTooltip={false}
+              />
+            );
+          }}
+        />
+      </LayerHost>
+      {galleryImages && galleryImages.length > 0 && (
+        <ImageGallery
+          images={galleryImages}
+          modalLayerHostId={chatCompositeModalLayerHostId}
+          onDismiss={() => setGalleryImages(undefined)}
+          onImageDownloadButtonClicked={() => {
+            alert('Download button clicked');
+          }}
+        />
+      )}
       {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
         <Dropdown
