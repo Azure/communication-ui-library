@@ -79,7 +79,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(rooms) */
     role
   ) => {
-    console.log('localVideoStreams', localVideoStreams);
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
         ? remoteParticipants[screenShareRemoteParticipantId]
