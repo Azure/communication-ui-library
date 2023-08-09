@@ -1207,8 +1207,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       messages,
       showMessageDate,
       showMessageStatus,
-      onRenderAvatar,
-      isNarrow,
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,
@@ -1237,7 +1235,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         </Chat>
       </LiveAnnouncer>
     );
-  }, [theme, classes, messagesToDisplay]);
+  }, [theme, classes, messagesToDisplay, styles?.chatContainer]);
 
   return (
     <div ref={chatThreadRef}>

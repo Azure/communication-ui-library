@@ -59,6 +59,9 @@ export const chatMessageDateStyle = mergeStyles({
   fontSize: '0.75rem'
 });
 
+/**
+ * @private
+ */
 export const chatMessageAuthorStyle = mergeStyles({
   fontWeight: FontWeights.semibold,
   fontSize: '0.75rem'

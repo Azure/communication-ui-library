@@ -20,7 +20,7 @@ import {
   Dropdown,
   IDropdownOption
 } from '@fluentui/react';
-import { Divider } from '@fluentui/react-northstar';
+import { Divider } from '@fluentui/react-components';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useRef, useState } from 'react';
@@ -104,9 +104,9 @@ const getDocs: () => JSX.Element = () => {
         of new/old messages and customizing icons &amp; controls inside the chat thread.
       </Description>
       <Description>
-        MessageThread internally uses the `Chat` &amp; `Chat.Message` component from `@fluentui/react-northstar`. You
-        can checkout the details about these [two
-        components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+        MessageThread internally uses the `Chat` &amp; `ChatMessage` components from `@fluentui-contrib/chat`. You can
+        checkout the details about these components
+        [here](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
       </Description>
 
       <Heading>Importing</Heading>
@@ -316,7 +316,7 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onRenderMessage = (messageProps: MessageProps, defaultOnRender?: MessageRenderer): JSX.Element => {
     if (messageProps.message.messageType === 'custom') {
-      return <Divider content={messageProps.message.content} color="brand" important />;
+      return <Divider content={messageProps.message.content} color="brand" />;
     }
 
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
