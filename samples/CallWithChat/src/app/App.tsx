@@ -6,7 +6,7 @@ import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
 import { setLogLevel } from '@azure/logger';
 import { initializeIcons, Spinner } from '@fluentui/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   buildTime,
   callingSDKVersion,
@@ -34,6 +34,7 @@ import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { useIsMobile } from './utils/useIsMobile';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
+import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
 
 setLogLevel('warning');
 initializeIcons();
@@ -60,6 +61,18 @@ const App = (): JSX.Element => {
   const [callWithChatArgs, setCallWithChatArgs] = useState<CallWithChatArgs | undefined>(undefined);
   const isMobileSession = useIsMobile();
   const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
+
+  const themeProvider = useSwitchableFluentTheme();
+
+  useEffect(() => {
+    window.addEventListener('message', (event) => {
+      if (event.data?.type === 'embed-customization') {
+        themeProvider.setCurrentTheme(
+          event.data.theme === 'dark' ? themeProvider.themeStore['Dark'] : themeProvider.themeStore['Light']
+        );
+      }
+    });
+  }, [themeProvider]);
 
   if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
     return <PageOpenInAnotherTab />;

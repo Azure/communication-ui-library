@@ -125,6 +125,22 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
+
+        console.log('sending message');
+        window.parent?.postMessage(
+          {
+            type: 'ACS_STATE_CHANGE',
+            state: {
+              page: state.page,
+              displayName: state.displayName,
+              callId: state.call?.id,
+              remoteParticipants: state.call?.remoteParticipants
+            }
+          },
+          {
+            targetOrigin: '*'
+          }
+        );
       });
       return adapter;
     },
@@ -143,6 +159,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     },
     afterAdapterCreate
   );
+
+  useEffect(() => {
+    const handleEvent = (event: MessageEvent): void => {
+      if (event.data?.type === 'endcall') {
+        adapter?.leaveCall();
+      }
+    };
+    window.addEventListener('message', handleEvent);
+    return () => window.removeEventListener('message', handleEvent);
+  }, [adapter]);
 
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
