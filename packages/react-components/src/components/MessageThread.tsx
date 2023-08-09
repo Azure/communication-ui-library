@@ -11,7 +11,6 @@ import {
   noMessageStatusStyle,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
-  FailedMyChatMessageContainer,
   useChatStyles,
   messageThreadContainerStyle
 } from './styles/MessageThread.styles';
@@ -340,7 +339,7 @@ const memoizeAllMessages = memoizeFnAll(
       participantCount: number,
       readCount: number
     ) => JSX.Element,
-    defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
+    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
     strings: MessageThreadStrings,
     theme: Theme,
     _attached?: boolean | string,
@@ -388,7 +387,7 @@ const memoizeAllMessages = memoizeFnAll(
     if (message.messageType === 'blocked') {
       const myChatMessageStyle =
         message.status === 'failed'
-          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
           : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
@@ -399,7 +398,7 @@ const memoizeAllMessages = memoizeFnAll(
       case 'chat': {
         const myChatMessageStyle =
           message.status === 'failed'
-            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
             : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
@@ -702,6 +701,12 @@ export type MessageProps = {
    *
    */
   onSendMessage?: (messageId: string) => Promise<void>;
+};
+
+/**
+ * @internal
+ */
+export type _MessagePropsInternal = MessageProps & {
   /**
    * Render the message status indicator.
    */
@@ -1211,7 +1216,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const chatBody = useMemo(() => {
     return (
       <LiveAnnouncer>
-        <Chat className={mergeClasses(classes.root)}>{messagesToDisplay}</Chat>
+        <Chat className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}>
+          {messagesToDisplay}
+        </Chat>
       </LiveAnnouncer>
     );
   }, [theme, classes, messagesToDisplay]);
@@ -1246,19 +1253,19 @@ const onRenderFileDownloadsTrampoline = (
   return undefined;
 };
 
-// const linkStyles = (theme: Theme): ComponentSlotStyle => {
-//   return {
-//     '& a:link': {
-//       color: theme.palette.themePrimary
-//     },
-//     '& a:visited': {
-//       color: theme.palette.themeDarker
-//     },
-//     '& a:hover': {
-//       color: theme.palette.themeDarker
-//     },
-//     '& a:selected': {
-//       color: theme.palette.themeDarker
-//     }
-//   };
-// };
+const linkStyles = (theme: Theme): ComponentSlotStyle => {
+  return {
+    '& a:link': {
+      color: theme.palette.themePrimary
+    },
+    '& a:visited': {
+      color: theme.palette.themeDarker
+    },
+    '& a:hover': {
+      color: theme.palette.themeDarker
+    },
+    '& a:selected': {
+      color: theme.palette.themeDarker
+    }
+  };
+};

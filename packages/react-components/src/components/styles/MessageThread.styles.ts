@@ -6,6 +6,7 @@ import { makeStyles, shorthands } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
+import { MessageStatus } from '../../../../acs-ui-common/dist/acs-ui-common';
 
 // Minimum chat bubble width. This matches the minimum chat bubble width from FluentUI
 // that can contain a message and a timestamp.
@@ -86,9 +87,6 @@ export const chatMessageDateStyle: CSSProperties = {
   fontWeight: 600
 };
 
-/**
- * @private
- */
 const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
   const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
   return {
@@ -102,8 +100,15 @@ const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): Comp
     }
   };
 };
-// export const defaultChatItemMessageContainerNoOverlap: String = makeStyles(defaultChatItemMessageContainer(false));
-// export const defaultChatItemMessageContainerOverlap: String = makeStyles(defaultChatItemMessageContainer(true));
+
+/**
+ * @private
+ */
+export const defaultChatItemMessageContainerNoOverlap = makeStyles(defaultChatItemMessageContainer(false));
+/**
+ * @private
+ */
+export const defaultChatItemMessageContainerOverlap = makeStyles(defaultChatItemMessageContainer(true));
 
 /**
  * @private
@@ -116,14 +121,61 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
   border: '1px solid transparent'
 };
 
+const useChatFailedMyMessageClasses = makeStyles({
+  ...defaultChatItemMessageContainer,
+  root: {
+    backgroundColor: 'rgba(168, 0, 0, 0.2)'
+  }
+});
+
+const chatNormalMyMessageClasses = makeStyles({
+  ...defaultChatItemMessageContainer,
+  root: {
+    backgroundColor: 'rgb(199, 224, 244)'
+  }
+});
+const useChatFailedMessageClasses = makeStyles({
+  ...defaultChatItemMessageContainer,
+  root: {
+    backgroundColor: 'rgba(168, 0, 0, 0.2)'
+  }
+});
+
+const chatNormalMessageClasses = makeStyles({
+  ...defaultChatItemMessageContainer,
+  root: {}
+});
+
 /**
  * @private
  */
-export const FailedMyChatMessageContainer: ComponentSlotStyle = {
+export const chatBlockedMyMessageClasses = makeStyles({
   ...defaultChatItemMessageContainer,
-  backgroundColor: 'rgba(168, 0, 0, 0.2)'
-};
+  root: {
+    backgroundColor: 'rgb(199, 224, 244)'
+  }
+});
 
+/**
+ * @private
+ */
+export const useChatMyMessageClasses = (messageState?: MessageStatus) => {
+  return messageState === 'failed' ? useChatFailedMyMessageClasses() : chatNormalMyMessageClasses();
+};
+/**
+ * @private
+ */
+export const chatBlockedMessageClasses = makeStyles({
+  ...defaultChatItemMessageContainer,
+  root: {}
+});
+
+/**
+ * @private
+ */
+export const useChatMessageClasses = (messageState?: MessageStatus) => {
+  return messageState === 'failed' ? useChatFailedMessageClasses() : chatNormalMessageClasses();
+};
 /**
  * @private
  */
@@ -187,6 +239,7 @@ export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlot
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginRight: '0rem',
   color: theme.palette.neutralSecondary,
+  backgroundColor: theme.palette.neutralLighter,
 
   '& i': {
     paddingTop: '0.25rem'
@@ -214,6 +267,7 @@ export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlot
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
+  paddingTop: '0.5rem',
   width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
@@ -230,7 +284,8 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
   visibility: 'hidden',
   // we use this hidden avatar just as a width placeholder
   // the placeholder is needed for responsive bubble width
-  height: 0
+  height: 0,
+  backgroundColor: 'yellow'
 };
 
 /**
