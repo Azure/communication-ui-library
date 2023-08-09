@@ -17,6 +17,8 @@ import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/call
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(raise-hand) */
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -112,6 +114,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRemoteParticipants,
     getIsScreenSharingOn,
     getIsMuted,
+    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount
   ],
@@ -121,6 +124,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     remoteParticipants,
     isScreenSharingOn,
     isMuted,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand,
     role,
     partitipantCount
   ): {
@@ -140,6 +145,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
+      /* @conditional-compile-remove(raise-hand) */
+      raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false

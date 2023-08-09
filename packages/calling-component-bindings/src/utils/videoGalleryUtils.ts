@@ -12,6 +12,8 @@ import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from '@internal/calling-stateful-client';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -25,7 +27,12 @@ export const _videoGalleryRemoteParticipantsMemo = (
   if (!remoteParticipants) {
     return [];
   }
-  return memoizedAllConvertRemoteParticipant((memoizedFn) => {
+
+  let callFunction = memoizedAllConvertRemoteParticipant as any;
+  /* @conditional-compile-remove(raise-hand) */
+  callFunction = memoizedAllConvertRemoteParticipantBeta;
+
+  return callFunction((memoizedFn) => {
     return (
       Object.values(remoteParticipants)
         /**
@@ -44,6 +51,8 @@ export const _videoGalleryRemoteParticipantsMemo = (
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
             checkIsSpeaking(participant),
+            /* @conditional-compile-remove(raise-hand) */
+            participant.raisedHand,
             participant.videoStreams,
             state,
             participant.displayName
@@ -72,6 +81,73 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     );
   }
 );
+
+/* @conditional-compile-remove(raise-hand) */
+const memoizedAllConvertRemoteParticipantBeta = memoizeFnAll(
+  (
+    userId: string,
+    isMuted: boolean,
+    isSpeaking: boolean,
+    raisedHand: RaisedHandState | undefined,
+    videoStreams: { [key: number]: RemoteVideoStreamState },
+    state: RemoteParticipantConnectionState,
+    displayName?: string
+  ): VideoGalleryRemoteParticipant => {
+    return convertRemoteParticipantToVideoGalleryRemoteParticipantBeta(
+      userId,
+      isMuted,
+      isSpeaking,
+      raisedHand,
+      videoStreams,
+      state,
+      displayName
+    );
+  }
+);
+
+/* @conditional-compile-remove(raise-hand) */
+/** @private */
+export const convertRemoteParticipantToVideoGalleryRemoteParticipantBeta = (
+  userId: string,
+  isMuted: boolean,
+  isSpeaking: boolean,
+  raisedHand: RaisedHandState | undefined,
+  videoStreams: { [key: number]: RemoteVideoStreamState },
+  state: RemoteParticipantConnectionState,
+  displayName?: string
+): VideoGalleryRemoteParticipant => {
+  const rawVideoStreamsArray = Object.values(videoStreams);
+  let videoStream: VideoGalleryStream | undefined = undefined;
+  let screenShareStream: VideoGalleryStream | undefined = undefined;
+
+  const sdkRemoteVideoStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'Video');
+
+  const sdkScreenShareStream =
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing' && i.isAvailable) ||
+    Object.values(rawVideoStreamsArray).find((i) => i.mediaStreamType === 'ScreenSharing');
+
+  if (sdkRemoteVideoStream) {
+    videoStream = convertRemoteVideoStreamToVideoGalleryStream(sdkRemoteVideoStream);
+  }
+  if (sdkScreenShareStream) {
+    screenShareStream = convertRemoteVideoStreamToVideoGalleryStream(sdkScreenShareStream);
+  }
+
+  return {
+    userId,
+    displayName,
+    isMuted,
+    isSpeaking,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand,
+    videoStream,
+    screenShareStream,
+    isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
+    state
+  };
+};
 
 /** @private */
 export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
@@ -109,8 +185,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     videoStream,
     screenShareStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
-    /* @conditional-compile-remove(one-to-n-calling) */
-    /* @conditional-compile-remove(PSTN-calls) */
     state
   };
 };
@@ -136,7 +210,8 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(raise-hand) */ raisedHand
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -148,6 +223,8 @@ export const memoizeLocalParticipant = memoizeOne(
       renderElement: localVideoStream?.view?.target
     },
     /* @conditional-compile-remove(rooms) */
-    role
+    role,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand: raisedHand
   })
 );

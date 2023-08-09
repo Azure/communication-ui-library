@@ -459,7 +459,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               }}
             >
               <Stack.Item>
-                <Text>{raisedHand.order}</Text>
+                <Text>{raisedHand.raisedHandOrderPosition}</Text>
               </Stack.Item>
               <Stack.Item>
                 <RaisedHandIcon />

@@ -1765,7 +1765,7 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 
 // @public
 export type RaisedHand = {
-    order: number;
+    raisedHandOrderPosition: number;
 };
 
 // @public

@@ -78,7 +78,6 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
-import { RaisedHand as RaisedHand_2 } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -2676,7 +2675,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? RaiseHandButtonSelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3409,14 +3408,28 @@ export type Profile = {
 
 // @public
 export type RaisedHand = {
-    order: number;
+    raisedHandOrderPosition: number;
 };
+
+// @public
+export type RaisedHandState = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
 
 // @public
 export interface RaiseHandButtonProps extends ControlBarButtonProps {
     onToggleRaiseHand?: () => Promise<void>;
     strings?: Partial<RaiseHandButtonStrings>;
 }
+
+// @public
+export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
 
 // @public
 export interface RaiseHandButtonStrings {
@@ -3429,8 +3442,8 @@ export interface RaiseHandButtonStrings {
 
 // @public
 export interface RaiseHandCallFeature {
-    localParticipantRaisedHand?: RaisedHand_2;
-    raisedHands: RaisedHand_2[];
+    localParticipantRaisedHand?: RaisedHandState;
+    raisedHands: RaisedHandState[];
 }
 
 // @public
@@ -3453,7 +3466,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand_2;
+    raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {

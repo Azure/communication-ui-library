@@ -24,8 +24,6 @@ export const RaiseHand = (props: {
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
   const raiseHandButtonDisabled = (): boolean => {
-    /* @conditional-compile-remove(PSTN-calls) */
-    return raiseHandButtonProps?.disabled ? raiseHandButtonProps.disabled : isDisabled(props.option);
     return isDisabled(props.option);
   };
 
