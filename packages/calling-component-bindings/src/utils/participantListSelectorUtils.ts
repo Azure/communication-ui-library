@@ -59,7 +59,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   };
 };
 
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
@@ -87,7 +87,7 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
   }
 );
 
-/* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(raise-hand) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (
   userId: string,
   displayName: string | undefined,

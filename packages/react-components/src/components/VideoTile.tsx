@@ -344,6 +344,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
+  let raisedHandBackgroundColor = '';
+  /* @conditional-compile-remove(raise-hand) */
+  raisedHandBackgroundColor = callingPalette.raiseHandGold;
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -357,7 +360,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           '&::after': {
             content: `''`,
             position: 'absolute',
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : callingPalette.raiseHandGold}`,
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
             borderRadius: theme.effects.roundedCorner4,
             width: '100%',
             height: '100%',
