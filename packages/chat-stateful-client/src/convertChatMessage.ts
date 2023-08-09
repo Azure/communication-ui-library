@@ -28,7 +28,12 @@ export const convertChatMessage = (
           "previewUrl": "" + "/chat/threads/123456789/messages/123456789/teamsInterop/images/" + element.id + "/views/small?api-version=2023-04-01-preview"
         }
       )
+      element?.setAttribute('src', '');
+      element?.setAttribute('itemtype', '');
+      element?.setAttribute('href', '');
+      element?.setAttribute('target-src', '');
     });
+    message.content.message = div.innerHTML;
   }
 
   return {
