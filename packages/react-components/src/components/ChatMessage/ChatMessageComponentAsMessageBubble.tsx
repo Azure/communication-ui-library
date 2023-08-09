@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IPersonaProps, Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+import { Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { IPersonaProps } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -314,11 +316,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   let renderedStatusIcon =
     showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
   renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
-
-  const myMessageContainerClasses =
-    message.messageType === 'blocked' ? chatBlockedMyMessageClasses() : useChatMyMessageClasses(message.status);
-  const messageContainerClasses =
-    message.messageType === 'blocked' ? chatBlockedMessageClasses() : useChatMessageClasses(message.status);
+  const chatMyMessageClass = useChatMyMessageClasses(message.status);
+  const chatMessageClass = useChatMessageClasses(message.status);
+  const chatBlockedMyMessageClass = chatBlockedMyMessageClasses();
+  const chatBlockedMessageClass = chatBlockedMessageClasses();
+  const myMessageContainerClasses = message.messageType === 'blocked' ? chatBlockedMyMessageClass : chatMyMessageClass;
+  const messageContainerClasses = message.messageType === 'blocked' ? chatBlockedMessageClass : chatMessageClass;
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>

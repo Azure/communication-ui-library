@@ -365,6 +365,7 @@ const memoizeAllMessages = memoizeFnAll(
     };
 
     const chatMessage = (
+      key: string,
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
     ): JSX.Element => {
@@ -379,7 +380,7 @@ const memoizeAllMessages = memoizeFnAll(
           ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
           : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
-      return chatMessageComponent;
+      return <div key={key}>{chatMessageComponent}</div>;
     };
 
     /* @conditional-compile-remove(data-loss-prevention) */
@@ -391,7 +392,7 @@ const memoizeAllMessages = memoizeFnAll(
           : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
-      return chatMessage(message, messageProps);
+      return chatMessage(_messageKey, message, messageProps);
     }
 
     switch (message.messageType) {
@@ -403,7 +404,7 @@ const memoizeAllMessages = memoizeFnAll(
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
-        return chatMessage(message, messageProps);
+        return chatMessage(_messageKey, message, messageProps);
       }
 
       case 'system': {
