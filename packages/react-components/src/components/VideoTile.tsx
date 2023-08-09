@@ -7,8 +7,10 @@ import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
-import { CallingTheme, useTheme } from '../theming';
+import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { CallingTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
 /* @conditional-compile-remove(raise-hand) */
@@ -324,8 +326,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     hidePersonaDetails: true
   };
 
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 
   const tileInfoStyle = useMemo(
@@ -345,6 +345,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
+  /* @conditional-compile-remove(raise-hand) */
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   /* @conditional-compile-remove(raise-hand) */
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
   return (
