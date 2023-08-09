@@ -321,7 +321,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const chatBlockedMyMessageClass = chatBlockedMyMessageClasses();
   const chatBlockedMessageClass = chatBlockedMessageClasses();
   const isBlockedMessage =
-    /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked' ?? false;
+    false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
   const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
   const chatMessage = (
