@@ -160,7 +160,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         isOpen={images.length > 0}
         onDismiss={onDismiss}
         overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
-        layerProps={{ id: modalLayerHostId }}
+        layerProps={{ hostId: props.modalLayerHostId }}
         styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       >
         <div className={mergeStyles(imageContainer, styles?.imageContainer)}>
@@ -176,7 +176,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         </div>
       </Modal>
       <Layer
-        id={modalLayerHostId}
+        hostId={modalLayerHostId}
         insertFirst={true}
         styles={{
           content: mergeStyles(headerStyle(theme, isDarkTheme), styles?.header)
