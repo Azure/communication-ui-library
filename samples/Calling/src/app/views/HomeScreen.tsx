@@ -2,22 +2,11 @@
 // Licensed under the MIT license.
 
 import React, { /* useEffect, */ useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Callout,
-  mergeStyles,
-  Link
-} from '@fluentui/react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { registerIcons } from '@fluentui/react';
+import { registerIcons, Callout, mergeStyles, Link } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -367,6 +356,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 props.startCallHandler({
                   //TODO: This needs to be updated after we change arg types of TeamsCall
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
+                  /* @conditional-compile-remove(rooms) */
                   callLocator: callLocator,
                   /* @conditional-compile-remove(rooms) */
                   option: chosenCallOption.key,
