@@ -272,6 +272,28 @@ packages:
       - encoding
     dev: false
 
+  /@azure/core-http@3.0.2:
+    resolution: {integrity: sha512-o1wR9JrmoM0xEAa0Ue7Sp8j+uJvmqYaGoHOCT5qaVYmvgmnZDC0OvQimPA/JR3u77Sz6D1y3Xmk1y69cDU9q9A==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@azure/abort-controller': 1.1.0
+      '@azure/core-auth': 1.4.0
+      '@azure/core-tracing': 1.0.0-preview.13
+      '@azure/core-util': 1.3.2
+      '@azure/logger': 1.0.4
+      '@types/node-fetch': 2.6.4
+      '@types/tunnel': 0.0.3
+      form-data: 4.0.0
+      node-fetch: 2.6.12
+      process: 0.11.10
+      tslib: 2.6.1
+      tunnel: 0.0.6
+      uuid: 8.3.2
+      xml2js: 0.5.0
+    transitivePeerDependencies:
+      - encoding
+    dev: false
+
   /@azure/core-lro@2.5.4:
     resolution: {integrity: sha512-3GJiMVH7/10bulzOKGrrLeG/uCBH/9VtxqaMcB9lIqAeamI/xYQSHJL/KcsLDuH+yTjYpro/u6D/MuRe4dN70Q==}
     engines: {node: '>=14.0.0'}
@@ -341,6 +363,22 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       tslib: 2.6.1
+    dev: false
+
+  /@azure/storage-blob@12.15.0:
+    resolution: {integrity: sha512-e7JBKLOFi0QVJqqLzrjx1eL3je3/Ug2IQj24cTM9b85CsnnFjLGeGjJVIjbGGZaytewiCEG7r3lRwQX7fKj0/w==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@azure/abort-controller': 1.1.0
+      '@azure/core-http': 3.0.2
+      '@azure/core-lro': 2.5.4
+      '@azure/core-paging': 1.5.0
+      '@azure/core-tracing': 1.0.0-preview.13
+      '@azure/logger': 1.0.4
+      events: 3.3.0
+      tslib: 2.6.1
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /@babel/cli@7.16.8(@babel/core@7.16.12):
@@ -15974,6 +16012,10 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
+  /shake.js@1.2.2:
+    resolution: {integrity: sha512-2onqnUWjVMsW8zFIlJ0gBGIzt33WkExKMToc5qgOX7HuHD1lBu52FQwlk763iZAlVE+ihiT1fHFMabzlVw/xIQ==}
+    dev: false
+
   /shallow-clone@3.0.1:
     resolution: {integrity: sha512-/6KqX+GVUdqPuPPd2LxDDxzX6CAbjJehAAOKlNpqqUpAqPM6HeL8f+o3a+JsyGjn2lv0WY8UsTgUJjU9Ok55NA==}
     engines: {node: '>=8'}
@@ -18735,7 +18777,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-XZzLXQbSMVE4bv6DZrbSYbRXl6+AuExmGqg1Fqb99vNsaFCQQJMjm4SYCOSOsH74GpzbvskFdC9xadBs+iL1aw==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-zl1FzZfea+CA0oKI5JHeK7kqIllgD5WDykiLsTgqWl+qJGkipBDX6NTZZwR+DMtMNulhukrbNimSvKfbGZ4jIA==, tarball: file:projects/calling.tgz}
     id: file:projects/calling.tgz
     name: '@rush-temp/calling'
     version: 0.0.0
@@ -18795,6 +18837,7 @@ packages:
       react-router-dom: 5.3.4(react@18.2.0)
       reselect: 4.0.0
       rimraf: 2.7.1
+      shake.js: 1.2.2
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.76.0)
       ts-loader: 8.4.0(typescript@4.3.5)(webpack@5.76.0)
@@ -19686,7 +19729,7 @@ packages:
     dev: false
 
   file:projects/server.tgz(@babel/core@7.16.12):
-    resolution: {integrity: sha512-oVQJ5xhP+wzFst/jH6x5yZtTu4llCDFHSnIzZlyFsIEXKv96dkOdVWY501oPpbwz3FotElhTB87K7X/XZGwRDQ==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-Md+e2u4vGUJoAwhcKP+NGky4NXXRvtxMgS8/A+SfZEDu2cOjMDMheLsL2LmqALa6Dm5i/3c/0mDCEG2HfFu9iQ==, tarball: file:projects/server.tgz}
     id: file:projects/server.tgz
     name: '@rush-temp/server'
     version: 0.0.0
@@ -19695,6 +19738,7 @@ packages:
       '@azure/communication-common': 3.0.0-beta.1
       '@azure/communication-identity': 1.2.0
       '@azure/communication-rooms': 1.0.0-beta.1
+      '@azure/storage-blob': 12.15.0
       '@types/cookie-parser': 1.4.3
       '@types/copy-webpack-plugin': 6.4.3
       '@types/cors': 2.8.13

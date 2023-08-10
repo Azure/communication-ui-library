@@ -114,6 +114,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/addUserToRoom',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/uploadToAzureBlobStorage',
+          target: 'http://[::1]:8080'
         }
       ]
     }
