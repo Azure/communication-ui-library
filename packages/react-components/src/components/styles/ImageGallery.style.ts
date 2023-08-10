@@ -131,7 +131,10 @@ export const bodyContainer: IStyle = {
  */
 export const bodyFocusZone: IStyle = {
   width: '100%',
-  height: '100%'
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
 };
 
 /**
@@ -139,8 +142,8 @@ export const bodyFocusZone: IStyle = {
  */
 export const normalImageStyle: IStyle = {
   objectFit: 'contain',
-  height: '100%',
-  width: '100%'
+  maxHeight: '100%',
+  maxWidth: '100%'
 };
 
 /**
