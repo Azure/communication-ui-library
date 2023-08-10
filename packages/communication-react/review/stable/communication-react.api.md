@@ -1123,7 +1123,6 @@ export type CommonCallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
-    moreButton?: boolean;
     peopleButton?: boolean;
 };
 
