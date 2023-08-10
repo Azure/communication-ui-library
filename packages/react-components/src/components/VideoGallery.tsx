@@ -36,6 +36,7 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
+import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 
 /**
  * @private
@@ -123,7 +124,7 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -619,6 +620,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const videoGalleryLayout = useMemo(() => {
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
+    } else if (layout === 'speaker') {
+      return <SpeakerVideoLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps]);

@@ -4,6 +4,8 @@
 import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '../../VideoGallery';
 
 /**
  * Arguments used to determine a {@link OrganizedParticipantsResult}
@@ -17,6 +19,7 @@ export interface OrganizedParticipantsArgs {
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
   pinnedParticipantUserIds?: string[];
+  layout?: VideoGalleryLayout;
 }
 
 /**
@@ -41,7 +44,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxRemoteVideoStreams,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
-    pinnedParticipantUserIds = []
+    pinnedParticipantUserIds = [],
+    layout
   } = props;
 
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
@@ -55,6 +59,17 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           lastVisibleParticipants: visibleGridParticipants.current,
           maxDominantSpeakers: maxRemoteVideoStreams as number
         }).slice(0, maxRemoteVideoStreams);
+
+  const dominantSpeakerToGrid =
+    layout === 'speaker'
+      ? dominantSpeakers[0]
+        ? visibleGridParticipants.current.find((p) => p.userId === dominantSpeakers[0])
+        : visibleGridParticipants.current[0]
+      : undefined;
+
+  if (dominantSpeakerToGrid) {
+    visibleGridParticipants.current = [dominantSpeakerToGrid];
+  }
 
   const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));
 
