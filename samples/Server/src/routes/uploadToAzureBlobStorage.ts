@@ -20,7 +20,6 @@ const router = express.Router();
  */
 
 router.post('/', async function (req, res, next) {
-  console.log(req.body);
   const logs: string = req.body.logs;
   if (!logs) {
     res.status(400).send('logs not found in request');

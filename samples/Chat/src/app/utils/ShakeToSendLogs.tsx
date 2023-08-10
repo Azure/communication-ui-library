@@ -83,7 +83,7 @@ const requestPermission = async (): Promise<void> => {
 const sendLogs = async (): Promise<string | false> => {
   const logs = getRecordedConsoleLogs();
 
-  const containerName = 'calling-sample-logs';
+  const containerName = 'chat-sample-logs';
   const response = await fetch(`/uploadToAzureBlobStorage`, {
     method: 'POST',
     headers: {
