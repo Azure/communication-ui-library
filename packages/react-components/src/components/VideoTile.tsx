@@ -7,7 +7,7 @@ import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
-import { CallingTheme, useTheme } from '../theming';
+import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { CallingTheme } from '../theming';
@@ -325,8 +325,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     styles: defaultPersonaStyles,
     hidePersonaDetails: true
   };
-
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
   const videoHintWithBorderRadius = mergeStyles(videoHint, { borderRadius: theme.effects.roundedCorner4 });
 

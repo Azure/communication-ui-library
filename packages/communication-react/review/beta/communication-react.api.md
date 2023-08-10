@@ -4,7 +4,7 @@
 
 ```ts
 
-import { AddPhoneNumberOptions } from '@azure/communication-callin
+import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
@@ -349,7 +349,6 @@ export interface CallAdapterCallOperations {
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
-    lowerHands(userIds: string[]): Promise<void>;
     mute(): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
@@ -892,7 +891,6 @@ export interface CallWithChatAdapterManagement {
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     lowerHand(): Promise<void>;
-    lowerHands(userIds: string[]): Promise<void>;
     mute(): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
@@ -1727,8 +1725,6 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onLowerHand: () => Promise<void>;
     // (undocumented)
-    onLowerHands: (userId: string[]) => Promise<void>;
-    // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
@@ -2342,8 +2338,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
-    ControlButtonRaiseHand: JSX.Element;
-    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -3409,17 +3403,17 @@ export type Profile = {
 };
 
 // @public
+export type RaisedHand = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
 export type RaisedHandState = {
     raisedHandOrderPosition: number;
 };
 
 // @public
 export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
-
-// @public
-=======
-    order: number;
-};
 
 // @public
 export interface RaiseHandButtonProps extends ControlBarButtonProps {

@@ -167,8 +167,6 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onLowerHand: () => Promise<void>;
     // (undocumented)
-    onLowerHands: (userId: string[]) => Promise<void>;
-    // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;

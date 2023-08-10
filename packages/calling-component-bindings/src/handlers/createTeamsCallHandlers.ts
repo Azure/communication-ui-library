@@ -22,10 +22,6 @@ import {
   CommonCallingHandlers,
   VideoBackgroundEffectsDependency
 } from './createCommonHandlers';
-/* @conditional-compile-remove(raise-hand) */
-import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
-import { CommunicationUserIdentifier, MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 /**
  * Object containing all the teams call handlers required for calling components.
  *
@@ -109,13 +105,6 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         }
         /* @conditional-compile-remove(teams-identity-support) */
         await call?.removeParticipant(participant);
-      },
-      /* @conditional-compile-remove(raise-hand) */
-      onLowerHands: async (userIds: string[]): Promise<void> => {
-        const participants = userIds.map((userId) => {
-          return _toCommunicationIdentifier(userId) as CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier;
-        });
-        await call?.feature(Features.RaiseHand).lowerHands(participants);
       }
     };
   }

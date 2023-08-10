@@ -174,13 +174,6 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   lowerHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
-  /**
-   * Lower hands for remote users.
-   *
-   * @public
-   */
-  lowerHands(userIds: string[]): Promise<void>;
   /**
    * Create the html view for a stream.
    *

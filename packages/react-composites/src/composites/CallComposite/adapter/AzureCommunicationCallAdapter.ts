@@ -822,13 +822,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
-  /* @conditional-compile-remove(raise-hand) */
-  public async lowerHands(userIds: string[]): Promise<void> {
-    return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.handlers.onLowerHands(userIds);
-    });
-  }
-
   /* @conditional-compile-remove(unsupported-browser) */
   public allowUnsupportedBrowserVersion(): void {
     this.context.setAllowedUnsupportedBrowser();

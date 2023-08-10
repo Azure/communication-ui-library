@@ -53,10 +53,6 @@ const createCompositeHandlers = memoizeOne(
       await adapter.removeParticipant(userId);
     },
     /* @conditional-compile-remove(raise-hand) */
-    onLowerHands: async (userIds: string[]) => {
-      await adapter.lowerHands(userIds);
-    },
-    /* @conditional-compile-remove(raise-hand) */
     onRaiseHand: async () => {
       await adapter.raiseHand();
     },

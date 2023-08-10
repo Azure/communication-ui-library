@@ -432,15 +432,6 @@ export interface CallAdapterCallOperations {
    * @public
    */
   lowerHand(): Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
-  /**
-   * Lower hand for participants from the call.
-   *
-   * @param userId - List of Ids of the participant
-   *
-   * @public
-   */
-  lowerHands(userIds: string[]): Promise<void>;
   /**
    * Stop sharing the screen
    *

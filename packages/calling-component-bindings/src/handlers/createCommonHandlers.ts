@@ -53,8 +53,6 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(raise-hand) */
   onLowerHand: () => Promise<void>;
   /* @conditional-compile-remove(raise-hand) */
-  onLowerHands: (userId: string[]) => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
@@ -276,13 +274,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(raise-hand) */
     const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
-
-    /* @conditional-compile-remove(raise-hand) */
-    const onLowerHands = async (userIds: string[]): Promise<void> => {
-      if (userIds.length > 0) {
-        await call?.feature(Features.RaiseHand)?.lowerHands([]);
-      }
-    };
 
     /* @conditional-compile-remove(raise-hand) */
     const onToggleRaiseHand = async (): Promise<void> => {
@@ -585,8 +576,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRaiseHand,
       /* @conditional-compile-remove(raise-hand) */
       onLowerHand,
-      /* @conditional-compile-remove(raise-hand) */
-      onLowerHands,
       /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
       /* @conditional-compile-remove(PSTN-calls) */

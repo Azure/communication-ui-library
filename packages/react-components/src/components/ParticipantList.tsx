@@ -158,7 +158,7 @@ const onRenderParticipantDefault = (
                     borderRadius: '1rem'
                   }}
                 >
-                  {callingParticipant.raisedHand.order && (
+                  {callingParticipant.raisedHand.raisedHandOrderPosition && (
                     <Stack.Item>
                       <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                     </Stack.Item>

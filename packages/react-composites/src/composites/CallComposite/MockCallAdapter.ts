@@ -102,11 +102,6 @@ export class MockCallAdapter implements CallAdapter {
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
-  /* @conditional-compile-remove(raise-hand) */
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  lowerHands(userIds: string[]): Promise<void> {
-    throw Error('lowerHand not implemented');
-  }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
   }
