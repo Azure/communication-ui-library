@@ -48,7 +48,7 @@ interface DeviceMotionEventiOS extends DeviceMotionEvent {
  * Hook to enable shake to send logs.
  * This should be used once in the app.
  */
-const useShakeDialog = (): [boolean, () => void] => {
+const useShakeDialog = (hasPermission: boolean): [boolean, () => void] => {
   const [showDialog, setShowDialog] = React.useState(false);
   const closeDialog = React.useCallback(() => setShowDialog(false), []);
   const handleShake = (): void => {
@@ -56,34 +56,35 @@ const useShakeDialog = (): [boolean, () => void] => {
   };
 
   useEffect(() => {
-    let shakeEvent: Shake;
+    if (!hasPermission) {
+      return;
+    }
 
-    requestPermission().then(() => {
-      shakeEvent = new Shake({
-        threshold: 15, // optional shake strength threshold
-        timeout: 1000 // optional, determines the frequency of event generation
-      });
-      shakeEvent.start();
-
-      startRecordingLogs();
-      window.addEventListener('shake', handleShake);
+    const shakeEvent = new Shake({
+      threshold: 15, // optional shake strength threshold
+      timeout: 1000 // optional, determines the frequency of event generation
     });
+    shakeEvent.start();
+
+    startRecordingLogs();
+    window.addEventListener('shake', handleShake);
 
     return () => {
       shakeEvent.stop();
       stopRecordingLogs();
       window.removeEventListener('shake', handleShake);
     };
-  }, []);
+  }, [hasPermission]);
 
   return [showDialog, closeDialog];
 };
 
-const requestPermission = async (): Promise<void> => {
+const requestPermission = async (): Promise<'granted' | 'denied'> => {
   try {
-    await (DeviceMotionEvent as unknown as DeviceMotionEventiOS).requestPermission?.();
+    return (await (DeviceOrientationEvent as unknown as DeviceMotionEventiOS)?.requestPermission?.()) ?? 'granted';
   } catch (e) {
     console.log('DeviceMotionEvent.requestPermission() failed', e);
+    return 'denied';
   }
 };
 
@@ -109,8 +110,41 @@ const sendLogs = async (): Promise<string | false> => {
   return blobUrl;
 };
 
+const PromptForShakePermission = (props: { onPermissionGranted: () => void }): JSX.Element => {
+  const [showPrompt, setShowPrompt] = React.useState(true);
+  const closePrompt = React.useCallback(() => setShowPrompt(false), []);
+  const dialogContentProps = {
+    type: DialogType.normal,
+    title: 'Enable permissions for shake to help',
+    subText:
+      'Would you like to enable shake to help? This will prompt you to send device logs when you shake your device.'
+  };
+
+  return (
+    <Dialog hidden={!showPrompt} dialogContentProps={dialogContentProps}>
+      <DialogFooter>
+        <PrimaryButton
+          text="Enable"
+          onClick={() => {
+            requestPermission().then((res) => {
+              if (res === 'granted') {
+                props.onPermissionGranted();
+              }
+              setShowPrompt(false);
+            });
+          }}
+        />
+        <DefaultButton onClick={closePrompt} text="Disable" />
+      </DialogFooter>
+    </Dialog>
+  );
+};
+
 export const ShakeToSendLogs = (): JSX.Element => {
-  const [showDialog, closeDialog] = useShakeDialog();
+  const needsToRequestDeviceMotionPermission = !!(DeviceOrientationEvent as unknown as DeviceMotionEventiOS)
+    ?.requestPermission;
+  const [hasPermission, setHasPermission] = React.useState(!needsToRequestDeviceMotionPermission);
+  const [showDialog, closeDialog] = useShakeDialog(hasPermission);
 
   const [logStatus, setLogStatus] = React.useState<'unsent' | 'sending' | 'failed' | 'sent'>('unsent');
   const [blobUrl, setBlobUrl] = React.useState<string>();
@@ -142,42 +176,47 @@ export const ShakeToSendLogs = (): JSX.Element => {
   };
 
   return (
-    <Dialog hidden={!showDialog} dialogContentProps={dialogContentProps} modalProps={{ onDismissed: reset }}>
-      <Spinner hidden={logStatus !== 'sending'} label="Sending logs..." />
-      {logStatus === 'unsent' && (
-        <DialogFooter>
-          <PrimaryButton onClick={onSendLogsClick} text="Send" />
-          <DefaultButton onClick={closeDialog} text="Don't send" />
-        </DialogFooter>
+    <>
+      {needsToRequestDeviceMotionPermission && (
+        <PromptForShakePermission onPermissionGranted={() => setHasPermission(true)} />
       )}
-      {logStatus === 'sent' && (
-        <>
-          <Text>
-            Your logs were successfully uploaded. You can access them{' '}
-            <Link href={blobUrl} target="_blank">
-              here
-            </Link>
-            .
-          </Text>
+      <Dialog hidden={!showDialog} dialogContentProps={dialogContentProps} modalProps={{ onDismissed: reset }}>
+        <Spinner hidden={logStatus !== 'sending'} label="Sending logs..." />
+        {logStatus === 'unsent' && (
           <DialogFooter>
-            <PrimaryButton
-              text="Send as email"
-              onClick={() => window.open(`mailto:?body=${encodeURIComponent(blobUrl ?? '')}`)}
-            />
-            <DefaultButton onClick={closeDialog} text="Close" />
+            <PrimaryButton onClick={onSendLogsClick} text="Send" />
+            <DefaultButton onClick={closeDialog} text="Don't send" />
           </DialogFooter>
-        </>
-      )}
-      {logStatus === 'failed' && (
-        <>
-          <Text>Failed to send logs.</Text>
-          <DialogFooter>
-            <PrimaryButton onClick={onSendLogsClick} text="Try again" />
-            <DefaultButton onClick={closeDialog} text="Close" />
-          </DialogFooter>
-        </>
-      )}
-    </Dialog>
+        )}
+        {logStatus === 'sent' && (
+          <>
+            <Text>
+              Your logs were successfully uploaded. You can access them{' '}
+              <Link href={blobUrl} target="_blank">
+                here
+              </Link>
+              .
+            </Text>
+            <DialogFooter>
+              <PrimaryButton
+                text="Send as email"
+                onClick={() => window.open(`mailto:?body=${encodeURIComponent(blobUrl ?? '')}`)}
+              />
+              <DefaultButton onClick={closeDialog} text="Close" />
+            </DialogFooter>
+          </>
+        )}
+        {logStatus === 'failed' && (
+          <>
+            <Text>Failed to send logs.</Text>
+            <DialogFooter>
+              <PrimaryButton onClick={onSendLogsClick} text="Try again" />
+              <DefaultButton onClick={closeDialog} text="Close" />
+            </DialogFooter>
+          </>
+        )}
+      </Dialog>
+    </>
   );
 };
 
