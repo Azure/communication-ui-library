@@ -8,10 +8,15 @@ import {
   merge,
   mergeStyles,
   PersonaPresence,
-  Stack
+  Stack,
+  Theme
 } from '@fluentui/react';
 /* @conditional-compile-remove(total-participant-count) */
 import { Text } from '@fluentui/react';
+/* @conditional-compile-remove(raise-hand) */
+import { useTheme } from '../theming';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
@@ -118,7 +123,8 @@ const onRenderParticipantDefault = (
   styles?: ParticipantListItemStyles,
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
-  participantAriaLabelledBy?: string
+  participantAriaLabelledBy?: string,
+  theme?: Theme
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -134,9 +140,34 @@ const onRenderParticipantDefault = (
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted
+    callingParticipant?.isScreenSharing ||
+    callingParticipant?.isMuted ||
+    /* @conditional-compile-remove(raise-hand) */ callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+            {
+              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
+                <Stack
+                  horizontal={true}
+                  tokens={{ childrenGap: '0.2rem' }}
+                  style={{
+                    alignItems: 'center',
+                    padding: '0.2rem',
+                    backgroundColor: theme?.palette.neutralLighter,
+                    borderRadius: '1rem'
+                  }}
+                >
+                  {callingParticipant.raisedHand.order && (
+                    <Stack.Item>
+                      <Text>{callingParticipant.raisedHand.order}</Text>
+                    </Stack.Item>
+                  )}
+                  <Stack.Item>
+                    <RaisedHandIcon />
+                  </Stack.Item>
+                </Stack>
+              )
+            }
             {callingParticipant.isScreenSharing && (
               <Icon
                 iconName="ParticipantItemScreenShareStart"
@@ -217,6 +248,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     participantAriaLabelledBy
   } = props;
 
+  /* @conditional-compile-remove(raise-hand) */
+  const theme = useTheme();
   const ids = useIdentifiers();
   const participantItemStrings = useLocale().strings.participantItem;
   /* @conditional-compile-remove(total-participant-count) */
@@ -254,6 +287,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onFetchParticipantMenuItems,
       onRemoveParticipant,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
+      /* @conditional-compile-remove(raise-hand) */
       participantItemStrings.removeButtonLabel
     ]
   );
@@ -268,7 +302,11 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
 
   return (
-    <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
+    <Stack
+      data-ui-id={ids.participantList}
+      className={mergeStyles(participantListStyle, props.styles?.root)}
+      role={'menu'}
+    >
       {displayedParticipants.map((participant: ParticipantListParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)
@@ -281,7 +319,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               participantItemStyles,
               props.onParticipantClick,
               showParticipantOverflowTooltip,
-              participantAriaLabelledBy
+              participantAriaLabelledBy,
+              /* @conditional-compile-remove(raise-hand) */
+              theme
             )
       )}
       {

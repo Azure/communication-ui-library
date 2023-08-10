@@ -1268,6 +1268,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -1339,6 +1341,7 @@ export type _FakeChatAdapterArgs = {
     failFileDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
     sendRemoteInlineImageMessage?: boolean;
+    inlineImageUrl?: string;
     frenchLocaleEnabled?: boolean;
     showParticipantPane?: boolean;
     participantsWithHiddenComposites?: ChatParticipant[];

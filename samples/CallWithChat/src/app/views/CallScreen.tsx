@@ -9,17 +9,16 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter,
-  onResolveVideoEffectDependencyLazy
+  CallWithChatAdapter
 } from '@azure/communication-react';
+/* @conditional-compile-remove(video-background-effects) */
+import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
-/* @conditional-compile-remove(video-background-effects) */
-import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 
 export interface CallScreenProps {
   token: string;
@@ -82,6 +81,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return {
       videoBackgroundOptions: {
         videoBackgroundImages,
+        /* @conditional-compile-remove(video-background-effects) */
         onResolveDependency: onResolveVideoEffectDependencyLazy
       }
     };
