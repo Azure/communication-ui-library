@@ -18867,7 +18867,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-UTH9PfbaOY8nr4pQCaM/h70nuC7SUkimFbm+emgB9Mafx1KwrAfBTwSZ1ezhsYZMARrmrKhB2D8GR3S5R+z5GA==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-K4bWKmQMQ3a2jA+tE/CxMyH0oYV3EXO/g0lFOoKtXe3ztQjzr8pLdlle8jL2VgIwwldydoyaxmUGhfW2umS2ug==, tarball: file:projects/callwithchat.tgz}
     id: file:projects/callwithchat.tgz
     name: '@rush-temp/callwithchat'
     version: 0.0.0
@@ -18925,6 +18925,7 @@ packages:
       react-router-dom: 5.3.4(react@18.2.0)
       reselect: 4.0.0
       rimraf: 2.7.1
+      shake.js: 1.2.2
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.76.0)
       ts-loader: 8.4.0(typescript@4.3.5)(webpack@5.76.0)
@@ -19048,7 +19049,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-uH17+j3gT/pyjWjXKREImuLTRFuT/0xmDXdkSOlLwtiftqzs2ZriMxiuN0N5AFJETbX/QpcHh/psldY3Ayfp5Q==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-yXoZ5FqOH0JnoO/dSGnP4wL5/YB4zxPmsuhAUkhoe4ylseCMlVXjshDMidODK/2ZosOnvUF7uafvyXjyBEYcHg==, tarball: file:projects/chat.tgz}
     id: file:projects/chat.tgz
     name: '@rush-temp/chat'
     version: 0.0.0
@@ -19101,6 +19102,7 @@ packages:
       react-linkify: 1.0.0-alpha
       reselect: 4.0.0
       rimraf: 2.7.1
+      shake.js: 1.2.2
       style-loader: 2.0.0(webpack@5.76.0)
       ts-loader: 8.4.0(typescript@4.3.5)(webpack@5.76.0)
       typescript: 4.3.5

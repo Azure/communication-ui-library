@@ -1,0 +1,162 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT license.
+
+import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';
+import React from 'react';
+import { useEffect } from 'react';
+import Shake from 'shake.js';
+
+const originalConsoleLog = console.log;
+const consoleLogs: string[] = ['---- LOGS START ----'];
+
+/**
+ * Track console logs for pushing to a debug location.
+ * This is particularly useful on mobile devices where the console is not easily accessible.
+ */
+const startRecordingConsoleLogs = (): void => {
+  console.log = (...args) => {
+    originalConsoleLog.apply(console, args);
+    consoleLogs.push(`${Date.now} ${JSON.stringify(args)}`);
+  };
+};
+
+const stopRecordingConsoleLogs = (): void => {
+  console.log = originalConsoleLog;
+};
+
+/**
+ * Get the recorded console logs.
+ * For more info see {@link startRecordingConsoleLogs}.
+ */
+const getRecordedConsoleLogs = (): string => {
+  return consoleLogs.join('\n');
+};
+
+/** On iOS, device motion events require permission granted first */
+interface DeviceMotionEventiOS extends DeviceMotionEvent {
+  requestPermission?: () => Promise<'granted' | 'denied'>;
+}
+
+/**
+ * Hook to enable shake to send logs.
+ * This should be used once in the app.
+ */
+const useShakeDialog = (): [boolean, () => void] => {
+  const [showDialog, setShowDialog] = React.useState(false);
+  const closeDialog = React.useCallback(() => setShowDialog(false), []);
+  const handleShake = (): void => {
+    setShowDialog(true);
+  };
+
+  useEffect(() => {
+    let shakeEvent: Shake;
+
+    requestPermission().then(() => {
+      shakeEvent = new Shake({
+        threshold: 15, // optional shake strength threshold
+        timeout: 1000 // optional, determines the frequency of event generation
+      });
+      shakeEvent.start();
+
+      startRecordingConsoleLogs();
+      window.addEventListener('shake', handleShake);
+    });
+
+    return () => {
+      shakeEvent.stop();
+      stopRecordingConsoleLogs();
+      window.removeEventListener('shake', handleShake);
+    };
+  }, []);
+
+  return [showDialog, closeDialog];
+};
+
+const requestPermission = async (): Promise<void> => {
+  try {
+    await (DeviceMotionEvent as unknown as DeviceMotionEventiOS).requestPermission?.();
+  } catch (e) {
+    console.log('DeviceMotionEvent.requestPermission() failed', e);
+  }
+};
+
+const sendLogs = async (): Promise<string | false> => {
+  const logs = getRecordedConsoleLogs();
+
+  const containerName = 'calling-sample-logs';
+  const response = await fetch(`/uploadToAzureBlobStorage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ containerName, logs })
+  });
+
+  if (!response.ok) {
+    console.error('Failed to upload logs to Azure Blob Storage', response);
+    return false;
+  }
+
+  const blobUrl = await response.text();
+  console.log(`Logs uploaded to ${blobUrl}`);
+  return blobUrl;
+};
+
+export const ShakeToSendLogs = (): JSX.Element => {
+  const [showDialog, closeDialog] = useShakeDialog();
+
+  const [logStatus, setLogStatus] = React.useState<'unsent' | 'sending' | 'failed' | 'sent'>('unsent');
+  const [blobUrl, setBlobUrl] = React.useState<string>();
+
+  const reset = (): void => {
+    setLogStatus('unsent');
+    setBlobUrl(undefined);
+  };
+
+  const onSendLogsClick = async (): Promise<void> => {
+    setLogStatus('sending');
+    try {
+      const result = await sendLogs();
+      if (result) {
+        setLogStatus('sent');
+        setBlobUrl(result);
+      } else {
+        setLogStatus('failed');
+      }
+    } catch {
+      setLogStatus('failed');
+    }
+  };
+
+  const dialogContentProps = {
+    type: DialogType.normal,
+    title: logStatus === 'sent' ? 'Logs sent!' : 'Send logs',
+    subText: logStatus === 'sent' ? undefined : 'We detected a shake. Would you like to send logs to help us debug?'
+  };
+
+  return (
+    <Dialog hidden={!showDialog} dialogContentProps={dialogContentProps} modalProps={{ onDismissed: reset }}>
+      <Spinner hidden={logStatus !== 'sending'} label="Sending logs..." />
+      {logStatus === 'unsent' && (
+        <DialogFooter>
+          <PrimaryButton onClick={onSendLogsClick} text="Send" />
+          <DefaultButton onClick={closeDialog} text="Don't send" />
+        </DialogFooter>
+      )}
+      {logStatus === 'sent' && (
+        <>
+          <Text>
+            Your logs are available here: <Link target="_blank">{blobUrl}</Link>
+          </Text>
+          <DialogFooter>
+            <PrimaryButton
+              text="Send as email"
+              onClick={() => window.open(`mailto:?body=${encodeURIComponent(blobUrl ?? '')}`)}
+            />
+            <DefaultButton onClick={closeDialog} text="Close" />
+          </DialogFooter>
+        </>
+      )}
+    </Dialog>
+  );
+};
