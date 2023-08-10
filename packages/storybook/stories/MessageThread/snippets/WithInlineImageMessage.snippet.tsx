@@ -7,8 +7,6 @@ import {
   ImageGalleryImageProps,
   ImageGallery
 } from '@azure/communication-react';
-import { LayerHost } from '@fluentui/react';
-import { useId } from '@fluentui/react-hooks';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
@@ -82,21 +80,17 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       contentType: 'text'
     }
   ];
-  const chatCompositeModalLayerHostId = useId('modalLayerHost');
   return (
     <FluentThemeProvider>
-      <LayerHost id={chatCompositeModalLayerHostId}>
-        <MessageThread
-          userId={'1'}
-          messages={messages}
-          onFetchAttachments={onFetchAttachment}
-          onInlineImageClicked={setImage}
-        />
-      </LayerHost>
+      <MessageThread
+        userId={'1'}
+        messages={messages}
+        onFetchAttachments={onFetchAttachment}
+        onInlineImageClicked={setImage}
+      />
       {galleryImages && galleryImages.length > 0 && (
         <ImageGallery
           images={galleryImages}
-          modalLayerHostId={chatCompositeModalLayerHostId}
           onDismiss={() => setGalleryImages(undefined)}
           onImageDownloadButtonClicked={() => {
             alert('Download button clicked');

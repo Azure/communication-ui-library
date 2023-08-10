@@ -20,8 +20,7 @@ import {
   PrimaryButton,
   Stack,
   Dropdown,
-  IDropdownOption,
-  LayerHost
+  IDropdownOption
 } from '@fluentui/react';
 import { Divider } from '@fluentui/react-northstar';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
