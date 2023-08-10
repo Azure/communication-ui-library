@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add Raise hand feature to the UI library",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -13,12 +13,11 @@ const MockLocalParticipant = {
 };
 
 const mockVideoElement = document.createElement('div');
-mockVideoElement.innerHTML = '<span />';
 mockVideoElement.style.width = decodeURIComponent('100%25');
 mockVideoElement.style.height = decodeURIComponent('100%25');
-mockVideoElement.style.background = 'url(https://media.giphy.com/media/QvMUP3619500qb6mtw/giphy.gif)';
-mockVideoElement.style.backgroundPosition = 'center';
-mockVideoElement.style.backgroundRepeat = 'no-repeat';
+mockVideoElement.innerHTML = `<img src="https://media.giphy.com/media/QvMUP3619500qb6mtw/giphy.gif" style="width: ${decodeURIComponent(
+  '100%25'
+)}; height: ${decodeURIComponent('100%25')}; object-fit: contain"/>`;
 
 const MockRemoteParticipants = [
   {
