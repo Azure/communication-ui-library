@@ -48,7 +48,7 @@ router.post('/', async function (req, res, next) {
   await containerClient.createIfNotExists();
 
   // create blob
-  const blobName = req.body.blobName ?? new Date().toISOString();
+  const blobName = req.body.blobName ?? `${new Date().toISOString()}.txt`;
   const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
   // upload logs to blob
