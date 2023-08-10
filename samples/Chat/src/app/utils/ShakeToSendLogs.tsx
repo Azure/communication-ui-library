@@ -18,11 +18,11 @@ const consoleLogs: string[] = ['---- LOGS START ----'];
 const startRecordingLogs = (): void => {
   console.log = (...args: unknown[]) => {
     originalConsoleLog.apply(console, args);
-    consoleLogs.push(`${Date.now} ${safeJSONStringify(args)}`);
+    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`);
   };
   AzureLogger.log = (...args: unknown[]) => {
     originalAzureLoggerLog.apply(console, args);
-    consoleLogs.push(`${Date.now} ${safeJSONStringify(args)}`);
+    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`);
   };
 };
 
