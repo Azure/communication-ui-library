@@ -1769,6 +1769,10 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     onDisposeRemoteStreamView?: ((userId: string) => Promise<void>) | undefined;
     isAvailable?: boolean | undefined;
     isReceiving?: boolean | undefined;
+    streamSize?: {
+        width: number;
+        height: number;
+    } | undefined;
     isScreenSharingOn?: boolean | undefined;
     renderElement?: HTMLElement | undefined;
     remoteVideoViewOptions?: VideoStreamOptions | undefined;
@@ -2185,6 +2189,11 @@ export interface VideoGalleryStream {
     isReceiving?: boolean;
     renderElement?: HTMLElement;
     scalingMode?: ViewScalingMode;
+    // (undocumented)
+    streamSize?: {
+        width: number;
+        height: number;
+    };
 }
 
 // @public

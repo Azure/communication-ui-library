@@ -61,6 +61,7 @@ export interface VideoGalleryStream {
   /* @conditional-compile-remove(pinned-participants) */
   /** Scaling mode of the video stream */
   scalingMode?: ViewScalingMode;
+  streamSize?: { width: number; height: number };
 }
 
 /**

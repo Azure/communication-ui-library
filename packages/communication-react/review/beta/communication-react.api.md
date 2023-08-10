@@ -3871,6 +3871,11 @@ export interface VideoGalleryStream {
     isReceiving?: boolean;
     renderElement?: HTMLElement;
     scalingMode?: ViewScalingMode;
+    // (undocumented)
+    streamSize?: {
+        width: number;
+        height: number;
+    };
 }
 
 // @public

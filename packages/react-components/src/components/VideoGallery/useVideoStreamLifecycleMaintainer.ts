@@ -11,6 +11,7 @@ export interface VideoStreamLifecycleMaintainerExtendableProps {
   isMirrored?: boolean;
   scalingMode?: ViewScalingMode;
   isScreenSharingOn?: boolean;
+  streamSize?: { width: number; height: number };
 }
 
 interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
@@ -46,14 +47,22 @@ const useVideoStreamLifecycleMaintainer = (
     onCreateStreamView,
     onDisposeStreamView,
     renderElementExists,
-    scalingMode
+    scalingMode,
+    streamSize
   } = props;
 
   const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
 
   useEffect(() => {
     if (isStreamAvailable && !renderElementExists) {
-      onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
+      const options: VideoStreamOptions = {
+        isMirrored,
+        scalingMode
+      };
+      if (streamSize && streamSize.height > streamSize.width) {
+        options.scalingMode = 'Fit';
+      }
+      onCreateStreamView?.(options)?.then((result) => {
         result && setVideoStreamViewResult(result);
       });
     }
@@ -74,7 +83,8 @@ const useVideoStreamLifecycleMaintainer = (
     onCreateStreamView,
     onDisposeStreamView,
     renderElementExists,
-    scalingMode
+    scalingMode,
+    streamSize
   ]);
 
   // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView

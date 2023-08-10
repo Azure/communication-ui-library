@@ -116,11 +116,32 @@ export class RemoteVideoStreamSubscriber {
   };
 
   private isSizeChanged = (): void => {
-    this._context.setRemoteVideoStreamSize(
-      this._callIdRef.callId,
-      this._participantKey,
-      this._remoteVideoStream.id,
-      this._remoteVideoStream.size
-    );
+    if (this._remoteVideoStream?.size.width === 0 && this._remoteVideoStream?.size.height === 0) {
+      return;
+    }
+    const streamSize =
+      this._context.getState().calls[this._callIdRef.callId]?.remoteParticipants[this._participantKey]?.videoStreams[
+        this._remoteVideoStream.id
+      ]?.streamSize;
+    const size2 = this._remoteVideoStream?.size.width / this._remoteVideoStream?.size.height;
+
+    if (!streamSize) {
+      this._context.setRemoteVideoStreamSize(
+        this._callIdRef.callId,
+        this._participantKey,
+        this._remoteVideoStream.id,
+        this._remoteVideoStream.size
+      );
+      console.log('Stream size updated first', this._remoteVideoStream.size);
+    } else if (streamSize?.width / streamSize?.height !== size2) {
+      this._context.setRemoteVideoStreamSize(
+        this._callIdRef.callId,
+        this._participantKey,
+        this._remoteVideoStream.id,
+        this._remoteVideoStream.size
+      );
+      console.log('Stream size updated', this._remoteVideoStream.size);
+    }
+    console.log('Stream size changed', this._remoteVideoStream.size);
   };
 }

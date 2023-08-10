@@ -508,6 +508,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteVideoStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
+          streamSize={isVideoParticipant ? remoteVideoStream?.streamSize : undefined}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
           remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
