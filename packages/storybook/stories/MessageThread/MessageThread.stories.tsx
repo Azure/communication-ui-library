@@ -387,40 +387,35 @@ const MessageThreadStory = (args): JSX.Element => {
         console.log('Invalid message type');
     }
   };
-  const chatCompositeModalLayerHostId = useId('modalLayerHost');
-
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
-      <LayerHost id={chatCompositeModalLayerHostId}>
-        <MessageThreadComponent
-          userId={UserOne.senderId}
-          messages={chatMessages}
-          showMessageDate={args.showMessageDate}
-          showMessageStatus={args.showMessageStatus}
-          disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
-          onLoadPreviousChatMessages={onLoadPreviousMessages}
-          onRenderMessage={onRenderMessage}
-          onFetchAttachments={onFetchAttachment}
-          onInlineImageClicked={setImage}
-          onUpdateMessage={onUpdateMessageCallback}
-          onRenderAvatar={(userId?: string) => {
-            return (
-              <Persona
-                size={PersonaSize.size32}
-                hidePersonaDetails
-                presence={PersonaPresence.online}
-                text={userId}
-                imageUrl={GetAvatarUrlByUserId(userId ?? '')}
-                showOverflowTooltip={false}
-              />
-            );
-          }}
-        />
-      </LayerHost>
+      <MessageThreadComponent
+        userId={UserOne.senderId}
+        messages={chatMessages}
+        showMessageDate={args.showMessageDate}
+        showMessageStatus={args.showMessageStatus}
+        disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
+        onLoadPreviousChatMessages={onLoadPreviousMessages}
+        onRenderMessage={onRenderMessage}
+        onFetchAttachments={onFetchAttachment}
+        onInlineImageClicked={setImage}
+        onUpdateMessage={onUpdateMessageCallback}
+        onRenderAvatar={(userId?: string) => {
+          return (
+            <Persona
+              size={PersonaSize.size32}
+              hidePersonaDetails
+              presence={PersonaPresence.online}
+              text={userId}
+              imageUrl={GetAvatarUrlByUserId(userId ?? '')}
+              showOverflowTooltip={false}
+            />
+          );
+        }}
+      />
       {galleryImages && galleryImages.length > 0 && (
         <ImageGallery
           images={galleryImages}
-          modalLayerHostId={chatCompositeModalLayerHostId}
           onDismiss={() => setGalleryImages(undefined)}
           onImageDownloadButtonClicked={() => {
             alert('Download button clicked');

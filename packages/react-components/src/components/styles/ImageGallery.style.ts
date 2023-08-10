@@ -35,7 +35,11 @@ export const overlayStyles = (theme: Theme, isDarkThemed: boolean): IOverlayStyl
 export const focusTrapZoneStyle: IStyle = {
   boxShadow: 'none',
   background: 'transparent',
-  display: 'flex'
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+  maxWidth: '100%',
+  maxHeight: '100%'
 };
 
 /**
@@ -44,9 +48,10 @@ export const focusTrapZoneStyle: IStyle = {
 export const scrollableContentStyle: IStyle = {
   overflowY: 'hidden',
   display: 'flex',
-  flexFlow: 'column wrap',
   maxWidth: '100%',
-  maxHeight: '100%'
+  maxHeight: '100%',
+  flexDirection: 'column',
+  flexWrap: 'nowrap'
 };
 
 /**
@@ -111,14 +116,22 @@ export const downloadIconStyle: IStyle = {
 /**
  * @private
  */
-export const imageContainer: IStyle = {
+export const bodyContainer: IStyle = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  margin: '4rem 0 2rem'
+  padding: '5.75rem'
+};
+
+/**
+ * @private
+ */
+export const bodyFocusZone: IStyle = {
+  width: '100%',
+  height: '100%'
 };
 
 /**
