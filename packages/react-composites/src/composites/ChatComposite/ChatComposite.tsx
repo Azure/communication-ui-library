@@ -11,10 +11,6 @@ import { chatScreenContainerStyle } from './styles/Chat.styles';
 import { ChatScreen } from './ChatScreen';
 /* @conditional-compile-remove(file-sharing) */
 import { FileSharingOptions } from './ChatScreen';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { LayerHost } from '@fluentui/react';
 
 /**
  * Props for {@link ChatComposite}.
@@ -32,11 +28,6 @@ export interface ChatCompositeProps extends BaseCompositeProps<ChatCompositeIcon
    * A callback for customizing the message renderer.
    */
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  /**
-   * Optional id property provided on a LayerHost that ImageGallery layer should render within.
-   */
-  modalLayerHostId?: string;
   /**
    * `(typingUsers: CommunicationParticipant[]) => JSX.Element`
    * A callback for customizing the typing indicator renderer.
@@ -109,15 +100,10 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onRenderTypingIndicator,
     onRenderMessage,
-    onFetchParticipantMenuItems,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    modalLayerHostId
+    onFetchParticipantMenuItems
   } = props;
 
   const formFactor = props['formFactor'] || 'desktop';
-
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const chatCompositeModalLayerHostId = useId('modalLayerHost');
 
   /**
    * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
@@ -142,15 +128,9 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            modalLayerHostId={props.modalLayerHostId || chatCompositeModalLayerHostId}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             {...fileSharingOptions()}
           />
-          {
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            !modalLayerHostId && <LayerHost id={chatCompositeModalLayerHostId} />
-          }
         </ChatAdapterProvider>
       </BaseProvider>
     </div>
