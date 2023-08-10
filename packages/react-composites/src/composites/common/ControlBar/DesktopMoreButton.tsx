@@ -196,6 +196,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         iconName: 'GalleryOptions',
         styles: { root: { lineHeight: 0 } }
       },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
       text: localeStrings.strings.call.moreButtonGalleryControlLabel,
       subMenuProps: {
         items: [
@@ -203,6 +206,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             key: 'topKey',
             text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
             canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
             isChecked: galleryPositionTop,
             onClick: () => {
               if (galleryPositionTop === false) {
