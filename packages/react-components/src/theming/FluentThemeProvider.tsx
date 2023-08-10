@@ -26,8 +26,9 @@ export interface FluentThemeProviderProps {
 
 const wrapper = mergeStyles({
   height: '100%',
-  width: '100%',
-  overflow: 'auto'
+  overflow: 'auto',
+  padding: 0,
+  width: '100%'
 });
 
 const defaultTheme = mergeThemes(getTheme(), lightTheme);
@@ -39,8 +40,8 @@ const ThemeContext = createContext<Theme>(defaultTheme);
  * Provider to apply a Fluent theme across this library's react components.
  *
  * @remarks Components in this library are composed primarily from [Fluent UI](https://developer.microsoft.com/fluentui#/controls/web),
- * controls, and also from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0) controls.
- * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
+ * controls, mixing v8 and v9 controls.
+ * This provider handles applying any theme provided to the underlying Fluent UI controls.
  *
  * @public
  */
@@ -53,11 +54,11 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
 
   return (
     <ThemeContext.Provider value={fluentUITheme}>
-      <FluentProvider className={wrapper} theme={createV9Theme(fluentUITheme)}>
-        <ThemeProvider theme={fluentUITheme} className={wrapper}>
+      <ThemeProvider theme={fluentUITheme} className={wrapper}>
+        <FluentProvider className={wrapper} theme={createV9Theme(fluentUITheme)}>
           {children}
-        </ThemeProvider>
-      </FluentProvider>
+        </FluentProvider>
+      </ThemeProvider>
     </ThemeContext.Provider>
   );
 };
