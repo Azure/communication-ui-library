@@ -20,7 +20,12 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     localVideoSelector,
     /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand
   ],
-  (displayName, dominantRemoteParticipant, localVideoStreamInfo, raisedHand) => {
+  (
+    displayName,
+    dominantRemoteParticipant,
+    localVideoStreamInfo,
+    /* @conditional-compile-remove(raise-hand) */ raisedHand
+  ) => {
     return {
       localParticipant: {
         displayName,
