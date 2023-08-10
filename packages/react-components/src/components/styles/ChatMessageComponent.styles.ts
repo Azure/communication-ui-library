@@ -11,6 +11,7 @@ import {
   IIconStyles
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+import { tokens } from '@fluentui/react-components';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
@@ -52,7 +53,19 @@ export const iconWrapperStyle = (theme: ITheme, isSubMenuOpen: boolean): IIconSt
 /**
  * @private
  */
-export const chatMessageDateStyle = mergeStyles({ fontWeight: FontWeights.semibold });
+export const chatMessageDateStyle = mergeStyles({
+  color: tokens.colorNeutralForeground2,
+  fontWeight: FontWeights.semibold,
+  fontSize: '0.75rem'
+});
+
+/**
+ * @private
+ */
+export const chatMessageAuthorStyle = mergeStyles({
+  fontWeight: FontWeights.semibold,
+  fontSize: '0.75rem'
+});
 
 /**
  * @private
@@ -64,7 +77,7 @@ export const chatMessageEditedTagStyle = (theme: Theme): string =>
  * @private
  */
 export const chatMessageFailedTagStyle = (theme: Theme): string =>
-  mergeStyles({ fontWeight: FontWeights.light, color: theme.semanticColors.errorText });
+  mergeStyles({ fontWeight: FontWeights.regular, color: theme.semanticColors.errorText });
 
 /**
  * @private

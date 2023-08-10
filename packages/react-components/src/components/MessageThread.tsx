@@ -2,43 +2,23 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import {
-  Chat,
-  ChatItemProps,
-  Flex,
-  ShorthandValue,
-  mergeStyles as mergeNorthstarThemes,
-  Ref
-} from '@internal/northstar-wrapper';
+import { Chat } from '@fluentui-contrib/react-chat';
+import { mergeClasses } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
-  chatStyle,
+  useChatStyles,
   buttonWithIconStyles,
   newMessageButtonStyle,
-  messageStatusContainerStyle,
   noMessageStatusStyle,
-  defaultChatItemMessageContainer,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
-  gutterWithAvatar,
-  gutterWithHiddenAvatar,
   FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
-import {
-  Icon,
-  IStyle,
-  mergeStyles,
-  Persona,
-  PersonaSize,
-  PrimaryButton,
-  Stack,
-  IPersona,
-  Theme
-} from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, PrimaryButton, Stack, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { IPersonaProps } from '@fluentui/react';
 import { delay } from './utils/delay';
@@ -364,7 +344,7 @@ const memoizeAllMessages = memoizeFnAll(
       participantCount: number,
       readCount: number
     ) => JSX.Element,
-    defaultChatMessageRenderer: (message: MessageProps) => JSX.Element,
+    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
     strings: MessageThreadStrings,
     theme: Theme,
     _attached?: boolean | string,
@@ -377,7 +357,7 @@ const memoizeAllMessages = memoizeFnAll(
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
     disableEditing?: boolean
-  ): ShorthandValue<ChatItemProps> => {
+  ): JSX.Element => {
     const messageProps: MessageProps = {
       message,
       strings,
@@ -389,80 +369,35 @@ const memoizeAllMessages = memoizeFnAll(
       disableEditing
     };
 
-    const chatMessageItemProps = (
+    const chatMessage = (
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
-    ): ShorthandValue<ChatItemProps> => {
+    ): JSX.Element => {
+      const messageStatusRenderer =
+        showMessageStatus && statusToRender
+          ? onRenderMessageStatus
+            ? (status: MessageStatus) => onRenderMessageStatus({ status })
+            : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
+          : () => <div className={mergeStyles(noMessageStatusStyle)} />;
+
       const chatMessageComponent =
         onRenderMessage === undefined
-          ? defaultChatMessageRenderer(messageProps)
+          ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
           : onRenderMessage(messageProps, defaultChatMessageRenderer);
 
-      const personaOptions: IPersona = {
-        hidePersonaDetails: true,
-        size: PersonaSize.size32,
-        text: message.senderDisplayName,
-        showOverflowTooltip: false
-      };
-
-      const chatItemMessageStyle =
-        (message.mine ? styles?.myChatItemMessageContainer : styles?.chatItemMessageContainer) ||
-        defaultChatItemMessageContainer(shouldOverlapAvatarAndMessage);
-
-      const chatGutterStyles =
-        message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
-      return {
-        gutter: {
-          styles: chatGutterStyles,
-          content: message.mine ? (
-            ''
-          ) : onRenderAvatar ? (
-            onRenderAvatar(message.senderId ?? '', personaOptions)
-          ) : (
-            <Persona {...personaOptions} />
-          )
-        },
-        contentPosition: message.mine ? 'end' : 'start',
-        message: {
-          styles: chatItemMessageStyle,
-          content: (
-            <Flex hAlign={message.mine ? 'end' : undefined} vAlign="end">
-              {chatMessageComponent}
-              <div
-                className={mergeStyles(
-                  messageStatusContainerStyle(message.mine ?? false),
-                  styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-                )}
-              >
-                {showMessageStatus && statusToRender ? (
-                  onRenderMessageStatus ? (
-                    onRenderMessageStatus({ status: statusToRender })
-                  ) : (
-                    defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
-                  )
-                ) : (
-                  <div className={mergeStyles(noMessageStatusStyle)} />
-                )}
-              </div>
-            </Flex>
-          )
-        },
-        attached: message.attached,
-        key: _messageKey
-      };
+      return <div key={_messageKey}>{chatMessageComponent}</div>;
     };
 
     /* @conditional-compile-remove(data-loss-prevention) */
-    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stablize)
+    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stabilize)
     if (message.messageType === 'blocked') {
       const myChatMessageStyle =
         message.status === 'failed'
-          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
+          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
           : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
-      return chatMessageItemProps(message, messageProps);
+      return chatMessage(message, messageProps);
     }
 
     switch (message.messageType) {
@@ -474,7 +409,7 @@ const memoizeAllMessages = memoizeFnAll(
         const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
 
-        return chatMessageItemProps(message, messageProps);
+        return chatMessage(message, messageProps);
       }
 
       case 'system': {
@@ -485,19 +420,13 @@ const memoizeAllMessages = memoizeFnAll(
           ) : (
             onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
           );
-        return {
-          children: systemMessageComponent,
-          key: _messageKey
-        };
+        return <div key={_messageKey}>{systemMessageComponent}</div>;
       }
 
       default: {
         // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
         const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
-        return {
-          children: customMessageComponent,
-          key: _messageKey
-        };
+        return <div key={_messageKey}>{customMessageComponent}</div>;
       }
     }
   }
@@ -790,13 +719,23 @@ export type MessageProps = {
 };
 
 /**
+ * @internal
+ */
+export type _MessagePropsInternal = MessageProps & {
+  /**
+   * Render the message status indicator.
+   */
+  messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+};
+
+/**
  * `MessageThread` allows you to easily create a component for rendering chat messages, handling scrolling behavior of new/old messages and customizing icons & controls inside the chat thread.
  * @param props - of type MessageThreadProps
  *
  * Users will need to provide at least chat messages and userId to render the `MessageThread` component.
  * Users can also customize `MessageThread` by passing in their own Avatar, `MessageStatusIndicator` icon, `JumpToNewMessageButton`, `LoadPreviousMessagesButton` and the behavior of these controls.
  *
- * `MessageThread` internally uses the `Chat` & `Chat.Message` component from `@fluentui/react-northstar`. You can checkout the details about these [two components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+ * `MessageThread` internally uses the `Chat` component from `@fluentui-contrib/chat`. You can checkout the details about these components [here](https://microsoft.github.io/fluentui-contrib/react-chat/).
  *
  * @public
  */
@@ -891,8 +830,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const messageIdSeenByMeRef = useRef<string>('');
 
-  const chatScrollDivRef = useRef<HTMLElement>(null);
-  const chatThreadRef = useRef<HTMLElement>(null);
+  const chatScrollDivRef = useRef<HTMLDivElement>(null);
+  const chatThreadRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
   // When the chat thread is narrow, we perform space optimizations such as overlapping
@@ -1208,7 +1147,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
-        return messages.map((message: Message, index: number): ShorthandValue<ChatItemProps> => {
+        return messages.map((message: Message, index: number): JSX.Element => {
           let key: string | undefined = message.messageId;
           let statusToRender: MessageStatus | undefined = undefined;
 
@@ -1297,19 +1236,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     ]
   );
 
+  const classes = useChatStyles();
   const chatBody = useMemo(() => {
     return (
       <LiveAnnouncer>
-        <Chat
-          styles={mergeNorthstarThemes(chatStyle, linkStyles(theme), styles?.chatContainer ?? {})}
-          items={messagesToDisplay}
-        />
+        <Chat className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}>
+          {messagesToDisplay}
+        </Chat>
       </LiveAnnouncer>
     );
-  }, [theme, styles?.chatContainer, messagesToDisplay]);
+  }, [theme, styles?.chatContainer, messagesToDisplay, classes]);
 
   return (
-    <Ref innerRef={chatThreadRef}>
+    <div ref={chatThreadRef}>
       <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
         {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
             tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
@@ -1324,9 +1263,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           </div>
         )}
 
-        <Ref innerRef={chatScrollDivRef}>{chatBody}</Ref>
+        <div ref={chatScrollDivRef}>{chatBody}</div>
       </Stack>
-    </Ref>
+    </div>
   );
 };
 

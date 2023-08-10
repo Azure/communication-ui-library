@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
-import { Chat } from '@internal/northstar-wrapper';
+import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -120,6 +120,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return (
       <Stack
         className={mergeStyles(
+          chatMessageEditContainerStyle,
           borderAndBoxShadowStyle({
             theme,
             hasErrorMessage: message.failureReason !== undefined,
@@ -188,7 +189,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  return <Chat.Message styles={chatMessageEditContainerStyle} content={getContent()} />;
+  return <ChatMyMessage body={getContent()} />;
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
