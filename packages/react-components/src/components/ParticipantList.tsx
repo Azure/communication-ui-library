@@ -8,10 +8,11 @@ import {
   merge,
   mergeStyles,
   PersonaPresence,
-  Stack
+  Stack,
+  Theme
 } from '@fluentui/react';
 /* @conditional-compile-remove(total-participant-count) */
-import { Text, Theme } from '@fluentui/react';
+import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
@@ -157,9 +158,11 @@ const onRenderParticipantDefault = (
                     borderRadius: '1rem'
                   }}
                 >
-                  <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
-                  </Stack.Item>
+                  {callingParticipant.raisedHand.order && (
+                    <Stack.Item>
+                      <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
+                    </Stack.Item>
+                  )}
                   <Stack.Item>
                     <RaisedHandIcon />
                   </Stack.Item>
@@ -322,7 +325,11 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     strings?.overflowParticipantCount ?? participantListStrings?.overflowParticipantCount;
 
   return (
-    <Stack data-ui-id={ids.participantList} className={mergeStyles(participantListStyle, props.styles?.root)}>
+    <Stack
+      data-ui-id={ids.participantList}
+      className={mergeStyles(participantListStyle, props.styles?.root)}
+      role={'menu'}
+    >
       {displayedParticipants.map((participant: ParticipantListParticipant) =>
         onRenderParticipant
           ? onRenderParticipant(participant)

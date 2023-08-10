@@ -4,7 +4,7 @@
 
 ```ts
 
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
+import { AddPhoneNumberOptions } from '@azure/communication-callin
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
@@ -2342,6 +2342,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -3407,17 +3409,17 @@ export type Profile = {
 };
 
 // @public
-export type RaisedHand = {
-    raisedHandOrderPosition: number;
-};
-
-// @public
 export type RaisedHandState = {
     raisedHandOrderPosition: number;
 };
 
 // @public
 export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+=======
+    order: number;
+};
 
 // @public
 export interface RaiseHandButtonProps extends ControlBarButtonProps {

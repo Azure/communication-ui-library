@@ -91,12 +91,12 @@ const raiseHandButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.palette.themePrimary,
     color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` } // added !important to avoid override by FluentUI button styles
+    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
   },
   rootCheckedHovered: {
     background: theme.palette.themePrimary,
     color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` } // added !important to avoid override by FluentUI button styles
+    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
   },
   labelChecked: { color: DefaultPalette.white }
 });

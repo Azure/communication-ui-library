@@ -59,6 +59,32 @@ const convertRemoteParticipantToParticipantListParticipant = (
   };
 };
 
+/* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
+  (
+    userId: string,
+    displayName: string | undefined,
+    state: RemoteParticipantState,
+    isMuted: boolean,
+    isScreenSharing: boolean,
+    isSpeaking: boolean,
+    localUserCanRemoveOthers: boolean
+  ): CallParticipantListParticipant => {
+    return convertRemoteParticipantToParticipantListParticipantBetaRelease(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      localUserCanRemoveOthers
+    );
+  }
+);
+
 /* @conditional-compile-remove(raise-hand) */
 /**
  * @private
@@ -86,6 +112,29 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     );
   }
 );
+
+/* @conditional-compile-remove(rooms) */
+const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
+  userId: string,
+  displayName: string | undefined,
+  state: RemoteParticipantState,
+  isMuted: boolean,
+  isScreenSharing: boolean,
+  isSpeaking: boolean,
+  localUserCanRemoveOthers: boolean
+): CallParticipantListParticipant => {
+  return {
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      localUserCanRemoveOthers
+    )
+  };
+};
 
 /* @conditional-compile-remove(raise-hand) */
 const convertRemoteParticipantToParticipantListParticipantBeta = (

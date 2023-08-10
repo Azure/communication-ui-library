@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { FontWeights, IStackTokens, IStyle, mergeStyles } from '@fluentui/react';
-import { IStackStyles } from '@fluentui/react';
+import { IStackTokens, mergeStyles } from '@fluentui/react';
+/* @conditional-compile-remove(PSTN-calls) */
+import { IStackStyles, IStyle, FontWeights } from '@fluentui/react';
 export const imgStyle = mergeStyles({
   width: '16.5rem',
   padding: '0.5rem',
