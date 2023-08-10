@@ -18,7 +18,7 @@ import { HoldButton } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
-import { RaiseHandButtonSelector, raiseHandButtonSelector } from '../callControlSelectors';
+import { raiseHandButtonSelector } from '../callControlSelectors';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
