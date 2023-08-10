@@ -115,10 +115,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
   ? /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */ EmptySelector
   : AreEqual<Component, typeof HoldButton> extends true
   ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
-  : AreEqual<Component, typeof RaiseHandButton> extends true
-  ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
-  : AreEqual<Component, typeof RaiseHandButton> extends true
-  ? /* @conditional-compile-remove(raise-hand) */ RaiseHandButtonSelector
   : undefined;
 
 /**
@@ -174,12 +170,14 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   return undefined;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     case HoldButton:
       return holdButtonSelector;
+    /* @conditional-compile-remove(raise-hand) */
     case RaiseHandButton:
+      /* @conditional-compile-remove(raise-hand) */
       return raiseHandButtonSelector;
   }
 };
