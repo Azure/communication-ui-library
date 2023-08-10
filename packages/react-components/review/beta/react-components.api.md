@@ -1229,7 +1229,6 @@ export interface ImageGalleryImageProps {
 // @beta
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
-    modalLayerHostId?: string;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
@@ -1239,13 +1238,13 @@ export interface ImageGalleryProps {
 
 // @beta
 export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    bodyContainer?: IStyle;
     closeIcon?: IStyle;
     controlBarContainer?: IStyle;
     downloadButton?: IStyle;
     downloadButtonIcon?: IStyle;
     header?: IStyle;
     image?: IStyle;
-    imageContainer?: IStyle;
     modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
     overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
     smallDownloadButton?: IStyle;
