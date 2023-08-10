@@ -2780,7 +2780,7 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
     downloadButtonIcon?: IStyle;
     header?: IStyle;
     image?: IStyle;
-    imageContainer?: IStyle;
+    bodyContainer?: IStyle;
     modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
     overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
     smallDownloadButton?: IStyle;
