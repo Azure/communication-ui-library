@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "ターゲット参加者のテナント ID を解決できません",
     "unableToResolveTenantMoreDetails": "参加者 ID が正しく入力チェックしてください",
     "participantIdIsMalformedTitle": "参加者 ID の形式が正しくありません",
-    "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください"
+    "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "このチャット内",

@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Die Mandanten-ID für den Zielteilnehmer kann nicht aufgelöst werden",
     "unableToResolveTenantMoreDetails": "Überprüfen Sie, ob die Teilnehmer-ID richtig eingegeben wurde.",
     "participantIdIsMalformedTitle": "Die Teilnehmer-ID weist nicht das richtige Format auf",
-    "participantIdIsMalformedMoreDetails": "Überprüfen Sie, ob die Teilnehmer-ID das richtige Format aufweist."
+    "participantIdIsMalformedMoreDetails": "Überprüfen Sie, ob die Teilnehmer-ID das richtige Format aufweist.",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",

@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Impossible de résoudre l’ID de locataire pour le participant cible",
     "unableToResolveTenantMoreDetails": "Veuillez case activée l’ID de participant est entré correctement",
     "participantIdIsMalformedTitle": "Le format de l’ID de participant n’est pas correct",
-    "participantIdIsMalformedMoreDetails": "Veuillez case activée que le format de l’ID de participant est correct"
+    "participantIdIsMalformedMoreDetails": "Veuillez case activée que le format de l’ID de participant est correct",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

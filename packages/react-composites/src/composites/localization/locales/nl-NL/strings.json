@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Kan de tenant-id voor de doeldeelnemer niet omzetten",
     "unableToResolveTenantMoreDetails": "Controleer of de deelnemer-id juist is ingevoerd",
     "participantIdIsMalformedTitle": "Deelnemer-id heeft niet de juiste indeling",
-    "participantIdIsMalformedMoreDetails": "Controleer of de deelnemer-id de juiste indeling heeft"
+    "participantIdIsMalformedMoreDetails": "Controleer of de deelnemer-id de juiste indeling heeft",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "In deze chat",

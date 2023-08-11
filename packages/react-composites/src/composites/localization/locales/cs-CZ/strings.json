@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Nepovedlo se přeložit ID tenanta pro cílového účastníka",
     "unableToResolveTenantMoreDetails": "Zkontrolujte prosím, jestli je správně zadané ID účastníka.",
     "participantIdIsMalformedTitle": "ID účastníka nemá správný formát.",
-    "participantIdIsMalformedMoreDetails": "Zkontrolujte prosím, jestli je ID účastníka ve správném formátu."
+    "participantIdIsMalformedMoreDetails": "Zkontrolujte prosím, jestli je ID účastníka ve správném formátu.",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",

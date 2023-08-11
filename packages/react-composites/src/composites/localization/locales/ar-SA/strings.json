@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "تعذر حل معرف المستأجر للمشارك الهدف",
     "unableToResolveTenantMoreDetails": "الرجاء التحقق من إدخال معرف المشارك بشكل صحيح",
     "participantIdIsMalformedTitle": "تنسيق معرف المشارك غير صحيح",
-    "participantIdIsMalformedMoreDetails": "الرجاء التحقق من أن معرف المشارك بالتنسيق الصحيح"
+    "participantIdIsMalformedMoreDetails": "الرجاء التحقق من أن معرف المشارك بالتنسيق الصحيح",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",

@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Nie można rozpoznać identyfikatora dzierżawy dla uczestnika docelowego",
     "unableToResolveTenantMoreDetails": "Sprawdź, czy identyfikator uczestnika został wprowadzony poprawnie",
     "participantIdIsMalformedTitle": "Identyfikator uczestnika ma niepoprawny format",
-    "participantIdIsMalformedMoreDetails": "Sprawdź, czy identyfikator uczestnika ma poprawny format"
+    "participantIdIsMalformedMoreDetails": "Sprawdź, czy identyfikator uczestnika ma poprawny format",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "W tym czacie",

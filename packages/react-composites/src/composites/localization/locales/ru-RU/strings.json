@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Не удалось разрешить идентификатор клиента для целевого участника",
     "unableToResolveTenantMoreDetails": "Проверьте, что идентификатор участника введен правильно",
     "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
-    "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате"
+    "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "В этом чате",

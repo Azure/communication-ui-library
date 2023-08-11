@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "No se puede resolver el id. de inquilino para el participante de destino",
     "unableToResolveTenantMoreDetails": "Compruebe que el id. de participante se ha escrito correctamente.",
     "participantIdIsMalformedTitle": "El id. de participante no tiene el formato correcto",
-    "participantIdIsMalformedMoreDetails": "Compruebe que el id. de participante tiene el formato correcto"
+    "participantIdIsMalformedMoreDetails": "Compruebe que el id. de participante tiene el formato correcto",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "En este chat",

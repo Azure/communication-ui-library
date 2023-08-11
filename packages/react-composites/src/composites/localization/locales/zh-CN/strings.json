@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "无法解析目标参与者的租户 ID",
     "unableToResolveTenantMoreDetails": "请检查正确输入参与者 ID",
     "participantIdIsMalformedTitle": "参与者 ID 的格式不正确",
-    "participantIdIsMalformedMoreDetails": "请检查参与者 ID 的格式正确"
+    "participantIdIsMalformedMoreDetails": "请检查参与者 ID 的格式正确",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

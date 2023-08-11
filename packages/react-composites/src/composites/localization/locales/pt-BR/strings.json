@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Não é possível resolve ID do locatário para o participante de destino",
     "unableToResolveTenantMoreDetails": "Verifique se a ID do participante foi inserida corretamente",
     "participantIdIsMalformedTitle": "A ID do participante não está no formato correto",
-    "participantIdIsMalformedMoreDetails": "Verifique marcar a ID do participante está no formato correto"
+    "participantIdIsMalformedMoreDetails": "Verifique marcar a ID do participante está no formato correto",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "Neste chat",

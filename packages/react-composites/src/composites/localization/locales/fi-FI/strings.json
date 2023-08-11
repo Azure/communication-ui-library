@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Kohdeosallistujan vuokraajan tunnusta ei voi selvittää",
     "unableToResolveTenantMoreDetails": "Tarkista, että osallistujan tunnus on kirjoitettu oikein",
     "participantIdIsMalformedTitle": "Osallistujan tunnus ei ole oikeassa muodossa",
-    "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa"
+    "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

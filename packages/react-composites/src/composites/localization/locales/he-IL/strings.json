@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "לא ניתן לזהות מזהה דייר עבור משתתף היעד",
     "unableToResolveTenantMoreDetails": "בדוק שמזהה המשתתף הוזן כראוי",
     "participantIdIsMalformedTitle": "מזהה המשתתף אינו בתבנית הנכונה",
-    "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה"
+    "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
