@@ -47,7 +47,8 @@ import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calli
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
-import { PartialTheme } from '@fluentui/react';
+import { PartialTheme as PartialTheme_2 } from '@fluentui/react';
+import { PartialTheme as PartialTheme_3 } from '@fluentui/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -62,7 +63,8 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { Theme } from '@fluentui/react';
+import { Theme as Theme_2 } from '@fluentui/react';
+import { Theme as Theme_3 } from '@fluentui/react-components';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
@@ -153,7 +155,7 @@ export type AzureCommunicationChatAdapterArgs = {
 
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
-    fluentTheme?: PartialTheme | Theme;
+    fluentTheme?: PartialTheme_2 | Theme_2;
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -772,7 +774,7 @@ export type CallWithChatCompositeOptions = {
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     adapter: CallWithChatAdapter;
-    fluentTheme?: PartialTheme | Theme;
+    fluentTheme?: PartialTheme_2 | Theme_2;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
     options?: CallWithChatCompositeOptions;
@@ -1755,7 +1757,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 // @public
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
-    fluentTheme?: PartialTheme | Theme;
+    fluentTheme?: PartialTheme_2 | Theme;
     rtl?: boolean;
 }
 
@@ -2143,6 +2145,11 @@ export interface OptionsDevice {
 }
 
 // @public
+export type PartialTheme = PartialTheme_2 & {
+    fluent9Theme: PartialTheme_3;
+};
+
+// @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     participants: CommunicationParticipant[];
@@ -2477,6 +2484,11 @@ export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     messageType: 'system';
 }
+
+// @public
+export type Theme = Theme_2 & {
+    fluent9Theme: Theme_3;
+};
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
