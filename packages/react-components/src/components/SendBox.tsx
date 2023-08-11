@@ -131,7 +131,7 @@ export interface SendBoxProps {
    */
   systemMessage?: string;
   /**
-   * Optional callback called when message is sent
+   * Optional override behavior on send button click
    */
   onSendMessage?: (content: string) => Promise<void>;
   /* @conditional-compile-remove(mention) */
