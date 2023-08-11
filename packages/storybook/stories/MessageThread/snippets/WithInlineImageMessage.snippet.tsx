@@ -27,7 +27,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   };
 
   const setImage = (attachment: FileMetadata): Promise<void> => {
-    const title = 'ASDFASDF';
+    const title = 'Image';
     const galleryImage: ImageGalleryImageProps = {
       title: title,
       saveAsName: attachment.id,
