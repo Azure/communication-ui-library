@@ -1347,6 +1347,7 @@ export type _FakeChatAdapterArgs = {
     participantsWithHiddenComposites?: ChatParticipant[];
     customDataModelEnabled?: boolean;
     chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+    theme?: 'light' | 'dark';
 };
 
 // @internal
