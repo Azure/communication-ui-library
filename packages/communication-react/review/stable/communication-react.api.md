@@ -2576,7 +2576,8 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+}
 
 // @public
 export type VideoGalleryParticipant = {

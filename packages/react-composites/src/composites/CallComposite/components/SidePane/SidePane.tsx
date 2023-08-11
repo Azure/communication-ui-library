@@ -43,9 +43,10 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     ? availableSpaceStyles
     : maxWidthStyles;
 
-  let Header =
+  const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
     EmptyElement;
+
   /**
    * Legacy code to support old behavior of showing chat and people tab headers on mobile side pane.
    * To be removed in breaking change.
@@ -56,9 +57,8 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     updateSidePaneRenderer(undefined);
   }, [updateSidePaneRenderer]);
 
-  if (props.mobileView && (overrideSidePaneId === 'chat' || sidePaneRenderer?.id === 'people')) {
-    // use legacy header
-    Header = () => (
+  const LegacyHeader = useMemo((): JSX.Element => {
+    return (
       <PeopleAndChatHeader
         onClose={overrideSidePaneId === 'chat' ? props.onChatButtonClicked ?? noop : closePane}
         activeTab={sidePaneRenderer?.id === 'people' ? 'people' : 'chat'}
@@ -69,7 +69,18 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
         onChatButtonClicked={overrideSidePaneId === 'chat' ? noop : props.onChatButtonClicked}
       />
     );
-  }
+  }, [
+    overrideSidePaneId,
+    props.onChatButtonClicked,
+    props.onPeopleButtonClicked,
+    props.disablePeopleButton,
+    props.disableChatButton,
+    sidePaneRenderer,
+    closePane
+  ]);
+
+  const HeaderToRender =
+    props.mobileView && (overrideSidePaneId === 'chat' || sidePaneRenderer?.id === 'people') ? LegacyHeader : Header();
 
   const ContentRender = overrideSidePane?.isActive ? undefined : sidePaneRenderer?.contentRenderer;
   const OverrideContentRender =
@@ -83,7 +94,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
 
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
-      <Header />
+      {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack verticalFill styles={scrollableContainer}>
           {ContentRender && (
