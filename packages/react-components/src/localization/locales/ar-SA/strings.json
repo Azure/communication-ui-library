@@ -8,8 +8,11 @@
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "lowerParticipantHandButtonLabel": "TODO: خفض اليد",
+    "raisedHandIconLabel": "TODO:: تسمية أيقونة رفع اليد"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"
   },
   "typingIndicator": {
     "singleUser": "{user} يكتب",
@@ -112,11 +115,11 @@
     "tooltipOffContent": "عرض الشاشة"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "رفع",
+    "onLabel": "خفض",
+    "tooltipDisabledContent": "تم تعطيل إجراء رفع اليد",
+    "tooltipOnContent": "خفض يد",
+    "tooltipOffContent": "رفع يد"
   },
   "messageThread": {
     "yesterday": "أمس",
