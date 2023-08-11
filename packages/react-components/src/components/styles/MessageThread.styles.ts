@@ -56,7 +56,7 @@ export const useChatStyles = makeStyles({
     paddingBottom: '0.5rem',
     // paddingTop: '0.8rem',
     ...shorthands.border('none'),
-    ...shorthands.overflow('auto'),
+    ...shorthands.overflow('auto hidden'),
     // `height: 100%` ensures that the Chat component covers 100% of it's parents height
     // to prevent intermittent scrollbars when GIFs are present in the chat.
     height: '100%',
@@ -73,13 +73,6 @@ export const newMessageButtonContainerStyle = mergeStyles({
   bottom: 0,
   right: '1.5rem'
 });
-
-/**
- * @private
- */
-export const chatMessageStyle: CSSProperties = {
-  overflowY: 'hidden'
-};
 
 /**
  * @private
@@ -131,9 +124,7 @@ const useChatFailedMyMessageClasses = makeStyles({
 
 const chatNormalMyMessageClasses = makeStyles({
   ...defaultChatItemMessageContainer,
-  root: {
-    backgroundColor: 'rgb(199, 224, 244)'
-  }
+  root: {}
 });
 const useChatFailedMessageClasses = makeStyles({
   ...defaultChatItemMessageContainer,

@@ -2,9 +2,10 @@
 // Licensed under the MIT license.
 
 import { PartialTheme } from '@fluentui/react';
+import { teamsDarkTheme, teamsLightTheme, Theme as F9Theme } from '@fluentui/react-components';
 
 /**
- * Custom Fluent theme pallete used by calling related components in this library.
+ * Custom Fluent theme pallette used by calling related components in this library.
  *
  * @public
  */
@@ -20,11 +21,20 @@ export interface CallingTheme {
 }
 
 /**
+ * Custom Fluent theme used by components exported from this library.
+ */
+export type Theme = PartialTheme & Partial<CallingTheme> & { fluent9Theme: F9Theme };
+
+/**
  * Preset light theme for components exported from this library.
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme = {
+export const lightTheme: PartialTheme & CallingTheme & { fluent9Theme: F9Theme } = {
+  fluent9Theme: {
+    ...teamsLightTheme,
+    colorBrandBackground2: '#C7E0F4'
+  },
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -67,7 +77,11 @@ export const lightTheme: PartialTheme & CallingTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme = {
+export const darkTheme: PartialTheme & CallingTheme & { fluent9Theme: F9Theme } = {
+  fluent9Theme: {
+    ...teamsDarkTheme,
+    colorBrandBackground2: '#0C2E49'
+  },
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',

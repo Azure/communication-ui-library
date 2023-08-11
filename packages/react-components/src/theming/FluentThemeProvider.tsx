@@ -2,10 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { ThemeProvider, Theme, PartialTheme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
-import { FluentProvider } from '@fluentui/react-components';
-import { createV9Theme } from '@fluentui/react-migration-v8-v9';
-import { lightTheme } from './themes';
+import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
+import { FluentProvider, Theme as F9Theme } from '@fluentui/react-components';
+import { Theme as WebUiTheme, lightTheme } from './themes';
 
 /**
  * Props for {@link FluentThemeProvider}.
@@ -26,12 +25,16 @@ export interface FluentThemeProviderProps {
 
 const wrapper = mergeStyles({
   height: '100%',
-  overflow: 'auto',
+  margin: 0,
+  overflow: 'hidden',
   padding: 0,
   width: '100%'
 });
 
-const defaultTheme = mergeThemes(getTheme(), lightTheme);
+const defaultTheme: Theme & WebUiTheme = {
+  ...mergeThemes(getTheme(), lightTheme),
+  fluent9Theme: { ...lightTheme.fluent9Theme }
+};
 
 /** Theme context for library's react components */
 const ThemeContext = createContext<Theme>(defaultTheme);
@@ -47,15 +50,20 @@ const ThemeContext = createContext<Theme>(defaultTheme);
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children } = props;
+  const v8Theme: Omit<Theme, 'fluent9Theme'> = defaultTheme;
 
-  let fluentUITheme: Theme = mergeThemes(defaultTheme, fluentTheme);
+  let fluentV8Theme: Theme = mergeThemes(v8Theme, fluentTheme);
+  const fluentV9Theme: F9Theme = { ...defaultTheme.fluent9Theme };
+
   // merge in rtl from FluentThemeProviderProps
-  fluentUITheme = mergeThemes(fluentUITheme, { rtl });
+  fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
+
+  const combinedThemes = { ...fluentV8Theme, fluent9Theme: fluentV9Theme };
 
   return (
-    <ThemeContext.Provider value={fluentUITheme}>
-      <ThemeProvider theme={fluentUITheme} className={wrapper}>
-        <FluentProvider className={wrapper} theme={createV9Theme(fluentUITheme)}>
+    <ThemeContext.Provider value={combinedThemes}>
+      <ThemeProvider theme={fluentV8Theme} className={wrapper}>
+        <FluentProvider className={wrapper} theme={fluentV9Theme}>
           {children}
         </FluentProvider>
       </ThemeProvider>
