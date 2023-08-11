@@ -7,9 +7,10 @@
     "mutedIconLabel": "Dempet",
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
-    "participantStateHold": "På vent",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "På vent"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} flere"
   },
   "typingIndicator": {
     "singleUser": "{user} skriver ...",
@@ -112,11 +113,11 @@
     "tooltipOffContent": "Presenter skjermen din"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Rekk opp",
+    "onLabel": "Ta ned",
+    "tooltipDisabledContent": "Rekk opp hånden-handlingen er deaktivert",
+    "tooltipOnContent": "Ta ned hånden",
+    "tooltipOffContent": "Rekke opp hånden"
   },
   "messageThread": {
     "yesterday": "I går",
