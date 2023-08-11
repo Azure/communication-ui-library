@@ -56,9 +56,7 @@ export const ParticipantListWithHeading = (props: {
   const subheadingUniqueId = useId();
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
-  const totalParticipantCount = participantListProps.totalParticipantCount
-    ? participantListProps.totalParticipantCount
-    : 1;
+  const totalParticipantCount = participantListProps.totalParticipantCount;
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
@@ -111,7 +109,7 @@ const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number):
   /* @conditional-compile-remove(total-participant-count) */
   const participantCountString = totalParticipantCount
     ? { numberOfPeople: `(${totalParticipantCount})` }
-    : { numberOfPeople: '' };
+    : { numberOfPeople: ' ' };
   /* @conditional-compile-remove(total-participant-count) */
   return _formatString(paneTitle, participantCountString);
   return paneTitle;
