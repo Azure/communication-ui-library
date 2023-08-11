@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { useCallback, useRef } from 'react';
-import { smartDominantSpeakerParticipants } from '../../../gallery';
+import { participantsById, smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '../../VideoGallery';
@@ -61,16 +61,21 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
         }).slice(0, maxRemoteVideoStreams);
 
   const dominantSpeakerToGrid =
-    layout === 'speaker'
-      ? dominantSpeakers[0]
-        ? visibleGridParticipants.current.find((p) => p.userId === dominantSpeakers[0])
-        : visibleGridParticipants.current[0]
-      : undefined;
+    layout === 'speaker' && dominantSpeakers
+      ? dominantSpeakers[0] !== undefined
+        ? visibleGridParticipants.current.filter((p) => p.userId === dominantSpeakers[0])
+        : [visibleGridParticipants.current[0]]
+      : [];
 
-  if (dominantSpeakerToGrid) {
-    visibleGridParticipants.current = [dominantSpeakerToGrid];
+  if (dominantSpeakerToGrid[0]) {
+    // <-- this is not coming back as the right participant
+    visibleGridParticipants.current = dominantSpeakerToGrid;
   }
 
+  /**
+   * We need to make sure that the dominant speaker is picked out
+   * and that everyone else goes to the overflow gallery
+   */
   const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));
 
   const remoteParticipantsOrdered = putVideoParticipantsFirst(remoteParticipants);
