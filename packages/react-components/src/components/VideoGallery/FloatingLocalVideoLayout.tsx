@@ -147,9 +147,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
-    /*@conditional-compile-remove(click-to-call) */
-    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'HorizontalBottom') {
-      return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
+    /*@conditional-compile-remove(click-to-call) */ {
+      /* @conditional-compile-remove(vertical-gallery) */
+      if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'HorizontalBottom') {
+        return localVideoTileSize === '16:9' || !isNarrow
+          ? LARGE_FLOATING_MODAL_SIZE_REM
+          : SMALL_FLOATING_MODAL_SIZE_REM;
+      }
     }
     return LARGE_FLOATING_MODAL_SIZE_REM;
   }, [

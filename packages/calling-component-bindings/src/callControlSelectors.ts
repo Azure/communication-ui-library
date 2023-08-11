@@ -58,7 +58,7 @@ export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.creat
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     /* @conditional-compile-remove(capabilities) */
     const incapable =
-      (capabilities?.muteUnmuteMic.isPresent === false && capabilities?.muteUnmuteMic.reason !== 'NotInitialized') ||
+      (capabilities?.unmuteMic.isPresent === false && capabilities?.unmuteMic.reason !== 'NotInitialized') ||
       role === 'Consumer';
     return {
       disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ incapable,
@@ -109,10 +109,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
     /* @conditional-compile-remove(capabilities) */
     const incapable =
-      (capabilities?.turnVideoOnOff.isPresent === false &&
-        capabilities?.turnVideoOnOff.reason !== 'NotInitialized' &&
-        /* TODO: Remove this when Calling SDK fixes bug that sets capabilities.turnVideoOnOff to be MeetingRestricted by default */
-        capabilities?.turnVideoOnOff.reason !== 'MeetingRestricted') ||
+      (capabilities?.turnVideoOn.isPresent === false && capabilities?.turnVideoOn.reason !== 'NotInitialized') ||
       role === 'Consumer';
     return {
       disabled:

@@ -333,7 +333,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
-    /* @conditional-compile-remove(rooms) */
+    /* @conditional-compile-remove(click-to-call) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
 
