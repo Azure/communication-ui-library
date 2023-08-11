@@ -363,6 +363,7 @@ export type CallCompositeIcons = {
     NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
 };
 
 // @public
@@ -460,6 +461,8 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -1268,6 +1271,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1356,6 +1360,7 @@ export type _FakeChatAdapterArgs = {
     participantsWithHiddenComposites?: ChatParticipant[];
     customDataModelEnabled?: boolean;
     chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+    theme?: 'light' | 'dark';
 };
 
 // @internal

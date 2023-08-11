@@ -41,4 +41,32 @@ test.describe('ImageGallery Modal tests', () => {
     await page.locator(dataUiId('SomeImageId1')).click();
     expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-broken-link.png`);
   });
+
+  test('ImageGallery Modal loads correctly in dark theme', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        localParticipant: TEST_PARTICIPANTS[1],
+        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
+        localParticipantPosition: 1,
+        sendRemoteInlineImageMessage: true,
+        theme: 'dark'
+      })
+    );
+    await page.locator(dataUiId('SomeImageId1')).click();
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-dark-mode.png`);
+  });
+
+  test('ImageGallery Modal loads correctly in light theme', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+        localParticipant: TEST_PARTICIPANTS[1],
+        remoteParticipants: [TEST_PARTICIPANTS[0], TEST_PARTICIPANTS[2]],
+        localParticipantPosition: 1,
+        sendRemoteInlineImageMessage: true,
+        theme: 'light'
+      })
+    );
+    await page.locator(dataUiId('SomeImageId1')).click();
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-light-mode.png`);
+  });
 });
