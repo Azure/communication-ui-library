@@ -33,9 +33,10 @@ import {
   PropertyChangedEvent,
   StartCallOptions,
   VideoOptions,
-  Call,
-  TeamsCaptions
+  Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -65,10 +66,10 @@ import {
   DiagnosticChangedEventListner,
   CallAdapterCallEndedEvent,
   CallAdapter,
-  JoinCallOptions,
-  CaptionLanguageChangedListener,
-  SpokenLanguageChangedListener
+  JoinCallOptions
 } from './CallAdapter';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionLanguageChangedListener, SpokenLanguageChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
