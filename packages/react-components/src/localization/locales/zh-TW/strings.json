@@ -7,9 +7,10 @@
     "mutedIconLabel": "已靜音",
     "displayNamePlaceholder": "未命名的參與者",
     "participantStateRinging": "撥號中...",
-    "participantStateHold": "電話保留",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "電話保留"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "其他 {overflowCount} 個"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在輸入...",
@@ -112,11 +113,11 @@
     "tooltipOffContent": "展示您的螢幕"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "舉手",
+    "onLabel": "較低",
+    "tooltipDisabledContent": "舉手動作已停用",
+    "tooltipOnContent": "把手放下",
+    "tooltipOffContent": "舉手"
   },
   "messageThread": {
     "yesterday": "昨天",

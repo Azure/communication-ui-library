@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personer",
     "peopleButtonTooltipOpen": "Visa deltagare",
     "peopleButtonTooltipClose": "Dölj deltagare",
-    "peoplePaneSubTitle": "I det här samtalet",
+    "peoplePaneSubTitle": "I det här samtalet {numberOfPeople}",
     "privacyPolicy": "Sekretesspolicy",
     "rejoinCallButtonLabel": "Anslut till samtal igen",
     "removedFromCallMoreDetails": "En annan deltagare tog bort dig från samtalet.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Det gick inte att matcha klientorganisations-ID för måldeltagaren",
     "unableToResolveTenantMoreDetails": "Kontrollera att deltagar-ID:t har angetts korrekt",
     "participantIdIsMalformedTitle": "Deltagar-ID:t har inte rätt format",
-    "participantIdIsMalformedMoreDetails": "Kontrollera att deltagar-ID:t har rätt format"
+    "participantIdIsMalformedMoreDetails": "Kontrollera att deltagar-ID:t har rätt format",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "I den här chatten",

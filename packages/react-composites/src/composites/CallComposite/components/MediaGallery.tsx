@@ -65,6 +65,8 @@ export interface MediaGalleryProps {
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetOverflowGalleryPosition?: 'Responsive' | 'HorizontalTop';
 }
 
 /**
@@ -129,14 +131,16 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       : { kind: 'contextual' };
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
-  /* @conditional-compile-remove(vertical-gallery) */
-  const overflowGalleryPosition = useMemo(
-    () =>
-      containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
+  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */
+  const overflowGalleryPosition = useMemo(() => {
+    if (props.userSetOverflowGalleryPosition === 'Responsive') {
+      return containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
         ? 'VerticalRight'
-        : 'HorizontalBottom',
-    [containerWidth, containerHeight]
-  );
+        : 'HorizontalBottom';
+    } else {
+      return props.userSetOverflowGalleryPosition;
+    }
+  }, [props.userSetOverflowGalleryPosition, containerWidth, containerHeight]);
 
   const VideoGalleryMemoized = useMemo(() => {
     return (
@@ -168,7 +172,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     layoutBasedOnTilePosition,
     props.isMobile,
     props.onRenderAvatar,
-    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(click-to-call) */
+    /* @conditional-compile-remove(rooms) */
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
@@ -177,10 +181,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
     /* @conditional-compile-remove(rooms) */
-    isRoomsCall,
-    /* @conditional-compile-remove(rooms) */
     userRole,
-    /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ containerAspectRatio
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall,
+    /* @conditional-compile-remove(vertical-gallery) */
+    containerAspectRatio
   ]);
 
   return (
