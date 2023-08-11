@@ -30,11 +30,11 @@ This is what will be included in the changelog when a new version is released, s
 
 ### Examples
 ```md
-- Adds functionality to open image gallery when user taps on an inline image
-- Starting new `workstream` or `feature` 
-- Adding to `workstream` or `feature` 
-- Fixes app crash when user taps on call button
-- Improves performance of the app by reducing the number of API calls
+- Add functionality to open image gallery when user taps on an inline image
+- Start new `workstream` or `feature` 
+- Add `functionality` to `workstream` or `feature` 
+- Fix for app crash when user taps on call button
+- Improve performance of the app by reducing the number of API calls
 ```
 
 
