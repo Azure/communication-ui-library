@@ -18,7 +18,7 @@ import {
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
-import { Icon, IStyle, mergeStyles, PrimaryButton, Stack, Theme } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, PrimaryButton, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { IPersonaProps } from '@fluentui/react';
 import { delay } from './utils/delay';
@@ -1248,23 +1248,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   }, [theme, styles?.chatContainer, messagesToDisplay, classes]);
 
   return (
-    <div ref={chatThreadRef}>
-      <Stack className={mergeStyles(messageThreadContainerStyle, styles?.root)} grow>
-        {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
+    <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>
+      {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
             tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
             thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
-        {existsNewChatMessage && !disableJumpToNewMessageButton && (
-          <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
-            {onRenderJumpToNewMessageButton ? (
-              onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
-            ) : (
-              <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
-            )}
-          </div>
-        )}
-
-        <div ref={chatScrollDivRef}>{chatBody}</div>
-      </Stack>
+      {existsNewChatMessage && !disableJumpToNewMessageButton && (
+        <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
+          {onRenderJumpToNewMessageButton ? (
+            onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
+          ) : (
+            <DefaultJumpToNewMessageButton text={strings.newMessagesIndicator} onClick={scrollToBottom} />
+          )}
+        </div>
+      )}
+      <div ref={chatScrollDivRef}>{chatBody}</div>
     </div>
   );
 };
