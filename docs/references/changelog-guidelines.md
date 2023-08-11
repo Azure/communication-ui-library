@@ -26,7 +26,7 @@ Categories and their definitions:
 Text field entry to describe the changes. The changelog entry to be in present tense, capitalized, and to NOT end with periods.
 
 
-This is what will be included in the changelog when a new version is released, so keep it concise and meaningful. See [Tips for writing meaningful changelog entries](../reviewer-notes/tips-for-writing-changelog-entries).
+This is what will be included in the changelog when a new version is released, so keep it concise and meaningful. See [Tips for writing meaningful changelog entries](../reviewer-notes/tips-for-writing-changelog-entries.md).
 
 ### Examples
 ```md
