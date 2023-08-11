@@ -16,7 +16,7 @@ export type { HoldButtonSelector } from './callControlSelectors';
 /* @conditional-compile-remove(close-captions) */
 export type {
   _StartCaptionsButtonSelector,
-  _ChangeSpokenLanguageSelector,
+  _CaptionSettingsSelector,
   _CaptionsBannerSelector
 } from './captionsSelector';
 
@@ -24,7 +24,7 @@ export type {
 export {
   _captionsBannerSelector,
   _startCaptionsButtonSelector,
-  _changeSpokenLanguageSelector
+ _captionSettingsSelector
 } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';

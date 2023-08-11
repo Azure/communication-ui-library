@@ -1006,8 +1006,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
       captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      captionsFeature.on('CaptionLanguageChanged', this.spokenLanguageChanged.bind(this));
-      captionsFeature.on('SpokenLanguageChanged', this.captionLanguageChanged.bind(this));
+      captionsFeature.on('CaptionLanguageChanged', this.captionLanguageChanged.bind(this));
+      captionsFeature.on('SpokenLanguageChanged', this.spokenLanguageChanged.bind(this));
     }
   }
 
@@ -1017,8 +1017,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
       captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      captionsFeature.off('CaptionLanguageChanged', this.spokenLanguageChanged.bind(this));
-      captionsFeature.off('SpokenLanguageChanged', this.captionLanguageChanged.bind(this));
+      captionsFeature.off('CaptionLanguageChanged', this.captionLanguageChanged.bind(this));
+      captionsFeature.off('SpokenLanguageChanged', this.spokenLanguageChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
   }

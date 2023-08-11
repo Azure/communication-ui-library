@@ -3,9 +3,9 @@
 
 /**
  * @public
- * strings for captions setting modal
+ * spoken language strings for captions setting modal
  */
-export interface CaptionsAvailableLanguageStrings {
+export interface AvailableSpokenLanguageStrings {
   'ar-ae': string;
   'ar-sa': string;
   'da-dk': string;
@@ -47,4 +47,43 @@ export interface CaptionsAvailableLanguageStrings {
   'ro-ro': string;
   'sk-sk': string;
   'zh-tw': string;
+}
+
+/**
+ * @public
+ * caption language strings for captions setting modal
+ */
+export interface AvailableCaptionLanguageStrings {
+  'ar': string;
+  'da': string;
+  'de': string;
+  'en': string;
+  'es': string;
+  'fi': string;
+  'fr': string;
+  'fr-ca': string;
+  'hi': string;
+  'it': string;
+  'ja': string;
+  'ko': string;
+  'nb': string;
+  'nl': string;
+  'pl': string;
+  'pt': string;
+  'ru': string;
+  'sv': string;
+  'zh-Hans': string;
+  'zh-Hant': string;
+  'cs': string;
+  'pt-pt': string;
+  'tr': string;
+  'vi': string;
+  'th': string;
+  'he': string;
+  'cy': string;
+  'uk': string;
+  'el': string;
+  'hu': string;
+  'ro': string;
+  'sk': string;
 }

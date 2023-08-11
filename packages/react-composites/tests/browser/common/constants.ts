@@ -42,7 +42,7 @@ export const IDS = {
   mentionSuggestionItem: 'mention-suggestion-item'
 };
 
-export const captionsAvailableLanguageStrings = [
+export const availableSpokenLanguageStrings = [
   'ar-ae',
   'ar-sa',
   'da-dk',
@@ -85,7 +85,39 @@ export const captionsAvailableLanguageStrings = [
   'sk-sk',
   'zh-tw'
 ];
-
+export const availableCaptionLanguageStrings= [
+  'ar',
+  'da',
+  'de',
+  'en',
+  'es',
+  'fi',
+  'fr',
+  'fr-ca',
+  'hi',
+  'it',
+  'ja',
+  'ko',
+  'nb',
+  'nl',
+  'pl',
+  'pt',
+  'ru',
+  'sv',
+  'zh-Hans',
+  'zh-Hant',
+  'cs',
+  'pt-pt',
+  'tr',
+  'vi',
+  'th',
+  'he',
+  'cy',
+  'uk',
+  'el',
+  'hu',
+  'ro',
+  'sk']
 export const captionsFeatureState = {
   captions: [
     {
@@ -119,9 +151,9 @@ export const captionsFeatureState = {
       captionText: 'Nice to see you today!'
     }
   ],
-  supportedSpokenLanguages: captionsAvailableLanguageStrings,
-  supportedCaptionLanguages: captionsAvailableLanguageStrings,
-  currentCaptionLanguage: 'en-us',
+  supportedSpokenLanguages: availableSpokenLanguageStrings,
+  supportedCaptionLanguages: availableCaptionLanguageStrings,
+  currentCaptionLanguage: 'en',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
   startCaptionsInProgress: true
@@ -160,9 +192,9 @@ export const captionsFeatureStateArabic = {
       captionText: '!سُعدت برؤيتك'
     }
   ],
-  supportedSpokenLanguages: captionsAvailableLanguageStrings,
-  supportedCaptionLanguages: captionsAvailableLanguageStrings,
-  currentCaptionLanguage: 'ar-ae',
+  supportedSpokenLanguages: availableSpokenLanguageStrings,
+  supportedCaptionLanguages: availableCaptionLanguageStrings,
+  currentCaptionLanguage: 'ar',
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
   startCaptionsInProgress: true

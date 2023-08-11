@@ -33,7 +33,9 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       /* @conditional-compile-remove(close-captions) */
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
       /* @conditional-compile-remove(close-captions) */
-      spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle
+      spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
+      /* @conditional-compile-remove(close-captions) */
+      captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle
     }),
     [strings]
   );
