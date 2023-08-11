@@ -41,7 +41,8 @@ import {
   gutterWithAvatar,
   gutterWithHiddenAvatar,
   useChatMyMessageClasses,
-  useChatMessageClasses
+  useChatMessageClasses,
+  _useChatMyMessageLayout
 } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
@@ -322,7 +323,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
   const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
-
+  const rootLayout = _useChatMyMessageLayout();
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>
@@ -330,7 +331,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           <ChatMyMessage
             key={props.message.messageId}
             attached={attached}
-            body={{ className: mergeClasses(mergeStyles(messageContainerStyle), myMessageContainerClasses?.root) }}
+            body={{
+              className: mergeClasses(mergeStyles(messageContainerStyle), myMessageContainerClasses?.body)
+            }}
+            root={{
+              className: rootLayout.root
+            }}
             data-ui-id="chat-composite-message"
             author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
             timestamp={

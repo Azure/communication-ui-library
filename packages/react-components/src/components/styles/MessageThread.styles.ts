@@ -65,6 +65,19 @@ export const useChatStyles = makeStyles({
 });
 
 /**
+ * @internal
+ */
+export const _useChatMyMessageLayout = makeStyles({
+  root: {
+    gridTemplateColumns: 'auto fit-content(0)',
+    gridTemplateAreas: `
+    "body actions"
+    "body status"
+    `
+  }
+});
+
+/**
  * @private
  */
 export const newMessageButtonContainerStyle = mergeStyles({
@@ -116,26 +129,28 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
 };
 
 const useChatFailedMyMessageClasses = makeStyles({
-  ...defaultChatItemMessageContainer,
-  root: {
+  body: {
+    ...defaultChatItemMessageContainer,
     backgroundColor: 'rgba(168, 0, 0, 0.2)'
   }
 });
 
 const chatNormalMyMessageClasses = makeStyles({
-  ...defaultChatItemMessageContainer,
-  root: {}
+  body: {
+    ...defaultChatItemMessageContainer
+  }
 });
 const useChatFailedMessageClasses = makeStyles({
-  ...defaultChatItemMessageContainer,
-  root: {
+  body: {
+    ...defaultChatItemMessageContainer,
     backgroundColor: 'rgba(168, 0, 0, 0.2)'
   }
 });
 
 const chatNormalMessageClasses = makeStyles({
-  ...defaultChatItemMessageContainer,
-  root: {}
+  body: {
+    ...defaultChatItemMessageContainer
+  }
 });
 
 /**
@@ -150,8 +165,8 @@ export const FailedMyChatMessageContainer: ComponentSlotStyle = {
  * @private
  */
 export const chatBlockedMyMessageClasses = makeStyles({
-  ...defaultChatItemMessageContainer,
-  root: {
+  body: {
+    ...defaultChatItemMessageContainer,
     backgroundColor: 'rgb(199, 224, 244)'
   }
 });
@@ -159,7 +174,7 @@ export const chatBlockedMyMessageClasses = makeStyles({
 /**
  * @private
  */
-export const useChatMyMessageClasses: (messageState?: MessageStatus) => Record<'root', string> = (
+export const useChatMyMessageClasses: (messageState?: MessageStatus) => Record<'body', string> = (
   messageState?: MessageStatus
 ) => {
   const failedClasses = useChatFailedMyMessageClasses();
@@ -170,14 +185,15 @@ export const useChatMyMessageClasses: (messageState?: MessageStatus) => Record<'
  * @private
  */
 export const chatBlockedMessageClasses = makeStyles({
-  ...defaultChatItemMessageContainer,
-  root: {}
+  body: {
+    ...defaultChatItemMessageContainer
+  }
 });
 
 /**
  * @private
  */
-export const useChatMessageClasses: (messageState?: MessageStatus) => Record<'root', string> = (
+export const useChatMessageClasses: (messageState?: MessageStatus) => Record<'body', string> = (
   messageState?: MessageStatus
 ) => {
   const failedClasses = useChatFailedMessageClasses();
