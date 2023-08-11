@@ -53,7 +53,7 @@
     "peoplePaneTitle": "人员",
     "peopleButtonTooltipOpen": "显示参与者",
     "peopleButtonTooltipClose": "隐藏参与者",
-    "peoplePaneSubTitle": "在此通话中",
+    "peoplePaneSubTitle": "在此通话中 {numberOfPeople}",
     "privacyPolicy": "隐私策略",
     "rejoinCallButtonLabel": "重新加入呼叫",
     "removedFromCallMoreDetails": "另一名参与者已将你从通话中删除。",

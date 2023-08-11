@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Люди",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
-    "peoplePaneSubTitle": "В этом звонке",
+    "peoplePaneSubTitle": "В этом вызове {numberOfPeople}",
     "privacyPolicy": "Политика конфиденциальности",
     "rejoinCallButtonLabel": "Повторно присоединиться к звонку",
     "removedFromCallMoreDetails": "Другой участник удалил вас из беседы.",

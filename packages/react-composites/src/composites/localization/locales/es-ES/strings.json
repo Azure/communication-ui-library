@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Contactos",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
-    "peoplePaneSubTitle": "En esta llamada",
+    "peoplePaneSubTitle": "En esta llamada {numberOfPeople}",
     "privacyPolicy": "Directiva de privacidad",
     "rejoinCallButtonLabel": "Volver a unirse a la llamada",
     "removedFromCallMoreDetails": "Otro participante te ha eliminado de la llamada.",

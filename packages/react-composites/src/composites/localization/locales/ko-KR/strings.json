@@ -53,7 +53,7 @@
     "peoplePaneTitle": "사용자",
     "peopleButtonTooltipOpen": "참가자 표시",
     "peopleButtonTooltipClose": "참가자 숨기기",
-    "peoplePaneSubTitle": "이 통화에서",
+    "peoplePaneSubTitle": "이 통화에 {numberOfPeople}명",
     "privacyPolicy": "개인 정보 취급 방침",
     "rejoinCallButtonLabel": "통화 다시 참가",
     "removedFromCallMoreDetails": "다른 참가자가 귀하를 통화에서 제거했습니다.",

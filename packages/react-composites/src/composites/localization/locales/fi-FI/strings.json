@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Ihmiset",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
-    "peoplePaneSubTitle": "Tässä puhelussa",
+    "peoplePaneSubTitle": "Tässä puhelussa {numberOfPeople}",
     "privacyPolicy": "Tietosuojakäytännöt",
     "rejoinCallButtonLabel": "Liity uudelleen puheluun",
     "removedFromCallMoreDetails": "Toinen osallistuja poisti sinut puhelusta.",

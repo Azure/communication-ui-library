@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personer",
     "peopleButtonTooltipOpen": "Visa deltagare",
     "peopleButtonTooltipClose": "Dölj deltagare",
-    "peoplePaneSubTitle": "I det här samtalet",
+    "peoplePaneSubTitle": "I det här samtalet {numberOfPeople}",
     "privacyPolicy": "Sekretesspolicy",
     "rejoinCallButtonLabel": "Anslut till samtal igen",
     "removedFromCallMoreDetails": "En annan deltagare tog bort dig från samtalet.",

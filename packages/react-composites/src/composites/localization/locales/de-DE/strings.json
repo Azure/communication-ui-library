@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Kontakte",
     "peopleButtonTooltipOpen": "Teilnehmende anzeigen",
     "peopleButtonTooltipClose": "Teilnehmende ausblenden",
-    "peoplePaneSubTitle": "In diesem Anruf",
+    "peoplePaneSubTitle": "In diesem Anruf {numberOfPeople}",
     "privacyPolicy": "Datenschutzrichtlinie",
     "rejoinCallButtonLabel": "Am Anruf erneut teilnehmen",
     "removedFromCallMoreDetails": "Ein anderer Teilnehmer hat Sie aus dem Anruf entfernt.",
