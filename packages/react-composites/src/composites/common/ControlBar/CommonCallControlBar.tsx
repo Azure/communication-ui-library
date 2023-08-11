@@ -60,7 +60,7 @@ export interface CommonCallControlBarProps {
   isCaptionsSupported?: boolean;
   displayVertical?: boolean;
   /* @conditional-compile-remove(gallery-layouts) */
-  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
 }
@@ -338,7 +338,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             isCaptionsSupported={props.isCaptionsSupported}
                             /* @conditional-compile-remove(close-captions) */
                             onCaptionsSettingsClick={openCaptionsSettingsModal}
-                            onSetUserSetOverflowGalleryPosition={props.onSetUserSetOverflowGalleryPosition}
+                            onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                           />
                         )
                     }

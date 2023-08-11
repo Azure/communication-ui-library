@@ -45,7 +45,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -189,7 +189,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(gallery-layouts) */
-  if (props.onSetUserSetOverflowGalleryPosition) {
+  if (props.onUserSetOverflowGalleryPositionChange) {
     moreButtonContextualMenuItems.push({
       key: 'overflowGalleryPositionKey',
       iconProps: {
@@ -212,10 +212,12 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: galleryPositionTop,
             onClick: () => {
               if (galleryPositionTop === false) {
-                props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
+                props.onUserSetOverflowGalleryPositionChange &&
+                  props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
                 setGalleryPositionTop(true);
               } else {
-                props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('Responsive');
+                props.onUserSetOverflowGalleryPositionChange &&
+                  props.onUserSetOverflowGalleryPositionChange('Responsive');
                 setGalleryPositionTop(false);
               }
             }
