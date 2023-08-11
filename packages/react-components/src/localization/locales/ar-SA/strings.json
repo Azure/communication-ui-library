@@ -7,9 +7,7 @@
     "mutedIconLabel": "تم كتم الصوت",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
-    "participantStateHold": "قيد الانتظار",
-    "lowerParticipantHandButtonLabel": "TODO: خفض اليد",
-    "raisedHandIconLabel": "TODO:: تسمية أيقونة رفع اليد"
+    "participantStateHold": "قيد الانتظار"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"

@@ -7,9 +7,7 @@
     "mutedIconLabel": "Gedempt",
     "displayNamePlaceholder": "Naamloze deelnemer",
     "participantStateRinging": "Bellen...",
-    "participantStateHold": "In de wacht",
-    "lowerParticipantHandButtonLabel": "TAAK: hand laten zakken",
-    "raisedHandIconLabel": "TAAK:: pictogramlabel hand opsteken"
+    "participantStateHold": "In de wacht"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} meer"

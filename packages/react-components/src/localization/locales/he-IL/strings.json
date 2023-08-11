@@ -7,9 +7,7 @@
     "mutedIconLabel": "מושתק",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
-    "participantStateHold": "בהמתנה",
-    "lowerParticipantHandButtonLabel": "משימה לביצוע: הורדת יד",
-    "raisedHandIconLabel": "משיבה לביצוע:: סמל תווית של הרמת יד"
+    "participantStateHold": "בהמתנה"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} נוספים"

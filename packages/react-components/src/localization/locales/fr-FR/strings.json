@@ -7,9 +7,7 @@
     "mutedIconLabel": "Muet activé",
     "displayNamePlaceholder": "Participant sans nom",
     "participantStateRinging": "Appel en cours...",
-    "participantStateHold": "En attente",
-    "lowerParticipantHandButtonLabel": "TODO : Main basse",
-    "raisedHandIconLabel": "À FAIRE: : l'étiquette de l'icône de la main levée"
+    "participantStateHold": "En attente"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} plus"

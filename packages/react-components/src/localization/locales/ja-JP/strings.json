@@ -7,9 +7,7 @@
     "mutedIconLabel": "ミュート状態",
     "displayNamePlaceholder": "名前のない参加者",
     "participantStateRinging": "呼び出し中...",
-    "participantStateHold": "保留中",
-    "lowerParticipantHandButtonLabel": "TODO: 手を下げる",
-    "raisedHandIconLabel": "TODO:: 手を挙げるアイコン ラベル"
+    "participantStateHold": "保留中"
   },
   "ParticipantList": {
     "overflowParticipantCount": "その他 {overflowCount} 個"

@@ -7,9 +7,7 @@
     "mutedIconLabel": "Микрофон отключен",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
-    "participantStateHold": "На удержании",
-    "lowerParticipantHandButtonLabel": "ЗАДАЧА: опустить руку",
-    "raisedHandIconLabel": "ЗАДАЧА:: подпись значка поднятия руки"
+    "participantStateHold": "На удержании"
   },
   "ParticipantList": {
     "overflowParticipantCount": "и еще {overflowCount}"

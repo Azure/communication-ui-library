@@ -7,9 +7,7 @@
     "mutedIconLabel": "Muted",
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
-    "participantStateHold": "On hold",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "On hold"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"

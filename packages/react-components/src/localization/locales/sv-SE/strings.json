@@ -7,9 +7,7 @@
     "mutedIconLabel": "Ljudet är avstängt",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
-    "participantStateHold": "Parkerat",
-    "lowerParticipantHandButtonLabel": "ATT GÖRA: Nedre hand",
-    "raisedHandIconLabel": "ATT GÖRA:: etikett för att höja handens ikon"
+    "participantStateHold": "Parkerat"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} till"

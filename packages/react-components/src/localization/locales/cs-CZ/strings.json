@@ -7,9 +7,7 @@
     "mutedIconLabel": "Ztlumeno",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
-    "participantStateHold": "Pozastavený hovor",
-    "lowerParticipantHandButtonLabel": "TODO: Dát ruku dolů",
-    "raisedHandIconLabel": "TODO:: popisek ikony zvednutí ruky"
+    "participantStateHold": "Pozastavený hovor"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} další(ch)"

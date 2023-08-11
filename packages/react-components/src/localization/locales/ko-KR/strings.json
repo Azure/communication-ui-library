@@ -7,9 +7,7 @@
     "mutedIconLabel": "음소거됨",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
-    "participantStateHold": "대기 중",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "대기 중"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount}개 더 보기"

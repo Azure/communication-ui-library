@@ -7,9 +7,7 @@
     "mutedIconLabel": "已靜音",
     "displayNamePlaceholder": "未命名的參與者",
     "participantStateRinging": "撥號中...",
-    "participantStateHold": "電話保留",
-    "lowerParticipantHandButtonLabel": "TODO: 把手放下",
-    "raisedHandIconLabel": "TODO:: 舉手圖示標籤"
+    "participantStateHold": "電話保留"
   },
   "ParticipantList": {
     "overflowParticipantCount": "其他 {overflowCount} 個"

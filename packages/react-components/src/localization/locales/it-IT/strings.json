@@ -7,9 +7,7 @@
     "mutedIconLabel": "Disattivato",
     "displayNamePlaceholder": "Partecipante senza nome",
     "participantStateRinging": "Chiamata in corso...",
-    "participantStateHold": "Per l'attesa",
-    "lowerParticipantHandButtonLabel": "TODO: abbassa la mano",
-    "raisedHandIconLabel": "TODO:: etichetta dell'icona alza la mano"
+    "participantStateHold": "Per l'attesa"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} altro"

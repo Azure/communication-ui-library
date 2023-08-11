@@ -7,9 +7,7 @@
     "mutedIconLabel": "Stumm geschaltet",
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
-    "participantStateHold": "In der Warteschleife",
-    "lowerParticipantHandButtonLabel": "TODO: Hand senken",
-    "raisedHandIconLabel": "TODO:: Symbolbeschriftung „Hand heben\""
+    "participantStateHold": "In der Warteschleife"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} weitere"

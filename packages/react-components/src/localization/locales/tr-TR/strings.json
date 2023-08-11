@@ -7,9 +7,7 @@
     "mutedIconLabel": "Ses kapatıldı",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
-    "participantStateHold": "Beklemede",
-    "lowerParticipantHandButtonLabel": "Yapılacaklar: Eli İndirme",
-    "raisedHandIconLabel": "Yapılacaklar: el kaldır simgesi etiketi"
+    "participantStateHold": "Beklemede"
   },
   "ParticipantList": {
     "overflowParticipantCount": "{overflowCount} tane daha"

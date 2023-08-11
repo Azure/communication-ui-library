@@ -7,9 +7,7 @@
     "mutedIconLabel": "Wyciszono",
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
-    "participantStateHold": "Zawieszony",
-    "lowerParticipantHandButtonLabel": "TODO: Opuść rękę",
-    "raisedHandIconLabel": "TODO:: etykieta ikony podnieś rękę"
+    "participantStateHold": "Zawieszony"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} więcej"

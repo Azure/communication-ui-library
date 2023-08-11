@@ -7,9 +7,7 @@
     "mutedIconLabel": "Silenciado",
     "displayNamePlaceholder": "Participante sin nombre",
     "participantStateRinging": "Llamando...",
-    "participantStateHold": "En espera",
-    "lowerParticipantHandButtonLabel": "TODO: Bajar la mano",
-    "raisedHandIconLabel": "TODO:: etiqueta del icono de levantar la mano"
+    "participantStateHold": "En espera"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} más"

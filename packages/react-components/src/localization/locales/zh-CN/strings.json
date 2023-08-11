@@ -7,9 +7,7 @@
     "mutedIconLabel": "已静音",
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "待机音乐",
-    "lowerParticipantHandButtonLabel": "TODO: 手放下",
-    "raisedHandIconLabel": "TODO:: 举手图标标签"
+    "participantStateHold": "待机音乐"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} 个"
