@@ -364,7 +364,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 props.onActionButtonClick(message, setMessageReadBy);
               }
             }}
-            statusIcon={renderedStatusIcon}
+            statusIcon={<div className={mergeStyles({ paddingLeft: 4 })}>{renderedStatusIcon}</div>}
           >
             {getContent()}
           </ChatMyMessage>

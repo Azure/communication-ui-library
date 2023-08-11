@@ -73,7 +73,9 @@ export const _useChatMyMessageLayout = makeStyles({
     gridTemplateAreas: `
     "body actions"
     "body status"
-    `
+    `,
+    gridGap: '0',
+    paddingBottom: '0.5rem'
   }
 });
 
