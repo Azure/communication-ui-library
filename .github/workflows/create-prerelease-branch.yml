@@ -126,7 +126,7 @@ jobs:
         if: ${{ github.event.inputs.bump_type == 'beta-release-major' || github.event.inputs.bump_type == 'beta-release-minor' || github.event.inputs.bump_type == 'beta-release-patch' || github.event.inputs.bump_type == 'beta-release-beta' }}
         run: node common/scripts/changelog/collect.mjs beta
       - name: Generate stable CHANGELOG
-        if: ${{ github.event.inputs.bump_type == 'stable-major' || github.event.inputs.bump_type == 'stable-minor' || || github.event.inputs.bump_type == 'stable-patch' }}
+        if: ${{ github.event.inputs.bump_type == 'stable-major' || github.event.inputs.bump_type == 'stable-minor' || github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/changelog/collect.mjs stable
 
       - name: sanity check - ensure all package versions are consistent
