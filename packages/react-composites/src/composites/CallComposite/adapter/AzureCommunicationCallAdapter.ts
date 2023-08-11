@@ -7,7 +7,7 @@ import {
   CallClientState,
   CallError,
   CallState,
-  createStatefulCallClient,
+  createStatefulCallClientInner,
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
@@ -20,6 +20,7 @@ import { AcceptedTransfer } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { CallCommon } from '@internal/calling-stateful-client';
+import { TelemetryImplementationHint } from '@internal/acs-ui-common';
 import {
   AudioOptions,
   CallAgent,
@@ -1300,9 +1301,10 @@ export const createAzureCommunicationCallAdapter = async ({
     throw new Error('Invalid identifier. Please provide valid identifier object.');
   }
 
-  const callClient = createStatefulCallClient({
+  const callClient = createStatefulCallClientInner({
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    // 'Call' as TelemetryImplementationHint
   });
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
@@ -1326,7 +1328,7 @@ export const createTeamsCallAdapter = async ({
   locator,
   options
 }: TeamsCallAdapterArgs): Promise<TeamsCallAdapter> => {
-  const callClient = createStatefulCallClient({
+  const callClient = createStatefulCallClientInner({
     userId
   });
   const callAgent = await callClient.createTeamsCallAgent(credential, {

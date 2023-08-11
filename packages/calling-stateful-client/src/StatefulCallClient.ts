@@ -18,7 +18,6 @@ import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCal
 /* @conditional-compile-remove(teams-identity-support) */
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
-import internal from 'stream';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -328,16 +327,20 @@ export const createStatefulCallClient = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
-  return createStatefulCallClientInner(args, options)
+  return createStatefulCallClientInner(args, options);
 };
 
+/**
 @internal
+*/
 export const createStatefulCallClientInner = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions,
-  telemetryImplementationHint?:  TelemetryImplementationHint
+  telemetryImplementationHint?: TelemetryImplementationHint
 ): StatefulCallClient => {
-  callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`);
+  callingStatefulLogger.info(
+    `Creating calling stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`
+  );
   return createStatefulCallClientWithDeps(
     new CallClient(withTelemetryTag(options?.callClientOptions)),
     new CallContext(
@@ -404,7 +407,10 @@ export const createStatefulCallClientWithDeps = (
   return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
 };
 
-const withTelemetryTag = (options?: CallClientOptions, telemetryImplementationHint?: TelemetryImplementationHint): CallClientOptions => {
+const withTelemetryTag = (
+  options?: CallClientOptions,
+  telemetryImplementationHint?: TelemetryImplementationHint
+): CallClientOptions => {
   const tags = options?.diagnostics?.tags ?? [];
   tags.push(_getApplicationId(telemetryImplementationHint));
   return {
