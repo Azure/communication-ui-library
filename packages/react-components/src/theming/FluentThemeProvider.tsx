@@ -63,7 +63,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   return (
     <ThemeContext.Provider value={combinedThemes}>
       <ThemeProvider theme={fluentV8Theme} className={wrapper}>
-        <FluentProvider className={wrapper} theme={fluentV9Theme}>
+        <FluentProvider className={wrapper} theme={fluentV9Theme} dir={rtl ? 'rtl' : 'ltr'}>
           {children}
         </FluentProvider>
       </ThemeProvider>
