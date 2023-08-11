@@ -11,6 +11,8 @@ import {
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
 import React from 'react';
+/* @conditional-compile-remove(gallery-layouts) */
+import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -76,6 +78,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const drawerMenuHostId = useId('drawerMenuHost');
 
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
+    'Responsive'
+  );
+
   return (
     <CallArrangement
       id={drawerMenuHostId}
@@ -106,6 +113,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               drawerMenuHostId={drawerMenuHostId}
               /* @conditional-compile-remove(click-to-call) */
               localVideoTileOptions={options?.localVideoTile}
+              /* @conditional-compile-remove(gallery-layouts) */
+              userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -119,6 +128,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       dataUiId={'call-page'}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
+      /* @conditional-compile-remove(gallery-layouts) */
+      onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
     />
   );
 };
