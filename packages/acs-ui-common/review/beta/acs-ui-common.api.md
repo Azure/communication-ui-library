@@ -43,7 +43,7 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @internal
-export const _getApplicationId: () => string;
+export const _getApplicationId: (telemetryImplementationHint?: TelemetryImplementationHint | undefined) => string;
 
 // @internal (undocumented)
 export interface _IObjectMap<T> {
