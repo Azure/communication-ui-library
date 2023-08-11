@@ -1,11 +1,11 @@
 # Changelog Guidelines
 
 To ease our release process, we need to follow some guidelines when adding a new changelog entry.
-`rush changelog` will give developers the ooportunity to create a change file to describe your changes. 
+`rush changelog` will give developers the opportunity to create a change file to describe your changes. 
 The `comment` field is used to generate the changelog entry, so it's important to follow the guidelines below.
 
 ## Type
-Select whether your change is a Major, Minor, or Patch (for more information on which to choose see [Semantic Versioning](https://semver.org/)).
+Select whether your change is a Prerelease, Patch, Minor, and None (for more information on which to choose see [Semantic Versioning](https://semver.org/)).
 
 When to use each type:
 1. Prerelease: Changes that are not yet released to the public.
