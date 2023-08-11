@@ -5,6 +5,8 @@ To ease our release process, we need to follow some guidelines when adding a new
 The `comment` field is used to generate the changelog entry, so it's important to follow the guidelines below.
 
 ## Type
+Select whether your change is a Major, Minor, or Patch (for more information on which to choose see [Semantic Versioning](https://semver.org/)).
+
 When to use each type:
 1. Prerelease: Changes that are not yet released to the public.
 1. Patch: Bug fixes; no API changes.
@@ -22,6 +24,9 @@ Categories and their definitions:
 
 ## Describe changes
 Text field entry to describe the changes. The changelog entry to be in present tense, capitalized, and to NOT end with periods.
+
+
+This is what will be included in the changelog when a new version is released, so keep it concise and meaningful. See [Tips for writing meaningful changelog entries](../reviewer-notes/tips-for-writing-changelog-entries).
 
 ### Examples
 ```md
