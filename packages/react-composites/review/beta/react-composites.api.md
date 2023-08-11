@@ -322,8 +322,6 @@ export type CallCompositeIcons = {
     ControlButtonScreenShareStop?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
-    ParticipantItemRaisedHand?: JSX.Element;
-    ParticipantIteRaisedHand?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -1231,8 +1229,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
-    ParticipantItemRaisedHand?: JSX.Element | undefined;
-    ParticipantIteRaisedHand?: JSX.Element | undefined;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
