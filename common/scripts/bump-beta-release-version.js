@@ -28,7 +28,7 @@ const bumpBetaVersion = (currentVersion) => {
       throw '\nplease use either major/minor/patch as a parameter!\n\n  Syntax:\n  node bump-beta-release-version.js minor\n'
     }
     const newBeta = Number.parseInt(betaVersion) + 1;
-    return `${newMajor}.${newMinor}.${newPatch}-beta.${newBeta}`
+    return `${major}.${minor}.${patch}-beta.${newBeta}`
   } else {
     const newMajor = bumpType === 'major' ? Number.parseInt(major) + 1 : major;
     const newMinor = bumpType === 'major' ?
