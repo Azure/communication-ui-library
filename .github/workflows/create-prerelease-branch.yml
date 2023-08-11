@@ -16,6 +16,7 @@ on:
           - stable-major
           - stable-minor
           - stable-patch
+          - stable-remove-beta-version
           - beta-release-major
           - beta-release-minor
           - beta-release-patch
@@ -99,6 +100,9 @@ jobs:
       - name: Bump stable patch package versions
         if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/bump-stable-version.js patch
+      - name: Remove beta version from stable package versions
+        if: ${{ github.event.inputs.bump_type == 'stable-remove-beta-version' }}
+        run: node common/scripts/bump-stable-version.js remove-beta
 
       # Retrieve new version so we can use it in the branch name.
       - name: Retrieve new version from package.json
