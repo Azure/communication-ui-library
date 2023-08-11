@@ -12,21 +12,19 @@ const MockLocalParticipant = {
   isMuted: true
 };
 
-const user5MockVideoElement = document.createElement('div');
-user5MockVideoElement.innerHTML = '<span />';
-user5MockVideoElement.style.width = decodeURIComponent('100%25');
-user5MockVideoElement.style.height = decodeURIComponent('100%25');
-user5MockVideoElement.style.background = 'url(https://media.giphy.com/media/QvMUP3619500qb6mtw/giphy.gif)';
-user5MockVideoElement.style.backgroundPosition = 'center';
-user5MockVideoElement.style.backgroundRepeat = 'no-repeat';
-
 const user6MockVideoElement = document.createElement('div');
-user6MockVideoElement.innerHTML = '<span />';
 user6MockVideoElement.style.width = decodeURIComponent('100%25');
 user6MockVideoElement.style.height = decodeURIComponent('100%25');
-user6MockVideoElement.style.background = 'url(https://media.giphy.com/media/RNveokQhEObpqyvYb5/giphy.gif)';
-user6MockVideoElement.style.backgroundPosition = 'center';
-user6MockVideoElement.style.backgroundRepeat = 'no-repeat';
+user6MockVideoElement.innerHTML = `<img src="https://media.giphy.com/media/QvMUP3619500qb6mtw/giphy.gif" style="width: ${decodeURIComponent(
+  '100%25'
+)}; height: ${decodeURIComponent('100%25')}; object-fit: contain"/>`;
+
+const user7MockVideoElement = document.createElement('div');
+user7MockVideoElement.style.width = decodeURIComponent('100%25');
+user7MockVideoElement.style.height = decodeURIComponent('100%25');
+user7MockVideoElement.innerHTML = `<img src="https://media.giphy.com/media/RNveokQhEObpqyvYb5/giphy.gif" style="width: ${decodeURIComponent(
+  '100%25'
+)}; height: ${decodeURIComponent('100%25')}; object-fit: contain"/>`;
 
 const MockRemoteParticipants = [
   {
@@ -50,7 +48,7 @@ const MockRemoteParticipants = [
     displayName: 'Bruce Wayne',
     videoStream: {
       isAvailable: true,
-      renderElement: user5MockVideoElement
+      renderElement: user6MockVideoElement
     }
   },
   {
@@ -58,7 +56,7 @@ const MockRemoteParticipants = [
     displayName: 'Ororo Munroe',
     videoStream: {
       isAvailable: true,
-      renderElement: user6MockVideoElement
+      renderElement: user7MockVideoElement
     }
   }
 ];

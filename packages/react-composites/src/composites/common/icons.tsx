@@ -19,6 +19,8 @@ import {
   VideoOff20Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(gallery-layouts) */
+import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
@@ -74,7 +76,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
-  RemoveVideoBackgroundEffect: <VideoPerson20Filled />
+  RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  GalleryOptions: <Grid20Regular />
 };
 
 /**
@@ -186,6 +190,8 @@ export type CallCompositeIcons = {
   BlurVideoBackground?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  GalleryOptions?: JSX.Element;
 };
 
 /**

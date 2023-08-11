@@ -93,6 +93,8 @@ export interface CallArrangementProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -315,6 +317,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
                 />
