@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { PartialTheme } from '@fluentui/react';
-import { teamsDarkTheme, teamsLightTheme, Theme as F9Theme } from '@fluentui/react-components';
+import { Theme as V8Theme, PartialTheme as PartialV8Theme } from '@fluentui/react';
+import { Theme as V9Theme, PartialTheme as PartialV9Theme } from '@fluentui/react-components';
 
 /**
  * Custom Fluent theme pallette used by calling related components in this library.
@@ -21,18 +21,26 @@ export interface CallingTheme {
 }
 
 /**
- * Custom Fluent theme used by components exported from this library.
+ * Theme wrapper for components used by this library.
+ *
+ * @public
  */
-export type Theme = PartialTheme & Partial<CallingTheme> & { fluent9Theme: F9Theme };
+export type Theme = V8Theme & { fluent9Theme: V9Theme };
+
+/**
+ * Theme override wrapper for components used by this library.
+ *
+ * @public
+ */
+export type PartialTheme = PartialV8Theme & { fluent9Theme: PartialV9Theme };
 
 /**
  * Preset light theme for components exported from this library.
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme & { fluent9Theme: F9Theme } = {
+export const lightTheme: PartialTheme & CallingTheme = {
   fluent9Theme: {
-    ...teamsLightTheme,
     colorBrandBackground2: '#C7E0F4'
   },
   palette: {
@@ -77,9 +85,8 @@ export const lightTheme: PartialTheme & CallingTheme & { fluent9Theme: F9Theme }
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme & { fluent9Theme: F9Theme } = {
+export const darkTheme: PartialTheme & CallingTheme = {
   fluent9Theme: {
-    ...teamsDarkTheme,
     colorBrandBackground2: '#0C2E49'
   },
   palette: {
