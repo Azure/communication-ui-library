@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Resolve issue where chat keyboard would dismiss randomly during interop meetings.",
+  "packageName": "@azure/communication-react",
+  "email": "73612854+palatter@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
