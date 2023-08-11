@@ -56,7 +56,9 @@ export const ParticipantListWithHeading = (props: {
   const subheadingUniqueId = useId();
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
-  const totalParticipantCount = participantListProps.totalParticipantCount;
+  const totalParticipantCount = participantListProps.totalParticipantCount
+    ? participantListProps.totalParticipantCount
+    : 1;
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
