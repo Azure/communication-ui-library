@@ -113,11 +113,11 @@
     "tooltipOffContent": "화면 프레젠테이션"
   },
   "raiseHandButton": {
-    "offLabel": "Raise",
-    "onLabel": "Lower",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "손 들기",
+    "onLabel": "낮추기",
+    "tooltipDisabledContent": "손 올리기 작업이 비활성화되었습니다.",
+    "tooltipOnContent": "손 내리기",
+    "tooltipOffContent": "손 들기"
   },
   "messageThread": {
     "yesterday": "어제",
