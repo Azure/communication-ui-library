@@ -316,6 +316,14 @@ export class CallSubscriber {
         undefined,
         convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
       );
+      /**
+       * This check is to make sure that we are not deleting the local render info for the local video stream if there is one.
+       *
+       * TODO: we need to make sure the we are supporting the local screenshare stream that is now being tracked. This is a stop gap solution.
+       */
+      if (event.removed[0].mediaStreamType === 'ScreenSharing') {
+        return;
+      }
       this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
     }
