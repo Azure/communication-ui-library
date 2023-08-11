@@ -117,7 +117,9 @@ const App = (): JSX.Element => {
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
             let callLocator: CallAdapterLocator | undefined =
-              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
+              getTeamsLinkFromUrl() ||
+              getGroupIdFromUrl() ||
+              /* @conditional-compile-remove(rooms) */ callDetails.callLocator;
 
             /* @conditional-compile-remove(rooms) */
             callLocator = callLocator || getRoomIdFromUrl();
