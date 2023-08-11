@@ -11,6 +11,9 @@
     "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
     "raisedHandIconLabel": "TODO:: raise hand icon label"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} flere"
+  },
   "typingIndicator": {
     "singleUser": "{user} skriver ...",
     "multipleUsers": "{users} skriver ...",
@@ -112,8 +115,8 @@
     "tooltipOffContent": "Presenter skjermen din"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
+    "offLabel": "Raise",
+    "onLabel": "Lower",
     "tooltipDisabledContent": "Raise Hand action is disabled",
     "tooltipOnContent": "Lower Hand",
     "tooltipOffContent": "Raise Hand"

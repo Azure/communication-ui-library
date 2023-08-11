@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personnes",
     "peopleButtonTooltipOpen": "Afficher les participants",
     "peopleButtonTooltipClose": "Masquer les participants",
-    "peoplePaneSubTitle": "Dans cet appel",
+    "peoplePaneSubTitle": "Dans cet appel {numberOfPeople}",
     "privacyPolicy": "Politique de confidentialité",
     "rejoinCallButtonLabel": "Rejoindre l’appel à nouveau.",
     "removedFromCallMoreDetails": "Un autre participant vous a supprimé de l’appel.",

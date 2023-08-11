@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Osoby",
     "peopleButtonTooltipOpen": "Pokaż uczestników",
     "peopleButtonTooltipClose": "Ukryj uczestników",
-    "peoplePaneSubTitle": "W tej rozmowie",
+    "peoplePaneSubTitle": "W tej rozmowie {numberOfPeople}",
     "privacyPolicy": "Zasady ochrony prywatności",
     "rejoinCallButtonLabel": "Dołącz ponownie do rozmowy",
     "removedFromCallMoreDetails": "Inny uczestnik usunął Cię z rozmowy.",

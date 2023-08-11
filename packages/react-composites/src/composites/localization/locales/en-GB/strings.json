@@ -53,7 +53,7 @@
     "peoplePaneTitle": "People",
     "peopleButtonTooltipOpen": "Show participants",
     "peopleButtonTooltipClose": "Hide participants",
-    "peoplePaneSubTitle": "In this call",
+    "peoplePaneSubTitle": "In this call {numberOfPeople}",
     "privacyPolicy": "Privacy policy",
     "rejoinCallButtonLabel": "Re-join call",
     "removedFromCallMoreDetails": "Another participant removed you from the call.",

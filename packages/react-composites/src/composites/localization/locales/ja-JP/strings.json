@@ -53,7 +53,7 @@
     "peoplePaneTitle": "連絡先",
     "peopleButtonTooltipOpen": "参加者を表示",
     "peopleButtonTooltipClose": "参加者を非表示",
-    "peoplePaneSubTitle": "通話中",
+    "peoplePaneSubTitle": "この通話では {numberOfPeople} 人",
     "privacyPolicy": "プライバシー ポリシー",
     "rejoinCallButtonLabel": "通話に再度参加",
     "removedFromCallMoreDetails": "別の参加者があなたを通話から削除しました。",

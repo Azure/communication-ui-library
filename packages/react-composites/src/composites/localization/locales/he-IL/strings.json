@@ -53,7 +53,7 @@
     "peoplePaneTitle": "אנשים",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
-    "peoplePaneSubTitle": "בשיחה זו",
+    "peoplePaneSubTitle": "בשיחה זו {numberOfPeople}",
     "privacyPolicy": "מדיניות פרטיות",
     "rejoinCallButtonLabel": "הצטרף לשיחה מחדש",
     "removedFromCallMoreDetails": "משתתף אחר הסיר אותך מהשיחה.",

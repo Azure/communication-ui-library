@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personer",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
-    "peoplePaneSubTitle": "I denne samtalen",
+    "peoplePaneSubTitle": "I denne samtalen {numberOfPeople}",
     "privacyPolicy": "Personvernerklæring",
     "rejoinCallButtonLabel": "Bli med i samtale på nytt",
     "removedFromCallMoreDetails": "En annen deltaker fjernet deg fra samtalen.",

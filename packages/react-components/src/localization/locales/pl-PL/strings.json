@@ -8,8 +8,11 @@
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
     "participantStateHold": "Zawieszony",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "lowerParticipantHandButtonLabel": "TODO: Opuść rękę",
+    "raisedHandIconLabel": "TODO:: etykieta ikony podnieś rękę"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} więcej"
   },
   "typingIndicator": {
     "singleUser": "Użytkownik {user} pisze...",
@@ -112,11 +115,11 @@
     "tooltipOffContent": "Prezentuj swój ekran"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Podnieś",
+    "onLabel": "Opuść",
+    "tooltipDisabledContent": "Akcja Podnieś rękę jest wyłączona",
+    "tooltipOnContent": "Opuść rękę",
+    "tooltipOffContent": "Podnieś rękę"
   },
   "messageThread": {
     "yesterday": "Wczoraj",

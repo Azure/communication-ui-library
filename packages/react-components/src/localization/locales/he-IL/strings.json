@@ -8,8 +8,11 @@
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "lowerParticipantHandButtonLabel": "משימה לביצוע: הורדת יד",
+    "raisedHandIconLabel": "משיבה לביצוע:: סמל תווית של הרמת יד"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} נוספים"
   },
   "typingIndicator": {
     "singleUser": "{user} מקליד...",
@@ -112,11 +115,11 @@
     "tooltipOffContent": "הצג את המסך שלך"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "הרם",
+    "onLabel": "הורד",
+    "tooltipDisabledContent": "פעולת הרמת יד אינה זמינה",
+    "tooltipOnContent": "הורד יד",
+    "tooltipOffContent": "הרם יד"
   },
   "messageThread": {
     "yesterday": "אתמול",

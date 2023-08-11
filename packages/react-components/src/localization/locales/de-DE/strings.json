@@ -8,8 +8,11 @@
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
     "participantStateHold": "In der Warteschleife",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "lowerParticipantHandButtonLabel": "TODO: Hand senken",
+    "raisedHandIconLabel": "TODO:: Symbolbeschriftung „Hand heben\""
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} weitere"
   },
   "typingIndicator": {
     "singleUser": "{user} schreibt ...",
@@ -112,11 +115,11 @@
     "tooltipOffContent": "Präsentieren Sie Ihren Bildschirm"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Heben",
+    "onLabel": "Senken",
+    "tooltipDisabledContent": "Aktion „Hand heben“ ist deaktiviert",
+    "tooltipOnContent": "Hand senken",
+    "tooltipOffContent": "Hand heben"
   },
   "messageThread": {
     "yesterday": "Gestern",

@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personen",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
-    "peoplePaneSubTitle": "In dit gesprek",
+    "peoplePaneSubTitle": "In dit gesprek {numberOfPeople}",
     "privacyPolicy": "Privacybeleid",
     "rejoinCallButtonLabel": "Opnieuw deelnemen aan gesprek",
     "removedFromCallMoreDetails": "Een andere deelnemer heeft u uit het gesprek verwijderd.",
