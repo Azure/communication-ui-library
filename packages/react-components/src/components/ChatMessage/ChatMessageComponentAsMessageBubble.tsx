@@ -308,7 +308,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     handleOnInlineImageClicked
   ]);
 
-  const attached = message.attached === 'top' ? 'top' : message.attached === false ? 'top' : 'center';
+  const attached = message.attached === 'top' || message.attached === false ? 'top' : 'center';
   const chatAvatarStyle =
     message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
