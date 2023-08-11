@@ -13,9 +13,13 @@ on:
         required: true
         type: choice
         options:
+          - stable-major
           - stable-minor
           - stable-patch
-          - beta
+          - beta-release-major
+          - beta-release-minor
+          - beta-release-patch
+          - beta-release-beta
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
 concurrency:
@@ -74,15 +78,27 @@ jobs:
       # Create pre-release branch
       #
       # Bump versions first so we can use the new version in the branch name.
-      - name: Bump beta package versions if beta
-        if: ${{ github.event.inputs.bump_type == 'beta' }}
-        run: node common/scripts/bump-beta-version.js
-      - name: Bump stable patch package versions
-        if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
-        run: node common/scripts/bump-stable-version.js patch
+      - name: Bump beta release major package version
+        if: ${{ github.event.inputs.bump_type == 'beta-release-major' }}
+        run: node common/scripts/bump-beta-release-version.js major
+      - name: Bump beta release minor package version
+        if: ${{ github.event.inputs.bump_type == 'beta-release-minor' }}
+        run: node common/scripts/bump-beta-release-version.js minor
+      - name: Bump beta release patch package version
+        if: ${{ github.event.inputs.bump_type == 'beta-release-patch' }}
+        run: node common/scripts/bump-beta-release-version.js patch
+      - name: Bump beta release beta package version
+        if: ${{ github.event.inputs.bump_type == 'beta-release-beta' }}
+        run: node common/scripts/bump-beta-release-version.js beta
+      - name: Bump stable major package versions
+        if: ${{ github.event.inputs.bump_type == 'stable-major' }}
+        run: node common/scripts/bump-stable-version.js major
       - name: Bump stable minor package versions
         if: ${{ github.event.inputs.bump_type == 'stable-minor' }}
         run: node common/scripts/bump-stable-version.js minor
+      - name: Bump stable patch package versions
+        if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
+        run: node common/scripts/bump-stable-version.js patch
 
       # Retrieve new version so we can use it in the branch name.
       - name: Retrieve new version from package.json
@@ -102,12 +118,11 @@ jobs:
         run: |
           git add .
           git commit -m "${{github.event.inputs.bump_type}} version bump"
-
       - name: Generate beta CHANGELOG
-        if: ${{ github.event.inputs.bump_type == 'beta' }}
+        if: ${{ github.event.inputs.bump_type == 'beta-release-major' || github.event.inputs.bump_type == 'beta-release-minor' || github.event.inputs.bump_type == 'beta-release-patch' || github.event.inputs.bump_type == 'beta-release-beta' }}
         run: node common/scripts/changelog/collect.mjs beta
       - name: Generate stable CHANGELOG
-        if: ${{ github.event.inputs.bump_type == 'stable-patch' || github.event.inputs.bump_type == 'stable-minor' }}
+        if: ${{ github.event.inputs.bump_type == 'stable-major' || github.event.inputs.bump_type == 'stable-minor' || || github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/changelog/collect.mjs stable
 
       - name: sanity check - ensure all package versions are consistent
