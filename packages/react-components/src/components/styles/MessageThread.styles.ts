@@ -154,6 +154,9 @@ export const FailedMyChatMessageContainer: ComponentSlotStyle = {
   backgroundColor: 'rgba(168, 0, 0, 0.2)'
 };
 
+/**
+ * @private
+ */
 export const chatBlockedMyMessageClasses = makeStyles({
   ...defaultChatItemMessageContainer,
   root: {
