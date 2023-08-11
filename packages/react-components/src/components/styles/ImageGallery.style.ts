@@ -64,7 +64,7 @@ export const headerStyle: IStyle = {
   height: '3.5rem',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  padding: '0 0.75rem'
+  padding: '0.25rem 0.75rem'
 };
 
 /**
@@ -123,7 +123,10 @@ export const bodyContainer: IStyle = {
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  padding: '5.75rem'
+  padding: '5.75rem',
+  '@media (max-width: 25rem) or (max-height: 25rem)': {
+    padding: '2rem'
+  }
 };
 
 /**
