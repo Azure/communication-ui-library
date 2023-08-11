@@ -390,7 +390,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             body={{
               className: mergeClasses(
                 mergeStyles(messageContainerStyle, defaultChatItemMessageContainerNoOverlap),
-                messageContainerClasses?.root
+                messageContainerClasses?.body
               )
             }}
             data-ui-id="chat-composite-message"
