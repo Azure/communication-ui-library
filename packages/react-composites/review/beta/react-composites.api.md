@@ -1272,6 +1272,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -1349,6 +1351,7 @@ export type _FakeChatAdapterArgs = {
     participantsWithHiddenComposites?: ChatParticipant[];
     customDataModelEnabled?: boolean;
     chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+    theme?: 'light' | 'dark';
 };
 
 // @internal

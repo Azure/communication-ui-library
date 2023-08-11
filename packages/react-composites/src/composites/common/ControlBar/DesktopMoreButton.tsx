@@ -45,7 +45,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -189,12 +189,15 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(gallery-layouts) */
-  if (props.onSetUserSetOverflowGalleryPosition) {
+  if (props.onUserSetOverflowGalleryPositionChange) {
     moreButtonContextualMenuItems.push({
       key: 'overflowGalleryPositionKey',
       iconProps: {
         iconName: 'GalleryOptions',
         styles: { root: { lineHeight: 0 } }
+      },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
       },
       text: localeStrings.strings.call.moreButtonGalleryControlLabel,
       subMenuProps: {
@@ -203,13 +206,18 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             key: 'topKey',
             text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
             canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
             isChecked: galleryPositionTop,
             onClick: () => {
               if (galleryPositionTop === false) {
-                props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('HorizontalTop');
+                props.onUserSetOverflowGalleryPositionChange &&
+                  props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
                 setGalleryPositionTop(true);
               } else {
-                props.onSetUserSetOverflowGalleryPosition && props.onSetUserSetOverflowGalleryPosition('Responsive');
+                props.onUserSetOverflowGalleryPositionChange &&
+                  props.onUserSetOverflowGalleryPositionChange('Responsive');
                 setGalleryPositionTop(false);
               }
             }

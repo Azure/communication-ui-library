@@ -94,7 +94,7 @@ export interface CallArrangementProps {
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -318,7 +318,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
                   /* @conditional-compile-remove(gallery-layouts) */
-                  onSetUserSetOverflowGalleryPosition={props.onSetUserSetOverflowGalleryPosition}
+                  onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
                 />

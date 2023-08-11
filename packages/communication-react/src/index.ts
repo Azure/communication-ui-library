@@ -269,6 +269,8 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
+/* @conditional-compile-remove(raise-hand) */
+export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStylesProps } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */

@@ -78,7 +78,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
-import { RaisedHand } from '@azure/communication-calling';
+import { RaisedHand as RaisedHand_2 } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -792,6 +792,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -801,6 +802,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @beta
@@ -1884,6 +1886,7 @@ export interface ComponentStrings {
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2169,6 +2172,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -2317,6 +2322,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -3382,9 +3389,29 @@ export type Profile = {
 };
 
 // @public
+export type RaisedHand = {
+    order: number;
+};
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
+
+// @public
 export interface RaiseHandCallFeature {
-    localParticipantRaisedHand?: RaisedHand;
-    raisedHands: RaisedHand[];
+    localParticipantRaisedHand?: RaisedHand_2;
+    raisedHands: RaisedHand_2[];
 }
 
 // @public
@@ -3407,7 +3434,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand;
+    raisedHand?: RaisedHand_2;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -3848,7 +3875,9 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
+}
 
 // @public
 export type VideoGalleryParticipant = {
@@ -3894,6 +3923,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -3988,6 +4018,7 @@ export interface VideoTileProps {
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;
