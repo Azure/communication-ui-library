@@ -49,6 +49,8 @@ export interface CommonCallControlBarProps {
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
+   /* @conditional-compile-remove(close-captions) */
+  isCaptionsOn?: boolean;
   displayVertical?: boolean;
 }
 
@@ -220,6 +222,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             <CaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
+              changeCaptionLanguage = {props.isCaptionsOn}
             />
           )
         }

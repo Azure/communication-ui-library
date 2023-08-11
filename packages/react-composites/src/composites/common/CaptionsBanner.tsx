@@ -69,6 +69,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
           <CaptionsSettingsModal
             showCaptionsSettingsModal={isCaptionsSettingsOpen}
             onDismissCaptionsSettings={onDismissCaptionsSettings}
+            changeCaptionLanguage
           />
         )
       }

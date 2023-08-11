@@ -22,6 +22,7 @@ import { _captionSettingsSelector} from '@internal/calling-component-bindings';
 export const CaptionsSettingsModal = (props: {
   /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal: boolean;
   /* @conditional-compile-remove(close-captions) */ onDismissCaptionsSettings: () => void;
+  /* @conditional-compile-remove(close-captions) */ changeCaptionLanguage?: boolean
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const CaptionsSettingsModalProps = useAdaptedSelector(_captionSettingsSelector);
@@ -59,6 +60,7 @@ export const CaptionsSettingsModal = (props: {
       availableCaptionLanguageStrings={availableCaptionLanguageStrings}
       showModal={props.showCaptionsSettingsModal}
       onDismissCaptionsSettings={props.onDismissCaptionsSettings}
+      changeCaptionLanguage={props.changeCaptionLanguage}
     />
   );
   return <></>;

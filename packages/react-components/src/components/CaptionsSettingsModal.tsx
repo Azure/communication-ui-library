@@ -64,6 +64,7 @@ supportedCaptionLanguages: string[];
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
   onDismissCaptionsSettings?: () => void;
+  changeCaptionLanguage?: boolean
 }
 
 /**
@@ -84,7 +85,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     onStartCaptions,
     strings,
     availableSpokenLanguageStrings,
-    availableCaptionLanguageStrings
+    availableCaptionLanguageStrings,
+    changeCaptionLanguage = false
   } = props;
 
   const theme = useTheme();
@@ -170,16 +172,24 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
           styles={dropdownStyles}
         />
         <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsSpokenLanguageDropdownInfoText}</Text>
-        <Dropdown
-          label={strings?.captionsSettingsCaptionLanguageDropdownLabel}
-          selectedKey={selectedCaptionLanguage ? selectedCaptionLanguage.key : undefined}
-          onChange={onCaptionLanguageChange}
-          calloutProps={calloutProps}
-          placeholder={currentCaptionLanguage !== '' ? currentCaptionLanguage : defaultCaptionLanguage}
-          options={captionLanguageDropdownOptions}
-          styles={dropdownStyles}
-        />
-          <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsCaptionLanguageDropdownInfoText}</Text>
+        {changeCaptionLanguage && 
+        <>
+
+<Dropdown
+         label={strings?.captionsSettingsCaptionLanguageDropdownLabel}
+         selectedKey={selectedCaptionLanguage ? selectedCaptionLanguage.key : undefined}
+         onChange={onCaptionLanguageChange}
+         calloutProps={calloutProps}
+         placeholder={currentCaptionLanguage !== '' ? currentCaptionLanguage : defaultCaptionLanguage}
+         options={captionLanguageDropdownOptions}
+         styles={dropdownStyles}
+       />
+         <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsCaptionLanguageDropdownInfoText}</Text>
+        </>
+        
+        
+        }
+       
       </Stack>
     );
   }, [
@@ -194,7 +204,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     strings?.captionsSettingsCaptionLanguageDropdownLabel,
     strings?.captionsSettingsSpokenLanguageDropdownLabel,
     strings?.captionsSettingsCaptionLanguageDropdownInfoText,
-    theme
+    theme,
+    changeCaptionLanguage
   ]);
 
   const CaptionsSettingsModalStyle: Partial<IModalStyles> = useMemo(
