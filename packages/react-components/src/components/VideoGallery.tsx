@@ -354,7 +354,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  const localTileNotInGrid = !!(
+    (layout === 'floatingLocalVideo' || layout === 'speaker') &&
+    remoteParticipants.length > 0
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -389,7 +392,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     const localVideoTileStyles = concatStyleSets(
-      shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {},
+      localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
         root: { borderRadius: theme.effects.roundedCorner4 }
       },
@@ -419,7 +422,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showLabel={
             !(
-              (shouldFloatLocalVideo && isNarrow) ||
+              (localTileNotInGrid && isNarrow) ||
               /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
                 '9:16'
             )
@@ -442,7 +445,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onRenderAvatar,
     onRenderLocalVideoTile,
-    shouldFloatLocalVideo,
+    localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
     strings.localVideoCameraSwitcherLabel,

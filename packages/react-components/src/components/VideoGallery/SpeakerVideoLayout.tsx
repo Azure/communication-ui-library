@@ -6,20 +6,17 @@ import { LocalVideoTileSize } from '../VideoGallery';
 import { LayoutProps } from './Layout';
 import { isNarrowWidth, isShortHeight } from '../utils/responsive';
 import React, { useMemo, useRef, useState } from 'react';
-import { FloatingLocalVideo } from './FloatingLocalVideo';
 import { OverflowGallery } from './OverflowGallery';
 import {
   SMALL_FLOATING_MODAL_SIZE_REM,
   SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
   VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
   LARGE_FLOATING_MODAL_SIZE_REM,
-  localVideoTileWithControlsContainerStyle,
-  LOCAL_VIDEO_TILE_ZINDEX,
   localVideoTileContainerStyle
 } from './styles/FloatingLocalVideo.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { GridLayout } from '../GridLayout';
-import { rootLayoutStyle } from './styles/DefaultLayout.styles';
+import { rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { layerHostStyle, innerLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useId } from '@fluentui/react-hooks';
@@ -59,7 +56,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     onRenderRemoteParticipant,
     styles,
     maxRemoteVideoStreams,
-    showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
@@ -100,12 +96,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     );
   });
 
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
-
-  if (!shouldFloatLocalVideo && localVideoComponent) {
-    gridTiles.push(localVideoComponent);
-  }
-
   /**
    * instantiate indexes available to render with indexes available that would be on first page
    *
@@ -126,8 +116,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         : p.videoStream?.isAvailable
     );
   });
-  console.log(gridParticipants);
-  console.log(overflowGalleryParticipants);
+
   const layerHostId = useId('layerhost');
 
   const localVideoSizeRem = useMemo(() => {
@@ -157,39 +146,19 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
   ]);
 
   const wrappedLocalVideoComponent =
-    (localVideoComponent && shouldFloatLocalVideo) || (screenShareComponent && localVideoComponent) ? (
-      // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-      showCameraSwitcherInLocalPreview ? (
-        <Stack
-          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, localVideoSizeRem), {
-            boxShadow: theme.effects.elevation8,
-            zIndex: LOCAL_VIDEO_TILE_ZINDEX
-          })}
-        >
-          {localVideoComponent}
-        </Stack>
-      ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
-        <Stack
-          className={mergeStyles(
-            localVideoTileContainerStyle(
-              theme,
-              localVideoSizeRem,
-              !!screenShareComponent,
-              /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
-            )
-          )}
-        >
-          {localVideoComponent}
-        </Stack>
-      ) : (
-        <FloatingLocalVideo
-          localVideoComponent={localVideoComponent}
-          layerHostId={layerHostId}
-          localVideoSizeRem={localVideoSizeRem}
-          parentWidth={parentWidth}
-          parentHeight={parentHeight}
-        />
-      )
+    localVideoComponent || (screenShareComponent && localVideoComponent) ? (
+      <Stack
+        className={mergeStyles(
+          localVideoTileContainerStyle(
+            theme,
+            localVideoSizeRem,
+            !!screenShareComponent,
+            /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
+          )
+        )}
+      >
+        {localVideoComponent}
+      </Stack>
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
