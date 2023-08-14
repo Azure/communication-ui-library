@@ -93,8 +93,10 @@ jobs:
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
 
-      - name: Add changelog
-        run: node ./common/scripts/changelog/change.mjs -m 'Create release branch and update SDK versions' --type none
+      - name: Disabled - DO THIS MANUALLY! Add changelog
+        run: |
+          echo "This step should be enabled when parameters can be added to the changelog command
+          Previous version of the command: node ./common/scripts/changelog/change.mjs -m 'Create release branch and update SDK versions' --type none"
 
       # Commit new dependencies
       - name: Commit changes
