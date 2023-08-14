@@ -149,7 +149,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
-        layout={'speaker'}
+        layout={layoutBasedOnTilePosition}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
