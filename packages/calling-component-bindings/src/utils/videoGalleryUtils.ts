@@ -67,7 +67,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     state: RemoteParticipantConnectionState,
     displayName?: string,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand?: any
+    raisedHand?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -91,7 +91,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   state: RemoteParticipantConnectionState,
   displayName?: string,
   /* @conditional-compile-remove(raise-hand) */
-  raisedHand?: any
+  raisedHand?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
