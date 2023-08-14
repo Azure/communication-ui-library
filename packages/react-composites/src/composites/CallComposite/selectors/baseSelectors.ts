@@ -3,6 +3,8 @@
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -196,3 +198,9 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
  * @private
  */
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
+
+/* @conditional-compile-remove(capabilities) */
+/** @private */
+export const getCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
+  return state.call?.capabilities?.capabilitiesChangeInfo;
+};

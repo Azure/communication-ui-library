@@ -19,6 +19,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -1302,7 +1303,8 @@ export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
 export interface CapabilitiesCallFeature {
-    capabilities: ParticipantCapabilities;
+    capabilities?: ParticipantCapabilities;
+    capabilitiesChangeInfo?: CapabilitiesChangeInfo;
 }
 
 // @beta

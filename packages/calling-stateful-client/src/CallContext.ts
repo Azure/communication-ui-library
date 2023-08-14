@@ -4,6 +4,7 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
+  CapabilitiesChangeInfo,
   DeviceAccess,
   DominantSpeakersInfo,
   ScalingMode,
@@ -392,11 +393,15 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(capabilities) */
-  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+  public setCapabilities(
+    callId: string,
+    capabilities: ParticipantCapabilities,
+    capabilitiesChangeInfo: CapabilitiesChangeInfo
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.capabilities = { capabilities: capabilities };
+        call.capabilities = { capabilities, capabilitiesChangeInfo };
       }
     });
   }

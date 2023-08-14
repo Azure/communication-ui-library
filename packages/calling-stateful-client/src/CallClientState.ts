@@ -7,6 +7,7 @@ import {
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
+  CapabilitiesChangeInfo,
   DeviceAccess,
   DominantSpeakersInfo,
   LatestMediaDiagnostics,
@@ -147,7 +148,11 @@ export interface CapabilitiesFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
    */
-  capabilities: ParticipantCapabilities;
+  capabilities?: ParticipantCapabilities;
+  /**
+   * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
+   */
+  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
 }
 
 /**

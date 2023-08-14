@@ -32,6 +32,7 @@ import { networkReconnectTileSelector } from '../selectors/networkReconnectTileS
 import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+import { capabilitiesNotificationSelector } from '../selectors/capabilitiesNotificationSelector';
 
 /**
  * @private
@@ -76,6 +77,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
+  const capabilitiesNotificationBarProps = useSelector(capabilitiesNotificationSelector);
 
   const strings = useLocale().strings.call;
 
@@ -96,6 +98,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
       errorBarProps={options?.errorBar !== false && errorBarProps}
+      capabilitiesNotificationBarProps={capabilitiesNotificationBarProps}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,
