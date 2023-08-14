@@ -76,7 +76,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const cameraSwitcherCallback = useHandlers(LocalVideoCameraCycleButton);
   const announcerString = useParticipantChangedAnnouncement();
 
-  /* @conditional-compile-remove(capabilities) */
+  /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(capabilities) */
   const userRole = adapter.getState().call?.role;
@@ -180,8 +180,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     overflowGalleryPosition,
     /* @conditional-compile-remove(rooms) */
     isRoomsCall,
-    /* @conditional-compile-remove(rooms) */
-    userRole,
+    /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(rooms) */ userRole,
     /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ containerAspectRatio
   ]);
 
