@@ -23,16 +23,14 @@ export const RaiseHand = (props: {
   const raiseHandButtonProps = usePropsFor(RaiseHandButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
-  const raiseHandButtonDisabled = (): boolean => {
-    return isDisabled(props.option);
-  };
+  const raiseHandButtonDisabled = isDisabled(props.option);
 
   return (
     <RaiseHandButton
       data-ui-id="call-composite-raisehand-button"
       {...raiseHandButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={raiseHandButtonDisabled() || props.disabled}
+      disabled={raiseHandButtonDisabled || props.disabled}
       styles={styles}
     />
   );

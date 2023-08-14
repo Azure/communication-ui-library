@@ -152,7 +152,6 @@ export type RaiseHandButtonSelector = (
   props: CallingBaseSelectorProps
 ) => {
   checked?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
   disabled?: boolean;
 };
 
@@ -163,11 +162,10 @@ export type RaiseHandButtonSelector = (
  * @public
  */
 export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createSelector(
-  [getLocalParticipantRaisedHand, /* @conditional-compile-remove(PSTN-calls) */ getCallState],
-  (raisedHand, /* @conditional-compile-remove(PSTN-calls) */ callState) => {
+  [getLocalParticipantRaisedHand, getCallState],
+  (raisedHand, callState) => {
     return {
       checked: raisedHand ? true : false,
-      /* @conditional-compile-remove(PSTN-calls) */
       disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
     };
   }

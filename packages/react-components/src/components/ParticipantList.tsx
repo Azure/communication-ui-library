@@ -124,7 +124,6 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  /* @conditional-compile-remove(raise-hand) */
   theme?: Theme
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
@@ -207,17 +206,25 @@ const onRenderParticipantDefault = (
 /**
  * Sort participants by raised hand order position
  */
-const sortParticipants = (participants: CallParticipantListParticipant[]): CallParticipantListParticipant[] => {
+const sortParticipants = (participants: ParticipantListParticipant[]): ParticipantListParticipant[] => {
   /* @conditional-compile-remove(raise-hand) */
+  const isParticipantListCallParticipant = function (participant: ParticipantListParticipant): boolean {
+    return 'raisedHand' in participant;
+  };
+
   participants.sort((a, b) => {
-    if (a.raisedHand && b.raisedHand) {
-      return a.raisedHand.raisedHandOrderPosition - b.raisedHand.raisedHandOrderPosition;
-    } else if (a.raisedHand) {
+    if (!isParticipantListCallParticipant(a) || !isParticipantListCallParticipant(b)) {
+      return 0;
+    }
+    const callA = a as CallParticipantListParticipant;
+    const callB = b as CallParticipantListParticipant;
+    if (callA.raisedHand && callB.raisedHand) {
+      return callA.raisedHand.raisedHandOrderPosition - callB.raisedHand.raisedHandOrderPosition;
+    } else if (callA.raisedHand) {
       return -1;
-    } else if (b.raisedHand) {
+    } else if (callB.raisedHand) {
       return 1;
     }
-    return 1;
     return 0;
   });
   return participants;
@@ -279,7 +286,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
-  sortParticipants(displayedParticipants as CallParticipantListParticipant[]);
+  sortParticipants(displayedParticipants);
 
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {

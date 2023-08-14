@@ -193,7 +193,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
   /* @conditional-compile-remove(raise-hand) */
-  const raiseHandButtonIsEnabled = true;
+  const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>

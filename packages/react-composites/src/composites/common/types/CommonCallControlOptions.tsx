@@ -83,12 +83,6 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   raiseHandButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(PSTN-calls) */
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /**
-   * Show, Hide or disable the more button during a call.
-   * @defaultValue true
-   */
   /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
