@@ -36,6 +36,7 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
+/* @conditional-compile-remove(gallery-layouts) */
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 
 /**
@@ -124,7 +125,11 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
+export type VideoGalleryLayout =
+  | 'default'
+  | 'floatingLocalVideo'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -355,7 +360,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
   const localTileNotInGrid = !!(
-    (layout === 'floatingLocalVideo' || layout === 'speaker') &&
+    (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
     remoteParticipants.length > 0
   );
 
@@ -623,7 +628,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const videoGalleryLayout = useMemo(() => {
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
-    } else if (layout === 'speaker') {
+    }
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;

@@ -2,17 +2,23 @@
 // Licensed under the MIT license.
 
 import { LayerHost, Stack, mergeStyles, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(click-to-call) */
 import { LocalVideoTileSize } from '../VideoGallery';
 import { LayoutProps } from './Layout';
-import { isNarrowWidth, isShortHeight } from '../utils/responsive';
+import { isNarrowWidth } from '../utils/responsive';
+/* @conditional-compile-remove(vertical-gallery) */
+import { isShortHeight } from '../utils/responsive';
 import React, { useMemo, useRef, useState } from 'react';
 import { OverflowGallery } from './OverflowGallery';
 import {
   SMALL_FLOATING_MODAL_SIZE_REM,
-  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
-  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
   LARGE_FLOATING_MODAL_SIZE_REM,
   localVideoTileContainerStyle
+} from './styles/FloatingLocalVideo.styles';
+/* @conditional-compile-remove(vertical-gallery) */
+import {
+  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
+  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
 } from './styles/FloatingLocalVideo.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { GridLayout } from '../GridLayout';
@@ -57,7 +63,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     styles,
     maxRemoteVideoStreams,
     parentWidth,
-    parentHeight,
+    /* @conditional-compile-remove(vertical-gallery) */ parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
@@ -82,7 +88,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    layout: 'speaker'
+    /* @conditional-compile-remove(gallery-layouts) */ layout: 'speaker'
   });
 
   let activeVideoStreams = 0;

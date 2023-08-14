@@ -19,6 +19,7 @@ export interface OrganizedParticipantsArgs {
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
   pinnedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
 }
 
@@ -45,16 +46,23 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = [],
+    /* @conditional-compile-remove(gallery-layouts) */
     layout
   } = props;
 
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
 
+  const participantsToSortTrampoline = (): VideoGalleryRemoteParticipant[] => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    return layout !== 'speaker' ? videoParticipants : remoteParticipants;
+    return videoParticipants;
+  };
+
   visibleGridParticipants.current =
     pinnedParticipantUserIds.length > 0 || isScreenShareActive
       ? []
       : smartDominantSpeakerParticipants({
-          participants: layout !== 'speaker' ? videoParticipants : remoteParticipants,
+          participants: participantsToSortTrampoline(),
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
           maxDominantSpeakers: maxRemoteVideoStreams as number
