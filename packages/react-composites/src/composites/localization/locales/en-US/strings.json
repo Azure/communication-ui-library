@@ -170,7 +170,13 @@
     "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
     "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content",
+    "capabilityTurnVideoOnRemoved": "Your camera has been disabled",
+    "capabilityTurnVideoOnGranted": "Your camera has been enabled",
+    "capabilityUnmuteMicRemoved": "Your mic has been disabled",
+    "capabilityUnmuteMicGranted": "Your mic has been enabled",
+    "capabilityShareScreenRemoved": "Your screen share has been disabled",
+    "capabilityShareScreenGranted": "Your screen share has been enabled"
   },
   "chat": {
     "chatListHeader": "In this chat",

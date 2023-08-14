@@ -4,18 +4,14 @@
 import { CapabilitiesChangeInfo, CapabilityResolutionReason } from '@azure/communication-calling';
 import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useLocale } from '../../localization';
+import { CallCompositeStrings } from '../Strings';
 
 /**
  * @beta
  */
 export interface CapabilitiesNotificationBarProps extends IMessageBarProps {
-  /**
-   * Strings shown on the UI on errors.
-   */
-  strings?: CapabilitiesNotificationBarStrings;
-
   capabilitiesChangeInfo?: CapabilitiesChangeInfo;
-  onDismissNotification?: () => void;
 }
 
 /**
@@ -39,13 +35,6 @@ export interface ActiveNotification {
   timestamp?: Date;
 }
 
-/**
- * @beta
- */
-export interface CapabilitiesNotificationBarStrings {
-  turnVideoOnOffCapabilityLost?: string;
-}
-
 type CapabalitiesNotificationType = 'turnVideoOn' | 'unmuteMic' | 'shareScreen';
 interface DismissedNotification {
   type: CapabalitiesNotificationType;
@@ -58,6 +47,8 @@ interface DismissedNotification {
  * @beta
  */
 export const CapabilitiesNotificationBar = (props: CapabilitiesNotificationBarProps): JSX.Element => {
+  const locale = useLocale();
+
   // Timestamp for when this comopnent is first mounted.
   // Never updated through the lifecycle of this component.
   const mountTimestamp = useRef(new Date(Date.now()));
@@ -91,6 +82,10 @@ export const CapabilitiesNotificationBar = (props: CapabilitiesNotificationBarPr
   return (
     <Stack data-ui-id="capabilities-notification-bar-stack">
       {toShow.map((notification) => {
+        const message = getNotificationMessage(notification.type, notification.isPresent, locale.strings.call);
+        if (!message) {
+          return null;
+        }
         return (
           <MessageBar
             key={notification.type}
@@ -115,7 +110,7 @@ export const CapabilitiesNotificationBar = (props: CapabilitiesNotificationBarPr
               setDismissedNotifications(dismissNotification(dismissedNotifications, notification));
             }}
           >
-            {getNotificationMessage(notification.type, notification.isPresent)}
+            {message}
           </MessageBar>
         );
       })}
@@ -123,14 +118,18 @@ export const CapabilitiesNotificationBar = (props: CapabilitiesNotificationBarPr
   );
 };
 
-const getNotificationMessage = (type: CapabalitiesNotificationType, isPresent: boolean): string => {
+const getNotificationMessage = (
+  type: CapabalitiesNotificationType,
+  isPresent: boolean,
+  strings: CallCompositeStrings
+): string | undefined => {
   switch (type) {
     case 'turnVideoOn':
-      return isPresent ? 'Your camera has been enabled' : 'Your camera has been disabled';
+      return isPresent ? strings.capabilityTurnVideoOnGranted : strings.capabilityTurnVideoOnRemoved;
     case 'unmuteMic':
-      return isPresent ? 'Your mic has been enabled' : 'Your mic has been disabled';
+      return isPresent ? strings.capabilityUnmuteMicGranted : strings.capabilityUnmuteMicRemoved;
     case 'shareScreen':
-      return isPresent ? 'Your screen share has been enabled' : 'Your screen share has been disabled';
+      return isPresent ? strings.capabilityShareScreenGranted : strings.capabilityShareScreenRemoved;
   }
 };
 

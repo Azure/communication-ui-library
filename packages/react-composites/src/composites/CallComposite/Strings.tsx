@@ -615,4 +615,34 @@ export interface CallCompositeStrings {
    * Label for the selection of the focusedContentLayout (Focused content) layout
    */
   moreButtonGalleryFocusedContentLayoutLabel?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Notification message shown to the user when capability to turn video on is removed
+   */
+  capabilityTurnVideoOnRemoved?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Notification message shown to the user when capability to turn video on is granted
+   */
+  capabilityTurnVideoOnGranted?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Notification message shown to the user when capability to unmute mic is removed
+   */
+  capabilityUnmuteMicRemoved?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Notification message shown to the user when capability to unmute mic is granted
+   */
+  capabilityUnmuteMicGranted?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Notification message shown to the user when capability to share screen is removed
+   */
+  capabilityShareScreenRemoved?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Notification message shown to the user when capability to share screen is granted
+   */
+  capabilityShareScreenGranted?: string;
 }
