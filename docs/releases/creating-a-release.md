@@ -31,9 +31,14 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 1. Options for this workflow:
     1. Branch - This is the branch that the release will be created from. Default option is from `main`.
     2. Bump Type - This is the type of release that will be created, the options for this are:
-        - `beta` - You will want to select this option when you want to do a beta release e.g: `release/1.2.beta.1`
+        - `beta-release-major` - Choose this option when you want to release from `1.2.0 -> 2.0.0-beta.1`
+        - `beta-release-minor` - Choose this option when you want to release from `1.2.0 -> 1.3.0-beta.1` or `1.2.0-beta.3 -> 1.3.0-beta.1`
+        - `beta-release-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1-beta.1` or `1.2.0-beta.3 -> 1.2.1-beta.1`
+        - `beta-release-beta` - Choose this option when you want to update only beta version to release from `1.2.0.beta.1 -> 1.2.0-beta.2`
+        - `stable-major` - This option is best for when you want to release from `1.2.0 -> 2.0.0`
         - `stable-minor` - This option is best for when you want to release from `1.2.0 -> 1.3.0`
         - `stable-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1`
+        - `stable-remove-beta-version` - Choose this option when you want to release from `1.2.0-beta.3 -> 1.2.0`
 
 ![Trigger prerelease branch creation](../images/trigger-create-prerelease-branch.png)
 
@@ -95,7 +100,7 @@ This section describes what the workflow above does. Understanding the workflow 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
     1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
 1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but **it will never be merged back in the base branch**.
-  1. On the release branch will check what kind of release this is, beta, stable-minor, or stable-patch. based on the selection here it will update the sdk versions.
+  1. On the release branch will check what kind of release this is, beta-release-major, beta-release-minor, beta-release-patch , beta-release-beta, stable-major, stable-minor, stable-patch or stable-remove-beta-version based on the selection here it will update the sdk versions.
   2. The action will synchronize the package telemetry verions on the release branch.
   3. After making these changes it will make a PR from the pre-release branch back into `main`.
 
