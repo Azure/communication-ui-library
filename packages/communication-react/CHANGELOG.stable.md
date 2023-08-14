@@ -24,7 +24,7 @@ Mon, 14 Aug 2023 18:28:26 GMT
 - Update control bar ui ([PR #3254](https://github.com/azure/communication-ui-library/pull/3254) by carolinecao@microsoft.com)
 - Enable Node 18 support ([PR #3229](https://github.com/azure/communication-ui-library/pull/3229) by 3941071+emlynmac@users.noreply.github.com)
 - New adapter API joinCallWithOptions to allow start with video and mic ([PR #3319](https://github.com/azure/communication-ui-library/pull/3319) by carolinecao@microsoft.com)
-- Hoist error tracking to composite level to allow tracking to be shared across components. This fixes an issue where errors would reappear after being dismissed. ([PR #3286](https://github.com/azure/communication-ui-library/pull/3286) by 2684369+JamesBurnside@users.noreply.github.com)
+- Hoist error tracking to composite level to allow tracking to be shared across components. This fixes an issue where errors would reappear after being dismissed ([PR #3286](https://github.com/azure/communication-ui-library/pull/3286) by 2684369+JamesBurnside@users.noreply.github.com)
 ### Bug Fixes
 - Fix an issue where local participant stops screen share and their local stream disappears but it is still showing to others in the call ([PR #3419](https://github.com/azure/communication-ui-library/pull/3419) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Resolve issue where chat keyboard would dismiss randomly during interop meetings ([PR #3421](https://github.com/azure/communication-ui-library/pull/3421) by 73612854+palatter@users.noreply.github.com)
