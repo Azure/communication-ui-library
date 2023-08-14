@@ -10,6 +10,10 @@ import Shake from 'shake.js';
 const originalConsoleLog = console.log;
 const originalAzureLoggerLog = AzureLogger.log;
 const consoleLogs: string[] = ['---- LOGS START ----'];
+// Ensure we cap any single log line to prevent the server from rejecting the request.
+const logLineCharacterLimit = 1000;
+// If there is a failure to send logs due to size, typically due to a very long call, retry with a smaller size.
+const logLengthMaxSize = 1000000;
 
 /**
  * Track console logs for pushing to a debug location.
@@ -18,11 +22,11 @@ const consoleLogs: string[] = ['---- LOGS START ----'];
 const startRecordingLogs = (): void => {
   console.log = (...args: unknown[]) => {
     originalConsoleLog.apply(console, args);
-    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`);
+    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`.slice(0, logLineCharacterLimit));
   };
   AzureLogger.log = (...args: unknown[]) => {
     originalAzureLoggerLog.apply(console, args);
-    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`);
+    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`.slice(0, logLineCharacterLimit));
   };
 };
 
@@ -97,8 +101,7 @@ const sendLogs = async (): Promise<string | false> => {
   // check for 413, which means the logs are too large to upload
   if (response.status === 413) {
     alert('Logs too large to upload. Trimming logs and retrying.');
-    const maxLogSize = 1000000;
-    const trimmedLogs = logs.slice(-maxLogSize);
+    const trimmedLogs = logs.slice(-logLengthMaxSize);
     response = await postLogsToServer(containerName, trimmedLogs);
   }
 
