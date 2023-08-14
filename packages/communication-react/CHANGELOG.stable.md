@@ -34,7 +34,7 @@ Mon, 14 Aug 2023 18:28:26 GMT
 - Fix side pane to refocus the people button when user closes the people pane with keyboard ([PR #3403](https://github.com/azure/communication-ui-library/pull/3403) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix speaker icon in contextual menu of microphone and devices button ([PR #3294](https://github.com/azure/communication-ui-library/pull/3294) by miguelgamis@microsoft.com)
 - Fix adapter error on mobile querying speakers when speakers are not available ([PR #3331](https://github.com/azure/communication-ui-library/pull/3331) by carolinecao@microsoft.com)
-- Extend touchable/clickable area of button to full height of send box. ([PR #3185](https://github.com/azure/communication-ui-library/pull/3185) by longamy@microsoft.com)
+- Extend touchable/clickable area of button to full height of send box ([PR #3185](https://github.com/azure/communication-ui-library/pull/3185) by longamy@microsoft.com)
 - Leverage useId from FluentUI instead of React ([PR #3239](https://github.com/azure/communication-ui-library/pull/3239) by edwardlee@microsoft.com)
 - Expose aria-labelledby prop for participantItems ([PR #3218](https://github.com/azure/communication-ui-library/pull/3218) by edwardlee@microsoft.com)
 - Show local tile in the overflow gallery when video gallery is in default layout ([PR #3222](https://github.com/azure/communication-ui-library/pull/3222) by 94866715+dmceachernmsft@users.noreply.github.com)
