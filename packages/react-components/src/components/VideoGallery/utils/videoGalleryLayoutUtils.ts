@@ -74,7 +74,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       ? dominantSpeakers && dominantSpeakers[0]
         ? visibleGridParticipants.current.filter((p) => p.userId === dominantSpeakers[0])
         : [visibleGridParticipants.current[0]]
-      : [visibleGridParticipants.current[0]];
+      : [];
   /* @conditional-compile-remove(gallery-layouts) */
   if (dominantSpeakerToGrid[0]) {
     visibleGridParticipants.current = dominantSpeakerToGrid;
