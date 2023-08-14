@@ -87,7 +87,8 @@ export function defaultMockCallAdapterState(
       /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       role: role ?? 'Unknown',
-      totalParticipantCount: Object.values(remoteParticipants).length + 1,
+      totalParticipantCount:
+        Object.values(remoteParticipants).length > 0 ? Object.values(remoteParticipants).length + 1 : undefined,
       captionsFeature: {
         captions: [],
         supportedSpokenLanguages: [],

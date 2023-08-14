@@ -9,6 +9,9 @@
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} další(ch)"
+  },
   "typingIndicator": {
     "singleUser": "{user} píše...",
     "multipleUsers": "{users} píší...",
@@ -73,7 +76,7 @@
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor",
     "microphoneButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Ztlumit možnosti mikrofonu a zvuku",
+    "onSplitButtonAriaLabel": "Ztlumit mikrofon a možnosti zvuku",
     "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možností zvuku",
     "microphoneActionTurnedOnAnnouncement": "Váš mikrofon je zapnutý",
     "microphoneActionTurnedOffAnnouncement": "Váš mikrofon je vypnutý",
@@ -108,6 +111,13 @@
     "tooltipDisabledContent": "Sdílení je zakázáno",
     "tooltipOnContent": "Sdílí se vaše obrazovka",
     "tooltipOffContent": "Sdílet obrazovku"
+  },
+  "raiseHandButton": {
+    "offLabel": "Zvednout",
+    "onLabel": "Dolů",
+    "tooltipDisabledContent": "Akce Zvednout ruku je zakázaná",
+    "tooltipOnContent": "Dát ruku dolů",
+    "tooltipOffContent": "Zvednout ruku"
   },
   "messageThread": {
     "yesterday": "Včera",

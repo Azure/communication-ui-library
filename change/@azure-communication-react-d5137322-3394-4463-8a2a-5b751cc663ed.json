@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Contribution Guide",
+  "comment": "Introduce new guideline for how to make changelog entry",
+  "packageName": "@azure/communication-react",
+  "email": "joshlai@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -53,7 +53,7 @@
     "peoplePaneTitle": "人員",
     "peopleButtonTooltipOpen": "顯示參與者",
     "peopleButtonTooltipClose": "隱藏參與者",
-    "peoplePaneSubTitle": "在此通話中",
+    "peoplePaneSubTitle": "在此通話 {numberOfPeople}",
     "privacyPolicy": "隱私權原則",
     "rejoinCallButtonLabel": "重新加入通話",
     "removedFromCallMoreDetails": "另一名參與者已將您自通話中移除。",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "無法解析目標參與者的租用戶識別碼",
     "unableToResolveTenantMoreDetails": "請檢查已正確輸入參與者識別碼",
     "participantIdIsMalformedTitle": "參與者識別碼的格式不正確",
-    "participantIdIsMalformedMoreDetails": "請檢查參與者識別碼的格式是否正確"
+    "participantIdIsMalformedMoreDetails": "請檢查參與者識別碼的格式是否正確",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
