@@ -267,11 +267,11 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
 
-    if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
+    /*if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
       setTextValueOverflow(true);
     } else {
       setTextValueOverflow(false);
-    }
+    }*/
     setTextValue(newValue);
   };
 
@@ -385,7 +385,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           }}
           styles={mergedStyles}
           supportNewline={supportNewline}
-          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          // maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
         >

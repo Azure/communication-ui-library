@@ -66,7 +66,7 @@ type InputBoxComponentProps = {
   inputClassName?: string;
   placeholderText?: string;
   supportNewline?: boolean;
-  maxLength: number;
+  maxLength?: number;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEnterKeyDown?: () => void;
   errorMessage?: string | React.ReactElement;

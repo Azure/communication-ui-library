@@ -77,10 +77,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     setTextValue(newValue ?? '');
   };
 
-  const textTooLongMessage =
+  /*const textTooLongMessage =
     messageState === 'too long'
       ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-      : undefined;
+      : undefined;*/
 
   const onRenderThemedCancelIcon = useCallback(
     () => onRenderCancelIcon(theme.palette.neutralSecondary),
@@ -147,8 +147,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               });
           }}
           supportNewline={false}
-          maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-          errorMessage={textTooLongMessage}
+          // maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
+          // errorMessage={textTooLongMessage}
           styles={editBoxStyles}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
