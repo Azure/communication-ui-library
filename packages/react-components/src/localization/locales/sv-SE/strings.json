@@ -7,9 +7,10 @@
     "mutedIconLabel": "Ljudet är avstängt",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
-    "participantStateHold": "Parkerat",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "Parkerat"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} till"
   },
   "typingIndicator": {
     "singleUser": "{user} skriver...",
@@ -112,11 +113,11 @@
     "tooltipOffContent": "Dela skärmen"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Hand",
+    "onLabel": "Lägre",
+    "tooltipDisabledContent": "Åtgärden Räck upp hand är inaktiverad",
+    "tooltipOnContent": "Ta ned handen",
+    "tooltipOffContent": "Räck upp handen"
   },
   "messageThread": {
     "yesterday": "I går",

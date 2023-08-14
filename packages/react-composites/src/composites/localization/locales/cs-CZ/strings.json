@@ -33,9 +33,9 @@
     "removeBackgroundTooltip": "Odebrat pozadí",
     "cameraOffBackgroundEffectWarningText": "Vaše kamera je vypnutá. Pokud chcete vidět efekt videa, zapněte kameru.",
     "failedToJoinCallDueToNoNetworkMoreDetails": "Hovor byl odpojen z důvodu problému se sítí. Zkontrolujte připojení a připojte se znovu.",
-    "failedToJoinCallDueToNoNetworkTitle": "Volání odpojeno",
+    "failedToJoinCallDueToNoNetworkTitle": "Hovor odpojen",
     "failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails": "Vstup do hovoru vám nebyl povolen. Pokud se jednalo o chybu, znovu se do hovoru přihlaste.",
-    "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Propuštěn z haly",
+    "failedToJoinTeamsMeetingReasonAccessDeniedTitle": "Odchod z předsálí",
     "learnMore": "Další informace",
     "leavingCallTitle": "Opouštíte hovor...",
     "leftCallMoreDetails": "Pokud se jedná o chybu, připojte se k hovoru znovu.",
@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
-    "peoplePaneSubTitle": "V tomto hovoru",
+    "peoplePaneSubTitle": "V tomto hovoru {numberOfPeople}",
     "privacyPolicy": "Zásady ochrany osobních údajů",
     "rejoinCallButtonLabel": "Znovu se připojit k hovoru",
     "removedFromCallMoreDetails": "Jiný účastník vás odebral z hovoru.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Nepovedlo se přeložit ID tenanta pro cílového účastníka",
     "unableToResolveTenantMoreDetails": "Zkontrolujte prosím, jestli je správně zadané ID účastníka.",
     "participantIdIsMalformedTitle": "ID účastníka nemá správný formát.",
-    "participantIdIsMalformedMoreDetails": "Zkontrolujte prosím, jestli je ID účastníka ve správném formátu."
+    "participantIdIsMalformedMoreDetails": "Zkontrolujte prosím, jestli je ID účastníka ve správném formátu.",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
