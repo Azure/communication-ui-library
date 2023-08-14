@@ -31,7 +31,7 @@ Mon, 14 Aug 2023 18:28:26 GMT
 - Fix message type being hard coded in sending state ([PR #3442](https://github.com/azure/communication-ui-library/pull/3442) by 109105353+jpeng-ms@users.noreply.github.com)
 - Fix participant count when you are alone in a call ([PR #3432](https://github.com/azure/communication-ui-library/pull/3432) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix accessibility bug where participant items are missing aria parent ([PR #3412](https://github.com/azure/communication-ui-library/pull/3412) by carolinecao@microsoft.com)
-- Fix side pane to refocus the people button when user closes the people pane with keyboard. ([PR #3403](https://github.com/azure/communication-ui-library/pull/3403) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix side pane to refocus the people button when user closes the people pane with keyboard ([PR #3403](https://github.com/azure/communication-ui-library/pull/3403) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix speaker icon in contextual menu of microphone and devices button ([PR #3294](https://github.com/azure/communication-ui-library/pull/3294) by miguelgamis@microsoft.com)
 - Fix adapter error on mobile querying speakers when speakers are not available ([PR #3331](https://github.com/azure/communication-ui-library/pull/3331) by carolinecao@microsoft.com)
 - Extend touchable/clickable area of button to full height of send box. ([PR #3185](https://github.com/azure/communication-ui-library/pull/3185) by longamy@microsoft.com)
