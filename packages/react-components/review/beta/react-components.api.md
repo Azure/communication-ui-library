@@ -20,6 +20,7 @@ import { IModalStyleProps } from '@fluentui/react';
 import { IModalStyles } from '@fluentui/react';
 import { IOverlayStyleProps } from '@fluentui/react';
 import { IOverlayStyles } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -36,6 +37,7 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
+import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -321,6 +323,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -330,6 +333,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @beta
@@ -705,6 +709,7 @@ export interface ComponentStrings {
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -810,6 +815,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -1312,6 +1319,7 @@ export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     modalLayerHostId?: string;
     onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
     styles?: ImageGalleryStylesProps;
@@ -1319,13 +1327,13 @@ export interface ImageGalleryProps {
 
 // @beta
 export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    bodyContainer?: IStyle;
     closeIcon?: IStyle;
     controlBarContainer?: IStyle;
     downloadButton?: IStyle;
     downloadButtonIcon?: IStyle;
     header?: IStyle;
     image?: IStyle;
-    imageContainer?: IStyle;
     modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
     overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
     smallDownloadButton?: IStyle;
@@ -1388,6 +1396,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
+    raisedHand?: RaisedHand | undefined;
 }) => JSX.Element>;
 
 // @beta
@@ -1534,6 +1543,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
+    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
 };
 
 // @public
@@ -1660,7 +1670,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -1835,6 +1845,29 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
+
+// @public
+export type RaisedHand = {
+    order: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -2253,7 +2286,9 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
+}
 
 // @public
 export type VideoGalleryParticipant = {
@@ -2299,6 +2334,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -2377,6 +2413,7 @@ export interface VideoTileProps {
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

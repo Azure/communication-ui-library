@@ -360,6 +360,7 @@ export type CallCompositeIcons = {
     NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
 };
 
 // @public
@@ -460,6 +461,8 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -1262,6 +1265,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1273,6 +1277,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -1345,11 +1351,13 @@ export type _FakeChatAdapterArgs = {
     failFileDownload?: boolean;
     sendRemoteFileSharingMessage?: boolean;
     sendRemoteInlineImageMessage?: boolean;
+    inlineImageUrl?: string;
     frenchLocaleEnabled?: boolean;
     showParticipantPane?: boolean;
     participantsWithHiddenComposites?: ChatParticipant[];
     customDataModelEnabled?: boolean;
     chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+    theme?: 'light' | 'dark';
 };
 
 // @internal

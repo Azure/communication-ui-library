@@ -46,7 +46,12 @@ import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
+import { IModalStyleProps } from '@fluentui/react';
+import { IModalStyles } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
+import { IOverlayStyleProps } from '@fluentui/react';
+import { IOverlayStyles } from '@fluentui/react';
+import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -73,7 +78,7 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
-import { RaisedHand } from '@azure/communication-calling';
+import { RaisedHand as RaisedHand_2 } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -82,6 +87,7 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
+import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -712,6 +718,7 @@ export type CallCompositeIcons = {
     NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
 };
 
 // @public
@@ -812,6 +819,8 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -940,6 +949,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -949,6 +959,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @beta
@@ -1947,6 +1958,7 @@ export interface ComponentStrings {
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2232,6 +2244,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -2369,6 +2383,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2380,6 +2395,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSpeakers?: JSX.Element | undefined;
     ChatMessageOptions: JSX.Element;
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -2811,6 +2828,45 @@ export interface ImageFileMetadata extends BaseFileMetadata {
 }
 
 // @beta
+export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+
+// @beta
+export interface ImageGalleryImageProps {
+    altText?: string;
+    imageUrl: string;
+    saveAsName: string;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @beta
+export interface ImageGalleryProps {
+    images: Array<ImageGalleryImageProps>;
+    modalLayerHostId?: string;
+    onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    startIndex?: number;
+    styles?: ImageGalleryStylesProps;
+}
+
+// @beta
+export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    bodyContainer?: IStyle;
+    closeIcon?: IStyle;
+    controlBarContainer?: IStyle;
+    downloadButton?: IStyle;
+    downloadButtonIcon?: IStyle;
+    header?: IStyle;
+    image?: IStyle;
+    modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
+    overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
+    smallDownloadButton?: IStyle;
+    title?: IStyle;
+    titleBarContainer?: IStyle;
+}
+
+// @beta
 export type IncomingCallManagement = {
     incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
 };
@@ -3054,6 +3110,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
+    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
 };
 
 // @public
@@ -3219,7 +3276,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3406,9 +3463,29 @@ export type Profile = {
 };
 
 // @public
+export type RaisedHand = {
+    order: number;
+};
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
+
+// @public
 export interface RaiseHandCallFeature {
-    localParticipantRaisedHand?: RaisedHand;
-    raisedHands: RaisedHand[];
+    localParticipantRaisedHand?: RaisedHand_2;
+    raisedHands: RaisedHand_2[];
 }
 
 // @public
@@ -3431,7 +3508,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand;
+    raisedHand?: RaisedHand_2;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -3917,7 +3994,9 @@ export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
+}
 
 // @public
 export type VideoGalleryParticipant = {
@@ -3963,6 +4042,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -4057,6 +4137,7 @@ export interface VideoTileProps {
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

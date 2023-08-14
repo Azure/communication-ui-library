@@ -2,20 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Link,
-  Callout,
-  mergeStyles
-} from '@fluentui/react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { registerIcons } from '@fluentui/react';
+import { registerIcons, Link, Callout, mergeStyles } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,

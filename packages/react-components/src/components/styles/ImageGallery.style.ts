@@ -18,10 +18,12 @@ export const downloadIcon: IIconProps = {
 /**
  * @private
  */
-export const overlayStyles = (theme: Theme): IOverlayStyles => {
+export const overlayStyles = (theme: Theme, isDarkThemed: boolean): IOverlayStyles => {
   return {
     root: {
-      background: theme.palette.white,
+      // The overlay background color should always be black in both light and dark theme.
+      // In dark theme, theme.palette.white is actually black.
+      background: isDarkThemed ? theme.palette.white : theme.palette.black,
       opacity: '0.85'
     }
   };
@@ -33,7 +35,11 @@ export const overlayStyles = (theme: Theme): IOverlayStyles => {
 export const focusTrapZoneStyle: IStyle = {
   boxShadow: 'none',
   background: 'transparent',
-  display: 'flex'
+  display: 'flex',
+  width: '100%',
+  height: '100%',
+  maxWidth: '100%',
+  maxHeight: '100%'
 };
 
 /**
@@ -42,9 +48,10 @@ export const focusTrapZoneStyle: IStyle = {
 export const scrollableContentStyle: IStyle = {
   overflowY: 'hidden',
   display: 'flex',
-  flexFlow: 'column wrap',
   maxWidth: '100%',
-  maxHeight: '100%'
+  maxHeight: '100%',
+  flexDirection: 'column',
+  flexWrap: 'nowrap'
 };
 
 /**
@@ -57,7 +64,7 @@ export const headerStyle: IStyle = {
   height: '3.5rem',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  padding: '0 0.75rem'
+  padding: '0.25rem 0.75rem'
 };
 
 /**
@@ -77,6 +84,7 @@ export const titleBarContainerStyle: IStyle = {
 export const titleStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
     paddingLeft: '0.5rem',
+    marginLeft: '0.5rem',
     color: isDarkThemed ? undefined : theme.palette.white,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
@@ -108,22 +116,48 @@ export const downloadIconStyle: IStyle = {
 /**
  * @private
  */
-export const imageContainer: IStyle = {
+export const bodyContainer: IStyle = {
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'center',
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  margin: '4rem 0 2rem'
+  padding: '5.75rem',
+  '@media (max-width: 25rem) or (max-height: 25rem)': {
+    padding: '2rem'
+  }
 };
 
 /**
  * @private
  */
-export const imageStyle: IStyle = {
-  objectFit: 'contain',
+export const bodyFocusZone: IStyle = {
+  width: '100%',
   height: '100%',
-  width: '100%'
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+};
+
+/**
+ * @private
+ */
+export const normalImageStyle: IStyle = {
+  objectFit: 'contain',
+  maxHeight: '100%',
+  maxWidth: '100%'
+};
+
+/**
+ * @private
+ */
+export const brokenImageStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+  return {
+    // The color should be white in dark theme.
+    // In dark theme, theme.palette.black is actually white.
+    color: isDarkThemed ? theme.palette.black : theme.palette.white
+  };
 };
 
 /**
@@ -131,6 +165,8 @@ export const imageStyle: IStyle = {
  */
 export const closeButtonStyles = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
+    // The color should be white in dark theme.
+    // In dark theme, theme.palette.black is actually white.
     color: isDarkThemed ? theme.palette.black : theme.palette.white,
     ':hover': {
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
@@ -159,10 +195,14 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle
     color: isDarkThemed ? undefined : theme.palette.white,
     whiteSpace: 'nowrap',
     ':hover': {
+      // The color should be white in dark theme.
+      // In dark theme, theme.palette.black is actually white.
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
     },
     ':active': {
+      // The color should be white in dark theme.
+      // In dark theme, theme.palette.black is actually white.
       color: isDarkThemed ? theme.palette.black : theme.palette.white,
       backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
     },
@@ -178,6 +218,8 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle
 export const smallDownloadButtonContainerStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
   return {
     marginRight: '0.5rem',
+    // The color should be white in dark theme.
+    // In dark theme, theme.palette.black is actually white.
     color: isDarkThemed ? theme.palette.black : theme.palette.white,
     whiteSpace: 'nowrap',
     ':hover': {

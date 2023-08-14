@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Kişiler",
     "peopleButtonTooltipOpen": "Katılımcıları göster",
     "peopleButtonTooltipClose": "Katılımcıları gizle",
-    "peoplePaneSubTitle": "Bu aramada",
+    "peoplePaneSubTitle": "Bu aramada {numberOfPeople} var",
     "privacyPolicy": "Gizlilik ilkesi",
     "rejoinCallButtonLabel": "Çağrıya yeniden katıl",
     "removedFromCallMoreDetails": "Başka bir katılımcı sizi aramadan çıkardı.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Hedef katılımcının kiracı kimliği çözülemiyor",
     "unableToResolveTenantMoreDetails": "Lütfen katılımcı kimliğinin doğru giril olup olmadığını denetleyin",
     "participantIdIsMalformedTitle": "Katılımcı kimliği doğru biçimde değil",
-    "participantIdIsMalformedMoreDetails": "Lütfen katılımcı kimliğinin doğru biçimde olduğundan emin olun"
+    "participantIdIsMalformedMoreDetails": "Lütfen katılımcı kimliğinin doğru biçimde olduğundan emin olun",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",

@@ -32,10 +32,10 @@ import { WEB_APP_TITLE } from './utils/constants';
 import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { useIsMobile } from './utils/useIsMobile';
-/* @conditional-compilation-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 
-setLogLevel('warning');
+setLogLevel('verbose');
 initializeIcons();
 
 interface Credentials {
@@ -170,8 +170,8 @@ const generateCallWithChatArgs = async (
 };
 
 const callLocatorGen = (
-  /* @conditional-compilation-remove(PSTN-calls) */ outBoundParticipants?: string[]
-): GroupCallLocator | /* @conditional-compilation-remove(PSTN-calls) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(PSTN-calls) */ outBoundParticipants?: string[]
+): GroupCallLocator | /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator => {
   /* @conditional-compile-remove(PSTN-calls) */
   if (outBoundParticipants) {
     return { participantIds: outBoundParticipants };
