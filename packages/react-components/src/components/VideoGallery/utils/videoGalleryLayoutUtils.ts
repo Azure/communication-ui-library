@@ -54,19 +54,20 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     pinnedParticipantUserIds.length > 0 || isScreenShareActive
       ? []
       : smartDominantSpeakerParticipants({
-          participants: layout === 'speaker' ? videoParticipants : remoteParticipants,
+          participants: layout !== 'speaker' ? videoParticipants : remoteParticipants,
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
           maxDominantSpeakers: maxRemoteVideoStreams as number
         }).slice(0, maxRemoteVideoStreams);
 
+  /* @conditional-compile-remove(gallery-layouts) */
   const dominantSpeakerToGrid =
-    layout === 'speaker' && dominantSpeakers
-      ? dominantSpeakers[0]
+    layout === 'speaker'
+      ? dominantSpeakers && dominantSpeakers[0]
         ? visibleGridParticipants.current.filter((p) => p.userId === dominantSpeakers[0])
         : [visibleGridParticipants.current[0]]
-      : [];
-
+      : [visibleGridParticipants.current[0]];
+  /* @conditional-compile-remove(gallery-layouts) */
   if (dominantSpeakerToGrid[0]) {
     visibleGridParticipants.current = dominantSpeakerToGrid;
   }

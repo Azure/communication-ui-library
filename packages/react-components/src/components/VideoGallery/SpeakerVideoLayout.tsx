@@ -96,6 +96,12 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     );
   });
 
+  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+
+  if (!shouldFloatLocalVideo && localVideoComponent) {
+    gridTiles.push(localVideoComponent);
+  }
+
   /**
    * instantiate indexes available to render with indexes available that would be on first page
    *
