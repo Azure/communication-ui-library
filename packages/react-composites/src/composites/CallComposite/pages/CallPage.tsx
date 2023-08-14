@@ -129,7 +129,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(gallery-layouts) */
-      onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+      onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
     />
   );
 };

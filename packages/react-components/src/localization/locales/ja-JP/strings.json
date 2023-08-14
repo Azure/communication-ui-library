@@ -7,9 +7,10 @@
     "mutedIconLabel": "ミュート状態",
     "displayNamePlaceholder": "名前のない参加者",
     "participantStateRinging": "呼び出し中...",
-    "participantStateHold": "保留中",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "保留中"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "その他 {overflowCount} 個"
   },
   "typingIndicator": {
     "singleUser": "{user} さんが入力しています...",
@@ -112,11 +113,11 @@
     "tooltipOffContent": "画面のプレゼンテーション"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "手を挙げる",
+    "onLabel": "低い",
+    "tooltipDisabledContent": "手を挙げる操作が無効になっています",
+    "tooltipOnContent": "手を下げる",
+    "tooltipOffContent": "手を挙げる"
   },
   "messageThread": {
     "yesterday": "昨日",
