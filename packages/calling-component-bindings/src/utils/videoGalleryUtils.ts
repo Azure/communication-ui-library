@@ -66,7 +66,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
-    raisedHand?: RaisedHandState
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand?: any
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -75,7 +76,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-      raisedHand
+      /* @conditional-compile-remove(raise-hand) */
+      raisedHand as RaisedHandState
     );
   }
 );
@@ -88,7 +90,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
-  raisedHand?: RaisedHandState
+  /* @conditional-compile-remove(raise-hand) */
+  raisedHand?: any
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -121,7 +124,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(PSTN-calls) */
     state,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand
+    raisedHand: raisedHand as RaisedHandState
   };
 };
 

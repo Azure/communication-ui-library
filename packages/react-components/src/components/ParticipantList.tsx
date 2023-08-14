@@ -212,6 +212,7 @@ const sortParticipants = (participants: ParticipantListParticipant[]): Participa
     return 'raisedHand' in participant;
   };
 
+  /* @conditional-compile-remove(raise-hand) */
   participants.sort((a, b) => {
     if (!isParticipantListCallParticipant(a) || !isParticipantListCallParticipant(b)) {
       return 0;
