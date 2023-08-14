@@ -174,7 +174,16 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           {localVideoComponent}
         </Stack>
       ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent))}>
+        <Stack
+          className={mergeStyles(
+            localVideoTileContainerStyle(
+              theme,
+              localVideoSizeRem,
+              !!screenShareComponent,
+              /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
+            )
+          )}
+        >
           {localVideoComponent}
         </Stack>
       ) : (
@@ -231,6 +240,13 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
+        {
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'HorizontalTop' ? (
+            overflowGallery
+          ) : (
+            <></>
+          )
+        }
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -238,8 +254,20 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {overflowGallery}
+        {overflowGalleryTrampoline(
+          overflowGallery,
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
+        )}
       </Stack>
     </Stack>
   );
+};
+
+const overflowGalleryTrampoline = (
+  gallery: JSX.Element | null,
+  galleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
+): JSX.Element | null => {
+  /* @conditional-compile-remove(gallery-layouts) */
+  return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
+  return gallery;
 };

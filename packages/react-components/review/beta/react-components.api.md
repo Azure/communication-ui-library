@@ -1244,13 +1244,13 @@ export interface ImageGalleryProps {
 
 // @beta
 export interface ImageGalleryStylesProps extends BaseCustomStyles {
+    bodyContainer?: IStyle;
     closeIcon?: IStyle;
     controlBarContainer?: IStyle;
     downloadButton?: IStyle;
     downloadButtonIcon?: IStyle;
     header?: IStyle;
     image?: IStyle;
-    imageContainer?: IStyle;
     modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
     overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
     smallDownloadButton?: IStyle;
@@ -1587,7 +1587,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
