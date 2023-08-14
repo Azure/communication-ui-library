@@ -34,7 +34,7 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
         - `beta-release-major` - Choose this option when you want to release from `1.2.0 -> 2.0.0-beta.1`
         - `beta-release-minor` - Choose this option when you want to release from `1.2.0 -> 1.3.0-beta.1` or `1.2.0-beta.3 -> 1.3.0-beta.1`
         - `beta-release-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1-beta.1` or `1.2.0-beta.3 -> 1.2.1-beta.1`
-        - `beta-release-beta` - Choose this option when you want ot update only beta version to release from `1.2.0.beta.1 -> 1.2.0-beta.2`
+        - `beta-release-beta` - Choose this option when you want to update only beta version to release from `1.2.0.beta.1 -> 1.2.0-beta.2`
         - `stable-major` - This option is best for when you want to release from `1.2.0 -> 2.0.0`
         - `stable-minor` - This option is best for when you want to release from `1.2.0 -> 1.3.0`
         - `stable-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1`
