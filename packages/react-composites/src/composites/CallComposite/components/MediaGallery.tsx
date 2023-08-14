@@ -30,7 +30,7 @@ import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 import { LocalVideoTileOptions } from '../CallComposite';
-/* @conditional-compile-remove(capabilities) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 
 const VideoGalleryStyles = {
@@ -157,10 +157,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
-        /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(capabilities) */
+        /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
           props.localVideoTileOptions === false ||
-          userRole === 'Consumer' ||
+          /* @conditional-compile-remove(capabilities) */ userRole === 'Consumer' ||
           /* @conditional-compile-remove(rooms) */ (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
             : props.isMobile && containerAspectRatio < 1
