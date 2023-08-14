@@ -98,7 +98,7 @@ const sendLogs = async (): Promise<string | false> => {
   if (response.status === 413) {
     alert('Logs too large to upload. Trimming logs and retrying.');
     const maxLogSize = 1000000;
-    const trimmedLogs = logs.slice(0, maxLogSize);
+    const trimmedLogs = logs.slice(-maxLogSize);
     response = await postLogsToServer(containerName, trimmedLogs);
   }
 
