@@ -526,6 +526,8 @@ export type CallCompositeIcons = {
     ControlButtonScreenShareStop?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
+    RaiseHandContextualMenuItem?: JSX.Element;
+    LowerHandContextualMenuItem?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -2188,6 +2190,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -2287,6 +2291,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -2351,7 +2357,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SitePermissionsSparkle: JSX.Element;
     SitePermissionCamera: JSX.Element;
     SitePermissionMic: JSX.Element;
-    SitePermissionCameraDenied: JSX.Element;
+    SitePermissionCameraDenied: JSX.Element; /**
+    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
+    * This wrapper ensures the icon name is being type-checked helping ensure no typos
+    * and ensure that icon is customizable through the composite API.
+    *
+    * @private
+    */
     SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
