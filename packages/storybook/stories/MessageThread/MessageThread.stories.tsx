@@ -119,141 +119,171 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={ExampleConstantsText} />
 
-      <Heading>Default MessageThread</Heading>
-      <Description>
-        By default, MessageThread displays Chat messages with display name of only for other users and creation time of
-        message when available.
-      </Description>
-      <Canvas mdxSource={DefaultMessageThreadExampleText}>
-        <DefaultMessageThreadExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Default MessageThread</Heading>
+        <Description>
+          By default, MessageThread displays Chat messages with display name of only for other users and creation time
+          of message when available.
+        </Description>
+        <Canvas mdxSource={DefaultMessageThreadExampleText}>
+          <DefaultMessageThreadExample />
+        </Canvas>
+      </div>
 
-      <Heading>MessageThread With Message Date</Heading>
-      <Canvas mdxSource={MessageThreadWithMessageDateExampleText}>
-        <MessageThreadWithMessageDateExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>MessageThread With Message Date</Heading>
+        <Canvas mdxSource={MessageThreadWithMessageDateExampleText}>
+          <MessageThreadWithMessageDateExample />
+        </Canvas>
+      </div>
 
-      <Heading>System Message</Heading>
-      <Description>The example below shows a message thread with a system message.</Description>
-      <Canvas mdxSource={MessageThreadWithSystemMessagesExampleText}>
-        <MessageThreadWithSystemMessagesExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>System Message</Heading>
+        <Description>The example below shows a message thread with a system message.</Description>
+        <Canvas mdxSource={MessageThreadWithSystemMessagesExampleText}>
+          <MessageThreadWithSystemMessagesExample />
+        </Canvas>
+      </div>
 
-      <Heading>Blocked Message</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
-        hyperlink.
-      </Description>
-      <Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
-        <MessageThreadWithBlockedMessagesExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Blocked Message</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
+          hyperlink.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
+          <MessageThreadWithBlockedMessagesExample />
+        </Canvas>
+      </div>
 
-      <Heading>Custom Message</Heading>
-      <Description>
-        The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomMessagesExampleText}>
-        <MessageThreadWithCustomMessagesExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Custom Message</Heading>
+        <Description>
+          The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomMessagesExampleText}>
+          <MessageThreadWithCustomMessagesExample />
+        </Canvas>
+      </div>
 
-      <Heading>Messages with Customized Chat Container</Heading>
-      <Description>
-        The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomChatContainerExampleText}>
-        <MessageThreadWithCustomChatContainerExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Messages with Customized Chat Container</Heading>
+        <Description>
+          The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomChatContainerExampleText}>
+          <MessageThreadWithCustomChatContainerExample />
+        </Canvas>
+      </div>
 
-      <Heading>Messages with Customized Message Container</Heading>
-      <Description>
-        The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
-        `styles.systemMessageContainer` in `MessageThread`
-      </Description>
-      <Description>
-        Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI malformed
-        issue when loading the storybook snippets
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomMessageContainerExampleText}>
-        <MessageThreadWithCustomMessageContainerExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Messages with Customized Message Container</Heading>
+        <Description>
+          The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
+          `styles.systemMessageContainer` in `MessageThread`
+        </Description>
+        <Description>
+          Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI
+          malformed issue when loading the storybook snippets
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomMessageContainerExampleText}>
+          <MessageThreadWithCustomMessageContainerExample />
+        </Canvas>
+      </div>
 
-      <Heading>Messages with Customized Blocked message Container</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        The example below shows how to render a `blocked` message with custom `warningText`, with
-        `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
-        `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
-        <MessageThreadWithCustoBlockedmMessageContainerExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Messages with Customized Blocked message Container</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          The example below shows how to render a `blocked` message with custom `warningText`, with
+          `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage`
+          in `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
+          <MessageThreadWithCustoBlockedmMessageContainerExample />
+        </Canvas>
+      </div>
 
-      <Heading>Default Message Status Indicator</Heading>
-      <Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
-        <MessageThreadWithMessageStatusIndicatorExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Default Message Status Indicator</Heading>
+        <Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
+          <MessageThreadWithMessageStatusIndicatorExample />
+        </Canvas>
+      </div>
 
-      <Heading>Custom Message Status Indicator</Heading>
-      <Description>
-        The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
-        `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomMessageStatusIndicatorExampleText}>
-        <MessageThreadWithCustomMessageStatusIndicatorExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Custom Message Status Indicator</Heading>
+        <Description>
+          The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
+          `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomMessageStatusIndicatorExampleText}>
+          <MessageThreadWithCustomMessageStatusIndicatorExample />
+        </Canvas>
+      </div>
 
-      <Heading>Custom Avatar</Heading>
-      <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
-        <MessageThreadWithCustomAvatarExample />
-      </Canvas>
-      <Description>
-        Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
-        component
-      </Description>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Custom Avatar</Heading>
+        <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
+          <MessageThreadWithCustomAvatarExample />
+        </Canvas>
+        <Description>
+          Note: You can view the details of the
+          [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component
+        </Description>
+      </div>
 
-      <Heading>Custom Timestamp</Heading>
-      <SingleLineBetaBanner />
-      <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
-        <MessageThreadWithCustomTimestampExample />
-      </Canvas>
-      <Heading>Display Inline Image with Messages</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        MessageThread component provides UI for displaying inline image attachments in a message. If an image is
-        protected by header-based authentication, developers can write there own HTTP call to get the image so you can
-        provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
-      </Description>
-      <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
-        <MessageThreadWithInlineImageExample />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Custom Timestamp</Heading>
+        <SingleLineBetaBanner />
+        <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
+          <MessageThreadWithCustomTimestampExample />
+        </Canvas>
+        <Heading>Display Inline Image with Messages</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          MessageThread component provides UI for displaying inline image attachments in a message. If an image is
+          protected by header-based authentication, developers can write there own HTTP call to get the image so you can
+          provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
+          <MessageThreadWithInlineImageExample />
+        </Canvas>
+      </div>
 
-      <Heading>Display File Attachments with Messages</Heading>
-      <DetailedBetaBanner />
-      <Description>
-        MessageThread component provides UI for displaying file attachments in a message. This allows developers to
-        implement a file sharing feature using the pure UI component with minimal effort. Developers can write their own
-        file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it in a
-        new browser tab. Developers can override this behavior as well using MessageThread props.
-      </Description>
-      <Canvas mdxSource={MessageWithFileText}>
-        <MessageWithFile />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Display File Attachments with Messages</Heading>
+        <DetailedBetaBanner />
+        <Description>
+          MessageThread component provides UI for displaying file attachments in a message. This allows developers to
+          implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
+          own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
+          in a new browser tab. Developers can override this behavior as well using MessageThread props.
+        </Description>
+        <Canvas mdxSource={MessageWithFileText}>
+          <MessageWithFile />
+        </Canvas>
+      </div>
 
-      <Heading>Mention of Users with a custom renderer within Messages</Heading>
-      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
-      <Description>
-        When a user is mentioned in a message, a custom HTML tag is used to represent the element in the MessageThread.
-        This element can be styled using the standard methods and the renderer can be overridden for further
-        customization. The HTML Tag is defined:
-      </Description>
-      <Source code={mentionTag} />
-      <Canvas mdxSource={MessageWithCustomMentionRendererText}>
-        <MessageWithCustomMentionRenderer />
-      </Canvas>
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Mention of Users with a custom renderer within Messages</Heading>
+        <SingleLineBetaBanner version={'1.7.0-beta.1'} />
+        <Description>
+          When a user is mentioned in a message, a custom HTML tag is used to represent the element in the
+          MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+          further customization. The HTML Tag is defined:
+        </Description>
+        <Source code={mentionTag} />
+        <Canvas mdxSource={MessageWithCustomMentionRendererText}>
+          <MessageWithCustomMentionRenderer />
+        </Canvas>
+      </div>
 
-      <Heading>Props</Heading>
-      <Props of={MessageThreadComponent} />
+      <div ref={(e) => e?.scrollIntoView({ behavior: 'auto' })}>
+        <Heading>Props</Heading>
+        <Props of={MessageThreadComponent} />
+      </div>
     </>
   );
 };
