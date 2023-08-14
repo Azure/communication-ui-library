@@ -92,13 +92,15 @@ const sendLogs = async (): Promise<string | false> => {
   const logs = getRecordedLogs();
 
   const containerName = 'chat-sample-logs';
-  const response = await fetch(`/uploadToAzureBlobStorage`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: safeJSONStringify({ containerName, logs })
-  });
+  let response = await postLogsToServer(containerName, logs);
+
+  // check for 413
+  if (response.status === 413) {
+    alert('Logs too large to upload. Trimming logs and retrying.');
+    const maxLogSize = 1000000;
+    const trimmedLogs = logs.slice(0, maxLogSize);
+    response = await postLogsToServer(containerName, trimmedLogs);
+  }
 
   if (!response.ok) {
     console.error('Failed to upload logs to Azure Blob Storage', response);
@@ -109,6 +111,15 @@ const sendLogs = async (): Promise<string | false> => {
   console.log(`Logs uploaded to ${blobUrl}`);
   return blobUrl;
 };
+
+const postLogsToServer = async (containerName: string, logs: string): Promise<Response> =>
+  fetch(`/uploadToAzureBlobStorage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: safeJSONStringify({ containerName, logs })
+  });
 
 const PromptForShakePermission = (props: { onPermissionGranted: () => void }): JSX.Element => {
   const [showPrompt, setShowPrompt] = React.useState(true);
