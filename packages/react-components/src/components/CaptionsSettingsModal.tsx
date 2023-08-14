@@ -26,8 +26,8 @@ import {
   titleContainerClassName
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
-import { defaultCaptionLanguage, defaultSpokenLanguage } from './utils';
-import { AvailableSpokenLanguageStrings , AvailableCaptionLanguageStrings } from '../types';
+import { defaultSpokenLanguage } from './utils';
+import { AvailableSpokenLanguageStrings , AvailableCaptionLanguageStrings, _spokenLanguageToCaptionLanguage } from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
@@ -98,8 +98,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
 
   const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<IDropdownOption>({
-    key: currentCaptionLanguage !== '' ? currentCaptionLanguage : defaultCaptionLanguage,
-    text: currentCaptionLanguage !== '' ? currentCaptionLanguage : defaultCaptionLanguage
+    key: currentCaptionLanguage !== '' ? currentCaptionLanguage : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
+    text: currentCaptionLanguage !== '' ? currentCaptionLanguage : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
   });
 
 
@@ -160,6 +160,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   );
 
   const CaptionsSettingsComponent = useCallback((): JSX.Element => {
+    const placeholderSpokenLanguage = currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
+    const placeholderCaptionLanguage = currentCaptionLanguage !== '' ? currentCaptionLanguage : _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage]
     return (
       <Stack>
         <Dropdown
@@ -167,7 +169,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
           selectedKey={selectedSpokenLanguage ? selectedSpokenLanguage.key : undefined}
           onChange={onSpokenLanguageChange}
           calloutProps={calloutProps}
-          placeholder={currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage}
+          placeholder={placeholderSpokenLanguage}
           options={spokenLanguageDropdownOptions}
           styles={dropdownStyles}
         />
@@ -180,7 +182,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
          selectedKey={selectedCaptionLanguage ? selectedCaptionLanguage.key : undefined}
          onChange={onCaptionLanguageChange}
          calloutProps={calloutProps}
-         placeholder={currentCaptionLanguage !== '' ? currentCaptionLanguage : defaultCaptionLanguage}
+         placeholder={placeholderCaptionLanguage}
          options={captionLanguageDropdownOptions}
          styles={dropdownStyles}
        />

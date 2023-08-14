@@ -87,3 +87,52 @@ export interface AvailableCaptionLanguageStrings {
   'ro': string;
   'sk': string;
 }
+
+
+/**
+ * @internal
+ * mapping between caption language and spoken language codes 
+ */
+export const _spokenLanguageToCaptionLanguage =  {
+  'ar-ae': 'ar',
+  'ar-sa': 'ar',
+  'da-dk': 'da',
+  'de-de': 'de',
+  'en-au': 'en',
+  'en-ca': 'en',
+  'en-gb': 'en',
+  'en-in': 'en',
+  'en-nz': 'en',
+  'en-us': 'en',
+  'es-es': 'es',
+  'es-mx': 'es',
+  'fi-fi': 'fi',
+  'fr-ca': 'fr-ca',
+  'fr-fr': 'fr',
+  'hi-in': 'hi',
+  'it-it': 'it',
+  'ja-jp': 'ja',
+  'ko-kr': 'ko',
+  'nb-no': 'nb',
+  'nl-be':'nl',
+  'nl-nl': 'nl',
+  'pl-pl': 'pl',
+  'pt-br': 'pt',
+  'ru-ru': 'ru',
+  'sv-se': 'sv',
+  'zh-cn': 'zh-Hans',
+  'zh-hk': 'zh-Hant',
+  'cs-cz': 'cs',
+  'pt-pt':'pt-pt',
+  'tr-tr': 'tr',
+  'vi-vn': 'vi',
+  'th-th': 'th',
+  'he-il': 'he',
+  'cy-gb': 'cy',
+  'uk-ua': 'uk',
+  'el-gr':'el',
+  'hu-hu': 'hu',
+  'ro-ro': 'ro',
+  'sk-sk': 'sk',
+  'zh-tw': 'zh-Hant'
+}

@@ -53,8 +53,3 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
  * @private
  */
 export const defaultSpokenLanguage = 'en-us';
-
-/**
- * @private
- */
-export const defaultCaptionLanguage = 'en';

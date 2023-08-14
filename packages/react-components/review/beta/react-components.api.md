@@ -462,6 +462,8 @@ export interface _CaptionsSettingsModalProps {
     // (undocumented)
     availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
     // (undocumented)
+    changeCaptionLanguage?: boolean;
+    // (undocumented)
     currentCaptionLanguage: string;
     // (undocumented)
     currentSpokenLanguage: string;
@@ -1951,6 +1953,51 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
 }
+
+// @internal
+export const _spokenLanguageToCaptionLanguage: {
+    'ar-ae': string;
+    'ar-sa': string;
+    'da-dk': string;
+    'de-de': string;
+    'en-au': string;
+    'en-ca': string;
+    'en-gb': string;
+    'en-in': string;
+    'en-nz': string;
+    'en-us': string;
+    'es-es': string;
+    'es-mx': string;
+    'fi-fi': string;
+    'fr-ca': string;
+    'fr-fr': string;
+    'hi-in': string;
+    'it-it': string;
+    'ja-jp': string;
+    'ko-kr': string;
+    'nb-no': string;
+    'nl-be': string;
+    'nl-nl': string;
+    'pl-pl': string;
+    'pt-br': string;
+    'ru-ru': string;
+    'sv-se': string;
+    'zh-cn': string;
+    'zh-hk': string;
+    'cs-cz': string;
+    'pt-pt': string;
+    'tr-tr': string;
+    'vi-vn': string;
+    'th-th': string;
+    'he-il': string;
+    'cy-gb': string;
+    'uk-ua': string;
+    'el-gr': string;
+    'hu-hu': string;
+    'ro-ro': string;
+    'sk-sk': string;
+    'zh-tw': string;
+};
 
 // @internal
 export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;

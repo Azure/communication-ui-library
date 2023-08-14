@@ -229,11 +229,6 @@ export const defaultSpokenLanguage = 'en-us';
 /**
  * @private
  */
-export const defaultCaptionLanguage = 'en';
-
-/**
- * @private
- */
 const SAFARI_COMPOSITION_KEYCODE = 229;
 /**
  * Determine if the press of the enter key is from a composition session or not (Safari only)

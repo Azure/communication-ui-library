@@ -44,7 +44,7 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {
       checked: isCaptionsFeatureActive ?? false,
-      currentCaptionLanguage: currentCaptionLanguage ?? 'en',
+      currentCaptionLanguage: currentCaptionLanguage ?? '',
       currentSpokenLanguage: currentSpokenLanguage ?? 'en-us'
     };
   }
@@ -76,8 +76,8 @@ export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.creat
   [getSupportedCaptionLanguages, getCurrentCaptionLanguage, getSupportedSpokenLanguages, getCurrentSpokenLanguage, getCaptionsStatus],
   (supportedCaptionLanguages, currentCaptionLanguage, supportedSpokenLanguages, currentSpokenLanguage,isCaptionsFeatureActive) => {
     return {
-      supportedCaptionLanguages: supportedCaptionLanguages ?? ['en'],
-      currentCaptionLanguage: currentCaptionLanguage ?? 'en',
+      supportedCaptionLanguages: supportedCaptionLanguages ?? [],
+      currentCaptionLanguage: currentCaptionLanguage ?? '',
       supportedSpokenLanguages: supportedSpokenLanguages ?? ['en-us'],
       currentSpokenLanguage: currentSpokenLanguage ?? 'en-us',
       isCaptionsFeatureActive: isCaptionsFeatureActive ?? false

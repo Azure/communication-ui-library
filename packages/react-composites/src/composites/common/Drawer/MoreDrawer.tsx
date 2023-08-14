@@ -45,6 +45,8 @@ import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CaptionSettingsDrawer } from './CaptionSettingsDrawer';
 /* @conditional-compile-remove(close-captions) */
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
+/* @conditional-compile-remove(close-captions) */
+import {  _spokenLanguageToCaptionLanguage} from '@internal/react-components'
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -302,7 +304,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     /* @conditional-compile-remove(close-captions) */
     const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
-      captionSettingsProp.currentCaptionLanguage !== ''? captionSettingsProp.currentCaptionLanguage : 'en'
+      captionSettingsProp.currentCaptionLanguage !== ''? captionSettingsProp.currentCaptionLanguage : _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
     );
 
   /* @conditional-compile-remove(close-captions) */
@@ -319,6 +321,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
+
+    const spokenLanguageString =  supportedSpokenLanguageStrings ? supportedSpokenLanguageStrings[currentSpokenLanguage] : currentSpokenLanguage
+    const captionLanguageString = supportedCaptionLanguageStrings ? supportedCaptionLanguageStrings[currentCaptionLanguage] : currentCaptionLanguage
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -355,7 +360,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       itemKey: 'ChangeSpokenLanguage',
       text: props.strings.spokenLanguageMenuTitle,
       id: 'common-call-composite-captions-spoken-settings-button',
-      secondaryText: supportedSpokenLanguageStrings ? supportedSpokenLanguageStrings[currentSpokenLanguage] : currentSpokenLanguage,
+      secondaryText: spokenLanguageString,
       iconProps: {
         iconName: 'ChangeSpokenLanguageIcon',
         styles: { root: { lineHeight: 0 } }
@@ -374,7 +379,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       itemKey: 'ChangeCaptionLanguage',
       text: props.strings.captionLanguageMenuTitle,
       id: 'common-call-composite-captions-subtitle-settings-button',
-      secondaryText: supportedCaptionLanguageStrings ? supportedCaptionLanguageStrings[currentCaptionLanguage] : currentCaptionLanguage,
+      secondaryText: captionLanguageString,
       iconProps: {
         iconName: 'ChangeCaptionLanguageIcon',
         styles: { root: { lineHeight: 0 } }

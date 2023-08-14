@@ -345,3 +345,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
 export type { AvailableSpokenLanguageStrings, AvailableCaptionLanguageStrings } from '../../react-components/src';
+
+/* @conditional-compile-remove(close-captions) */
+export { _spokenLanguageToCaptionLanguage} from '../../react-components/src';
