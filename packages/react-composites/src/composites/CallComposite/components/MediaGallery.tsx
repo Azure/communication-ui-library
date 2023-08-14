@@ -80,7 +80,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   const adapter = useAdapter();
-  /* @conditional-compile-remove(capabilities) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   const userRole = adapter.getState().call?.role;
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
@@ -160,7 +160,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         /* @conditional-compile-remove(click-to-call) */
         localVideoTileSize={
           props.localVideoTileOptions === false ||
-          /* @conditional-compile-remove(capabilities) */ userRole === 'Consumer' ||
+          /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
+          userRole === 'Consumer' ||
           /* @conditional-compile-remove(rooms) */ (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
             : props.isMobile && containerAspectRatio < 1
