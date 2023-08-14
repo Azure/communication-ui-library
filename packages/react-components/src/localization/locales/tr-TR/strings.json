@@ -7,9 +7,10 @@
     "mutedIconLabel": "Ses kapatıldı",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
-    "participantStateHold": "Beklemede",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "Beklemede"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "{overflowCount} tane daha"
   },
   "typingIndicator": {
     "singleUser": "{user} yazıyor...",
@@ -112,11 +113,11 @@
     "tooltipOffContent": "Ekranınızı sunun"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Kaldır",
+    "onLabel": "İndir",
+    "tooltipDisabledContent": "El Kaldırma eylemi devre dışı bırakıldı",
+    "tooltipOnContent": "Eli İndirme",
+    "tooltipOffContent": "El Kaldırma"
   },
   "messageThread": {
     "yesterday": "Dün",
