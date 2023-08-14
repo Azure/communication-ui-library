@@ -128,8 +128,7 @@ export interface VideoGalleryStrings {
 export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker';
 
 /**
  * {@link VideoGallery} Component Styles.
