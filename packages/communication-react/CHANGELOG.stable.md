@@ -15,7 +15,7 @@ Mon, 14 Aug 2023 18:28:26 GMT
 - Ensure chat client state changes are true changes ([PR #3317](https://github.com/azure/communication-ui-library/pull/3317) by 3941071+emlynmac@users.noreply.github.com)
 - Bump @azure/communication-* SDKs ([PR #3355](https://github.com/azure/communication-ui-library/pull/3355) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update micPrimaryActionSplitButtonTitle to microphonePrimaryActionSplitButtonTitle ([PR #3214](https://github.com/azure/communication-ui-library/pull/3214) by 2684369+JamesBurnside@users.noreply.github.com)
-- Introduce new handler for disposing screen share for remote particapants, stops flash when navigating overflow galleries ([PR #3202](https://github.com/azure/communication-ui-library/pull/3202) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce new handler for disposing screen share for remote participants to stop flashing when navigating through overflow galleries ([PR #3202](https://github.com/azure/communication-ui-library/pull/3202) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fetch translated strings ([PR #3270](https://github.com/azure/communication-ui-library/pull/3270) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Improve Czech translated strings ([PR #3367](https://github.com/azure/communication-ui-library/pull/3367) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix PIPIP on people view to be draggable across the whole screen ([PR #3204](https://github.com/azure/communication-ui-library/pull/3204) by alkwa@microsoft.com)
