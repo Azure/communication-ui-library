@@ -35,7 +35,7 @@ import { useIsMobile } from './utils/useIsMobile';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 
-setLogLevel('warning');
+setLogLevel('verbose');
 initializeIcons();
 
 interface Credentials {
