@@ -899,6 +899,7 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
  * Create a {@link CallWithChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
  *
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Please note that chatThreadClient has to be created by StatefulChatClient via chatClient.getChatThreadClient(chatThreadId) API.
  * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
  * @public
