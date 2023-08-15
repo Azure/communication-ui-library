@@ -614,6 +614,9 @@ export class CallContext {
           if (stream && stream.view) {
             stream.view.scalingMode = scalingMode;
           }
+          if (stream) {
+            stream.selectedScalingMode = scalingMode;
+          }
         }
       }
     });
