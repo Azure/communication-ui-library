@@ -247,7 +247,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             }
           },
           {
-            key: 'speakerSelectionKey',
+            key: 'defaultSelectionKey',
             text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
             canCheck: true,
             itemProps: {
@@ -262,7 +262,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
               styles: { root: { lineHeight: 0 } }
             }
           },
-          { key: 'divider_1', itemType: ContextualMenuItemType.Divider },
+          { key: 'dividerLayoutsKey', itemType: ContextualMenuItemType.Divider },
           {
             key: 'topKey',
             text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
