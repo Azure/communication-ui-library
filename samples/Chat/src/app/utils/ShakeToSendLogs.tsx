@@ -7,6 +7,8 @@ import React from 'react';
 import { useEffect } from 'react';
 import Shake from 'shake.js';
 
+const HAS_SHAKE_FEATURE = typeof DeviceOrientationEvent !== 'undefined';
+
 const originalConsoleLog = console.log;
 const originalAzureLoggerLog = AzureLogger.log;
 const consoleLogs: string[] = ['---- LOGS START ----'];
@@ -155,8 +157,8 @@ const PromptForShakePermission = (props: { onPermissionGranted: () => void }): J
 };
 
 export const ShakeToSendLogs = (): JSX.Element => {
-  const needsToRequestDeviceMotionPermission = !!(DeviceOrientationEvent as unknown as DeviceMotionEventiOS)
-    ?.requestPermission;
+  const needsToRequestDeviceMotionPermission =
+    HAS_SHAKE_FEATURE && !!(DeviceOrientationEvent as unknown as DeviceMotionEventiOS)?.requestPermission;
   const [hasPermission, setHasPermission] = React.useState(!needsToRequestDeviceMotionPermission);
   const [showDialog, closeDialog] = useShakeDialog(hasPermission);
 
