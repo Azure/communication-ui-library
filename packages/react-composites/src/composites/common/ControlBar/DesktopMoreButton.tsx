@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { IContextualMenuItem } from '@fluentui/react';
+/* @conditional-compile-remove(gallery-layouts) */
+import { ContextualMenuItemType } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -260,6 +262,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
               styles: { root: { lineHeight: 0 } }
             }
           },
+          { key: 'divider_1', itemType: ContextualMenuItemType.Divider },
           {
             key: 'topKey',
             text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
