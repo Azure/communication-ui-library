@@ -836,6 +836,9 @@ export type CallWithChatCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
