@@ -85,9 +85,9 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
           /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.Captions) {
-            const captionsFeature = target.feature(Features.Captions).captions as TeamsCaptions;
-            const proxyFeature = new ProxyTeamsCaptionsFeature(this._context, target);
-            return new Proxy(captionsFeature, proxyFeature);
+            const captionsFeature = target.feature(Features.Captions).captions;
+            const proxyFeature = new ProxyTeamsCaptions(this._context, target);
+            return {captions: new Proxy(captionsFeature, proxyFeature)}
           }
           /* @conditional-compile-remove(call-transfer) */
           if (args[0] === Features.Transfer) {
@@ -108,7 +108,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
 /**
  * @private
  */
-class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptions> {
+class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
   private _context: CallContext;
   private _call: CallCommon;
 
