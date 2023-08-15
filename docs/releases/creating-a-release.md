@@ -100,7 +100,7 @@ This section describes what the workflow above does. Understanding the workflow 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
     1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
 1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but **it will never be merged back in the base branch**.
-  1. On the release branch will check what kind of release this is, beta, stable-minor, or stable-patch. based on the selection here it will update the sdk versions.
+  1. On the release branch will check what kind of release this is, beta-release-major, beta-release-minor, beta-release-patch , beta-release-beta, stable-major, stable-minor, stable-patch or stable-remove-beta-version based on the selection here it will update the sdk versions.
   2. The action will synchronize the package telemetry verions on the release branch.
   3. After making these changes it will make a PR from the pre-release branch back into `main`.
 
