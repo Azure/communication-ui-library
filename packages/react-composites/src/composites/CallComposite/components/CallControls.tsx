@@ -40,7 +40,7 @@ import { CommonCallAdapter } from '../adapter';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from './buttons/RaiseHand';
 /* @conditional-compile-remove(raise-hand) */
-import { RaiseHandButton } from '@internal/react-components';
+import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 /**
  * @private
  */
