@@ -595,4 +595,9 @@ export interface CallCompositeStrings {
    * Label for the toggle to move the overflow gallery to the top
    */
   moreButtonGalleryPositionToggleLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the speaker layout
+   */
+  moreButtonGallerySpeakerLayoutLabel?: string;
 }

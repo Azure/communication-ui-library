@@ -3,6 +3,8 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -46,6 +48,10 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   onCaptionsSettingsClick?: () => void;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
 }
 
 /**
@@ -207,11 +213,32 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       subMenuProps: {
         items: [
           {
-            key: 'topKey',
-            text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
+            key: 'speakerSelectionKey',
+            text: localeStrings.strings.call.moreButtonGallerySpeakerLayoutLabel,
             canCheck: true,
             itemProps: {
               styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'speaker',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
+            },
+            iconProps: {
+              iconName: 'SpeakerGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
+            key: 'topKey',
+            text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
+            canCheck: true,
+            topDivider: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            iconProps: {
+              iconName: 'OverflowGalleryTop',
+              styles: { root: { lineHeight: 0 } }
             },
             isChecked: galleryPositionTop,
             onClick: () => {

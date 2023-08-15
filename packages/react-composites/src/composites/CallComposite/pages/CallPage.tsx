@@ -8,7 +8,8 @@ import {
   ActiveErrorMessage,
   ErrorBar,
   OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback
+  ParticipantMenuItemsCallback,
+  VideoGalleryLayout
 } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(gallery-layouts) */
@@ -46,6 +47,8 @@ export interface CallPageProps {
   options?: CallCompositeOptions;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  galleryLayout: VideoGalleryLayout;
 }
 
 /**
@@ -58,7 +61,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
-    mobileView
+    mobileView,
+    galleryLayout = 'floatingLocalVideo'
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -82,6 +86,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
     'Responsive'
   );
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(galleryLayout);
 
   return (
     <CallArrangement
@@ -115,6 +121,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               localVideoTileOptions={options?.localVideoTile}
               /* @conditional-compile-remove(gallery-layouts) */
               userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+              /* @conditional-compile-remove(gallery-layouts) */
+              userSetGalleryLayout={userSetGalleryLayout}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -130,6 +138,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(gallery-layouts) */
       onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
+      /* @conditional-compile-remove(gallery-layouts) */
+      onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+      userSetGalleryLayout={userSetGalleryLayout}
     />
   );
 };
