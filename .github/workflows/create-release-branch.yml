@@ -80,13 +80,13 @@ jobs:
       # e.g. https://github.com/Azure/communication-ui-library/pull/2441 was needed to unbreak CI
       # on a stable release branch.
       - name: Force build flavor to `stable`
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch')}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
         run: |
           node ./common/scripts/force-build-flavor.mjs stable
           rush update
 
       - name: Force build flavor to `beta-release`
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta') }}
         run: node ./common/scripts/force-build-flavor.mjs beta-release
 
       # Synchronize the telemetry package versions.
