@@ -447,31 +447,29 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
-        {
-          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
-            <Stack
-              horizontal={true}
-              tokens={{ childrenGap: '0.2rem' }}
-              style={{
-                alignItems: 'center',
-                padding: '0.2rem',
-                backgroundColor: theme.palette.white,
-                opacity: 0.9,
-                borderRadius: '1rem',
-                margin: '0.5rem',
-                width: 'fit-content',
-                position: 'absolute'
-              }}
-            >
-              <Stack.Item>
-                <Text>{raisedHand.raisedHandOrderPosition}</Text>
-              </Stack.Item>
-              <Stack.Item>
-                <RaisedHandIcon />
-              </Stack.Item>
-            </Stack>
-          )
-        }
+        {canShowLabel && /* @conditional-compile-remove(raise-hand) */ raisedHand && (
+          <Stack
+            horizontal={true}
+            tokens={{ childrenGap: '0.2rem' }}
+            style={{
+              alignItems: 'center',
+              padding: '0.2rem',
+              backgroundColor: theme.palette.white,
+              opacity: 0.9,
+              borderRadius: '1rem',
+              margin: '0.5rem',
+              width: 'fit-content',
+              position: 'absolute'
+            }}
+          >
+            <Stack.Item>
+              <Text>{raisedHand.raisedHandOrderPosition}</Text>
+            </Stack.Item>
+            <Stack.Item>
+              <RaisedHandIcon />
+            </Stack.Item>
+          </Stack>
+        )}
       </div>
     </Stack>
   );
