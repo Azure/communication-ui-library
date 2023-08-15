@@ -11,7 +11,6 @@ import {
   CustomAvatarOptions,
   Announcer
 } from '@internal/react-components';
-/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
@@ -192,6 +191,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     userRole,
     /* @conditional-compile-remove(rooms) */
     isRoomsCall,
+    /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */
     containerAspectRatio,
     /* @conditional-compile-remove(gallery-layouts) */
     props.userSetGalleryLayout,

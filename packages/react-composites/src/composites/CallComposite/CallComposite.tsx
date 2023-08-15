@@ -455,6 +455,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(gallery-layouts) */
           galleryLayout={
             props.options?.galleryOptions?.layout ? props.options.galleryOptions.layout : 'floatingLocalVideo'
           }

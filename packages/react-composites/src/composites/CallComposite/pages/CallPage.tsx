@@ -8,9 +8,10 @@ import {
   ActiveErrorMessage,
   ErrorBar,
   OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback,
-  VideoGalleryLayout
+  ParticipantMenuItemsCallback
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
 /* @conditional-compile-remove(gallery-layouts) */
 import { useState } from 'react';
@@ -62,6 +63,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     onFetchParticipantMenuItems,
     options,
     mobileView,
+    /* @conditional-compile-remove(gallery-layouts) */
     galleryLayout = 'floatingLocalVideo'
   } = props;
 
@@ -140,6 +142,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
       /* @conditional-compile-remove(gallery-layouts) */
       onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+      /* @conditional-compile-remove(gallery-layouts) */
       userSetGalleryLayout={userSetGalleryLayout}
     />
   );

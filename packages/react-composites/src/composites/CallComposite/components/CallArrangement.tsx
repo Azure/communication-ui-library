@@ -15,6 +15,7 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
