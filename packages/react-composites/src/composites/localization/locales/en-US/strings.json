@@ -167,7 +167,9 @@
     "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format",
     "moreButtonGalleryControlLabel": "Gallery options",
     "moreButtonGalleryPositionToggleLabel": "Move gallery to top",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout"
+    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout"
   },
   "chat": {
     "chatListHeader": "In this chat",

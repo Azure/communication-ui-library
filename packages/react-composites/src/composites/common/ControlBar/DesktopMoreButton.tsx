@@ -229,6 +229,38 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             }
           },
           {
+            key: 'dynamicSelectionKey',
+            text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'floatingLocalVideo',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+            },
+            iconProps: {
+              iconName: 'FloatingLocalVideoGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
+            key: 'speakerSelectionKey',
+            text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'default',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+            },
+            iconProps: {
+              iconName: 'DefaultGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
             key: 'topKey',
             text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
             canCheck: true,
