@@ -108,7 +108,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const holdButtonProps = usePropsFor(HoldButton);
 
   /* @conditional-compile-remove(raise-hand) */
-  const raiseHandButtonProps = usePropsFor(RaiseHandButton);
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
