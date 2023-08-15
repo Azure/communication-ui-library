@@ -103,6 +103,7 @@ export type ParticipantListSelector = (
 ) => {
   participants: CallParticipantListParticipant[];
   myUserId: string;
+  /* @conditional-compile-remove(total-participant-count) */
   totalParticipantCount?: number;
 };
 
