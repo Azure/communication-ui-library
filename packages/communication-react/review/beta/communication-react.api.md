@@ -2357,13 +2357,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SitePermissionsSparkle: JSX.Element;
     SitePermissionCamera: JSX.Element;
     SitePermissionMic: JSX.Element;
-    SitePermissionCameraDenied: JSX.Element; /**
-    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
-    * This wrapper ensures the icon name is being type-checked helping ensure no typos
-    * and ensure that icon is customizable through the composite API.
-    *
-    * @private
-    */
+    SitePermissionCameraDenied: JSX.Element;
     SitePermissionMicDenied: JSX.Element;
     UnsupportedEnvironmentWarning: JSX.Element;
     BrowserPermissionDeniedError: JSX.Element;
