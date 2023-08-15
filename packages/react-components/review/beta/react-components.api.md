@@ -20,7 +20,6 @@ import { IModalStyleProps } from '@fluentui/react';
 import { IModalStyles } from '@fluentui/react';
 import { IOverlayStyleProps } from '@fluentui/react';
 import { IOverlayStyles } from '@fluentui/react';
-import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -1460,7 +1459,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
+    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
