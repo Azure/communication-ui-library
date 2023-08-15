@@ -20,17 +20,20 @@ import {
   UpdateMode
 } from 'roosterjs-react';
 import { InputBoxButton } from '../InputBoxComponent';
-import { IconButton } from '@fluentui/react';
+import { IconButton, formProperties } from '@fluentui/react';
 import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
 import EditorViewState from './EditorViewState';
+import AtMentionPlugin from './Plugins/atMentionPlugin';
+import { suggestions, trigger } from './Plugins/mentionLoopupData';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   //   editorCreator?: (div: HTMLDivElement, options: EditorOptions) => IEditor;
   children: ReactNode;
   onChange: (newValue?: string) => void;
+  mentionLookupOptions?: MentionLookupOptions;
 }
 export default function RichTextEditor(props: RichTextEditorProps) {
-  const { children, onChange } = props;
+  const { children, onChange, mentionLookupOptions } = props;
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
   const ribbonPlugin = React.useRef(createRibbonPlugin());
@@ -76,15 +79,27 @@ export default function RichTextEditor(props: RichTextEditorProps) {
 
   function defaultEditorCreator(div: HTMLDivElement) {
     const contentPlugin = createUpdateContentPlugin(
-      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInputq,
+      UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
       (html, mode) => {
         onChange(html);
         // console.log('onChange::: ', html);
       }
     );
+    const mentionOption = {
+      trigger,
+      onQueryUpdated: async (query: string) => {
+        const filtered = suggestions.filter((suggestion) => {
+          return suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
+        });
+        return Promise.resolve(filtered);
+      }
+    };
+
+    const atMentionPluginInstance = new AtMentionPlugin(mentionOption);
+    const atMentionPlugin = atMentionPluginInstance.Picker;
 
     const options: EditorOptions = {
-      plugins: [ribbonPlugin.current, contentPlugin],
+      plugins: [ribbonPlugin.current, contentPlugin, atMentionPlugin],
       trustedHTMLHandler: preserveImagesHandler
     };
     editor.current = new Editor(div, options);

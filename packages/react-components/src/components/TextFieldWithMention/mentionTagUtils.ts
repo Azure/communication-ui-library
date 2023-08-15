@@ -4,7 +4,7 @@
 import { ComponentStrings } from '../../localization';
 import { Mention } from '../MentionPopover';
 
-const MSFT_MENTION_TAG = 'msft-mention';
+export const MSFT_MENTION_TAG = 'msft-mention';
 
 /**
  * Props for finding a valid index in range.

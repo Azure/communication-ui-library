@@ -49,7 +49,7 @@ export interface TextFieldWithMentionProps {
   textFieldProps: ITextFieldProps;
   dataUiId?: string;
   textValue: string; // This could be plain text or HTML.
-  onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
+  onChange: (newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEnterKeyDown?: () => void;
   textFieldRef?: React.RefObject<ITextField>;
@@ -192,7 +192,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       // set focus back to text field
       textFieldRef?.current?.focus();
       setActiveSuggestionIndex(undefined);
-      onChange && onChange(undefined, updatedContent.updatedHTML);
+      onChange && onChange(updatedContent.updatedHTML);
     },
     [
       textFieldRef,
@@ -393,13 +393,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       selectionEndValue?: number;
       interactionStartSelection?: { start: number | undefined; end: number | undefined };
     }): void => {
-      if (event.currentTarget.selectionStart === 0 && event.currentTarget.selectionEnd === inputTextValue.length) {
-        // entire text is selected, no need to change anything
-        setSelectionStartValue(event.currentTarget.selectionStart);
-        setSelectionEndValue(event.currentTarget.selectionEnd);
-        setInteractionStartSelection(undefined);
-        setShouldHandleOnMouseDownDuringSelect(false);
-      } else if (shouldHandleOnMouseDownDuringSelect) {
+      if (shouldHandleOnMouseDownDuringSelect) {
         if (
           interactionStartSelection !== undefined &&
           (interactionStartSelection.start !== event.currentTarget.selectionStart ||
@@ -429,32 +423,15 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
           });
           setInteractionStartSelection(undefined);
           setShouldHandleOnMouseDownDuringSelect(false);
-        } else if (event.currentTarget.selectionStart !== null && event.currentTarget.selectionEnd !== null) {
+        } else if (event.currentTarget.selectionStart !== null) {
           // on select was triggered by mouse down/up with no movement
           const mentionTag = findMentionTagForSelection(tags, event.currentTarget.selectionStart);
           if (mentionTag !== undefined && mentionTag.plainTextBeginIndex !== undefined) {
             // handle mention click by selecting the whole mention
             // if the selection is not on the bounds of the mention
-            // disable selection for clicks on mention bounds
             const mentionEndIndex = mentionTag.plainTextEndIndex ?? mentionTag.plainTextBeginIndex;
-
+            // disable selection for clicks on mention bounds
             if (
-              event.currentTarget.selectionStart !== event.currentTarget.selectionEnd &&
-              event.currentTarget.selectionEnd > mentionEndIndex
-            ) {
-              // handle triple click when the text starts from mention
-              if (event.currentTarget.selectionDirection === null) {
-                event.currentTarget.setSelectionRange(mentionTag.plainTextBeginIndex, event.currentTarget.selectionEnd);
-              } else {
-                event.currentTarget.setSelectionRange(
-                  mentionTag.plainTextBeginIndex,
-                  event.currentTarget.selectionEnd,
-                  event.currentTarget.selectionDirection
-                );
-              }
-              setSelectionStartValue(mentionTag.plainTextBeginIndex);
-              setSelectionEndValue(event.currentTarget.selectionEnd);
-            } else if (
               event.currentTarget.selectionStart !== event.currentTarget.selectionEnd ||
               (event.currentTarget.selectionStart !== mentionTag.plainTextBeginIndex &&
                 event.currentTarget.selectionStart !== mentionEndIndex)
@@ -481,6 +458,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
             setSelectionEndValue(nullToUndefined(event.currentTarget.selectionEnd));
           }
           setInteractionStartSelection(undefined);
+          setShouldHandleOnMouseDownDuringSelect(false);
         }
       } else {
         // selection was changed by keyboard
@@ -629,7 +607,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
         setSelectionStartValue(updatedContent.updatedSelectionIndex);
       }
 
-      onChange && onChange(event, updatedContent.updatedHTML);
+      onChange && onChange(updatedContent.updatedHTML);
     },
     [debouncedQueryUpdate, mentionLookupOptions, onChange, updateMentionSuggestions]
   );
