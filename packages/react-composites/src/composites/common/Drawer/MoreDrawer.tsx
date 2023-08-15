@@ -259,9 +259,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(raise-hand) */
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.raiseHandButton)) {
-    const raiseHandIconName = raiseHandButtonProps.checked
-      ? 'LowerHandContextualMenuItem'
-      : 'RaiseHandContextualMenuItem';
+    const raiseHandIcon = raiseHandButtonProps.checked ? 'LowerHandContextualMenuItem' : 'RaiseHandContextualMenuItem';
     drawerMenuItems.push({
       itemKey: 'raiseHandButtonKey',
       disabled: props.disableButtonsForHoldScreen || isDisabled(drawerSelectionOptions.raiseHandButton),
@@ -275,7 +273,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         onLightDismiss();
       },
       iconProps: {
-        iconName: raiseHandIconName,
+        iconName: raiseHandIcon,
         styles: { root: { lineHeight: 0 } }
       }
     });

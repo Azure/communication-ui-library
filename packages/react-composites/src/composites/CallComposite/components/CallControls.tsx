@@ -39,6 +39,8 @@ import { callControlsContainerStyles } from '../styles/CallPage.styles';
 import { CommonCallAdapter } from '../adapter';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from './buttons/RaiseHand';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandButton } from '@internal/react-components';
 /**
  * @private
  */
@@ -105,6 +107,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton);
+
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
@@ -160,6 +165,27 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         itemProps: {
           styles: buttonFlyoutIncreasedSizeStyles
         }
+      });
+    }
+
+    /* @conditional-compile-remove(raise-hand) */
+    if (raiseHandButtonIsEnabled) {
+      items.push({
+        key: 'raiseHandButtonKey',
+        text: raiseHandButtonProps.checked
+          ? localeStrings.component.strings.raiseHandButton.onLabel
+          : localeStrings.component.strings.raiseHandButton.offLabel,
+        onClick: () => {
+          if (raiseHandButtonProps.onToggleRaiseHand) {
+            raiseHandButtonProps.onToggleRaiseHand();
+          }
+        },
+        iconProps: { iconName: 'RaiseHandContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        disabled: isDisabled(options?.raiseHandButton),
+        ['data-ui-id']: 'raise-hand-button'
       });
     }
 
@@ -225,7 +251,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
           {
-            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && (
+            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && !props.isMobile && (
               <RaiseHand displayType={options?.displayType} />
             )
           }

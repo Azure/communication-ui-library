@@ -197,7 +197,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
       role === 'Consumer' ||
       role === 'Attendee';
     /* @conditional-compile-remove(PSTN-calls) */
-    disabled = disabled || ['InLobby', 'Connecting'].includes(callState);
+    disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState);
     return {
       checked: isScreenSharingOn,
       disabled
