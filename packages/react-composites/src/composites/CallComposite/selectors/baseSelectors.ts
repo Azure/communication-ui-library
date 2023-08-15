@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -55,6 +56,16 @@ export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.ca
  * @private
  */
 export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => _isPreviewOn(state.devices);
+
+/**
+ * @private
+ */
+export const getMicrophones = (state: CallAdapterState): AudioDeviceInfo[] => state.devices.microphones;
+
+/**
+ * @private
+ */
+export const getCameras = (state: CallAdapterState): VideoDeviceInfo[] => state.devices.cameras;
 
 /* @conditional-compile-remove(rooms) */
 /**
