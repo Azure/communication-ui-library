@@ -12,6 +12,10 @@ const HAS_SHAKE_FEATURE = typeof DeviceOrientationEvent !== 'undefined';
 const originalConsoleLog = console.log;
 const originalAzureLoggerLog = AzureLogger.log;
 const consoleLogs: string[] = ['---- LOGS START ----'];
+// Ensure we cap any single log line to prevent the server from rejecting the request.
+const logLineCharacterLimit = 1000;
+// If there is a failure to send logs due to size, typically due to a very long call, retry with a smaller size.
+const logLengthMaxSize = 1000000;
 
 /**
  * Track console logs for pushing to a debug location.
@@ -20,11 +24,11 @@ const consoleLogs: string[] = ['---- LOGS START ----'];
 const startRecordingLogs = (): void => {
   console.log = (...args: unknown[]) => {
     originalConsoleLog.apply(console, args);
-    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`);
+    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`.slice(0, logLineCharacterLimit));
   };
   AzureLogger.log = (...args: unknown[]) => {
     originalAzureLoggerLog.apply(console, args);
-    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`);
+    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`.slice(0, logLineCharacterLimit));
   };
 };
 
@@ -94,13 +98,14 @@ const sendLogs = async (): Promise<string | false> => {
   const logs = getRecordedLogs();
 
   const containerName = 'chat-sample-logs';
-  const response = await fetch(`/uploadToAzureBlobStorage`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: safeJSONStringify({ containerName, logs })
-  });
+  let response = await postLogsToServer(containerName, logs);
+
+  // check for 413
+  if (response.status === 413) {
+    alert('Logs too large to upload. Trimming logs and retrying.');
+    const trimmedLogs = logs.slice(-logLengthMaxSize);
+    response = await postLogsToServer(containerName, trimmedLogs);
+  }
 
   if (!response.ok) {
     console.error('Failed to upload logs to Azure Blob Storage', response);
@@ -111,6 +116,15 @@ const sendLogs = async (): Promise<string | false> => {
   console.log(`Logs uploaded to ${blobUrl}`);
   return blobUrl;
 };
+
+const postLogsToServer = async (containerName: string, logs: string): Promise<Response> =>
+  fetch(`/uploadToAzureBlobStorage`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: safeJSONStringify({ containerName, logs })
+  });
 
 const PromptForShakePermission = (props: { onPermissionGranted: () => void }): JSX.Element => {
   const [showPrompt, setShowPrompt] = React.useState(true);
