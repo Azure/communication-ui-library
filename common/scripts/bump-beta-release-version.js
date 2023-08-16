@@ -26,8 +26,8 @@ const bumpBetaVersion = (currentVersion) => {
     // if bumpType is beta, no need to update major, minor or patch version
     if (betaVersion === undefined) {
       // set beta version to 0 to fix beachball issue with prerelease type
-      const newMinor = Number.parseInt(minor) + 1;
-      return `${major}.${newMinor}.0-beta.0`
+      const newPatch = Number.parseInt(patch) + 1;
+      return `${major}.${minor}.${newPatch}-beta.0`
     }
     const newBeta = Number.parseInt(betaVersion) + 1;
     return `${major}.${minor}.${patch}-beta.${newBeta}`
