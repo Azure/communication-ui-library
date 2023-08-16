@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Custom gallery layouts",
+  "comment": "Introduce E2E tests for validating the movement of the overflow gallery to the top of the video gallery",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

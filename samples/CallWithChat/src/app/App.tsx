@@ -36,7 +36,7 @@ import { useIsMobile } from './utils/useIsMobile';
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { useSwitchableFluentTheme } from './theming/SwitchableFluentThemeProvider';
 
-setLogLevel('warning');
+setLogLevel('verbose');
 initializeIcons();
 
 interface Credentials {

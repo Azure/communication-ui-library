@@ -48,12 +48,12 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 import { useIsMobile } from '../utils/useIsMobile';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { useBoolean, useId } from '@fluentui/react-hooks';
+import { CallAdapterLocator } from '@azure/communication-react';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    /* @conditional-compile-remove(rooms) */
-    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
+    callLocator?: CallAdapterLocator | TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator;
     /* @conditional-compile-remove(rooms) */
     option?: string;
     /* @conditional-compile-remove(rooms) */
@@ -356,7 +356,6 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 props.startCallHandler({
                   //TODO: This needs to be updated after we change arg types of TeamsCall
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
-                  /* @conditional-compile-remove(rooms) */
                   callLocator: callLocator,
                   /* @conditional-compile-remove(rooms) */
                   option: chosenCallOption.key,

@@ -9,6 +9,9 @@
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} meer"
+  },
   "typingIndicator": {
     "singleUser": "{user} typt ...",
     "multipleUsers": "{users} typen ...",
@@ -108,6 +111,13 @@
     "tooltipDisabledContent": "Presenteren is uitgeschakeld",
     "tooltipOnContent": "Uw scherm presenteren",
     "tooltipOffContent": "Uw scherm presenteren"
+  },
+  "raiseHandButton": {
+    "offLabel": "Opsteken",
+    "onLabel": "Laten zakken",
+    "tooltipDisabledContent": "Actie Hand opsteken is uitgeschakeld",
+    "tooltipOnContent": "Hand laten zakken",
+    "tooltipOffContent": "Hand opsteken"
   },
   "messageThread": {
     "yesterday": "Gisteren",

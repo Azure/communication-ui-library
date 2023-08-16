@@ -53,7 +53,7 @@
     "peoplePaneTitle": "אנשים",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
-    "peoplePaneSubTitle": "בשיחה זו",
+    "peoplePaneSubTitle": "בשיחה זו {numberOfPeople}",
     "privacyPolicy": "מדיניות פרטיות",
     "rejoinCallButtonLabel": "הצטרף לשיחה מחדש",
     "removedFromCallMoreDetails": "משתתף אחר הסיר אותך מהשיחה.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "לא ניתן לזהות מזהה דייר עבור משתתף היעד",
     "unableToResolveTenantMoreDetails": "בדוק שמזהה המשתתף הוזן כראוי",
     "participantIdIsMalformedTitle": "מזהה המשתתף אינו בתבנית הנכונה",
-    "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה"
+    "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה",
+    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",

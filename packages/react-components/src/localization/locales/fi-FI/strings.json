@@ -9,6 +9,9 @@
     "participantStateRinging": "Soitetaan...",
     "participantStateHold": "Pidossa"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} lisää"
+  },
   "typingIndicator": {
     "singleUser": "{user} käyttäjä kirjoittaa parhaillaan...",
     "multipleUsers": "{users} käyttäjää kirjoittaa parhaillaan...",
@@ -108,6 +111,13 @@
     "tooltipDisabledContent": "Näytön jakaminen on poissa käytöstä",
     "tooltipOnContent": "Näyttösi näytetään muille osallistujille",
     "tooltipOffContent": "Näytä oma näyttösi"
+  },
+  "raiseHandButton": {
+    "offLabel": "Nosta",
+    "onLabel": "Laske",
+    "tooltipDisabledContent": "Nosta käsi -toiminto on poistettu käytöstä",
+    "tooltipOnContent": "Laske käsi",
+    "tooltipOffContent": "Nosta käsi"
   },
   "messageThread": {
     "yesterday": "eilen",

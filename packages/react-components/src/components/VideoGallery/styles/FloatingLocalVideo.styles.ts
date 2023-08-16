@@ -61,7 +61,8 @@ export const LOCAL_VIDEO_TILE_ZINDEX = 2;
 export const localVideoTileContainerStyle = (
   theme: Theme,
   localVideoTileSizeRem: { width: number; height: number },
-  screenSharePresent?: boolean
+  screenSharePresent?: boolean,
+  overflowGalleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
 ): IStyle => {
   return {
     width: screenSharePresent ? `${localVideoTileSizeRem.width}rem` : '',
@@ -69,7 +70,8 @@ export const localVideoTileContainerStyle = (
     minWidth: screenSharePresent ? '' : `${localVideoTileSizeRem.width}rem`,
     minHeight: screenSharePresent ? '' : `${localVideoTileSizeRem.height}rem`,
     position: 'absolute',
-    bottom: `${localVideoTileOuterPaddingRem}rem`,
+    bottom: overflowGalleryPosition !== 'HorizontalTop' ? `${localVideoTileOuterPaddingRem}rem` : 'unset',
+    top: overflowGalleryPosition === 'HorizontalTop' ? `${localVideoTileOuterPaddingRem}rem` : 'unset',
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
     right: `${localVideoTileOuterPaddingRem}rem`
