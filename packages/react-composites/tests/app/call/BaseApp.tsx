@@ -92,6 +92,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.galleryLayout) {
+    options = {
+      ...options,
+      galleryOptions: { layout: queryArgs.galleryLayout }
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}
