@@ -1,6 +1,8 @@
 {
   "type": "none",
-  "comment": "Updated description for showParticipantOverflowTooltip prop",
+  "area": "improvement",
+  "workstream": "Release",
+  "comment": "Disable Changelog step for release branch script",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "none"
