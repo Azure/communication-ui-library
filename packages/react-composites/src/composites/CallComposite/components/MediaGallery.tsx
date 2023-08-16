@@ -68,7 +68,7 @@ export interface MediaGalleryProps {
   /* @conditional-compile-remove(gallery-layouts) */
   userSetOverflowGalleryPosition?: 'Responsive' | 'HorizontalTop';
   /* @conditional-compile-remove(gallery-layouts) */
-  userSetGalleryLayout?: VideoGalleryLayout;
+  userSetGalleryLayout: VideoGalleryLayout;
 }
 
 /**
@@ -147,7 +147,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       /* @conditional-compile-remove(gallery-layouts) */
-      return props.userSetGalleryLayout ?? layoutBasedOnTilePosition;
+      return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
       return layoutBasedOnTilePosition;
     };
 
