@@ -16,10 +16,6 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
-import { IModalStyleProps } from '@fluentui/react';
-import { IModalStyles } from '@fluentui/react';
-import { IOverlayStyleProps } from '@fluentui/react';
-import { IOverlayStyles } from '@fluentui/react';
 import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -1238,23 +1234,6 @@ export interface ImageGalleryProps {
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
-    styles?: ImageGalleryStylesProps;
-}
-
-// @beta
-export interface ImageGalleryStylesProps extends BaseCustomStyles {
-    bodyContainer?: IStyle;
-    closeIcon?: IStyle;
-    controlBarContainer?: IStyle;
-    downloadButton?: IStyle;
-    downloadButtonIcon?: IStyle;
-    header?: IStyle;
-    image?: IStyle;
-    modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
-    overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
-    smallDownloadButton?: IStyle;
-    title?: IStyle;
-    titleBarContainer?: IStyle;
 }
 
 // @public
