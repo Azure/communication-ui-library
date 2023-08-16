@@ -1234,7 +1234,6 @@ export interface ImageGalleryImageProps {
 // @beta
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
-    modalLayerHostId?: string;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;

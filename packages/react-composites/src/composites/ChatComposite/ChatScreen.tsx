@@ -66,8 +66,6 @@ export type ChatScreenProps = {
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  modalLayerHostId?: string;
   styles?: ChatScreenStyles;
   hasFocusOnMount?: 'sendBoxTextField';
   fileSharing?: FileSharingOptions;
@@ -353,7 +351,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         galleryImages && galleryImages.length > 0 && (
           <ImageGallery
-            modalLayerHostId={props.modalLayerHostId}
             images={galleryImages}
             onDismiss={() => setGalleryImages(undefined)}
             onImageDownloadButtonClicked={handleOnDownloadImage}
