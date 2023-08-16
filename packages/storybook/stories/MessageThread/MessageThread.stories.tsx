@@ -348,7 +348,7 @@ const MessageThreadStory = (args): JSX.Element => {
       ];
     });
   };
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const onInlineImageClicked = (attachment: FileMetadata): Promise<void> => {
     const title = 'Message Thread Image';
@@ -411,15 +411,16 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
-      {galleryImages && galleryImages.length > 0 && (
+      {
         <ImageGallery
+          isOpen={galleryImages.length > 0}
           images={galleryImages}
-          onDismiss={() => setGalleryImages(undefined)}
+          onDismiss={() => setGalleryImages([])}
           onImageDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />
-      )}
+      }
       {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
         <Dropdown
