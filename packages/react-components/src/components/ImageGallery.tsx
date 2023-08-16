@@ -113,10 +113,6 @@ export interface ImageGalleryProps {
    * Callback called when there's an error loading the image.
    */
   onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-  /** Optional id property provided on a LayerHost that this Layer should render within.
-   *  If an id is not provided, we will render the Layer content in a fixed position element rendered at the end of the document.
-   */
-  modalLayerHostId?: string;
   /**
    * Indicating which index of the images array to start with.
    */
@@ -137,7 +133,7 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
+  const { images, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
@@ -231,7 +227,6 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       isOpen={images.length > 0}
       onDismiss={onDismiss}
       overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
-      layerProps={{ id: modalLayerHostId }}
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
       isDarkOverlay={true}
     >
