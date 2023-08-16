@@ -498,19 +498,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
-      const participantVideoOptions = {
-        scalingMode: remoteVideoViewOptions?.scalingMode
+      const participantVideoViewOptions = {
+        scalingMode: remoteVideoViewOptions?.scalingMode,
+        isMirrored: remoteVideoViewOptions?.isMirrored
       } as VideoStreamOptions;
-      if (!participantVideoOptions.scalingMode) {
-        participantVideoOptions.scalingMode = remoteVideoViewOptions?.scalingMode;
-        participantVideoOptions.isMirrored = remoteVideoViewOptions?.isMirrored;
-      }
-      if (
-        remoteVideoStream?.scalingMode &&
-        participantVideoOptions?.scalingMode &&
-        participantVideoOptions.scalingMode !== remoteVideoStream?.scalingMode
-      ) {
-        participantVideoOptions.scalingMode = remoteVideoStream?.scalingMode;
+      if (remoteVideoStream?.scalingMode) {
+        participantVideoViewOptions.scalingMode = remoteVideoStream?.scalingMode;
       }
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
@@ -525,7 +518,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
+          remoteVideoViewOptions={isVideoParticipant ? participantVideoViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
