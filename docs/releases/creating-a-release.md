@@ -84,7 +84,7 @@ After finishing creating release branch, follow these steps to create a UI snaps
 3. Wait for snapshot update
 4. Once snapshot update finished, you might or might not see changes for UI snapshot, if there is any updates, open a PR to merge that new branch back to release branch
 5. Add a changelog item for creating the release branch
-rushx changelog -m 'Create release branch and update SDK versions' --type none"
+`rushx changelog -m 'Create release branch and update SDK versions' --type none"`
 6. Merge the PR if everything looks fine, or notify feature owner if something looks not 100% correct.
 
 ### Step 1.4: Notify the release thread about api.md update and UI snapshot update (beta-release only)
