@@ -4,7 +4,7 @@
 import { ImageGallery as ImageGalleryComponent } from '@azure/communication-react';
 import { Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
 
