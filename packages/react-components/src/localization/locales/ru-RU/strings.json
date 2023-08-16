@@ -9,6 +9,9 @@
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "и еще {overflowCount}"
+  },
   "typingIndicator": {
     "singleUser": "{user} вводит текст...",
     "multipleUsers": "{users} вводят текст...",
@@ -108,6 +111,13 @@
     "tooltipDisabledContent": "Демонстрация отключена",
     "tooltipOnContent": "Демонстрация экрана",
     "tooltipOffContent": "Демонстрировать экран"
+  },
+  "raiseHandButton": {
+    "offLabel": "Поднять руку",
+    "onLabel": "Опустить",
+    "tooltipDisabledContent": "Действие \"Поднять руку\" отключено",
+    "tooltipOnContent": "Опустить руку",
+    "tooltipOffContent": "Поднять руку"
   },
   "messageThread": {
     "yesterday": "Вчера",

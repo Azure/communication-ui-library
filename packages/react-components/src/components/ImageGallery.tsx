@@ -3,6 +3,7 @@
 
 import {
   DefaultButton,
+  FocusTrapZone,
   IModalStyleProps,
   IModalStyles,
   IOverlayStyleProps,
@@ -11,7 +12,6 @@ import {
   IStyleFunctionOrObject,
   Icon,
   IconButton,
-  Layer,
   Modal,
   Stack,
   mergeStyles
@@ -20,6 +20,8 @@ import {
 import React, { SyntheticEvent, useState } from 'react';
 import { BaseCustomStyles } from '../types';
 import {
+  bodyContainer,
+  bodyFocusZone,
   brokenImageStyle,
   cancelIcon,
   closeButtonStyles,
@@ -29,7 +31,6 @@ import {
   downloadIconStyle,
   focusTrapZoneStyle,
   headerStyle,
-  imageContainer,
   normalImageStyle,
   overlayStyles,
   scrollableContentStyle,
@@ -67,7 +68,7 @@ export interface ImageGalleryStylesProps extends BaseCustomStyles {
   /** Styles for the close modal icon. */
   closeIcon?: IStyle;
   /** Styles for the image container. */
-  imageContainer?: IStyle;
+  bodyContainer?: IStyle;
   /** Styles for the image. */
   image?: IStyle;
 }
@@ -112,10 +113,6 @@ export interface ImageGalleryProps {
    * Callback called when there's an error loading the image.
    */
   onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-  /** Optional id property provided on a LayerHost that this Layer should render within.
-   *  If an id is not provided, we will render the Layer content in a fixed position element rendered at the end of the document.
-   */
-  modalLayerHostId?: string;
   /**
    * Indicating which index of the images array to start with.
    */
@@ -136,7 +133,7 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, modalLayerHostId, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
+  const { images, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
@@ -153,29 +150,8 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
     return <></>;
   }
   const image = images[startIndex];
-  return (
-    <Layer hostId={modalLayerHostId}>
-      <Modal
-        titleAriaId={image.title}
-        isOpen={images.length > 0}
-        onDismiss={onDismiss}
-        overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
-        layerProps={{ id: modalLayerHostId }}
-        styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
-      >
-        <div className={mergeStyles(imageContainer, styles?.imageContainer)}>
-          <img
-            src={image.imageUrl}
-            className={mergeStyles(imageStyle, styles?.image)}
-            alt={image.altText || defaultAltText}
-            data-testid="image-gallery-main-image"
-            onError={(event) => {
-              setIsImageLoaded(false);
-              onError && onError(event);
-            }}
-          />
-        </div>
-      </Modal>
+  const renderHeaderBar = (): JSX.Element => {
+    return (
       <Stack className={mergeStyles(headerStyle, styles?.header)}>
         <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
           {image.titleIcon}
@@ -213,6 +189,49 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
         </Stack>
       </Stack>
-    </Layer>
+    );
+  };
+
+  const renderBodyWithLightDismiss = (): JSX.Element => {
+    return (
+      <Stack className={mergeStyles(bodyContainer, styles?.bodyContainer)} onClick={() => props.onDismiss()}>
+        <FocusTrapZone
+          onKeyDown={(e) => {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+              onDismiss();
+            }
+          }}
+          // Ensure when the focus trap has focus, the light dismiss area can still be clicked with mouse to dismiss.
+          // Note: this still correctly captures keyboard focus, this just allows mouse click outside of the focus trap.
+          isClickableOutsideFocusTrap={true}
+          className={mergeStyles(bodyFocusZone)}
+        >
+          <img
+            src={image.imageUrl}
+            className={mergeStyles(imageStyle, styles?.image)}
+            alt={image.altText || defaultAltText}
+            onError={(event) => {
+              setIsImageLoaded(false);
+              onError && onError(event);
+            }}
+            onClick={(event) => event.stopPropagation()}
+          />
+        </FocusTrapZone>
+      </Stack>
+    );
+  };
+
+  return (
+    <Modal
+      titleAriaId={image.title}
+      isOpen={images.length > 0}
+      onDismiss={onDismiss}
+      overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
+      styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
+      isDarkOverlay={true}
+    >
+      {renderHeaderBar()}
+      {renderBodyWithLightDismiss()}
+    </Modal>
   );
 };

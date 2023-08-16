@@ -8,6 +8,8 @@ import { _StartCaptionsButton } from '@internal/react-components';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
 import React from 'react';
+/* @conditional-compile-remove(gallery-layouts) */
+import { useState } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useMemo, useCallback } from 'react';
 /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -42,6 +44,8 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   /* @conditional-compile-remove(control-bar-button-injection) */
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -64,6 +68,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
+
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
     () => ({
@@ -74,6 +81,15 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   );
 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
+
+  /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(gallery-layouts) */
+  const menuSubIconStyleSet = {
+    root: {
+      height: 'unset',
+      lineHeight: '100%',
+      width: '1.25rem'
+    }
+  };
 
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   moreButtonContextualMenuItems.push({
@@ -93,14 +109,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsContextualMenuItems: IContextualMenuItem[] = [];
-
-    const menuSubIconStyleSet = {
-      root: {
-        height: 'unset',
-        lineHeight: '100%',
-        width: '1.25rem'
-      }
-    };
 
     moreButtonContextualMenuItems.push({
       key: 'liveCaptionsKey',
@@ -178,6 +186,48 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         styles: buttonFlyoutIncreasedSizeStyles
       },
       disabled: props.disableButtonsForHoldScreen
+    });
+  }
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  if (props.onUserSetOverflowGalleryPositionChange) {
+    moreButtonContextualMenuItems.push({
+      key: 'overflowGalleryPositionKey',
+      iconProps: {
+        iconName: 'GalleryOptions',
+        styles: { root: { lineHeight: 0 } }
+      },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      submenuIconProps: {
+        styles: menuSubIconStyleSet
+      },
+      text: localeStrings.strings.call.moreButtonGalleryControlLabel,
+      subMenuProps: {
+        items: [
+          {
+            key: 'topKey',
+            text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: galleryPositionTop,
+            onClick: () => {
+              if (galleryPositionTop === false) {
+                props.onUserSetOverflowGalleryPositionChange &&
+                  props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
+                setGalleryPositionTop(true);
+              } else {
+                props.onUserSetOverflowGalleryPositionChange &&
+                  props.onUserSetOverflowGalleryPositionChange('Responsive');
+                setGalleryPositionTop(false);
+              }
+            }
+          }
+        ]
+      }
     });
   }
 

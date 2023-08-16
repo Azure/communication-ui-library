@@ -47,6 +47,7 @@ import { CallState } from '@internal/calling-stateful-client';
 import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
+import { deviceCountSelector } from './selectors/deviceCountSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -238,6 +239,29 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
+  const adapter = useAdapter();
+  const { camerasCount, microphonesCount } = useSelector(deviceCountSelector);
+  const hasCameras = camerasCount > 0;
+  const hasMicrophones = microphonesCount > 0;
+
+  useEffect(() => {
+    (async () => {
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+      });
+      await adapter.askDevicePermission(constrain);
+      adapter.queryCameras();
+      adapter.queryMicrophones();
+      adapter.querySpeakers();
+    })();
+  }, [
+    adapter,
+    // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
+    // as we cannot request permissions when there are no devices.
+    hasCameras,
+    hasMicrophones
+  ]);
+
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
@@ -274,7 +298,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
 
-  const adapter = useAdapter();
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
@@ -503,18 +526,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     options,
     formFactor = 'desktop'
   } = props;
-
-  useEffect(() => {
-    (async () => {
-      const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
-      });
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
-      adapter.querySpeakers();
-    })();
-  }, [adapter]);
 
   const mobileView = formFactor === 'mobile';
 

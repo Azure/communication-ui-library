@@ -16,6 +16,8 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
+import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(raise-hand) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
@@ -63,6 +65,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
+            /* @conditional-compile-remove(raise-hand) */
+            participant.raisedHand,
             localUserCanRemoveOthers
           );
         })
@@ -79,8 +83,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(raise-hand) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
+  /* @conditional-compile-remove(rooms) */
+  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
@@ -95,6 +101,7 @@ export type ParticipantListSelector = (
 ) => {
   participants: CallParticipantListParticipant[];
   myUserId: string;
+  /* @conditional-compile-remove(total-participant-count) */
   totalParticipantCount?: number;
 };
 
