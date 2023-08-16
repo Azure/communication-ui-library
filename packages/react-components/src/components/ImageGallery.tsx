@@ -51,6 +51,10 @@ export interface ImageGalleryImageProps {
  */
 export interface ImageGalleryProps {
   /**
+   * Boolean that controls whether the modal is displayed.
+   */
+  isOpen?: boolean;
+  /**
    * Array of images used to populate the ImageGallery
    */
   images: Array<ImageGalleryImageProps>;
@@ -78,7 +82,7 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
+  const { isOpen, images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
@@ -164,7 +168,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   return (
     <Modal
       titleAriaId={image.title}
-      isOpen={images.length > 0}
+      isOpen={isOpen}
       onDismiss={onDismiss}
       overlay={{ styles: { ...overlayStyles(theme, isDarkTheme) } }}
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
