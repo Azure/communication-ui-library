@@ -1,6 +1,6 @@
 {
   "name": "@internal/storybook",
-  "version": "1.7.0",
+  "version": "1.7.0-beta.0",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "node ./scripts/build.mjs",

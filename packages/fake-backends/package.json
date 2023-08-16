@@ -1,6 +1,6 @@
 {
   "name": "@internal/fake-backends",
-  "version": "1.7.0",
+  "version": "1.7.0-beta.0",
   "description": "Fake implementations of backend services",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
