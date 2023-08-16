@@ -1,24 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import {
-  DefaultButton,
-  FocusTrapZone,
-  IModalStyleProps,
-  IModalStyles,
-  IOverlayStyleProps,
-  IOverlayStyles,
-  IStyle,
-  IStyleFunctionOrObject,
-  Icon,
-  IconButton,
-  Modal,
-  Stack,
-  mergeStyles
-} from '@fluentui/react';
+import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
 
 import React, { SyntheticEvent, useState } from 'react';
-import { BaseCustomStyles } from '../types';
 import {
   bodyContainer,
   bodyFocusZone,
@@ -40,38 +25,6 @@ import {
 } from './styles/ImageGallery.style';
 import { useTheme } from '../theming/FluentThemeProvider';
 import { isDarkThemed } from '../theming/themeUtils';
-
-/**
- * Fluent styles for {@link ImageGallery}.
- *
- * @beta
- */
-export interface ImageGalleryStylesProps extends BaseCustomStyles {
-  /** Styles for the ImageGallery Modal. */
-  modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
-  /** Styles for the ImageGallery Modal overlay. */
-  overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
-  /** Styles for the ImageGallery header bar. */
-  header?: IStyle;
-  /** Styles for the ImageGallery titleBar container. */
-  titleBarContainer?: IStyle;
-  /** styles for the title label */
-  title?: IStyle;
-  /** Styles for the ImageGallery controlBar container. */
-  controlBarContainer?: IStyle;
-  /** Styles for the download button. */
-  downloadButton?: IStyle;
-  /** Styles for the icon within the download button. */
-  downloadButtonIcon?: IStyle;
-  /** Styles for the small download button when screen width is smaller than 25 rem. */
-  smallDownloadButton?: IStyle;
-  /** Styles for the close modal icon. */
-  closeIcon?: IStyle;
-  /** Styles for the image container. */
-  bodyContainer?: IStyle;
-  /** Styles for the image. */
-  image?: IStyle;
-}
 
 /**
  * Props for {@link ImageGallery}.
@@ -117,14 +70,6 @@ export interface ImageGalleryProps {
    * Indicating which index of the images array to start with.
    */
   startIndex?: number;
-  /**
-   * Allows users to pass in an object contains custom CSS styles.
-   * @Example
-   * ```
-   * <ImageGallery styles={{ image: { background: 'blue' } }} />
-   * ```
-   */
-  styles?: ImageGalleryStylesProps;
 }
 
 /**
@@ -133,7 +78,7 @@ export interface ImageGalleryProps {
  * @beta
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
-  const { images, onImageDownloadButtonClicked, onDismiss, onError, styles, startIndex = 0 } = props;
+  const { images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
 
@@ -152,37 +97,32 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const image = images[startIndex];
   const renderHeaderBar = (): JSX.Element => {
     return (
-      <Stack className={mergeStyles(headerStyle, styles?.header)}>
-        <Stack className={mergeStyles(titleBarContainerStyle, styles?.titleBarContainer)}>
+      <Stack className={mergeStyles(headerStyle)}>
+        <Stack className={mergeStyles(titleBarContainerStyle)}>
           {image.titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme), styles?.title)} aria-label={image.title}>
+          <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme))} aria-label={image.title}>
             {image.title}
           </Stack.Item>
         </Stack>
-        <Stack className={mergeStyles(controlBarContainerStyle, styles?.controlBarContainer)}>
+        <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
-            className={mergeStyles(downloadButtonStyle(theme, isDarkTheme), styles?.downloadButton)}
+            className={mergeStyles(downloadButtonStyle(theme, isDarkTheme))}
             text={downloadButtonTitleString}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
-            onRenderIcon={() => (
-              <Icon
-                iconName={downloadIcon.iconName}
-                className={mergeStyles(downloadIconStyle, styles?.downloadButtonIcon)}
-              />
-            )}
+            onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
             aria-label={downloadButtonTitleString}
           />
           <IconButton
             iconProps={downloadIcon}
-            className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme), styles?.smallDownloadButton)}
+            className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme))}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             aria-label={downloadButtonTitleString}
             aria-live={'polite'}
           />
           <IconButton
             iconProps={cancelIcon}
-            className={mergeStyles(closeButtonStyles(theme, isDarkTheme), styles?.closeIcon)}
+            className={mergeStyles(closeButtonStyles(theme, isDarkTheme))}
             onClick={onDismiss}
             ariaLabel={closeString}
             aria-live={'polite'}
@@ -194,7 +134,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
 
   const renderBodyWithLightDismiss = (): JSX.Element => {
     return (
-      <Stack className={mergeStyles(bodyContainer, styles?.bodyContainer)} onClick={() => props.onDismiss()}>
+      <Stack className={mergeStyles(bodyContainer)} onClick={() => props.onDismiss()}>
         <FocusTrapZone
           onKeyDown={(e) => {
             if (e.key === 'Escape' || e.key === 'Esc') {
@@ -208,7 +148,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         >
           <img
             src={image.imageUrl}
-            className={mergeStyles(imageStyle, styles?.image)}
+            className={mergeStyles(imageStyle)}
             alt={image.altText || defaultAltText}
             onError={(event) => {
               setIsImageLoaded(false);
@@ -226,8 +166,8 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       titleAriaId={image.title}
       isOpen={images.length > 0}
       onDismiss={onDismiss}
-      overlay={{ styles: { ...overlayStyles(theme, isDarkTheme), ...styles?.overlay } }}
-      styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle, ...styles?.modal }}
+      overlay={{ styles: { ...overlayStyles(theme, isDarkTheme) } }}
+      styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >
       {renderHeaderBar()}
