@@ -165,8 +165,8 @@
     "unableToResolveTenantMoreDetails": "Kontroller at deltaker-ID-en er riktig angitt",
     "participantIdIsMalformedTitle": "Deltaker-ID-en har ikke riktig format",
     "participantIdIsMalformedMoreDetails": "Kontroller at deltaker-ID-en har riktig format",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "Gallerialternativer",
+    "moreButtonGalleryPositionToggleLabel": "Flytt galleri øverst"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
