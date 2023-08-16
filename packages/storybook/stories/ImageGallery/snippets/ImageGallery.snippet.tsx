@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 export const ImageGalleryExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
-  const imgClickedHandler = (event: React.MouseEvent<HTMLImageElement>) => {
+  const imgClickedHandler = (event: React.MouseEvent<HTMLImageElement>): void => {
     event.stopPropagation();
 
     const img = event.currentTarget;

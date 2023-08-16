@@ -34,7 +34,7 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const ImageGalleryStory = (args): JSX.Element => {
+const ImageGalleryStory = (): JSX.Element => {
   return <div style={{ width: '31.25rem' }}></div>;
 };
 
