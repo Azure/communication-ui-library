@@ -364,6 +364,7 @@ export type CallCompositeIcons = {
     SpeakerGalleryLayout?: JSX.Element;
     FloatingLocalVideoGalleryLayout?: JSX.Element;
     DefaultGalleryLayout?: JSX.Element;
+    FocusedContentGalleryLayout?: JSX.Element;
     OverflowGalleryTop?: JSX.Element;
 };
 
@@ -1278,6 +1279,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SpeakerGalleryLayout?: JSX.Element | undefined;
     FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
     DefaultGalleryLayout?: JSX.Element | undefined;
+    FocusedContentGalleryLayout?: JSX.Element | undefined;
     OverflowGalleryTop?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;

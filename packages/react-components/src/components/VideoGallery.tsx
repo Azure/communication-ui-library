@@ -38,6 +38,7 @@ import { useId } from '@fluentui/react-hooks';
 import { VerticalGalleryStyles } from './VerticalGallery';
 /* @conditional-compile-remove(gallery-layouts) */
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
+import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 
 /**
  * @private
@@ -128,7 +129,8 @@ export interface VideoGalleryStrings {
 export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker';
+  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -625,6 +627,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (screenShareParticipant && layout === 'focusedContent') {
+      return <FocusedContentLayout {...layoutProps} />;
+    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
@@ -633,7 +639,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <SpeakerVideoLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps]);
+  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
 
   return (
     <div

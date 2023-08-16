@@ -38,6 +38,8 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(gallery-layouts) */
+import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -76,6 +78,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
+  /* @conditional-compile-remove(gallery-layouts) */
+  const adapter = useAdapter();
+  /* @conditional-compile-remove(gallery-layouts) */
+  const isScreenSharingOn = adapter.getState().call?.isScreenSharingOn;
   /* @conditional-compile-remove(gallery-layouts) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
 
@@ -261,6 +267,23 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
               iconName: 'DefaultGalleryLayout',
               styles: { root: { lineHeight: 0 } }
             }
+          },
+          {
+            key: 'focusedContentSelectionKey',
+            text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'focusedContent' && isScreenSharingOn,
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+            },
+            iconProps: {
+              iconName: 'FocusedContentGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            },
+            disabled: !isScreenSharingOn
           },
           { key: 'dividerLayoutsKey', itemType: ContextualMenuItemType.Divider },
           {
