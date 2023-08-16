@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-import { ImageGallery, ImageGalleryImageProps, ImageGalleryStylesProps } from './ImageGallery';
+import { ImageGallery, ImageGalleryImageProps } from './ImageGallery';
 import { render, screen } from '@testing-library/react';
 
 describe.only('ImageGallery default layout tests', () => {
@@ -24,17 +24,18 @@ describe.only('ImageGallery default layout tests', () => {
   const renderImageGalleryComponent = (
     images?: Array<ImageGalleryImageProps>,
     startIndex?: number,
-    styles?: ImageGalleryStylesProps
+    onDismiss?: () => void,
+    onImageDownloadButtonClicked?: () => void,
+    onError?: () => void
   ): HTMLElement => {
     const imagesArray = images || [imageInfo];
     const { container } = render(
       <ImageGallery
         images={imagesArray}
         startIndex={startIndex}
-        styles={styles}
-        onError={() => jest.fn()}
-        onDismiss={() => jest.fn()}
-        onImageDownloadButtonClicked={() => jest.fn()}
+        onDismiss={onDismiss || jest.fn()}
+        onImageDownloadButtonClicked={onImageDownloadButtonClicked || jest.fn()}
+        onError={onError || jest.fn()}
       />
     );
     return container;
@@ -42,7 +43,7 @@ describe.only('ImageGallery default layout tests', () => {
 
   test('Show image gallery with required props', async () => {
     renderImageGalleryComponent();
-    const image: HTMLImageElement = await screen.findByTestId('image-gallery-main-image');
+    const image: HTMLImageElement = await screen.findByRole('img', { name: 'image-gallery-main-image' });
     const title: HTMLElement = await screen.findByText(imageInfo.title);
     const titleIcon: HTMLElement = await screen.findByTestId(titleIconTestId);
     expect(image.src).toContain(imageInfo.imageUrl);
@@ -54,7 +55,7 @@ describe.only('ImageGallery default layout tests', () => {
 
   test('Show the correct image from images base on the startIndex', async () => {
     renderImageGalleryComponent([imageInfo, imageInfo2], 1);
-    const image: HTMLImageElement = await screen.findByTestId('image-gallery-main-image');
+    const image: HTMLImageElement = await screen.findByRole('img', { name: 'image-gallery-main-image' });
     const title: HTMLElement = await screen.findByText(imageInfo2.title);
     const titleIcon: HTMLElement = await screen.findByTestId(titleIconTestId);
     expect(image.src).toContain(imageInfo2.imageUrl);
@@ -62,5 +63,26 @@ describe.only('ImageGallery default layout tests', () => {
 
     expect(title).toBeTruthy();
     expect(titleIcon).toBeTruthy();
+  });
+
+  test('It should call the onDismiss handler when the close icon is clicked', async () => {
+    const onDismissHandler = jest.fn();
+    renderImageGalleryComponent(undefined, undefined, onDismissHandler);
+    const buttons = await screen.findAllByRole('button', { name: 'Close' });
+    expect(buttons.length).toBe(1);
+    const closeButton: HTMLElement = buttons[0];
+    closeButton.click();
+    expect(onDismissHandler).toBeCalledTimes(1);
+  });
+
+  test('It should call the onImageDownloadButtonClicked handler when the download icon is clicked', async () => {
+    const onImageDownloadButtonClicked = jest.fn();
+    renderImageGalleryComponent(undefined, undefined, undefined, onImageDownloadButtonClicked);
+    const buttons = await screen.findAllByRole('button', { name: 'Download' });
+    expect(buttons.length).toBe(2);
+    const downloadButton: HTMLElement = buttons[0];
+    downloadButton.click();
+    expect(onImageDownloadButtonClicked).toBeCalledTimes(1);
+    expect(onImageDownloadButtonClicked).toBeCalledWith(imageInfo.imageUrl, imageInfo.saveAsName);
   });
 });
