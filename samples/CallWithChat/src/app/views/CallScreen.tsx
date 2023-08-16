@@ -133,8 +133,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             state: {
               page: state.page,
               displayName: state.displayName,
-              callId: state.call?.id,
-              remoteParticipants: state.call?.remoteParticipants
+              callId: state.call?.id
+              // remoteParticipants: state.call?.remoteParticipants
             }
           },
           {
@@ -146,6 +146,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     },
     [callIdRef]
   );
+
+  useEffect(() => {
+    setInterval(() => {
+      console.log('about to send service worker message...');
+      navigator.serviceWorker.controller?.postMessage('sending message to service worker');
+    }, 5000);
+  }, []);
 
   const adapter = useAzureCommunicationCallWithChatAdapter(
     {

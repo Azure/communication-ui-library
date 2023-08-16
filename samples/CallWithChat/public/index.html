@@ -11,6 +11,24 @@
 
     <!-- For debugging purposes only. Remove for production builds. -->
     <script src="https://cdn.jsdelivr.net/npm/react-render-tracker"></script>
+
+    <!--  service worker testing -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('service-worker.js')
+          .then((registration) => {
+            console.log('Service Worker registered with scope:', registration.scope);
+          })
+          .catch((error) => {
+            console.log('Service Worker registration failed:', error);
+          });
+      }
+
+      navigator.serviceWorker.addEventListener('message', (event) => {
+        console.log('Received a message from service worker:', event.data);
+      });
+    </script>
   </head>
 
   <body>
