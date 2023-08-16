@@ -26,7 +26,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     ];
   };
 
-  const setImage = (attachment: FileMetadata): Promise<void> => {
+  const onInlineImageClicked = (attachment: FileMetadata): Promise<void> => {
     const title = 'Image';
     const galleryImage: ImageGalleryImageProps = {
       title: title,
@@ -86,7 +86,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         userId={'1'}
         messages={messages}
         onFetchAttachments={onFetchAttachment}
-        onInlineImageClicked={setImage}
+        onInlineImageClicked={onInlineImageClicked}
       />
       {galleryImages && galleryImages.length > 0 && (
         <ImageGallery

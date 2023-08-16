@@ -350,7 +350,7 @@ const MessageThreadStory = (args): JSX.Element => {
   };
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
 
-  const setImage = (attachment: FileMetadata): Promise<void> => {
+  const onInlineImageClicked = (attachment: FileMetadata): Promise<void> => {
     const title = 'Message Thread Image';
     const galleryImage: ImageGalleryImageProps = {
       title: title,
@@ -396,7 +396,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachment}
-        onInlineImageClicked={setImage}
+        onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (
