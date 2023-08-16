@@ -165,8 +165,8 @@
     "unableToResolveTenantMoreDetails": "참가자 ID가 올바르게 입력되었는지 검사.",
     "participantIdIsMalformedTitle": "참가자 ID의 형식이 잘못되었습니다.",
     "participantIdIsMalformedMoreDetails": "참가자 ID가 올바른 형식인지 검사.",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "갤러리 옵션",
+    "moreButtonGalleryPositionToggleLabel": "갤러리를 맨 위로 이동"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",
