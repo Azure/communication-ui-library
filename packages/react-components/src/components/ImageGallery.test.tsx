@@ -4,8 +4,17 @@
 import React from 'react';
 import { ImageGallery, ImageGalleryImageProps } from './ImageGallery';
 import { render, screen } from '@testing-library/react';
+import { registerIcons } from '@fluentui/react';
 
-describe.only('ImageGallery default layout tests', () => {
+describe('ImageGallery default layout tests', () => {
+  beforeAll(() => {
+    registerIcons({
+      icons: {
+        cancel: <></>,
+        download: <></>
+      }
+    });
+  });
   const titleIconTestId = 'titleIconTestId';
   const imageInfo = {
     imageUrl: 'images/inlineImageExample1.png',
