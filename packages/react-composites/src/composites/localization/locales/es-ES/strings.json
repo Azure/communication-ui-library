@@ -165,8 +165,8 @@
     "unableToResolveTenantMoreDetails": "Compruebe que el id. de participante se ha escrito correctamente.",
     "participantIdIsMalformedTitle": "El id. de participante no tiene el formato correcto",
     "participantIdIsMalformedMoreDetails": "Compruebe que el id. de participante tiene el formato correcto",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "Opciones de la Galería",
+    "moreButtonGalleryPositionToggleLabel": "Mover galería a la parte superior"
   },
   "chat": {
     "chatListHeader": "En este chat",
