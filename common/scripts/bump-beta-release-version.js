@@ -25,7 +25,9 @@ const bumpBetaVersion = (currentVersion) => {
     const betaVersion = versionStrs[1];
     // if bumpType is beta, no need to update major, minor or patch version
     if (betaVersion === undefined) {
-      throw '\nplease use either major/minor/patch as a parameter!\n\n  Syntax:\n  node bump-beta-release-version.js minor\n'
+      // set beta version to 0 to fix beachball issue with prerelease type
+      const newPatch = Number.parseInt(patch) + 1;
+      return `${major}.${minor}.${newPatch}-beta.0`
     }
     const newBeta = Number.parseInt(betaVersion) + 1;
     return `${major}.${minor}.${patch}-beta.${newBeta}`

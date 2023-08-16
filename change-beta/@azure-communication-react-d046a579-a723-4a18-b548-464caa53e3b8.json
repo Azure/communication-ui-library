@@ -1,6 +1,8 @@
 {
   "type": "none",
-  "comment": "Testing dependencies update",
+  "area": "improvement",
+  "workstream": "Release",
+  "comment": "Change log grooming for 1.7.0",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "none"
