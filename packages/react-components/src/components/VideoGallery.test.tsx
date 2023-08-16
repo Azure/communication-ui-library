@@ -55,6 +55,37 @@ describe('VideoGallery default layout tests', () => {
     ).toBe(true);
   });
 
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('should render only one grid tile when in speaker layout', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isSpeaking: true
+      })
+    );
+
+    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    const { container } = render(
+      <VideoGallery
+        layout="speaker"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        dominantSpeakers={[remoteParticipants[0].userId]}
+      />
+    );
+
+    const tiles = getGridTiles(container);
+    expect(tiles.length).toBe(1);
+    expect(
+      tiles.some((tile) => {
+        return getDisplayName(tile) === 'Remote Participant1';
+      })
+    ).toBe(true);
+  });
+
   test('should not have floating local video tile present', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
