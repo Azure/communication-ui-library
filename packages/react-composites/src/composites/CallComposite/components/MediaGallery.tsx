@@ -9,9 +9,9 @@ import {
   VideoStreamOptions,
   OnRenderAvatarCallback,
   CustomAvatarOptions,
-  Announcer,
-  VideoGalleryLayout
+  Announcer
 } from '@internal/react-components';
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 /* @conditional-compile-remove(pinned-participants) */
@@ -67,6 +67,8 @@ export interface MediaGalleryProps {
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
   /* @conditional-compile-remove(gallery-layouts) */
   userSetOverflowGalleryPosition?: 'Responsive' | 'HorizontalTop';
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout: VideoGalleryLayout;
 }
 
 /**
@@ -143,13 +145,19 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [props.userSetOverflowGalleryPosition, containerWidth, containerHeight]);
 
   const VideoGalleryMemoized = useMemo(() => {
+    const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
+      /* @conditional-compile-remove(gallery-layouts) */
+      return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
+      return layoutBasedOnTilePosition;
+    };
+
     return (
       <VideoGallery
         {...videoGalleryProps}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
-        layout={layoutBasedOnTilePosition}
+        layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
@@ -169,7 +177,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [
     videoGalleryProps,
-    layoutBasedOnTilePosition,
     props.isMobile,
     props.onRenderAvatar,
     /* @conditional-compile-remove(rooms) */
@@ -184,8 +191,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     userRole,
     /* @conditional-compile-remove(rooms) */
     isRoomsCall,
-    /* @conditional-compile-remove(vertical-gallery) */
-    containerAspectRatio
+    /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */
+    containerAspectRatio,
+    /* @conditional-compile-remove(gallery-layouts) */
+    props.userSetGalleryLayout,
+    layoutBasedOnTilePosition
   ]);
 
   return (

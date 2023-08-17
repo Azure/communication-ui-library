@@ -48,6 +48,8 @@ import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiv
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /**
  * Props for {@link CallComposite}.
@@ -219,6 +221,16 @@ export type CallCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Options for controlling the starting layout of the composite's video gallery
+   */
+  galleryOptions?: {
+    /**
+     * Layout for the gallery when the call starts
+     */
+    layout?: VideoGalleryLayout;
+  };
 };
 
 type MainScreenProps = {
@@ -443,6 +455,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(gallery-layouts) */
+          galleryLayout={
+            props.options?.galleryOptions?.layout ? props.options.galleryOptions.layout : 'floatingLocalVideo'
+          }
         />
       );
       break;

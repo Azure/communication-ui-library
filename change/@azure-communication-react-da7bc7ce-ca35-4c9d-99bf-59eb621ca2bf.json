@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "Beachball",
-  "comment": "Updated Beachball config with new prompts",
-  "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix mention popover content view is not wrapped up in the scroll view when the list is long",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
