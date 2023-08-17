@@ -68,6 +68,7 @@ describe('VideoGallery default layout tests', () => {
     );
 
     remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
     const { container } = render(
       <VideoGallery
         layout="speaker"
@@ -82,6 +83,38 @@ describe('VideoGallery default layout tests', () => {
     expect(
       tiles.some((tile) => {
         return getDisplayName(tile) === 'Remote Participant1';
+      })
+    ).toBe(true);
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('should render different speaker', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isSpeaking: true
+      })
+    );
+
+    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    const { container } = render(
+      <VideoGallery
+        layout="speaker"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        dominantSpeakers={[remoteParticipants[1].userId]}
+      />
+    );
+
+    const tiles = getGridTiles(container);
+    expect(tiles.length).toBe(1);
+    expect(
+      tiles.some((tile) => {
+        return getDisplayName(tile) === 'Remote Participant2';
       })
     ).toBe(true);
   });
