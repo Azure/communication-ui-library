@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add type check to stable sample calling app",
-  "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
-  "dependentChangeType": "none"
-}
