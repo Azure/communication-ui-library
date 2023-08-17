@@ -37,7 +37,10 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
 import { CommonCallAdapter } from '../adapter';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHand } from './buttons/RaiseHand';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 /**
  * @private
  */
@@ -104,6 +107,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
@@ -162,6 +168,27 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
+    /* @conditional-compile-remove(raise-hand) */
+    if (raiseHandButtonIsEnabled) {
+      items.push({
+        key: 'raiseHandButtonKey',
+        text: raiseHandButtonProps.checked
+          ? localeStrings.component.strings.raiseHandButton.onLabel
+          : localeStrings.component.strings.raiseHandButton.offLabel,
+        onClick: () => {
+          if (raiseHandButtonProps.onToggleRaiseHand) {
+            raiseHandButtonProps.onToggleRaiseHand();
+          }
+        },
+        iconProps: { iconName: 'RaiseHandContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        disabled: isDisabled(options?.raiseHandButton),
+        ['data-ui-id']: 'raise-hand-button'
+      });
+    }
+
     return items;
   };
 
@@ -190,6 +217,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>
@@ -220,6 +250,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
+          {
+            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && !props.isMobile && (
+              <RaiseHand displayType={options?.displayType} />
+            )
+          }
           {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
