@@ -73,8 +73,8 @@ import { TransferRequestedListener } from './CallAdapter';
 import {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
-  CaptionLanguageChangedListener,
-  SpokenLanguageChangedListener
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
 } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import {
@@ -992,9 +992,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
 
@@ -1009,8 +1009,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
       captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      captionsFeature.on('CaptionLanguageChanged', this.captionLanguageChanged.bind(this));
-      captionsFeature.on('SpokenLanguageChanged', this.spokenLanguageChanged.bind(this));
+      captionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+      captionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     }
   }
 
@@ -1020,8 +1020,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
       captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      captionsFeature.off('CaptionLanguageChanged', this.captionLanguageChanged.bind(this));
-      captionsFeature.off('SpokenLanguageChanged', this.spokenLanguageChanged.bind(this));
+      captionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+      captionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
   }
@@ -1104,17 +1104,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   /* @conditional-compile-remove(close-captions) */
-  private spokenLanguageChanged(): void {
+  private isSpokenLanguageChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
-    this.emitter.emit('SpokenLanguageChanged', {
+    this.emitter.emit('isSpokenLanguageChanged', {
       activeSpokenLanguage: captionsFeature.activeSpokenLanguage
     });
   }
 
   /* @conditional-compile-remove(close-captions) */
-  private captionLanguageChanged(): void {
+  private isCaptionLanguageChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
-    this.emitter.emit('CaptionLanguageChanged', {
+    this.emitter.emit('isCaptionLanguageChanged', {
       activeCaptionLanguage: captionsFeature.activeCaptionLanguage
     });
   }
@@ -1169,9 +1169,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
 

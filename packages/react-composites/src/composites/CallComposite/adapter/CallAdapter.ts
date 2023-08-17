@@ -311,19 +311,19 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionLanguageChanged' event.
  *
  * @public
  */
-export type CaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
+export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ * Callback for {@link CallAdapterSubscribers} 'isSpokenLanguageChanged' event.
  *
  * @public
  */
-export type SpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
+export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
 
 /* @conditional-compile-remove(call-transfer) */
 /**
@@ -753,14 +753,14 @@ export interface CallAdapterSubscribers {
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * Subscribe function for 'CaptionLanguageChanged' event.
+   * Subscribe function for 'isCaptionLanguageChanged' event.
    */
-  on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * Subscribe function for 'SpokenLanguageChanged' event.
+   * Subscribe function for 'isSpokenLanguageChanged' event.
    */
-  on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   /* @conditional-compile-remove(call-transfer) */
   /**
@@ -828,14 +828,14 @@ export interface CallAdapterSubscribers {
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * Unsubscribe function for 'CaptionLanguageChanged' event.
+   * Unsubscribe function for 'isCaptionLanguageChanged' event.
    */
-  off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * Unsubscribe function for 'SpokenLanguageChanged' event.
+   * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
-  off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * Unsubscribe function for 'transferRequested' event.

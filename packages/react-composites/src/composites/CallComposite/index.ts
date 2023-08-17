@@ -90,8 +90,8 @@ export type {
 export type {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
-  CaptionLanguageChangedListener,
-  SpokenLanguageChangedListener
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
 } from './adapter';
 
 /* @conditional-compile-remove(call-transfer) */

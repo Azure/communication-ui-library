@@ -163,61 +163,61 @@ export interface AvailableCaptionLanguageStrings {
     // (undocumented)
     'zh-Hant': string;
     // (undocumented)
-    'ar': string;
+    ar: string;
     // (undocumented)
-    'cs': string;
+    cs: string;
     // (undocumented)
-    'cy': string;
+    cy: string;
     // (undocumented)
-    'da': string;
+    da: string;
     // (undocumented)
-    'de': string;
+    de: string;
     // (undocumented)
-    'el': string;
+    el: string;
     // (undocumented)
-    'en': string;
+    en: string;
     // (undocumented)
-    'es': string;
+    es: string;
     // (undocumented)
-    'fi': string;
+    fi: string;
     // (undocumented)
-    'fr': string;
+    fr: string;
     // (undocumented)
-    'he': string;
+    he: string;
     // (undocumented)
-    'hi': string;
+    hi: string;
     // (undocumented)
-    'hu': string;
+    hu: string;
     // (undocumented)
-    'it': string;
+    it: string;
     // (undocumented)
-    'ja': string;
+    ja: string;
     // (undocumented)
-    'ko': string;
+    ko: string;
     // (undocumented)
-    'nb': string;
+    nb: string;
     // (undocumented)
-    'nl': string;
+    nl: string;
     // (undocumented)
-    'pl': string;
+    pl: string;
     // (undocumented)
-    'pt': string;
+    pt: string;
     // (undocumented)
-    'ro': string;
+    ro: string;
     // (undocumented)
-    'ru': string;
+    ru: string;
     // (undocumented)
-    'sk': string;
+    sk: string;
     // (undocumented)
-    'sv': string;
+    sv: string;
     // (undocumented)
-    'th': string;
+    th: string;
     // (undocumented)
-    'tr': string;
+    tr: string;
     // (undocumented)
-    'uk': string;
+    uk: string;
     // (undocumented)
-    'vi': string;
+    vi: string;
 }
 
 // @public
@@ -578,8 +578,8 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
-    off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -595,8 +595,8 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
-    on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
 }
 
@@ -1128,9 +1128,9 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
-    off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
-    off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1170,9 +1170,9 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
-    on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
-    on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1358,7 +1358,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'CaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'SpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1448,11 +1448,6 @@ export type CancelEditCallback = (messageId: string) => void;
 export interface CapabilitiesCallFeature {
     capabilities: ParticipantCapabilities;
 }
-
-// @public
-export type CaptionLanguageChangedListener = (event: {
-    activeCaptionLanguage: string;
-}) => void;
 
 // @public (undocumented)
 export interface CaptionsCallFeatureState {
@@ -2876,6 +2871,11 @@ export interface IncomingCallState {
 }
 
 // @public
+export type IsCaptionLanguageChangedListener = (event: {
+    activeCaptionLanguage: string;
+}) => void;
+
+// @public
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -2895,6 +2895,11 @@ export type IsMutedChangedListener = (event: {
 export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
+}) => void;
+
+// @public
+export type IsSpokenLanguageChangedListener = (event: {
+    activeSpokenLanguage: string;
 }) => void;
 
 // @public
@@ -3624,11 +3629,6 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
 }
-
-// @public
-export type SpokenLanguageChangedListener = (event: {
-    activeSpokenLanguage: string;
-}) => void;
 
 // @public
 export interface StatefulCallClient extends CallClient {

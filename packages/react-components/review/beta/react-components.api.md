@@ -81,61 +81,61 @@ export interface AvailableCaptionLanguageStrings {
     // (undocumented)
     'zh-Hant': string;
     // (undocumented)
-    'ar': string;
+    ar: string;
     // (undocumented)
-    'cs': string;
+    cs: string;
     // (undocumented)
-    'cy': string;
+    cy: string;
     // (undocumented)
-    'da': string;
+    da: string;
     // (undocumented)
-    'de': string;
+    de: string;
     // (undocumented)
-    'el': string;
+    el: string;
     // (undocumented)
-    'en': string;
+    en: string;
     // (undocumented)
-    'es': string;
+    es: string;
     // (undocumented)
-    'fi': string;
+    fi: string;
     // (undocumented)
-    'fr': string;
+    fr: string;
     // (undocumented)
-    'he': string;
+    he: string;
     // (undocumented)
-    'hi': string;
+    hi: string;
     // (undocumented)
-    'hu': string;
+    hu: string;
     // (undocumented)
-    'it': string;
+    it: string;
     // (undocumented)
-    'ja': string;
+    ja: string;
     // (undocumented)
-    'ko': string;
+    ko: string;
     // (undocumented)
-    'nb': string;
+    nb: string;
     // (undocumented)
-    'nl': string;
+    nl: string;
     // (undocumented)
-    'pl': string;
+    pl: string;
     // (undocumented)
-    'pt': string;
+    pt: string;
     // (undocumented)
-    'ro': string;
+    ro: string;
     // (undocumented)
-    'ru': string;
+    ru: string;
     // (undocumented)
-    'sk': string;
+    sk: string;
     // (undocumented)
-    'sv': string;
+    sv: string;
     // (undocumented)
-    'th': string;
+    th: string;
     // (undocumented)
-    'tr': string;
+    tr: string;
     // (undocumented)
-    'uk': string;
+    uk: string;
     // (undocumented)
-    'vi': string;
+    vi: string;
 }
 
 // @public
@@ -2016,6 +2016,7 @@ export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Ele
 // @internal (undocumented)
 export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
     currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     onStopCaptions: () => Promise<void>;
     strings?: _StartCaptionsButtonStrings;

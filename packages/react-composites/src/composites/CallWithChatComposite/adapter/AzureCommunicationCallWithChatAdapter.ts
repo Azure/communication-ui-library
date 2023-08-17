@@ -90,8 +90,8 @@ import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapte
 import {
   IsCaptionsActiveChangedListener,
   CaptionsReceivedListener,
-  CaptionLanguageChangedListener,
-  SpokenLanguageChangedListener
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
@@ -529,9 +529,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -575,12 +575,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.on('isCaptionsActiveChanged', listener);
         break;
       /* @conditional-compile-remove(close-captions) */
-      case 'CaptionLanguageChanged':
-        this.callAdapter.on('CaptionLanguageChanged', listener);
+      case 'isCaptionLanguageChanged':
+        this.callAdapter.on('isCaptionLanguageChanged', listener);
         break;
       /* @conditional-compile-remove(close-captions) */
-      case 'SpokenLanguageChanged':
-        this.callAdapter.on('SpokenLanguageChanged', listener);
+      case 'isSpokenLanguageChanged':
+        this.callAdapter.on('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
@@ -631,9 +631,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
-  off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
@@ -677,12 +677,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.off('isCaptionsActiveChanged', listener);
         break;
       /* @conditional-compile-remove(close-captions) */
-      case 'CaptionLanguageChanged':
-        this.callAdapter.off('CaptionLanguageChanged', listener);
+      case 'isCaptionLanguageChanged':
+        this.callAdapter.off('isCaptionLanguageChanged', listener);
         break;
       /* @conditional-compile-remove(close-captions) */
-      case 'SpokenLanguageChanged':
-        this.callAdapter.off('SpokenLanguageChanged', listener);
+      case 'isSpokenLanguageChanged':
+        this.callAdapter.off('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);

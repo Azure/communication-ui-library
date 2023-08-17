@@ -56,8 +56,8 @@ export type {
 export type {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
-  CaptionLanguageChangedListener,
-  SpokenLanguageChangedListener
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
 } from './CallAdapter';
 
 /* @conditional-compile-remove(call-transfer) */
