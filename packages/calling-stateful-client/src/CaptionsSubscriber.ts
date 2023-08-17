@@ -34,14 +34,13 @@ export class CaptionsSubscriber {
       this._context.setAvailableCaptionLanguages(this._callIdRef.callId, this._captions.supportedCaptionLanguages);
     }
     this._context.setSelectedSpokenLanguage(this._callIdRef.callId, this._captions.activeSpokenLanguage);
-
+this._context.setSelectedCaptionLanguage(this._callIdRef.callId, this._captions.activeCaptionLanguage);
     this.subscribe();
   }
 
   private subscribe = (): void => {
     this._captions.on('CaptionsActiveChanged', this.isCaptionsActiveChanged);
     this._captions.on('CaptionsReceived', this.onCaptionsReceived);
-
     this._captions.on('CaptionLanguageChanged', this.isCaptionLanguageChanged);
     this._captions.on('SpokenLanguageChanged', this.isSpokenLanguageChanged);
   };
@@ -55,8 +54,6 @@ export class CaptionsSubscriber {
 
   private onCaptionsReceived: TeamsCaptionsHandler = (caption: TeamsCaptionsInfo): void => {
     this._context.addCaption(this._callIdRef.callId, caption);
-    this._context.setSelectedSpokenLanguage(this._callIdRef.callId, caption.spokenLanguage);
-    this._context.setSelectedCaptionLanguage(this._callIdRef.callId, caption.spokenLanguage);
   };
 
   private isCaptionsActiveChanged: PropertyChangedEvent = (): void => {

@@ -40,7 +40,8 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled
+  VideoProhibited16Filled,
+  Translate20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
 import { HandRight20Filled, HandRightOff20Filled } from '@fluentui/react-icons';
@@ -336,6 +337,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   CaptionsSettingsIcon: <Settings20Regular />,
   /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
+   /* @conditional-compile-remove(close-captions) */
+  ChangeCaptionLanguageIcon:<Translate20Regular/>,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />
