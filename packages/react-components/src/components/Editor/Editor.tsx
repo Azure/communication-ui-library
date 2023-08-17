@@ -28,15 +28,22 @@ import { suggestions, trigger } from './Plugins/mentionLoopupData';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   //   editorCreator?: (div: HTMLDivElement, options: EditorOptions) => IEditor;
-  children: ReactNode;
+  content: string;
   onChange: (newValue?: string) => void;
   mentionLookupOptions?: MentionLookupOptions;
+  children: ReactNode;
 }
 export default function RichTextEditor(props: RichTextEditorProps) {
-  const { children, onChange, mentionLookupOptions } = props;
+  const { content, onChange, mentionLookupOptions, children } = props;
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
   const ribbonPlugin = React.useRef(createRibbonPlugin());
+
+  React.useEffect(() => {
+    if (editor.current) {
+      editor.current.setContent(content || '');
+    }
+  }, [content]);
 
   function renderRibbon() {
     const buttons = getButtons([KnownRibbonButtonKey.Bold, KnownRibbonButtonKey.Italic]);
@@ -99,33 +106,9 @@ export default function RichTextEditor(props: RichTextEditorProps) {
     const atMentionPlugin = atMentionPluginInstance.Picker;
 
     const options: EditorOptions = {
-      plugins: [ribbonPlugin.current, contentPlugin, atMentionPlugin],
-      trustedHTMLHandler: preserveImagesHandler
+      plugins: [ribbonPlugin.current, contentPlugin, atMentionPlugin]
     };
     editor.current = new Editor(div, options);
     return editor.current;
   }
 }
-
-const preserveImagesHandler = (html: string) => {
-  console.log('paste html:: /n ', html);
-  const doc = new DOMParser().parseFromString(html, 'text/html');
-  const walker = document.createTreeWalker(doc.body, NodeFilter.SHOW_ALL);
-
-  let node = walker.nextNode();
-  while (node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.textContent = node.textContent.trim();
-    } else if (node.nodeType === Node.ELEMENT_NODE && node.nodeName !== 'IMG') {
-      if (node.textContent) {
-        const textNode = doc.createTextNode(node.textContent.trim());
-        node.parentNode.replaceChild(textNode, node);
-      } else {
-        node.parentNode.removeChild(node);
-      }
-    }
-    node = walker.nextNode();
-  }
-
-  return html;
-};

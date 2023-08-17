@@ -233,7 +233,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
   const sendTextFieldRef = React.useRef<ITextField>(null);
-
   const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   const sendMessageOnClick = (): void => {
@@ -257,7 +256,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     // Message can be empty if there is a valid file upload
     if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(message));
-      // setTextValue('');
+      setTextValue('');
     }
     sendTextFieldRef.current?.focus();
   };

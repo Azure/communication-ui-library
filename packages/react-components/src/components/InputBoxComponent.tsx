@@ -173,7 +173,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <RichTextEditor onChange={onChange} mentionLookupOptions={}>
+      <RichTextEditor content={textValue} onChange={onChange}>
         {onRenderChildren}
       </RichTextEditor>
       // <TextField
