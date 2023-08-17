@@ -237,6 +237,9 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [fileUploadsPendingError, setFileUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
   const sendMessageOnClick = (): void => {
+    let editor = window['editor'];
+    editor.current.setContent('');
+    
     // don't send a message when disabled
     if (disabled || textValueOverflow) {
       return;

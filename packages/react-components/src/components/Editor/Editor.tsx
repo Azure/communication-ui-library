@@ -36,10 +36,12 @@ export default function RichTextEditor(props: RichTextEditorProps) {
   const ribbonPlugin = React.useRef(createRibbonPlugin());
 
   function renderRibbon() {
-    const buttons = getButtons([KnownRibbonButtonKey.Bold, KnownRibbonButtonKey.Italic]);
+    const buttons = getButtons([KnownRibbonButtonKey.Bold, 
+      KnownRibbonButtonKey.Italic,
+      KnownRibbonButtonKey.ClearFormat, 
+      KnownRibbonButtonKey.Strikethrough, KnownRibbonButtonKey.TextColor, KnownRibbonButtonKey.InsertImage]);
     const ribbonStyle = {
-      backgroundColor: '#f5f5f5', // The color you want
-      height: '50px' // The height you want
+
     };
 
     return (
@@ -51,34 +53,22 @@ export default function RichTextEditor(props: RichTextEditorProps) {
   function renderBottomButtons() {
     return (
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <IconButton
-          iconProps={{ iconName: 'ClearFormatting' }}
-          onClick={() => {
-            clearFormatApi(editor.current, ClearFormatMode.AutoDetect);
-          }}
-        />
-        <IconButton
-          iconProps={{ iconName: 'Bold' }}
-          onClick={() => {
-            toggleBold(editor.current);
-            return true;
-          }}
-        />
-        <div style={{ flex: 1 }} />
+        <div style={{ flex: 1 }}/>
         {children()}
-      </div>
+        </div>
     );
   }
 
   return (
     <div>
       {renderRibbon()}
-      <Rooster plugins={[ribbonPlugin.current]} editorCreator={defaultEditorCreator} />
+      <Rooster plugins={[ribbonPlugin.current]} editorCreator={defaultEditorCreator} style={ { height: '80px', outline: 'none', overflow: 'scroll', paddingLeft: '2px' } } />
       {renderBottomButtons()}
     </div>
   );
 
   function defaultEditorCreator(div: HTMLDivElement) {
+    window['editor'] = editor;
     const contentPlugin = createUpdateContentPlugin(
       UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
       (html, mode) => {
