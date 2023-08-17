@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import React, { useCallback, useMemo, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { defaultSpokenLanguage } from './utils';
 
