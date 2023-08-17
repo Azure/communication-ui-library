@@ -1,41 +1,38 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
-import { useId } from '@fluentui/react-hooks';
-import React, { useMemo, useRef, useState } from 'react';
-import { useTheme } from '../../theming';
-import { GridLayout } from '../GridLayout';
+import { LayerHost, Stack, mergeStyles, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(click-to-call) */
+import { LocalVideoTileSize } from '../VideoGallery';
+import { LayoutProps } from './Layout';
 import { isNarrowWidth } from '../utils/responsive';
 /* @conditional-compile-remove(vertical-gallery) */
 import { isShortHeight } from '../utils/responsive';
-import { FloatingLocalVideo } from './FloatingLocalVideo';
-import { LayoutProps } from './Layout';
+import React, { useMemo, useRef, useState } from 'react';
+import { OverflowGallery } from './OverflowGallery';
 import {
+  SMALL_FLOATING_MODAL_SIZE_REM,
   LARGE_FLOATING_MODAL_SIZE_REM,
-  localVideoTileContainerStyle,
-  localVideoTileWithControlsContainerStyle,
-  LOCAL_VIDEO_TILE_ZINDEX,
-  SMALL_FLOATING_MODAL_SIZE_REM
+  localVideoTileContainerStyle
 } from './styles/FloatingLocalVideo.styles';
 /* @conditional-compile-remove(vertical-gallery) */
 import {
-  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
-  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
+  VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM,
+  SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
 } from './styles/FloatingLocalVideo.styles';
-import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
-import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
-import { OverflowGallery } from './OverflowGallery';
-/* @conditional-compile-remove(click-to-call) */
-import { LocalVideoTileSize } from '../VideoGallery';
+import { GridLayout } from '../GridLayout';
+import { rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
+import { layerHostStyle, innerLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
+import { videoGalleryLayoutGap } from './styles/Layout.styles';
+import { useId } from '@fluentui/react-hooks';
 
 /**
  * Props for {@link FloatingLocalVideoLayout}.
  *
  * @private
  */
-export interface FloatingLocalVideoLayoutProps extends LayoutProps {
+export interface SpeakerVideoLayoutProps extends LayoutProps {
   /**
    * Whether to display the local video camera switcher button
    */
@@ -52,12 +49,11 @@ export interface FloatingLocalVideoLayoutProps extends LayoutProps {
 }
 
 /**
- * FloatingLocalVideoLayout displays remote participants and a screen sharing component in
- * a grid and overflow gallery while floating the local video
+ * Layout for the gallery mode to highlight the current dominant speaker
  *
  * @private
  */
-export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): JSX.Element => {
+export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element => {
   const {
     remoteParticipants = [],
     dominantSpeakers,
@@ -66,9 +62,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     onRenderRemoteParticipant,
     styles,
     maxRemoteVideoStreams,
-    showCameraSwitcherInLocalPreview,
     parentWidth,
-    parentHeight,
+    /* @conditional-compile-remove(vertical-gallery) */ parentHeight,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
@@ -93,7 +88,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'floatingLocalVideo'
+    /* @conditional-compile-remove(gallery-layouts) */ layout: 'speaker'
   });
 
   let activeVideoStreams = 0;
@@ -163,39 +158,19 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
   ]);
 
   const wrappedLocalVideoComponent =
-    (localVideoComponent && shouldFloatLocalVideo) || (screenShareComponent && localVideoComponent) ? (
-      // When we use showCameraSwitcherInLocalPreview it disables dragging to allow keyboard navigation.
-      showCameraSwitcherInLocalPreview ? (
-        <Stack
-          className={mergeStyles(localVideoTileWithControlsContainerStyle(theme, localVideoSizeRem), {
-            boxShadow: theme.effects.elevation8,
-            zIndex: LOCAL_VIDEO_TILE_ZINDEX
-          })}
-        >
-          {localVideoComponent}
-        </Stack>
-      ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
-        <Stack
-          className={mergeStyles(
-            localVideoTileContainerStyle(
-              theme,
-              localVideoSizeRem,
-              !!screenShareComponent,
-              /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
-            )
-          )}
-        >
-          {localVideoComponent}
-        </Stack>
-      ) : (
-        <FloatingLocalVideo
-          localVideoComponent={localVideoComponent}
-          layerHostId={layerHostId}
-          localVideoSizeRem={localVideoSizeRem}
-          parentWidth={parentWidth}
-          parentHeight={parentHeight}
-        />
-      )
+    localVideoComponent || (screenShareComponent && localVideoComponent) ? (
+      <Stack
+        className={mergeStyles(
+          localVideoTileContainerStyle(
+            theme,
+            localVideoSizeRem,
+            !!screenShareComponent,
+            /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
+          )
+        )}
+      >
+        {localVideoComponent}
+      </Stack>
     ) : undefined;
 
   const overflowGallery = useMemo(() => {
