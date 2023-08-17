@@ -15,7 +15,8 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings
+  VideoGalleryStrings,
+  ImageGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButtonStrings } from '../components';
@@ -94,6 +95,9 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /** Strings for ImageGallery */
+  imageGallery: ImageGalleryStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */

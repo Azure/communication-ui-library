@@ -25,6 +25,7 @@ import {
 } from './styles/ImageGallery.style';
 import { useTheme } from '../theming/FluentThemeProvider';
 import { isDarkThemed } from '../theming/themeUtils';
+import { useLocale } from '../localization';
 
 /**
  * Props for {@link ImageGallery}.
@@ -73,6 +74,22 @@ export interface ImageGalleryProps {
 }
 
 /**
+ * Strings of {@link ImageGallery} that can be overridden.
+ *
+ * @beta
+ */
+export interface ImageGalleryStrings {
+  /**
+   * Download button label for ImageGallery
+   */
+  downloadButtonLabel: string;
+  /**
+   * Dismiss button aria label for ImageGallery
+   */
+  dismissButtonAriaLabel: string;
+}
+
+/**
  * Component to render a fullscreen modal for a selected image.
  *
  * @beta
@@ -81,10 +98,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
-
-  const downloadButtonTitleString = 'Download';
-  const closeString = 'Close';
-  const defaultAltText = 'image';
+  const localeStrings = useLocale().strings.imageGallery;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
@@ -107,24 +121,24 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme, isDarkTheme))}
-            text={downloadButtonTitleString}
+            text={localeStrings.downloadButtonLabel}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
-            aria-label={downloadButtonTitleString}
+            aria-label={localeStrings.downloadButtonLabel}
           />
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme))}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
-            aria-label={downloadButtonTitleString}
+            aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
           />
           <IconButton
             iconProps={cancelIcon}
             className={mergeStyles(closeButtonStyles(theme, isDarkTheme))}
             onClick={onDismiss}
-            ariaLabel={closeString}
+            ariaLabel={localeStrings.dismissButtonAriaLabel}
             aria-live={'polite'}
           />
         </Stack>
@@ -149,7 +163,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           <img
             src={image.imageUrl}
             className={mergeStyles(imageStyle)}
-            alt={image.altText || defaultAltText}
+            alt={image.altText || 'image'}
             onError={(event) => {
               setIsImageLoaded(false);
               onError && onError(event);

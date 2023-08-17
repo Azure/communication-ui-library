@@ -1261,6 +1261,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
+    imageGallery: ImageGalleryStrings;
 }
 
 // @public
