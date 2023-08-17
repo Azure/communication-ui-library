@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   FileMetadata,
-  AttachmentDownloadResult
+  AttachmentDownloadResult,
+  ImageGalleryImageProps,
+  ImageGallery
 } from '@azure/communication-react';
 import {
   Persona,
@@ -346,6 +348,18 @@ const MessageThreadStory = (args): JSX.Element => {
       ];
     });
   };
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+
+  const onInlineImageClicked = (attachment: FileMetadata): Promise<void> => {
+    const title = 'Message Thread Image';
+    const galleryImage: ImageGalleryImageProps = {
+      title: title,
+      saveAsName: attachment.id,
+      imageUrl: attachment.url
+    };
+    setGalleryImages([galleryImage]);
+    return Promise.resolve();
+  };
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
@@ -371,7 +385,6 @@ const MessageThreadStory = (args): JSX.Element => {
         console.log('Invalid message type');
     }
   };
-
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent
@@ -383,6 +396,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachment}
+        onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (
@@ -397,6 +411,15 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
+      {galleryImages && galleryImages.length > 0 && (
+        <ImageGallery
+          images={galleryImages}
+          onDismiss={() => setGalleryImages(undefined)}
+          onImageDownloadButtonClicked={() => {
+            alert('Download button clicked');
+          }}
+        />
+      )}
       {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
         <Dropdown
