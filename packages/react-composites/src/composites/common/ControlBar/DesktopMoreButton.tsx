@@ -82,6 +82,15 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
+  /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(gallery-layouts) */
+  const menuSubIconStyleSet = {
+    root: {
+      height: 'unset',
+      lineHeight: '100%',
+      width: '1.25rem'
+    }
+  };
+
   /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   moreButtonContextualMenuItems.push({
     key: 'holdButtonKey',
@@ -100,14 +109,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsContextualMenuItems: IContextualMenuItem[] = [];
-
-    const menuSubIconStyleSet = {
-      root: {
-        height: 'unset',
-        lineHeight: '100%',
-        width: '1.25rem'
-      }
-    };
 
     moreButtonContextualMenuItems.push({
       key: 'liveCaptionsKey',
@@ -198,6 +199,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       },
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
+      },
+      submenuIconProps: {
+        styles: menuSubIconStyleSet
       },
       text: localeStrings.strings.call.moreButtonGalleryControlLabel,
       subMenuProps: {

@@ -83,7 +83,9 @@ After finishing creating release branch, follow these steps to create a UI snaps
 2. trigger the UI snapshot update for the new branch branch: ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
 3. Wait for snapshot update
 4. Once snapshot update finished, you might or might not see changes for UI snapshot, if there is any updates, open a PR to merge that new branch back to release branch
-5. Merge the PR if everything looks fine, or notify feature owner if something looks not 100% correct.
+5. Add a changelog item for creating the release branch
+`rushx changelog -m 'Create release branch and update SDK versions' --type none"`
+6. Merge the PR if everything looks fine, or notify feature owner if something looks not 100% correct.
 
 ### Step 1.4: Notify the release thread about api.md update and UI snapshot update (beta-release only)
 
@@ -100,7 +102,7 @@ This section describes what the workflow above does. Understanding the workflow 
 1. Create a Pull Request to merge the prerelease branch back into the base branch.
     1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
 1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but **it will never be merged back in the base branch**.
-  1. On the release branch will check what kind of release this is, beta, stable-minor, or stable-patch. based on the selection here it will update the sdk versions.
+  1. On the release branch will check what kind of release this is, beta-release-major, beta-release-minor, beta-release-patch , beta-release-beta, stable-major, stable-minor, stable-patch or stable-remove-beta-version based on the selection here it will update the sdk versions.
   2. The action will synchronize the package telemetry verions on the release branch.
   3. After making these changes it will make a PR from the pre-release branch back into `main`.
 
