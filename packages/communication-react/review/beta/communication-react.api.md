@@ -46,11 +46,7 @@ import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
-import { IModalStyleProps } from '@fluentui/react';
-import { IModalStyles } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
-import { IOverlayStyleProps } from '@fluentui/react';
-import { IOverlayStyles } from '@fluentui/react';
 import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
@@ -2772,23 +2768,6 @@ export interface ImageGalleryProps {
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
-    styles?: ImageGalleryStylesProps;
-}
-
-// @beta
-export interface ImageGalleryStylesProps extends BaseCustomStyles {
-    bodyContainer?: IStyle;
-    closeIcon?: IStyle;
-    controlBarContainer?: IStyle;
-    downloadButton?: IStyle;
-    downloadButtonIcon?: IStyle;
-    header?: IStyle;
-    image?: IStyle;
-    modal?: IStyleFunctionOrObject<IModalStyleProps, IModalStyles>;
-    overlay?: IStyleFunctionOrObject<IOverlayStyleProps, IOverlayStyles>;
-    smallDownloadButton?: IStyle;
-    title?: IStyle;
-    titleBarContainer?: IStyle;
 }
 
 // @beta
@@ -3871,7 +3850,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
