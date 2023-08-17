@@ -77,7 +77,7 @@ export const getMicrophones = (state: CallAdapterState): AudioDeviceInfo[] => st
  */
 export const getCameras = (state: CallAdapterState): VideoDeviceInfo[] => state.devices.cameras;
 
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */

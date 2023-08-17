@@ -7,7 +7,6 @@ import {
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
-  CapabilitiesChangeInfo,
   DeviceAccess,
   DominantSpeakersInfo,
   LatestMediaDiagnostics,
@@ -18,7 +17,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */

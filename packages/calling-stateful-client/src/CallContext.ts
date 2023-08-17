@@ -4,7 +4,6 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
-  CapabilitiesChangeInfo,
   DeviceAccess,
   DominantSpeakersInfo,
   ScalingMode,
@@ -13,7 +12,7 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */

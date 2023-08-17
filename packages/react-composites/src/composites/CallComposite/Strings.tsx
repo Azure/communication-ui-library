@@ -619,30 +619,30 @@ export interface CallCompositeStrings {
   /**
    * Notification message shown to the user when capability to turn video on is removed
    */
-  capabilityTurnVideoOnRemoved?: string;
+  capabilityTurnVideoOnLostDueToMeetingOption?: string;
   /* @conditional-compile-remove(capabilities) */
   /**
    * Notification message shown to the user when capability to turn video on is granted
    */
-  capabilityTurnVideoOnGranted?: string;
+  capabilityTurnVideoOnGrantedDueToMeetingOption?: string;
   /* @conditional-compile-remove(capabilities) */
   /**
    * Notification message shown to the user when capability to unmute mic is removed
    */
-  capabilityUnmuteMicRemoved?: string;
+  capabilityUnmuteMicLostDueToMeetingOption?: string;
   /* @conditional-compile-remove(capabilities) */
   /**
    * Notification message shown to the user when capability to unmute mic is granted
    */
-  capabilityUnmuteMicGranted?: string;
+  capabilityUnmuteMicGrantedDueToMeetingOption?: string;
   /* @conditional-compile-remove(capabilities) */
   /**
    * Notification message shown to the user when capability to share screen is removed
    */
-  capabilityShareScreenRemoved?: string;
+  capabilityShareScreenLostDueToRoleChangeToAttendee?: string;
   /* @conditional-compile-remove(capabilities) */
   /**
    * Notification message shown to the user when capability to share screen is granted
    */
-  capabilityShareScreenGranted?: string;
+  capabilityShareScreenGrantedDueToRoleChangeToPresenter?: string;
 }
