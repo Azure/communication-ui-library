@@ -133,8 +133,8 @@ export const getControlledTheme = (choice: string): PartialTheme => {
   return DefaultTheme;
 };
 
-const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo'] as const;
-const OVERFLOW_GALLERY_LAYOUTS = ['HorizontalBottom', 'VerticalRight'] as const;
+const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo', 'speaker'] as const;
+const OVERFLOW_GALLERY_LAYOUTS = ['HorizontalBottom', 'VerticalRight', 'HorizontalTop'] as const;
 
 export const orientationArg = {
   options: ['landscape', 'portrait'],
