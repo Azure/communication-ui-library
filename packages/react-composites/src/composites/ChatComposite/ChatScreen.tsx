@@ -261,10 +261,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const handleOnDownloadImage = (blobUrl: string, filename: string): void => {
-    // Place holder function for download handler
-    console.log(blobUrl, filename);
-  };
+  const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
+    // Create a new anchor element
+    const a = document.createElement('a');
+    // Set the href and download attributes for the anchor element
+    a.href = imageUrl;
+    a.download = saveAsName || 'download';
+    // Programmatically click the anchor element to trigger the download
+    a.click();
+    a.remove();
+  }, []);
 
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
@@ -353,7 +359,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           isOpen={galleryImages.length > 0}
           images={galleryImages}
           onDismiss={() => setGalleryImages([])}
-          onImageDownloadButtonClicked={handleOnDownloadImage}
+          onImageDownloadButtonClicked={onImageDownloadButtonClicked}
         />
       }
     </Stack>

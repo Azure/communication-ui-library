@@ -4,6 +4,8 @@
 import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../../types';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '../../VideoGallery';
 
 /**
  * Arguments used to determine a {@link OrganizedParticipantsResult}
@@ -17,6 +19,8 @@ export interface OrganizedParticipantsArgs {
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
   pinnedParticipantUserIds?: string[];
+  /* @conditional-compile-remove(gallery-layouts) */
+  layout?: VideoGalleryLayout;
 }
 
 /**
@@ -41,20 +45,40 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxRemoteVideoStreams,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
-    pinnedParticipantUserIds = []
+    pinnedParticipantUserIds = [],
+    /* @conditional-compile-remove(gallery-layouts) */
+    layout
   } = props;
 
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
+
+  const participantsToSortTrampoline = (): VideoGalleryRemoteParticipant[] => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    return layout !== 'speaker' ? videoParticipants : remoteParticipants;
+    return videoParticipants;
+  };
 
   visibleGridParticipants.current =
     pinnedParticipantUserIds.length > 0 || isScreenShareActive
       ? []
       : smartDominantSpeakerParticipants({
-          participants: videoParticipants,
+          participants: participantsToSortTrampoline(),
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
           maxDominantSpeakers: maxRemoteVideoStreams as number
         }).slice(0, maxRemoteVideoStreams);
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  const dominantSpeakerToGrid =
+    layout === 'speaker'
+      ? dominantSpeakers && dominantSpeakers[0]
+        ? visibleGridParticipants.current.filter((p) => p.userId === dominantSpeakers[0])
+        : [visibleGridParticipants.current[0]]
+      : [];
+  /* @conditional-compile-remove(gallery-layouts) */
+  if (dominantSpeakerToGrid[0]) {
+    visibleGridParticipants.current = dominantSpeakerToGrid;
+  }
 
   const visibleGridParticipantsSet = new Set(visibleGridParticipants.current.map((p) => p.userId));
 
