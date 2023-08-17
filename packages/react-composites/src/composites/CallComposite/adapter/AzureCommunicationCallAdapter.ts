@@ -35,6 +35,8 @@ import {
   VideoOptions,
   Call
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
 import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
@@ -45,7 +47,7 @@ import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/c
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(close-captions) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -66,6 +68,8 @@ import {
   CallAdapter,
   JoinCallOptions
 } from './CallAdapter';
+/* @conditional-compile-remove(close-captions) */
+import { CaptionLanguageChangedListener, SpokenLanguageChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
@@ -80,8 +84,6 @@ import {
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, IsCallEndedPage, isCameraOn } from '../utils';
-/* @conditional-compile-remove(close-captions) */
-import { _isTeamsMeetingCall } from '@internal/calling-stateful-client';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
@@ -987,6 +989,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
 
@@ -997,20 +1003,23 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private subscribeToCaptionEvents(): void {
-    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
-      this.call?.feature(Features.TeamsCaptions).on('captionsReceived', this.captionsReceived.bind(this));
-      this.call?.feature(Features.TeamsCaptions).on('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    if (this.call && this.call.state === 'Connected' && this.context.getState().isTeamsCall) {
+      const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
+      captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
+      captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      captionsFeature.on('CaptionLanguageChanged', this.spokenLanguageChanged.bind(this));
+      captionsFeature.on('SpokenLanguageChanged', this.captionLanguageChanged.bind(this));
     }
   }
 
   /* @conditional-compile-remove(close-captions) */
   private unsubscribeFromCaptionEvents(): void {
-    if (this.call && this.call.state === 'Connected' && _isTeamsMeetingCall(this.call)) {
-      this._call?.feature(Features.TeamsCaptions).off('captionsReceived', this.captionsReceived.bind(this));
-      this._call
-        ?.feature(Features.TeamsCaptions)
-        .off('isCaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+    if (this.call && this.call.state === 'Connected' && this.context.getState().isTeamsCall) {
+      const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
+      captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
+      captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      captionsFeature.off('CaptionLanguageChanged', this.spokenLanguageChanged.bind(this));
+      captionsFeature.off('SpokenLanguageChanged', this.captionLanguageChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
   }
@@ -1086,8 +1095,25 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(close-captions) */
   private isCaptionsActiveChanged(): void {
+    const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
     this.emitter.emit('isCaptionsActiveChanged', {
-      isActive: this.call?.feature(Features.TeamsCaptions).isCaptionsFeatureActive
+      isActive: captionsFeature.isCaptionsFeatureActive
+    });
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  private spokenLanguageChanged(): void {
+    const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
+    this.emitter.emit('SpokenLanguageChanged', {
+      activeSpokenLanguage: captionsFeature.activeSpokenLanguage
+    });
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  private captionLanguageChanged(): void {
+    const captionsFeature = this.call?.feature(Features.Captions) as unknown as TeamsCaptions;
+    this.emitter.emit('CaptionLanguageChanged', {
+      activeCaptionLanguage: captionsFeature.activeCaptionLanguage
     });
   }
 
@@ -1140,6 +1166,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
 

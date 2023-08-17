@@ -28,6 +28,8 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier }
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */
 import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -509,19 +511,23 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).startCaptions(options);
+      const captionsFeature = call?.feature(Features.Captions) as unknown as TeamsCaptions;
+      await captionsFeature.startCaptions(options);
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).stopCaptions();
+      const captionsFeature = call?.feature(Features.Captions) as unknown as TeamsCaptions;
+      await captionsFeature.stopCaptions();
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions) as unknown as TeamsCaptions;
+      await captionsFeature.setSpokenLanguage(language);
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions) as unknown as TeamsCaptions;
+      await captionsFeature.setCaptionLanguage(language);
     };
 
     return {

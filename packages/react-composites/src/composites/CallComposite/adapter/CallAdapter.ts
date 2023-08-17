@@ -309,6 +309,22 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
+/* @conditional-compile-remove(close-captions) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ *
+ * @beta
+ */
+export type CaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
+ *
+ * @beta
+ */
+export type SpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
+
 /* @conditional-compile-remove(call-transfer) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
