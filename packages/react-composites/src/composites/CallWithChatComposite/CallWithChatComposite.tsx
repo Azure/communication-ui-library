@@ -42,6 +42,8 @@ import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButt
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -157,6 +159,16 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Options for controlling the starting layout of the composite's video gallery
+   */
+  galleryOptions?: {
+    /**
+     * Layout for the gallery when the call starts
+     */
+    layout?: VideoGalleryLayout;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -181,6 +193,10 @@ type CallWithChatScreenProps = {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  galleryOptions?: {
+    layout?: VideoGalleryLayout;
+  };
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -351,7 +367,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(call-readiness) */
       onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(unsupported-browser) */
-      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
+      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
+      /* @conditional-compile-remove(gallery-layouts) */
+      galleryOptions: props.galleryOptions
     }),
     [
       props.callControls,
@@ -366,7 +384,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(call-readiness) */
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
-      props.onPermissionsTroubleshootingClick
+      props.onPermissionsTroubleshootingClick,
+      /* @conditional-compile-remove(gallery-layouts) */
+      props.galleryOptions
     ]
   );
 

@@ -31,6 +31,13 @@ import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 import { Attach20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(gallery-layouts) */
+import {
+  PersonCircle20Regular,
+  WindowHeaderHorizontal20Regular,
+  TableSimple20Regular,
+  PictureInPicture20Regular
+} from '@fluentui/react-icons';
 
 const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
 
@@ -78,7 +85,15 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
   /* @conditional-compile-remove(gallery-layouts) */
-  GalleryOptions: <Grid20Regular />
+  GalleryOptions: <Grid20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  SpeakerGalleryLayout: <PersonCircle20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  DefaultGalleryLayout: <TableSimple20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  FloatingLocalVideoGalleryLayout: <PictureInPicture20Regular />
 };
 
 /**
@@ -192,6 +207,14 @@ export type CallCompositeIcons = {
   RemoveVideoBackgroundEffect?: JSX.Element;
   /* @conditional-compile-remove(gallery-layouts) */
   GalleryOptions?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  SpeakerGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  FloatingLocalVideoGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  DefaultGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  OverflowGalleryTop?: JSX.Element;
 };
 
 /**
