@@ -356,8 +356,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             isCaptionsSupported={props.isCaptionsSupported}
                             /* @conditional-compile-remove(close-captions) */
                             onCaptionsSettingsClick={openCaptionsSettingsModal}
+                            /* @conditional-compile-remove(gallery-layouts) */
                             onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                            /* @conditional-compile-remove(gallery-layouts) */
                             onUserSetGalleryLayout={props.onUserSetGalleryLayout}
+                            /* @conditional-compile-remove(gallery-layouts) */
                             userSetGalleryLayout={props.userSetGalleryLayout}
                           />
                         )
