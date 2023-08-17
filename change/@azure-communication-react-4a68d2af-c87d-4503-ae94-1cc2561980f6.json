@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Removes the role hint and permissions provider from the CallAdapter state allowing for simpler use of the CallComposite with a rooms call",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
