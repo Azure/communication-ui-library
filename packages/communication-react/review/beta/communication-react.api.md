@@ -669,6 +669,7 @@ export interface CallCompositeStrings {
     moreButtonGalleryControlLabel?: string;
     moreButtonGalleryDefaultLayoutLabel?: string;
     moreButtonGalleryFloatingLocalLayoutLabel?: string;
+    moreButtonGalleryFocusedContentLayoutLabel?: string;
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     mutedMessage: string;

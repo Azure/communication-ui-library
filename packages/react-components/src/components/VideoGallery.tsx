@@ -38,6 +38,7 @@ import { useId } from '@fluentui/react-hooks';
 import { VerticalGalleryStyles } from './VerticalGallery';
 /* @conditional-compile-remove(gallery-layouts) */
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
+/* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 
 /**

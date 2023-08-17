@@ -38,8 +38,6 @@ import { _startCaptionsButtonSelector } from '@internal/calling-component-bindin
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(gallery-layouts) */
-import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 
 /** @private */
 export interface DesktopMoreButtonProps extends ControlBarButtonProps {
@@ -79,11 +77,13 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
   /* @conditional-compile-remove(gallery-layouts) */
-  const adapter = useAdapter();
-  /* @conditional-compile-remove(gallery-layouts) */
-  const isScreenSharingOn = adapter.getState().call?.isScreenSharingOn;
-  /* @conditional-compile-remove(gallery-layouts) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [focusedContentOn, setFocusedContentOn] = useState<boolean>(false);
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [previousLayout, setPreviousLayout] = useState<VideoGalleryLayout>(
+    props.userSetGalleryLayout ?? 'floatingLocalVideo'
+  );
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
@@ -230,6 +230,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: props.userSetGalleryLayout === 'speaker',
             onClick: () => {
               props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
+              setFocusedContentOn(false);
             },
             iconProps: {
               iconName: 'SpeakerGalleryLayout',
@@ -246,6 +247,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: props.userSetGalleryLayout === 'floatingLocalVideo',
             onClick: () => {
               props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+              setFocusedContentOn(false);
             },
             iconProps: {
               iconName: 'FloatingLocalVideoGalleryLayout',
@@ -262,6 +264,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: props.userSetGalleryLayout === 'default',
             onClick: () => {
               props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+              setFocusedContentOn(false);
             },
             iconProps: {
               iconName: 'DefaultGalleryLayout',
@@ -275,15 +278,21 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             itemProps: {
               styles: buttonFlyoutIncreasedSizeStyles
             },
-            isChecked: props.userSetGalleryLayout === 'focusedContent' && isScreenSharingOn,
+            isChecked: focusedContentOn,
             onClick: () => {
-              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+              if (focusedContentOn === false) {
+                setPreviousLayout(props.userSetGalleryLayout ?? 'floatingLocalVideo');
+                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+                setFocusedContentOn(true);
+              } else {
+                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout(previousLayout);
+                setFocusedContentOn(false);
+              }
             },
             iconProps: {
               iconName: 'FocusedContentGalleryLayout',
               styles: { root: { lineHeight: 0 } }
-            },
-            disabled: !isScreenSharingOn
+            }
           },
           { key: 'dividerLayoutsKey', itemType: ContextualMenuItemType.Divider },
           {

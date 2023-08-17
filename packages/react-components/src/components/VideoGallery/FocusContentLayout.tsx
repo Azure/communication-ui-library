@@ -2,7 +2,6 @@
 // Licensed under the MIT license.
 
 import { LayerHost, Stack, mergeStyles } from '@fluentui/react';
-import { LocalVideoTileSize } from '../VideoGallery';
 import { LayoutProps } from './Layout';
 import React from 'react';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
@@ -23,11 +22,6 @@ export interface FocusedContentLayoutProps extends LayoutProps {
    * Height of parent element
    */
   parentHeight?: number;
-  /* @conditional-compile-remove(click-to-call) */
-  /**
-   * Local video tile mode
-   */
-  localVideoTileSize?: LocalVideoTileSize;
 }
 
 /**
