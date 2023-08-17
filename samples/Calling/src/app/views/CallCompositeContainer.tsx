@@ -26,9 +26,6 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       onNetworkingTroubleShootingClick,
       callControls: {
         legacyControlBarExperience: false
-      },
-      galleryOptions: {
-        layout: 'speaker'
       }
     }),
     []
