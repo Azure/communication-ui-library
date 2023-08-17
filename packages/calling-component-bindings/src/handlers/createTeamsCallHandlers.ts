@@ -22,7 +22,6 @@ import {
   CommonCallingHandlers,
   VideoBackgroundEffectsDependency
 } from './createCommonHandlers';
-
 /**
  * Object containing all the teams call handlers required for calling components.
  *
