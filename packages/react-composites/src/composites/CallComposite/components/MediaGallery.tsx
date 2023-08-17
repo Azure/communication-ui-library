@@ -142,7 +142,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     return containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
       ? 'VerticalRight'
       : 'HorizontalBottom';
-  }, [props.userSetOverflowGalleryPosition, containerWidth, containerHeight]);
+  }, [
+    /* @conditional-compile-remove(gallery-layouts) */ props.userSetOverflowGalleryPosition,
+    containerWidth,
+    containerHeight
+  ]);
 
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
