@@ -136,7 +136,7 @@ test.describe('VideoGallery tests', async () => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
     vasily.isSpeaking = true;
-    const participants = [vasily, paul];
+    const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
 
     page.goto(
