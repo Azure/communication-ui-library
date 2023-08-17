@@ -794,7 +794,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(close-captions) */
-  public clearCaption(callId: string): void {
+  public clearCaptions(callId: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {

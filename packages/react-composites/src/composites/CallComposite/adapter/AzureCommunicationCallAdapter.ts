@@ -66,13 +66,12 @@ import {
   CallAdapterCallEndedEvent,
   CallAdapter,
   JoinCallOptions,
-  CaptionLanguageChangedListener,
-  SpokenLanguageChangedListener
 } from './CallAdapter';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
+import { CaptionsReceivedListener, IsCaptionsActiveChangedListener,  CaptionLanguageChangedListener,
+  SpokenLanguageChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import {
   VideoBackgroundImage,
