@@ -53,7 +53,7 @@ export interface ImageGalleryProps {
   /**
    * Boolean that controls whether the modal is displayed.
    */
-  isOpen?: boolean;
+  isOpen: boolean;
   /**
    * Array of images used to populate the ImageGallery
    */
