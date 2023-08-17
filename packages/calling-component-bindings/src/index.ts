@@ -21,11 +21,7 @@ export type {
 } from './captionsSelector';
 
 /* @conditional-compile-remove(close-captions) */
-export {
-  _captionsBannerSelector,
-  _startCaptionsButtonSelector,
- _captionSettingsSelector
-} from './captionsSelector';
+export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */

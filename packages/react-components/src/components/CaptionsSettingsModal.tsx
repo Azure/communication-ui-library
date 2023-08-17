@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React, { useCallback } from 'react';
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import {
   IModalStyles,
   Modal,
@@ -27,7 +27,11 @@ import {
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
-import { AvailableSpokenLanguageStrings , AvailableCaptionLanguageStrings, _spokenLanguageToCaptionLanguage } from '../types';
+import {
+  AvailableSpokenLanguageStrings,
+  AvailableCaptionLanguageStrings,
+  _spokenLanguageToCaptionLanguage
+} from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
@@ -52,19 +56,19 @@ export interface _CaptionsSettingsModalStrings {
  */
 export interface _CaptionsSettingsModalProps {
   supportedSpokenLanguages: string[];
-supportedCaptionLanguages: string[];
+  supportedCaptionLanguages: string[];
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
   onStartCaptions: (options?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
-  currentCaptionLanguage:string;
+  currentCaptionLanguage: string;
   availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
-  availableCaptionLanguageStrings?:AvailableCaptionLanguageStrings
+  availableCaptionLanguageStrings?: AvailableCaptionLanguageStrings;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
   onDismissCaptionsSettings?: () => void;
-  changeCaptionLanguage?: boolean
+  changeCaptionLanguage?: boolean;
 }
 
 /**
@@ -91,17 +95,33 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
   const theme = useTheme();
 
+  const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
+
   const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState<IDropdownOption>({
     key: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage,
     text: currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
   });
 
-
   const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<IDropdownOption>({
-    key: currentCaptionLanguage !== '' ? currentCaptionLanguage : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
-    text: currentCaptionLanguage !== '' ? currentCaptionLanguage : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
+    key:
+      currentCaptionLanguage !== ''
+        ? currentCaptionLanguage
+        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
+    text:
+      currentCaptionLanguage !== ''
+        ? currentCaptionLanguage
+        : _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
   });
 
+  useEffect(() => {
+    // set spoken language when start captions with a spoken language specified.
+    // this is to fix the bug when a second user starts captions with a new spoken language, captions bot ignore that spoken language
+    if (isCaptionsFeatureActive && !hasSetSpokenLanguage) {
+      onSetSpokenLanguage(selectedSpokenLanguage.key.toString());
+      // we only need to call set spoken language once when first starting captions
+      setHasSetSpokenLanguage(true);
+    }
+  }, [isCaptionsFeatureActive, onSetSpokenLanguage, selectedSpokenLanguage.key, hasSetSpokenLanguage]);
 
   const onDismiss = useCallback((): void => {
     if (onDismissCaptionsSettings) {
@@ -111,15 +131,23 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
 
   const onConfirm = useCallback(async (): Promise<void> => {
     const spokenLanguageCode = selectedSpokenLanguage.key.toString();
-    const captionLanguageCode = selectedCaptionLanguage.key.toString()
+    const captionLanguageCode = selectedCaptionLanguage.key.toString();
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(spokenLanguageCode);
-      onSetCaptionLanguage(captionLanguageCode)
+      onSetCaptionLanguage(captionLanguageCode);
     } else {
       await onStartCaptions({ spokenLanguage: spokenLanguageCode });
     }
     onDismiss();
-  }, [onDismiss, isCaptionsFeatureActive, onSetSpokenLanguage, onSetCaptionLanguage, onStartCaptions, selectedSpokenLanguage.key, selectedCaptionLanguage.key]);
+  }, [
+    onDismiss,
+    isCaptionsFeatureActive,
+    onSetSpokenLanguage,
+    onSetCaptionLanguage,
+    onStartCaptions,
+    selectedSpokenLanguage.key,
+    selectedCaptionLanguage.key
+  ]);
 
   const spokenLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
     return supportedSpokenLanguages.map((languageCode) => {
@@ -130,7 +158,6 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     });
   }, [supportedSpokenLanguages, availableSpokenLanguageStrings]);
 
-
   const captionLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
     return supportedCaptionLanguages.map((languageCode) => {
       return {
@@ -140,13 +167,19 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     });
   }, [supportedCaptionLanguages, availableCaptionLanguageStrings]);
 
-  const onSpokenLanguageChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption | undefined): void => {
+  const onSpokenLanguageChange = (
+    event: React.FormEvent<HTMLDivElement>,
+    option: IDropdownOption | undefined
+  ): void => {
     if (option) {
       setSelectedSpokenLanguage(option);
     }
   };
 
-  const onCaptionLanguageChange = (event: React.FormEvent<HTMLDivElement>, option: IDropdownOption | undefined): void => {
+  const onCaptionLanguageChange = (
+    event: React.FormEvent<HTMLDivElement>,
+    option: IDropdownOption | undefined
+  ): void => {
     if (option) {
       setSelectedCaptionLanguage(option);
     }
@@ -160,8 +193,11 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   );
 
   const CaptionsSettingsComponent = useCallback((): JSX.Element => {
-    const placeholderSpokenLanguage = currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage
-    const placeholderCaptionLanguage = currentCaptionLanguage !== '' ? currentCaptionLanguage : _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage]
+    const placeholderSpokenLanguage = currentSpokenLanguage !== '' ? currentSpokenLanguage : defaultSpokenLanguage;
+    const placeholderCaptionLanguage =
+      currentCaptionLanguage !== ''
+        ? currentCaptionLanguage
+        : _spokenLanguageToCaptionLanguage[placeholderSpokenLanguage];
     return (
       <Stack>
         <Dropdown
@@ -174,33 +210,31 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
           styles={dropdownStyles}
         />
         <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsSpokenLanguageDropdownInfoText}</Text>
-        {changeCaptionLanguage && 
-        <>
-
-<Dropdown
-         label={strings?.captionsSettingsCaptionLanguageDropdownLabel}
-         selectedKey={selectedCaptionLanguage ? selectedCaptionLanguage.key : undefined}
-         onChange={onCaptionLanguageChange}
-         calloutProps={calloutProps}
-         placeholder={placeholderCaptionLanguage}
-         options={captionLanguageDropdownOptions}
-         styles={dropdownStyles}
-       />
-         <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsCaptionLanguageDropdownInfoText}</Text>
-        </>
-        
-        
-        }
-       
+        {changeCaptionLanguage && (
+          <>
+            <Dropdown
+              label={strings?.captionsSettingsCaptionLanguageDropdownLabel}
+              selectedKey={selectedCaptionLanguage ? selectedCaptionLanguage.key : undefined}
+              onChange={onCaptionLanguageChange}
+              calloutProps={calloutProps}
+              placeholder={placeholderCaptionLanguage}
+              options={captionLanguageDropdownOptions}
+              styles={dropdownStyles}
+            />
+            <Text className={dropdownInfoTextStyle(theme)}>
+              {strings?.captionsSettingsCaptionLanguageDropdownInfoText}
+            </Text>
+          </>
+        )}
       </Stack>
     );
   }, [
     calloutProps,
     currentSpokenLanguage,
     currentCaptionLanguage,
-   spokenLanguageDropdownOptions,
-   captionLanguageDropdownOptions,
-   selectedCaptionLanguage,
+    spokenLanguageDropdownOptions,
+    captionLanguageDropdownOptions,
+    selectedCaptionLanguage,
     selectedSpokenLanguage,
     strings?.captionsSettingsSpokenLanguageDropdownInfoText,
     strings?.captionsSettingsCaptionLanguageDropdownLabel,

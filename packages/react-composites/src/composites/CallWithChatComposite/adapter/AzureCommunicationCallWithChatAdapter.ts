@@ -87,7 +87,12 @@ import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { IsCaptionsActiveChangedListener, CaptionsReceivedListener,CaptionLanguageChangedListener,SpokenLanguageChangedListener } from '../../CallComposite/adapter/CallAdapter';
+import {
+  IsCaptionsActiveChangedListener,
+  CaptionsReceivedListener,
+  CaptionLanguageChangedListener,
+  SpokenLanguageChangedListener
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
@@ -523,10 +528,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-   /* @conditional-compile-remove(close-captions) */
-   on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
-   /* @conditional-compile-remove(close-captions) */
-   on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -569,8 +574,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'isCaptionsActiveChanged':
         this.callAdapter.on('isCaptionsActiveChanged', listener);
         break;
-       /* @conditional-compile-remove(close-captions) */
-       case 'CaptionLanguageChanged':
+      /* @conditional-compile-remove(close-captions) */
+      case 'CaptionLanguageChanged':
         this.callAdapter.on('CaptionLanguageChanged', listener);
         break;
       /* @conditional-compile-remove(close-captions) */
@@ -671,8 +676,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'isCaptionsActiveChanged':
         this.callAdapter.off('isCaptionsActiveChanged', listener);
         break;
-       /* @conditional-compile-remove(close-captions) */
-       case 'CaptionLanguageChanged':
+      /* @conditional-compile-remove(close-captions) */
+      case 'CaptionLanguageChanged':
         this.callAdapter.off('CaptionLanguageChanged', listener);
         break;
       /* @conditional-compile-remove(close-captions) */

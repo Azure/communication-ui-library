@@ -73,8 +73,20 @@ export type _CaptionSettingsSelector = (
  * @internal
  */
 export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.createSelector(
-  [getSupportedCaptionLanguages, getCurrentCaptionLanguage, getSupportedSpokenLanguages, getCurrentSpokenLanguage, getCaptionsStatus],
-  (supportedCaptionLanguages, currentCaptionLanguage, supportedSpokenLanguages, currentSpokenLanguage,isCaptionsFeatureActive) => {
+  [
+    getSupportedCaptionLanguages,
+    getCurrentCaptionLanguage,
+    getSupportedSpokenLanguages,
+    getCurrentSpokenLanguage,
+    getCaptionsStatus
+  ],
+  (
+    supportedCaptionLanguages,
+    currentCaptionLanguage,
+    supportedSpokenLanguages,
+    currentSpokenLanguage,
+    isCaptionsFeatureActive
+  ) => {
     return {
       supportedCaptionLanguages: supportedCaptionLanguages ?? [],
       currentCaptionLanguage: currentCaptionLanguage ?? '',

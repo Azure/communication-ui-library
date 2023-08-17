@@ -46,7 +46,7 @@ import { CaptionSettingsDrawer } from './CaptionSettingsDrawer';
 /* @conditional-compile-remove(close-captions) */
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 /* @conditional-compile-remove(close-captions) */
-import {  _spokenLanguageToCaptionLanguage} from '@internal/react-components'
+import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -90,7 +90,7 @@ export interface MoreDrawerStrings {
    */
   spokenLanguageMenuTitle: string;
 
-    /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(close-captions) */
   /**
    * Label for captionLanguage drawerMenuItem
    *
@@ -299,13 +299,15 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(close-captions) */
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
-    captionSettingsProp.currentSpokenLanguage !== ''? captionSettingsProp.currentSpokenLanguage : 'en-us'
+    captionSettingsProp.currentSpokenLanguage !== '' ? captionSettingsProp.currentSpokenLanguage : 'en-us'
   );
 
-    /* @conditional-compile-remove(close-captions) */
-    const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
-      captionSettingsProp.currentCaptionLanguage !== ''? captionSettingsProp.currentCaptionLanguage : _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
-    );
+  /* @conditional-compile-remove(close-captions) */
+  const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
+    captionSettingsProp.currentCaptionLanguage !== ''
+      ? captionSettingsProp.currentCaptionLanguage
+      : _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
+  );
 
   /* @conditional-compile-remove(close-captions) */
   const onToggleChange = useCallback(async () => {
@@ -322,8 +324,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   if (props.isCaptionsSupported) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
 
-    const spokenLanguageString =  supportedSpokenLanguageStrings ? supportedSpokenLanguageStrings[currentSpokenLanguage] : currentSpokenLanguage
-    const captionLanguageString = supportedCaptionLanguageStrings ? supportedCaptionLanguageStrings[currentCaptionLanguage] : currentCaptionLanguage
+    const spokenLanguageString = supportedSpokenLanguageStrings
+      ? supportedSpokenLanguageStrings[currentSpokenLanguage]
+      : currentSpokenLanguage;
+    const captionLanguageString = supportedCaptionLanguageStrings
+      ? supportedCaptionLanguageStrings[currentCaptionLanguage]
+      : currentCaptionLanguage;
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -426,21 +432,23 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           selectLanguage={setCurrentSpokenLanguage}
           setCurrentLanguage={captionSettingsHandlers.onSetSpokenLanguage}
           currentLanguage={currentSpokenLanguage}
-          strings={{menuTitle: props.strings.spokenLanguageMenuTitle}}
+          strings={{ menuTitle: props.strings.spokenLanguageMenuTitle }}
           supportedLanguageStrings={supportedSpokenLanguageStrings}
         />
       )}
       {isCaptionLanguageDrawerOpen && props.isCaptionsSupported && (
         <CaptionSettingsDrawer
-        onLightDismiss={props.onLightDismiss}
-       selectLanguage={setCurrentCaptionLanguage}
-        setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}
-        currentLanguage={currentCaptionLanguage}
-        strings={{menuTitle: props.strings.captionLanguageMenuTitle}}
-        supportedLanguageStrings={supportedCaptionLanguageStrings}
+          onLightDismiss={props.onLightDismiss}
+          selectLanguage={setCurrentCaptionLanguage}
+          setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}
+          currentLanguage={currentCaptionLanguage}
+          strings={{ menuTitle: props.strings.captionLanguageMenuTitle }}
+          supportedLanguageStrings={supportedCaptionLanguageStrings}
         />
       )}
-      {!isSpokenLanguageDrawerOpen && !isCaptionLanguageDrawerOpen && <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />}
+      {!isSpokenLanguageDrawerOpen && !isCaptionLanguageDrawerOpen && (
+        <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />
+      )}
     </>
   );
 

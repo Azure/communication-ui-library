@@ -85,7 +85,7 @@ export const availableSpokenLanguageStrings = [
   'sk-sk',
   'zh-tw'
 ];
-export const availableCaptionLanguageStrings= [
+export const availableCaptionLanguageStrings = [
   'ar',
   'da',
   'de',
@@ -117,7 +117,8 @@ export const availableCaptionLanguageStrings= [
   'el',
   'hu',
   'ro',
-  'sk']
+  'sk'
+];
 export const captionsFeatureState = {
   captions: [
     {

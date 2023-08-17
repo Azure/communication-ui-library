@@ -53,7 +53,12 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener, CaptionLanguageChangedListener, SpokenLanguageChangedListener } from './CallAdapter';
+export type {
+  CaptionsReceivedListener,
+  IsCaptionsActiveChangedListener,
+  CaptionLanguageChangedListener,
+  SpokenLanguageChangedListener
+} from './CallAdapter';
 
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferRequestedListener } from './CallAdapter';

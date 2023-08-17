@@ -7,7 +7,11 @@ import { useMemo, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsSettingsModal, AvailableSpokenLanguageStrings, AvailableCaptionLanguageStrings } from '@internal/react-components';
+import {
+  _CaptionsSettingsModal,
+  AvailableSpokenLanguageStrings,
+  AvailableCaptionLanguageStrings
+} from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import {
   _DrawerMenu as DrawerMenu,
@@ -34,7 +38,9 @@ export const CaptionSettingsDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */ currentLanguage: string;
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
   /* @conditional-compile-remove(close-captions) */ strings?: CaptionSettingsDrawerStrings;
-  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?: AvailableSpokenLanguageStrings|AvailableCaptionLanguageStrings
+  /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?:
+    | AvailableSpokenLanguageStrings
+    | AvailableCaptionLanguageStrings;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();
@@ -49,17 +55,13 @@ export const CaptionSettingsDrawer = (props: {
 
   /* @conditional-compile-remove(close-captions) */
   const drawerItems: DrawerMenuItemProps[] = useMemo(() => {
-    return Object.keys(props.supportedLanguageStrings ??[]).map((languageCode) => ({
+    return Object.keys(props.supportedLanguageStrings ?? []).map((languageCode) => ({
       itemKey: languageCode,
-      text: props.supportedLanguageStrings? props.supportedLanguageStrings[languageCode] : languageCode,
+      text: props.supportedLanguageStrings ? props.supportedLanguageStrings[languageCode] : languageCode,
       onItemClick: () => onDrawerItemClick(languageCode),
       secondaryIconProps: props.currentLanguage === languageCode ? { iconName: 'Accept' } : undefined
     }));
-  }, [
-    props.currentLanguage,
-    props.supportedLanguageStrings,
-    onDrawerItemClick
-  ]);
+  }, [props.currentLanguage, props.supportedLanguageStrings, onDrawerItemClick]);
 
   /* @conditional-compile-remove(close-captions) */
   return (

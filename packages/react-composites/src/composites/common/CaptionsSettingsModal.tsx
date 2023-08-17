@@ -16,13 +16,13 @@ import { useHandlers } from '../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(close-captions) */
-import { _captionSettingsSelector} from '@internal/calling-component-bindings';
+import { _captionSettingsSelector } from '@internal/calling-component-bindings';
 
 /** @private */
 export const CaptionsSettingsModal = (props: {
   /* @conditional-compile-remove(close-captions) */ showCaptionsSettingsModal: boolean;
   /* @conditional-compile-remove(close-captions) */ onDismissCaptionsSettings: () => void;
-  /* @conditional-compile-remove(close-captions) */ changeCaptionLanguage?: boolean
+  /* @conditional-compile-remove(close-captions) */ changeCaptionLanguage?: boolean;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const CaptionsSettingsModalProps = useAdaptedSelector(_captionSettingsSelector);
@@ -46,9 +46,9 @@ export const CaptionsSettingsModal = (props: {
   const availableSpokenLanguageStrings: AvailableSpokenLanguageStrings | undefined =
     strings.availableSpokenLanguageStrings;
 
-     /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(close-captions) */
   const availableCaptionLanguageStrings: AvailableCaptionLanguageStrings | undefined =
-  strings.availableCaptionLanguageStrings;
+    strings.availableCaptionLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   return (

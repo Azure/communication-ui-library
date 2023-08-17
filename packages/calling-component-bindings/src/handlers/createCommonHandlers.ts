@@ -512,22 +512,22 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions
+      const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.startCaptions(options);
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions
+      const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.stopCaptions();
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions
+      const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.setSpokenLanguage(language);
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
-      const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions
+      const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
 

@@ -485,7 +485,7 @@ export interface CallCompositeStrings {
    * text under captions setting dropdown indicating what the dropdown is for
    */
   captionsSettingsSpokenLanguageDropdownInfoText?: string;
-   /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
@@ -525,7 +525,7 @@ export interface CallCompositeStrings {
    * list of key value pairs that pairs spoken language code to language names
    */
   availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
-   /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(close-captions) */
   /**
    * list of key value pairs that pairs caption language code to language names
    */

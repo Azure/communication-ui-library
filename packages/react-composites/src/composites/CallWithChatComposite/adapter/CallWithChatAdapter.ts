@@ -37,7 +37,11 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
-import { CaptionLanguageChangedListener, JoinCallOptions, SpokenLanguageChangedListener } from '../../CallComposite/adapter/CallAdapter';
+import {
+  CaptionLanguageChangedListener,
+  JoinCallOptions,
+  SpokenLanguageChangedListener
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -462,10 +466,10 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-   /* @conditional-compile-remove(close-captions) */
-   on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
-   /* @conditional-compile-remove(close-captions) */
-   on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -482,10 +486,10 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-   /* @conditional-compile-remove(close-captions) */
-   off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
-   /* @conditional-compile-remove(close-captions) */
-   off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'CaptionLanguageChanged', listener: CaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'SpokenLanguageChanged', listener: SpokenLanguageChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;

@@ -50,7 +50,7 @@ export const dropdownInfoTextStyle = (theme: Theme): string =>
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(16),
     color: theme.palette.neutralSecondary,
-    paddingBottom: _pxToRem(24),
+    paddingBottom: _pxToRem(24)
   });
 
 /**

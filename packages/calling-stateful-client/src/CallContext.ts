@@ -785,8 +785,12 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        const currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage
-        if (caption.captionLanguage.toUpperCase() === currentCaptionLanguage.toUpperCase() || currentCaptionLanguage === '' || currentCaptionLanguage === undefined){
+        const currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
+        if (
+          caption.captionLanguage.toUpperCase() === currentCaptionLanguage.toUpperCase() ||
+          currentCaptionLanguage === '' ||
+          currentCaptionLanguage === undefined
+        ) {
           this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
         }
       }
