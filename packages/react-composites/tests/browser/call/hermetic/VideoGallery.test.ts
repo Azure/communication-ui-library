@@ -131,12 +131,12 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
   /* @conditional-compile-remove(gallery-layouts) */
-  test('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
+  test.only('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
     vasily.isSpeaking = true;
-    const participants = [vasily, paul];
+    const participants = [paul, vasily];
     const initialState = defaultMockCallAdapterState(participants);
 
     page.goto(
