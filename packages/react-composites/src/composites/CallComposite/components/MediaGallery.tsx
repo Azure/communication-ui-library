@@ -133,15 +133,15 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
       : { kind: 'contextual' };
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
-  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(vertical-gallery) */
   const overflowGalleryPosition = useMemo(() => {
-    if (props.userSetOverflowGalleryPosition === 'Responsive') {
-      return containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
-        ? 'VerticalRight'
-        : 'HorizontalBottom';
-    } else {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (props.userSetOverflowGalleryPosition === 'HorizontalTop') {
       return props.userSetOverflowGalleryPosition;
     }
+    return containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
+      ? 'VerticalRight'
+      : 'HorizontalBottom';
   }, [props.userSetOverflowGalleryPosition, containerWidth, containerHeight]);
 
   const VideoGalleryMemoized = useMemo(() => {
@@ -191,7 +191,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     userRole,
     /* @conditional-compile-remove(rooms) */
     isRoomsCall,
-    /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(vertical-gallery) */
     containerAspectRatio,
     /* @conditional-compile-remove(gallery-layouts) */
     props.userSetGalleryLayout,
