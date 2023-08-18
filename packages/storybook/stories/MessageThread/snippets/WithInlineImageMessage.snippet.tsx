@@ -12,7 +12,7 @@ import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
@@ -112,15 +112,16 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         onFetchAttachments={onFetchAttachment}
         onInlineImageClicked={onInlineImageClicked}
       />
-      {galleryImages && galleryImages.length > 0 && (
+      {
         <ImageGallery
+          isOpen={galleryImages.length > 0}
           images={galleryImages}
-          onDismiss={() => setGalleryImages(undefined)}
+          onDismiss={() => setGalleryImages([])}
           onImageDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />
-      )}
+      }
     </FluentThemeProvider>
   );
 };

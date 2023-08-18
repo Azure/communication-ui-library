@@ -136,7 +136,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -382,13 +382,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
       {
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-        galleryImages && galleryImages.length > 0 && (
-          <ImageGallery
-            images={galleryImages}
-            onDismiss={() => setGalleryImages(undefined)}
-            onImageDownloadButtonClicked={onImageDownloadButtonClicked}
-          />
-        )
+        <ImageGallery
+          isOpen={galleryImages.length > 0}
+          images={galleryImages}
+          onDismiss={() => setGalleryImages([])}
+          onImageDownloadButtonClicked={onImageDownloadButtonClicked}
+        />
       }
     </Stack>
   );
