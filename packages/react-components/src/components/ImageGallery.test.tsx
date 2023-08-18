@@ -77,6 +77,7 @@ describe('ImageGallery default layout tests', () => {
     expect(titleIcon).toBeTruthy();
   });
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('It should call the onDismiss handler when the close icon is clicked', async () => {
     const onDismissHandler = jest.fn();
     renderImageGalleryComponent(undefined, undefined, onDismissHandler);
@@ -87,6 +88,7 @@ describe('ImageGallery default layout tests', () => {
     expect(onDismissHandler).toBeCalledTimes(1);
   });
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   test('It should call the onImageDownloadButtonClicked handler when the download icon is clicked', async () => {
     const onImageDownloadButtonClicked = jest.fn();
     renderImageGalleryComponent(undefined, undefined, undefined, onImageDownloadButtonClicked);
