@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "Il formato dell'ID partecipante non è corretto",
     "participantIdIsMalformedMoreDetails": "Verifica che il formato dell'ID partecipante sia corretto",
     "moreButtonGalleryControlLabel": "Opzioni della raccolta",
-    "moreButtonGalleryPositionToggleLabel": "Sposta raccolta in alto"
+    "moreButtonGalleryPositionToggleLabel": "Sposta raccolta in alto",
+    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {
     "chatListHeader": "In questa chat",

@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "מזהה המשתתף אינו בתבנית הנכונה",
     "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה",
     "moreButtonGalleryControlLabel": "אפשרויות גלריה",
-    "moreButtonGalleryPositionToggleLabel": "העבר את הגלריה לחלק העליון"
+    "moreButtonGalleryPositionToggleLabel": "העבר את הגלריה לחלק העליון",
+    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",

@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "Deltaker-ID-en har ikke riktig format",
     "participantIdIsMalformedMoreDetails": "Kontroller at deltaker-ID-en har riktig format",
     "moreButtonGalleryControlLabel": "Gallerialternativer",
-    "moreButtonGalleryPositionToggleLabel": "Flytt galleri øverst"
+    "moreButtonGalleryPositionToggleLabel": "Flytt galleri øverst",
+    "moreButtonGallerySpeakerLayoutLabel": "Høyttaleroppsett",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisk oppsett",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallerioppsett",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {
     "chatListHeader": "I denne chatten",

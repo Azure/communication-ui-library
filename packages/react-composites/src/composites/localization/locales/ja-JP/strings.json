@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "参加者 ID の形式が正しくありません",
     "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください",
     "moreButtonGalleryControlLabel": "ギャラリーのオプション",
-    "moreButtonGalleryPositionToggleLabel": "ギャラリーを上に移動"
+    "moreButtonGalleryPositionToggleLabel": "ギャラリーを上に移動",
+    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {
     "chatListHeader": "このチャット内",

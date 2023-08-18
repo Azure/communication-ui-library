@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "تنسيق معرف المشارك غير صحيح",
     "participantIdIsMalformedMoreDetails": "الرجاء التحقق من أن معرف المشارك بالتنسيق الصحيح",
     "moreButtonGalleryControlLabel": "خيارات المعرض",
-    "moreButtonGalleryPositionToggleLabel": "نقل المعرض إلى الأعلى"
+    "moreButtonGalleryPositionToggleLabel": "نقل المعرض إلى الأعلى",
+    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
