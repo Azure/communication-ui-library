@@ -45,7 +45,7 @@ const ImageGalleryStory = (args): JSX.Element => {
   return (
     <div style={{ width: '31.25rem' }}>
       <ImageGalleryComponent
-        isOpen={args.disabled}
+        isOpen={args.isOpen}
         images={galleryImages}
         onDismiss={() => {
           alert('Dismiss button clicked');
@@ -65,10 +65,9 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Image Gallery`,
   component: ImageGalleryComponent,
   argTypes: {
-    disabled: controlsToAdd.displayImageGallery,
     title: controlsToAdd.displayTitleImageGallery,
+    isOpen: controlsToAdd.displayImageGallery,
     // Hiding auto-generated controls
-    isOpen: hiddenControl,
     images: hiddenControl,
     onDismiss: hiddenControl,
     onImageDownloadButtonClicked: hiddenControl,
