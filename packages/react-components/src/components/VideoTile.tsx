@@ -448,7 +448,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
         {
-          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
+          /* @conditional-compile-remove(raise-hand) */ raisedHand && canShowLabel && (
             <Stack
               horizontal={true}
               tokens={{ childrenGap: '0.2rem' }}
@@ -464,7 +464,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               }}
             >
               <Stack.Item>
-                <Text>{raisedHand.order}</Text>
+                <Text>{raisedHand.raisedHandOrderPosition}</Text>
               </Stack.Item>
               <Stack.Item>
                 <RaisedHandIcon />

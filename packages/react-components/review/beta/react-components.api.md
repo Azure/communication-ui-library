@@ -16,7 +16,6 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
-import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -731,6 +730,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -1439,7 +1440,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
+    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1744,7 +1745,7 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 
 // @public
 export type RaisedHand = {
-    order: number;
+    raisedHandOrderPosition: number;
 };
 
 // @public

@@ -86,7 +86,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // raise hands feature
         'raise-hand',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+        // Feature for custom video gallery layouts
+        'gallery-layouts'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

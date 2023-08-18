@@ -137,6 +137,13 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
+      {
+        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'HorizontalTop' ? (
+          overflowGallery
+        ) : (
+          <></>
+        )
+      }
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -144,7 +151,19 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {overflowGallery}
+      {overflowGalleryTrampoline(
+        overflowGallery,
+        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
+      )}
     </Stack>
   );
+};
+
+const overflowGalleryTrampoline = (
+  gallery: JSX.Element | null,
+  galleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
+): JSX.Element | null => {
+  /* @conditional-compile-remove(gallery-layouts) */
+  return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
+  return gallery;
 };
