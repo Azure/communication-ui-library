@@ -78,6 +78,12 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   /* @conditional-compile-remove(gallery-layouts) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [focusedContentOn, setFocusedContentOn] = useState<boolean>(false);
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [previousLayout, setPreviousLayout] = useState<VideoGalleryLayout>(
+    props.userSetGalleryLayout ?? 'floatingLocalVideo'
+  );
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
@@ -224,6 +230,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: props.userSetGalleryLayout === 'speaker',
             onClick: () => {
               props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
+              setFocusedContentOn(false);
             },
             iconProps: {
               iconName: 'SpeakerGalleryLayout',
@@ -240,6 +247,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: props.userSetGalleryLayout === 'floatingLocalVideo',
             onClick: () => {
               props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+              setFocusedContentOn(false);
             },
             iconProps: {
               iconName: 'FloatingLocalVideoGalleryLayout',
@@ -256,9 +264,33 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             isChecked: props.userSetGalleryLayout === 'default',
             onClick: () => {
               props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+              setFocusedContentOn(false);
             },
             iconProps: {
               iconName: 'DefaultGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
+            key: 'focusedContentSelectionKey',
+            text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: focusedContentOn,
+            onClick: () => {
+              if (focusedContentOn === false) {
+                setPreviousLayout(props.userSetGalleryLayout ?? 'floatingLocalVideo');
+                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+                setFocusedContentOn(true);
+              } else {
+                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout(previousLayout);
+                setFocusedContentOn(false);
+              }
+            },
+            iconProps: {
+              iconName: 'FocusedContentGalleryLayout',
               styles: { root: { lineHeight: 0 } }
             }
           },

@@ -569,6 +569,7 @@ export type CallCompositeIcons = {
     SpeakerGalleryLayout?: JSX.Element;
     FloatingLocalVideoGalleryLayout?: JSX.Element;
     DefaultGalleryLayout?: JSX.Element;
+    FocusedContentGalleryLayout?: JSX.Element;
     OverflowGalleryTop?: JSX.Element;
 };
 
@@ -673,6 +674,7 @@ export interface CallCompositeStrings {
     moreButtonGalleryControlLabel?: string;
     moreButtonGalleryDefaultLayoutLabel?: string;
     moreButtonGalleryFloatingLocalLayoutLabel?: string;
+    moreButtonGalleryFocusedContentLayoutLabel?: string;
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     mutedMessage: string;
@@ -2346,6 +2348,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SpeakerGalleryLayout?: JSX.Element | undefined;
     FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
     DefaultGalleryLayout?: JSX.Element | undefined;
+    FocusedContentGalleryLayout?: JSX.Element | undefined;
     OverflowGalleryTop?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
@@ -3909,7 +3912,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
