@@ -36,9 +36,8 @@ const getDocs: () => JSX.Element = () => {
 };
 
 const ImageGalleryStory = (args): JSX.Element => {
-  // const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
   const galleryImage: ImageGalleryImageProps = {
-    title: 'Image',
+    title: args.title,
     saveAsName: 'images/inlineImageExample1.png',
     imageUrl: 'images/inlineImageExample1.png'
   };
@@ -67,6 +66,7 @@ export default {
   component: ImageGalleryComponent,
   argTypes: {
     disabled: controlsToAdd.displayImageGallery,
+    title: controlsToAdd.displayTitleImageGallery,
     // Hiding auto-generated controls
     isOpen: hiddenControl,
     images: hiddenControl,
