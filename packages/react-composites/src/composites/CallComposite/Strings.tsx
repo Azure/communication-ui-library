@@ -610,4 +610,9 @@ export interface CallCompositeStrings {
    * Label for the selection of the floatingLocalVideo (Dynamic) layout
    */
   moreButtonGalleryFloatingLocalLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the focusedContentLayout (Focused content) layout
+   */
+  moreButtonGalleryFocusedContentLayoutLabel?: string;
 }
