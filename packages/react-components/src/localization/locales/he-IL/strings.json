@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "Download",
+    "dismissButtonAriaLabel": "Close"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "ההודעה נשלחה",
     "deliveredTooltipText": "‏‏נשלח",

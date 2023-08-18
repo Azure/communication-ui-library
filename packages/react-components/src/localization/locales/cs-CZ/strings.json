@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "Download",
+    "dismissButtonAriaLabel": "Close"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",
     "deliveredTooltipText": "Odesláno",
@@ -107,7 +111,7 @@
   },
   "screenShareButton": {
     "onLabel": "Zastavit prezentaci",
-    "offLabel": "Přítomno",
+    "offLabel": "Prezentovat",
     "tooltipDisabledContent": "Sdílení je zakázáno",
     "tooltipOnContent": "Sdílí se vaše obrazovka",
     "tooltipOffContent": "Sdílet obrazovku"

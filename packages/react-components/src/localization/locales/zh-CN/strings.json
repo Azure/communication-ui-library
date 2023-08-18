@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "Download",
+    "dismissButtonAriaLabel": "Close"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
     "deliveredTooltipText": "已发送",

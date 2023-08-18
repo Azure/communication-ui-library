@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "Download",
+    "dismissButtonAriaLabel": "Close"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
     "deliveredTooltipText": "送信しました",
