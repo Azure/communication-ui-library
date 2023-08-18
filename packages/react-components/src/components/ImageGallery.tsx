@@ -25,6 +25,7 @@ import {
 } from './styles/ImageGallery.style';
 import { useTheme } from '../theming/FluentThemeProvider';
 import { isDarkThemed } from '../theming/themeUtils';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { useLocale } from '../localization';
 
 /**
@@ -98,6 +99,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
   const theme = useTheme();
   const isDarkTheme = isDarkThemed(theme);
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const localeStrings = useLocale().strings.imageGallery;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
@@ -121,16 +123,19 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme, isDarkTheme))}
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             text={localeStrings.downloadButtonLabel}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             aria-label={localeStrings.downloadButtonLabel}
           />
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme))}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
           />
@@ -138,6 +143,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             iconProps={cancelIcon}
             className={mergeStyles(closeButtonStyles(theme, isDarkTheme))}
             onClick={onDismiss}
+            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
             aria-live={'polite'}
           />

@@ -33,7 +33,7 @@
   },
   "imageGallery": {
     "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close",
+    "dismissButtonAriaLabel": "Close"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",

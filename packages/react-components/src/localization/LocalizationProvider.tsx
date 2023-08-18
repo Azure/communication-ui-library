@@ -15,8 +15,7 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings,
-  ImageGalleryStrings
+  VideoGalleryStrings
 } from '../components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButtonStrings } from '../components';
@@ -46,6 +45,8 @@ import { VerticalGalleryStrings } from '../components/VerticalGallery';
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ImageGalleryStrings } from '../components/ImageGallery';
 
 /**
  * Locale information for all components exported from this library.
