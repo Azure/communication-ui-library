@@ -2,8 +2,6 @@
 // Licensed under the MIT license.
 
 import { IStyle, mergeStyles } from '@fluentui/react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { IPersonaProps, Persona, PersonaSize } from '@fluentui/react';
 import { Chat, Text } from '@internal/northstar-wrapper';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -88,10 +86,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (
-    attachment: FileMetadata,
-    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
-  ) => Promise<void>;
+  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
@@ -236,23 +231,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       if (onInlineImageClicked === undefined) {
         return;
       }
-      (message as ChatMessage).attachedFilesMetadata?.forEach(async (attachment) => {
-        if (attachment.id === attachmentId) {
-          const onRenderTitleIcon = (personaProps?: IPersonaProps): JSX.Element => {
-            return (
-              <Persona
-                text={message.senderDisplayName}
-                imageAlt={message.senderDisplayName}
-                size={PersonaSize.size32}
-                hidePersonaDetails={true}
-                showOverflowTooltip={false}
-                {...personaProps}
-              />
-            );
-          };
-          await onInlineImageClicked({ ...attachment, name: message.senderDisplayName || '' }, onRenderTitleIcon);
-        }
-      });
+      await onInlineImageClicked(attachmentId, message.messageId);
     },
     [message, onInlineImageClicked]
   );
