@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
-import { _getApplicationId } from '@internal/acs-ui-common';
+import { _getApplicationId, TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { ChatContext } from './ChatContext';
 import { ChatClientState } from './ChatClientState';
 import { EventSubscriber } from './EventSubscriber';
@@ -161,12 +161,23 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  chatStatefulLogger.info(`Creating chat stateful client using library version: ${_getApplicationId()}`);
+  return createStatefulChatClientInner(args, options);
+};
+
+/**
+ * @internal
+ */
+export const createStatefulChatClientInner = (
+  args: StatefulChatClientArgs,
+  options?: StatefulChatClientOptions,
+  telemetryImplementationHint: TelemetryImplementationHint = 'StatefulComponents'
+): StatefulChatClient => {
+  chatStatefulLogger.info(`Creating chat stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`);
   const tweakedOptions = {
     ...options,
     chatClientOptions: {
       ...options?.chatClientOptions,
-      userAgentOptions: { userAgentPrefix: _getApplicationId() }
+      userAgentOptions: { userAgentPrefix: _getApplicationId(telemetryImplementationHint) }
     }
   };
   return _createStatefulChatClientWithDeps(

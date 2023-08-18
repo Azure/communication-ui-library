@@ -204,19 +204,19 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
       }
       case 'createTeamsCallAgent': {
         /* @conditional-compile-remove(teams-identity-support) */ return this._context.withAsyncErrorTeedToState(
-          async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
-            // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
-            // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
-            // callAgent if the createCallAgent succeeds.
-            const callAgent = await target.createTeamsCallAgent(...args);
-            this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
-            this._context.setCallAgent({
-              displayName: undefined
-            });
-            return this._callAgent;
-          },
-          'CallClient.createTeamsCallAgent'
-        );
+        async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
+          // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+          // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+          // callAgent if the createCallAgent succeeds.
+          const callAgent = await target.createTeamsCallAgent(...args);
+          this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
+          this._context.setCallAgent({
+            displayName: undefined
+          });
+          return this._callAgent;
+        },
+        'CallClient.createTeamsCallAgent'
+      );
         return Reflect.get(target, prop);
       }
       case 'getDeviceManager': {
@@ -231,7 +231,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             } else {
               throw new Error(
                 'Multiple DeviceManager not supported. This means a incompatible version of communication-calling is ' +
-                  'used OR calling declarative was not properly updated to communication-calling version.'
+                'used OR calling declarative was not properly updated to communication-calling version.'
               );
             }
           } else {
@@ -278,8 +278,8 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient.
    */
   userId:
-    | CommunicationUserIdentifier
-    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+  | CommunicationUserIdentifier
+  | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required
@@ -331,18 +331,18 @@ export const createStatefulCallClient = (
 };
 
 /**
-@internal
+* @internal
 */
 export const createStatefulCallClientInner = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions,
-  telemetryImplementationHint?: TelemetryImplementationHint
+  telemetryImplementationHint: TelemetryImplementationHint = 'StatefulComponents'
 ): StatefulCallClient => {
   callingStatefulLogger.info(
     `Creating calling stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`
   );
   return createStatefulCallClientWithDeps(
-    new CallClient(withTelemetryTag(options?.callClientOptions)),
+    new CallClient(withTelemetryTag(telemetryImplementationHint, options?.callClientOptions)),
     new CallContext(
       getIdentifierKind(args.userId),
       options?.maxStateChangeListeners,
@@ -408,8 +408,8 @@ export const createStatefulCallClientWithDeps = (
 };
 
 const withTelemetryTag = (
-  options?: CallClientOptions,
-  telemetryImplementationHint?: TelemetryImplementationHint
+  telemetryImplementationHint: TelemetryImplementationHint,
+  options?: CallClientOptions
 ): CallClientOptions => {
   const tags = options?.diagnostics?.tags ?? [];
   tags.push(_getApplicationId(telemetryImplementationHint));
