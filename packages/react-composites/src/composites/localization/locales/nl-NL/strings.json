@@ -170,7 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Luidsprekerindeling",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamische indeling",
     "moreButtonGalleryDefaultLayoutLabel": "Galerie-indeling",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Inhoud met prioriteit"
   },
   "chat": {
     "chatListHeader": "In deze chat",

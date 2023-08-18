@@ -170,7 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
     "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Un contenu ciblé"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

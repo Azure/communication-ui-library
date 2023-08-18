@@ -167,9 +167,9 @@
     "participantIdIsMalformedMoreDetails": "請檢查參與者識別碼的格式是否正確",
     "moreButtonGalleryControlLabel": "圖庫選項",
     "moreButtonGalleryPositionToggleLabel": "將圖庫移至頂端",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGallerySpeakerLayoutLabel": "喇叭版面配置",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "動態版面配置",
+    "moreButtonGalleryDefaultLayoutLabel": "資源庫配置",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {

@@ -167,9 +167,9 @@
     "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa",
     "moreButtonGalleryControlLabel": "Valikoiman asetukset",
     "moreButtonGalleryPositionToggleLabel": "Siirrä valikoima ylimmäiseksi",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGallerySpeakerLayoutLabel": "Kaiuttimen asettelu",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
+    "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {

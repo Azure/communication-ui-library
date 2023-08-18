@@ -170,7 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Układ osoby mówiącej",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Układ dynamiczny",
     "moreButtonGalleryDefaultLayoutLabel": "Układ galerii",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Zawartość priorytetowa"
   },
   "chat": {
     "chatListHeader": "W tym czacie",
