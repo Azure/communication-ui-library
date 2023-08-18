@@ -47,7 +47,6 @@ import { IContextualMenuStyles } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
-import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -3051,7 +3050,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
+    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
