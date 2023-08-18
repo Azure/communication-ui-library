@@ -15,6 +15,7 @@ export const sanitize = (version: string): string => {
   }
   return version;
 };
+
 /**
 * @internal
 */
