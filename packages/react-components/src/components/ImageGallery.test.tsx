@@ -47,6 +47,7 @@ describe('ImageGallery default layout tests', () => {
         onDismiss={onDismiss || jest.fn()}
         onImageDownloadButtonClicked={onImageDownloadButtonClicked || jest.fn()}
         onError={onError || jest.fn()}
+        isOpen={true}
       />
     );
     return container;
