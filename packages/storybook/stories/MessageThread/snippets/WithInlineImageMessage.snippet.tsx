@@ -5,12 +5,14 @@ import {
   FileMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
-  ImageGallery
+  ImageGallery,
+  ChatMessage
 } from '@azure/communication-react';
+import { Persona, PersonaSize } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
@@ -26,10 +28,32 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     ];
   };
 
-  const onInlineImageClicked = (attachment: FileMetadata): Promise<void> => {
+  const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
+    const filteredMessages = messages?.filter((message) => {
+      return message.messageId === messageId;
+    });
+    if (!filteredMessages || filteredMessages.length <= 0) {
+      return Promise.reject(`Message not found with messageId ${messageId}`);
+    }
+    const chatMessage = filteredMessages[0] as ChatMessage;
+
+    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+      return attachment.id === attachmentId;
+    });
+
+    if (!attachments || attachments.length <= 0) {
+      return Promise.reject(`Attachment not found with id ${attachmentId}`);
+    }
+
+    const attachment = attachments[0];
+    attachment.name = chatMessage.senderDisplayName || '';
     const title = 'Image';
+    const titleIcon = (
+      <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
+    );
     const galleryImage: ImageGalleryImageProps = {
-      title: title,
+      title,
+      titleIcon,
       saveAsName: attachment.id,
       imageUrl: attachment.url
     };
@@ -88,15 +112,16 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
         onFetchAttachments={onFetchAttachment}
         onInlineImageClicked={onInlineImageClicked}
       />
-      {galleryImages && galleryImages.length > 0 && (
+      {
         <ImageGallery
+          isOpen={galleryImages.length > 0}
           images={galleryImages}
-          onDismiss={() => setGalleryImages(undefined)}
+          onDismiss={() => setGalleryImages([])}
           onImageDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />
-      )}
+      }
     </FluentThemeProvider>
   );
 };
