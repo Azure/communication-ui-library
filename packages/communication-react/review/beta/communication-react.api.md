@@ -2063,11 +2063,6 @@ export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient,
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
-// Warning: (ae-internal-missing-underscore) The name "createStatefulCallClientInner" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined, telemetryImplementationHint?: TelemetryImplementationHint) => StatefulCallClient;
-
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 

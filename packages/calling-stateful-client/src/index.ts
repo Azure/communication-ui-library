@@ -3,6 +3,8 @@
 
 export * from './index-public';
 
+export { createStatefulCallClientInner } from './StatefulCallClient';
+
 export { _isACSCall, _isACSCallAgent, _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 
 /* @conditional-compile-remove(close-captions) */
