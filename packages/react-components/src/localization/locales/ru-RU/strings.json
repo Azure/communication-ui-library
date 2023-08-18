@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "Рекомендации"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "Скачать",
+    "dismissButtonAriaLabel": "Закрыть"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
