@@ -130,4 +130,49 @@ test.describe('VideoGallery tests', async () => {
     // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    vasily.isSpeaking = true;
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { galleryLayout: 'speaker', newControlBarExperience: 'true' })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-speaker-participant.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery can switch between modes', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    vasily.isSpeaking = true;
+    const participants = [vasily, paul];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls.png');
+    await page.locator('button:has-text("Gallery options")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls-open.png');
+    await page.locator('button:has-text("Speaker layout")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("Gallery layout")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("Dynamic layout")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
+  });
 });
