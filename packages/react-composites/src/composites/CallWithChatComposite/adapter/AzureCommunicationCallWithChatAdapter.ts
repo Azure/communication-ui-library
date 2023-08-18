@@ -905,8 +905,10 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
+  /* @conditional-compile-remove(video-background-effects) */
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  options?: AzureCommunicationChatAdapterOptions;
+  chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
@@ -924,15 +926,23 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callLocator,
   chatClient,
   chatThreadClient,
+  /* @conditional-compile-remove(video-background-effects) */
+  callAdapterOptions,
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  options
+  chatAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
-  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
+  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(
+    callClient,
+    callAgent,
+    callLocator,
+    /* @conditional-compile-remove(video-background-effects) */
+    callAdapterOptions
+  );
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    options
+    chatAdapterOptions
   );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
