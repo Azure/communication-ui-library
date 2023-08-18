@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ImageGallery as ImageGalleryComponent, ImageGalleryImageProps } from '@azure/communication-react';
+import { ImageGallery as ImageGalleryComponent } from '@azure/communication-react';
 import { ArgsTable, Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { controlsToAdd, hiddenControl } from '../controlsUtils';
 
 import { ImageGalleryExample } from './snippets/ImageGallery.snippet';
 const ImageGalleryExampleText = require('!!raw-loader!./snippets/ImageGallery.snippet.tsx').default;
@@ -37,27 +36,8 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const ImageGalleryStory = (args): JSX.Element => {
-  const galleryImage: ImageGalleryImageProps = {
-    title: args.title,
-    saveAsName: 'images/inlineImageExample1.png',
-    imageUrl: 'images/inlineImageExample1.png'
-  };
-  const galleryImages = [galleryImage];
-  return (
-    <div style={{ width: '31.25rem' }}>
-      <ImageGalleryComponent
-        isOpen={args.isOpen}
-        images={galleryImages}
-        onDismiss={() => {
-          alert('Dismiss button clicked');
-        }}
-        onImageDownloadButtonClicked={() => {
-          alert('Download button clicked');
-        }}
-      />
-    </div>
-  );
+const ImageGalleryStory = (): JSX.Element => {
+  return <></>;
 };
 
 export const ImageGallery = ImageGalleryStory.bind({});
@@ -66,17 +46,8 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-imagegallery`,
   title: `${COMPONENT_FOLDER_PREFIX}/Image Gallery`,
   component: ImageGalleryComponent,
-  argTypes: {
-    title: controlsToAdd.displayTitleImageGallery,
-    isOpen: controlsToAdd.displayImageGallery,
-    // Hiding auto-generated controls
-    images: hiddenControl,
-    onDismiss: hiddenControl,
-    onImageDownloadButtonClicked: hiddenControl,
-    onError: hiddenControl,
-    startIndex: hiddenControl
-  },
   parameters: {
+    previewTabs: { canvas: { disable: true, hidden: true } },
     docs: {
       page: () => getDocs()
     }

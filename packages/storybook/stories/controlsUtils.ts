@@ -240,8 +240,6 @@ export const controlsToAdd = {
   },
   disabled: { control: 'boolean', defaultValue: false, name: 'Disable component' },
   displayName: { control: 'text', defaultValue: 'John Smith', name: 'Display Name' },
-  displayTitleImageGallery: { control: 'text', defaultValue: 'Image', name: 'Image Gallery Title' },
-  displayImageGallery: { control: 'boolean', defaultValue: false, name: 'Display Image Gallery' },
   enableJumpToNewMessageButton: { control: 'boolean', defaultValue: true, name: 'Enable Jump To New Message' },
   endpointUrl: {
     control: 'text',
