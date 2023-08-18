@@ -76,7 +76,10 @@ import { CommonCallControlOptions } from '../../common/types/CommonCallControlOp
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesNotificationBar, CapabilitiesNotificationBarProps } from './CapabilitiesNotficationBar';
+import {
+  CapabilitiesChangeNotificationBar,
+  CapabilitiesChangeNotificationBarProps
+} from './CapabilitiesNotficationBar';
 
 /**
  * @private
@@ -86,7 +89,7 @@ export interface CallArrangementProps {
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   /* @conditional-compile-remove(capabilities) */
-  capabilitiesNotificationBarProps?: CapabilitiesNotificationBarProps;
+  capabilitiesNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
@@ -389,7 +392,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       /* @conditional-compile-remove(capabilities) */
                       props.capabilitiesNotificationBarProps && (
                         <Stack styles={bannerNotificationStyles}>
-                          <CapabilitiesNotificationBar {...props.capabilitiesNotificationBarProps} />
+                          <CapabilitiesChangeNotificationBar {...props.capabilitiesNotificationBarProps} />
                         </Stack>
                       )
                     }

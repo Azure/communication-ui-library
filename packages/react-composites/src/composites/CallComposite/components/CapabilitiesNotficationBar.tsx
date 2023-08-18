@@ -21,7 +21,7 @@ import { CallCompositeStrings } from '../Strings';
 /**
  * @beta
  */
-export interface CapabilitiesNotificationBarProps extends IMessageBarProps {
+export interface CapabilitiesChangeNotificationBarProps extends IMessageBarProps {
   capabilitiesChangeInfo?: CapabilitiesChangeInfo;
   participantRole?: ParticipantRole;
 }
@@ -70,10 +70,10 @@ interface DismissedNotification {
  * Notification bar for capabilities changes
  * @beta
  */
-export const CapabilitiesNotificationBar = (props: CapabilitiesNotificationBarProps): JSX.Element => {
+export const CapabilitiesChangeNotificationBar = (props: CapabilitiesChangeNotificationBarProps): JSX.Element => {
   const locale = useLocale();
 
-  // Timestamp for when this comopnent is first mounted.
+  // Timestamp for when this component is first mounted.
   // Never updated through the lifecycle of this component.
   const mountTimestamp = useRef(new Date(Date.now()));
 
@@ -122,7 +122,7 @@ export const CapabilitiesNotificationBar = (props: CapabilitiesNotificationBarPr
   const toShow = activeNotificationsToShow(activeNotifications, dismissedNotifications, mountTimestamp.current);
 
   return (
-    <Stack data-ui-id="capabilities-notification-bar-stack">
+    <Stack data-ui-id="capabilities-changes-notification-bar-stack">
       {toShow.map((notification) => {
         const message = getNotificationMessage(notification, locale.strings.call);
         if (!message) {
