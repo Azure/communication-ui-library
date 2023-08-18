@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { ImageGallery as ImageGalleryComponent, ImageGalleryImageProps } from '@azure/communication-react';
-import { Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
+import { ArgsTable, Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
@@ -31,6 +31,8 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={ImageGalleryExampleText}>
         <ImageGalleryExample />
       </Canvas>
+      <Heading>Props</Heading>
+      <ArgsTable of={ImageGalleryComponent} />
     </>
   );
 };
