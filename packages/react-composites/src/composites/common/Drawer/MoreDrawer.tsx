@@ -17,6 +17,8 @@ import { _StartCaptionsButton } from '@internal/react-components';
 
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
@@ -151,6 +153,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+
   const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
       const selected = speakers?.find((speaker) => speaker.id === itemKey);
@@ -249,6 +254,28 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         onLightDismiss();
       },
       iconProps: { iconName: 'HoldCallContextualMenuItem', styles: { root: { lineHeight: 0 } } }
+    });
+  }
+
+  /* @conditional-compile-remove(raise-hand) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.raiseHandButton)) {
+    const raiseHandIcon = raiseHandButtonProps.checked ? 'LowerHandContextualMenuItem' : 'RaiseHandContextualMenuItem';
+    drawerMenuItems.push({
+      itemKey: 'raiseHandButtonKey',
+      disabled: props.disableButtonsForHoldScreen || isDisabled(drawerSelectionOptions.raiseHandButton),
+      text: raiseHandButtonProps.checked
+        ? localeStrings.component.strings.raiseHandButton.onLabel
+        : localeStrings.component.strings.raiseHandButton.offLabel,
+      onItemClick: () => {
+        if (raiseHandButtonProps.onToggleRaiseHand) {
+          raiseHandButtonProps.onToggleRaiseHand();
+        }
+        onLightDismiss();
+      },
+      iconProps: {
+        iconName: raiseHandIcon,
+        styles: { root: { lineHeight: 0 } }
+      }
     });
   }
 

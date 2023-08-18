@@ -16,6 +16,8 @@ export { _MentionPopover } from './MentionPopover';
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export { ImageGallery } from './ImageGallery';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
