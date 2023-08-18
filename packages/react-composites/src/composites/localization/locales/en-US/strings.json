@@ -169,7 +169,8 @@
     "moreButtonGalleryPositionToggleLabel": "Move gallery to top",
     "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout"
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
   },
   "chat": {
     "chatListHeader": "In this chat",
