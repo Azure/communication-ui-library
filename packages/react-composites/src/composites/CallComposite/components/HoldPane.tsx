@@ -74,6 +74,7 @@ export const HoldPane = (): JSX.Element => {
             }
           }}
           data-ui-id="hold-page-resume-call-button"
+          autoFocus={true}
         ></PrimaryButton>
       </Stack>
     </Stack>
