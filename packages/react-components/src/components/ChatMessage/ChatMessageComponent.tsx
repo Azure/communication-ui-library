@@ -12,8 +12,6 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { IPersonaProps } from '@fluentui/react';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -97,10 +95,7 @@ type ChatMessageComponentProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (
-    attachment: FileMetadata,
-    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
-  ) => Promise<void>;
+  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.

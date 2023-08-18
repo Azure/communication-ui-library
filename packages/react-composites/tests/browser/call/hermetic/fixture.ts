@@ -13,7 +13,7 @@ import type {
   MockVideoStreamRendererViewState
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
-import type { CallKind, ParticipantRole } from '@azure/communication-calling';
+import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import type { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
@@ -63,6 +63,11 @@ export function defaultMockCallAdapterState(
   participants?.forEach((p) => {
     remoteParticipants[toFlatCommunicationIdentifier(p.identifier)] = p;
   });
+  const speakers = participants?.filter((p) => p.isSpeaking);
+  const dominantSpeakers: DominantSpeakersInfo = {
+    speakersList: speakers?.map((s) => s.identifier) ?? [],
+    timestamp: new Date()
+  };
   return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,
@@ -87,6 +92,7 @@ export function defaultMockCallAdapterState(
       /** @conditional-compile-remove(raise-hand) */
       raiseHand: { raisedHands: [] },
       role: role ?? 'Unknown',
+      dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
         Object.values(remoteParticipants).length > 0 ? Object.values(remoteParticipants).length + 1 : undefined,
       captionsFeature: {

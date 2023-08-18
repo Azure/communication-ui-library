@@ -348,12 +348,34 @@ const MessageThreadStory = (args): JSX.Element => {
       ];
     });
   };
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
-  const onInlineImageClicked = (attachment: FileMetadata): Promise<void> => {
+  const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
+    const messages = chatMessages?.filter((message) => {
+      return message.messageId === messageId;
+    });
+    if (!messages || messages.length <= 0) {
+      return Promise.reject(`Message not found with messageId ${messageId}`);
+    }
+    const chatMessage = messages[0] as ChatMessage;
+
+    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+      return attachment.id === attachmentId;
+    });
+
+    if (!attachments || attachments.length <= 0) {
+      return Promise.reject(`Attachment not found with id ${attachmentId}`);
+    }
+
+    const attachment = attachments[0];
+    attachment.name = chatMessage.senderDisplayName || '';
     const title = 'Message Thread Image';
+    const titleIcon = (
+      <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
+    );
     const galleryImage: ImageGalleryImageProps = {
-      title: title,
+      title,
+      titleIcon,
       saveAsName: attachment.id,
       imageUrl: attachment.url
     };
@@ -411,15 +433,16 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
-      {galleryImages && galleryImages.length > 0 && (
+      {
         <ImageGallery
+          isOpen={galleryImages.length > 0}
           images={galleryImages}
-          onDismiss={() => setGalleryImages(undefined)}
+          onDismiss={() => setGalleryImages([])}
           onImageDownloadButtonClicked={() => {
             alert('Download button clicked');
           }}
         />
-      )}
+      }
       {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
         <Dropdown
