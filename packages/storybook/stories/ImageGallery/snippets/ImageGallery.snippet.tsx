@@ -2,7 +2,7 @@ import { ImageGallery, ImageGalleryImageProps, FluentThemeProvider } from '@azur
 import React, { useState } from 'react';
 
 export const ImageGalleryExample: () => JSX.Element = () => {
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
   const imgClickedHandler = (event: React.MouseEvent<HTMLImageElement>): void => {
     event.stopPropagation();
 
@@ -22,15 +22,16 @@ export const ImageGalleryExample: () => JSX.Element = () => {
       <div style={{ width: '31.25rem' }}>
         <img alt="image" src="images/inlineImageExample1.png" onClick={imgClickedHandler} />
       </div>
-      {galleryImages && galleryImages.length > 0 && (
-        <ImageGallery
-          images={galleryImages}
-          onDismiss={() => setGalleryImages(undefined)}
-          onImageDownloadButtonClicked={() => {
-            alert('Download button clicked');
-          }}
-        />
-      )}
+      <ImageGallery
+        isOpen={galleryImages.length > 0}
+        images={galleryImages}
+        onDismiss={() => {
+          setGalleryImages([]);
+        }}
+        onImageDownloadButtonClicked={() => {
+          alert('Download button clicked');
+        }}
+      />
     </FluentThemeProvider>
   );
 };

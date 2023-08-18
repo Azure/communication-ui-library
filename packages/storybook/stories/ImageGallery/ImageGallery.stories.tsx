@@ -1,12 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ImageGallery as ImageGalleryComponent } from '@azure/communication-react';
+import { ImageGallery as ImageGalleryComponent, ImageGalleryImageProps } from '@azure/communication-react';
 import { Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 
 import { ImageGalleryExample } from './snippets/ImageGallery.snippet';
 const ImageGalleryExampleText = require('!!raw-loader!./snippets/ImageGallery.snippet.tsx').default;
@@ -34,8 +35,28 @@ const getDocs: () => JSX.Element = () => {
   );
 };
 
-const ImageGalleryStory = (): JSX.Element => {
-  return <div style={{ width: '31.25rem' }}></div>;
+const ImageGalleryStory = (args): JSX.Element => {
+  // const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const galleryImage: ImageGalleryImageProps = {
+    title: 'Image',
+    saveAsName: 'images/inlineImageExample1.png',
+    imageUrl: 'images/inlineImageExample1.png'
+  };
+  const galleryImages = [galleryImage];
+  return (
+    <div style={{ width: '31.25rem' }}>
+      <ImageGalleryComponent
+        isOpen={args.disabled}
+        images={galleryImages}
+        onDismiss={() => {
+          alert('Dismiss button clicked');
+        }}
+        onImageDownloadButtonClicked={() => {
+          alert('Download button clicked');
+        }}
+      />
+    </div>
+  );
 };
 
 export const ImageGallery = ImageGalleryStory.bind({});
@@ -44,7 +65,16 @@ export default {
   id: `${COMPONENT_FOLDER_PREFIX}-imagegallery`,
   title: `${COMPONENT_FOLDER_PREFIX}/Image Gallery`,
   component: ImageGalleryComponent,
-  argTypes: {},
+  argTypes: {
+    disabled: controlsToAdd.displayImageGallery,
+    // Hiding auto-generated controls
+    isOpen: hiddenControl,
+    images: hiddenControl,
+    onDismiss: hiddenControl,
+    onImageDownloadButtonClicked: hiddenControl,
+    onError: hiddenControl,
+    startIndex: hiddenControl
+  },
   parameters: {
     docs: {
       page: () => getDocs()
