@@ -3,7 +3,7 @@
 
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { IPersonaProps } from '@fluentui/react';
+import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
   ErrorBar,
@@ -18,6 +18,9 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ChatMessage } from '@internal/react-components';
+
 import React, { useCallback, useEffect } from 'react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { useState } from 'react';
@@ -133,7 +136,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps> | undefined>(undefined);
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -221,11 +224,35 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onInlineImageClicked = useCallback(
-    async (
-      attachment: FileMetadata,
-      onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
-    ): Promise<void> => {
-      const titleIcon = onRenderTitleIcon && onRenderTitleIcon();
+    async (attachmentId: string, messageId: string): Promise<void> => {
+      const messages = messageThreadProps.messages?.filter((message) => {
+        return message.messageId === messageId;
+      });
+      if (!messages || messages.length <= 0) {
+        console.log(`Message not found with messageId ${messageId}`);
+        return;
+      }
+      const chatMessage = messages[0] as ChatMessage;
+
+      const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+        return attachment.id === attachmentId;
+      });
+
+      if (!attachments || attachments.length <= 0) {
+        console.log(`Attachment not found with id ${attachmentId}`);
+        return;
+      }
+
+      const attachment = attachments[0];
+      attachment.name = chatMessage.senderDisplayName || '';
+
+      const titleIconRenderOptions = {
+        text: chatMessage.senderDisplayName,
+        size: PersonaSize.size32,
+        showOverflowTooltip: false,
+        imageAlt: chatMessage.senderDisplayName
+      };
+      const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(chatMessage.senderId, titleIconRenderOptions);
       const galleryImage: ImageGalleryImageProps = {
         title: attachment.name,
         titleIcon: titleIcon,
@@ -257,14 +284,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       }
     },
-    [adapter, fullSizeAttachments]
+    [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const handleOnDownloadImage = (blobUrl: string, filename: string): void => {
-    // Place holder function for download handler
-    console.log(blobUrl, filename);
-  };
+  const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
+    // Create a new anchor element
+    const a = document.createElement('a');
+    // Set the href and download attributes for the anchor element
+    a.href = imageUrl;
+    a.download = saveAsName || 'download';
+    // Programmatically click the anchor element to trigger the download
+    a.click();
+    a.remove();
+  }, []);
 
   const AttachFileButton = useCallback(() => {
     if (!fileSharing?.uploadHandler) {
@@ -349,13 +382,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
       {
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-        galleryImages && galleryImages.length > 0 && (
-          <ImageGallery
-            images={galleryImages}
-            onDismiss={() => setGalleryImages(undefined)}
-            onImageDownloadButtonClicked={handleOnDownloadImage}
-          />
-        )
+        <ImageGallery
+          isOpen={galleryImages.length > 0}
+          images={galleryImages}
+          onDismiss={() => setGalleryImages([])}
+          onImageDownloadButtonClicked={onImageDownloadButtonClicked}
+        />
       }
     </Stack>
   );

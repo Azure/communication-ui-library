@@ -16,7 +16,6 @@ import { IIconProps } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IModalProps } from '@fluentui/react';
-import { IPersonaProps } from '@fluentui/react';
 import { IPersonaStyleProps } from '@fluentui/react';
 import { IPersonaStyles } from '@fluentui/react';
 import { IRawStyle } from '@fluentui/react';
@@ -612,6 +611,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
+    imageGallery: ImageGalleryStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -731,6 +731,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -1230,10 +1232,17 @@ export interface ImageGalleryImageProps {
 // @beta
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
+    isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
     onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
+}
+
+// @beta
+export interface ImageGalleryStrings {
+    dismissButtonAriaLabel: string;
+    downloadButtonLabel: string;
 }
 
 // @public
@@ -1438,7 +1447,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachment: FileMetadata, onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element) => Promise<void>;
+    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1743,7 +1752,7 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 
 // @public
 export type RaisedHand = {
-    order: number;
+    raisedHandOrderPosition: number;
 };
 
 // @public
