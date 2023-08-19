@@ -85,9 +85,9 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
         return this._context.withErrorTeedToState((...args: Parameters<CallCommon['feature']>) => {
           /* @conditional-compile-remove(close-captions) */
           if (args[0] === Features.Captions) {
-            const captionsFeature = target.feature(Features.Captions).captions as TeamsCaptions;
-            const proxyFeature = new ProxyTeamsCaptionsFeature(this._context, target);
-            return new Proxy(captionsFeature, proxyFeature);
+            const captionsFeature = target.feature(Features.Captions).captions;
+            const proxyFeature = new ProxyTeamsCaptions(this._context, target);
+            return { captions: new Proxy(captionsFeature, proxyFeature) };
           }
           /* @conditional-compile-remove(call-transfer) */
           if (args[0] === Features.Transfer) {
@@ -108,7 +108,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
 /**
  * @private
  */
-class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptions> {
+class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
   private _context: CallContext;
   private _call: CallCommon;
 
@@ -124,7 +124,6 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptions> {
           this._context.setStartCaptionsInProgress(this._call.id, true);
           const ret = await target.startCaptions(...args);
           this._context.setSelectedSpokenLanguage(this._call.id, args[0]?.spokenLanguage ?? 'en-us');
-
           return ret;
         }, 'Call.feature');
         break;
@@ -133,6 +132,7 @@ class ProxyTeamsCaptionsFeature implements ProxyHandler<TeamsCaptions> {
           const ret = await target.stopCaptions(...args);
           this._context.setIsCaptionActive(this._call.id, false);
           this._context.setStartCaptionsInProgress(this._call.id, false);
+          //this._context.clearCaptions(this._call.id);
           return ret;
         }, 'Call.feature');
       case 'setSpokenLanguage':
