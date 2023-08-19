@@ -1413,7 +1413,7 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @public
+// @beta
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
