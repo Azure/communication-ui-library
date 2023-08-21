@@ -276,8 +276,6 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
@@ -293,8 +291,6 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
 }
 
@@ -1463,11 +1459,6 @@ export interface FileUploadState {
 export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @beta
-export type IsCaptionLanguageChangedListener = (event: {
-    activeCaptionLanguage: string;
-}) => void;
-
-// @beta
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -1487,11 +1478,6 @@ export type IsMutedChangedListener = (event: {
 export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
-}) => void;
-
-// @beta
-export type IsSpokenLanguageChangedListener = (event: {
-    activeSpokenLanguage: string;
 }) => void;
 
 // @public
