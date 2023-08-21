@@ -157,9 +157,9 @@ const onRenderParticipantDefault = (
                     borderRadius: '1rem'
                   }}
                 >
-                  {callingParticipant.raisedHand.order && (
+                  {callingParticipant.raisedHand.raisedHandOrderPosition && (
                     <Stack.Item>
-                      <Text>{callingParticipant.raisedHand.order}</Text>
+                      <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                     </Stack.Item>
                   )}
                   <Stack.Item>
@@ -201,6 +201,34 @@ const onRenderParticipantDefault = (
       ariaLabelledBy={participantAriaLabelledBy}
     />
   );
+};
+
+/**
+ * Sort participants by raised hand order position
+ */
+const sortParticipants = (participants: ParticipantListParticipant[]): ParticipantListParticipant[] => {
+  /* @conditional-compile-remove(raise-hand) */
+  const isParticipantListCallParticipant = function (participant: ParticipantListParticipant): boolean {
+    return 'raisedHand' in participant;
+  };
+
+  /* @conditional-compile-remove(raise-hand) */
+  participants.sort((a, b) => {
+    if (!isParticipantListCallParticipant(a) || !isParticipantListCallParticipant(b)) {
+      return 0;
+    }
+    const callA = a as CallParticipantListParticipant;
+    const callB = b as CallParticipantListParticipant;
+    if (callA.raisedHand && callB.raisedHand) {
+      return callA.raisedHand.raisedHandOrderPosition - callB.raisedHand.raisedHandOrderPosition;
+    } else if (callA.raisedHand) {
+      return -1;
+    } else if (callB.raisedHand) {
+      return 1;
+    }
+    return 0;
+  });
+  return participants;
 };
 
 const getParticipantsForDefaultRender = (
@@ -258,6 +286,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
+
+  sortParticipants(displayedParticipants);
+
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];

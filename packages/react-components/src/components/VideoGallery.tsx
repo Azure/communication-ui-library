@@ -36,6 +36,10 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
+/* @conditional-compile-remove(gallery-layouts) */
+import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
+/* @conditional-compile-remove(gallery-layouts) */
+import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 
 /**
  * @private
@@ -123,7 +127,11 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout =
+  | 'default'
+  | 'floatingLocalVideo'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -353,7 +361,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  const localTileNotInGrid = !!(
+    (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
+    remoteParticipants.length > 0
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -388,7 +399,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     const localVideoTileStyles = concatStyleSets(
-      shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {},
+      localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
         root: { borderRadius: theme.effects.roundedCorner4 }
       },
@@ -418,7 +429,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showLabel={
             !(
-              (shouldFloatLocalVideo && isNarrow) ||
+              (localTileNotInGrid && isNarrow) ||
               /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
                 '9:16'
             )
@@ -429,6 +440,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={localParticipant.raisedHand}
         />
       </Stack>
     );
@@ -441,7 +454,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onRenderAvatar,
     onRenderLocalVideoTile,
-    shouldFloatLocalVideo,
+    localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
     strings.localVideoCameraSwitcherLabel,
@@ -624,11 +637,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (screenShareParticipant && layout === 'focusedContent') {
+      return <FocusedContentLayout {...layoutProps} />;
+    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (layout === 'speaker') {
+      return <SpeakerVideoLayout {...layoutProps} />;
+    }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps]);
+  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
 
   return (
     <div
