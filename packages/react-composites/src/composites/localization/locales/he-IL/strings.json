@@ -167,10 +167,10 @@
     "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה",
     "moreButtonGalleryControlLabel": "אפשרויות גלריה",
     "moreButtonGalleryPositionToggleLabel": "העבר את הגלריה לחלק העליון",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGallerySpeakerLayoutLabel": "פריסת דובר",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "פריסה דינמית",
+    "moreButtonGalleryDefaultLayoutLabel": "פריסת גלריה",
+    "moreButtonGalleryFocusedContentLayoutLabel": "תוכן ממוקד"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",

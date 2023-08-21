@@ -167,9 +167,9 @@
     "participantIdIsMalformedMoreDetails": "Veuillez case activée que le format de l’ID de participant est correct",
     "moreButtonGalleryControlLabel": "Options de galerie",
     "moreButtonGalleryPositionToggleLabel": "Déplacer la galerie vers le haut",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
+    "moreButtonGallerySpeakerLayoutLabel": "Disposition du haut-parleur",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Disposition dynamique",
+    "moreButtonGalleryDefaultLayoutLabel": "Disposition de la galerie",
     "moreButtonGalleryFocusedContentLayoutLabel": "Un contenu ciblé"
   },
   "chat": {

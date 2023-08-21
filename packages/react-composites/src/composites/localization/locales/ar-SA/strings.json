@@ -167,10 +167,10 @@
     "participantIdIsMalformedMoreDetails": "الرجاء التحقق من أن معرف المشارك بالتنسيق الصحيح",
     "moreButtonGalleryControlLabel": "خيارات المعرض",
     "moreButtonGalleryPositionToggleLabel": "نقل المعرض إلى الأعلى",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGallerySpeakerLayoutLabel": "تخطيط السماعة",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "تخطيط ديناميكي",
+    "moreButtonGalleryDefaultLayoutLabel": "تخطيط المعرض",
+    "moreButtonGalleryFocusedContentLayoutLabel": "المحتوى المركز عليه"
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",

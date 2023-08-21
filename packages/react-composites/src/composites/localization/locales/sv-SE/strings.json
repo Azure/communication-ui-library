@@ -167,10 +167,10 @@
     "participantIdIsMalformedMoreDetails": "Kontrollera att deltagar-ID:t har rätt format",
     "moreButtonGalleryControlLabel": "Gallerialternativ",
     "moreButtonGalleryPositionToggleLabel": "Flytta galleriet högst upp",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGallerySpeakerLayoutLabel": "Högtalarlayout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisk layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallerilayout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Fokuserat innehåll"
   },
   "chat": {
     "chatListHeader": "I den här chatten",

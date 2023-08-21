@@ -167,10 +167,10 @@
     "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください",
     "moreButtonGalleryControlLabel": "ギャラリーのオプション",
     "moreButtonGalleryPositionToggleLabel": "ギャラリーを上に移動",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGallerySpeakerLayoutLabel": "スピーカーのレイアウト",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "動的なレイアウト",
+    "moreButtonGalleryDefaultLayoutLabel": "ギャラリーのレイアウト",
+    "moreButtonGalleryFocusedContentLayoutLabel": "優先コンテンツ"
   },
   "chat": {
     "chatListHeader": "このチャット内",

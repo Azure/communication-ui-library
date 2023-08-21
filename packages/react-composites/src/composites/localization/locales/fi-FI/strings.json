@@ -170,7 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Kaiuttimen asettelu",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
     "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

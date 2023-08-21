@@ -170,7 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "喇叭版面配置",
     "moreButtonGalleryFloatingLocalLayoutLabel": "動態版面配置",
     "moreButtonGalleryDefaultLayoutLabel": "資源庫配置",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "焦點內容"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
