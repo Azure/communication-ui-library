@@ -26,8 +26,10 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */
 import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -536,21 +538,26 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         );
       }
     };
+
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).startCaptions(options);
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.startCaptions(options);
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).stopCaptions();
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.stopCaptions();
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.setSpokenLanguage(language);
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
+      await captionsFeature.setCaptionLanguage(language);
     };
 
     return {

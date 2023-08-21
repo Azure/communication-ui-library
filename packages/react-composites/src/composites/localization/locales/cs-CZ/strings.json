@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "ID účastníka nemá správný formát.",
     "participantIdIsMalformedMoreDetails": "Zkontrolujte prosím, jestli je ID účastníka ve správném formátu.",
     "moreButtonGalleryControlLabel": "Možnosti galerie",
-    "moreButtonGalleryPositionToggleLabel": "Přesunout galerii na začátek"
+    "moreButtonGalleryPositionToggleLabel": "Přesunout galerii na začátek",
+    "moreButtonGallerySpeakerLayoutLabel": "Rozložení reproduktoru",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamické rozložení",
+    "moreButtonGalleryDefaultLayoutLabel": "Rozložení galerie",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Prioritní obsah"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
