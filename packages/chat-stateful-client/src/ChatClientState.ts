@@ -155,4 +155,5 @@ export type ChatErrorTarget =
   | 'ChatThreadClient.sendReadReceipt'
   | 'ChatThreadClient.sendTypingNotification'
   | 'ChatThreadClient.updateMessage'
-  | 'ChatThreadClient.updateTopic';
+  | 'ChatThreadClient.updateTopic'
+  | 'ChatThreadClient.updateProperties';

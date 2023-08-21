@@ -16,6 +16,7 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
+  UpdateChatThreadPropertiesOptions,
   UpdateMessageOptions
 } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
@@ -309,6 +310,43 @@ export class FakeChatThreadClient implements IChatThreadClient {
         readOn: now
       }
     );
+    return Promise.resolve();
+  }
+
+  updateProperties(request: UpdateChatThreadPropertiesOptions): Promise<void> {
+    const now = new Date(Date.now());
+    this.modifyThreadForUser((thread) => {
+      if (request.topic) {
+        thread.topic = request.topic;
+        thread.messages = [
+          ...thread.messages,
+          {
+            ...this.baseChatMessage(now),
+            type: 'topicUpdated',
+            content: {
+              topic: request.topic,
+              // Verify: semantics of initiator.
+              initiator: getIdentifierKind(this.userId)
+            }
+          }
+        ];
+      }
+    });
+
+    if (request.topic) {
+      this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated(
+        getThreadEventTargets(this.checkedGetThread(), this.userId),
+        {
+          ...this.baseChatThreadEvent(),
+          properties: {
+            topic: request.topic,
+            metadata: {}
+          },
+          updatedOn: new Date(Date.now()),
+          updatedBy: chatToSignalingParticipant(this.checkedGetMe())
+        }
+      );
+    }
     return Promise.resolve();
   }
 

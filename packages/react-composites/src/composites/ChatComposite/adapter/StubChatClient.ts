@@ -108,6 +108,9 @@ export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   listReadReceipts(): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     return pagedAsyncIterator([]);
   }
+  updateProperties(): Promise<void> {
+    return Promise.resolve();
+  }
 }
 
 /**
