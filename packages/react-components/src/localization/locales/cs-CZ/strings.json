@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "Návrhy"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "Stáhnout",
+    "dismissButtonAriaLabel": "Zavřít"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",

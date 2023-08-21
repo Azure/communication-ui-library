@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "الاقتراحات"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "تنزيل",
+    "dismissButtonAriaLabel": "إغلاق"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "تم إرسال الرسالة",

@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "Ehdotuksia"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "Lataa",
+    "dismissButtonAriaLabel": "Sulje"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Viesti on lähetetty",

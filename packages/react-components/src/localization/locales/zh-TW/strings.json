@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "建議"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "下載",
+    "dismissButtonAriaLabel": "關閉"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "訊息已傳送",

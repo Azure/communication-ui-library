@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "Sugerencias"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "Descargar",
+    "dismissButtonAriaLabel": "Cerrar"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensaje enviado",

@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "제안"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "다운로드",
+    "dismissButtonAriaLabel": "닫기"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",

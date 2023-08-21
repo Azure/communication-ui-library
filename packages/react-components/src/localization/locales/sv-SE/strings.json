@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "Förslag"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "Ladda ner",
+    "dismissButtonAriaLabel": "Stäng"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",

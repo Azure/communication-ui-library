@@ -32,8 +32,8 @@
     "mentionPopoverHeader": "Forslag"
   },
   "imageGallery": {
-    "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "downloadButtonLabel": "Last ned",
+    "dismissButtonAriaLabel": "Lukk"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Melding sendt",
