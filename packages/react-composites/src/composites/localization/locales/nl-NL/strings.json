@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personen",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
-    "peoplePaneSubTitle": "In dit gesprek",
+    "peoplePaneSubTitle": "In dit gesprek {numberOfPeople}",
     "privacyPolicy": "Privacybeleid",
     "rejoinCallButtonLabel": "Opnieuw deelnemen aan gesprek",
     "removedFromCallMoreDetails": "Een andere deelnemer heeft u uit het gesprek verwijderd.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Kan de tenant-id voor de doeldeelnemer niet omzetten",
     "unableToResolveTenantMoreDetails": "Controleer of de deelnemer-id juist is ingevoerd",
     "participantIdIsMalformedTitle": "Deelnemer-id heeft niet de juiste indeling",
-    "participantIdIsMalformedMoreDetails": "Controleer of de deelnemer-id de juiste indeling heeft"
+    "participantIdIsMalformedMoreDetails": "Controleer of de deelnemer-id de juiste indeling heeft",
+    "moreButtonGalleryControlLabel": "Galerieopties",
+    "moreButtonGalleryPositionToggleLabel": "Galerie naar boven verplaatsen"
   },
   "chat": {
     "chatListHeader": "In deze chat",

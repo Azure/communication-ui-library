@@ -184,6 +184,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.unmute.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
+    /* @conditional-compile-remove(raise-hand) */
+    this.raiseHand.bind(this);
+    /* @conditional-compile-remove(raise-hand) */
+    this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
@@ -344,6 +348,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Stop the current active screen share. */
   public async stopScreenShare(): Promise<void> {
     await this.callAdapter.stopScreenShare();
+  }
+  /* @conditional-compile-remove(raise-hand) */
+  /** Raise hand for local user. */
+  public async raiseHand(): Promise<void> {
+    await this.callAdapter.raiseHand();
+  }
+  /* @conditional-compile-remove(raise-hand) */
+  /** Lower hand for local user. */
+  public async lowerHand(): Promise<void> {
+    await this.callAdapter.lowerHand();
   }
   /** Create a stream view for a remote participants video feed. */
   public async createStreamView(
@@ -891,14 +905,17 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
+  /* @conditional-compile-remove(video-background-effects) */
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  options?: AzureCommunicationChatAdapterOptions;
+  chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
  * Create a {@link CallWithChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
  *
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Please note that chatThreadClient has to be created by StatefulChatClient via chatClient.getChatThreadClient(chatThreadId) API.
  * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
  * @public
@@ -909,15 +926,23 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callLocator,
   chatClient,
   chatThreadClient,
+  /* @conditional-compile-remove(video-background-effects) */
+  callAdapterOptions,
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  options
+  chatAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
-  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
+  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(
+    callClient,
+    callAgent,
+    callLocator,
+    /* @conditional-compile-remove(video-background-effects) */
+    callAdapterOptions
+  );
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    options
+    chatAdapterOptions
   );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);

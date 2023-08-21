@@ -72,7 +72,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Optimal Video Count
         'optimal-video-count',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+        // Feature for custom video gallery layouts
+        'gallery-layouts'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -84,7 +86,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // raise hands feature
         'raise-hand',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+        // Feature for custom video gallery layouts
+        'gallery-layouts'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Persone",
     "peopleButtonTooltipOpen": "Mostra partecipanti",
     "peopleButtonTooltipClose": "Nascondi partecipanti",
-    "peoplePaneSubTitle": "In questa chiamata",
+    "peoplePaneSubTitle": "In questa chiamata {numberOfPeople}",
     "privacyPolicy": "Informativa sulla privacy",
     "rejoinCallButtonLabel": "Partecipa alla chiamata",
     "removedFromCallMoreDetails": "Un altro partecipante ti ha rimosso dalla chiamata.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Non è possibile risolvere l'ID tenant per il partecipante di destinazione",
     "unableToResolveTenantMoreDetails": "Verifica che l'ID partecipante sia stato immesso correttamente",
     "participantIdIsMalformedTitle": "Il formato dell'ID partecipante non è corretto",
-    "participantIdIsMalformedMoreDetails": "Verifica che il formato dell'ID partecipante sia corretto"
+    "participantIdIsMalformedMoreDetails": "Verifica che il formato dell'ID partecipante sia corretto",
+    "moreButtonGalleryControlLabel": "Opzioni della raccolta",
+    "moreButtonGalleryPositionToggleLabel": "Sposta raccolta in alto"
   },
   "chat": {
     "chatListHeader": "In questa chat",

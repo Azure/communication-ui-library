@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Remove transfer request prompt example from Transfer storybook documentation",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

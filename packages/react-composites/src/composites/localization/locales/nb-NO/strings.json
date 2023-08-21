@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personer",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
-    "peoplePaneSubTitle": "I denne samtalen",
+    "peoplePaneSubTitle": "I denne samtalen {numberOfPeople}",
     "privacyPolicy": "Personvernerklæring",
     "rejoinCallButtonLabel": "Bli med i samtale på nytt",
     "removedFromCallMoreDetails": "En annen deltaker fjernet deg fra samtalen.",
@@ -164,7 +164,9 @@
     "unableToResolveTenantTitle": "Kan ikke løse leier-ID for måldeltakeren",
     "unableToResolveTenantMoreDetails": "Kontroller at deltaker-ID-en er riktig angitt",
     "participantIdIsMalformedTitle": "Deltaker-ID-en har ikke riktig format",
-    "participantIdIsMalformedMoreDetails": "Kontroller at deltaker-ID-en har riktig format"
+    "participantIdIsMalformedMoreDetails": "Kontroller at deltaker-ID-en har riktig format",
+    "moreButtonGalleryControlLabel": "Gallerialternativer",
+    "moreButtonGalleryPositionToggleLabel": "Flytt galleri øverst"
   },
   "chat": {
     "chatListHeader": "I denne chatten",

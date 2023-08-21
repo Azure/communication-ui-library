@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Fix speaker icon in contextual menu of microphone and devices button",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "none"
-}

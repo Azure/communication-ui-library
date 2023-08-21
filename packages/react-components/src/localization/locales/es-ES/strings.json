@@ -7,9 +7,10 @@
     "mutedIconLabel": "Silenciado",
     "displayNamePlaceholder": "Participante sin nombre",
     "participantStateRinging": "Llamando...",
-    "participantStateHold": "En espera",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "En espera"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} más"
   },
   "typingIndicator": {
     "singleUser": "{user} está escribiendo...",
@@ -112,11 +113,11 @@
     "tooltipOffContent": "Presentar la pantalla"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Participar",
+    "onLabel": "Bajar",
+    "tooltipDisabledContent": "La acción Levantar la mano está deshabilitada",
+    "tooltipOnContent": "Bajar la mano",
+    "tooltipOffContent": "Levantar la mano"
   },
   "messageThread": {
     "yesterday": "Ayer",

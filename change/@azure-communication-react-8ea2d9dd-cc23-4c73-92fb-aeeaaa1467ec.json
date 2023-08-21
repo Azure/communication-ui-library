@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Add azure deployment failure to the pipeline",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
