@@ -7,7 +7,7 @@ import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CallState,
