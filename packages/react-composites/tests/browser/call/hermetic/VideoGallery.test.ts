@@ -2,6 +2,7 @@
 // Licensed under the MIT license.
 
 import {
+  addScreenshareStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
@@ -174,5 +175,25 @@ test.describe('VideoGallery tests', async () => {
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Dynamic layout")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery only renders screenshare stream in focused content', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    addScreenshareStream(vasily, true);
+
+    const participants = [paul, vasily];
+
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("Focused content")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('focused-content-layout.png');
   });
 });
