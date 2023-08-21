@@ -132,7 +132,7 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
           const ret = await target.stopCaptions(...args);
           this._context.setIsCaptionActive(this._call.id, false);
           this._context.setStartCaptionsInProgress(this._call.id, false);
-          //this._context.clearCaptions(this._call.id);
+          this._context.clearCaptions(this._call.id);
           return ret;
         }, 'Call.feature');
       case 'setSpokenLanguage':
