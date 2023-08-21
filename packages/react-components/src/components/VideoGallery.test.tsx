@@ -55,70 +55,6 @@ describe('VideoGallery default layout tests', () => {
     ).toBe(true);
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
-  test('should render only one grid tile when in speaker layout', () => {
-    const localParticipant = createLocalParticipant({
-      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
-    });
-    const remoteParticipants = Array.from({ length: 2 }, () =>
-      createRemoteParticipant({
-        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
-        isSpeaking: true
-      })
-    );
-
-    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
-    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
-    const { container } = render(
-      <VideoGallery
-        layout="speaker"
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-        dominantSpeakers={[remoteParticipants[0].userId]}
-      />
-    );
-
-    const tiles = getGridTiles(container);
-    expect(tiles.length).toBe(1);
-    expect(
-      tiles.some((tile) => {
-        return getDisplayName(tile) === 'Remote Participant1';
-      })
-    ).toBe(true);
-  });
-
-  /* @conditional-compile-remove(gallery-layouts) */
-  test('should render different speaker', () => {
-    const localParticipant = createLocalParticipant({
-      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
-    });
-    const remoteParticipants = Array.from({ length: 2 }, () =>
-      createRemoteParticipant({
-        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
-        isSpeaking: true
-      })
-    );
-
-    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
-    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
-    const { container } = render(
-      <VideoGallery
-        layout="speaker"
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-        dominantSpeakers={[remoteParticipants[1].userId]}
-      />
-    );
-
-    const tiles = getGridTiles(container);
-    expect(tiles.length).toBe(1);
-    expect(
-      tiles.some((tile) => {
-        return getDisplayName(tile) === 'Remote Participant2';
-      })
-    ).toBe(true);
-  });
-
   test('should not have floating local video tile present', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
@@ -344,6 +280,114 @@ describe('VideoGallery floating local video layout tests', () => {
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
     expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Video Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
+  });
+});
+
+/* @conditional-compile-remove(gallery-layouts) */
+describe('VideoGallery Speaker layout tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('should render only one grid tile when in speaker layout', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isSpeaking: true
+      })
+    );
+
+    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    const { container } = render(
+      <VideoGallery
+        layout="speaker"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        dominantSpeakers={[remoteParticipants[0].userId]}
+      />
+    );
+
+    const tiles = getGridTiles(container);
+    expect(tiles.length).toBe(1);
+    expect(
+      tiles.some((tile) => {
+        return getDisplayName(tile) === 'Remote Participant1';
+      })
+    ).toBe(true);
+  });
+
+  test('should render different speaker', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isSpeaking: true
+      })
+    );
+
+    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    const { container } = render(
+      <VideoGallery
+        layout="speaker"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        dominantSpeakers={[remoteParticipants[1].userId]}
+      />
+    );
+
+    const tiles = getGridTiles(container);
+    expect(tiles.length).toBe(1);
+    expect(
+      tiles.some((tile) => {
+        return getDisplayName(tile) === 'Remote Participant2';
+      })
+    ).toBe(true);
+  });
+});
+
+/* @conditional-compile-remove(gallery-layouts) */
+describe('VideoGallery Focused Content layout tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('Should render only the screenshare stream in the grid when in focused content layout', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isScreenSharingOn: true
+      })
+    );
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteScreenSharingParticipant',
+        displayName: 'Remote Screen Sharing Participant',
+        isScreenSharingOn: true,
+        screenShareStream: { isAvailable: true, renderElement: createRemoteScreenShareVideoDivElement() }
+      })
+    );
+
+    const { container } = render(
+      <VideoGallery
+        layout="focusedContent"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+      />
+    );
+
+    const tiles = getTiles(container);
+    expect(tiles.length).toBe(1);
   });
 });
 
