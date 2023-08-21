@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "Deelnemer-id heeft niet de juiste indeling",
     "participantIdIsMalformedMoreDetails": "Controleer of de deelnemer-id de juiste indeling heeft",
     "moreButtonGalleryControlLabel": "Galerieopties",
-    "moreButtonGalleryPositionToggleLabel": "Galerie naar boven verplaatsen"
+    "moreButtonGalleryPositionToggleLabel": "Galerie naar boven verplaatsen",
+    "moreButtonGallerySpeakerLayoutLabel": "Luidsprekerindeling",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamische indeling",
+    "moreButtonGalleryDefaultLayoutLabel": "Galerie-indeling",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Inhoud met prioriteit"
   },
   "chat": {
     "chatListHeader": "In deze chat",

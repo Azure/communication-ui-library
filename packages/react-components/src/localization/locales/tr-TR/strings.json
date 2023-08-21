@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "İndir",
+    "dismissButtonAriaLabel": "Kapat"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
     "deliveredTooltipText": "Gönderilen",

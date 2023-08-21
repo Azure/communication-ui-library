@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "참가자 ID의 형식이 잘못되었습니다.",
     "participantIdIsMalformedMoreDetails": "참가자 ID가 올바른 형식인지 검사.",
     "moreButtonGalleryControlLabel": "갤러리 옵션",
-    "moreButtonGalleryPositionToggleLabel": "갤러리를 맨 위로 이동"
+    "moreButtonGalleryPositionToggleLabel": "갤러리를 맨 위로 이동",
+    "moreButtonGallerySpeakerLayoutLabel": "스피커 레이아웃",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "동적 레이아웃",
+    "moreButtonGalleryDefaultLayoutLabel": "갤러리 레이아웃",
+    "moreButtonGalleryFocusedContentLayoutLabel": "중요 콘텐츠"
   },
   "chat": {
     "chatListHeader": "채팅 참가자",

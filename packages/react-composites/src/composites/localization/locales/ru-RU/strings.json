@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
     "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате",
     "moreButtonGalleryControlLabel": "Параметры коллекции",
-    "moreButtonGalleryPositionToggleLabel": "Переместить коллекцию вверх"
+    "moreButtonGalleryPositionToggleLabel": "Переместить коллекцию вверх",
+    "moreButtonGallerySpeakerLayoutLabel": "Макет динамика",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический макет",
+    "moreButtonGalleryDefaultLayoutLabel": "Макет коллекции",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы"
   },
   "chat": {
     "chatListHeader": "В этом чате",

@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "参与者 ID 的格式不正确",
     "participantIdIsMalformedMoreDetails": "请检查参与者 ID 的格式正确",
     "moreButtonGalleryControlLabel": "库选项",
-    "moreButtonGalleryPositionToggleLabel": "将库移到顶部"
+    "moreButtonGalleryPositionToggleLabel": "将库移到顶部",
+    "moreButtonGallerySpeakerLayoutLabel": "扬声器布局",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "动态布局",
+    "moreButtonGalleryDefaultLayoutLabel": "库布局",
+    "moreButtonGalleryFocusedContentLayoutLabel": "重点内容"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
