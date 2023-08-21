@@ -42,7 +42,12 @@ import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } f
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type {
+  BackgroundBlurConfig,
+  BackgroundReplacementConfig,
+  CapabilitiesChangeHandler,
+  CapabilitiesChangeInfo
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -70,6 +75,8 @@ import {
 } from './CallAdapter';
 /* @conditional-compile-remove(call-transfer) */
 import { TransferRequestedListener } from './CallAdapter';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
@@ -1007,6 +1014,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
+  /* @conditional-compile-remove(capabilities) */
+  on(event: 'capabilitiesChanged', listener: CapabilitiesChangeHandler): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1041,6 +1050,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
     /* @conditional-compile-remove(call-transfer) */
     this.call?.feature(Features.Transfer).on('transferRequested', this.transferRequested.bind(this));
+    /* @conditional-compile-remove(capabilities) */
+    this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
   }
 
   private unsubscribeCallEvents(): void {
@@ -1129,6 +1140,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.emitter.emit('transferRequested', newArgs);
   }
 
+  /* @conditional-compile-remove(capabilities) */
+  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
+    if (!data.newValue.turnVideoOn?.isPresent) {
+      this.stopCamera();
+    }
+    this.emitter.emit('capabilitiesChanged', data);
+  }
+
   private callIdChanged(): void {
     this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
   }
@@ -1160,6 +1179,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
+  /* @conditional-compile-remove(capabilities) */
+  off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
