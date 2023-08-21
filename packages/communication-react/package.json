@@ -48,7 +48,7 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": ">=1.14.1",
+    "@azure/communication-calling": ">=1.15.3",
     "@azure/communication-chat": ">=1.2.0",
     "@types/react": ">=16.8.0 <19.0.0",
     "@types/react-dom": ">=16.8.0 <19.0.0",
@@ -88,7 +88,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": ">=1.14.1",
+    "@azure/communication-calling": ">=1.15.3",
     "@azure/communication-chat": ">=1.2.0",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "~7.16.0",
