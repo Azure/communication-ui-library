@@ -15,6 +15,8 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useEffect } from 'react';
@@ -93,6 +95,12 @@ export interface CallArrangementProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
 }
 
 /**
@@ -315,6 +323,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  userSetGalleryLayout={props.userSetGalleryLayout}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
                 />

@@ -53,7 +53,7 @@
     "peoplePaneTitle": "連絡先",
     "peopleButtonTooltipOpen": "参加者を表示",
     "peopleButtonTooltipClose": "参加者を非表示",
-    "peoplePaneSubTitle": "通話中",
+    "peoplePaneSubTitle": "この通話では {numberOfPeople} 人",
     "privacyPolicy": "プライバシー ポリシー",
     "rejoinCallButtonLabel": "通話に再度参加",
     "removedFromCallMoreDetails": "別の参加者があなたを通話から削除しました。",
@@ -164,7 +164,13 @@
     "unableToResolveTenantTitle": "ターゲット参加者のテナント ID を解決できません",
     "unableToResolveTenantMoreDetails": "参加者 ID が正しく入力チェックしてください",
     "participantIdIsMalformedTitle": "参加者 ID の形式が正しくありません",
-    "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください"
+    "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください",
+    "moreButtonGalleryControlLabel": "ギャラリーのオプション",
+    "moreButtonGalleryPositionToggleLabel": "ギャラリーを上に移動",
+    "moreButtonGallerySpeakerLayoutLabel": "スピーカーのレイアウト",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "動的なレイアウト",
+    "moreButtonGalleryDefaultLayoutLabel": "ギャラリーのレイアウト",
+    "moreButtonGalleryFocusedContentLayoutLabel": "優先コンテンツ"
   },
   "chat": {
     "chatListHeader": "このチャット内",

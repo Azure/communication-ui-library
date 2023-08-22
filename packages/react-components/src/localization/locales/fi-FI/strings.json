@@ -7,9 +7,10 @@
     "mutedIconLabel": "Mykistetty",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
-    "participantStateHold": "Pidossa",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "Pidossa"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} lisää"
   },
   "typingIndicator": {
     "singleUser": "{user} käyttäjä kirjoittaa parhaillaan...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Lataa",
+    "dismissButtonAriaLabel": "Sulje"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Viesti on lähetetty",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "Näytä oma näyttösi"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Nosta",
+    "onLabel": "Laske",
+    "tooltipDisabledContent": "Nosta käsi -toiminto on poistettu käytöstä",
+    "tooltipOnContent": "Laske käsi",
+    "tooltipOffContent": "Nosta käsi"
   },
   "messageThread": {
     "yesterday": "eilen",

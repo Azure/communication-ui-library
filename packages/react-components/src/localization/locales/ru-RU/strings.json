@@ -7,9 +7,10 @@
     "mutedIconLabel": "Микрофон отключен",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
-    "participantStateHold": "На удержании",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "На удержании"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "и еще {overflowCount}"
   },
   "typingIndicator": {
     "singleUser": "{user} вводит текст...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Скачать",
+    "dismissButtonAriaLabel": "Закрыть"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "Демонстрировать экран"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Поднять руку",
+    "onLabel": "Опустить",
+    "tooltipDisabledContent": "Действие \"Поднять руку\" отключено",
+    "tooltipOnContent": "Опустить руку",
+    "tooltipOffContent": "Поднять руку"
   },
   "messageThread": {
     "yesterday": "Вчера",

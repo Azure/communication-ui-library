@@ -2227,7 +2227,6 @@ export type ParticipantListProps = {
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     participants: CallParticipantListParticipant[];
     myUserId: string;
-    totalParticipantCount?: number;
 };
 
 // @public

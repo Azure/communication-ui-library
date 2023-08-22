@@ -7,9 +7,10 @@
     "mutedIconLabel": "Muet activé",
     "displayNamePlaceholder": "Participant sans nom",
     "participantStateRinging": "Appel en cours...",
-    "participantStateHold": "En attente",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "En attente"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} plus"
   },
   "typingIndicator": {
     "singleUser": "{user} en train d’écrire...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Télécharger",
+    "dismissButtonAriaLabel": "Fermer"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message envoyé",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "Présenter votre écran"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Augmenter",
+    "onLabel": "Inférieur",
+    "tooltipDisabledContent": "L'action lever la main est désactivée",
+    "tooltipOnContent": "Baisser la main",
+    "tooltipOffContent": "Lever les mains"
   },
   "messageThread": {
     "yesterday": "Hier",

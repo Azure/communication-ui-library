@@ -7,9 +7,10 @@
     "mutedIconLabel": "음소거됨",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
-    "participantStateHold": "대기 중",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "대기 중"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount}개 더 보기"
   },
   "typingIndicator": {
     "singleUser": "{user} 님이 입력 중...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "다운로드",
+    "dismissButtonAriaLabel": "닫기"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "화면 프레젠테이션"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "손 들기",
+    "onLabel": "낮추기",
+    "tooltipDisabledContent": "손 올리기 작업이 비활성화되었습니다.",
+    "tooltipOnContent": "손 내리기",
+    "tooltipOffContent": "손 들기"
   },
   "messageThread": {
     "yesterday": "어제",

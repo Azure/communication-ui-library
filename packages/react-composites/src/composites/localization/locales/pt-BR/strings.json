@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Pessoas",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
-    "peoplePaneSubTitle": "Nesta chamada",
+    "peoplePaneSubTitle": "Nessa chamada {numberOfPeople}",
     "privacyPolicy": "Política de privacidade",
     "rejoinCallButtonLabel": "Reingressar na chamada",
     "removedFromCallMoreDetails": "Outro participante removeu você da chamada.",
@@ -164,7 +164,13 @@
     "unableToResolveTenantTitle": "Não é possível resolve ID do locatário para o participante de destino",
     "unableToResolveTenantMoreDetails": "Verifique se a ID do participante foi inserida corretamente",
     "participantIdIsMalformedTitle": "A ID do participante não está no formato correto",
-    "participantIdIsMalformedMoreDetails": "Verifique marcar a ID do participante está no formato correto"
+    "participantIdIsMalformedMoreDetails": "Verifique marcar a ID do participante está no formato correto",
+    "moreButtonGalleryControlLabel": "Opções da galeria",
+    "moreButtonGalleryPositionToggleLabel": "Mover a galeria para o topo",
+    "moreButtonGallerySpeakerLayoutLabel": "Layout do alto-falante",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Layout dinâmico",
+    "moreButtonGalleryDefaultLayoutLabel": "Layout da galeria",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Conteúdo focado"
   },
   "chat": {
     "chatListHeader": "Neste chat",

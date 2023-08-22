@@ -16,11 +16,12 @@ import createThread from './routes/createThread';
 import addUser from './routes/addUser';
 import createRoom from './routes/createRoom';
 import addUserToRoom from './routes/addUserToRoom';
+import uploadToAzureBlobStorage from './routes/uploadToAzureBlobStorage';
 
 const app = express();
 
 app.use(logger('tiny'));
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, 'build')));
@@ -72,6 +73,12 @@ app.use('/createRoom', cors(), createRoom);
  * purpose: Calling: add user to room with the given role
  */
 app.use('/addUserToRoom', cors(), addUserToRoom);
+
+/**
+ * route: /getLogUploadData
+ * purpose: Get tokens and endpoints for uploading logs to Azure Blob Storage
+ */
+app.use('/uploadToAzureBlobStorage', cors(), uploadToAzureBlobStorage);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

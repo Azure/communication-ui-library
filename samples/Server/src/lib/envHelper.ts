@@ -27,3 +27,18 @@ export const getAdminUserId = (): string => {
 
   return adminUserId;
 };
+
+export const getAzureBlobStorageEndpoint = (): string => {
+  const uri = new URL(process.env['EndpointUrl'] || appSettings.EndpointUrl);
+  return `${uri.protocol}//${uri.host}`;
+};
+
+export const getAzureBlobStorageConnectionString = (): string => {
+  const accountName = process.env['AzureBlobStorageConnectionString'] || appSettings.AzureBlobStorageConnectionString;
+
+  if (!accountName) {
+    throw new Error('No Azure Blob Storage Connection String provided');
+  }
+
+  return accountName;
+};
