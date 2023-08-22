@@ -42,12 +42,9 @@ import { AcceptTransferOptions, LocalVideoStream, TransferRequestedEventArgs } f
 /* @conditional-compile-remove(close-captions) */
 import { StartCaptionsOptions, TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
-import type {
-  BackgroundBlurConfig,
-  BackgroundReplacementConfig,
-  CapabilitiesChangeHandler,
-  CapabilitiesChangeInfo
-} from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import type { CapabilitiesChangeHandler, CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
