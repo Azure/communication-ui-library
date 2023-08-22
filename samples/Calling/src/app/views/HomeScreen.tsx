@@ -1,23 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { /* useEffect, */ useState } from 'react';
-import {
-  Stack,
-  PrimaryButton,
-  Image,
-  ChoiceGroup,
-  IChoiceGroupOption,
-  Text,
-  TextField,
-  Callout,
-  mergeStyles,
-  Link
-} from '@fluentui/react';
+import React, { useState } from 'react';
+import { Stack, PrimaryButton, Image, ChoiceGroup, IChoiceGroupOption, Text, TextField } from '@fluentui/react';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { IButtonStyles, IStackStyles, IStackTokens, ITextFieldProps, IconButton } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
-import { registerIcons } from '@fluentui/react';
+import { registerIcons, Callout, mergeStyles, Link } from '@fluentui/react';
 import heroSVG from '../../assets/hero.svg';
 import {
   imgStyle,
@@ -59,12 +48,12 @@ import { Backspace20Regular } from '@fluentui/react-icons';
 import { useIsMobile } from '../utils/useIsMobile';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { useBoolean, useId } from '@fluentui/react-hooks';
+import { CallAdapterLocator } from '@azure/communication-react';
 
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
-    /* @conditional-compile-remove(rooms) */
-    callLocator?: TeamsMeetingLinkLocator | RoomLocator;
+    callLocator?: CallAdapterLocator | TeamsMeetingLinkLocator | /* @conditional-compile-remove(rooms) */ RoomLocator;
     /* @conditional-compile-remove(rooms) */
     option?: string;
     /* @conditional-compile-remove(rooms) */
@@ -179,6 +168,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-adhoc-call) */
   const outboundTeamsUsersTextFieldLabelId: string = useId('outbound-teams-users-text-field');
+
+  let showDisplayNameField = true;
+  /* @conditional-compile-remove(teams-identity-support) */
+  showDisplayNameField = !teamsIdentityChosen;
 
   return (
     <Stack
@@ -346,7 +339,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
               )
             }
           </Stack>
-          {!teamsIdentityChosen && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
+          {showDisplayNameField && <DisplayNameField defaultName={displayName} setName={setDisplayName} />}
           <PrimaryButton
             disabled={!buttonEnabled}
             className={buttonStyle}

@@ -42,6 +42,13 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(raise-hand) */
+import {
+  HandRight20Filled,
+  HandRightOff20Filled,
+  HandRight20Regular,
+  HandRightOff20Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(close-captions) */
 import {
   ClosedCaption20Regular,
@@ -235,6 +242,14 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
+  /* @conditional-compile-remove(raise-hand) */
+  ControlButtonRaiseHand: <HandRight20Filled />,
+  /* @conditional-compile-remove(raise-hand) */
+  ControlButtonLowerHand: <HandRightOff20Filled />,
+  /* @conditional-compile-remove(raise-hand) */
+  RaiseHandContextualMenuItem: <HandRight20Regular />,
+  /* @conditional-compile-remove(raise-hand) */
+  LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */

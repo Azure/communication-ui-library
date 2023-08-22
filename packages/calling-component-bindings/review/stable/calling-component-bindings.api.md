@@ -138,7 +138,10 @@ export interface CommonCallingHandlers {
 }
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+
+// @public
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
@@ -196,7 +199,6 @@ export const microphoneButtonSelector: MicrophoneButtonSelector;
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     participants: CallParticipantListParticipant[];
     myUserId: string;
-    totalParticipantCount?: number;
 };
 
 // @public

@@ -5,7 +5,7 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
-import { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -37,6 +37,8 @@ import type {
   PhoneNumberIdentifier
 } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
+/* @conditional-compile-remove(video-background-effects) */
+import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -125,6 +127,11 @@ export type CallAdapterClientState = {
    * Default set of background images for background replacement effect.
    */
   videoBackgroundImages?: VideoBackgroundImage[];
+  /* @conditional-compile-remove(video-background-effects) */
+  /**
+   * Dependency to be injected for video background effect.
+   */
+  onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * State to track the selected video background effect.
@@ -411,6 +418,20 @@ export interface CallAdapterCallOperations {
    * @public
    */
   startScreenShare(): Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Raise hand for current user
+   *
+   * @public
+   */
+  raiseHand(): Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * lower hand for current user
+   *
+   * @public
+   */
+  lowerHand(): Promise<void>;
   /**
    * Stop sharing the screen
    *

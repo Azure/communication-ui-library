@@ -4,7 +4,13 @@
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
+import {
+  _IdentifierProvider,
+  FileDownloadError,
+  FileDownloadHandler,
+  lightTheme,
+  darkTheme
+} from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -64,7 +70,8 @@ export const FakeAdapterApp = (): JSX.Element => {
           fakeAdapters.service.model,
           fakeChatAdapterArgs.localParticipant,
           fakeChatAdapterArgs.remoteParticipants[0],
-          fakeAdapters.service.threadId
+          fakeAdapters.service.threadId,
+          fakeChatAdapterArgs.inlineImageUrl
         );
       }
     })();
@@ -110,6 +117,7 @@ export const FakeAdapterApp = (): JSX.Element => {
             onFetchAvatarPersonaData={
               fakeChatAdapterArgs.customDataModelEnabled ? customOnFetchAvatarPersonaData : undefined
             }
+            fluentTheme={fakeChatAdapterArgs.theme === 'dark' ? darkTheme : lightTheme}
           />
         </_IdentifierProvider>
       )}
@@ -165,7 +173,8 @@ const sendRemoteInlineImageMessage = (
   chatClientModel: Model,
   localParticipant: ChatParticipant,
   remoteParticipant: ChatParticipant,
-  threadId: string
+  threadId: string,
+  inlineImageUrl?: string
 ): void => {
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
@@ -190,7 +199,7 @@ const sendRemoteInlineImageMessage = (
           attachmentType: 'teamsInlineImage',
           contentType: 'png',
           name: '',
-          url: 'images/inlineImageExample1.png',
+          url: inlineImageUrl || 'images/inlineImageExample1.png',
           previewUrl: 'images/inlineImageExample1.png'
         }
       ]

@@ -9,7 +9,9 @@ const CopyPlugin = require("copy-webpack-plugin");
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
-    entry: './src/index.tsx',
+    entry: {
+      build: './src/index.tsx'
+    },
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
     resolve:  {
@@ -32,7 +34,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     },
     output: {
       path: path.join(sampleAppDir, env.production ? '/dist/build' : 'dist'),
-      filename: 'build.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [
@@ -111,6 +113,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         },
         {
           path: '/addUserToRoom',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/uploadToAzureBlobStorage',
           target: 'http://[::1]:8080'
         }
       ]

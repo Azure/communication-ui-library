@@ -47,6 +47,9 @@ import { CallState } from '@internal/calling-stateful-client';
 import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
+import { deviceCountSelector } from './selectors/deviceCountSelector';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /**
  * Props for {@link CallComposite}.
@@ -218,6 +221,16 @@ export type CallCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Options for controlling the starting layout of the composite's video gallery
+   */
+  galleryOptions?: {
+    /**
+     * Layout for the gallery when the call starts
+     */
+    layout?: VideoGalleryLayout;
+  };
 };
 
 type MainScreenProps = {
@@ -238,6 +251,29 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
+  const adapter = useAdapter();
+  const { camerasCount, microphonesCount } = useSelector(deviceCountSelector);
+  const hasCameras = camerasCount > 0;
+  const hasMicrophones = microphonesCount > 0;
+
+  useEffect(() => {
+    (async () => {
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+      });
+      await adapter.askDevicePermission(constrain);
+      adapter.queryCameras();
+      adapter.queryMicrophones();
+      adapter.querySpeakers();
+    })();
+  }, [
+    adapter,
+    // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
+    // as we cannot request permissions when there are no devices.
+    hasCameras,
+    hasMicrophones
+  ]);
+
   const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
@@ -274,7 +310,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
 
-  const adapter = useAdapter();
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
@@ -285,7 +320,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'roomNotFound':
       pageElement = (
         <NoticePage
-          iconName="NoticePageInvalidRoom"
+          iconName="NoticePageAccessDeniedRoomsCall"
           title={locale.strings.call.roomNotFoundTitle}
           moreDetails={locale.strings.call.roomNotFoundDetails}
           dataUiId={'room-not-found-page'}
@@ -295,7 +330,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'deniedPermissionToRoom':
       pageElement = (
         <NoticePage
-          iconName="NoticePageInvalidRoom"
+          iconName="NoticePageAccessDeniedRoomsCall"
           title={locale.strings.call.deniedPermissionToRoomTitle}
           moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
           dataUiId={'not-invited-to-room-page'}
@@ -420,6 +455,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(gallery-layouts) */
+          galleryLayout={
+            props.options?.galleryOptions?.layout ? props.options.galleryOptions.layout : 'floatingLocalVideo'
+          }
         />
       );
       break;
@@ -503,18 +542,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     options,
     formFactor = 'desktop'
   } = props;
-
-  useEffect(() => {
-    (async () => {
-      const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
-      });
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
-      adapter.querySpeakers();
-    })();
-  }, [adapter]);
 
   const mobileView = formFactor === 'mobile';
 

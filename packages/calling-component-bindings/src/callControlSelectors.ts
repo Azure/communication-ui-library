@@ -13,11 +13,12 @@ import {
   getLocalVideoStreams
 } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
-import { getCapabilites } from './baseSelectors';
+import { getCapabilites, getRole } from './baseSelectors';
 /* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
-
+/* @conditional-compile-remove(raise-hand) */
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 /**
  * Selector type for {@link MicrophoneButton} component.
  *
@@ -41,11 +42,25 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [getCallExists, getIsMuted, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
-  (callExists, isMuted, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
+  [
+    getCallExists,
+    getIsMuted,
+    getDeviceManager,
+    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getRole
+  ],
+  (
+    callExists,
+    isMuted,
+    deviceManager,
+    /* @conditional-compile-remove(capabilities) */ capabilities,
+    /* @conditional-compile-remove(capabilities) */ role
+  ) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
     /* @conditional-compile-remove(capabilities) */
-    const incapable = capabilities?.muteUnmuteMic.isPresent === false;
+    const incapable =
+      (capabilities?.unmuteMic.isPresent === false && capabilities?.unmuteMic.reason !== 'NotInitialized') ||
+      role === 'Consumer';
     return {
       disabled: !callExists || !permission || /* @conditional-compile-remove(capabilities) */ incapable,
       checked: callExists ? !isMuted : false,
@@ -78,13 +93,25 @@ export type CameraButtonSelector = (
  * @public
  */
 export const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
-  [getLocalVideoStreams, getDeviceManager, /* @conditional-compile-remove(capabilities) */ getCapabilites],
-  (localVideoStreams, deviceManager, /* @conditional-compile-remove(capabilities) */ capabilities) => {
+  [
+    getLocalVideoStreams,
+    getDeviceManager,
+    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getRole
+  ],
+  (
+    localVideoStreams,
+    deviceManager,
+    /* @conditional-compile-remove(capabilities) */ capabilities,
+    /* @conditional-compile-remove(capabilities) */ role
+  ) => {
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
     /* @conditional-compile-remove(capabilities) */
-    const incapable = capabilities?.turnVideoOnOff.isPresent === false;
+    const incapable =
+      (capabilities?.turnVideoOn.isPresent === false && capabilities?.turnVideoOn.reason !== 'NotInitialized') ||
+      role === 'Consumer';
     return {
       disabled:
         !deviceManager.selectedCamera ||
@@ -111,6 +138,36 @@ export type ScreenShareButtonSelector = (
   /* @conditional-compile-remove(capabilities) */ /* @conditional-compile-remove(PSTN-calls) */ disabled?: boolean;
 };
 
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Selector type for {@link RaiseHandButton} component.
+ *
+ * @public
+ */
+export type RaiseHandButtonSelector = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+) => {
+  checked?: boolean;
+  disabled?: boolean;
+};
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Selector for {@link RaiseHandButton} component.
+ *
+ * @public
+ */
+export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createSelector(
+  [getLocalParticipantRaisedHand, getCallState],
+  (raisedHand, callState) => {
+    return {
+      checked: raisedHand ? true : false,
+      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
+    };
+  }
+);
+
 /**
  * Selector for {@link ScreenShareButton} component.
  *
@@ -120,18 +177,24 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
   [
     getIsScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ getCallState,
-    /* @conditional-compile-remove(capabilities) */ getCapabilites
+    /* @conditional-compile-remove(capabilities) */ getCapabilites,
+    /* @conditional-compile-remove(capabilities) */ getRole
   ],
   (
     isScreenSharingOn,
     /* @conditional-compile-remove(PSTN-calls) */ callState,
-    /* @conditional-compile-remove(capabilities) */ capabilities
+    /* @conditional-compile-remove(capabilities) */ capabilities,
+    /* @conditional-compile-remove(capabilities) */ role
   ) => {
     let disabled: boolean | undefined = undefined;
     /* @conditional-compile-remove(capabilities) */
-    disabled = disabled || capabilities?.shareScreen.isPresent === false;
+    disabled =
+      disabled ||
+      (capabilities?.shareScreen.isPresent === false && capabilities?.shareScreen.reason !== 'NotInitialized') ||
+      role === 'Consumer' ||
+      role === 'Attendee';
     /* @conditional-compile-remove(PSTN-calls) */
-    disabled = disabled || ['InLobby', 'Connecting'].includes(callState);
+    disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState);
     return {
       checked: isScreenSharingOn,
       disabled

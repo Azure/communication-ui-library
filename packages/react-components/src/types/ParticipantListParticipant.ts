@@ -17,6 +17,19 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
+  /* @conditional-compile-remove(raise-hand) */
+  /** Whether calling participant is raised hand */
+  raisedHand?: RaisedHand;
+};
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Raised hand state with order
+ *
+ * @public
+ */
+export type RaisedHand = {
+  raisedHandOrderPosition: number;
 };
 
 /**

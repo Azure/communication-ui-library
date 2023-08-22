@@ -22,6 +22,7 @@ export interface QueryArgs {
   usePermissionTroubleshootingActions?: boolean;
   rtl?: boolean;
   localVideoTilePosition?: false | ('grid' | 'floating');
+  enableVideoEffect?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -30,6 +31,8 @@ export interface QueryArgs {
   token: string;
   displayName: string;
   mockRemoteParticipantCount: number;
+  enableVideoEffects?: boolean;
+  galleryLayout?: string;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -66,6 +69,8 @@ export function parseQueryArgs(): QueryArgs {
     customCallCompositeOptions: params.customCallCompositeOptions
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined,
-    localVideoTilePosition
+    localVideoTilePosition,
+    enableVideoEffects: Boolean(params.enableVideoEffects),
+    galleryLayout: params.galleryLayout ?? ''
   };
 }

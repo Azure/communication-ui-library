@@ -6,8 +6,10 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { BackgroundBlurConfig } from '@azure/communication-calling-effects';
-import { BackgroundReplacementConfig } from '@azure/communication-calling-effects';
+import { BackgroundBlurConfig } from '@azure/communication-calling';
+import { BackgroundBlurEffect } from '@azure/communication-calling';
+import { BackgroundReplacementConfig } from '@azure/communication-calling';
+import { BackgroundReplacementEffect } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -71,7 +73,6 @@ import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
-import { RaisedHand } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -80,6 +81,7 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
+import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -192,7 +194,8 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
     callClient: StatefulCallClient;
     chatClient: StatefulChatClient;
     chatThreadClient: ChatThreadClient;
-    options?: AzureCommunicationChatAdapterOptions;
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 // @public
@@ -341,7 +344,9 @@ export interface CallAdapterCallOperations {
     // @beta
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
+    lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -382,6 +387,7 @@ export type CallAdapterClientState = {
     environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
 };
@@ -514,6 +520,10 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonRaiseHand?: JSX.Element;
+    ControlButtonLowerHand?: JSX.Element;
+    RaiseHandContextualMenuItem?: JSX.Element;
+    LowerHandContextualMenuItem?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -552,9 +562,15 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
-    NoticePageInvalidRoom?: JSX.Element;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
+    SpeakerGalleryLayout?: JSX.Element;
+    FloatingLocalVideoGalleryLayout?: JSX.Element;
+    DefaultGalleryLayout?: JSX.Element;
+    FocusedContentGalleryLayout?: JSX.Element;
+    OverflowGalleryTop?: JSX.Element;
 };
 
 // @public
@@ -570,6 +586,9 @@ export type CallCompositeOptions = {
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -652,6 +671,12 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryDefaultLayoutLabel?: string;
+    moreButtonGalleryFloatingLocalLayoutLabel?: string;
+    moreButtonGalleryFocusedContentLayoutLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
+    moreButtonGallerySpeakerLayoutLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -764,6 +789,11 @@ export interface CallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
+// @beta
+export type CallingHandlersOptions = {
+    onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+};
+
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
@@ -775,6 +805,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -784,6 +815,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @beta
@@ -869,10 +901,12 @@ export interface CallWithChatAdapterManagement {
     joinCall(options?: JoinCallOptions): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    lowerHand(): Promise<void>;
     mute(): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
+    raiseHand(): Promise<void>;
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
@@ -1025,6 +1059,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
     latestChatErrors: AdapterErrors;
+    onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     userId: CommunicationIdentifierKind;
     videoBackgroundImages?: VideoBackgroundImage[];
@@ -1115,6 +1150,9 @@ export type CallWithChatCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -1635,7 +1673,10 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
 
 // @beta
 export type CommonCallAdapterOptions = {
-    videoBackgroundImages?: VideoBackgroundImage[];
+    videoBackgroundOptions?: {
+        videoBackgroundImages?: VideoBackgroundImage[];
+        onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    };
     onFetchProfile?: OnFetchProfileCallback;
 };
 
@@ -1659,6 +1700,9 @@ export type CommonCallControlOptions = {
         disabled: boolean;
     };
     moreButton?: boolean;
+    raiseHandButton?: boolean | {
+        disabled: boolean;
+    };
     onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     holdButton?: boolean | {
         disabled: boolean;
@@ -1692,6 +1736,10 @@ export interface CommonCallingHandlers {
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onRaiseHand: () => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -1730,6 +1778,8 @@ export interface CommonCallingHandlers {
     onToggleHold: () => Promise<void>;
     // (undocumented)
     onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleRaiseHand: () => Promise<void>;
     // (undocumented)
     onToggleScreenShare: () => Promise<void>;
 }
@@ -1852,6 +1902,7 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
+    imageGallery: ImageGalleryStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -1863,6 +1914,7 @@ export interface ComponentStrings {
     participantItem: ParticipantItemStrings;
     ParticipantList: ParticipantListStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2015,7 +2067,7 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, options }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
+export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions, chatAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
@@ -2026,13 +2078,18 @@ export function createAzureCommunicationChatAdapterFromClient(chatClient: Statef
 }): Promise<ChatAdapter>;
 
 // @public
-export const createDefaultCallingHandlers: (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+
+// @public
+export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
 
 // @public
 export const createDefaultChatHandlers: (chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient) => ChatHandlers;
 
 // @beta
-export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall) => never | TeamsCallingHandlers;
+export const createDefaultTeamsCallingHandlers: (callClient: StatefulCallClient, callAgent: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent, deviceManager: StatefulDeviceManager | undefined, call: undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall, options?: {
+    onResolveVideoBackgroundEffectsDependency?: (() => Promise<VideoBackgroundEffectsDependency>) | undefined;
+} | undefined) => never | TeamsCallingHandlers;
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
@@ -2143,6 +2200,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipantsContextualMenuItem: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     CancelFileUpload: JSX.Element;
     DownloadFile: JSX.Element;
     DataLossPreventionProhibited: JSX.Element;
@@ -2240,6 +2301,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -2276,9 +2341,15 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
-    NoticePageInvalidRoom?: JSX.Element | undefined;
+    NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
+    SpeakerGalleryLayout?: JSX.Element | undefined;
+    FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
+    DefaultGalleryLayout?: JSX.Element | undefined;
+    FocusedContentGalleryLayout?: JSX.Element | undefined;
+    OverflowGalleryTop?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2720,6 +2791,34 @@ export interface ImageFileMetadata extends BaseFileMetadata {
 }
 
 // @beta
+export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
+
+// @beta
+export interface ImageGalleryImageProps {
+    altText?: string;
+    imageUrl: string;
+    saveAsName: string;
+    title?: string;
+    titleIcon?: JSX.Element;
+}
+
+// @beta
+export interface ImageGalleryProps {
+    images: Array<ImageGalleryImageProps>;
+    isOpen: boolean;
+    onDismiss: () => void;
+    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    startIndex?: number;
+}
+
+// @beta
+export interface ImageGalleryStrings {
+    dismissButtonAriaLabel: string;
+    downloadButtonLabel: string;
+}
+
+// @beta
 export type IncomingCallManagement = {
     incomingCalls: ReadonlyArray<DeclarativeIncomingCall>;
 };
@@ -2963,6 +3062,7 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
+    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
@@ -3111,6 +3211,12 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @beta
+export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
+export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
+
+// @beta
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
@@ -3122,7 +3228,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3309,9 +3415,43 @@ export type Profile = {
 };
 
 // @public
+export type RaisedHand = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export type RaisedHandState = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
+
+// @public
 export interface RaiseHandCallFeature {
-    localParticipantRaisedHand?: RaisedHand;
-    raisedHands: RaisedHand[];
+    localParticipantRaisedHand?: RaisedHandState;
+    raisedHands: RaisedHandState[];
 }
 
 // @public
@@ -3334,7 +3474,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    raisedHand?: RaisedHand;
+    raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -3745,6 +3885,12 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
 // @beta
+export type VideoBackgroundEffectsDependency = {
+    createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
+    createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
+};
+
+// @beta
 export interface VideoBackgroundImage {
     key: string;
     tooltipText?: string;
@@ -3766,10 +3912,12 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
-export type VideoGalleryLocalParticipant = VideoGalleryParticipant;
+export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
+}
 
 // @public
 export type VideoGalleryParticipant = {
@@ -3815,6 +3963,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -3909,6 +4058,7 @@ export interface VideoTileProps {
     participantState?: ParticipantState;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

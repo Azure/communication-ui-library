@@ -83,6 +83,12 @@ type ChatMessageComponentAsMessageBubbleProps = {
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
+   * Optional callback called when an inline image is clicked.
+   * @beta
+   */
+  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /**
    * Optional map of attachment ids to blob urls.
    */
   attachmentsMap?: Record<string, string>;
@@ -135,7 +141,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    fileDownloadHandler
+    fileDownloadHandler,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onInlineImageClicked
   } = props;
 
   const defaultTimeStamp = message.createdOn
@@ -217,6 +225,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  const handleOnInlineImageClicked = useCallback(
+    async (attachmentId: string): Promise<void> => {
+      if (onInlineImageClicked === undefined) {
+        return;
+      }
+      await onInlineImageClicked(attachmentId, message.messageId);
+    },
+    [message, onInlineImageClicked]
+  );
+
   const getContent = useCallback(() => {
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
@@ -237,11 +256,21 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
+          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+          onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [defaultOnRenderFileDownloads, message, props, strings, userId]);
+  }, [
+    defaultOnRenderFileDownloads,
+    message,
+    props,
+    strings,
+    userId,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    handleOnInlineImageClicked
+  ]);
 
   const chatMessage = (
     <>
@@ -296,7 +325,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       )}
     </>
   );
-
   return chatMessage;
 };
 
