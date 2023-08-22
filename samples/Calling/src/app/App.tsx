@@ -164,7 +164,8 @@ const App = (): JSX.Element => {
                 document.title,
                 window.location.origin +
                   getJoinParams(callLocator) +
-                  getIsCTEParam(/* @conditional-compile-remove(teams-identity-support) */ !!callDetails.teamsToken)
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  getIsCTEParam(!!callDetails.teamsToken)
               );
             }
             /* @conditional-compile-remove(teams-identity-support) */
@@ -223,6 +224,7 @@ const App = (): JSX.Element => {
   }
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 const getIsCTEParam = (isCTE?: boolean): string => {
   return isCTE ? '&isCTE=true' : '';
 };
