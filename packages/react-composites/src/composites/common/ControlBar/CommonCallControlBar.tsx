@@ -162,6 +162,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
+      selectedLabel: callWithChatStrings.selectedPeopleButtonLabel,
       tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
       tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
     }),
@@ -379,7 +380,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
-                    ariaLabel={peopleButtonStrings?.label}
+                    ariaLabel={props.peopleButtonChecked? peopleButtonStrings?.selectedLabel: peopleButtonStrings?.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
