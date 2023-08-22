@@ -16,9 +16,10 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
-  UpdateChatThreadPropertiesOptions,
   UpdateMessageOptions
 } from '@azure/communication-chat';
+/* @conditional-compile-remove(chat-beta-sdk) */
+import { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { BaseChatEvent, BaseChatMessageEvent, BaseChatThreadEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
@@ -313,6 +314,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
+  /* @conditional-compile-remove(chat-beta-sdk) */
   updateProperties(request: UpdateChatThreadPropertiesOptions): Promise<void> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
