@@ -380,7 +380,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
-                    ariaLabel={props.peopleButtonChecked? peopleButtonStrings?.selectedLabel: peopleButtonStrings?.label}
+                    ariaLabel={
+                      props.peopleButtonChecked ? peopleButtonStrings?.selectedLabel : peopleButtonStrings?.label
+                    }
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
