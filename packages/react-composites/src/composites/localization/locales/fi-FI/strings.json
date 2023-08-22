@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "Osallistujan tunnus ei ole oikeassa muodossa",
     "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa",
     "moreButtonGalleryControlLabel": "Valikoiman asetukset",
-    "moreButtonGalleryPositionToggleLabel": "Siirrä valikoima ylimmäiseksi"
+    "moreButtonGalleryPositionToggleLabel": "Siirrä valikoima ylimmäiseksi",
+    "moreButtonGallerySpeakerLayoutLabel": "Kaiuttimen asettelu",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
+    "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
