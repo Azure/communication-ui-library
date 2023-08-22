@@ -1139,7 +1139,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   /* @conditional-compile-remove(capabilities) */
   private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
-    if (!data.newValue.turnVideoOn?.isPresent) {
+    if (data.newValue.turnVideoOn?.isPresent === false) {
       this.stopCamera();
     }
     this.emitter.emit('capabilitiesChanged', data);
