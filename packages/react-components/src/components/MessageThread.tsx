@@ -647,10 +647,7 @@ export type MessageThreadProps = {
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (
-    attachment: FileMetadata,
-    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
-  ) => Promise<void>;
+  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 /**

@@ -165,8 +165,12 @@
     "unableToResolveTenantMoreDetails": "Проверьте, что идентификатор участника введен правильно",
     "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
     "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "Параметры коллекции",
+    "moreButtonGalleryPositionToggleLabel": "Переместить коллекцию вверх",
+    "moreButtonGallerySpeakerLayoutLabel": "Макет динамика",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический макет",
+    "moreButtonGalleryDefaultLayoutLabel": "Макет коллекции",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы"
   },
   "chat": {
     "chatListHeader": "В этом чате",

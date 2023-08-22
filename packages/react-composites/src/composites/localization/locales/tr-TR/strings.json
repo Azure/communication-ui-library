@@ -165,8 +165,12 @@
     "unableToResolveTenantMoreDetails": "Lütfen katılımcı kimliğinin doğru giril olup olmadığını denetleyin",
     "participantIdIsMalformedTitle": "Katılımcı kimliği doğru biçimde değil",
     "participantIdIsMalformedMoreDetails": "Lütfen katılımcı kimliğinin doğru biçimde olduğundan emin olun",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "Galeri seçenekleri",
+    "moreButtonGalleryPositionToggleLabel": "Galeriyi en üste taşı",
+    "moreButtonGallerySpeakerLayoutLabel": "Konuşmacı düzeni",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dinamik düzen",
+    "moreButtonGalleryDefaultLayoutLabel": "Galeri düzeni",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Odaklanmış içerik"
   },
   "chat": {
     "chatListHeader": "Bu sohbette",

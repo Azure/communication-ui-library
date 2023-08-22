@@ -165,8 +165,12 @@
     "unableToResolveTenantMoreDetails": "Tarkista, että osallistujan tunnus on kirjoitettu oikein",
     "participantIdIsMalformedTitle": "Osallistujan tunnus ei ole oikeassa muodossa",
     "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "Valikoiman asetukset",
+    "moreButtonGalleryPositionToggleLabel": "Siirrä valikoima ylimmäiseksi",
+    "moreButtonGallerySpeakerLayoutLabel": "Kaiuttimen asettelu",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
+    "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",

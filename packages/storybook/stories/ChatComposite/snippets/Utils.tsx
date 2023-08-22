@@ -9,6 +9,8 @@ import React from 'react';
 import { CompositeConnectionParamsErrMessage } from '../../CompositeStringUtils';
 import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../constants';
 
+const botDisplayName = 'A simple bot';
+
 // Adds a bot to the thread that sends out provided canned messages one by one.
 export const addParrotBotToThread = async (
   userToken: string,
@@ -21,7 +23,7 @@ export const addParrotBotToThread = async (
   const botIdentifier: CommunicationUserIdentifier = { communicationUserId: botId };
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userToken));
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: botIdentifier, displayName: 'A simple bot' }]
+    participants: [{ id: botIdentifier, displayName: botDisplayName }]
   });
 
   sendMessagesAsBot(botToken, endpointUrl, threadId, messages);
@@ -40,12 +42,12 @@ const sendMessagesAsBot = async (
   let index = 0;
   // Send first message immediately so users aren't staring at an empty chat thread.
   if (messages.length > 0) {
-    threadClient.sendMessage({ content: messages[index++] });
+    threadClient.sendMessage({ content: messages[index++] }, { senderDisplayName: botDisplayName });
   }
 
   setInterval(() => {
     if (index < messages.length) {
-      threadClient.sendMessage({ content: messages[index++] });
+      threadClient.sendMessage({ content: messages[index++] }, { senderDisplayName: botDisplayName });
     }
   }, 5000);
 };
@@ -54,12 +56,12 @@ export const sendMessagesAsBotWithAdapter = async (adapter: ChatAdapter, message
   let index = 0;
   // Send first message immediately so users aren't staring at an empty chat thread.
   if (messages.length > 0) {
-    adapter.sendMessage(messages[index++]);
+    adapter.sendMessage(messages[index++], { senderDisplayName: botDisplayName });
   }
 
   setInterval(() => {
     if (index < messages.length) {
-      adapter.sendMessage(messages[index++]);
+      adapter.sendMessage(messages[index++], { senderDisplayName: botDisplayName });
     }
   }, 5000);
 };

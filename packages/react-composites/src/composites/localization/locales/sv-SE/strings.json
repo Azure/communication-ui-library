@@ -165,8 +165,12 @@
     "unableToResolveTenantMoreDetails": "Kontrollera att deltagar-ID:t har angetts korrekt",
     "participantIdIsMalformedTitle": "Deltagar-ID:t har inte rätt format",
     "participantIdIsMalformedMoreDetails": "Kontrollera att deltagar-ID:t har rätt format",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "Gallerialternativ",
+    "moreButtonGalleryPositionToggleLabel": "Flytta galleriet högst upp",
+    "moreButtonGallerySpeakerLayoutLabel": "Högtalarlayout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisk layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallerilayout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Fokuserat innehåll"
   },
   "chat": {
     "chatListHeader": "I den här chatten",

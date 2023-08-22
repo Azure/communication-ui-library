@@ -83,7 +83,9 @@ After finishing creating release branch, follow these steps to create a UI snaps
 2. trigger the UI snapshot update for the new branch branch: ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
 3. Wait for snapshot update
 4. Once snapshot update finished, you might or might not see changes for UI snapshot, if there is any updates, open a PR to merge that new branch back to release branch
-5. Merge the PR if everything looks fine, or notify feature owner if something looks not 100% correct.
+5. Add a changelog item for creating the release branch
+`rushx changelog -m 'Create release branch and update SDK versions' --type none"`
+6. Merge the PR if everything looks fine, or notify feature owner if something looks not 100% correct.
 
 ### Step 1.4: Notify the release thread about api.md update and UI snapshot update (beta-release only)
 

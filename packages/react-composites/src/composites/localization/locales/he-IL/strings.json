@@ -165,8 +165,12 @@
     "unableToResolveTenantMoreDetails": "בדוק שמזהה המשתתף הוזן כראוי",
     "participantIdIsMalformedTitle": "מזהה המשתתף אינו בתבנית הנכונה",
     "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה",
-    "moreButtonGalleryControlLabel": "Gallery options",
-    "moreButtonGalleryPositionToggleLabel": "Move gallery to top"
+    "moreButtonGalleryControlLabel": "אפשרויות גלריה",
+    "moreButtonGalleryPositionToggleLabel": "העבר את הגלריה לחלק העליון",
+    "moreButtonGallerySpeakerLayoutLabel": "פריסת דובר",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "פריסה דינמית",
+    "moreButtonGalleryDefaultLayoutLabel": "פריסת גלריה",
+    "moreButtonGalleryFocusedContentLayoutLabel": "תוכן ממוקד"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
