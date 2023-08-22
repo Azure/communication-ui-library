@@ -12,7 +12,7 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -392,11 +392,15 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(capabilities) */
-  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+  public setCapabilities(
+    callId: string,
+    capabilities: ParticipantCapabilities,
+    capabilitiesChangeInfo: CapabilitiesChangeInfo
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.capabilities = { capabilities: capabilities };
+        call.capabilities = { capabilities, capabilitiesChangeInfo };
       }
     });
   }

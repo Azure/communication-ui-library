@@ -412,6 +412,12 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    capabilityShareScreenGrantedDueToRoleChangeToPresenter?: string;
+    capabilityShareScreenLostDueToRoleChangeToAttendee?: string;
+    capabilityTurnVideoOnGrantedDueToMeetingOption?: string;
+    capabilityTurnVideoOnLostDueToMeetingOption?: string;
+    capabilityUnmuteMicGrantedDueToMeetingOption?: string;
+    capabilityUnmuteMicLostDueToMeetingOption?: string;
     captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;

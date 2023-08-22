@@ -75,6 +75,11 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
+/* @conditional-compile-remove(capabilities) */
+import {
+  CapabilitiesChangeNotificationBar,
+  CapabilitiesChangeNotificationBarProps
+} from './CapabilitiesNotficationBar';
 
 /**
  * @private
@@ -83,6 +88,8 @@ export interface CallArrangementProps {
   id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
@@ -381,6 +388,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         />
                       </Stack>
                     )}
+                    {
+                      /* @conditional-compile-remove(capabilities) */
+                      props.capabilitiesNotificationBarProps && (
+                        <Stack styles={bannerNotificationStyles}>
+                          <CapabilitiesChangeNotificationBar {...props.capabilitiesNotificationBarProps} />
+                        </Stack>
+                      )
+                    }
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
