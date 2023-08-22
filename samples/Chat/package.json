@@ -42,6 +42,7 @@
     "@internal/react-composites": "1.7.1-beta.0",
     "@types/react-linkify": "^1.0.0",
     "json-stringify-safe": "^5.0.1",
+    "mobile-detect": "~1.4.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-linkify": "^1.0.0-alpha",
