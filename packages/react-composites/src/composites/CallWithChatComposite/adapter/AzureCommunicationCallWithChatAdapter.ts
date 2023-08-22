@@ -34,7 +34,7 @@ import {
   IsSpeakingChangedListener,
   CallAdapter,
   CallAdapterState,
-  createAzureCommunicationCallAdapter,
+  createAzureCommunicationCallAdapterInner,
   CallEndedListener
 } from '../../CallComposite';
 import {
@@ -82,7 +82,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
-import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _toCommunicationIdentifier, TelemetryImplementation } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
@@ -727,14 +727,15 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
-  const createCallAdapterPromise = createAzureCommunicationCallAdapter({
+  const createCallAdapterPromise = createAzureCommunicationCallAdapterInner(
     userId,
     displayName,
     credential,
     locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions
-  });
+    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions,
+    'CallWithChat' as TelemetryImplementation
+  );
 
   const threadId = isTeamsMeetingLinkLocator(locator)
     ? getChatThreadFromTeamsLink(locator.meetingLink)
