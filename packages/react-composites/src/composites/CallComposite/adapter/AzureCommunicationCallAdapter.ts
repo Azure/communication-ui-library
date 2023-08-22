@@ -1296,6 +1296,20 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
+  return createAzureCommunicationCallAdapterInner({userId, displayName, credential, locator, alternateCallerId, options})
+};
+
+/**
+ * @internal
+ */
+export const createAzureCommunicationCallAdapterInner = async ({
+  userId,
+  displayName,
+  credential,
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  /* @conditional-compile-remove(video-background-effects) */ options
+}: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
   }
