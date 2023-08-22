@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "Tracking correct dependencies",
+  "comment": "updating stable dependencies to use caret for calling and chat",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
