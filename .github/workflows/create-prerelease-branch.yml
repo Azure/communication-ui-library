@@ -16,7 +16,7 @@ on:
           - stable-major
           - stable-minor
           - stable-patch
-          - stable-remove-beta-version
+          - stable-remove-beta-suffix
           - beta-release-major
           - beta-release-minor
           - beta-release-patch
@@ -101,7 +101,7 @@ jobs:
         if: ${{ github.event.inputs.bump_type == 'stable-patch' }}
         run: node common/scripts/bump-stable-version.js patch
       - name: Remove beta version from stable package versions
-        if: ${{ github.event.inputs.bump_type == 'stable-remove-beta-version' }}
+        if: ${{ github.event.inputs.bump_type == 'stable-remove-beta-suffix' }}
         run: node common/scripts/bump-stable-version.js remove-beta
 
       # Retrieve new version so we can use it in the branch name.
@@ -126,7 +126,7 @@ jobs:
         if: ${{ github.event.inputs.bump_type == 'beta-release-major' || github.event.inputs.bump_type == 'beta-release-minor' || github.event.inputs.bump_type == 'beta-release-patch' || github.event.inputs.bump_type == 'beta-release-beta' }}
         run: node common/scripts/changelog/collect.mjs beta
       - name: Generate stable CHANGELOG
-        if: ${{ github.event.inputs.bump_type == 'stable-major' || github.event.inputs.bump_type == 'stable-minor' || github.event.inputs.bump_type == 'stable-patch' || github.event.inputs.bump_type == 'stable-remove-beta-version' }}
+        if: ${{ github.event.inputs.bump_type == 'stable-major' || github.event.inputs.bump_type == 'stable-minor' || github.event.inputs.bump_type == 'stable-patch' || github.event.inputs.bump_type == 'stable-remove-beta-suffix' }}
         run: node common/scripts/changelog/collect.mjs stable
 
       - name: sanity check - ensure all package versions are consistent
