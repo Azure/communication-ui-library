@@ -379,7 +379,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           )
         }
       </Stack>
-
       {
         /* @conditional-compile-remove(image-gallery) */
         <ImageGallery
