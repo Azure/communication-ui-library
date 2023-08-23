@@ -5,7 +5,7 @@
  * @public
  * spoken language strings for captions setting modal
  */
-export interface AvailableSpokenLanguageStrings {
+export interface SpokenLanguageStrings {
   'ar-ae': string;
   'ar-sa': string;
   'da-dk': string;
@@ -53,7 +53,7 @@ export interface AvailableSpokenLanguageStrings {
  * @public
  * caption language strings for captions setting modal
  */
-export interface AvailableCaptionLanguageStrings {
+export interface CaptionLanguageStrings {
   ar: string;
   da: string;
   de: string;

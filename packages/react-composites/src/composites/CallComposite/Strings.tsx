@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(close-captions) */
-import { AvailableSpokenLanguageStrings, AvailableCaptionLanguageStrings } from '@internal/react-components';
+import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -517,12 +517,12 @@ export interface CallCompositeStrings {
   /**
    * list of key value pairs that pairs spoken language code to language names
    */
-  availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
+  spokenLanguageStrings?: SpokenLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
   /**
    * list of key value pairs that pairs caption language code to language names
    */
-  availableCaptionLanguageStrings?: AvailableCaptionLanguageStrings;
+  captionLanguageStrings?: CaptionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
   /**
    * captions banner loading spinner label

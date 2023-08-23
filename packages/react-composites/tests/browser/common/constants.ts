@@ -42,7 +42,7 @@ export const IDS = {
   mentionSuggestionItem: 'mention-suggestion-item'
 };
 
-export const availableSpokenLanguageStrings = [
+export const spokenLanguageStrings = [
   'ar-ae',
   'ar-sa',
   'da-dk',
@@ -85,7 +85,7 @@ export const availableSpokenLanguageStrings = [
   'sk-sk',
   'zh-tw'
 ];
-export const availableCaptionLanguageStrings = [
+export const captionLanguageStrings = [
   'ar',
   'da',
   'de',
@@ -152,8 +152,8 @@ export const captionsFeatureState = {
       captionText: 'Nice to see you today!'
     }
   ],
-  supportedSpokenLanguages: availableSpokenLanguageStrings,
-  supportedCaptionLanguages: availableCaptionLanguageStrings,
+  supportedSpokenLanguages: spokenLanguageStrings,
+  supportedCaptionLanguages: captionLanguageStrings,
   currentCaptionLanguage: 'en',
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
@@ -193,8 +193,8 @@ export const captionsFeatureStateArabic = {
       captionText: '!سُعدت برؤيتك'
     }
   ],
-  supportedSpokenLanguages: availableSpokenLanguageStrings,
-  supportedCaptionLanguages: availableCaptionLanguageStrings,
+  supportedSpokenLanguages: spokenLanguageStrings,
+  supportedCaptionLanguages: captionLanguageStrings,
   currentCaptionLanguage: 'ar',
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,

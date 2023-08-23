@@ -9,8 +9,8 @@ import { useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import {
   _CaptionsSettingsModal,
-  AvailableSpokenLanguageStrings,
-  AvailableCaptionLanguageStrings
+  SpokenLanguageStrings,
+  CaptionLanguageStrings
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import {
@@ -39,8 +39,8 @@ export const CaptionSettingsDrawer = (props: {
   /* @conditional-compile-remove(close-captions) */ onLightDismiss: () => void;
   /* @conditional-compile-remove(close-captions) */ strings?: CaptionSettingsDrawerStrings;
   /* @conditional-compile-remove(close-captions) */ supportedLanguageStrings?:
-    | AvailableSpokenLanguageStrings
-    | AvailableCaptionLanguageStrings;
+    | SpokenLanguageStrings
+    | CaptionLanguageStrings;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const theme = useTheme();

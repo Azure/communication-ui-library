@@ -6,8 +6,8 @@ import React from 'react';
 import {
   _CaptionsSettingsModal,
   _CaptionsSettingsModalStrings,
-  AvailableSpokenLanguageStrings,
-  AvailableCaptionLanguageStrings
+  SpokenLanguageStrings,
+  CaptionLanguageStrings
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
@@ -43,12 +43,12 @@ export const CaptionsSettingsModal = (props: {
     captionsSettingsCloseModalButtonAriaLabel: strings.captionsSettingsCloseModalButtonAriaLabel
   };
   /* @conditional-compile-remove(close-captions) */
-  const availableSpokenLanguageStrings: AvailableSpokenLanguageStrings | undefined =
-    strings.availableSpokenLanguageStrings;
+  const spokenLanguageStrings: SpokenLanguageStrings | undefined =
+    strings.spokenLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
-  const availableCaptionLanguageStrings: AvailableCaptionLanguageStrings | undefined =
-    strings.availableCaptionLanguageStrings;
+  const captionLanguageStrings: CaptionLanguageStrings | undefined =
+    strings.captionLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   return (
@@ -56,8 +56,8 @@ export const CaptionsSettingsModal = (props: {
       {...CaptionsSettingsModalProps}
       {...handlers}
       strings={modalStrings}
-      availableSpokenLanguageStrings={availableSpokenLanguageStrings}
-      availableCaptionLanguageStrings={availableCaptionLanguageStrings}
+      spokenLanguageStrings={spokenLanguageStrings}
+      captionLanguageStrings={captionLanguageStrings}
       showModal={props.showCaptionsSettingsModal}
       onDismissCaptionsSettings={props.onDismissCaptionsSettings}
       changeCaptionLanguage={props.changeCaptionLanguage}

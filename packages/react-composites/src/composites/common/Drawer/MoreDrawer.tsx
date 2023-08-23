@@ -306,11 +306,11 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(close-captions) */
   //Captions drawer menu
-  const supportedSpokenLanguageStrings = useLocale().strings.call.availableSpokenLanguageStrings;
+  const supportedSpokenLanguageStrings = useLocale().strings.call.spokenLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   //Captions drawer menu
-  const supportedCaptionLanguageStrings = useLocale().strings.call.availableCaptionLanguageStrings;
+  const supportedCaptionLanguageStrings = useLocale().strings.call.captionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
   const captionSettingsProp = useAdaptedSelector(_captionSettingsSelector);
   /* @conditional-compile-remove(close-captions) */

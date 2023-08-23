@@ -70,160 +70,6 @@ export interface AttachmentDownloadResult {
 }
 
 // @public
-export interface AvailableCaptionLanguageStrings {
-    // (undocumented)
-    'fr-ca': string;
-    // (undocumented)
-    'pt-pt': string;
-    // (undocumented)
-    'zh-Hans': string;
-    // (undocumented)
-    'zh-Hant': string;
-    // (undocumented)
-    ar: string;
-    // (undocumented)
-    cs: string;
-    // (undocumented)
-    cy: string;
-    // (undocumented)
-    da: string;
-    // (undocumented)
-    de: string;
-    // (undocumented)
-    el: string;
-    // (undocumented)
-    en: string;
-    // (undocumented)
-    es: string;
-    // (undocumented)
-    fi: string;
-    // (undocumented)
-    fr: string;
-    // (undocumented)
-    he: string;
-    // (undocumented)
-    hi: string;
-    // (undocumented)
-    hu: string;
-    // (undocumented)
-    it: string;
-    // (undocumented)
-    ja: string;
-    // (undocumented)
-    ko: string;
-    // (undocumented)
-    nb: string;
-    // (undocumented)
-    nl: string;
-    // (undocumented)
-    pl: string;
-    // (undocumented)
-    pt: string;
-    // (undocumented)
-    ro: string;
-    // (undocumented)
-    ru: string;
-    // (undocumented)
-    sk: string;
-    // (undocumented)
-    sv: string;
-    // (undocumented)
-    th: string;
-    // (undocumented)
-    tr: string;
-    // (undocumented)
-    uk: string;
-    // (undocumented)
-    vi: string;
-}
-
-// @public
-export interface AvailableSpokenLanguageStrings {
-    // (undocumented)
-    'ar-ae': string;
-    // (undocumented)
-    'ar-sa': string;
-    // (undocumented)
-    'cs-cz': string;
-    // (undocumented)
-    'cy-gb': string;
-    // (undocumented)
-    'da-dk': string;
-    // (undocumented)
-    'de-de': string;
-    // (undocumented)
-    'el-gr': string;
-    // (undocumented)
-    'en-au': string;
-    // (undocumented)
-    'en-ca': string;
-    // (undocumented)
-    'en-gb': string;
-    // (undocumented)
-    'en-in': string;
-    // (undocumented)
-    'en-nz': string;
-    // (undocumented)
-    'en-us': string;
-    // (undocumented)
-    'es-es': string;
-    // (undocumented)
-    'es-mx': string;
-    // (undocumented)
-    'fi-fi': string;
-    // (undocumented)
-    'fr-ca': string;
-    // (undocumented)
-    'fr-fr': string;
-    // (undocumented)
-    'he-il': string;
-    // (undocumented)
-    'hi-in': string;
-    // (undocumented)
-    'hu-hu': string;
-    // (undocumented)
-    'it-it': string;
-    // (undocumented)
-    'ja-jp': string;
-    // (undocumented)
-    'ko-kr': string;
-    // (undocumented)
-    'nb-no': string;
-    // (undocumented)
-    'nl-be': string;
-    // (undocumented)
-    'nl-nl': string;
-    // (undocumented)
-    'pl-pl': string;
-    // (undocumented)
-    'pt-br': string;
-    // (undocumented)
-    'pt-pt': string;
-    // (undocumented)
-    'ro-ro': string;
-    // (undocumented)
-    'ru-ru': string;
-    // (undocumented)
-    'sk-sk': string;
-    // (undocumented)
-    'sv-se': string;
-    // (undocumented)
-    'th-th': string;
-    // (undocumented)
-    'tr-tr': string;
-    // (undocumented)
-    'uk-ua': string;
-    // (undocumented)
-    'vi-vn': string;
-    // (undocumented)
-    'zh-cn': string;
-    // (undocumented)
-    'zh-hk': string;
-    // (undocumented)
-    'zh-tw': string;
-}
-
-// @public
 export interface BaseCustomStyles {
     root?: IStyle;
 }
@@ -410,6 +256,74 @@ export type CancelEditCallback = (messageId: string) => void;
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
+// @public
+export interface CaptionLanguageStrings {
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'zh-Hans': string;
+    // (undocumented)
+    'zh-Hant': string;
+    // (undocumented)
+    ar: string;
+    // (undocumented)
+    cs: string;
+    // (undocumented)
+    cy: string;
+    // (undocumented)
+    da: string;
+    // (undocumented)
+    de: string;
+    // (undocumented)
+    el: string;
+    // (undocumented)
+    en: string;
+    // (undocumented)
+    es: string;
+    // (undocumented)
+    fi: string;
+    // (undocumented)
+    fr: string;
+    // (undocumented)
+    he: string;
+    // (undocumented)
+    hi: string;
+    // (undocumented)
+    hu: string;
+    // (undocumented)
+    it: string;
+    // (undocumented)
+    ja: string;
+    // (undocumented)
+    ko: string;
+    // (undocumented)
+    nb: string;
+    // (undocumented)
+    nl: string;
+    // (undocumented)
+    pl: string;
+    // (undocumented)
+    pt: string;
+    // (undocumented)
+    ro: string;
+    // (undocumented)
+    ru: string;
+    // (undocumented)
+    sk: string;
+    // (undocumented)
+    sv: string;
+    // (undocumented)
+    th: string;
+    // (undocumented)
+    tr: string;
+    // (undocumented)
+    uk: string;
+    // (undocumented)
+    vi: string;
+}
+
 // @internal
 export interface _CaptionProps extends _CaptionsInfo {
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -457,9 +371,7 @@ export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX
 // @internal
 export interface _CaptionsSettingsModalProps {
     // (undocumented)
-    availableCaptionLanguageStrings?: AvailableCaptionLanguageStrings;
-    // (undocumented)
-    availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
+    captionLanguageStrings?: CaptionLanguageStrings;
     // (undocumented)
     changeCaptionLanguage?: boolean;
     // (undocumented)
@@ -478,6 +390,8 @@ export interface _CaptionsSettingsModalProps {
     onStartCaptions: (options?: _captionsOptions) => Promise<void>;
     // (undocumented)
     showModal?: boolean;
+    // (undocumented)
+    spokenLanguageStrings?: SpokenLanguageStrings;
     // (undocumented)
     strings?: _CaptionsSettingsModalStrings;
     // (undocumented)
@@ -1972,6 +1886,92 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
+}
+
+// @public
+export interface SpokenLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
 }
 
 // @internal

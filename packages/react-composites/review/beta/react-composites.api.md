@@ -7,14 +7,13 @@
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AttachmentDownloadResult } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
-import { AvailableCaptionLanguageStrings } from '@internal/react-components';
-import { AvailableSpokenLanguageStrings } from '@internal/react-components';
 import type { BackgroundBlurConfig } from '@azure/communication-calling';
 import type { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
+import { CaptionLanguageStrings } from '@internal/react-components';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
@@ -50,6 +49,7 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
+import { SpokenLanguageStrings } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
@@ -411,14 +411,13 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    availableCaptionLanguageStrings?: AvailableCaptionLanguageStrings;
-    availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
     captionsBannerSpinnerText?: string;
@@ -526,6 +525,7 @@ export interface CallCompositeStrings {
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
     soundLabel: string;
+    spokenLanguageStrings?: SpokenLanguageStrings;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;

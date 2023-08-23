@@ -28,8 +28,8 @@ import {
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
 import {
-  AvailableSpokenLanguageStrings,
-  AvailableCaptionLanguageStrings,
+  SpokenLanguageStrings,
+  CaptionLanguageStrings,
   _spokenLanguageToCaptionLanguage
 } from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
@@ -62,8 +62,8 @@ export interface _CaptionsSettingsModalProps {
   onStartCaptions: (options?: _captionsOptions) => Promise<void>;
   currentSpokenLanguage: string;
   currentCaptionLanguage: string;
-  availableSpokenLanguageStrings?: AvailableSpokenLanguageStrings;
-  availableCaptionLanguageStrings?: AvailableCaptionLanguageStrings;
+  spokenLanguageStrings?: SpokenLanguageStrings;
+  captionLanguageStrings?: CaptionLanguageStrings;
   isCaptionsFeatureActive?: boolean;
   strings?: _CaptionsSettingsModalStrings;
   showModal?: boolean;
@@ -88,8 +88,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     onDismissCaptionsSettings,
     onStartCaptions,
     strings,
-    availableSpokenLanguageStrings,
-    availableCaptionLanguageStrings,
+    spokenLanguageStrings,
+    captionLanguageStrings,
     changeCaptionLanguage = false
   } = props;
 
@@ -153,19 +153,19 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     return supportedSpokenLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: availableSpokenLanguageStrings ? availableSpokenLanguageStrings[languageCode] : languageCode
+        text: spokenLanguageStrings ? spokenLanguageStrings[languageCode] : languageCode
       };
     });
-  }, [supportedSpokenLanguages, availableSpokenLanguageStrings]);
+  }, [supportedSpokenLanguages, spokenLanguageStrings]);
 
   const captionLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
     return supportedCaptionLanguages.map((languageCode) => {
       return {
         key: languageCode,
-        text: availableCaptionLanguageStrings ? availableCaptionLanguageStrings[languageCode] : languageCode
+        text: captionLanguageStrings ? captionLanguageStrings[languageCode] : languageCode
       };
     });
-  }, [supportedCaptionLanguages, availableCaptionLanguageStrings]);
+  }, [supportedCaptionLanguages, captionLanguageStrings]);
 
   const onSpokenLanguageChange = (
     event: React.FormEvent<HTMLDivElement>,
