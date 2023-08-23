@@ -76,10 +76,10 @@ import { CommonCallControlOptions } from '../../common/types/CommonCallControlOp
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
-import {
-  CapabilitiesChangeNotificationBar,
-  CapabilitiesChangeNotificationBarProps
-} from './CapabilitiesNotficationBar';
+import { CapabilitiesChangeNotificationBar } from './CapabilitiesNotficationBar';
+/* @conditional-compile-remove(capabilities) */
+import { useNotificationTracker } from '../utils/TrackNotifications';
+import { CapabilitiesChangeInfo, ParticipantRole } from '@azure/communication-calling';
 
 /**
  * @private
@@ -89,7 +89,10 @@ export interface CallArrangementProps {
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
   /* @conditional-compile-remove(capabilities) */
-  capabilitiesNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  capabilitiesNotificationBarProps?: {
+    capabilitiesChangeInfo?: CapabilitiesChangeInfo;
+    participantRole?: ParticipantRole;
+  };
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
@@ -282,6 +285,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
+  /* @conditional-compile-remove(capabilities) */
+  const { capabilitiesChangeNotifications, onDismissCapabilityChangeNotification } = useNotificationTracker(
+    props.capabilitiesNotificationBarProps ?? {}
+  );
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -390,9 +398,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                     {
                       /* @conditional-compile-remove(capabilities) */
-                      props.capabilitiesNotificationBarProps && (
+                      capabilitiesChangeNotifications && capabilitiesChangeNotifications?.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>
-                          <CapabilitiesChangeNotificationBar {...props.capabilitiesNotificationBarProps} />
+                          <CapabilitiesChangeNotificationBar
+                            capabilitiesChangeNotifications={capabilitiesChangeNotifications}
+                            onDismissNotification={onDismissCapabilityChangeNotification}
+                          />
                         </Stack>
                       )
                     }
