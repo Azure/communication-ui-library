@@ -76,7 +76,7 @@ import { CommonCallControlOptions } from '../../common/types/CommonCallControlOp
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
-import { CapabalityChangedNotification, CapabilitiesChangedNotificationBar } from './CapabilitiesNotficationBar';
+import { CapabalityChangedNotification, CapabilitiesChangedNotificationBar } from './CapabilitiesNotificationBar';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */

@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilityName } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { CapabalityChangedNotification } from '../components/CapabilitiesNotficationBar';
+import { CapabalityChangedNotification } from '../components/CapabilitiesNotificationBar';
 /* @conditional-compile-remove(capabilities) */
 import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
 

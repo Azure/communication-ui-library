@@ -64,7 +64,7 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
   return (
     <Stack data-ui-id="capabilities-changed-notification-bar-stack">
       {props.capabilitiesChangedNotifications.map((notification) => {
-        const message = getNotificationMessage(notification, locale.strings.call);
+        const message = getCapabilityChangedNotificationString(notification, locale.strings.call);
         if (!message) {
           return null;
         }
@@ -85,7 +85,7 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
 };
 
 /* @conditional-compile-remove(capabilities) */
-const getNotificationMessage = (
+const getCapabilityChangedNotificationString = (
   notification: CapabalityChangedNotification,
   strings: CallCompositeStrings
 ): string | undefined => {
