@@ -212,7 +212,6 @@ export interface CallCompositeStrings {
    * control bar People button label when checked
    */
   selectedPeopleButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar Chat button label.
    */
