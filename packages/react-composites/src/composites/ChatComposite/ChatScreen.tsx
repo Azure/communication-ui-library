@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { isIOS, mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { PersonaSize } from '@fluentui/react';
 import {
@@ -288,15 +288,28 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
-    // Create a new anchor element
-    const a = document.createElement('a');
-    // Set the href and download attributes for the anchor element
-    a.href = imageUrl;
-    a.download = saveAsName || 'download';
-    // Programmatically click the anchor element to trigger the download
-    a.click();
-    a.remove();
+  const onImageDownloadButtonClicked = useCallback(async (imageUrl: string, saveAsName: string): Promise<void> => {
+    if (isIOS()) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        window.open(imageUrl, '_blank');
+      };
+      const blob = await fetch(imageUrl).then((r) => r.blob());
+      reader.readAsDataURL(blob);
+    } else {
+      // Create a new anchor element
+      const a = document.createElement('a');
+      // Set the href and download attributes for the anchor element
+      a.href = imageUrl;
+      a.download = saveAsName;
+      a.rel = 'noopener noreferrer';
+      a.target = '_blank';
+
+      // Programmatically click the anchor element to trigger the download
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   }, []);
 
   const AttachFileButton = useCallback(() => {
