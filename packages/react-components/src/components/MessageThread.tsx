@@ -711,7 +711,7 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -822,7 +822,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);

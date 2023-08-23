@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(image-gallery) */
 import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
-
+/* @conditional-compile-remove(image-gallery) */
 import React, { SyntheticEvent, useState } from 'react';
+/* @conditional-compile-remove(image-gallery) */
 import {
   bodyContainer,
   bodyFocusZone,
@@ -23,11 +24,13 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
+/* @conditional-compile-remove(image-gallery) */
 import { useTheme } from '../theming/FluentThemeProvider';
+/* @conditional-compile-remove(image-gallery) */
 import { isDarkThemed } from '../theming/themeUtils';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { useLocale } from '../localization';
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Props for {@link ImageGallery}.
  *
@@ -45,7 +48,7 @@ export interface ImageGalleryImageProps {
   /** Optional JSX element used as a title icon and displayed to the left of the title element. */
   titleIcon?: JSX.Element;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Props for {@link ImageGallery}.
  *
@@ -77,7 +80,7 @@ export interface ImageGalleryProps {
    */
   startIndex?: number;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Strings of {@link ImageGallery} that can be overridden.
  *
@@ -93,7 +96,7 @@ export interface ImageGalleryStrings {
    */
   dismissButtonAriaLabel: string;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Component to render a fullscreen modal for a selected image.
  *

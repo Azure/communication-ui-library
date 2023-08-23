@@ -96,7 +96,7 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -163,7 +163,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onFetchAttachments={props.onFetchAttachments}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onInlineImageClicked={props.onInlineImageClicked}
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        /* @conditional-compile-remove(image-gallery) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
