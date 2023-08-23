@@ -6,35 +6,49 @@ import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, S
 import React from 'react';
 import { useEffect } from 'react';
 import Shake from 'shake.js';
+import { useIsMobile } from './useIsMobile';
 
 const HAS_SHAKE_FEATURE = typeof DeviceOrientationEvent !== 'undefined';
+const NEEDS_SHAKE_PERMISSION =
+  HAS_SHAKE_FEATURE && !!(DeviceOrientationEvent as unknown as DeviceMotionEventiOS)?.requestPermission;
 
-const originalConsoleLog = console.log;
-const originalAzureLoggerLog = AzureLogger.log;
-const consoleLogs: string[] = ['---- LOGS START ----'];
+const logs: string[] = ['---- LOGS START ----'];
 // Ensure we cap any single log line to prevent the server from rejecting the request.
 const logLineCharacterLimit = 1000;
 // If there is a failure to send logs due to size, typically due to a very long call, retry with a smaller size.
 const logLengthMaxSize = 1000000;
+
+const storeLog = (logType: string, log: string | undefined): void => {
+  log && logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
+};
 
 /**
  * Track console logs for pushing to a debug location.
  * This is particularly useful on mobile devices where the console is not easily accessible.
  */
 const startRecordingLogs = (): void => {
-  console.log = (...args: unknown[]) => {
-    originalConsoleLog.apply(console, args);
-    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`.slice(0, logLineCharacterLimit));
-  };
-  AzureLogger.log = (...args: unknown[]) => {
-    originalAzureLoggerLog.apply(console, args);
-    consoleLogs.push(`${new Date().toISOString()} ${safeJSONStringify(args)}`.slice(0, logLineCharacterLimit));
-  };
-};
+  function hookLogType(logType: string): (...args: unknown[]) => void {
+    const original = console[logType].bind(console);
+    return function (...args: unknown[]) {
+      storeLog(logType, safeJSONStringify(args));
+      original.apply(console, args);
+    };
+  }
 
-const stopRecordingLogs = (): void => {
-  console.log = originalConsoleLog;
-  AzureLogger.log = originalAzureLoggerLog;
+  console.log = hookLogType('log');
+  console.warn = hookLogType('warn');
+  console.error = hookLogType('error');
+  console.info = hookLogType('info');
+  console.debug = hookLogType('debug');
+
+  AzureLogger.log = hookLogType('log');
+
+  window.addEventListener('error', function (event) {
+    storeLog('error', safeJSONStringify(event));
+  });
+  window.addEventListener('unhandledrejection', function (event) {
+    storeLog('error', safeJSONStringify(event));
+  });
 };
 
 /**
@@ -42,7 +56,7 @@ const stopRecordingLogs = (): void => {
  * For more info see {@link startRecordingLogs}.
  */
 const getRecordedLogs = (): string => {
-  return consoleLogs.join('\n');
+  return logs.join('\n');
 };
 
 /** On iOS, device motion events require permission granted first */
@@ -54,7 +68,7 @@ interface DeviceMotionEventiOS extends DeviceMotionEvent {
  * Hook to enable shake to send logs.
  * This should be used once in the app.
  */
-const useShakeDialog = (hasPermission: boolean): [boolean, () => void] => {
+const useShakeDialog = (hasPermission: boolean, disabled: boolean): [boolean, () => void] => {
   const [showDialog, setShowDialog] = React.useState(false);
   const closeDialog = React.useCallback(() => setShowDialog(false), []);
   const handleShake = (): void => {
@@ -62,7 +76,7 @@ const useShakeDialog = (hasPermission: boolean): [boolean, () => void] => {
   };
 
   useEffect(() => {
-    if (!hasPermission) {
+    if (disabled || !hasPermission) {
       return;
     }
 
@@ -77,12 +91,22 @@ const useShakeDialog = (hasPermission: boolean): [boolean, () => void] => {
 
     return () => {
       shakeEvent.stop();
-      stopRecordingLogs();
       window.removeEventListener('shake', handleShake);
     };
-  }, [hasPermission]);
+  }, [disabled, hasPermission]);
 
   return [showDialog, closeDialog];
+};
+
+const checkExistingPermissionState = async (): Promise<boolean> => {
+  // If the user has already granted permission, the requestPermission returns 'granted'.
+  // Otherwise the API throws an exception and we can assume the user has not granted permission.
+  try {
+    const result = await (DeviceOrientationEvent as unknown as DeviceMotionEventiOS)?.requestPermission?.();
+    return result === 'granted';
+  } catch (e) {
+    return false;
+  }
 };
 
 const requestPermission = async (): Promise<'granted' | 'denied'> => {
@@ -157,10 +181,22 @@ const PromptForShakePermission = (props: { onPermissionGranted: () => void }): J
 };
 
 export const ShakeToSendLogs = (): JSX.Element => {
-  const needsToRequestDeviceMotionPermission =
-    HAS_SHAKE_FEATURE && !!(DeviceOrientationEvent as unknown as DeviceMotionEventiOS)?.requestPermission;
-  const [hasPermission, setHasPermission] = React.useState(!needsToRequestDeviceMotionPermission);
-  const [showDialog, closeDialog] = useShakeDialog(hasPermission);
+  const disableShakeLogs = !useIsMobile();
+  const [hasPermission, setHasPermission] = React.useState(!NEEDS_SHAKE_PERMISSION);
+  const [showRequestPermissionDialog, setShowRequestPermissionDialog] = React.useState(false);
+  useEffect(() => {
+    if (NEEDS_SHAKE_PERMISSION && !disableShakeLogs) {
+      checkExistingPermissionState().then((existingPermissionState) => {
+        if (!existingPermissionState) {
+          setShowRequestPermissionDialog(true);
+        } else {
+          setHasPermission(true);
+        }
+      });
+    }
+  }, [disableShakeLogs]);
+
+  const [showDialog, closeDialog] = useShakeDialog(hasPermission, disableShakeLogs);
 
   const [logStatus, setLogStatus] = React.useState<'unsent' | 'sending' | 'failed' | 'sent'>('unsent');
   const [blobUrl, setBlobUrl] = React.useState<string>();
@@ -193,8 +229,13 @@ export const ShakeToSendLogs = (): JSX.Element => {
 
   return (
     <>
-      {needsToRequestDeviceMotionPermission && (
-        <PromptForShakePermission onPermissionGranted={() => setHasPermission(true)} />
+      {!hasPermission && showRequestPermissionDialog && (
+        <PromptForShakePermission
+          onPermissionGranted={() => {
+            setHasPermission(true);
+            setShowRequestPermissionDialog(false);
+          }}
+        />
       )}
       <Dialog hidden={!showDialog} dialogContentProps={dialogContentProps} modalProps={{ onDismissed: reset }}>
         <Spinner hidden={logStatus !== 'sending'} label="Sending logs..." />
@@ -241,10 +282,14 @@ export const ShakeToSendLogs = (): JSX.Element => {
  * Use this only in areas where the JSON.stringify is non-critical and OK for the JSON.stringify to fail, such as logging.
  */
 export const safeJSONStringify = (
-  value: unknown,
+  value?: unknown,
   replacer?: ((this: unknown, key: string, value: unknown) => unknown) | undefined,
   space?: string | number | undefined
 ): string | undefined => {
+  if (!value) {
+    return;
+  }
+
   try {
     return JSON.stringify(value, replacer, space);
   } catch (e) {
