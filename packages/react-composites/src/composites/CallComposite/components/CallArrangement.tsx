@@ -76,10 +76,15 @@ import { CommonCallControlOptions } from '../../common/types/CommonCallControlOp
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesChangeNotificationBar } from './CapabilitiesNotficationBar';
+import { CapabalityChangedNotification, CapabilitiesChangedNotificationBar } from './CapabilitiesNotficationBar';
 /* @conditional-compile-remove(capabilities) */
-import { useNotificationTracker } from '../utils/TrackNotifications';
-import { CapabilitiesChangeInfo, ParticipantRole } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
+import { TrackedNotifications } from '../types/NotificationTracking';
+import {
+  filterLatestNotifications,
+  trackNotificationAsDismissed,
+  updateTrackedNotificationsWithActiveNotifications
+} from '../utils/TrackNotifications';
 
 /**
  * @private
@@ -285,9 +290,39 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
-  /* @conditional-compile-remove(capabilities) */
-  const { capabilitiesChangeNotifications, onDismissCapabilityChangeNotification } = useNotificationTracker(
-    props.capabilitiesNotificationBarProps ?? {}
+  const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({});
+
+  const activeNotifications = useRef<Partial<Record<ParticipantCapabilityName, CapabalityChangedNotification>>>({});
+
+  useEffect(() => {
+    Object.entries(props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
+      (capabilityChanged) => {
+        const capabilityChangeNotification: CapabalityChangedNotification = {
+          capabilityName: capabilityChanged[0] as ParticipantCapabilityName,
+          isPresent: capabilityChanged[1].isPresent,
+          changedReason: props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.reason,
+          role: props.capabilitiesNotificationBarProps?.participantRole,
+          timestamp: new Date(Date.now())
+        };
+        activeNotifications.current[capabilityChanged[0]] = capabilityChangeNotification;
+      }
+    );
+    setTrackedNotifications((prev) =>
+      updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications.current)
+    );
+  }, [
+    props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.newValue,
+    props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.reason,
+    props.capabilitiesNotificationBarProps?.participantRole
+  ]);
+
+  const onDismissCapabilityChangedNotification = useCallback((notification: CapabalityChangedNotification) => {
+    setTrackedNotifications((prev) => trackNotificationAsDismissed(notification.capabilityName, prev));
+  }, []);
+
+  const latestCapabilityChangedNotifications = useMemo(
+    () => filterLatestNotifications(activeNotifications.current, trackedNotifications),
+    [trackedNotifications]
   );
 
   return (
@@ -398,11 +433,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                     {
                       /* @conditional-compile-remove(capabilities) */
-                      capabilitiesChangeNotifications && capabilitiesChangeNotifications?.length > 0 && (
+                      latestCapabilityChangedNotifications?.length > 0 && (
                         <Stack styles={bannerNotificationStyles}>
-                          <CapabilitiesChangeNotificationBar
-                            capabilitiesChangeNotifications={capabilitiesChangeNotifications}
-                            onDismissNotification={onDismissCapabilityChangeNotification}
+                          <CapabilitiesChangedNotificationBar
+                            capabilitiesChangedNotifications={latestCapabilityChangedNotifications}
+                            onDismissNotification={onDismissCapabilityChangedNotification}
                           />
                         </Stack>
                       )

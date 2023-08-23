@@ -14,18 +14,18 @@ import { CallCompositeStrings } from '../Strings';
 
 /* @conditional-compile-remove(capabilities) */
 /**
- * @beta
+ * @private
  */
 export interface CapabilitiesChangeNotificationBarProps extends IMessageBarProps {
-  capabilitiesChangeNotifications: CapabalityChangeNotification[];
-  onDismissNotification: (notification: CapabalityChangeNotification) => void;
+  capabilitiesChangedNotifications: CapabalityChangedNotification[];
+  onDismissNotification: (notification: CapabalityChangedNotification) => void;
 }
 
 /* @conditional-compile-remove(capabilities) */
 /**
- * @beta
+ * @private
  */
-export interface CapabalityChangeNotification {
+export interface CapabalityChangedNotification {
   /**
    * Name of capability
    */
@@ -55,15 +55,15 @@ export interface CapabalityChangeNotification {
 
 /* @conditional-compile-remove(capabilities) */
 /**
- * Notification bar for capabilities changes
- * @beta
+ * Notification bar for capabilities changed
+ * @private
  */
-export const CapabilitiesChangeNotificationBar = (props: CapabilitiesChangeNotificationBarProps): JSX.Element => {
+export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNotificationBarProps): JSX.Element => {
   const locale = useLocale();
 
   return (
-    <Stack data-ui-id="capabilities-changes-notification-bar-stack">
-      {props.capabilitiesChangeNotifications.map((notification) => {
+    <Stack data-ui-id="capabilities-changed-notification-bar-stack">
+      {props.capabilitiesChangedNotifications.map((notification) => {
         const message = getNotificationMessage(notification, locale.strings.call);
         if (!message) {
           return null;
@@ -86,7 +86,7 @@ export const CapabilitiesChangeNotificationBar = (props: CapabilitiesChangeNotif
 
 /* @conditional-compile-remove(capabilities) */
 const getNotificationMessage = (
-  notification: CapabalityChangeNotification,
+  notification: CapabalityChangedNotification,
   strings: CallCompositeStrings
 ): string | undefined => {
   switch (notification.capabilityName) {
