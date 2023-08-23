@@ -1142,6 +1142,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     if (data.newValue.turnVideoOn?.isPresent === false) {
       this.stopCamera();
     }
+    if (data.newValue.unmuteMic?.isPresent === false) {
+      this.mute();
+    }
+    if (data.newValue.shareScreen?.isPresent === false) {
+      this.stopScreenShare();
+    }
     this.emitter.emit('capabilitiesChanged', data);
   }
 
