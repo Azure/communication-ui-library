@@ -49,7 +49,12 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener, IsCaptionsActiveChangedListener, IsCaptionLanguageChangedListener,IsSpokenLanguageChangedListener } from '../../CallComposite/adapter/CallAdapter';
+import {
+  CaptionsReceivedListener,
+  IsCaptionsActiveChangedListener,
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 

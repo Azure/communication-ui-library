@@ -43,12 +43,10 @@ export const CaptionsSettingsModal = (props: {
     captionsSettingsCloseModalButtonAriaLabel: strings.captionsSettingsCloseModalButtonAriaLabel
   };
   /* @conditional-compile-remove(close-captions) */
-  const spokenLanguageStrings: SpokenLanguageStrings | undefined =
-    strings.spokenLanguageStrings;
+  const spokenLanguageStrings: SpokenLanguageStrings | undefined = strings.spokenLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
-  const captionLanguageStrings: CaptionLanguageStrings | undefined =
-    strings.captionLanguageStrings;
+  const captionLanguageStrings: CaptionLanguageStrings | undefined = strings.captionLanguageStrings;
 
   /* @conditional-compile-remove(close-captions) */
   return (
