@@ -7,11 +7,7 @@ import { useMemo, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useTheme } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import {
-  _CaptionsSettingsModal,
-  SpokenLanguageStrings,
-  CaptionLanguageStrings
-} from '@internal/react-components';
+import { _CaptionsSettingsModal, SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import {
   _DrawerMenu as DrawerMenu,

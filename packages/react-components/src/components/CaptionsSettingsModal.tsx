@@ -27,11 +27,7 @@ import {
 } from './styles/CaptionsSettingsModal.styles';
 import { _captionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
-import {
-  SpokenLanguageStrings,
-  CaptionLanguageStrings,
-  _spokenLanguageToCaptionLanguage
-} from '../types';
+import { SpokenLanguageStrings, CaptionLanguageStrings, _spokenLanguageToCaptionLanguage } from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
