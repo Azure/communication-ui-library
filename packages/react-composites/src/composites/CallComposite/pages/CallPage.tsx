@@ -33,7 +33,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
-import { capabilitiesNotificationSelector } from '../selectors/capabilitiesNotificationSelector';
+import { capabilitiesChangedAndRoleInfoSelector } from '../selectors/capabilitiesChangedInfoSelector';
 
 /**
  * @private
@@ -79,7 +79,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
   /* @conditional-compile-remove(capabilities) */
-  const capabilitiesNotificationBarProps = useSelector(capabilitiesNotificationSelector);
+  const capabilitiesChangedAndRoleInfo = useSelector(capabilitiesChangedAndRoleInfoSelector);
 
   const strings = useLocale().strings.call;
 
@@ -100,8 +100,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       id={drawerMenuHostId}
       complianceBannerProps={{ ...complianceBannerProps, strings }}
       errorBarProps={options?.errorBar !== false && errorBarProps}
-      /* @conditional-compile-remove(capabilities) */
-      capabilitiesNotificationBarProps={capabilitiesNotificationBarProps}
       mutedNotificationProps={mutedNotificationProps}
       callControlProps={{
         callInvitationURL: callInvitationURL,
@@ -150,6 +148,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
       /* @conditional-compile-remove(gallery-layouts) */
       userSetGalleryLayout={userSetGalleryLayout}
+      /* @conditional-compile-remove(capabilities) */
+      capabilitiesChangedAndRoleInfo={capabilitiesChangedAndRoleInfo}
     />
   );
 };

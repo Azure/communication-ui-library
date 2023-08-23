@@ -8,11 +8,9 @@ import { getCapabilitiesChangedInfo, getRole } from './baseSelectors';
 
 /* @conditional-compile-remove(capabilities) */
 /**
- * Selector for {@link CapabilitiesNotification} component.
- *
- * @public
+ * @private
  */
-export const capabilitiesNotificationSelector = reselect.createSelector(
+export const capabilitiesChangedAndRoleInfoSelector = reselect.createSelector(
   [getCapabilitiesChangedInfo, getRole],
   (capabilitiesChangeInfo, participantRole) => {
     return { capabilitiesChangeInfo, participantRole };

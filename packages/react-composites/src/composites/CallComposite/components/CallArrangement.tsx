@@ -79,12 +79,14 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 import { CapabalityChangedNotification, CapabilitiesChangedNotificationBar } from './CapabilitiesNotficationBar';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
-import { TrackedNotifications } from '../types/NotificationTracking';
+/* @conditional-compile-remove(capabilities) */
+import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
+/* @conditional-compile-remove(capabilities) */
 import {
-  filterLatestNotifications,
-  trackNotificationAsDismissed,
-  updateTrackedNotificationsWithActiveNotifications
-} from '../utils/TrackNotifications';
+  filterLatestCapabilityChangedNotifications,
+  trackCapabilityChangedNotificationAsDismissed,
+  updateTrackedCapabilityChangedNotificationsWithActiveNotifications
+} from '../utils/TrackCapabilityChangedNotifications';
 
 /**
  * @private
@@ -93,11 +95,6 @@ export interface CallArrangementProps {
   id?: string;
   complianceBannerProps: _ComplianceBannerProps;
   errorBarProps: ErrorBarProps | false;
-  /* @conditional-compile-remove(capabilities) */
-  capabilitiesNotificationBarProps?: {
-    capabilitiesChangeInfo?: CapabilitiesChangeInfo;
-    participantRole?: ParticipantRole;
-  };
   mutedNotificationProps?: MutedNotificationProps;
   callControlProps: CallControlsProps;
   onRenderGalleryContent: () => JSX.Element;
@@ -116,6 +113,8 @@ export interface CallArrangementProps {
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedAndRoleInfo?: CapabilitiesChangedAndRoleInfo;
 }
 
 /**
@@ -290,39 +289,42 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
-  const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({});
+  /* @conditional-compile-remove(capabilities) */
+  const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
+    useState<TrackedCapabilityChangedNotifications>({});
 
-  const activeNotifications = useRef<Partial<Record<ParticipantCapabilityName, CapabalityChangedNotification>>>({});
+  /* @conditional-compile-remove(capabilities) */
+  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
 
+  /* @conditional-compile-remove(capabilities) */
   useEffect(() => {
-    Object.entries(props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
-      (capabilityChanged) => {
-        const capabilityChangeNotification: CapabalityChangedNotification = {
-          capabilityName: capabilityChanged[0] as ParticipantCapabilityName,
-          isPresent: capabilityChanged[1].isPresent,
-          changedReason: props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.reason,
-          role: props.capabilitiesNotificationBarProps?.participantRole,
-          timestamp: new Date(Date.now())
-        };
-        activeNotifications.current[capabilityChanged[0]] = capabilityChangeNotification;
-      }
+    activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
+      props.capabilitiesChangedAndRoleInfo ?? {},
+      activeNotifications.current
     );
-    setTrackedNotifications((prev) =>
-      updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications.current)
+    setTrackedCapabilityChangedNotifications((prev) =>
+      updateTrackedCapabilityChangedNotificationsWithActiveNotifications(
+        prev,
+        Object.values(activeNotifications.current)
+      )
     );
-  }, [
-    props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.newValue,
-    props.capabilitiesNotificationBarProps?.capabilitiesChangeInfo?.reason,
-    props.capabilitiesNotificationBarProps?.participantRole
-  ]);
+  }, [props.capabilitiesChangedAndRoleInfo]);
 
+  /* @conditional-compile-remove(capabilities) */
   const onDismissCapabilityChangedNotification = useCallback((notification: CapabalityChangedNotification) => {
-    setTrackedNotifications((prev) => trackNotificationAsDismissed(notification.capabilityName, prev));
+    setTrackedCapabilityChangedNotifications((prev) =>
+      trackCapabilityChangedNotificationAsDismissed(notification.capabilityName, prev)
+    );
   }, []);
 
+  /* @conditional-compile-remove(capabilities) */
   const latestCapabilityChangedNotifications = useMemo(
-    () => filterLatestNotifications(activeNotifications.current, trackedNotifications),
-    [trackedNotifications]
+    () =>
+      filterLatestCapabilityChangedNotifications(
+        Object.values(activeNotifications.current),
+        trackedCapabilityChangedNotifications
+      ),
+    [trackedCapabilityChangedNotifications]
   );
 
   return (
@@ -513,4 +515,35 @@ const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallCont
     return false;
   }
   return callControls.participantsButton !== false && callControls.peopleButton !== false;
+};
+
+/* @conditional-compile-remove(capabilities) */
+interface CapabilitiesChangedAndRoleInfo {
+  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
+  participantRole?: ParticipantRole;
+}
+
+/* @conditional-compile-remove(capabilities) */
+type LatestCapabilityChangedNotificationRecord = Partial<
+  Record<ParticipantCapabilityName, CapabalityChangedNotification>
+>;
+
+/* @conditional-compile-remove(capabilities) */
+const updateLatestCapabilityChangedNotificationMap = (
+  capabilitiesChangedAndRoleInfo: CapabilitiesChangedAndRoleInfo,
+  activeNotifications: LatestCapabilityChangedNotificationRecord
+): LatestCapabilityChangedNotificationRecord => {
+  Object.entries(capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
+    (newCapabilityChanged) => {
+      const newCapabilityChangeNotification: CapabalityChangedNotification = {
+        capabilityName: newCapabilityChanged[0] as ParticipantCapabilityName,
+        isPresent: newCapabilityChanged[1].isPresent,
+        changedReason: capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.reason,
+        role: capabilitiesChangedAndRoleInfo?.participantRole,
+        timestamp: new Date(Date.now())
+      };
+      activeNotifications[newCapabilityChanged[0]] = newCapabilityChangeNotification;
+    }
+  );
+  return activeNotifications;
 };
