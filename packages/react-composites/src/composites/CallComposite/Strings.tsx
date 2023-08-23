@@ -209,6 +209,10 @@ export interface CallCompositeStrings {
    */
   peopleButtonLabel: string;
   /**
+   * control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
+  /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;

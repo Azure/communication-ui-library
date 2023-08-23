@@ -449,6 +449,7 @@ export interface CallCompositeStrings {
     removedFromCallTitle: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    selectedPeopleButtonLabel: string;
     soundLabel: string;
     startCallButtonLabel: string;
     threeParticipantJoinedNoticeString: string;
@@ -811,6 +812,7 @@ export interface CallWithChatCompositeStrings {
     removeMenuLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    selectedPeopleButtonLabel: string;
 }
 
 // @public
