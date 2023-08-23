@@ -96,7 +96,7 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
    */
