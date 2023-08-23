@@ -19,6 +19,8 @@ import { controlBarContainerStyles } from '../../CallComposite/styles/CallContro
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
@@ -39,7 +41,8 @@ import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /**
  * @private
  */
@@ -63,6 +66,10 @@ export interface CommonCallControlBarProps {
   displayVertical?: boolean;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
 }
@@ -290,6 +297,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         componentRef={props.cameraButtonRef}
                       />
                     )}
+                    {
+                      /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
+                        isEnabled(options.raiseHandButton) && (
+                          <RaiseHand
+                            displayType={options.displayType}
+                            styles={commonButtonStyles}
+                            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                            disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                          />
+                        )
+                    }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
@@ -342,7 +360,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             isCaptionsSupported={props.isCaptionsSupported}
                             /* @conditional-compile-remove(close-captions) */
                             onCaptionsSettingsClick={openCaptionsSettingsModal}
+                            /* @conditional-compile-remove(gallery-layouts) */
                             onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                            /* @conditional-compile-remove(gallery-layouts) */
+                            onUserSetGalleryLayout={props.onUserSetGalleryLayout}
+                            /* @conditional-compile-remove(gallery-layouts) */
+                            userSetGalleryLayout={props.userSetGalleryLayout}
                           />
                         )
                     }

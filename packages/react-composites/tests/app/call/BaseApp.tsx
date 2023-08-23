@@ -20,6 +20,7 @@ import { isMobile } from '../lib/utils';
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';
 import { MoreHorizontal20Regular } from '@fluentui/react-icons';
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /** @internal */
 export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter }): JSX.Element {
@@ -89,6 +90,13 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     options = {
       ...options,
       localVideoTile: queryArgs.localVideoTilePosition
+    };
+  }
+
+  if (queryArgs.galleryLayout) {
+    options = {
+      ...options,
+      galleryOptions: { layout: queryArgs.galleryLayout as VideoGalleryLayout }
     };
   }
 

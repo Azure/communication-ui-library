@@ -28,7 +28,7 @@ import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { useId } from '@fluentui/react-hooks';
 
 /**
- * Props for {@link FloatingLocalVideoLayout}.
+ * Props for {@link SpeakerVideoLayout}.
  *
  * @private
  */

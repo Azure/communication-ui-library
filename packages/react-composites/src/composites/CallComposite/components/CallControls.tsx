@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { memoizeFunction, Stack, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { IContextualMenuItem } from '@fluentui/react';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useState } from 'react';
@@ -22,29 +22,31 @@ import { ScreenShare } from './buttons/ScreenShare';
 import { ContainerRectProps } from '../../common/ContainerRectProps';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
 import { People } from './buttons/People';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { MoreButton } from '../../common/MoreButton';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../hooks/usePropsFor';
-/* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(new-call-control-bar) */
+/* @conditional-compile-remove(PSTN-calls) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
 import { CommonCallAdapter } from '../adapter';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHand } from './buttons/RaiseHand';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 /**
  * @private
  */
 export type CallControlsProps = {
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   peopleButtonChecked?: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   onPeopleButtonClicked?: () => void;
   callInvitationURL?: string;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -66,10 +68,10 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
-  /* @conditional-compile-remove(new-call-control-bar) */
+  /* @conditional-compile-remove(PSTN-calls) */
   const adapter = useAdapter();
 
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const localeStrings = useLocale();
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -82,7 +84,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     [localeStrings]
   );
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.moreButtonCallingLabel,
@@ -104,10 +106,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+
   /* @conditional-compile-remove(PSTN-calls) */
   const alternateCallerId = useAdapter().getState().alternateCallerId;
 
-  /* @conditional-compile-remove(new-call-control-bar) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   const moreButtonContextualMenuItems = (): IContextualMenuItem[] => {
     const items: IContextualMenuItem[] = [];
 
@@ -162,6 +167,27 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
+    /* @conditional-compile-remove(raise-hand) */
+    if (raiseHandButtonIsEnabled) {
+      items.push({
+        key: 'raiseHandButtonKey',
+        text: raiseHandButtonProps.checked
+          ? localeStrings.component.strings.raiseHandButton.onLabel
+          : localeStrings.component.strings.raiseHandButton.offLabel,
+        onClick: () => {
+          if (raiseHandButtonProps.onToggleRaiseHand) {
+            raiseHandButtonProps.onToggleRaiseHand();
+          }
+        },
+        iconProps: { iconName: 'RaiseHandContextualMenuItem', styles: { root: { lineHeight: 0 } } },
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        disabled: isDisabled(options?.raiseHandButton),
+        ['data-ui-id']: 'raise-hand-button'
+      });
+    }
+
     return items;
   };
 
@@ -190,6 +216,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const microphoneButtonIsEnabled = isEnabled(options?.microphoneButton);
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
+
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
 
   return (
     <Stack horizontalAlign="center" className={callControlsContainerStyles}>
@@ -220,6 +249,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
+          {
+            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && !props.isMobile && (
+              <RaiseHand displayType={options?.displayType} />
+            )
+          }
           {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}
@@ -259,7 +293,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             />
           )}
           {
-            /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
+            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
             isEnabled(options?.moreButton) && moreButtonContextualMenuItems().length > 0 && (
               <MoreButton
                 data-ui-id="common-call-composite-more-button"

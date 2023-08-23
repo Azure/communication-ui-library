@@ -166,7 +166,11 @@
     "participantIdIsMalformedTitle": "參與者識別碼的格式不正確",
     "participantIdIsMalformedMoreDetails": "請檢查參與者識別碼的格式是否正確",
     "moreButtonGalleryControlLabel": "圖庫選項",
-    "moreButtonGalleryPositionToggleLabel": "將圖庫移至頂端"
+    "moreButtonGalleryPositionToggleLabel": "將圖庫移至頂端",
+    "moreButtonGallerySpeakerLayoutLabel": "喇叭版面配置",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "動態版面配置",
+    "moreButtonGalleryDefaultLayoutLabel": "資源庫配置",
+    "moreButtonGalleryFocusedContentLayoutLabel": "焦點內容"
   },
   "chat": {
     "chatListHeader": "在此聊天中",

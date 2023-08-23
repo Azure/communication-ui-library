@@ -44,7 +44,12 @@ import {
   Translate20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
-import { HandRight20Filled, HandRightOff20Filled } from '@fluentui/react-icons';
+import {
+  HandRight20Filled,
+  HandRightOff20Filled,
+  HandRight20Regular,
+  HandRightOff20Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(close-captions) */
 import {
   ClosedCaption20Regular,
@@ -242,6 +247,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonRaiseHand: <HandRight20Filled />,
   /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand: <HandRightOff20Filled />,
+  /* @conditional-compile-remove(raise-hand) */
+  RaiseHandContextualMenuItem: <HandRight20Regular />,
+  /* @conditional-compile-remove(raise-hand) */
+  LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */

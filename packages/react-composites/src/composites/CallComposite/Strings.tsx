@@ -192,32 +192,26 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Description string for return to call button
    */
   returnToCallButtonAriaDescription?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar People button label
    */
   peopleButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for SidePaneHeader dismiss button
    */
@@ -267,7 +261,6 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button in the Calling composite
    */
@@ -610,4 +603,24 @@ export interface CallCompositeStrings {
    * Label for the toggle to move the overflow gallery to the top
    */
   moreButtonGalleryPositionToggleLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the speaker layout
+   */
+  moreButtonGallerySpeakerLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the default (Gallery) layout
+   */
+  moreButtonGalleryDefaultLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the floatingLocalVideo (Dynamic) layout
+   */
+  moreButtonGalleryFloatingLocalLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the focusedContentLayout (Focused content) layout
+   */
+  moreButtonGalleryFocusedContentLayoutLabel?: string;
 }
