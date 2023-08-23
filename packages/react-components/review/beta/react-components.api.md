@@ -256,7 +256,7 @@ export type CancelEditCallback = (messageId: string) => void;
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
-// @public
+// @beta
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1888,7 +1888,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @public
+// @beta
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;

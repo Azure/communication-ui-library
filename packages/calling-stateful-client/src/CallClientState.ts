@@ -55,7 +55,7 @@ export interface CallAgentState {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @public
+ * @beta
  */
 export interface CaptionsInfo {
   /**
@@ -90,7 +90,7 @@ export interface CaptionsInfo {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @public
+ * @beta
  */
 export interface CaptionsCallFeatureState {
   /**

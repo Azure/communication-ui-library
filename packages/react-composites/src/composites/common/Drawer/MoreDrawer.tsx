@@ -10,11 +10,10 @@ import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
-  _DrawerMenuStyles,
-  _CaptionsSettingsModal
+  _DrawerMenuStyles
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import { _StartCaptionsButton } from '@internal/react-components';
+import { _StartCaptionsButton,  _CaptionsSettingsModal } from '@internal/react-components';
 
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';

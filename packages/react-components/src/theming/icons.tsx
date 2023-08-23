@@ -40,8 +40,7 @@ import {
   WifiWarning20Filled,
   SpeakerMute16Filled,
   MicProhibited16Filled,
-  VideoProhibited16Filled,
-  Translate20Regular
+  VideoProhibited16Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
 import {
@@ -55,7 +54,8 @@ import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
   Settings20Regular,
-  PersonVoice20Regular
+  PersonVoice20Regular,
+  Translate20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';

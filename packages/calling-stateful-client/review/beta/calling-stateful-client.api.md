@@ -141,7 +141,7 @@ export interface CapabilitiesCallFeature {
     capabilities: ParticipantCapabilities;
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -152,7 +152,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;

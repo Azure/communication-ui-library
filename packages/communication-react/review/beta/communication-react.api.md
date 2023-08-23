@@ -1317,7 +1317,7 @@ export interface CapabilitiesCallFeature {
     capabilities: ParticipantCapabilities;
 }
 
-// @public
+// @beta
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1385,7 +1385,7 @@ export interface CaptionLanguageStrings {
     vi: string;
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -1396,7 +1396,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
@@ -1407,12 +1407,12 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @public
+// @beta
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
 
-// @public
+// @beta
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -2832,12 +2832,12 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @public
+// @beta
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
 
-// @public
+// @beta
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -2859,7 +2859,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @public
+// @beta
 export type IsSpokenLanguageChangedListener = (event: {
     activeSpokenLanguage: string;
 }) => void;
@@ -3606,7 +3606,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @public
+// @beta
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;
