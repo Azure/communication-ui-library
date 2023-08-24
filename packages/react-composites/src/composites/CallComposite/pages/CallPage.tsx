@@ -34,6 +34,8 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
 import { capabilitiesChangedAndRoleInfoSelector } from '../selectors/capabilitiesChangedInfoSelector';
+/* @conditional-compile-remove(capabilities) */
+import { useTrackedCapabilityChangedNotifications } from '../utils/TrackCapabilityChangedNotifications';
 
 /**
  * @private
@@ -78,8 +80,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
   const mutedNotificationProps = useSelector(mutedNotificationSelector);
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
-  /* @conditional-compile-remove(capabilities) */
-  const capabilitiesChangedAndRoleInfo = useSelector(capabilitiesChangedAndRoleInfoSelector);
 
   const strings = useLocale().strings.call;
 
@@ -94,6 +94,13 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   );
   /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(galleryLayout);
+
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedAndRoleInfo = useSelector(capabilitiesChangedAndRoleInfoSelector);
+
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedNotificationBarProps =
+    useTrackedCapabilityChangedNotifications(capabilitiesChangedAndRoleInfo);
 
   return (
     <CallArrangement
@@ -149,7 +156,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(gallery-layouts) */
       userSetGalleryLayout={userSetGalleryLayout}
       /* @conditional-compile-remove(capabilities) */
-      capabilitiesChangedAndRoleInfo={capabilitiesChangedAndRoleInfo}
+      capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
     />
   );
 };

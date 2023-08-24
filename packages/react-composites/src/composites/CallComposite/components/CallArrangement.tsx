@@ -76,17 +76,10 @@ import { CommonCallControlOptions } from '../../common/types/CommonCallControlOp
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
 /* @conditional-compile-remove(capabilities) */
-import { CapabalityChangedNotification, CapabilitiesChangedNotificationBar } from './CapabilitiesNotificationBar';
-/* @conditional-compile-remove(capabilities) */
-import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
-/* @conditional-compile-remove(capabilities) */
 import {
-  filterLatestCapabilityChangedNotifications,
-  trackCapabilityChangedNotificationAsDismissed,
-  updateTrackedCapabilityChangedNotificationsWithActiveNotifications
-} from '../utils/TrackCapabilityChangedNotifications';
+  CapabilitiesChangedNotificationBar,
+  CapabilitiesChangeNotificationBarProps
+} from './CapabilitiesNotificationBar';
 
 /**
  * @private
@@ -114,7 +107,7 @@ export interface CallArrangementProps {
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
-  capabilitiesChangedAndRoleInfo?: CapabilitiesChangedAndRoleInfo;
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
@@ -289,44 +282,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
-  /* @conditional-compile-remove(capabilities) */
-  const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
-    useState<TrackedCapabilityChangedNotifications>({});
-
-  /* @conditional-compile-remove(capabilities) */
-  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
-
-  /* @conditional-compile-remove(capabilities) */
-  useEffect(() => {
-    activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
-      props.capabilitiesChangedAndRoleInfo ?? {},
-      activeNotifications.current
-    );
-    setTrackedCapabilityChangedNotifications((prev) =>
-      updateTrackedCapabilityChangedNotificationsWithActiveNotifications(
-        prev,
-        Object.values(activeNotifications.current)
-      )
-    );
-  }, [props.capabilitiesChangedAndRoleInfo]);
-
-  /* @conditional-compile-remove(capabilities) */
-  const onDismissCapabilityChangedNotification = useCallback((notification: CapabalityChangedNotification) => {
-    setTrackedCapabilityChangedNotifications((prev) =>
-      trackCapabilityChangedNotificationAsDismissed(notification.capabilityName, prev)
-    );
-  }, []);
-
-  /* @conditional-compile-remove(capabilities) */
-  const latestCapabilityChangedNotifications = useMemo(
-    () =>
-      filterLatestCapabilityChangedNotifications(
-        Object.values(activeNotifications.current),
-        trackedCapabilityChangedNotifications
-      ),
-    [trackedCapabilityChangedNotifications]
-  );
-
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -435,14 +390,12 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     )}
                     {
                       /* @conditional-compile-remove(capabilities) */
-                      latestCapabilityChangedNotifications?.length > 0 && (
-                        <Stack styles={bannerNotificationStyles}>
-                          <CapabilitiesChangedNotificationBar
-                            capabilitiesChangedNotifications={latestCapabilityChangedNotifications}
-                            onDismissNotification={onDismissCapabilityChangedNotification}
-                          />
-                        </Stack>
-                      )
+                      props.capabilitiesChangedNotificationBarProps &&
+                        props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <CapabilitiesChangedNotificationBar {...props.capabilitiesChangedNotificationBarProps} />
+                          </Stack>
+                        )
                     }
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
@@ -515,35 +468,4 @@ const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallCont
     return false;
   }
   return callControls.participantsButton !== false && callControls.peopleButton !== false;
-};
-
-/* @conditional-compile-remove(capabilities) */
-interface CapabilitiesChangedAndRoleInfo {
-  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
-  participantRole?: ParticipantRole;
-}
-
-/* @conditional-compile-remove(capabilities) */
-type LatestCapabilityChangedNotificationRecord = Partial<
-  Record<ParticipantCapabilityName, CapabalityChangedNotification>
->;
-
-/* @conditional-compile-remove(capabilities) */
-const updateLatestCapabilityChangedNotificationMap = (
-  capabilitiesChangedAndRoleInfo: CapabilitiesChangedAndRoleInfo,
-  activeNotifications: LatestCapabilityChangedNotificationRecord
-): LatestCapabilityChangedNotificationRecord => {
-  Object.entries(capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
-    (newCapabilityChanged) => {
-      const newCapabilityChangeNotification: CapabalityChangedNotification = {
-        capabilityName: newCapabilityChanged[0] as ParticipantCapabilityName,
-        isPresent: newCapabilityChanged[1].isPresent,
-        changedReason: capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.reason,
-        role: capabilitiesChangedAndRoleInfo?.participantRole,
-        timestamp: new Date(Date.now())
-      };
-      activeNotifications[newCapabilityChanged[0]] = newCapabilityChangeNotification;
-    }
-  );
-  return activeNotifications;
 };

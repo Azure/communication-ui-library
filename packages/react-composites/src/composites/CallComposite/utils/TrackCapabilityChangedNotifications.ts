@@ -2,11 +2,70 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilityName } from '@azure/communication-calling';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(capabilities) */
-import { CapabalityChangedNotification } from '../components/CapabilitiesNotificationBar';
+import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import {
+  CapabalityChangedNotification,
+  CapabilitiesChangeNotificationBarProps
+} from '../components/CapabilitiesNotificationBar';
 /* @conditional-compile-remove(capabilities) */
 import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * Create a record for when the notification was most recently dismissed for tracking dismissed notifications.
+ *
+ * @private
+ */
+export const useTrackedCapabilityChangedNotifications = (capabilitiesChangedAndRoleInfo: {
+  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
+  participantRole?: ParticipantRole;
+}): CapabilitiesChangeNotificationBarProps => {
+  /* @conditional-compile-remove(capabilities) */
+  const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
+    useState<TrackedCapabilityChangedNotifications>({});
+
+  /* @conditional-compile-remove(capabilities) */
+  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
+
+  /* @conditional-compile-remove(capabilities) */
+  useEffect(() => {
+    activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
+      capabilitiesChangedAndRoleInfo ?? {},
+      activeNotifications.current
+    );
+    setTrackedCapabilityChangedNotifications((prev) =>
+      updateTrackedCapabilityChangedNotificationsWithActiveNotifications(
+        prev,
+        Object.values(activeNotifications.current)
+      )
+    );
+  }, [capabilitiesChangedAndRoleInfo]);
+
+  /* @conditional-compile-remove(capabilities) */
+  const onDismissCapabilityChangedNotification = useCallback((notification: CapabalityChangedNotification) => {
+    setTrackedCapabilityChangedNotifications((prev) =>
+      trackCapabilityChangedNotificationAsDismissed(notification.capabilityName, prev)
+    );
+  }, []);
+
+  /* @conditional-compile-remove(capabilities) */
+  const latestCapabilityChangedNotifications = useMemo(
+    () =>
+      filterLatestCapabilityChangedNotifications(
+        Object.values(activeNotifications.current),
+        trackedCapabilityChangedNotifications
+      ),
+    [trackedCapabilityChangedNotifications]
+  );
+
+  return {
+    capabilitiesChangedNotifications: latestCapabilityChangedNotifications,
+    onDismissNotification: onDismissCapabilityChangedNotification
+  };
+};
 
 /* @conditional-compile-remove(capabilities) */
 /**
@@ -74,4 +133,35 @@ export const trackCapabilityChangedNotificationAsDismissed = (
       lastDismissedAt: now
     }
   };
+};
+
+/* @conditional-compile-remove(capabilities) */
+interface CapabilitiesChangedAndRoleInfo {
+  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
+  participantRole?: ParticipantRole;
+}
+
+/* @conditional-compile-remove(capabilities) */
+type LatestCapabilityChangedNotificationRecord = Partial<
+  Record<ParticipantCapabilityName, CapabalityChangedNotification>
+>;
+
+/* @conditional-compile-remove(capabilities) */
+const updateLatestCapabilityChangedNotificationMap = (
+  capabilitiesChangedAndRoleInfo: CapabilitiesChangedAndRoleInfo,
+  activeNotifications: LatestCapabilityChangedNotificationRecord
+): LatestCapabilityChangedNotificationRecord => {
+  Object.entries(capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
+    (newCapabilityChanged) => {
+      const newCapabilityChangeNotification: CapabalityChangedNotification = {
+        capabilityName: newCapabilityChanged[0] as ParticipantCapabilityName,
+        isPresent: newCapabilityChanged[1].isPresent,
+        changedReason: capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.reason,
+        role: capabilitiesChangedAndRoleInfo?.participantRole,
+        timestamp: new Date(Date.now())
+      };
+      activeNotifications[newCapabilityChanged[0]] = newCapabilityChangeNotification;
+    }
+  );
+  return activeNotifications;
 };
