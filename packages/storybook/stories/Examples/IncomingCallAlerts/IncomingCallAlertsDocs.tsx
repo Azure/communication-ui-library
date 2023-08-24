@@ -169,7 +169,7 @@ const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
     />
   );
 
-  cosnt showLocalVideo = !!localVideoStreamElement;
+  const showLocalVideo = !!localVideoStreamElement;
 
   return (
     <>

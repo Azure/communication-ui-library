@@ -21,7 +21,6 @@ export type CallControlOptions =
        * @defaultValue true
        */
       participantsButton?: boolean | { disabled: boolean };
-      /* @conditional-compile-remove(new-call-control-bar) */
       legacyControlBarExperience?: boolean;
     };
 
