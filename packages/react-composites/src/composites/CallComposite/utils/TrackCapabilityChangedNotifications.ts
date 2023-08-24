@@ -19,10 +19,9 @@ import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChange
  *
  * @private
  */
-export const useTrackedCapabilityChangedNotifications = (capabilitiesChangedAndRoleInfo: {
-  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
-  participantRole?: ParticipantRole;
-}): CapabilitiesChangeNotificationBarProps => {
+export const useTrackedCapabilityChangedNotifications = (
+  capabilitiesChangedAndRoleInfo: CapabilitiesChangedAndRoleInfo
+): CapabilitiesChangeNotificationBarProps => {
   /* @conditional-compile-remove(capabilities) */
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedCapabilityChangedNotifications>({});
