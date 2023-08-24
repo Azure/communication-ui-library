@@ -115,7 +115,7 @@ test.describe('Captions buttons in call control', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
   });
 
-  test('Captions settings renders normally', async ({ page, serverUrl }) => {
+  test('Captions settings renders normally', async ({ page, serverUrl },testInfo) => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsCall = true;
@@ -124,7 +124,9 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    await pageClick(page, `[id="common-call-composite-captions-settings-button"]`);
+    if (!isTestProfileMobile(testInfo)) {
+      await pageClick(page, `[id="common-call-composite-captions-settings-button"]`);
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-settings.png`);
   });
 
