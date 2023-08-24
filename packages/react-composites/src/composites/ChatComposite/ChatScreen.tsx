@@ -231,7 +231,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return message.messageId === messageId;
       });
       if (!messages || messages.length <= 0) {
-        console.log(`Message not found with messageId ${messageId}`);
         return;
       }
       const chatMessage = messages[0] as ChatMessage;
@@ -241,7 +240,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       });
 
       if (!attachments || attachments.length <= 0) {
-        console.log(`Attachment not found with id ${attachmentId}`);
         return;
       }
 
