@@ -1328,12 +1328,6 @@ export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void
 // @beta
 export interface CaptionLanguageStrings {
     // (undocumented)
-    'ar-ae': string;
-    // (undocumented)
-    'ar-sa': string;
-    // (undocumented)
-    'cs-cz': string;
-    // (undocumented)
     'fr-ca': string;
     // (undocumented)
     'pt-pt': string;
