@@ -14,6 +14,10 @@ export interface CallWithChatCompositeStrings {
    */
   peopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
+  /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
   peopleButtonTooltipOpen: string;
