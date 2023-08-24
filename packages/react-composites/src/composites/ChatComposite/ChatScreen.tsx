@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { isIOS, mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { isIOS } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { PersonaSize } from '@fluentui/react';
 import {
