@@ -10,7 +10,7 @@ import { getCapabilitiesChangedInfo, getRole } from './baseSelectors';
 /**
  * @private
  */
-export const capabilitiesChangedAndRoleInfoSelector = reselect.createSelector(
+export const capabilitiesChangedInfoAndRoleSelector = reselect.createSelector(
   [getCapabilitiesChangedInfo, getRole],
   (capabilitiesChangeInfo, participantRole) => {
     return { capabilitiesChangeInfo, participantRole };

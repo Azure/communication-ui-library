@@ -33,7 +33,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
-import { capabilitiesChangedAndRoleInfoSelector } from '../selectors/capabilitiesChangedInfoSelector';
+import { capabilitiesChangedInfoAndRoleSelector } from '../selectors/capabilitiesChangedInfoAndRoleSelector';
 /* @conditional-compile-remove(capabilities) */
 import { useTrackedCapabilityChangedNotifications } from '../utils/TrackCapabilityChangedNotifications';
 
@@ -96,11 +96,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(galleryLayout);
 
   /* @conditional-compile-remove(capabilities) */
-  const capabilitiesChangedAndRoleInfo = useSelector(capabilitiesChangedAndRoleInfoSelector);
+  const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
 
   /* @conditional-compile-remove(capabilities) */
   const capabilitiesChangedNotificationBarProps =
-    useTrackedCapabilityChangedNotifications(capabilitiesChangedAndRoleInfo);
+    useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
   return (
     <CallArrangement

@@ -20,7 +20,7 @@ import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChange
  * @private
  */
 export const useTrackedCapabilityChangedNotifications = (
-  capabilitiesChangedAndRoleInfo: CapabilitiesChangedAndRoleInfo
+  capabilitiesChangedAndRoleInfo: CapabilitiesChangedInfoAndRole
 ): CapabilitiesChangeNotificationBarProps => {
   /* @conditional-compile-remove(capabilities) */
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
@@ -135,7 +135,7 @@ export const trackCapabilityChangedNotificationAsDismissed = (
 };
 
 /* @conditional-compile-remove(capabilities) */
-interface CapabilitiesChangedAndRoleInfo {
+interface CapabilitiesChangedInfoAndRole {
   capabilitiesChangeInfo?: CapabilitiesChangeInfo;
   participantRole?: ParticipantRole;
 }
@@ -147,16 +147,16 @@ type LatestCapabilityChangedNotificationRecord = Partial<
 
 /* @conditional-compile-remove(capabilities) */
 const updateLatestCapabilityChangedNotificationMap = (
-  capabilitiesChangedAndRoleInfo: CapabilitiesChangedAndRoleInfo,
+  capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
   activeNotifications: LatestCapabilityChangedNotificationRecord
 ): LatestCapabilityChangedNotificationRecord => {
-  Object.entries(capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
+  Object.entries(capabilitiesChangedInfoAndRole?.capabilitiesChangeInfo?.newValue ?? {}).forEach(
     (newCapabilityChanged) => {
       const newCapabilityChangeNotification: CapabalityChangedNotification = {
         capabilityName: newCapabilityChanged[0] as ParticipantCapabilityName,
         isPresent: newCapabilityChanged[1].isPresent,
-        changedReason: capabilitiesChangedAndRoleInfo?.capabilitiesChangeInfo?.reason,
-        role: capabilitiesChangedAndRoleInfo?.participantRole,
+        changedReason: capabilitiesChangedInfoAndRole?.capabilitiesChangeInfo?.reason,
+        role: capabilitiesChangedInfoAndRole?.participantRole,
         timestamp: new Date(Date.now())
       };
       activeNotifications[newCapabilityChanged[0]] = newCapabilityChangeNotification;
