@@ -288,7 +288,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const onImageDownloadButtonClicked = useCallback(async (imageUrl: string, saveAsName: string): Promise<void> => {
+  const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
     if (isIOS()) {
       window.open(imageUrl, '_blank');
     } else {
