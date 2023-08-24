@@ -221,6 +221,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     return (
       <span
+        data-ui-id={node.attribs.id}
         onClick={handleOnClick}
         tabIndex={0}
         role="button"
