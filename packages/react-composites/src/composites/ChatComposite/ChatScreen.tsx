@@ -290,12 +290,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onImageDownloadButtonClicked = useCallback(async (imageUrl: string, saveAsName: string): Promise<void> => {
     if (isIOS()) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        window.open(imageUrl, '_blank');
-      };
-      const blob = await fetch(imageUrl).then((r) => r.blob());
-      reader.readAsDataURL(blob);
+      window.open(imageUrl, '_blank');
     } else {
       // Create a new anchor element
       const a = document.createElement('a');
