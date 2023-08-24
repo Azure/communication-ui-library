@@ -220,9 +220,21 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     };
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     return (
-      <span onClick={handleOnClick} data-ui-id={node.attribs.id}>
+      <Stack
+        onClick={handleOnClick}
+        tabIndex={0}
+        role="button"
+        style={{
+          cursor: 'pointer'
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleOnClick();
+          }
+        }}
+      >
         {processNodeDefinitions.processDefaultNode(node, children, index)}
-      </span>
+      </Stack>
     );
     return processNodeDefinitions.processDefaultNode(node, children, index);
   }
