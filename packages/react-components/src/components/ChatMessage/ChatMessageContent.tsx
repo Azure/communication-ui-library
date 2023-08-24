@@ -220,7 +220,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     };
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     return (
-      <Stack
+      <span
         onClick={handleOnClick}
         tabIndex={0}
         role="button"
@@ -234,7 +234,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
         }}
       >
         {processNodeDefinitions.processDefaultNode(node, children, index)}
-      </Stack>
+      </span>
     );
     return processNodeDefinitions.processDefaultNode(node, children, index);
   }
