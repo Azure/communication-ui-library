@@ -17,7 +17,7 @@ import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/com
 /* @conditional-compile-remove(capabilities) */
 import type { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesCallFeature } from '@internal/calling-stateful-client';
+import { CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -298,7 +298,7 @@ export const stubLocalCameraName = async (page: Page): Promise<void> => {
 };
 
 /* @conditional-compile-remove(capabilities) */
-const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesCallFeature => {
+const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesFeatureState => {
   switch (role) {
     case 'Attendee':
       return {

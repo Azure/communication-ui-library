@@ -147,11 +147,11 @@ export interface CapabilitiesFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
    */
-  capabilities?: ParticipantCapabilities;
+  capabilities: ParticipantCapabilities;
   /**
-   * Proxy of the latest {@link @azure/communication-calling#CapabilitiesChangeInfo} received from {@link @azure/communication-calling#CapabilitiesChangedEventType}.
+   * Proxy of the latest {@link @azure/communication-calling#CapabilitiesChangeInfo}
    */
-  capabilitiesChangeInfo?: CapabilitiesChangeInfo;
+  latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
 /**
@@ -484,7 +484,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
-  capabilities?: CapabilitiesFeatureState;
+  capabilitiesState?: CapabilitiesFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */

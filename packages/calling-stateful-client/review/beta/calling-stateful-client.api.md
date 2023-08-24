@@ -108,7 +108,7 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.fea
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    capabilities?: CapabilitiesCallFeature;
+    capabilitiesState?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -138,9 +138,9 @@ export interface CallState {
 }
 
 // @beta
-export interface CapabilitiesCallFeature {
-    capabilities?: ParticipantCapabilities;
-    capabilitiesChangeInfo?: CapabilitiesChangeInfo;
+export interface CapabilitiesFeatureState {
+    capabilities: ParticipantCapabilities;
+    latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
 // @beta (undocumented)

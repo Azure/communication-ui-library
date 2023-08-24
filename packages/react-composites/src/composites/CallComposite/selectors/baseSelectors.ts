@@ -202,5 +202,5 @@ export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state
 /* @conditional-compile-remove(capabilities) */
 /** @private */
 export const getCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
-  return state.call?.capabilities?.capabilitiesChangeInfo;
+  return state.call?.capabilitiesState?.latestCapabilitiesChangeInfo;
 };

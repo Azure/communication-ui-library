@@ -848,7 +848,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    capabilities?: CapabilitiesCallFeature;
+    capabilitiesState?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1308,13 +1308,13 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
-export interface CapabilitiesCallFeature {
-    capabilities?: ParticipantCapabilities;
-    capabilitiesChangeInfo?: CapabilitiesChangeInfo;
-}
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
 // @beta
-export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+export interface CapabilitiesFeatureState {
+    capabilities: ParticipantCapabilities;
+    latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
+}
 
 // @beta
 export interface CaptionsAvailableLanguageStrings {
