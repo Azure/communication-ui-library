@@ -113,7 +113,7 @@ export function defaultMockCallAdapterState(
         maxRemoteVideoStreams: 4
       },
       /* @conditional-compile-remove(capabilities) */
-      capabilities: role ? getCapabilitiesFromRole(role) : undefined
+      capabilitiesState: role ? getCapabilitiesFromRole(role) : undefined
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
@@ -302,15 +302,18 @@ const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesFeatureStat
   switch (role) {
     case 'Attendee':
       return {
-        capabilities: attendeeCapabilitiesInRoomsCall
+        capabilities: attendeeCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     case 'Consumer':
       return {
-        capabilities: consumerCapabilitiesInRoomsCall
+        capabilities: consumerCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     default:
       return {
-        capabilities: presenterCapabilitiesInRoomsCall
+        capabilities: presenterCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
   }
 };
