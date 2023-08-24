@@ -113,7 +113,7 @@ export function defaultMockCallAdapterState(
         maxRemoteVideoStreams: 4
       },
       /* @conditional-compile-remove(capabilities) */
-      capabilitiesState: role ? getCapabilitiesFromRole(role) : undefined
+      capabilitiesFeature: role ? getCapabilitiesFromRole(role) : undefined
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {

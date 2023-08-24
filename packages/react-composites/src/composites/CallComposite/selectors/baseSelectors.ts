@@ -204,5 +204,5 @@ export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state
  * @private
  */
 export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
-  return state.call?.capabilitiesState?.latestCapabilitiesChangeInfo;
+  return state.call?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
 };

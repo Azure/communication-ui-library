@@ -50,7 +50,7 @@ export const getRole = (state: CallClientState, props: CallingBaseSelectorProps)
 export const getCapabilites = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesState?.capabilities;
+): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
 
 /**
  * @private
