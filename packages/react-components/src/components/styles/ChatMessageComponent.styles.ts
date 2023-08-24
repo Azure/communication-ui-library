@@ -11,7 +11,11 @@ import {
   IIconStyles
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { tokens } from '@fluentui/react-components';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
+import {
+  defaultSendBoxInactiveBorderThicknessREM,
+  defaultSendBoxActiveBorderThicknessREM
+} from '../styles/SendBox.styles';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
 
@@ -89,16 +93,49 @@ export const chatMessageMenuStyle = mergeStyles({
   overflow: 'hidden'
 });
 
+// /**
+//  * @private
+//  */
+// export const chatMessageEditContainerStyle = {
+//   margin: 0,
+//   padding: 0,//'0 !important',
+//   maxWidth: 'unset',
+//   minWidth: 'unset',
+//   backgroundColor: 'transparent'// !important'
+// };
+
 /**
  * @private
  */
-export const chatMessageEditContainerStyle = {
-  margin: 0,
-  padding: 0,
-  maxWidth: 'unset',
-  minWidth: 'unset',
-  backgroundColor: 'transparent'
-};
+export const useChatMessageEditContainerStyles = makeStyles({
+  body: {
+    ...shorthands.padding(0),
+    backgroundColor: 'transparent',
+    maxWidth: 'unset',
+    minWidth: 'unset',
+    ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    ...shorthands.borderWidth(`${defaultSendBoxInactiveBorderThicknessREM}rem`),
+    ...shorthands.borderStyle('solid'),
+
+    //     // The border thickness changes on hover, to prevent the border thickness change causing the
+    //     // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
+    ...shorthands.margin(`${defaultSendBoxActiveBorderThicknessREM - defaultSendBoxInactiveBorderThicknessREM}rem`),
+
+    ':hover, :active, :focus, :focus-within': {
+      // ...shorthands.margin('0rem'),
+      ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`)
+    }
+  },
+  bodyError: {
+    ...shorthands.borderColor('var(--errorText)')
+  },
+  bodyDefault: {
+    ...shorthands.borderColor(tokens.colorNeutralStrokeAccessible),
+    ':hover, :active, :focus, :focus-within': {
+      ...shorthands.borderColor(tokens.colorCompoundBrandStroke)
+    }
+  }
+});
 
 /**
  * Styles that can be applied to ensure flyout items have the minimum touch target size.

@@ -10,13 +10,13 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
-import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, chatMessageEditContainerStyle } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle, useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
+import { mergeClasses } from '@fluentui/react-components';
 
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
 
@@ -118,16 +118,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const getContent = (): JSX.Element => {
     return (
-      <Stack
-        className={mergeStyles(
-          chatMessageEditContainerStyle,
-          borderAndBoxShadowStyle({
-            theme,
-            hasErrorMessage: message.failureReason !== undefined,
-            disabled: false
-          })
-        )}
-      >
+      <Stack>
         <InputBoxComponent
           inlineChildren={props.inlineEditButtons}
           id={'editbox'}
@@ -188,8 +179,18 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       </Stack>
     );
   };
-
-  return <ChatMyMessage body={getContent()} />;
+  const classes = useChatMessageEditContainerStyles();
+  return (
+    <ChatMyMessage
+      body={{
+        children: getContent(),
+        className: mergeClasses(
+          classes.body,
+          message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
+        )
+      }}
+    />
+  );
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
