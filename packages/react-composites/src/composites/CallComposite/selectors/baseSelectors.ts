@@ -200,7 +200,9 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
 
 /* @conditional-compile-remove(capabilities) */
-/** @private */
-export const getCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
+/**
+ * @private
+ */
+export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
   return state.call?.capabilitiesState?.latestCapabilitiesChangeInfo;
 };

@@ -79,7 +79,7 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 import {
   CapabilitiesChangedNotificationBar,
   CapabilitiesChangeNotificationBarProps
-} from './CapabilitiesNotificationBar';
+} from './CapabilitiesChangedNotificationBar';
 
 /**
  * @private

@@ -9,7 +9,7 @@ import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } fr
 import {
   CapabalityChangedNotification,
   CapabilitiesChangeNotificationBarProps
-} from '../components/CapabilitiesNotificationBar';
+} from '../components/CapabilitiesChangedNotificationBar';
 /* @conditional-compile-remove(capabilities) */
 import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChangedNotificationTracking';
 
