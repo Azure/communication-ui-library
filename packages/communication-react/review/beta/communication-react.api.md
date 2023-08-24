@@ -19,6 +19,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -426,6 +427,7 @@ export interface CallAdapterSubscribers {
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -441,6 +443,7 @@ export interface CallAdapterSubscribers {
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -1302,6 +1305,9 @@ export type CancelEditCallback = (messageId: string) => void;
 export interface CapabilitiesCallFeature {
     capabilities: ParticipantCapabilities;
 }
+
+// @beta
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
 // @beta
 export interface CaptionsAvailableLanguageStrings {

@@ -13,6 +13,7 @@ import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
@@ -277,6 +278,7 @@ export interface CallAdapterSubscribers {
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -292,6 +294,7 @@ export interface CallAdapterSubscribers {
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -910,6 +913,9 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 
 // @public
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+
+// @beta
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
 // @beta
 export type CaptionsReceivedListener = (event: {
