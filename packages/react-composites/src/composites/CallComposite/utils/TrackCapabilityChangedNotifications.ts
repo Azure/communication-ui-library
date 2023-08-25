@@ -171,8 +171,8 @@ const updateLatestCapabilityChangedNotificationMap = (
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
       capabilityName: capabilityName as ParticipantCapabilityName,
       isPresent: newCapabilityValue.isPresent,
-      changedReason: capabilitiesChangedInfoAndRole.capabilitiesChangeInfo?.reason,
-      role: capabilitiesChangedInfoAndRole?.participantRole,
+      changedReason: capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason,
+      role: capabilitiesChangedInfoAndRole.participantRole,
       timestamp: new Date(Date.now())
     };
     activeNotifications[capabilityName] = newCapabilityChangeNotification;
