@@ -81,7 +81,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional function to fetch attachments.
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -142,7 +142,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked
   } = props;
 
@@ -225,7 +225,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   const handleOnInlineImageClicked = useCallback(
     async (attachmentId: string): Promise<void> => {
       if (onInlineImageClicked === undefined) {
@@ -256,7 +256,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+          /* @conditional-compile-remove(image-gallery) */
           onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
@@ -268,7 +268,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     props,
     strings,
     userId,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(image-gallery) */
     handleOnInlineImageClicked
   ]);
 
