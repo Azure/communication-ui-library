@@ -6,6 +6,8 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -309,6 +311,22 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
+/* @conditional-compile-remove(close-captions) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isCaptionLanguageChanged' event.
+ *
+ * @beta
+ */
+export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
+
+/* @conditional-compile-remove(close-captions) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'isSpokenLanguageChanged' event.
+ *
+ * @beta
+ */
+export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
+
 /* @conditional-compile-remove(call-transfer) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
@@ -316,6 +334,14 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
  * @beta
  */
 export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'capabilitiesChanged' event.
+ *
+ * @beta
+ */
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -749,11 +775,27 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Subscribe function for 'isCaptionLanguageChanged' event.
+   */
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Subscribe function for 'isSpokenLanguageChanged' event.
+   */
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+
   /* @conditional-compile-remove(call-transfer) */
   /**
    * Subscribe function for 'transferRequested' event.
    */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Unsubscribe function for 'capabilitiesChanged' event.
+   */
+  on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -813,11 +855,26 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Unsubscribe function for 'isCaptionLanguageChanged' event.
+   */
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Unsubscribe function for 'isSpokenLanguageChanged' event.
+   */
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   /**
    * Unsubscribe function for 'transferRequested' event.
    */
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * Unsubscribe function for 'capabilitiesChanged' event.
+   */
+  off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // This type remains for non-breaking change reason

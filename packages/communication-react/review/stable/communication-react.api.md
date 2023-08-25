@@ -397,6 +397,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
     complianceBannerNowOnlyTranscription: string;
@@ -414,6 +415,7 @@ export interface CallCompositeStrings {
     configurationPageTitle: string;
     copyInviteLinkActionedAriaLabel: string;
     defaultPlaceHolder: string;
+    dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -432,6 +434,7 @@ export interface CallCompositeStrings {
     manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
+    moreButtonCallingLabel: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -440,10 +443,15 @@ export interface CallCompositeStrings {
     noSpeakersLabel: string;
     participantJoinedNoticeString: string;
     participantLeftNoticeString: string;
+    peopleButtonLabel: string;
+    peoplePaneTitle: string;
     privacyPolicy: string;
     rejoinCallButtonLabel: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
+    returnToCallButtonAriaDescription?: string;
+    returnToCallButtonAriaLabel?: string;
+    selectedPeopleButtonLabel: string;
     soundLabel: string;
     startCallButtonLabel: string;
     threeParticipantJoinedNoticeString: string;
@@ -461,6 +469,7 @@ export type CallControlOptions = (CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
+    legacyControlBarExperience?: boolean;
 });
 
 // @public
@@ -805,6 +814,7 @@ export interface CallWithChatCompositeStrings {
     removeMenuLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    selectedPeopleButtonLabel: string;
 }
 
 // @public

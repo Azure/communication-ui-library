@@ -32,8 +32,16 @@ import {
 jest.useFakeTimers();
 
 const mockParticipants: SignalingChatParticipant[] = [
-  { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: 'user1', metadata: {} },
-  { id: { kind: 'communicationUser', communicationUserId: 'user2' }, displayName: 'user1', metadata: {} }
+  {
+    id: { kind: 'communicationUser', communicationUserId: 'user1' },
+    displayName: 'user1',
+    metadata: {}
+  },
+  {
+    id: { kind: 'communicationUser', communicationUserId: 'user2' },
+    displayName: 'user1',
+    metadata: {}
+  }
 ];
 
 describe('declarative chatThread list iterators', () => {
@@ -120,9 +128,14 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     const event: ChatThreadCreatedEvent = {
       threadId,
       version: '',
-      properties: { topic },
+      properties: { topic, /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {} },
       createdOn: new Date('01-01-2020'),
-      createdBy: { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: '' },
+      createdBy: {
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
+        displayName: '',
+        /* @conditional-compile-remove(chat-beta-sdk) */
+        metadata: {}
+      },
       participants: mockParticipants
     };
 
@@ -136,8 +149,13 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     const editedTopic = 'new topic';
     const editEvent: ChatThreadPropertiesUpdatedEvent = {
       ...event,
-      properties: { topic: editedTopic },
-      updatedBy: { displayName: '', id: { kind: 'communicationUser', communicationUserId: 'user1' } },
+      properties: { topic: editedTopic, /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {} },
+      updatedBy: {
+        displayName: '',
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
+        /* @conditional-compile-remove(chat-beta-sdk) */
+        metadata: {}
+      },
       updatedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('chatThreadPropertiesUpdated', editEvent);
@@ -147,7 +165,12 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     // delete event
     const deletedEvent: ChatThreadDeletedEvent = {
       ...event,
-      deletedBy: { displayName: '', id: { kind: 'communicationUser', communicationUserId: 'user1' } },
+      deletedBy: {
+        displayName: '',
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
+        /* @conditional-compile-remove(chat-beta-sdk) */
+        metadata: {}
+      },
       deletedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('chatThreadDeleted', deletedEvent);
@@ -201,7 +224,12 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     const addedEvent: ParticipantsAddedEvent = {
       threadId,
-      addedBy: { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: '' },
+      addedBy: {
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
+        displayName: '',
+        /* @conditional-compile-remove(chat-beta-sdk) */
+        metadata: {}
+      },
       addedOn: new Date('01-01-2020'),
       participantsAdded: mockParticipants,
       version: ''
@@ -215,7 +243,12 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       threadId,
       participantsRemoved: [mockParticipants[0]],
       version: '',
-      removedBy: { id: { kind: 'communicationUser', communicationUserId: 'user1' }, displayName: '' },
+      removedBy: {
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
+        displayName: '',
+        /* @conditional-compile-remove(chat-beta-sdk) */
+        metadata: {}
+      },
       removedOn: new Date('01-01-2020')
     };
     await client.triggerEvent('participantsRemoved', removedEvent);

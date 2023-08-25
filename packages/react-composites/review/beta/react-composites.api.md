@@ -13,7 +13,8 @@ import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
-import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
+import { CaptionLanguageStrings } from '@internal/react-components';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
@@ -49,6 +50,7 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
+import { SpokenLanguageStrings } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
@@ -276,7 +278,10 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -291,7 +296,10 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -412,18 +420,20 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+    captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
     captionsBannerSpinnerText?: string;
     captionsSettingsCancelButtonLabel?: string;
+    captionsSettingsCaptionLanguageDropdownInfoText?: string;
+    captionsSettingsCaptionLanguageDropdownLabel?: string;
     captionsSettingsCloseModalButtonAriaLabel?: string;
     captionsSettingsConfirmButtonLabel?: string;
-    captionsSettingsDropdownInfoText?: string;
-    captionsSettingsDropdownLabel?: string;
     captionsSettingsLabel?: string;
     captionsSettingsModalAriaLabel?: string;
     captionsSettingsModalTitle?: string;
+    captionsSettingsSpokenLanguageDropdownInfoText?: string;
+    captionsSettingsSpokenLanguageDropdownLabel?: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -517,7 +527,9 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
+    selectedPeopleButtonLabel: string;
     soundLabel: string;
+    spokenLanguageStrings?: SpokenLanguageStrings;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
@@ -683,6 +695,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
+    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
@@ -720,6 +736,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    // (undocumented)
+    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -881,6 +901,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
+    moreDrawerCaptionLanguageMenuTitle: string;
     moreDrawerCaptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
@@ -897,6 +918,7 @@ export interface CallWithChatCompositeStrings {
     removeMenuLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    selectedPeopleButtonLabel: string;
 }
 
 // @public
@@ -907,7 +929,10 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+
+// @beta
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
 // @beta
 export type CaptionsReceivedListener = (event: {
@@ -1344,6 +1369,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ChangeCaptionLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
@@ -1459,6 +1485,11 @@ export interface FileUploadState {
 export type FileUploadsUiState = Record<string, FileUploadState>;
 
 // @beta
+export type IsCaptionLanguageChangedListener = (event: {
+    activeCaptionLanguage: string;
+}) => void;
+
+// @beta
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -1478,6 +1509,11 @@ export type IsMutedChangedListener = (event: {
 export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
+}) => void;
+
+// @beta
+export type IsSpokenLanguageChangedListener = (event: {
+    activeSpokenLanguage: string;
 }) => void;
 
 // @public
