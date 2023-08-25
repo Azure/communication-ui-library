@@ -4,7 +4,12 @@
 /* @conditional-compile-remove(capabilities) */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
+import {
+  CapabilitiesChangeInfo,
+  CapabilitiesChangedReason,
+  ParticipantCapabilityName,
+  ParticipantRole
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import {
   CapabalityChangedNotification,
@@ -22,15 +27,22 @@ import { TrackedCapabilityChangedNotifications } from '../types/CapabilityChange
 export const useTrackedCapabilityChangedNotifications = (
   capabilitiesChangedAndRoleInfo: CapabilitiesChangedInfoAndRole
 ): CapabilitiesChangeNotificationBarProps => {
-  /* @conditional-compile-remove(capabilities) */
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedCapabilityChangedNotifications>({});
 
-  /* @conditional-compile-remove(capabilities) */
   const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
 
-  /* @conditional-compile-remove(capabilities) */
+  // Take note of first capabilities changed reason
+  const firstCapabilitiesChangedReason = useRef<CapabilitiesChangedReason>();
+
   useEffect(() => {
+    if (firstCapabilitiesChangedReason.current === undefined) {
+      firstCapabilitiesChangedReason.current = capabilitiesChangedAndRoleInfo.capabilitiesChangeInfo?.reason;
+      // Skip the first notifications if they are role related to be inline with Teams behavior
+      if (firstCapabilitiesChangedReason.current === 'RoleChanged') {
+        return;
+      }
+    }
     activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
       capabilitiesChangedAndRoleInfo,
       activeNotifications.current
@@ -43,14 +55,12 @@ export const useTrackedCapabilityChangedNotifications = (
     );
   }, [capabilitiesChangedAndRoleInfo]);
 
-  /* @conditional-compile-remove(capabilities) */
   const onDismissCapabilityChangedNotification = useCallback((notification: CapabalityChangedNotification) => {
     setTrackedCapabilityChangedNotifications((prev) =>
       trackCapabilityChangedNotificationAsDismissed(notification.capabilityName, prev)
     );
   }, []);
 
-  /* @conditional-compile-remove(capabilities) */
   const latestCapabilityChangedNotifications = useMemo(
     () =>
       filterLatestCapabilityChangedNotifications(
@@ -157,17 +167,6 @@ const updateLatestCapabilityChangedNotificationMap = (
   for (const [capabilityName, newCapabilityValue] of Object.entries(
     capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
   )) {
-    const activeNotification = activeNotifications[capabilityName];
-    // Skip adding notification if there has never been a notification for a capability yet and the first change info
-    // says capability it is present due to a a role change
-    if (
-      activeNotification === undefined &&
-      newCapabilityValue.isPresent &&
-      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === 'RoleChanged'
-    ) {
-      continue;
-    }
-
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
       capabilityName: capabilityName as ParticipantCapabilityName,
       isPresent: newCapabilityValue.isPresent,
