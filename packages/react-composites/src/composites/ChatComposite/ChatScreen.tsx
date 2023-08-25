@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
