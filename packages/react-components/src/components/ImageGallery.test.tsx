@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-/* @conditional-compile-remove(image-gallery) */
 import React from 'react';
-/* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from './ImageGallery';
-/* @conditional-compile-remove(image-gallery) */
 import { render, screen } from '@testing-library/react';
-/* @conditional-compile-remove(image-gallery) */
 import { registerIcons } from '@fluentui/react';
 
-/* @conditional-compile-remove(image-gallery) */
 describe('ImageGallery default layout tests', () => {
   beforeAll(() => {
     registerIcons({
@@ -81,7 +76,7 @@ describe('ImageGallery default layout tests', () => {
     expect(titleIcon).toBeTruthy();
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   test('It should call the onDismiss handler when the close icon is clicked', async () => {
     const onDismissHandler = jest.fn();
     renderImageGalleryComponent(undefined, undefined, onDismissHandler);
@@ -92,7 +87,7 @@ describe('ImageGallery default layout tests', () => {
     expect(onDismissHandler).toBeCalledTimes(1);
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   test('It should call the onImageDownloadButtonClicked handler when the download icon is clicked', async () => {
     const onImageDownloadButtonClicked = jest.fn();
     renderImageGalleryComponent(undefined, undefined, undefined, onImageDownloadButtonClicked);
