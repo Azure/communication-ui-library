@@ -52,7 +52,7 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { getPage } from '../selectors/baseSelectors';
+import { getCaptionsStatus, getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
@@ -269,6 +269,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const isTeamsCall = useSelector(getIsTeamsCall);
   /* @conditional-compile-remove(close-captions) */
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
+  /* @conditional-compile-remove(close-captions) */
+  const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
@@ -318,6 +320,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  /* @conditional-compile-remove(close-captions) */
+                  isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
                   onShowVideoEffectsPicker={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */
@@ -435,13 +439,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 };
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
-  /* @conditional-compile-remove(new-call-control-bar) */
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
-
-  // In stable builds, we default to legacy until new-call-control-bar feature is stablized.
-  return (
-    options === undefined || options === true || (options as _CallControlOptions)?.legacyControlBarExperience !== false
-  );
 };
 
 const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {
