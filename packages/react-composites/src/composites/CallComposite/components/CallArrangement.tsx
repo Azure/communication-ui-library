@@ -282,6 +282,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
+  // Filter out shareScreen capability notifications if on mobile
+  const filteredCapabilitesChangedNotifications = props.mobileView
+    ? props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications.filter(
+        (notification) => notification.capabilityName !== 'shareScreen'
+      )
+    : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -393,7 +400,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       props.capabilitiesChangedNotificationBarProps &&
                         props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
                           <Stack styles={bannerNotificationStyles}>
-                            <CapabilitiesChangedNotificationBar {...props.capabilitiesChangedNotificationBarProps} />
+                            <CapabilitiesChangedNotificationBar
+                              {...props.capabilitiesChangedNotificationBarProps}
+                              capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                            />
                           </Stack>
                         )
                     }
