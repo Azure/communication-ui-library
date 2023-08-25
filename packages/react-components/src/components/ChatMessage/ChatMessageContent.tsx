@@ -210,6 +210,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     );
   },
   processNode: (node, children, index): JSX.Element => {
+    node.attribs = { ...node.attribs, 'aria-label': node.attribs.name };
     // logic to check id in map/list
     if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
       node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
