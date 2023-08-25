@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconProps, IOverlayStyles, IStyle, Theme } from '@fluentui/react';
+import { IIconProps, IOverlayStyles, IStyle } from '@fluentui/react';
+import { ChatTheme } from '../../theming/themes';
 
 /**
  * @private
@@ -18,12 +19,11 @@ export const downloadIcon: IIconProps = {
 /**
  * @private
  */
-export const overlayStyles = (theme: Theme, isDarkThemed: boolean): IOverlayStyles => {
+export const overlayStyles = (theme: ChatTheme): IOverlayStyles => {
   return {
     root: {
-      // The overlay background color should always be black in both light and dark theme.
-      // In dark theme, theme.palette.white is actually black.
-      background: isDarkThemed ? theme.palette.white : theme.palette.black,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      background: theme.chatPalette.modalOverlayBlack,
       opacity: '0.85'
     }
   };
@@ -81,11 +81,12 @@ export const titleBarContainerStyle: IStyle = {
 /**
  * @private
  */
-export const titleStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+export const titleStyle = (theme: ChatTheme): IStyle => {
   return {
     paddingLeft: '0.5rem',
     marginLeft: '0.5rem',
-    color: isDarkThemed ? undefined : theme.palette.white,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    color: theme.chatPalette.modalTitleWhite,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
     fontStyle: 'normal',
@@ -152,29 +153,31 @@ export const normalImageStyle: IStyle = {
 /**
  * @private
  */
-export const brokenImageStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+export const brokenImageStyle = (theme: ChatTheme): IStyle => {
   return {
-    // The color should be white in dark theme.
-    // In dark theme, theme.palette.black is actually white.
-    color: isDarkThemed ? theme.palette.black : theme.palette.white
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    color: theme.chatPalette.modalTitleWhite
   };
 };
 
 /**
  * @private
  */
-export const closeButtonStyles = (theme: Theme, isDarkThemed: boolean): IStyle => {
+export const closeButtonStyles = (theme: ChatTheme): IStyle => {
   return {
-    // The color should be white in dark theme.
-    // In dark theme, theme.palette.black is actually white.
-    color: isDarkThemed ? theme.palette.black : theme.palette.white,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    color: theme.chatPalette.modalTitleWhite,
     ':hover': {
-      color: isDarkThemed ? theme.palette.black : theme.palette.white,
-      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      color: theme.chatPalette.modalTitleWhite,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      color: isDarkThemed ? theme.palette.black : theme.palette.white,
-      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      color: theme.chatPalette.modalTitleWhite,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     }
   };
 };
@@ -182,7 +185,7 @@ export const closeButtonStyles = (theme: Theme, isDarkThemed: boolean): IStyle =
 /**
  * @private
  */
-export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
   return {
     margin: '0 0.5rem',
     height: '32px',
@@ -191,20 +194,22 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle
     fontWeight: 600,
     padding: '0.38rem 0.75rem',
     borderRadius: '4px',
-    backgroundColor: isDarkThemed ? theme.palette.neutralLighterAlt : theme.palette.neutralPrimary,
-    color: isDarkThemed ? undefined : theme.palette.white,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    backgroundColor: theme.chatPalette.modalButtonBackground,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    color: theme.chatPalette.modalTitleWhite,
     whiteSpace: 'nowrap',
     ':hover': {
-      // The color should be white in dark theme.
-      // In dark theme, theme.palette.black is actually white.
-      color: isDarkThemed ? theme.palette.black : theme.palette.white,
-      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      color: theme.chatPalette.modalTitleWhite,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      // The color should be white in dark theme.
-      // In dark theme, theme.palette.black is actually white.
-      color: isDarkThemed ? theme.palette.black : theme.palette.white,
-      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      color: theme.chatPalette.modalTitleWhite,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     },
     '@media (max-width: 25rem)': {
       display: 'none'
@@ -215,20 +220,23 @@ export const downloadButtonStyle = (theme: Theme, isDarkThemed: boolean): IStyle
 /**
  * @private
  */
-export const smallDownloadButtonContainerStyle = (theme: Theme, isDarkThemed: boolean): IStyle => {
+export const smallDownloadButtonContainerStyle = (theme: ChatTheme): IStyle => {
   return {
     marginRight: '0.5rem',
-    // The color should be white in dark theme.
-    // In dark theme, theme.palette.black is actually white.
-    color: isDarkThemed ? theme.palette.black : theme.palette.white,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    color: theme.chatPalette.modalTitleWhite,
     whiteSpace: 'nowrap',
     ':hover': {
-      color: isDarkThemed ? theme.palette.black : theme.palette.white,
-      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralPrimaryAlt
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      color: theme.chatPalette.modalTitleWhite,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      color: isDarkThemed ? theme.palette.black : theme.palette.white,
-      backgroundColor: isDarkThemed ? undefined : theme.palette.neutralDark
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      color: theme.chatPalette.modalTitleWhite,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     },
     '@media (min-width: 25rem)': {
       display: 'none'

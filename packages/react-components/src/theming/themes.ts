@@ -4,7 +4,7 @@
 import { PartialTheme } from '@fluentui/react';
 
 /**
- * Custom Fluent theme pallete used by calling related components in this library.
+ * Custom Fluent theme palette used by calling related components in this library.
  *
  * @public
  */
@@ -20,11 +20,31 @@ export interface CallingTheme {
 }
 
 /**
+ * Custom Fluent theme palette used by chat related components in this library.
+ *
+ * @public
+ */
+export interface ChatTheme {
+  chatPalette: {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalOverlayBlack: string;
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalTitleWhite: string;
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackground: string;
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackgroundHover: string;
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackgroundActive: string;
+  };
+}
+
+/**
  * Preset light theme for components exported from this library.
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme = {
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -57,6 +77,18 @@ export const lightTheme: PartialTheme & CallingTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  chatPalette: {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalOverlayBlack: '#000000',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalTitleWhite: '#ffffff',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackground: '#1b1a19',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackgroundHover: '#252423',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackgroundActive: '#292827'
+  },
   semanticColors: {
     errorText: '#a80000'
   }
@@ -67,7 +99,7 @@ export const lightTheme: PartialTheme & CallingTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme = {
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -99,6 +131,18 @@ export const darkTheme: PartialTheme & CallingTheme = {
     iconWhite: '#ffffff',
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
+  },
+  chatPalette: {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalOverlayBlack: '#000000',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalTitleWhite: '#ffffff',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackground: '#1b1a19',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackgroundHover: '#252423',
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#f1707b'
