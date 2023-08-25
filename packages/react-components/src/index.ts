@@ -44,7 +44,9 @@ export type {
 export type { RaisedHand } from './types';
 
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsAvailableLanguageStrings } from './types';
+export type { SpokenLanguageStrings, CaptionLanguageStrings } from './types';
+/* @conditional-compile-remove(close-captions) */
+export { _spokenLanguageToCaptionLanguage } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';

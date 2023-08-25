@@ -49,7 +49,12 @@ import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/commu
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from '../../CallComposite/adapter/CallAdapter';
+import {
+  CaptionsReceivedListener,
+  IsCaptionsActiveChangedListener,
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
@@ -476,6 +481,10 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -492,6 +501,10 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -540,6 +553,8 @@ export type CallWithChatEvent =
   | 'selectedSpeakerChanged'
   | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged'
   | /* @conditional-compile-remove(close-captions) */ 'captionsReceived'
+  | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged'
+  | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged'
   | 'messageReceived'
   | 'messageSent'
   | 'messageRead'
