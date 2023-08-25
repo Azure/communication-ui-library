@@ -122,20 +122,22 @@ export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBas
 // @internal
 export const _captionsBannerSelector: _CaptionsBannerSelector;
 
-// @beta
-export type CaptionsOptions = {
-    spokenLanguage: string;
-};
-
 // @internal
-export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedCaptionLanguages: string[];
+    currentCaptionLanguage: string;
     supportedSpokenLanguages: string[];
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
 };
 
 // @internal
-export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector;
+export const _captionSettingsSelector: _CaptionSettingsSelector;
+
+// @beta
+export type CaptionsOptions = {
+    spokenLanguage: string;
+};
 
 // @public
 export interface CommonCallingHandlers {

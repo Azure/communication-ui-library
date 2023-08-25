@@ -642,7 +642,7 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -763,7 +763,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -1076,7 +1076,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             onDisplayDateTimeString={onDisplayDateTimeString}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments}
@@ -1101,7 +1101,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onDisplayDateTimeString,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       onFetchInlineAttachment,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      /* @conditional-compile-remove(image-gallery) */
       onInlineImageClicked,
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,

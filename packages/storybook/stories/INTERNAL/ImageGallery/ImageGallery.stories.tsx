@@ -5,8 +5,8 @@ import { ImageGallery as ImageGalleryComponent } from '@azure/communication-reac
 import { ArgsTable, Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
+import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 
 import { ImageGalleryExample } from './snippets/ImageGallery.snippet';
 const ImageGalleryExampleText = require('!!raw-loader!./snippets/ImageGallery.snippet.tsx').default;
@@ -43,8 +43,8 @@ const ImageGalleryStory = (): JSX.Element => {
 export const ImageGallery = ImageGalleryStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-imagegallery`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Image Gallery`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-imagegallery`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Image Gallery`,
   component: ImageGalleryComponent,
   parameters: {
     previewTabs: { canvas: { disable: true, hidden: true } },
