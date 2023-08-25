@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 /* @conditional-compile-remove(raise-hand) */
-import { ControlBarButtonStyles, RaiseHandButton } from '@internal/react-components';
+import { ControlBarButtonStyles, RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import React, { useMemo } from 'react';
 /* @conditional-compile-remove(raise-hand) */
@@ -10,6 +10,12 @@ import { CallControlDisplayType } from '../../../common/types/CommonCallControlO
 import { usePropsFor } from '../../hooks/usePropsFor';
 /* @conditional-compile-remove(raise-hand) */
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+/* @conditional-compile-remove(raise-hand) */
+import { useSelector } from '../../hooks/useSelector';
+/* @conditional-compile-remove(raise-hand) */
+import { getCallStatus } from '../../selectors/baseSelectors';
+/* @conditional-compile-remove(raise-hand) */
+import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(raise-hand) */
 /** @private */
@@ -20,17 +26,22 @@ export const RaiseHand = (props: {
   styles?: ControlBarButtonStyles;
   disabled?: boolean;
 }): JSX.Element => {
-  const raiseHandButtonProps = usePropsFor(RaiseHandButton);
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+  const callStatus = useSelector(getCallStatus);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
-  const raiseHandButtonDisabled = isDisabled(props.option);
+  let raiseHandButtonDisabled = isDisabled(props.option);
+
+  if (_isInLobbyOrConnecting(callStatus)) {
+    raiseHandButtonDisabled = true;
+  }
 
   return (
     <RaiseHandButton
       data-ui-id="call-composite-raisehand-button"
       {...raiseHandButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={raiseHandButtonDisabled || props.disabled}
+      disabled={raiseHandButtonDisabled || raiseHandButtonProps.disabled || props.disabled}
       styles={styles}
     />
   );
