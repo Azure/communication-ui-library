@@ -69,6 +69,7 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
     view: undefined,
+    /* @conditional-compile-remove(pinned-participants) */
     streamSize: stream.size
   };
 }

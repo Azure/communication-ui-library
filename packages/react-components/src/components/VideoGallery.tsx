@@ -515,6 +515,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
 
+      /* @conditional-compile-remove(pinned-participants) */
+      const createViewOptions =
+        remoteVideoStream?.streamSize && remoteVideoStream.streamSize?.height > remoteVideoStream.streamSize?.width
+          ? ({
+              scalingMode: 'Fit',
+              isMirrored: remoteVideoViewOptions?.isMirrored
+            } as VideoStreamOptions)
+          : remoteVideoViewOptions;
+
       return (
         <_RemoteVideoTile
           key={participant.userId}
@@ -524,9 +533,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onDisposeRemoteStreamView={isVideoParticipant ? onDisposeRemoteVideoStreamView : undefined}
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
-          streamSize={isVideoParticipant ? remoteVideoStream?.streamSize : undefined}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
+          remoteVideoViewOptions={isVideoParticipant ? createViewOptions : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}

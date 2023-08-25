@@ -41,7 +41,6 @@ export const _RemoteVideoTile = React.memo(
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     isAvailable?: boolean;
     isReceiving?: boolean;
-    streamSize?: { width: number; height: number };
     isScreenSharingOn?: boolean; // TODO: Remove this once onDisposeRemoteStreamView no longer disposes of screen share stream
     renderElement?: HTMLElement;
     remoteVideoViewOptions?: VideoStreamOptions;
@@ -62,7 +61,6 @@ export const _RemoteVideoTile = React.memo(
     const {
       isAvailable,
       isReceiving = true, // default to true to prevent any breaking change
-      streamSize,
       isScreenSharingOn,
       onCreateRemoteStreamView,
       onDisposeRemoteStreamView,
@@ -86,7 +84,6 @@ export const _RemoteVideoTile = React.memo(
       () => ({
         isMirrored: remoteVideoViewOptions?.isMirrored,
         isScreenSharingOn,
-        streamSize,
         isStreamAvailable: isAvailable,
         isStreamReceiving: isReceiving,
         onCreateRemoteStreamView,
@@ -98,7 +95,6 @@ export const _RemoteVideoTile = React.memo(
       [
         isAvailable,
         isReceiving,
-        streamSize,
         isScreenSharingOn,
         onCreateRemoteStreamView,
         onDisposeRemoteStreamView,

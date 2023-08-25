@@ -138,6 +138,7 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     renderElement: stream.view?.target,
     /* @conditional-compile-remove(pinned-participants) */
     scalingMode: stream.view?.scalingMode,
+    /* @conditional-compile-remove(pinned-participants) */
     streamSize: stream.streamSize
   };
 };
