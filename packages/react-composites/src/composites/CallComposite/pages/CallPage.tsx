@@ -33,9 +33,7 @@ import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(capabilities) */
-import { capabilitiesChangedInfoAndRoleSelector } from '../selectors/capabilitiesChangedInfoAndRoleSelector';
-/* @conditional-compile-remove(capabilities) */
-import { useTrackedCapabilityChangedNotifications } from '../utils/TrackCapabilityChangedNotifications';
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -54,6 +52,8 @@ export interface CallPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   galleryLayout: VideoGalleryLayout;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
@@ -94,13 +94,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   );
   /* @conditional-compile-remove(gallery-layouts) */
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(galleryLayout);
-
-  /* @conditional-compile-remove(capabilities) */
-  const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
-
-  /* @conditional-compile-remove(capabilities) */
-  const capabilitiesChangedNotificationBarProps =
-    useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
 
   return (
     <CallArrangement
@@ -156,7 +149,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(gallery-layouts) */
       userSetGalleryLayout={userSetGalleryLayout}
       /* @conditional-compile-remove(capabilities) */
-      capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+      capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
     />
   );
 };

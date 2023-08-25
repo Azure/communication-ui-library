@@ -399,6 +399,7 @@ export class CallContext {
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      console.log('capabilitiesChangeInfo: ', capabilitiesChangeInfo);
       if (call) {
         call.capabilitiesFeature = { capabilities, latestCapabilitiesChangeInfo: capabilitiesChangeInfo };
       }
