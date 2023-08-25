@@ -1065,7 +1065,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-            inlineAcceptRejectEditButtons={!isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}

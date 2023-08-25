@@ -42,11 +42,6 @@ export type ChatMessageComponentAsEditBoxProps = {
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
-  /**
-   * Inline the accept and reject edit buttons when editing a message.
-   * Setting to false will mean they are on a new line inside the editable chat message.
-   */
-  inlineEditButtons: boolean;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
 };
@@ -120,10 +115,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return (
       <Stack>
         <InputBoxComponent
-          inlineChildren={props.inlineEditButtons}
+          inlineChildren={false}
           id={'editbox'}
           textFieldRef={editTextFieldRef}
-          inputClassName={editBoxStyle(props.inlineEditButtons)}
+          inputClassName={editBoxStyle}
           placeholderText={strings.editBoxPlaceholderText}
           textValue={textValue}
           onChange={setText}
@@ -180,16 +175,18 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
   const classes = useChatMessageEditContainerStyles();
+  const className = mergeClasses(
+    classes.body,
+    message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
+  );
   return (
     <ChatMyMessage
       body={{
-        children: getContent(),
-        className: mergeClasses(
-          classes.body,
-          message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
-        )
+        className: className
       }}
-    />
+    >
+      {getContent()}
+    </ChatMyMessage>
   );
 };
 

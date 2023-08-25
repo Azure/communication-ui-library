@@ -113,16 +113,17 @@ export const useChatMessageEditContainerStyles = makeStyles({
     backgroundColor: 'transparent',
     maxWidth: 'unset',
     minWidth: 'unset',
+    boxSizing: 'border-box',
+    ...shorthands.border(`${defaultSendBoxInactiveBorderThicknessREM}rem`, 'solid'),
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
-    ...shorthands.borderWidth(`${defaultSendBoxInactiveBorderThicknessREM}rem`),
-    ...shorthands.borderStyle('solid'),
-
-    //     // The border thickness changes on hover, to prevent the border thickness change causing the
-    //     // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
+    // The border thickness changes on hover, to prevent the border thickness change causing the
+    // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
     ...shorthands.margin(`${defaultSendBoxActiveBorderThicknessREM - defaultSendBoxInactiveBorderThicknessREM}rem`),
 
-    ':hover, :active, :focus, :focus-within': {
-      // ...shorthands.margin('0rem'),
+    '&:hover, &:active, &:focus, &:focus-within': {
+      // ':hover, :active, :focus, :focus-within': {
+      ...shorthands.margin('0rem'),
+      // this one
       ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`)
     }
   },
@@ -131,7 +132,7 @@ export const useChatMessageEditContainerStyles = makeStyles({
   },
   bodyDefault: {
     ...shorthands.borderColor(tokens.colorNeutralStrokeAccessible),
-    ':hover, :active, :focus, :focus-within': {
+    '&:hover, &:active, &:focus, &:focus-within': {
       ...shorthands.borderColor(tokens.colorCompoundBrandStroke)
     }
   }
