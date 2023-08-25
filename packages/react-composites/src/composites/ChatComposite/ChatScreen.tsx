@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(image-gallery) */
+import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { PersonaSize } from '@fluentui/react';
 import {
   CommunicationParticipant,
@@ -18,11 +20,11 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { ChatMessage } from '@internal/react-components';
 
 import React, { useCallback, useEffect } from 'react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { useState } from 'react';
 
 import { AvatarPersona, AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -57,7 +59,7 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 import { _FileDownloadCards } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 
 /**
@@ -133,9 +135,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
   const adapter = useAdapter();
@@ -222,7 +224,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter]
   );
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
       const messages = messageThreadProps.messages?.filter((message) => {
@@ -285,16 +287,24 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
   );
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
-    // Create a new anchor element
-    const a = document.createElement('a');
-    // Set the href and download attributes for the anchor element
-    a.href = imageUrl;
-    a.download = saveAsName || 'download';
-    // Programmatically click the anchor element to trigger the download
-    a.click();
-    a.remove();
+    if (isIOS()) {
+      window.open(imageUrl, '_blank');
+    } else {
+      // Create a new anchor element
+      const a = document.createElement('a');
+      // Set the href and download attributes for the anchor element
+      a.href = imageUrl;
+      a.download = saveAsName;
+      a.rel = 'noopener noreferrer';
+      a.target = '_blank';
+
+      // Programmatically click the anchor element to trigger the download
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   }, []);
 
   const AttachFileButton = useCallback(() => {
@@ -332,7 +342,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             onRenderFileDownloads={onRenderFileDownloads}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onRenderInlineAttachment}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
             numberOfChatMessagesToReload={defaultNumberOfChatMessagesToReload}
             styles={messageThreadStyles}
@@ -377,9 +387,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           )
         }
       </Stack>
-
       {
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        /* @conditional-compile-remove(image-gallery) */
         <ImageGallery
           isOpen={galleryImages.length > 0}
           images={galleryImages}

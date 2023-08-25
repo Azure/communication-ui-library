@@ -54,7 +54,8 @@ import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
   Settings20Regular,
-  PersonVoice20Regular
+  PersonVoice20Regular,
+  Translate20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -345,6 +346,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   CaptionsSettingsIcon: <Settings20Regular />,
   /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />

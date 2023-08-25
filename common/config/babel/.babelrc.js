@@ -75,7 +75,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for capabilities
         'capabilities',
         // Feature for custom video gallery layouts
-        'gallery-layouts'
+        'gallery-layouts',
+        // Feature image gallery
+        'image-gallery'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -84,12 +86,12 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // raise hands feature
-        'raise-hand',
         // Feature for capabilities
         'capabilities',
         // Feature for custom video gallery layouts
-        'gallery-layouts'
+        'gallery-layouts',
+        // Feature image gallery
+        'image-gallery'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
