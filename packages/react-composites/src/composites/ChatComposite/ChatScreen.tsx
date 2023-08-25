@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { isIOS } from '@fluentui/react';
 import { mergeStyles, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { PersonaSize } from '@fluentui/react';
@@ -287,14 +289,22 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
-    // Create a new anchor element
-    const a = document.createElement('a');
-    // Set the href and download attributes for the anchor element
-    a.href = imageUrl;
-    a.download = saveAsName || 'download';
-    // Programmatically click the anchor element to trigger the download
-    a.click();
-    a.remove();
+    if (isIOS()) {
+      window.open(imageUrl, '_blank');
+    } else {
+      // Create a new anchor element
+      const a = document.createElement('a');
+      // Set the href and download attributes for the anchor element
+      a.href = imageUrl;
+      a.download = saveAsName;
+      a.rel = 'noopener noreferrer';
+      a.target = '_blank';
+
+      // Programmatically click the anchor element to trigger the download
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
   }, []);
 
   const AttachFileButton = useCallback(() => {
