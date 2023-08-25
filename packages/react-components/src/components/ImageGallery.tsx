@@ -180,6 +180,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
               onError && onError(event);
             }}
             onClick={(event) => event.stopPropagation()}
+            aria-live={'polite'}
           />
         </FocusTrapZone>
       </Stack>
