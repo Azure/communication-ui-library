@@ -3,8 +3,7 @@ import {
   MessageThread,
   Message,
   FileMetadata,
-  AttachmentDownloadResult,
-  ChatMessage
+  AttachmentDownloadResult
 } from '@azure/communication-react';
 import React from 'react';
 
