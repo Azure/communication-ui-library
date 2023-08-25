@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -208,6 +208,10 @@ export interface CallCompositeStrings {
    * control bar People button label
    */
   peopleButtonLabel: string;
+  /**
+   * control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
   /**
    * control bar Chat button label.
    */
@@ -465,14 +469,24 @@ export interface CallCompositeStrings {
   captionsSettingsModalTitle?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * label for dropdown inside captions setting modal
+   * label for spoken language dropdown inside captions setting modal
    */
-  captionsSettingsDropdownLabel?: string;
+  captionsSettingsSpokenLanguageDropdownLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for captions language inside captions setting modal
+   */
+  captionsSettingsCaptionLanguageDropdownLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
-  captionsSettingsDropdownInfoText?: string;
+  captionsSettingsSpokenLanguageDropdownInfoText?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * text under captions setting dropdown indicating what the dropdown is for
+   */
+  captionsSettingsCaptionLanguageDropdownInfoText?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * confirm button label in captions setting modal
@@ -505,9 +519,14 @@ export interface CallCompositeStrings {
   captionsBannerMoreButtonTooltip?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * list of key value pairs that pairs language code to language names
+   * list of key value pairs that pairs spoken language code to language names
    */
-  captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+  spokenLanguageStrings?: SpokenLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * list of key value pairs that pairs caption language code to language names
+   */
+  captionLanguageStrings?: CaptionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
   /**
    * captions banner loading spinner label

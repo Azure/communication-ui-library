@@ -133,7 +133,7 @@ export {
   VideoGallery,
   VideoTile
 } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
@@ -277,7 +277,7 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
@@ -356,4 +356,4 @@ export type {
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsAvailableLanguageStrings } from '../../react-components/src';
+export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';

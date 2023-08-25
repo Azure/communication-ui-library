@@ -14,6 +14,10 @@ export interface CallWithChatCompositeStrings {
    */
   peopleButtonLabel: string;
   /**
+   * {@link CallWithChatComposite} control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
+  /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
   peopleButtonTooltipOpen: string;
@@ -69,6 +73,13 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerSpokenLanguageMenuTitle: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Title for the caption language sub-menu in more button drawer.
+   *
+   * Only used with `mobileView` set to `true`.
+   */
+  moreDrawerCaptionLanguageMenuTitle: string;
   /**
    * {@Link CallWithChatComposite} control bar More button label
    */
