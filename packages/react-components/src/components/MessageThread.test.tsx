@@ -318,6 +318,7 @@ describe('Message should display image and attachment correctly', () => {
     });
   });
 
+  /* @conditional-compile-remove(image-gallery) */
   test('onInlineImageClicked handler should be called when an inline image is clicked', async () => {
     const fildId1 = 'SomeFileId1';
     const fildName1 = 'SomeFileId1.txt';
