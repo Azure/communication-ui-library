@@ -810,10 +810,28 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+        const currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
+        if (
+          caption.captionLanguage.toUpperCase() === currentCaptionLanguage.toUpperCase() ||
+          currentCaptionLanguage === '' ||
+          currentCaptionLanguage === undefined
+        ) {
+          this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+        }
       }
     });
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  public clearCaptions(callId: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.captions = [];
+      }
+    });
+  }
+
   /* @conditional-compile-remove(close-captions) */
   setIsCaptionActive(callId: string, isCaptionsActive: boolean): void {
     this.modifyState((draft: CallClientState) => {

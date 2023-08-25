@@ -7,7 +7,8 @@ import {
   MicrophoneButton,
   DevicesButton,
   ParticipantsButton,
-  ScreenShareButton
+  ScreenShareButton,
+  RaiseHandButton
 } from '@azure/communication-react';
 import { IContextualMenuProps } from '@fluentui/react';
 import React from 'react';
@@ -76,6 +77,11 @@ export const AllButtonsControlBarExample: () => JSX.Element = () => {
           }}
         />
         <ScreenShareButton
+          onClick={() => {
+            /*handle onClick*/
+          }}
+        />
+        <RaiseHandButton
           onClick={() => {
             /*handle onClick*/
           }}

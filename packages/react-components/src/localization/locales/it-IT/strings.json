@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "Scarica",
+    "dismissButtonAriaLabel": "Chiudi"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
     "deliveredTooltipText": "Inviato",

@@ -19,6 +19,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -425,7 +426,10 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
+    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -440,7 +444,10 @@ export interface CallAdapterSubscribers {
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
+    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -610,18 +617,20 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+    captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
     captionsBannerSpinnerText?: string;
     captionsSettingsCancelButtonLabel?: string;
+    captionsSettingsCaptionLanguageDropdownInfoText?: string;
+    captionsSettingsCaptionLanguageDropdownLabel?: string;
     captionsSettingsCloseModalButtonAriaLabel?: string;
     captionsSettingsConfirmButtonLabel?: string;
-    captionsSettingsDropdownInfoText?: string;
-    captionsSettingsDropdownLabel?: string;
     captionsSettingsLabel?: string;
     captionsSettingsModalAriaLabel?: string;
     captionsSettingsModalTitle?: string;
+    captionsSettingsSpokenLanguageDropdownInfoText?: string;
+    captionsSettingsSpokenLanguageDropdownLabel?: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -715,7 +724,9 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
+    selectedPeopleButtonLabel: string;
     soundLabel: string;
+    spokenLanguageStrings?: SpokenLanguageStrings;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
@@ -986,6 +997,10 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
+    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    // (undocumented)
+    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
@@ -1023,6 +1038,10 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+    // (undocumented)
+    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+    // (undocumented)
+    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1184,6 +1203,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
+    moreDrawerCaptionLanguageMenuTitle: string;
     moreDrawerCaptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
@@ -1200,6 +1220,7 @@ export interface CallWithChatCompositeStrings {
     removeMenuLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
+    selectedPeopleButtonLabel: string;
 }
 
 // @public
@@ -1210,7 +1231,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1302,89 +1323,74 @@ export interface CapabilitiesCallFeature {
 }
 
 // @beta
-export interface CaptionsAvailableLanguageStrings {
-    // (undocumented)
-    'ar-ae': string;
-    // (undocumented)
-    'ar-sa': string;
-    // (undocumented)
-    'cs-cz': string;
-    // (undocumented)
-    'cy-gb': string;
-    // (undocumented)
-    'da-dk': string;
-    // (undocumented)
-    'de-de': string;
-    // (undocumented)
-    'el-gr': string;
-    // (undocumented)
-    'en-au': string;
-    // (undocumented)
-    'en-ca': string;
-    // (undocumented)
-    'en-gb': string;
-    // (undocumented)
-    'en-in': string;
-    // (undocumented)
-    'en-nz': string;
-    // (undocumented)
-    'en-us': string;
-    // (undocumented)
-    'es-es': string;
-    // (undocumented)
-    'es-mx': string;
-    // (undocumented)
-    'fi-fi': string;
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+// @beta
+export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
     // (undocumented)
-    'fr-fr': string;
-    // (undocumented)
-    'he-il': string;
-    // (undocumented)
-    'hi-in': string;
-    // (undocumented)
-    'hu-hu': string;
-    // (undocumented)
-    'it-it': string;
-    // (undocumented)
-    'ja-jp': string;
-    // (undocumented)
-    'ko-kr': string;
-    // (undocumented)
-    'nb-no': string;
-    // (undocumented)
-    'nl-be': string;
-    // (undocumented)
-    'nl-nl': string;
-    // (undocumented)
-    'pl-pl': string;
-    // (undocumented)
-    'pt-br': string;
-    // (undocumented)
     'pt-pt': string;
     // (undocumented)
-    'ro-ro': string;
+    'zh-Hans': string;
     // (undocumented)
-    'ru-ru': string;
+    'zh-Hant': string;
     // (undocumented)
-    'sk-sk': string;
+    ar: string;
     // (undocumented)
-    'sv-se': string;
+    cs: string;
     // (undocumented)
-    'th-th': string;
+    cy: string;
     // (undocumented)
-    'tr-tr': string;
+    da: string;
     // (undocumented)
-    'uk-ua': string;
+    de: string;
     // (undocumented)
-    'vi-vn': string;
+    el: string;
     // (undocumented)
-    'zh-cn': string;
+    en: string;
     // (undocumented)
-    'zh-hk': string;
+    es: string;
     // (undocumented)
-    'zh-tw': string;
+    fi: string;
+    // (undocumented)
+    fr: string;
+    // (undocumented)
+    he: string;
+    // (undocumented)
+    hi: string;
+    // (undocumented)
+    hu: string;
+    // (undocumented)
+    it: string;
+    // (undocumented)
+    ja: string;
+    // (undocumented)
+    ko: string;
+    // (undocumented)
+    nb: string;
+    // (undocumented)
+    nl: string;
+    // (undocumented)
+    pl: string;
+    // (undocumented)
+    pt: string;
+    // (undocumented)
+    ro: string;
+    // (undocumented)
+    ru: string;
+    // (undocumented)
+    sk: string;
+    // (undocumented)
+    sv: string;
+    // (undocumented)
+    th: string;
+    // (undocumented)
+    tr: string;
+    // (undocumented)
+    uk: string;
+    // (undocumented)
+    vi: string;
 }
 
 // @beta (undocumented)
@@ -1563,7 +1569,7 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateTopic';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic';
 
 // @public
 export type ChatHandlers = {
@@ -2271,6 +2277,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ChangeCaptionLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
@@ -2396,6 +2403,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsOffIcon: JSX.Element;
     CaptionsSettingsIcon: JSX.Element;
     ChangeSpokenLanguageIcon: JSX.Element;
+    ChangeCaptionLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
@@ -2833,6 +2841,11 @@ export interface IncomingCallState {
 }
 
 // @beta
+export type IsCaptionLanguageChangedListener = (event: {
+    activeCaptionLanguage: string;
+}) => void;
+
+// @beta
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -2852,6 +2865,11 @@ export type IsMutedChangedListener = (event: {
 export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
+}) => void;
+
+// @beta
+export type IsSpokenLanguageChangedListener = (event: {
+    activeSpokenLanguage: string;
 }) => void;
 
 // @public
@@ -3599,6 +3617,92 @@ export type SitePermissionsStrings = {
 export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
+}
+
+// @beta
+export interface SpokenLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
 }
 
 // @public
