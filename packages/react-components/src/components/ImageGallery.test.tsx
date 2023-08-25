@@ -10,6 +10,7 @@ import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
 describe('ImageGallery default layout tests', () => {
+  /* @conditional-compile-remove(image-gallery) */
   beforeAll(() => {
     registerIcons({
       icons: {
