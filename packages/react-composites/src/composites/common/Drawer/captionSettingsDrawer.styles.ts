@@ -16,8 +16,8 @@ export const captionSettingsDrawerStyles = (theme: Theme): _DrawerMenuStyles => 
     drawerContentContainer: {
       root: {
         span: {
-          fontWeight: 600,
-          fontSize: _pxToRem(17),
+          fontWeight: 400,
+          fontSize: _pxToRem(14),
           lineHeight: _pxToRem(22),
           color: theme.palette.neutralDark
         }
