@@ -150,24 +150,32 @@ const updateLatestCapabilityChangedNotificationMap = (
   capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
   activeNotifications: LatestCapabilityChangedNotificationRecord
 ): LatestCapabilityChangedNotificationRecord => {
-  if (!capabilitiesChangedInfoAndRole.capabilitiesChangeInfo?.newValue) {
+  if (!capabilitiesChangedInfoAndRole.capabilitiesChangeInfo) {
     return activeNotifications;
   }
-  Object.entries(capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue).forEach((newCapabilityChanged) => {
-    // If there has not been a notification for a capability yet and the first change info for that capability says
-    // that is present then do skip adding a notification
-    const activeNotification = activeNotifications[newCapabilityChanged[0]];
-    if (activeNotification === undefined && newCapabilityChanged[1].isPresent) {
-      return;
+
+  for (const [capabilityName, newCapabilityValue] of Object.entries(
+    capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
+  )) {
+    const activeNotification = activeNotifications[capabilityName];
+    // Skip adding notification if there has never been a notification for a capability yet and the first change info
+    // says capability it is present due to a a role change
+    if (
+      activeNotification === undefined &&
+      newCapabilityValue.isPresent &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === 'RoleChanged'
+    ) {
+      continue;
     }
+
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
-      capabilityName: newCapabilityChanged[0] as ParticipantCapabilityName,
-      isPresent: newCapabilityChanged[1].isPresent,
+      capabilityName: capabilityName as ParticipantCapabilityName,
+      isPresent: newCapabilityValue.isPresent,
       changedReason: capabilitiesChangedInfoAndRole.capabilitiesChangeInfo?.reason,
       role: capabilitiesChangedInfoAndRole?.participantRole,
       timestamp: new Date(Date.now())
     };
-    activeNotifications[newCapabilityChanged[0]] = newCapabilityChangeNotification;
-  });
+    activeNotifications[capabilityName] = newCapabilityChangeNotification;
+  }
   return activeNotifications;
 };
