@@ -457,7 +457,7 @@ export interface ChatMessage extends MessageCommon {
     status?: MessageStatus;
 }
 
-// @beta
+// @public
 export interface ChatTheme {
     // (undocumented)
     chatPalette: {
