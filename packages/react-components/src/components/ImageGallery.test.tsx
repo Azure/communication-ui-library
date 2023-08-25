@@ -1,10 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+/* @conditional-compile-remove(image-gallery) */
 import React from 'react';
+/* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from './ImageGallery';
+/* @conditional-compile-remove(image-gallery) */
 import { render, screen } from '@testing-library/react';
+/* @conditional-compile-remove(image-gallery) */
 import { registerIcons } from '@fluentui/react';
 
+/* @conditional-compile-remove(image-gallery) */
 describe('ImageGallery default layout tests', () => {
   beforeAll(() => {
     registerIcons({
