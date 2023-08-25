@@ -8,7 +8,7 @@ import { _DrawerMenuStyles } from '@internal/react-components';
 /**
  * @private
  */
-export const spokenLanguageDrawerStyles = (theme: Theme): _DrawerMenuStyles => ({
+export const captionSettingsDrawerStyles = (theme: Theme): _DrawerMenuStyles => ({
   root: {
     overflow: 'auto'
   },

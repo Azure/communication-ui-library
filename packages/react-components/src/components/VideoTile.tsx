@@ -135,7 +135,7 @@ export interface VideoTileProps {
   isSpeaking?: boolean;
 
   /* @conditional-compile-remove(raise-hand) */
-  /** Whether the participant is raised hand. Show a indicator (border) and order icon */
+  /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
   /* @conditional-compile-remove(one-to-n-calling) */
