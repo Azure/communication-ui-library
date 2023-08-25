@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "feature",
+  "workstream": "ImageGallery",
+  "comment": "Add unit tests for Image Gallery component",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
