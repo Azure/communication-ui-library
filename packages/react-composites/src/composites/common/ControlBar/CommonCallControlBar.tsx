@@ -33,7 +33,7 @@ import {
   generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { DesktopMoreButton } from './DesktopMoreButton';
 import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
@@ -61,6 +61,8 @@ export interface CommonCallControlBarProps {
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsOn?: boolean;
   displayVertical?: boolean;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
@@ -241,6 +243,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             <CaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
+              changeCaptionLanguage={props.isCaptionsOn}
             />
           )
         }
@@ -340,7 +343,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       />
                     )}
                     {
-                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
                         options?.moreButton
                       ) &&
                         /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
@@ -350,6 +353,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           <DesktopMoreButton
                             disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                             styles={commonButtonStyles}
+                            /*@conditional-compile-remove(PSTN-calls) */
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}

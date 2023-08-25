@@ -75,7 +75,12 @@ import { TransferRequestedListener } from './CallAdapter';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
+import {
+  CaptionsReceivedListener,
+  IsCaptionsActiveChangedListener,
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
+} from './CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import {
   VideoBackgroundImage,
@@ -1009,6 +1014,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
@@ -1025,6 +1034,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
       captionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      captionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+      captionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     }
   }
 
@@ -1034,6 +1045,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
       captionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
       captionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
+      captionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
+      captionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
       this.call?.off('stateChanged', this.subscribeToCaptionEvents.bind(this));
     }
   }
@@ -1117,6 +1130,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     });
   }
 
+  /* @conditional-compile-remove(close-captions) */
+  private isSpokenLanguageChanged(): void {
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
+    this.emitter.emit('isSpokenLanguageChanged', {
+      activeSpokenLanguage: captionsFeature.activeSpokenLanguage
+    });
+  }
+
+  /* @conditional-compile-remove(close-captions) */
+  private isCaptionLanguageChanged(): void {
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions;
+    this.emitter.emit('isCaptionLanguageChanged', {
+      activeCaptionLanguage: captionsFeature.activeCaptionLanguage
+    });
+  }
+
   /* @conditional-compile-remove(call-transfer) */
   private transferRequested(args: TransferRequestedEventArgs): void {
     const newArgs = {
@@ -1180,6 +1209,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
   /* @conditional-compile-remove(call-transfer) */
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
