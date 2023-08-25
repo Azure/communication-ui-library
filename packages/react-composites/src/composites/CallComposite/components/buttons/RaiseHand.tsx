@@ -41,7 +41,7 @@ export const RaiseHand = (props: {
       data-ui-id="call-composite-raisehand-button"
       {...raiseHandButtonProps}
       showLabel={props.displayType !== 'compact'}
-      disabled={raiseHandButtonDisabled || raiseHandButtonProps.disabled || props.disabled}
+      disabled={raiseHandButtonDisabled || props.disabled}
       styles={styles}
     />
   );
