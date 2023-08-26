@@ -152,9 +152,9 @@ const onRenderParticipantDefault = (
                   tokens={{ childrenGap: '0.2rem' }}
                   style={{
                     alignItems: 'center',
-                    padding: '0.2rem',
+                    padding: '0.1rem 0.2rem',
                     backgroundColor: theme?.palette.neutralLighter,
-                    borderRadius: '1rem'
+                    borderRadius: '0.3rem'
                   }}
                 >
                   {callingParticipant.raisedHand.raisedHandOrderPosition && (
