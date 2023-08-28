@@ -454,7 +454,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               tokens={{ childrenGap: '0.2rem' }}
               style={{
                 alignItems: 'center',
-                padding: '0.2rem',
+                padding: '0.2rem 0.3rem',
                 backgroundColor: theme.palette.white,
                 opacity: 0.9,
                 borderRadius: '1rem',
