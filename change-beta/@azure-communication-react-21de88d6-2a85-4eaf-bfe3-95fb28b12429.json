@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update captions banner width and height for better readibility",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}

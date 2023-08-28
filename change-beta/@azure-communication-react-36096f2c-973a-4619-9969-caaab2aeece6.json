@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "fix",
-  "workstream": "raise hand feature",
-  "comment": "disable raise hand button in lobby",
-  "packageName": "@azure/communication-react",
-  "email": "ruslanzdor@microsoft.com",
-  "dependentChangeType": "patch"
-}
