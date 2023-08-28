@@ -29,9 +29,7 @@ const isTeamsMeetingLink = (link: string): boolean => link.startsWith('https://t
 const isGroupID = (id: string): boolean => validateUUID(id);
 
 const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefined => {
-  if (locator === '') {
-    return undefined;
-  } else if (isTeamsMeetingLink(locator)) {
+  if (isTeamsMeetingLink(locator)) {
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
     return { groupId: locator };
@@ -51,7 +49,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     }
   }, [props.token]);
 
-  const locator = useMemo(() => createCallAdapterLocator(props.locator.trim()), [props.locator]);
+  const locator = useMemo(() => createCallAdapterLocator(props.locator), [props.locator]);
 
   const adapter = useAzureCommunicationCallAdapter(
     {
