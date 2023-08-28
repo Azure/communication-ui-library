@@ -1308,7 +1308,8 @@ export const createAzureCommunicationCallAdapterInner = async (
   credential: CommunicationTokenCredential,
   locator: CallAdapterLocator,
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string,
-  /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions
+  /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions,
+  telemetryImplementationHint: TelemetryImplementationHint = 'Call'
 ): Promise<CallAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
@@ -1317,8 +1318,7 @@ export const createAzureCommunicationCallAdapterInner = async (
   const callClient = createStatefulCallClientInner({
     userId,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
-  }, undefined);
-  // }, undefined, telemetryImplementationHint);
+  }, undefined, telemetryImplementationHint);
   const callAgent = await callClient.createCallAgent(credential, {
     displayName
   });

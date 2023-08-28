@@ -56,6 +56,7 @@ import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
@@ -1133,7 +1134,7 @@ export const createAzureCommunicationCallAdapterFromClient: (callClient: Statefu
 // Warning: (ae-internal-missing-underscore) The name "createAzureCommunicationCallAdapterInner" should be prefixed with an underscore because the declaration is marked as @internal
 //
 // @internal (undocumented)
-export const createAzureCommunicationCallAdapterInner: (userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, locator: CallAdapterLocator, alternateCallerId?: string | undefined, options?: CommonCallAdapterOptions | undefined) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterInner: (userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, locator: CallAdapterLocator, alternateCallerId?: string | undefined, options?: CommonCallAdapterOptions | undefined, telemetryImplementationHint?: TelemetryImplementationHint) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
