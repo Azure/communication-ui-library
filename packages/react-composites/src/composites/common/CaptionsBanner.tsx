@@ -26,7 +26,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(close-captions) */
 const mobileViewBannerWidth = '90%';
 /* @conditional-compile-remove(close-captions) */
-const desktopViewBannerWidth = '50%';
+const desktopViewBannerWidth = '35rem';
 
 /** @private */
 export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
@@ -76,9 +76,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
       {
         /* @conditional-compile-remove(close-captions) */ <div className={containerClassName}>
           <Stack horizontalAlign="center">
-            <Stack.Item
-              style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth, maxWidth: '35rem' }}
-            >
+            <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <_CaptionsBanner
                 {...captionsBannerProps}
                 {...handlers}
