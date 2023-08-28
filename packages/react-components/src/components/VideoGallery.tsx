@@ -16,7 +16,8 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoStreamOptions,
-  CreateVideoStreamViewResult
+  CreateVideoStreamViewResult,
+  ViewScalingMode
 } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
@@ -374,6 +375,22 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
   /* @conditional-compile-remove(pinned-participants) */
+  const [selectedScalingModeState, setselectedScalingModeState] = React.useState<{ [key: string]: VideoStreamOptions }>(
+    {}
+  );
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const updateScalingModeForRemoteUser = useCallback(
+    (remoteUserId: string, scalingMode: ViewScalingMode) => {
+      selectedScalingModeState[remoteUserId] = {
+        scalingMode: scalingMode,
+        isMirrored: remoteVideoViewOptions?.isMirrored
+      };
+      setselectedScalingModeState({ ...selectedScalingModeState });
+    },
+    [selectedScalingModeState, remoteVideoViewOptions]
+  );
+  /* @conditional-compile-remove(pinned-participants) */
   useEffect(() => {
     props.pinnedParticipants?.forEach((pinParticipant) => {
       if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
@@ -511,13 +528,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
+      const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
       /* @conditional-compile-remove(pinned-participants) */
-      const createViewOptions = remoteVideoStream?.scalingMode
-        ? {
-            scalingMode: remoteVideoStream.scalingMode,
-            isMirrored: remoteVideoViewOptions?.isMirrored
-          }
-        : remoteVideoViewOptions;
+      const createViewOptions = selectedScalingMode ?? remoteVideoViewOptions;
 
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
@@ -555,6 +568,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(pinned-participants) */
           onUnpinParticipant={onUnpinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
+          updateScalingModeForRemoteUser={updateScalingModeForRemoteUser}
+          /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
           /* @conditional-compile-remove(pinned-participants) */
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
@@ -564,19 +579,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       );
     },
     [
+      selectedScalingModeState,
+      remoteVideoViewOptions,
+      pinnedParticipants,
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
-      remoteVideoViewOptions,
-      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
-      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
-      /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString
+      localParticipant.userId,
+      remoteVideoTileMenuOptions,
+      drawerMenuHostId,
+      onPinParticipant,
+      onUnpinParticipant,
+      updateScalingModeForRemoteUser,
+      toggleAnnouncerString
     ]
   );
 
