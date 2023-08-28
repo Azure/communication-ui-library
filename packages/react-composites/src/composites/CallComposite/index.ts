@@ -21,6 +21,7 @@ export * from './Strings';
 
 export {
   createAzureCommunicationCallAdapter,
+  createAzureCommunicationCallAdapterInner,
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './adapter';
