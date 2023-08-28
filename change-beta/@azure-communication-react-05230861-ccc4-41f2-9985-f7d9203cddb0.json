@@ -1,6 +1,8 @@
 {
   "type": "patch",
-  "comment": "Add selected state aria label to active tab header",
+  "area": "fix",
+  "workstream": "control-bar",
+  "comment": "Remove controlBar shadow in landscape mobile view",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
