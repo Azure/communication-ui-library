@@ -210,6 +210,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     );
   },
   processNode: (node, children, index): JSX.Element => {
+    node.attribs = { ...node.attribs, 'aria-label': node.attribs.name };
     // logic to check id in map/list
     if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
       node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
@@ -220,7 +221,20 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     };
     /* @conditional-compile-remove(image-gallery) */
     return (
-      <span onClick={handleOnClick} data-ui-id={node.attribs.id}>
+      <span
+        data-ui-id={node.attribs.id}
+        onClick={handleOnClick}
+        tabIndex={0}
+        role="button"
+        style={{
+          cursor: 'pointer'
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleOnClick();
+          }
+        }}
+      >
         {processNodeDefinitions.processDefaultNode(node, children, index)}
       </span>
     );

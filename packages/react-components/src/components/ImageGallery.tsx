@@ -178,11 +178,15 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             className={mergeStyles(imageStyle)}
             alt={image.altText || 'image'}
             aria-label={'image-gallery-main-image'}
+            aria-live={'polite'}
             onError={(event) => {
               setIsImageLoaded(false);
               onError && onError(event);
             }}
             onClick={(event) => event.stopPropagation()}
+            onDoubleClick={(event) => {
+              event.persist();
+            }}
           />
         </FocusTrapZone>
       </Stack>
