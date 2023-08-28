@@ -23,10 +23,10 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
+import { useTheme } from '../theming/FluentThemeProvider';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { useLocale } from '../localization';
-import { darkTheme } from '../theming';
-
+import { ChatTheme } from '../theming';
 /**
  * Props for {@link ImageGallery}.
  *
@@ -100,15 +100,16 @@ export interface ImageGalleryStrings {
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { isOpen, images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
+  const theme = useTheme() as unknown as ChatTheme;
+
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const localeStrings = useLocale().strings.imageGallery;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
-  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(darkTheme);
+  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme);
 
   if (images.length <= startIndex) {
-    console.log('Unable to display Image Gallery due to startIndex is out of range.');
     return <></>;
   }
   const image = images[startIndex];
@@ -117,13 +118,13 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {image.titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(darkTheme))} aria-label={image.title}>
+          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={image.title}>
             {image.title}
           </Stack.Item>
         </Stack>
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
-            className={mergeStyles(downloadButtonStyle(darkTheme))}
+            className={mergeStyles(downloadButtonStyle(theme))}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             text={localeStrings.downloadButtonLabel}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
@@ -134,7 +135,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
           <IconButton
             iconProps={downloadIcon}
-            className={mergeStyles(smallDownloadButtonContainerStyle(darkTheme))}
+            className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             aria-label={localeStrings.downloadButtonLabel}
@@ -142,7 +143,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
           <IconButton
             iconProps={cancelIcon}
-            className={mergeStyles(closeButtonStyles(darkTheme))}
+            className={mergeStyles(closeButtonStyles(theme))}
             onClick={onDismiss}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
@@ -188,7 +189,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       titleAriaId={image.title}
       isOpen={isOpen}
       onDismiss={onDismiss}
-      overlay={{ styles: { ...overlayStyles(darkTheme) } }}
+      overlay={{ styles: { ...overlayStyles(theme) } }}
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >
