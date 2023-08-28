@@ -7,7 +7,7 @@ This log was last generated on Mon, 14 Aug 2023 18:28:26 GMT and should not be m
 ## [1.7.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.7.0)
 
 Mon, 14 Aug 2023 18:28:26 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.7.0-beta.1...@azure/communication-react_v1.7.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.7.0-beta.2...@azure/communication-react_v1.7.0)
 
 ### Improvements
 - Update signaling sdk to 1.0.0-beta19 ([PR #3414](https://github.com/azure/communication-ui-library/pull/3414) by joshlai@microsoft.com)

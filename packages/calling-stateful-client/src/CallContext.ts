@@ -555,6 +555,27 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(pinned-participants) */
+  public setRemoteVideoStreamSize(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream) {
+            stream.streamSize = size;
+          }
+        }
+      }
+    });
+  }
+
   public setRemoteVideoStreams(
     callId: string,
     participantKey: string,
