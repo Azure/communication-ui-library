@@ -1,7 +1,0 @@
-{
-  "type": "minor",
-  "comment": "New adapter API joinCallWithOptions to allow start with video and mic",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
