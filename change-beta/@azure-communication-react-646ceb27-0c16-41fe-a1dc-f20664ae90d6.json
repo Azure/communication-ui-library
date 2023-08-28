@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Image Gallery",
+  "comment": "Fix image gallery double click to use default behaviour",
+  "packageName": "@azure/communication-react",
+  "email": "9044372+JoshuaLai@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
