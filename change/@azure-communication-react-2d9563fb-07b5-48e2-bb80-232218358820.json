@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Updated initial index value in findStringsDiffIndexes to include the last symbol in the strings",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

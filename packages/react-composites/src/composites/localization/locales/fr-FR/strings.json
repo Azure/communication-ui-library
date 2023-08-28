@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Personnes",
     "peopleButtonTooltipOpen": "Afficher les participants",
     "peopleButtonTooltipClose": "Masquer les participants",
-    "peoplePaneSubTitle": "Dans cet appel",
+    "peoplePaneSubTitle": "Dans cet appel {numberOfPeople}",
     "privacyPolicy": "Politique de confidentialité",
     "rejoinCallButtonLabel": "Rejoindre l’appel à nouveau.",
     "removedFromCallMoreDetails": "Un autre participant vous a supprimé de l’appel.",
@@ -164,7 +164,13 @@
     "unableToResolveTenantTitle": "Impossible de résoudre l’ID de locataire pour le participant cible",
     "unableToResolveTenantMoreDetails": "Veuillez case activée l’ID de participant est entré correctement",
     "participantIdIsMalformedTitle": "Le format de l’ID de participant n’est pas correct",
-    "participantIdIsMalformedMoreDetails": "Veuillez case activée que le format de l’ID de participant est correct"
+    "participantIdIsMalformedMoreDetails": "Veuillez case activée que le format de l’ID de participant est correct",
+    "moreButtonGalleryControlLabel": "Options de galerie",
+    "moreButtonGalleryPositionToggleLabel": "Déplacer la galerie vers le haut",
+    "moreButtonGallerySpeakerLayoutLabel": "Disposition du haut-parleur",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Disposition dynamique",
+    "moreButtonGalleryDefaultLayoutLabel": "Disposition de la galerie",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Un contenu ciblé"
   },
   "chat": {
     "chatListHeader": "Dans cette conversation",

@@ -19,6 +19,8 @@ import {
   VideoOff20Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(gallery-layouts) */
+import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
@@ -29,6 +31,14 @@ import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 import { Attach20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(gallery-layouts) */
+import {
+  PersonCircle20Regular,
+  WindowHeaderHorizontal20Regular,
+  TableSimple20Regular,
+  PictureInPicture20Regular,
+  ContentView20Regular
+} from '@fluentui/react-icons';
 
 const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
 
@@ -70,11 +80,23 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
   /* @conditional-compile-remove(rooms) */
-  NoticePageInvalidRoom: <Info20Filled />,
+  NoticePageAccessDeniedRoomsCall: <Info20Filled />,
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
-  RemoveVideoBackgroundEffect: <VideoPerson20Filled />
+  RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  GalleryOptions: <Grid20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  SpeakerGalleryLayout: <PersonCircle20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  DefaultGalleryLayout: <TableSimple20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  FloatingLocalVideoGalleryLayout: <PictureInPicture20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  FocusedContentGalleryLayout: <ContentView20Regular />
 };
 
 /**
@@ -139,6 +161,14 @@ export type CallCompositeIcons = {
   ControlButtonParticipants?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  ControlButtonRaiseHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  ControlButtonLowerHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  RaiseHandContextualMenuItem?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  LowerHandContextualMenuItem?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -181,11 +211,23 @@ export type CallCompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
-  NoticePageInvalidRoom?: JSX.Element;
+  NoticePageAccessDeniedRoomsCall?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  GalleryOptions?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  SpeakerGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  FloatingLocalVideoGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  DefaultGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  FocusedContentGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  OverflowGalleryTop?: JSX.Element;
 };
 
 /**

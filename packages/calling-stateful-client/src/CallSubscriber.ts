@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { Features, LocalVideoStream, RemoteParticipant } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallCommon } from './BetaToStableTypes';
 import { CallContext } from './CallContext';
@@ -19,9 +21,9 @@ import { ParticipantSubscriber } from './ParticipantSubscriber';
 import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
-/* @conditional-compile-remove(close-captions) */
-import { _isTeamsMeetingCall } from './TypeGuards';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
@@ -46,6 +48,8 @@ export class CallSubscriber {
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
   private _captionsSubscriber?: CaptionsSubscriber;
+  /* @conditional-compile-remove(raise-hand) */
+  private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
   /* @conditional-compile-remove(capabilities) */
@@ -73,7 +77,12 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-
+    /* @conditional-compile-remove(raise-hand) */
+    this._raiseHandSubscriber = new RaiseHandSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RaiseHand)
+    );
     /* @conditional-compile-remove(optimal-video-count) */
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,
@@ -171,6 +180,8 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(raise-hand) */
+    this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
   };
@@ -200,13 +211,15 @@ export class CallSubscriber {
   /* @conditional-compile-remove(close-captions) */
   private initCaptionSubscriber = (): void => {
     // subscribe to captions here so that we don't call captions when call is not initialized
-    if (_isTeamsMeetingCall(this._call) && this._call.state === 'Connected' && !this._captionsSubscriber) {
-      this._captionsSubscriber = new CaptionsSubscriber(
-        this._callIdRef,
-        this._context,
-        this._call.feature(Features.TeamsCaptions)
-      );
-      this._call.off('stateChanged', this.initCaptionSubscriber);
+    if (this._call.state === 'Connected' && !this._captionsSubscriber) {
+      if (this._call.feature(Features.Captions).captions.kind === 'TeamsCaptions') {
+        this._captionsSubscriber = new CaptionsSubscriber(
+          this._callIdRef,
+          this._context,
+          this._call.feature(Features.Captions).captions as TeamsCaptions
+        );
+        this._call.off('stateChanged', this.initCaptionSubscriber);
+      }
     }
   };
 
@@ -305,6 +318,14 @@ export class CallSubscriber {
         undefined,
         convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
       );
+      /**
+       * This check is to make sure that we are not deleting the local render info for the local video stream if there is one.
+       *
+       * TODO: we need to make sure the we are supporting the local screenshare stream that is now being tracked. This is a stop gap solution.
+       */
+      if (event.removed[0].mediaStreamType === 'ScreenSharing') {
+        return;
+      }
       this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
       this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
     }

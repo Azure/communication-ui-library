@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Update updating-npm-publishing.md to include detailed steps on PAT Token generation and troubleshooting guide",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "none"
+}

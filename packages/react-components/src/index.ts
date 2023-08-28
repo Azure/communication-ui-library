@@ -9,17 +9,6 @@ export { LocalizationProvider } from './localization';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
 
-/* @conditional-compile-remove(rooms) */
-export {
-  _PermissionsProvider,
-  presenterPermissions,
-  consumerPermissions,
-  _usePermissions,
-  _getPermissions
-} from './permissions';
-/* @conditional-compile-remove(rooms) */
-export type { _Permissions, _PermissionsProviderProps, Role } from './permissions';
-
 export type {
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -51,8 +40,13 @@ export type {
   ViewScalingMode
 } from './types';
 
+/* @conditional-compile-remove(raise-hand) */
+export type { RaisedHand } from './types';
+
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsAvailableLanguageStrings } from './types';
+export type { SpokenLanguageStrings, CaptionLanguageStrings } from './types';
+/* @conditional-compile-remove(close-captions) */
+export { _spokenLanguageToCaptionLanguage } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';

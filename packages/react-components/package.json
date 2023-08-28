@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.7.0-beta.2",
+  "version": "1.7.1-beta.0",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -10,7 +10,7 @@
   ],
   "scripts": {
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
-    "build:esm": "rushx _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
+    "build:esm": "copyfiles -u 1 src/**/assets/**/* dist/dist-esm && rushx _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
@@ -39,8 +39,8 @@
     "@fluentui/react-hooks": "~8.6.12",
     "@fluentui/react-icons": "~2.0.194",
     "@fluentui/react-window-provider": "~2.2.3",
-    "@internal/acs-ui-common": "1.7.0-beta.2",
-    "@internal/northstar-wrapper": "1.7.0-beta.2",
+    "@internal/acs-ui-common": "1.7.1-beta.0",
+    "@internal/northstar-wrapper": "1.7.1-beta.0",
     "copy-to-clipboard": "~3.3.1",
     "dompurify": "^3.0.3",
     "html-to-react": "~1.5.0",

@@ -14,6 +14,11 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
+/* @conditional-compile-remove(image-gallery) */
+export { ImageGallery } from './ImageGallery';
+/* @conditional-compile-remove(image-gallery) */
+export type { ImageGalleryStrings } from './ImageGallery';
+
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
 /* @conditional-compile-remove(mention) */
@@ -25,6 +30,9 @@ export type {
   Mention,
   MentionPopoverStrings
 } from './MentionPopover';
+
+/* @conditional-compile-remove(image-gallery) */
+export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
@@ -59,6 +67,9 @@ export type {
   ParticipantMenuItemsCallback
 } from './ParticipantList';
 
+/* @conditional-compile-remove(total-participant-count) */
+export type { ParticipantListStrings } from './ParticipantList';
+
 export { Announcer } from './Announcer';
 export type { AnnouncerProps } from './Announcer';
 
@@ -68,7 +79,7 @@ export type { VideoGalleryProps, VideoGalleryStrings, VideoGalleryStyles, VideoG
 export type { VideoTileContextualMenuProps, VideoTileDrawerMenuProps } from './VideoGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 export type { OverflowGalleryPosition } from './VideoGallery';
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 export type { LocalVideoTileSize } from './VideoGallery';
 export type { HorizontalGalleryStyles } from './HorizontalGallery';
 
@@ -153,6 +164,11 @@ export type {
 
 export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
+
+/* @conditional-compile-remove(raise-hand) */
+export { RaiseHandButton } from './RaiseHandButton';
+/* @conditional-compile-remove(raise-hand) */
+export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps } from './VideoTile';

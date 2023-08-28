@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -16,6 +17,8 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from '@internal/calling-stateful-client';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -31,12 +34,23 @@ export type CallingBaseSelectorProps = {
  */
 export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManager;
 
-/* @conditional-compile-remove(rooms) */
 /**
  * @private
  */
-export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined =>
-  state.calls[props.callId]?.role;
+export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined => {
+  /* @conditional-compile-remove(rooms) */
+  return state.calls[props.callId]?.role;
+  return 'Unknown';
+};
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * @private
+ */
+export const getCapabilites = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilities?.capabilities;
 
 /**
  * @private
@@ -64,6 +78,17 @@ export const getRemoteParticipants = (
     }
   | undefined => {
   return state.calls[props.callId]?.remoteParticipants;
+};
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * @private
+ */
+export const getLocalParticipantRaisedHand = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): RaisedHandState | undefined => {
+  return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
 };
 
 /**

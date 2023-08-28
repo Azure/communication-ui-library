@@ -15,7 +15,7 @@ import { CallScreenProps } from './CallScreen';
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
 
 export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.Element => {
-  const { /* @conditional-compile-remove(rooms) */ roleHint, adapter } = props;
+  const { adapter } = props;
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
 
@@ -46,8 +46,8 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
 
   let callInvitationUrl: string | undefined = window.location.href;
   /* @conditional-compile-remove(rooms) */
-  // If roleHint is defined then the call is a Rooms call so we should not make call invitation link available
-  if (roleHint) {
+  // If the call is a Rooms call we should not make call invitation link available
+  if (adapter.getState().isRoomsCall) {
     callInvitationUrl = undefined;
   }
 

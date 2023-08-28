@@ -16,6 +16,8 @@ import {
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(rooms) */
+import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(optimal-video-count) */
 import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
@@ -26,6 +28,8 @@ import {
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
+/* @conditional-compile-remove(raise-hand) */
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -59,7 +63,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getIdentifier,
     getDominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
-    getOptimalVideoCount
+    getOptimalVideoCount,
+    /* @conditional-compile-remove(rooms) */
+    getRole,
+    /* @conditional-compile-remove(raise-hand) */
+    getLocalParticipantRaisedHand
   ],
   (
     screenShareRemoteParticipantId,
@@ -71,7 +79,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     identifier: string,
     dominantSpeakers,
     /* @conditional-compile-remove(optimal-video-count) */
-    optimalVideoCount
+    optimalVideoCount,
+    /* @conditional-compile-remove(rooms) */
+    role,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -83,6 +95,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const dominantSpeakersMap: Record<string, number> = {};
     dominantSpeakerIds?.forEach((speaker, idx) => (dominantSpeakersMap[speaker] = idx));
     const noRemoteParticipants = [];
+
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -91,10 +104,22 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             checkIsSpeaking(screenShareRemoteParticipant),
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
-            screenShareRemoteParticipant.displayName
+            screenShareRemoteParticipant.displayName,
+            /* @conditional-compile-remove(raise-hand) */
+            screenShareRemoteParticipant.raisedHand
           )
         : undefined,
-      localParticipant: memoizeLocalParticipant(identifier, displayName, isMuted, isScreenSharingOn, localVideoStream),
+      localParticipant: memoizeLocalParticipant(
+        identifier,
+        displayName,
+        isMuted,
+        isScreenSharingOn,
+        localVideoStream,
+        /* @conditional-compile-remove(rooms) */
+        role,
+        /* @conditional-compile-remove(raise-hand) */
+        raisedHand
+      ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants)
       ),

@@ -5,8 +5,8 @@ import { RemoteParticipantState } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
-/* @conditional-compile-remove(rooms) */
-import { Role } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from '@internal/calling-stateful-client';
 
 /**
  * @private
@@ -18,7 +18,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     state: RemoteParticipantState,
     isMuted: boolean,
     isScreenSharing: boolean,
-    isSpeaking: boolean
+    isSpeaking: boolean,
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -26,7 +27,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      localUserCanRemoveOthers
     );
   }
 );
@@ -37,7 +39,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
-  isSpeaking: boolean
+  isSpeaking: boolean,
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -50,11 +53,39 @@ const convertRemoteParticipantToParticipantListParticipant = (
     // ACS users can not remove Teams users.
     // Removing unknown types of users is undefined.
     isRemovable:
-      getIdentifierKind(identifier).kind === 'communicationUser' || getIdentifierKind(identifier).kind === 'phoneNumber'
+      (getIdentifierKind(identifier).kind === 'communicationUser' ||
+        getIdentifierKind(identifier).kind === 'phoneNumber') &&
+      localUserCanRemoveOthers
   };
 };
 
 /* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const memoizedConvertAllremoteParticipantsBetaRelease = memoizeFnAll(
+  (
+    userId: string,
+    displayName: string | undefined,
+    state: RemoteParticipantState,
+    isMuted: boolean,
+    isScreenSharing: boolean,
+    isSpeaking: boolean,
+    localUserCanRemoveOthers: boolean
+  ): CallParticipantListParticipant => {
+    return convertRemoteParticipantToParticipantListParticipantBetaRelease(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      localUserCanRemoveOthers
+    );
+  }
+);
+
+/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */
@@ -66,7 +97,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isMuted: boolean,
     isScreenSharing: boolean,
     isSpeaking: boolean,
-    role: Role
+    raisedHand: RaisedHandState | undefined,
+    localUserCanRemoveOthers: boolean
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -75,20 +107,21 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isMuted,
       isScreenSharing,
       isSpeaking,
-      role
+      raisedHand,
+      localUserCanRemoveOthers
     );
   }
 );
 
 /* @conditional-compile-remove(rooms) */
-const convertRemoteParticipantToParticipantListParticipantBeta = (
+const convertRemoteParticipantToParticipantListParticipantBetaRelease = (
   userId: string,
   displayName: string | undefined,
   state: RemoteParticipantState,
   isMuted: boolean,
   isScreenSharing: boolean,
   isSpeaking: boolean,
-  role: Role
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -97,8 +130,33 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       state,
       isMuted,
       isScreenSharing,
-      isSpeaking
+      isSpeaking,
+      localUserCanRemoveOthers
+    )
+  };
+};
+
+/* @conditional-compile-remove(raise-hand) */
+const convertRemoteParticipantToParticipantListParticipantBeta = (
+  userId: string,
+  displayName: string | undefined,
+  state: RemoteParticipantState,
+  isMuted: boolean,
+  isScreenSharing: boolean,
+  isSpeaking: boolean,
+  raisedHand: RaisedHandState | undefined,
+  localUserCanRemoveOthers: boolean
+): CallParticipantListParticipant => {
+  return {
+    ...convertRemoteParticipantToParticipantListParticipant(
+      userId,
+      displayName,
+      state,
+      isMuted,
+      isScreenSharing,
+      isSpeaking,
+      localUserCanRemoveOthers
     ),
-    role
+    raisedHand
   };
 };

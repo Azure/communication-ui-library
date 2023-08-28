@@ -26,7 +26,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(close-captions) */
 const mobileViewBannerWidth = '90%';
 /* @conditional-compile-remove(close-captions) */
-const desktopViewBannerWidth = '50%';
+const desktopViewBannerWidth = '35rem';
 
 /** @private */
 export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
@@ -69,6 +69,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
           <CaptionsSettingsModal
             showCaptionsSettingsModal={isCaptionsSettingsOpen}
             onDismissCaptionsSettings={onDismissCaptionsSettings}
+            changeCaptionLanguage
           />
         )
       }

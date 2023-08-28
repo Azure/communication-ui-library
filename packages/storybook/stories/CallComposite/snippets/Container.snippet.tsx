@@ -7,9 +7,11 @@ import {
   CompositeLocale,
   useAzureCommunicationCallAdapter
 } from '@azure/communication-react';
-import { PartialTheme, Theme } from '@fluentui/react';
+import { PartialTheme, Theme, initializeIcons } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { validate as validateUUID } from 'uuid';
+
+initializeIcons();
 
 export type ContainerProps = {
   userId: CommunicationUserIdentifier;

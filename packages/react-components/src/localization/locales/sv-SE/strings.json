@@ -9,6 +9,9 @@
     "participantStateRinging": "Ringer...",
     "participantStateHold": "Parkerat"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} till"
+  },
   "typingIndicator": {
     "singleUser": "{user} skriver...",
     "multipleUsers": "{users} skriver...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Ladda ner",
+    "dismissButtonAriaLabel": "Stäng"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "Presentationen är inaktiverad",
     "tooltipOnContent": "Visar din skärm",
     "tooltipOffContent": "Dela skärmen"
+  },
+  "raiseHandButton": {
+    "offLabel": "Hand",
+    "onLabel": "Lägre",
+    "tooltipDisabledContent": "Åtgärden Räck upp hand är inaktiverad",
+    "tooltipOnContent": "Ta ned handen",
+    "tooltipOffContent": "Räck upp handen"
   },
   "messageThread": {
     "yesterday": "I går",

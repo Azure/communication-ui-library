@@ -65,7 +65,6 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
       contentType: 'text'
     }
   ];
-
   return (
     <FluentThemeProvider>
       <MessageThread userId={'1'} messages={messages} onFetchAttachments={onFetchAttachment} />

@@ -16,23 +16,23 @@ export type { HoldButtonSelector } from './callControlSelectors';
 /* @conditional-compile-remove(close-captions) */
 export type {
   _StartCaptionsButtonSelector,
-  _ChangeSpokenLanguageSelector,
+  _CaptionSettingsSelector,
   _CaptionsBannerSelector
 } from './captionsSelector';
 
 /* @conditional-compile-remove(close-captions) */
-export {
-  _captionsBannerSelector,
-  _startCaptionsButtonSelector,
-  _changeSpokenLanguageSelector
-} from './captionsSelector';
+export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
-export type { CallingHandlers } from './handlers/createHandlers';
+export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 /* @conditional-compile-remove(close-captions) */
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
+/* @conditional-compile-remove(video-background-effects) */
+export type { CallingHandlersOptions } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 

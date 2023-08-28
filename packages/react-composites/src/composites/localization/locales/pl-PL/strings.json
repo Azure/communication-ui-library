@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Osoby",
     "peopleButtonTooltipOpen": "Pokaż uczestników",
     "peopleButtonTooltipClose": "Ukryj uczestników",
-    "peoplePaneSubTitle": "W tej rozmowie",
+    "peoplePaneSubTitle": "W tej rozmowie {numberOfPeople}",
     "privacyPolicy": "Zasady ochrony prywatności",
     "rejoinCallButtonLabel": "Dołącz ponownie do rozmowy",
     "removedFromCallMoreDetails": "Inny uczestnik usunął Cię z rozmowy.",
@@ -164,7 +164,13 @@
     "unableToResolveTenantTitle": "Nie można rozpoznać identyfikatora dzierżawy dla uczestnika docelowego",
     "unableToResolveTenantMoreDetails": "Sprawdź, czy identyfikator uczestnika został wprowadzony poprawnie",
     "participantIdIsMalformedTitle": "Identyfikator uczestnika ma niepoprawny format",
-    "participantIdIsMalformedMoreDetails": "Sprawdź, czy identyfikator uczestnika ma poprawny format"
+    "participantIdIsMalformedMoreDetails": "Sprawdź, czy identyfikator uczestnika ma poprawny format",
+    "moreButtonGalleryControlLabel": "Opcje galerii",
+    "moreButtonGalleryPositionToggleLabel": "Przenieś galerię na górę",
+    "moreButtonGallerySpeakerLayoutLabel": "Układ osoby mówiącej",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Układ dynamiczny",
+    "moreButtonGalleryDefaultLayoutLabel": "Układ galerii",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Zawartość priorytetowa"
   },
   "chat": {
     "chatListHeader": "W tym czacie",

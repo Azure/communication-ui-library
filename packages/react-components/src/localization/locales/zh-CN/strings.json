@@ -9,6 +9,9 @@
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "待机音乐"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} 个"
+  },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
     "multipleUsers": "{users} 正在键入...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "下载",
+    "dismissButtonAriaLabel": "关闭"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "已禁用演示。",
     "tooltipOnContent": "演示屏幕",
     "tooltipOffContent": "演示您的屏幕"
+  },
+  "raiseHandButton": {
+    "offLabel": "举手",
+    "onLabel": "放下",
+    "tooltipDisabledContent": "举手操作已禁用",
+    "tooltipOnContent": "手放下",
+    "tooltipOffContent": "举手"
   },
   "messageThread": {
     "yesterday": "昨天",

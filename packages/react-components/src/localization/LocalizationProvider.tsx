@@ -17,6 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandButtonStrings } from '../components';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -39,8 +41,12 @@ import { UnsupportedBrowserVersionStrings } from '../components/UnsupportedBrows
 import { UnsupportedOperatingSystemStrings } from '../components/UnsupportedOperatingSystem';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStrings } from '../components/VerticalGallery';
+/* @conditional-compile-remove(total-participant-count) */
+import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
+/* @conditional-compile-remove(image-gallery) */
+import { ImageGalleryStrings } from '../components/ImageGallery';
 
 /**
  * Locale information for all components exported from this library.
@@ -80,6 +86,9 @@ export interface ComponentStrings {
   participantsButton: ParticipantsButtonStrings;
   /** Strings for ScreenShareButton */
   screenShareButton: ScreenShareButtonStrings;
+  /* @conditional-compile-remove(raise-hand) */
+  /** Strings for RaiseHandButton */
+  raiseHandButton: RaiseHandButtonStrings;
   /** Strings for TypingIndicator */
   typingIndicator: TypingIndicatorStrings;
   /** Strings for SendBox */
@@ -87,6 +96,9 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
+  /* @conditional-compile-remove(image-gallery) */
+  /** Strings for ImageGallery */
+  imageGallery: ImageGalleryStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
@@ -159,6 +171,9 @@ export interface ComponentStrings {
    * Strings for the VerticalGallery.
    */
   VerticalGallery: VerticalGalleryStrings;
+  /* @conditional-compile-remove(total-participant-count) */
+  /** Strings for the participant list component */
+  ParticipantList: ParticipantListStrings;
 }
 
 /**

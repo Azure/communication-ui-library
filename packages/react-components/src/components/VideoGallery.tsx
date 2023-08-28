@@ -27,8 +27,6 @@ import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
 import { _formatString } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
-/* @conditional-compile-remove(rooms) */
-import { _usePermissions } from '../permissions';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
 import { useIdentifiers } from '../identifiers';
@@ -38,6 +36,10 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
+/* @conditional-compile-remove(gallery-layouts) */
+import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
+/* @conditional-compile-remove(gallery-layouts) */
+import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 
 /**
  * @private
@@ -125,7 +127,11 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout =
+  | 'default'
+  | 'floatingLocalVideo'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -149,9 +155,12 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  *
  * @beta
  */
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition =
+  | 'HorizontalBottom'
+  | 'VerticalRight'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
-/* @conditional-compile-remove(click-to-call) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
  * different modes of the local video tile
  *
@@ -259,7 +268,7 @@ export interface VideoGalleryProps {
    * @defaultValue 'HorizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
-  /* @conditional-compile-remove(click-to-call) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   /**
    * Determines the aspect ratio of local video tile in the video gallery.
    * @remarks 'followDeviceOrientation' will be responsive to the screen orientation and will change between 9:16 (portrait) and
@@ -335,7 +344,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
-    /* @conditional-compile-remove(click-to-call) */
+    /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
 
@@ -352,7 +361,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  const localTileNotInGrid = !!(
+    (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
+    remoteParticipants.length > 0
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -374,15 +386,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
-  /* @conditional-compile-remove(rooms) */
-  const permissions = _usePermissions();
-
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
   const localVideoTile = useMemo((): JSX.Element /* @conditional-compile-remove(rooms) */ | undefined => {
-    /* @conditional-compile-remove(rooms) */
-    if (!permissions.cameraButton || /* @conditional-compile-remove(click-to-call) */ localVideoTileSize === 'hidden') {
+    /* @conditional-compile-remove(click-to-call) */
+    if (localVideoTileSize === 'hidden') {
       return undefined;
     }
     if (onRenderLocalVideoTile) {
@@ -390,7 +399,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     const localVideoTileStyles = concatStyleSets(
-      shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {},
+      localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
         root: { borderRadius: theme.effects.roundedCorner4 }
       },
@@ -420,8 +429,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showLabel={
             !(
-              (shouldFloatLocalVideo && isNarrow) ||
-              /*@conditional-compile-remove(click-to-call) */ localVideoTileSize === '9:16'
+              (localTileNotInGrid && isNarrow) ||
+              /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
+                '9:16'
             )
           }
           showMuteIndicator={showMuteIndicator}
@@ -430,6 +440,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={localParticipant.raisedHand}
         />
       </Stack>
     );
@@ -442,7 +454,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onRenderAvatar,
     onRenderLocalVideoTile,
-    shouldFloatLocalVideo,
+    localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
     strings.localVideoCameraSwitcherLabel,
@@ -451,8 +463,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     strings.localVideoSelectedDescription,
     styles?.localVideo,
     theme.effects.roundedCorner4,
-    /* @conditional-compile-remove(rooms) */ permissions.cameraButton,
-    /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+    /*@conditional-compile-remove(click-to-call) */
+    localVideoTileSize
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -503,6 +515,18 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
 
+      const createViewOptions = (): VideoStreamOptions | undefined => {
+        /* @conditional-compile-remove(pinned-participants) */
+        return remoteVideoStream?.streamSize &&
+          remoteVideoStream.streamSize?.height > remoteVideoStream.streamSize?.width
+          ? ({
+              scalingMode: 'Fit',
+              isMirrored: remoteVideoViewOptions?.isMirrored
+            } as VideoStreamOptions)
+          : remoteVideoViewOptions;
+        return remoteVideoViewOptions;
+      };
+
       return (
         <_RemoteVideoTile
           key={participant.userId}
@@ -513,7 +537,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
+          remoteVideoViewOptions={isVideoParticipant && createViewOptions() ? createViewOptions() : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
@@ -618,11 +642,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (screenShareParticipant && layout === 'focusedContent') {
+      return <FocusedContentLayout {...layoutProps} />;
+    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (layout === 'speaker') {
+      return <SpeakerVideoLayout {...layoutProps} />;
+    }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps]);
+  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
 
   return (
     <div

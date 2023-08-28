@@ -68,7 +68,6 @@ test.describe('Call composite custom call control options tests', () => {
   });
 });
 
-/* @conditional-compile-remove(new-call-control-bar) */
 test.describe('New call control bar renders correctly', () => {
   // New call experience will be turned off by default from hermetic test app until it is in stable
   // Add callControls: {} as part of option to enable it (even without turn it on)
@@ -116,6 +115,7 @@ test.describe('New call control bar renders correctly', () => {
       })
     );
 
+    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
     await pageClick(page, dataUiId('common-call-composite-more-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);

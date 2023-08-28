@@ -11,18 +11,25 @@ import {
   getIsMuted,
   CallingBaseSelectorProps
 } from './baseSelectors';
+import { getRole } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(rooms) */
+import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(raise-hand) */
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
+/* @conditional-compile-remove(raise-hand) */
+import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { getParticipantCount } from './baseSelectors';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(communication-common-beta-v3) */
 import { isMicrosoftBotIdentifier } from '@azure/communication-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
-  remoteParticipants: RemoteParticipantState[]
+  remoteParticipants: RemoteParticipantState[],
+  localUserCanRemoveOthers: boolean
 ): CallParticipantListParticipant[] => {
   /* eslint-disable @typescript-eslint/explicit-function-return-type */
   const conversionCallback = (memoizeFn) => {
@@ -60,7 +67,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isMuted,
             isScreenSharing,
             participant.isSpeaking,
-            /* @conditional-compile-remove(rooms) */ participant.role
+            /* @conditional-compile-remove(raise-hand) */
+            participant.raisedHand,
+            localUserCanRemoveOthers
           );
         })
         .sort((a, b) => {
@@ -76,8 +85,10 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         })
     );
   };
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(raise-hand) */
   return memoizedConvertAllremoteParticipantsBeta(conversionCallback);
+  /* @conditional-compile-remove(rooms) */
+  return memoizedConvertAllremoteParticipantsBetaRelease(conversionCallback);
   return memoizedConvertAllremoteParticipants(conversionCallback);
 };
 
@@ -92,6 +103,8 @@ export type ParticipantListSelector = (
 ) => {
   participants: CallParticipantListParticipant[];
   myUserId: string;
+  /* @conditional-compile-remove(total-participant-count) */
+  totalParticipantCount?: number;
 };
 
 /**
@@ -100,20 +113,36 @@ export type ParticipantListSelector = (
  * @public
  */
 export const participantListSelector: ParticipantListSelector = createSelector(
-  [getIdentifier, getDisplayName, getRemoteParticipants, getIsScreenSharingOn, getIsMuted],
+  [
+    getIdentifier,
+    getDisplayName,
+    getRemoteParticipants,
+    getIsScreenSharingOn,
+    getIsMuted,
+    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
+    getRole,
+    getParticipantCount
+  ],
   (
     userId,
     displayName,
     remoteParticipants,
     isScreenSharingOn,
-    isMuted
+    isMuted,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand,
+    role,
+    partitipantCount
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
+    totalParticipantCount?: number;
   } => {
+    const localUserCanRemoveOthers = localUserCanRemoveOthersTrampoline(role);
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
-          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants))
+          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
+          localUserCanRemoveOthers
         )
       : [];
     participants.push({
@@ -121,13 +150,19 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       displayName: displayName,
       isScreenSharing: isScreenSharingOn,
       isMuted: isMuted,
+      /* @conditional-compile-remove(raise-hand) */
+      raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false
     });
+    /* @conditional-compile-remove(total-participant-count) */
+    const totalParticipantCount = partitipantCount;
     return {
       participants: participants,
-      myUserId: userId
+      myUserId: userId,
+      /* @conditional-compile-remove(total-participant-count) */
+      totalParticipantCount: totalParticipantCount
     };
   }
 );
@@ -136,4 +171,10 @@ const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantS
   /* @conditional-compile-remove(PSTN-calls) */
   return _updateUserDisplayNames(remoteParticipants);
   return remoteParticipants;
+};
+
+const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
+  /* @conditional-compile-remove(rooms) */
+  return role === 'Presenter' || role === 'Unknown' || role === undefined;
+  return true;
 };

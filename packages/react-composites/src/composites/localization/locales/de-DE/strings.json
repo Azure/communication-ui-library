@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Kontakte",
     "peopleButtonTooltipOpen": "Teilnehmende anzeigen",
     "peopleButtonTooltipClose": "Teilnehmende ausblenden",
-    "peoplePaneSubTitle": "In diesem Anruf",
+    "peoplePaneSubTitle": "In diesem Anruf {numberOfPeople}",
     "privacyPolicy": "Datenschutzrichtlinie",
     "rejoinCallButtonLabel": "Am Anruf erneut teilnehmen",
     "removedFromCallMoreDetails": "Ein anderer Teilnehmer hat Sie aus dem Anruf entfernt.",
@@ -164,7 +164,13 @@
     "unableToResolveTenantTitle": "Die Mandanten-ID für den Zielteilnehmer kann nicht aufgelöst werden",
     "unableToResolveTenantMoreDetails": "Überprüfen Sie, ob die Teilnehmer-ID richtig eingegeben wurde.",
     "participantIdIsMalformedTitle": "Die Teilnehmer-ID weist nicht das richtige Format auf",
-    "participantIdIsMalformedMoreDetails": "Überprüfen Sie, ob die Teilnehmer-ID das richtige Format aufweist."
+    "participantIdIsMalformedMoreDetails": "Überprüfen Sie, ob die Teilnehmer-ID das richtige Format aufweist.",
+    "moreButtonGalleryControlLabel": "Katalogoptionen",
+    "moreButtonGalleryPositionToggleLabel": "Katalog nach oben verschieben",
+    "moreButtonGallerySpeakerLayoutLabel": "Lautsprecherlayout",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisches Layout",
+    "moreButtonGalleryDefaultLayoutLabel": "Kataloglayout",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Fokussierte Inhalte"
   },
   "chat": {
     "chatListHeader": "In diesem Chat",

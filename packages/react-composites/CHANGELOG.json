@@ -2,6 +2,57 @@
   "name": "@internal/react-composites",
   "entries": [
     {
+      "date": "Mon, 14 Aug 2023 18:28:42 GMT",
+      "tag": "@internal/react-composites_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/acs-ui-common to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-component-bindings to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/calling-stateful-client to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-component-bindings to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/chat-stateful-client to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/react-components to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/react-composites",
+            "comment": "Bump @internal/fake-backends to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Jul 2023 17:34:40 GMT",
       "tag": "@internal/react-composites_v1.7.0-beta.2",
       "version": "1.7.0-beta.2",
@@ -11,12 +62,6 @@
             "author": "beachball",
             "package": "@internal/react-composites",
             "comment": "Bump @internal/acs-ui-common to v1.7.0-beta.2",
-            "commit": "ff8ff1cd681697cf9b165ac25f7195b9bf679d30"
-          },
-          {
-            "author": "beachball",
-            "package": "@internal/react-composites",
-            "comment": "Bump @internal/calling-component-bindings to v1.7.0-beta.2",
             "commit": "ff8ff1cd681697cf9b165ac25f7195b9bf679d30"
           },
           {

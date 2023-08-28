@@ -9,6 +9,9 @@
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} další(ch)"
+  },
   "typingIndicator": {
     "singleUser": "{user} píše...",
     "multipleUsers": "{users} píší...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Stáhnout",
+    "dismissButtonAriaLabel": "Zavřít"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",
@@ -73,7 +80,7 @@
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor",
     "microphoneButtonSplitRoleDescription": "Tlačítko rozdělení",
-    "onSplitButtonAriaLabel": "Ztlumit možnosti mikrofonu a zvuku",
+    "onSplitButtonAriaLabel": "Ztlumit mikrofon a možnosti zvuku",
     "offSplitButtonAriaLabel": "Zrušit ztlumení mikrofonu a možností zvuku",
     "microphoneActionTurnedOnAnnouncement": "Váš mikrofon je zapnutý",
     "microphoneActionTurnedOffAnnouncement": "Váš mikrofon je vypnutý",
@@ -104,10 +111,17 @@
   },
   "screenShareButton": {
     "onLabel": "Zastavit prezentaci",
-    "offLabel": "Přítomno",
+    "offLabel": "Prezentovat",
     "tooltipDisabledContent": "Sdílení je zakázáno",
     "tooltipOnContent": "Sdílí se vaše obrazovka",
     "tooltipOffContent": "Sdílet obrazovku"
+  },
+  "raiseHandButton": {
+    "offLabel": "Zvednout",
+    "onLabel": "Dolů",
+    "tooltipDisabledContent": "Akce Zvednout ruku je zakázaná",
+    "tooltipOnContent": "Dát ruku dolů",
+    "tooltipOffContent": "Zvednout ruku"
   },
   "messageThread": {
     "yesterday": "Včera",

@@ -33,6 +33,10 @@ import { Features } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from './CallClientState';
 
 /**
  * @private
@@ -64,7 +68,9 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
     isAvailable: stream.isAvailable,
     /* @conditional-compile-remove(video-stream-is-receiving-flag) */
     isReceiving: stream.isReceiving,
-    view: undefined
+    view: undefined,
+    /* @conditional-compile-remove(pinned-participants) */
+    streamSize: stream.size
   };
 }
 
@@ -85,7 +91,9 @@ export function convertSdkParticipantToDeclarativeParticipant(
     callEndReason: participant.callEndReason,
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
-    isSpeaking: participant.isSpeaking
+    isSpeaking: participant.isSpeaking,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand: undefined
   };
 }
 
@@ -122,6 +130,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
@@ -191,5 +201,15 @@ export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
 ): LocalVideoStreamVideoEffectsState {
   return {
     activeEffects: videoEffects
+  };
+}
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * @private
+ */
+export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedHandState {
+  return {
+    raisedHandOrderPosition: raisedHand.order
   };
 }

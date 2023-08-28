@@ -62,6 +62,10 @@ export type _FakeChatAdapterArgs = {
    */
   sendRemoteInlineImageMessage?: boolean;
   /**
+   * Overwrites the url of the inline image that the first remote participant will send.
+   */
+  inlineImageUrl?: string;
+  /**
    * Determines if chat composite will be localized in French (France).
    */
   frenchLocaleEnabled?: boolean;
@@ -81,6 +85,7 @@ export type _FakeChatAdapterArgs = {
    * Record of rest errors to throw when methods of interface ChatThreadClient are called
    */
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+  theme?: 'light' | 'dark';
 };
 
 /** @internal */

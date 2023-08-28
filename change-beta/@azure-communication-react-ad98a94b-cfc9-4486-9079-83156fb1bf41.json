@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Image Gallery",
+  "comment": "Fix to allow iOS browsers to open the image in a new tab",
+  "packageName": "@azure/communication-react",
+  "email": "9044372+JoshuaLai@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

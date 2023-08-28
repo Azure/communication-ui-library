@@ -74,6 +74,12 @@ export class MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
+  raiseHand(): Promise<void> {
+    throw Error('raiseHand not implemented');
+  }
+  lowerHand(): Promise<void> {
+    throw Error('lowerHand not implemented');
+  }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
   }

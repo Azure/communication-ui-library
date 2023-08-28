@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /* @conditional-compile-remove(close-captions) */
-import { CaptionsAvailableLanguageStrings } from '@internal/react-components';
+import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -192,32 +192,30 @@ export interface CallCompositeStrings {
    * Tooltip text used to inform a user that toggling microphone in lobby is not supported.
    */
   microphoneToggleInLobbyNotAllowed: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Side pane People section Title.
    */
   peoplePaneTitle: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria label string for return to call back button
    */
   returnToCallButtonAriaLabel?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Aria Description string for return to call button
    */
   returnToCallButtonAriaDescription?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * control bar People button label
    */
   peopleButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /**
+   * control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
   /**
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Label for SidePaneHeader dismiss button
    */
@@ -267,7 +265,6 @@ export interface CallCompositeStrings {
    * Aria Label for dialpad Modal close button
    */
   dialpadCloseModalButtonAriaLabel: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
   /**
    * label for more button in the Calling composite
    */
@@ -472,14 +469,24 @@ export interface CallCompositeStrings {
   captionsSettingsModalTitle?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * label for dropdown inside captions setting modal
+   * label for spoken language dropdown inside captions setting modal
    */
-  captionsSettingsDropdownLabel?: string;
+  captionsSettingsSpokenLanguageDropdownLabel?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * label for captions language inside captions setting modal
+   */
+  captionsSettingsCaptionLanguageDropdownLabel?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * text under captions setting dropdown indicating what the dropdown is for
    */
-  captionsSettingsDropdownInfoText?: string;
+  captionsSettingsSpokenLanguageDropdownInfoText?: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * text under captions setting dropdown indicating what the dropdown is for
+   */
+  captionsSettingsCaptionLanguageDropdownInfoText?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
    * confirm button label in captions setting modal
@@ -512,9 +519,14 @@ export interface CallCompositeStrings {
   captionsBannerMoreButtonTooltip?: string;
   /* @conditional-compile-remove(close-captions) */
   /**
-   * list of key value pairs that pairs language code to language names
+   * list of key value pairs that pairs spoken language code to language names
    */
-  captionsAvailableLanguageStrings?: CaptionsAvailableLanguageStrings;
+  spokenLanguageStrings?: SpokenLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * list of key value pairs that pairs caption language code to language names
+   */
+  captionLanguageStrings?: CaptionLanguageStrings;
   /* @conditional-compile-remove(close-captions) */
   /**
    * captions banner loading spinner label
@@ -585,4 +597,34 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when target participant id is malformed
    */
   participantIdIsMalformedMoreDetails?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Controls label to move the overflow gallery around
+   */
+  moreButtonGalleryControlLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the toggle to move the overflow gallery to the top
+   */
+  moreButtonGalleryPositionToggleLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the speaker layout
+   */
+  moreButtonGallerySpeakerLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the default (Gallery) layout
+   */
+  moreButtonGalleryDefaultLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the floatingLocalVideo (Dynamic) layout
+   */
+  moreButtonGalleryFloatingLocalLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the focusedContentLayout (Focused content) layout
+   */
+  moreButtonGalleryFocusedContentLayoutLabel?: string;
 }

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix Mention Popover's position is too low when insert mention in the middle of a very long text",
-  "packageName": "@azure/communication-react",
-  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
