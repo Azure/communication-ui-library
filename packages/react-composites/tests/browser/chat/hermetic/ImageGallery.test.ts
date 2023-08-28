@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './fixture';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { expect } from '@playwright/test';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { dataUiId, stableScreenshot } from '../../common/utils';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 test.describe('ImageGallery Modal tests', () => {
   test('ImageGallery Modal loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
     await page.goto(

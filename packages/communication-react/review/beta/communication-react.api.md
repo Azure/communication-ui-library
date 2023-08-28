@@ -3507,7 +3507,10 @@ export interface RemoteVideoStreamState {
     // @beta
     isReceiving: boolean;
     mediaStreamType: MediaStreamType;
-    selectedScalingMode?: ScalingMode;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
     view?: VideoStreamRendererViewState;
 }
 
@@ -4091,6 +4094,10 @@ export interface VideoGalleryStream {
     isReceiving?: boolean;
     renderElement?: HTMLElement;
     scalingMode?: ViewScalingMode;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
 }
 
 // @public
