@@ -1,8 +1,8 @@
 {
   "call": {
-    "cameraLabel": "Fotoaparát",
+    "cameraLabel": "Kamera",
     "noCamerasLabel": "Nebyly nalezeny žádné kamery",
-    "cameraPermissionDenied": "Váš prohlížeč blokuje přístup k fotoaparátu.",
+    "cameraPermissionDenied": "Váš prohlížeč blokuje přístup ke kameře.",
     "cameraTurnedOff": "Máte vypnutou kameru.",
     "chatButtonLabel": "Chat",
     "close": "Zavřít",
