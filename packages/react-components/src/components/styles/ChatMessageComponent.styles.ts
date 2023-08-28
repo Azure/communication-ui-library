@@ -96,7 +96,7 @@ export const chatMessageMenuStyle = mergeStyles({
 /**
  * @private
  */
-export const useChatMessageEditContainerStyles = makeStyles({
+export const _useChatMessageEditContainerStyles = makeStyles({
   body: {
     ...shorthands.padding(0),
     backgroundColor: 'transparent',
@@ -117,7 +117,7 @@ export const useChatMessageEditContainerStyles = makeStyles({
     }
   },
   bodyError: {
-    ...shorthands.borderColor('var(--errorText)')
+    ...shorthands.borderColor(tokens.colorStatusDangerForeground1)
   },
   bodyDefault: {
     ...shorthands.borderColor(tokens.colorNeutralStrokeAccessible),

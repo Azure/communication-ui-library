@@ -13,7 +13,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle, _useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 import { mergeClasses } from '@fluentui/react-components';
@@ -174,7 +174,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       </Stack>
     );
   };
-  const classes = useChatMessageEditContainerStyles();
+  const classes = _useChatMessageEditContainerStyles();
   const className = mergeClasses(
     classes.body,
     message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
