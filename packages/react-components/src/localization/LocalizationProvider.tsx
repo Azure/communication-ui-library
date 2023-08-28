@@ -45,7 +45,7 @@ import { VerticalGalleryStrings } from '../components/VerticalGallery';
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { ImageGalleryStrings } from '../components/ImageGallery';
 
 /**
@@ -96,7 +96,7 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   /** Strings for ImageGallery */
   imageGallery: ImageGalleryStrings;
   /** Strings for MessageStatusIndicator */

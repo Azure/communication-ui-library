@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-
+/* @conditional-compile-remove(image-gallery) */
 import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
-
+/* @conditional-compile-remove(image-gallery) */
 import React, { SyntheticEvent, useState } from 'react';
+/* @conditional-compile-remove(image-gallery) */
 import {
   bodyContainer,
   bodyFocusZone,
@@ -23,9 +24,11 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
+/* @conditional-compile-remove(image-gallery) */
 import { useTheme } from '../theming/FluentThemeProvider';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(image-gallery) */
 import { ChatTheme } from '../theming';
 /**
  * Props for {@link ImageGallery}.
@@ -44,7 +47,7 @@ export interface ImageGalleryImageProps {
   /** Optional JSX element used as a title icon and displayed to the left of the title element. */
   titleIcon?: JSX.Element;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Props for {@link ImageGallery}.
  *
@@ -76,7 +79,7 @@ export interface ImageGalleryProps {
    */
   startIndex?: number;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Strings of {@link ImageGallery} that can be overridden.
  *
@@ -92,7 +95,7 @@ export interface ImageGalleryStrings {
    */
   dismissButtonAriaLabel: string;
 }
-
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Component to render a fullscreen modal for a selected image.
  *
@@ -102,7 +105,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { isOpen, images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
   const theme = useTheme() as unknown as ChatTheme;
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   const localeStrings = useLocale().strings.imageGallery;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
@@ -125,19 +128,19 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
             className={mergeStyles(downloadButtonStyle(theme))}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            /* @conditional-compile-remove(image-gallery) */
             text={localeStrings.downloadButtonLabel}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
           />
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
           />
@@ -145,7 +148,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             iconProps={cancelIcon}
             className={mergeStyles(closeButtonStyles(theme))}
             onClick={onDismiss}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+            /* @conditional-compile-remove(image-gallery) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
             aria-live={'polite'}
           />
@@ -178,6 +181,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
               onError && onError(event);
             }}
             onClick={(event) => event.stopPropagation()}
+            aria-live={'polite'}
           />
         </FocusTrapZone>
       </Stack>
