@@ -1090,7 +1090,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       strings,
       props.userId,
       participantCount,
-      isNarrow,
       onRenderAvatar,
       showMessageStatus,
       onActionButtonClickMemo,
