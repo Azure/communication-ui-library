@@ -555,6 +555,7 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(pinned-participants) */
   public setRemoteVideoStreamSize(
     callId: string,
     participantKey: string,

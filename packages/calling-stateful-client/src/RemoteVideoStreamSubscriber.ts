@@ -117,6 +117,7 @@ export class RemoteVideoStreamSubscriber {
     );
   };
 
+  /* @conditional-compile-remove(pinned-participants) */
   private isSizeChanged = (): void => {
     if (this._remoteVideoStream?.size.width === 0 && this._remoteVideoStream?.size.height === 0) {
       return;
