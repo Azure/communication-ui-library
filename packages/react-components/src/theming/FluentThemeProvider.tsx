@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext } from 'react';
 import { ThemeProvider, PartialTheme, Theme as V8Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
-import { FluentProvider, Theme as V9Theme, teamsLightTheme } from '@fluentui/react-components';
+import { FluentProvider, Theme as V9Theme, teamsLightTheme, makeStyles, shorthands } from '@fluentui/react-components';
 import { Theme, lightTheme } from './themes';
 
 /**
@@ -31,6 +31,16 @@ const wrapper = mergeStyles({
   width: '100%'
 });
 
+const useFluentv9Wrapper = makeStyles({
+  body: {
+    height: '100%',
+    ...shorthands.margin(0),
+    ...shorthands.overflow('hidden'),
+    ...shorthands.padding(0),
+    width: '100%'
+  }
+});
+
 const defaultTheme: Theme = {
   ...mergeThemes(getTheme(), lightTheme),
   fluent9Theme: { ...teamsLightTheme, ...lightTheme.fluent9Theme }
@@ -51,6 +61,7 @@ const ThemeContext = createContext<Theme>(defaultTheme);
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children } = props;
   const v8Theme: Omit<V8Theme, 'fluent9Theme'> = defaultTheme;
+  const fluentv9Wrapper = useFluentv9Wrapper();
 
   let fluentV8Theme: V8Theme = mergeThemes(v8Theme, fluentTheme);
   const fluentV9Theme: V9Theme = { ...defaultTheme.fluent9Theme };
@@ -63,7 +74,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   return (
     <ThemeContext.Provider value={combinedThemes}>
       <ThemeProvider theme={fluentV8Theme} className={wrapper}>
-        <FluentProvider className={wrapper} theme={fluentV9Theme} dir={rtl ? 'rtl' : 'ltr'}>
+        <FluentProvider className={fluentv9Wrapper.body} theme={fluentV9Theme} dir={rtl ? 'rtl' : 'ltr'}>
           {children}
         </FluentProvider>
       </ThemeProvider>
