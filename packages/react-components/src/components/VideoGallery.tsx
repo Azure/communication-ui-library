@@ -382,13 +382,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const updateScalingModeForRemoteUser = useCallback(
     (remoteUserId: string, scalingMode: ViewScalingMode) => {
-      selectedScalingModeState[remoteUserId] = {
-        scalingMode: scalingMode,
-        isMirrored: remoteVideoViewOptions?.isMirrored
-      };
-      setselectedScalingModeState({ ...selectedScalingModeState });
+      setselectedScalingModeState((current) => ({
+        ...current,
+        [remoteUserId]: {
+          scalingMode,
+          isMirrored: remoteVideoViewOptions?.isMirrored
+        }
+      }));
     },
-    [selectedScalingModeState, remoteVideoViewOptions]
+    [remoteVideoViewOptions]
   );
   /* @conditional-compile-remove(pinned-participants) */
   useEffect(() => {
