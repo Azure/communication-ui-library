@@ -98,17 +98,14 @@ export const chatMessageDateStyle: CSSProperties = {
 
 const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
   const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
-  return
-  { 
-    body: {
-      marginRight: '0rem',
-      marginLeft: `${messageAvatarGap}rem`,
-      width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
-      zIndex: CHAT_MESSAGE_ZINDEX,
-      '& msft-mention': {
-        color: '#D83B01',
-        fontWeight: 600
-      }
+  return {
+    marginRight: '0rem',
+    marginLeft: `${messageAvatarGap}rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
+    zIndex: CHAT_MESSAGE_ZINDEX,
+    '& msft-mention': {
+      color: '#D83B01',
+      fontWeight: 600
     }
   };
 };

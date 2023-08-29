@@ -38,6 +38,7 @@ import {
   chatBlockedMessageClasses,
   chatBlockedMyMessageClasses,
   defaultChatItemMessageContainerNoOverlap,
+  defaultChatItemMessageContainerOverlap,
   gutterWithAvatar,
   gutterWithHiddenAvatar,
   useChatMyMessageClasses,
@@ -61,6 +62,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
    */
   showMessageStatus?: boolean;
   messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+  /**
+   * Whether to overlap avatar and message when the view is width constrained.
+   */
+  shouldOverlapAvatarAndMessage: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -160,7 +165,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     messageStatus,
     fileDownloadHandler,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked
+    onInlineImageClicked,
+    shouldOverlapAvatarAndMessage
   } = props;
 
   const defaultTimeStamp = message.createdOn
@@ -305,6 +311,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
   const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
   const rootLayout = _useChatMyMessageLayout();
+
+  console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>
@@ -370,7 +378,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
               className: mergeClasses(
-                mergeStyles(messageContainerStyle, defaultChatItemMessageContainerNoOverlap),
+                mergeStyles(
+                  messageContainerStyle,
+                  shouldOverlapAvatarAndMessage
+                    ? defaultChatItemMessageContainerOverlap
+                    : defaultChatItemMessageContainerNoOverlap
+                ),
                 messageContainerClasses?.body
               )
             }}

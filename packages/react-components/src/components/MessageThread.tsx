@@ -332,8 +332,8 @@ const memoizeAllMessages = memoizeFnAll(
     message: Message,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    onRenderAvatar: OnRenderAvatarCallback | undefined,
-    shouldOverlapAvatarAndMessage: boolean,
+    onRenderAvatar: OnRenderAvatarCallback | undefined, // Is this still used?
+    shouldOverlapAvatarAndMessage: boolean, // REMOVE
     styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
@@ -1068,6 +1068,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
             inlineAcceptRejectEditButtons={!isNarrow}
+            shouldOverlapAvatarAndMessage={isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
