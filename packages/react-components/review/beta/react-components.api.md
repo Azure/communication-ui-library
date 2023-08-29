@@ -25,8 +25,7 @@ import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
 import { ITooltipHostProps } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
-import { PartialTheme as PartialTheme_2 } from '@fluentui/react';
-import { PartialTheme as PartialTheme_3 } from '@fluentui/react-components';
+import { PartialTheme } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { PropsWithChildren } from 'react';
@@ -34,8 +33,7 @@ import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
 import { SyntheticEvent } from 'react';
-import { Theme as Theme_2 } from '@fluentui/react';
-import { Theme as Theme_3 } from '@fluentui/react-components';
+import { Theme } from '@fluentui/react';
 
 // @public
 export interface ActiveErrorMessage {
@@ -1117,7 +1115,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 // @public
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
-    fluentTheme?: PartialTheme_2 | Theme;
+    fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
 
@@ -1574,11 +1572,6 @@ export interface OptionsDevice {
 
 // @beta
 export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
-
-// @public
-export type PartialTheme = PartialTheme_2 & {
-    fluent9Theme: PartialTheme_3;
-};
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2067,11 +2060,6 @@ export interface SystemMessageCommon extends MessageCommon {
     // (undocumented)
     messageType: 'system';
 }
-
-// @public
-export type Theme = Theme_2 & {
-    fluent9Theme: Theme_3;
-};
 
 // @internal (undocumented)
 export type _TileOrientation = 'portrait' | 'landscape';

@@ -48,7 +48,8 @@ import { FileDownloadHandler } from './FileDownloadCards';
 import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
-import { useTheme, createv9Theme, useFluentv9Wrapper } from '../theming';
+import { useTheme } from '../theming';
+import { createV9Theme, useFluentV9Wrapper } from './../theming/v9ThemeShim';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
@@ -1230,10 +1231,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const classes = useChatStyles();
-  const fluentV9Wrapper = useFluentv9Wrapper();
+  const fluentV9Wrapper = useFluentV9Wrapper();
 
   const chatBody = useMemo(() => {
-    const v9Theme = createv9Theme(theme);
+    const v9Theme = createV9Theme(theme);
     return (
       <LiveAnnouncer>
         <FluentProvider className={fluentV9Wrapper.body} theme={v9Theme} dir={theme.rtl ? 'rtl' : 'ltr'}>

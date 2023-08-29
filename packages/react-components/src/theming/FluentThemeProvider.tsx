@@ -3,7 +3,6 @@
 
 import React, { createContext, useContext } from 'react';
 import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
-import { makeStyles, shorthands } from '@fluentui/react-components';
 import { lightTheme } from './themes';
 
 /**
@@ -29,20 +28,6 @@ const wrapper = mergeStyles({
   overflow: 'hidden',
   padding: 0,
   width: '100%'
-});
-
-/**
- *
- * @private
- */
-export const useFluentv9Wrapper = makeStyles({
-  body: {
-    height: '100%',
-    ...shorthands.margin(0),
-    ...shorthands.overflow('hidden'),
-    ...shorthands.padding(0),
-    width: '100%'
-  }
 });
 
 const defaultTheme: Theme = {

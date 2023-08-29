@@ -4,4 +4,3 @@
 export * from './themes';
 export * from './FluentThemeProvider';
 export * from './icons';
-export * from './v9ThemeShim';
