@@ -19,10 +19,11 @@ export interface CallingTheme {
   };
 }
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * Custom Fluent theme palette used by chat related components in this library.
  *
- * @public
+ * @beta
  */
 export interface ChatTheme {
   /**
@@ -31,15 +32,10 @@ export interface ChatTheme {
    * @beta
    */
   chatPalette: {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalOverlayBlack: string;
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalTitleWhite: string;
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackground: string;
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackgroundHover: string;
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackgroundActive: string;
   };
 }
@@ -49,7 +45,7 @@ export interface ChatTheme {
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -82,16 +78,12 @@ export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-gallery) */
   chatPalette: {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalOverlayBlack: '#000000',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalTitleWhite: '#ffffff',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackground: '#1b1a19',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackgroundHover: '#252423',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
@@ -104,7 +96,7 @@ export const lightTheme: PartialTheme & CallingTheme & ChatTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
+export const darkTheme: PartialTheme & CallingTheme /* @conditional-compile-remove(image-gallery) */ & ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -137,16 +129,12 @@ export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-gallery) */
   chatPalette: {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalOverlayBlack: '#000000',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalTitleWhite: '#ffffff',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackground: '#1b1a19',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackgroundHover: '#252423',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
