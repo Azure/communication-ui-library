@@ -3,6 +3,8 @@
 
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -627,4 +629,9 @@ export interface CallCompositeStrings {
    * Label for the selection of the focusedContentLayout (Focused content) layout
    */
   moreButtonGalleryFocusedContentLayoutLabel?: string;
+  /* @conditional-compile-remove(capabilities) */
+  /**
+   * All strings for capability changed notification
+   */
+  capabilityChangedNotification?: CapabilityChangedNotificationStrings;
 }
