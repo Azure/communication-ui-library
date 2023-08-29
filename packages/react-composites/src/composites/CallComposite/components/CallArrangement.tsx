@@ -75,6 +75,11 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
+/* @conditional-compile-remove(capabilities) */
+import {
+  CapabilitiesChangedNotificationBar,
+  CapabilitiesChangeNotificationBarProps
+} from './CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -101,6 +106,8 @@ export interface CallArrangementProps {
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
@@ -277,6 +284,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
+  /* @conditional-compile-remove(capabilities) */
+  // Filter out shareScreen capability notifications if on mobile
+  const filteredCapabilitesChangedNotifications = props.mobileView
+    ? props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications.filter(
+        (notification) => notification.capabilityName !== 'shareScreen'
+      )
+    : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -385,6 +400,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         />
                       </Stack>
                     )}
+                    {
+                      /* @conditional-compile-remove(capabilities) */
+                      props.capabilitiesChangedNotificationBarProps &&
+                        props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <CapabilitiesChangedNotificationBar
+                              {...props.capabilitiesChangedNotificationBarProps}
+                              capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                            />
+                          </Stack>
+                        )
+                    }
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}

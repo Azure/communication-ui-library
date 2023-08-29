@@ -18,6 +18,8 @@ import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communica
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -30,6 +32,8 @@ export interface LobbyPageProps {
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
