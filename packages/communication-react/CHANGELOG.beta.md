@@ -11,8 +11,8 @@ This log was last generated on Mon, 28 Aug 2023 22:17:59 GMT and should not be m
 Mon, 28 Aug 2023 22:17:59 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.7.0...1.8.0-beta.1)
 
-### Mention - Public Preview
-The Web UI Calling composite now supports Raise Hand capabilities. This enables users to raise and lower hand in Teams interop meetings.
+### Raise Hand - Public Preview
+The Web UI Call and CallWitihChat composite now supports Raise Hand feature. This enables users to raise and lower hand in Teams interop meetings.
 
 ### Features
 - Add Raise hand feature to the UI Library ([PR #3420](https://github.com/azure/communication-ui-library/pull/3420) by ruslanzdor@microsoft.com)
@@ -23,7 +23,6 @@ The Web UI Calling composite now supports Raise Hand capabilities. This enables 
 
 ### Bug Fixes
 - Fix image gallery double click to use default behaviour ([PR #3515](https://github.com/azure/communication-ui-library/pull/3515) by 9044372+JoshuaLai@users.noreply.github.com)
-- Fix logic of when to show display name field in Calling sample app ([PR #3407](https://github.com/azure/communication-ui-library/pull/3407) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix side pane to refocus the people button when user closes the people pane with keyboard ([PR #3403](https://github.com/azure/communication-ui-library/pull/3403) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix typo on Custom data model page in the CallComposite ([PR #3493](https://github.com/azure/communication-ui-library/pull/3493) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix issue when local participant stops screen share their local stream would disappear but still be showing to others in the call ([PR #3419](https://github.com/azure/communication-ui-library/pull/3419) by 94866715+dmceachernmsft@users.noreply.github.com)
@@ -31,7 +30,7 @@ The Web UI Calling composite now supports Raise Hand capabilities. This enables 
 - Autofocus on Resume Call button in OnHold screen page ([PR #3480](https://github.com/azure/communication-ui-library/pull/3480) by edwardlee@microsoft.com)
 - Add default aria label for video effect items ([PR #3477](https://github.com/azure/communication-ui-library/pull/3477) by edwardlee@microsoft.com)
 - Ensure camera and microphone permissions are re-requested when the number of devices goes from 0 to n ([PR #3439](https://github.com/azure/communication-ui-library/pull/3439) by 2684369+JamesBurnside@users.noreply.github.com)
-- People button announce seleted state ([PR #3496](https://github.com/azure/communication-ui-library/pull/3496) by carolinecao@microsoft.com)
+- People button announces seleted state ([PR #3496](https://github.com/azure/communication-ui-library/pull/3496) by carolinecao@microsoft.com)
 - Resolve issue where chat keyboard would dismiss randomly during interop meetings ([PR #3421](https://github.com/azure/communication-ui-library/pull/3421) by 73612854+palatter@users.noreply.github.com)
 - Fix message type being hard coded in sending state ([PR #3442](https://github.com/azure/communication-ui-library/pull/3442) by 109105353+jpeng-ms@users.noreply.github.com)
 - Remove controlBar shadow in landscape mobile view ([PR #3501](https://github.com/azure/communication-ui-library/pull/3501) by edwardlee@microsoft.com)
