@@ -278,6 +278,10 @@ export type CallWithChatCompositeIcons = {
   ControlButtonOptions?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;
