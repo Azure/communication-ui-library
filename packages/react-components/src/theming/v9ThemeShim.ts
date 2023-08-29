@@ -12,6 +12,9 @@ import {
 } from '@fluentui/react-components';
 import { blackAlpha, whiteAlpha, grey, grey10Alpha, grey12Alpha } from './themeDuplicates';
 
+// These mappings are required for createV9Theme
+// For more info, check https://react.fluentui.dev/iframe.html?viewMode=docs&id=concepts-migration-from-v8-components-theme-migration--page#compatible-themes
+
 /**
  * Creates v9 color tokens from a v8 palette.
  */
