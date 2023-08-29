@@ -18,6 +18,7 @@ import {
 } from '../styles/SendBox.styles';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
+const errorTextColor = 'var(--errorText)';
 
 /**
  * @private
@@ -117,7 +118,7 @@ export const _useChatMessageEditContainerStyles = makeStyles({
     }
   },
   bodyError: {
-    ...shorthands.borderColor(tokens.colorStatusDangerForeground1)
+    ...shorthands.borderColor(errorTextColor)
   },
   bodyDefault: {
     ...shorthands.borderColor(tokens.colorNeutralStrokeAccessible),

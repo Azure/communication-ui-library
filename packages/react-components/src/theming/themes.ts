@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Theme as V8Theme, PartialTheme as PartialV8Theme } from '@fluentui/react';
-import { Theme as V9Theme, PartialTheme as PartialV9Theme } from '@fluentui/react-components';
+import { PartialTheme } from '@fluentui/react';
 
 /**
  * Custom Fluent theme pallette used by calling related components in this library.
@@ -21,31 +20,11 @@ export interface CallingTheme {
 }
 
 /**
- * Theme wrapper for components used by this library.
- *
- * @public
- */
-export type Theme = V8Theme & { fluent9Theme: V9Theme };
-
-/**
- * Theme override wrapper for components used by this library.
- *
- * @public
- */
-export type PartialTheme = PartialV8Theme & { fluent9Theme: PartialV9Theme };
-
-/**
  * Preset light theme for components exported from this library.
  *
  * @public
  */
 export const lightTheme: PartialTheme & CallingTheme = {
-  fluent9Theme: {
-    colorBrandBackground2: '#C7E0F4',
-    colorStatusDangerForeground1: '#a80000',
-    colorNeutralStrokeAccessible: '#605e5c',
-    colorCompoundBrandStroke: '#0078d4'
-  },
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -89,12 +68,6 @@ export const lightTheme: PartialTheme & CallingTheme = {
  * @public
  */
 export const darkTheme: PartialTheme & CallingTheme = {
-  fluent9Theme: {
-    colorBrandBackground2: '#0C2E49',
-    colorStatusDangerForeground1: '#f1707b',
-    colorNeutralStrokeAccessible: '#d0d0d0',
-    colorCompoundBrandStroke: '#2899f5'
-  },
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',

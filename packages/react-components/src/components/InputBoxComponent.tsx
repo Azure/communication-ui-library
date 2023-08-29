@@ -105,11 +105,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
-  // temporary fix this is v8 component but FluentProvider (v9) sets default lineHeight
-  const errorMessageStyle = mergeStyles({ paddingTop: '0' }, styles?.systemMessage);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
     fieldGroup: styles?.textField,
-    errorMessage: errorMessageStyle,
+    errorMessage: styles?.systemMessage,
     suffix: {
       backgroundColor: 'transparent',
       padding: '0 0'
