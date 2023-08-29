@@ -13,7 +13,6 @@ import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
-import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionLanguageStrings } from '@internal/react-components';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
@@ -62,7 +61,6 @@ import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
-import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
@@ -281,7 +279,6 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
-    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -299,7 +296,6 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
-    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -375,12 +371,6 @@ export type CallCompositeIcons = {
     NoticePageAccessDeniedRoomsCall?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
-    GalleryOptions?: JSX.Element;
-    SpeakerGalleryLayout?: JSX.Element;
-    FloatingLocalVideoGalleryLayout?: JSX.Element;
-    DefaultGalleryLayout?: JSX.Element;
-    FocusedContentGalleryLayout?: JSX.Element;
-    OverflowGalleryTop?: JSX.Element;
 };
 
 // @public
@@ -396,9 +386,6 @@ export type CallCompositeOptions = {
     onEnvironmentInfoTroubleshootingClick?: () => void;
     remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
-    galleryOptions?: {
-        layout?: VideoGalleryLayout;
-    };
 };
 
 // @public
@@ -483,12 +470,6 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
-    moreButtonGalleryControlLabel?: string;
-    moreButtonGalleryDefaultLayoutLabel?: string;
-    moreButtonGalleryFloatingLocalLayoutLabel?: string;
-    moreButtonGalleryFocusedContentLayoutLabel?: string;
-    moreButtonGalleryPositionToggleLabel?: string;
-    moreButtonGallerySpeakerLayoutLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -556,12 +537,12 @@ export interface CallCompositeStrings {
 export type CallControlDisplayType = 'default' | 'compact';
 
 // @public
-export type CallControlOptions = CommonCallControlOptions & {
+export type CallControlOptions = (CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
     legacyControlBarExperience?: boolean;
-};
+});
 
 // @public
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
@@ -867,9 +848,6 @@ export type CallWithChatCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    galleryOptions?: {
-        layout?: VideoGalleryLayout;
-    };
 };
 
 // @public
@@ -932,15 +910,12 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @beta
-export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
-
-// @beta
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
 
 // @public
-export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & FileUploadAdapter;
+export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers & /* @conditional-compile-remove(file-sharing) */ FileUploadAdapter;
 
 // @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
@@ -977,7 +952,7 @@ export interface ChatAdapterThreadManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
+    updateMessage(messageId: string, content: string, metadata?: Record<string, string>, /* @conditional-compile-remove(file-sharing) */ options?: {
         attachedFilesMetadata?: FileMetadata[];
     }): Promise<void>;
 }
@@ -1184,7 +1159,7 @@ export interface CompositeStrings {
 export const createAzureCommunicationCallAdapter: ({ userId, displayName, credential, locator, alternateCallerId, options }: AzureCommunicationCallAdapterArgs) => Promise<CallAdapter>;
 
 // @public
-export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
+export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
 
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
@@ -1199,7 +1174,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, options?: {
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options?: {
     credential?: CommunicationTokenCredential;
 }): Promise<ChatAdapter>;
 
@@ -1317,12 +1292,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
-    GalleryOptions?: JSX.Element | undefined;
-    SpeakerGalleryLayout?: JSX.Element | undefined;
-    FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
-    DefaultGalleryLayout?: JSX.Element | undefined;
-    FocusedContentGalleryLayout?: JSX.Element | undefined;
-    OverflowGalleryTop?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;

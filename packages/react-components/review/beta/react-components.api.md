@@ -32,7 +32,6 @@ import { PropsWithChildren } from 'react';
 import { default as React_2 } from 'react';
 import * as React_3 from 'react';
 import { RefObject } from 'react';
-import { SyntheticEvent } from 'react';
 import { Theme } from '@fluentui/react';
 
 // @public
@@ -607,7 +606,6 @@ export interface ComponentStrings {
     endCallButton: EndCallButtonStrings;
     errorBar: ErrorBarStrings;
     holdButton: HoldButtonStrings;
-    imageGallery: ImageGalleryStrings;
     mentionPopover: MentionPopoverStrings;
     messageStatusIndicator: MessageStatusIndicatorStrings;
     messageThread: MessageThreadStrings;
@@ -1214,34 +1212,6 @@ export interface ImageFileMetadata extends BaseFileMetadata {
     previewUrl?: string;
 }
 
-// @beta
-export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
-
-// @beta
-export interface ImageGalleryImageProps {
-    altText?: string;
-    imageUrl: string;
-    saveAsName: string;
-    title?: string;
-    titleIcon?: JSX.Element;
-}
-
-// @beta
-export interface ImageGalleryProps {
-    images: Array<ImageGalleryImageProps>;
-    isOpen: boolean;
-    onDismiss: () => void;
-    onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
-    startIndex?: number;
-}
-
-// @beta
-export interface ImageGalleryStrings {
-    dismissButtonAriaLabel: string;
-    downloadButtonLabel: string;
-}
-
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
@@ -1444,7 +1414,6 @@ export type MessageThreadProps = {
     fileDownloadHandler?: FileDownloadHandler;
     onDisplayDateTimeString?: (messageDate: Date) => string;
     mentionOptions?: MentionOptions;
-    onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
 };
 
 // @public
@@ -1571,7 +1540,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
+export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2176,7 +2145,7 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, /* @conditional-compile-remove(file-sharing) */ metadata?: Record<string, string>, /* @conditional-compile-remove(file-sharing) */ options?: {
     attachedFilesMetadata?: FileMetadata[];
 }) => Promise<void>;
 
@@ -2271,7 +2240,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
