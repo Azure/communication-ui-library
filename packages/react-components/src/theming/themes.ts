@@ -96,7 +96,7 @@ export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-r
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme /* @conditional-compile-remove(image-gallery) */ & ChatTheme = {
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',

@@ -1,7 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IIconProps, IOverlayStyles, IStyle } from '@fluentui/react';
+import { IIconProps, IStyle } from '@fluentui/react';
+/* @conditional-compile-remove(image-gallery) */
+import { IOverlayStyles } from '@fluentui/react';
+/* @conditional-compile-remove(image-gallery) */
 import { ChatTheme } from '../../theming/themes';
 
 /**
@@ -16,13 +19,13 @@ export const downloadIcon: IIconProps = {
   iconName: 'Download'
 };
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * @private
  */
 export const overlayStyles = (theme: ChatTheme): IOverlayStyles => {
   return {
     root: {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       background: theme.chatPalette.modalOverlayBlack,
       opacity: '0.85'
     }
@@ -78,6 +81,7 @@ export const titleBarContainerStyle: IStyle = {
   alignItems: 'center'
 };
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * @private
  */
@@ -85,7 +89,6 @@ export const titleStyle = (theme: ChatTheme): IStyle => {
   return {
     paddingLeft: '0.5rem',
     marginLeft: '0.5rem',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     color: theme.chatPalette.modalTitleWhite,
     fontFamily: 'inherit',
     fontSize: '0.875rem',
@@ -150,38 +153,35 @@ export const normalImageStyle: IStyle = {
   maxWidth: '100%'
 };
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * @private
  */
 export const brokenImageStyle = (theme: ChatTheme): IStyle => {
   return {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     color: theme.chatPalette.modalTitleWhite
   };
 };
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * @private
  */
 export const closeButtonStyles = (theme: ChatTheme): IStyle => {
   return {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     color: theme.chatPalette.modalTitleWhite,
     ':hover': {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       color: theme.chatPalette.modalTitleWhite,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       color: theme.chatPalette.modalTitleWhite,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     }
   };
 };
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * @private
  */
@@ -194,21 +194,15 @@ export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
     fontWeight: 600,
     padding: '0.38rem 0.75rem',
     borderRadius: '4px',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     backgroundColor: theme.chatPalette.modalButtonBackground,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     color: theme.chatPalette.modalTitleWhite,
     whiteSpace: 'nowrap',
     ':hover': {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       color: theme.chatPalette.modalTitleWhite,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       color: theme.chatPalette.modalTitleWhite,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     },
     '@media (max-width: 25rem)': {
@@ -217,25 +211,21 @@ export const downloadButtonStyle = (theme: ChatTheme): IStyle => {
   };
 };
 
+/* @conditional-compile-remove(image-gallery) */
 /**
  * @private
  */
 export const smallDownloadButtonContainerStyle = (theme: ChatTheme): IStyle => {
   return {
     marginRight: '0.5rem',
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     color: theme.chatPalette.modalTitleWhite,
     whiteSpace: 'nowrap',
     ':hover': {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       color: theme.chatPalette.modalTitleWhite,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       backgroundColor: theme.chatPalette.modalButtonBackgroundHover
     },
     ':active': {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       color: theme.chatPalette.modalTitleWhite,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       backgroundColor: theme.chatPalette.modalButtonBackgroundActive
     },
     '@media (min-width: 25rem)': {

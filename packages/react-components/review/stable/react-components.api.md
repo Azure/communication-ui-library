@@ -160,12 +160,6 @@ export interface ChatMessage extends MessageCommon {
 }
 
 // @public
-export interface ChatTheme {
-    // @beta
-    chatPalette: {};
-}
-
-// @public
 export type CommunicationParticipant = {
     userId: string;
     displayName?: string;
@@ -383,7 +377,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -823,7 +817,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
