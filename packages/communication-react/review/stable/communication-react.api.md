@@ -1071,7 +1071,7 @@ export type ChatReturnProps<Component extends (props: any) => JSX.Element> = Get
 
 // @public
 export interface ChatTheme {
-    // (undocumented)
+    // @beta
     chatPalette: {};
 }
 

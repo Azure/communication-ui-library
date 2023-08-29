@@ -25,6 +25,11 @@ export interface CallingTheme {
  * @public
  */
 export interface ChatTheme {
+  /**
+   * Custom Fluent theme palette used by chat related components in this library.
+   *
+   * @beta
+   */
   chatPalette: {
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     modalOverlayBlack: string;

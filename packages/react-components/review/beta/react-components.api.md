@@ -455,7 +455,7 @@ export interface ChatMessage extends MessageCommon {
 
 // @public
 export interface ChatTheme {
-    // (undocumented)
+    // @beta
     chatPalette: {
         modalOverlayBlack: string;
         modalTitleWhite: string;
