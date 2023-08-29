@@ -57,14 +57,19 @@ export const scrollableContentStyle: IStyle = {
 /**
  * @private
  */
-export const headerStyle: IStyle = {
-  fontSize: 'inherit',
-  margin: '0',
-  width: '100%',
-  height: '3.5rem',
-  flexDirection: 'row',
-  justifyContent: 'space-between',
-  padding: '0.25rem 0.75rem'
+export const headerStyle = (isIOS: boolean): IStyle => {
+  return {
+    fontSize: 'inherit',
+    margin: '0',
+    width: '100%',
+    height: '3.5rem',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: '0.25rem 0.75rem',
+    '@media (max-height: 25rem)': {
+      padding: isIOS ? '0.25rem 2rem' : '0.25rem 0.75rem'
+    }
+  };
 };
 
 /**

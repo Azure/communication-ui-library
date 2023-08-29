@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 /* @conditional-compile-remove(image-gallery) */
-import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
+import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, isIOS, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
 import React, { SyntheticEvent, useState } from 'react';
 /* @conditional-compile-remove(image-gallery) */
@@ -120,7 +120,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const image = images[startIndex];
   const renderHeaderBar = (): JSX.Element => {
     return (
-      <Stack className={mergeStyles(headerStyle)}>
+      <Stack className={mergeStyles(headerStyle(isIOS()))}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {image.titleIcon}
           <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme))} aria-label={image.title}>
