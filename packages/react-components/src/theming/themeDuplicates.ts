@@ -4,6 +4,8 @@
 import { BrandVariants } from '@fluentui/react-components';
 
 /**
+ * @private
+ *
  * Possible color variant values
  */
 export type ColorVariants = {
@@ -22,6 +24,8 @@ export type ColorVariants = {
 };
 
 /**
+ * @private
+ *
  * All the global shared colors and their shade/tint variants
  */
 export type GlobalSharedColors = {
@@ -76,6 +80,9 @@ export type GlobalSharedColors = {
   charcoal: ColorVariants;
 };
 
+/**
+ * @private
+ */
 export type TextAlignment =
   | 'inherit'
   | 'initial'
@@ -89,6 +96,9 @@ export type TextAlignment =
   | 'match-parent'
   | 'right';
 
+/**
+ * @private
+ */
 export type TextAlignments = {
   start: TextAlignment;
   center: TextAlignment;
@@ -96,6 +106,9 @@ export type TextAlignments = {
   justify: TextAlignment;
 };
 
+/**
+ * @private
+ */
 export type Greys =
   | 0
   | 2
@@ -149,8 +162,14 @@ export type Greys =
   | 98
   | 100;
 
+/**
+ * @private
+ */
 export type AlphaColors = 5 | 10 | 20 | 30 | 40 | 50 | 60 | 70 | 80 | 90;
 
+/**
+ * @private
+ */
 export const grey: Record<Greys, string> = {
   '0': '#000000',
   '2': '#050505',
@@ -205,6 +224,9 @@ export const grey: Record<Greys, string> = {
   '100': '#ffffff'
 };
 
+/**
+ * @private
+ */
 export const whiteAlpha: Record<AlphaColors, string> = {
   '5': 'rgba(255, 255, 255, 0.05)',
   '10': 'rgba(255, 255, 255, 0.1)',
@@ -218,6 +240,9 @@ export const whiteAlpha: Record<AlphaColors, string> = {
   '90': 'rgba(255, 255, 255, 0.9)'
 };
 
+/**
+ * @private
+ */
 export const blackAlpha: Record<AlphaColors, string> = {
   '5': 'rgba(0, 0, 0, 0.05)',
   '10': 'rgba(0, 0, 0, 0.1)',
@@ -231,6 +256,9 @@ export const blackAlpha: Record<AlphaColors, string> = {
   '90': 'rgba(0, 0, 0, 0.9)'
 };
 
+/**
+ * @private
+ */
 export const grey10Alpha: Record<AlphaColors, string> = {
   '5': 'rgba(26, 26, 26, 0.05)',
   '10': 'rgba(26, 26, 26, 0.1)',
@@ -244,6 +272,9 @@ export const grey10Alpha: Record<AlphaColors, string> = {
   '90': 'rgba(26, 26, 26, 0.9)'
 };
 
+/**
+ * @private
+ */
 export const grey12Alpha: Record<AlphaColors, string> = {
   '5': 'rgba(31, 31, 31, 0.05)',
   '10': 'rgba(31, 31, 31, 0.1)',
@@ -257,6 +288,9 @@ export const grey12Alpha: Record<AlphaColors, string> = {
   '90': 'rgba(31, 31, 31, 0.9)'
 };
 
+/**
+ * @private
+ */
 export const grey14Alpha: Record<AlphaColors, string> = {
   '5': 'rgba(36, 36, 36, 0.05)',
   '10': 'rgba(36, 36, 36, 0.1)',
@@ -270,24 +304,54 @@ export const grey14Alpha: Record<AlphaColors, string> = {
   '90': 'rgba(36, 36, 36, 0.9)'
 };
 
+/**
+ * @private
+ */
 export const white = '#ffffff';
 
+/**
+ * @private
+ */
 export const black = '#000000';
 
+/**
+ * @private
+ */
 export const hcHyperlink = '#ffff00';
 
+/**
+ * @private
+ */
 export const hcHighlight = '#1aebff';
 
+/**
+ * @private
+ */
 export const hcDisabled = '#3ff23f';
 
+/**
+ * @private
+ */
 export const hcCanvas = '#000000';
 
+/**
+ * @private
+ */
 export const hcCanvasText = '#ffffff';
 
+/**
+ * @private
+ */
 export const hcHighlightText = '#000000';
 
+/**
+ * @private
+ */
 export const hcButtonText = '#000000';
 
+/**
+ * @private
+ */
 export const hcButtonFace = '#ffffff';
 
 const darkRed: ColorVariants = {
@@ -1025,6 +1089,9 @@ const charcoal: ColorVariants = {
   tint60: '#f7f7f7'
 };
 
+/**
+ * @private
+ */
 export const sharedColors: GlobalSharedColors = {
   darkRed,
   burgundy,
@@ -1077,6 +1144,9 @@ export const sharedColors: GlobalSharedColors = {
   charcoal
 };
 
+/**
+ * @private
+ */
 export const brandWeb: BrandVariants = {
   10: `#061724`,
   20: `#082338`,
