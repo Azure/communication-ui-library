@@ -9,8 +9,6 @@ import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/r
 import { CapabilitiesChangedReason, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(capabilities) */
-import { CallCompositeStrings } from '../Strings';
 
 /* @conditional-compile-remove(capabilities) */
 /**
@@ -64,7 +62,10 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
   return (
     <Stack data-ui-id="capabilities-changed-notification-bar-stack">
       {props.capabilitiesChangedNotifications.map((notification) => {
-        const message = getCapabilityChangedNotificationString(notification, locale.strings.call);
+        const message = getCapabilityChangedNotificationString(
+          notification,
+          locale.strings.call.capabilityChangedNotification
+        );
         if (!message) {
           return null;
         }
@@ -87,29 +88,29 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
 /* @conditional-compile-remove(capabilities) */
 const getCapabilityChangedNotificationString = (
   notification: CapabalityChangedNotification,
-  strings: CallCompositeStrings
+  strings?: CapabilityChangedNotificationStrings
 ): string | undefined => {
   switch (notification.capabilityName) {
     case 'turnVideoOn':
       if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
         return notification.isPresent
-          ? strings.capabilityTurnVideoOnGrantedDueToMeetingOption
-          : strings.capabilityTurnVideoOnLostDueToMeetingOption;
+          ? strings?.turnVideoOn?.grantedDueToMeetingOption
+          : strings?.turnVideoOn?.lostDueToMeetingOption;
       }
       break;
     case 'unmuteMic':
       if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
         return notification.isPresent
-          ? strings.capabilityUnmuteMicGrantedDueToMeetingOption
-          : strings.capabilityUnmuteMicLostDueToMeetingOption;
+          ? strings?.unmuteMic?.grantedDueToMeetingOption
+          : strings?.unmuteMic?.lostDueToMeetingOption;
       }
       break;
     case 'shareScreen':
       if (notification.isPresent && notification.changedReason === 'RoleChanged' && notification.role === 'Presenter') {
-        return strings.capabilityShareScreenGrantedDueToRoleChangeToPresenter;
+        return strings?.shareScreen?.grantedDueToRoleChangeToPresenter;
       }
       if (!notification.isPresent && notification.changedReason === 'RoleChanged' && notification.role === 'Attendee') {
-        return strings.capabilityShareScreenLostDueToRoleChangeToAttendee;
+        return strings?.shareScreen?.lostDueToRoleChangeToAttendee;
       }
       break;
   }
@@ -132,3 +133,50 @@ const messageBarStyles = {
     paddingTop: '0.8rem'
   }
 };
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * Strings for capability changed notification
+ * @beta
+ */
+export interface CapabilityChangedNotificationStrings {
+  /**
+   * Strings for 'turnVideoOn' capability
+   */
+  turnVideoOn?: {
+    /**
+     * Notification message shown to the user when capability to turn video on is lost due to a meeting option change
+     */
+    lostDueToMeetingOption?: string;
+    /**
+     * Notification message shown to the user when capability to turn video on is granted due to a meeting option change
+     */
+    grantedDueToMeetingOption?: string;
+  };
+  /**
+   * Strings for 'unmuteMic' capability
+   */
+  unmuteMic?: {
+    /**
+     * Notification message shown to the user when capability to unmute mic is lost due to a meeting option change
+     */
+    lostDueToMeetingOption?: string;
+    /**
+     * Notification message shown to the user when capability to unmute mic is granted due to a meeting option change
+     */
+    grantedDueToMeetingOption?: string;
+  };
+  /**
+   * Strings for 'shareScreen' capability
+   */
+  shareScreen?: {
+    /**
+     * Notification message shown to the user when capability to share screen is lost due to a role change to Attendeee
+     */
+    lostDueToRoleChangeToAttendee?: string;
+    /**
+     * Notification message shown to the user when capability to share screen is granted due to a role change to Presenter
+     */
+    grantedDueToRoleChangeToPresenter?: string;
+  };
+}

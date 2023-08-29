@@ -3,6 +3,8 @@
 
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
 /**
  * Strings used by the {@link CallComposite} directly.
@@ -629,32 +631,7 @@ export interface CallCompositeStrings {
   moreButtonGalleryFocusedContentLayoutLabel?: string;
   /* @conditional-compile-remove(capabilities) */
   /**
-   * Notification message shown to the user when capability to turn video on is removed
+   * All strings for capability changed notification
    */
-  capabilityTurnVideoOnLostDueToMeetingOption?: string;
-  /* @conditional-compile-remove(capabilities) */
-  /**
-   * Notification message shown to the user when capability to turn video on is granted
-   */
-  capabilityTurnVideoOnGrantedDueToMeetingOption?: string;
-  /* @conditional-compile-remove(capabilities) */
-  /**
-   * Notification message shown to the user when capability to unmute mic is removed
-   */
-  capabilityUnmuteMicLostDueToMeetingOption?: string;
-  /* @conditional-compile-remove(capabilities) */
-  /**
-   * Notification message shown to the user when capability to unmute mic is granted
-   */
-  capabilityUnmuteMicGrantedDueToMeetingOption?: string;
-  /* @conditional-compile-remove(capabilities) */
-  /**
-   * Notification message shown to the user when capability to share screen is removed
-   */
-  capabilityShareScreenLostDueToRoleChangeToAttendee?: string;
-  /* @conditional-compile-remove(capabilities) */
-  /**
-   * Notification message shown to the user when capability to share screen is granted
-   */
-  capabilityShareScreenGrantedDueToRoleChangeToPresenter?: string;
+  capabilityChangedNotification?: CapabilityChangedNotificationStrings;
 }

@@ -420,12 +420,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    capabilityShareScreenGrantedDueToRoleChangeToPresenter?: string;
-    capabilityShareScreenLostDueToRoleChangeToAttendee?: string;
-    capabilityTurnVideoOnGrantedDueToMeetingOption?: string;
-    capabilityTurnVideoOnLostDueToMeetingOption?: string;
-    capabilityUnmuteMicGrantedDueToMeetingOption?: string;
-    capabilityUnmuteMicLostDueToMeetingOption?: string;
+    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
@@ -939,6 +934,22 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 
 // @beta
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+// @beta
+export interface CapabilityChangedNotificationStrings {
+    shareScreen?: {
+        lostDueToRoleChangeToAttendee?: string;
+        grantedDueToRoleChangeToPresenter?: string;
+    };
+    turnVideoOn?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+    unmuteMic?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+}
 
 // @beta
 export type CaptionsReceivedListener = (event: {

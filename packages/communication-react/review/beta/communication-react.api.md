@@ -617,12 +617,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    capabilityShareScreenGrantedDueToRoleChangeToPresenter?: string;
-    capabilityShareScreenLostDueToRoleChangeToAttendee?: string;
-    capabilityTurnVideoOnGrantedDueToMeetingOption?: string;
-    capabilityTurnVideoOnLostDueToMeetingOption?: string;
-    capabilityUnmuteMicGrantedDueToMeetingOption?: string;
-    capabilityUnmuteMicLostDueToMeetingOption?: string;
+    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
@@ -1330,6 +1325,22 @@ export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void
 export interface CapabilitiesFeatureState {
     capabilities: ParticipantCapabilities;
     latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
+}
+
+// @beta
+export interface CapabilityChangedNotificationStrings {
+    shareScreen?: {
+        lostDueToRoleChangeToAttendee?: string;
+        grantedDueToRoleChangeToPresenter?: string;
+    };
+    turnVideoOn?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+    unmuteMic?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
 }
 
 // @beta
