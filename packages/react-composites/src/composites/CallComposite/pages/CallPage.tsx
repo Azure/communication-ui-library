@@ -32,7 +32,6 @@ import { networkReconnectTileSelector } from '../selectors/networkReconnectTileS
 import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
-/* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
@@ -52,7 +51,6 @@ export interface CallPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   galleryLayout: VideoGalleryLayout;
-  /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
@@ -148,7 +146,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
       /* @conditional-compile-remove(gallery-layouts) */
       userSetGalleryLayout={userSetGalleryLayout}
-      /* @conditional-compile-remove(capabilities) */
       capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
     />
   );

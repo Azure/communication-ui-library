@@ -3,11 +3,9 @@
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
 import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CallState,
@@ -77,7 +75,6 @@ export const getMicrophones = (state: CallAdapterState): AudioDeviceInfo[] => st
  */
 export const getCameras = (state: CallAdapterState): VideoDeviceInfo[] => state.devices.cameras;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */
@@ -199,7 +196,6 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
  */
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */

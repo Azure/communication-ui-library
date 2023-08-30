@@ -40,6 +40,7 @@ export type {
   CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
+  CapabilitiesChangedListener,
   DiagnosticChangedEventListner,
   DisplayNameChangedListener,
   IsLocalScreenSharingActiveChangedListener,
@@ -62,9 +63,6 @@ export type {
 
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferRequestedListener } from './CallAdapter';
-
-/* @conditional-compile-remove(capabilities) */
-export type { CapabilitiesChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';

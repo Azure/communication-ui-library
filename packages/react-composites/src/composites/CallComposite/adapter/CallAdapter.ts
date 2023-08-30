@@ -6,8 +6,6 @@ import { CallState, DeviceManagerState } from '@internal/calling-stateful-client
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-transfer) */
@@ -20,6 +18,7 @@ import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
   Call,
+  CapabilitiesChangeInfo,
   PermissionConstraints,
   RemoteParticipant,
   StartCallOptions,
@@ -335,11 +334,10 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
  */
 export type TransferRequestedListener = (event: TransferRequestedEventArgs) => void;
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'capabilitiesChanged' event.
  *
- * @beta
+ * @public
  */
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
@@ -791,7 +789,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'transferRequested' event.
    */
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
-  /* @conditional-compile-remove(capabilities) */
   /**
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
@@ -870,7 +867,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'transferRequested' event.
    */
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
-  /* @conditional-compile-remove(capabilities) */
   /**
    * Unsubscribe function for 'capabilitiesChanged' event.
    */

@@ -4,21 +4,20 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
+  CapabilitiesChangeInfo,
   DeviceAccess,
   DominantSpeakersInfo,
+  ParticipantCapabilities,
+  ParticipantRole,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -310,7 +309,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */
   public setRole(callId: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -391,7 +389,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(capabilities) */
   public setCapabilities(
     callId: string,
     capabilities: ParticipantCapabilities,

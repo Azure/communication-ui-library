@@ -2,9 +2,7 @@
 // Licensed under the MIT license.
 
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
-import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';
-/* @conditional-compile-remove(capabilities) */
-import { _HighContrastAwareIcon } from '@internal/react-components';
+import { ControlBarButtonStyles, MicrophoneButton, _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { useLocale } from '../../../localization';
@@ -12,7 +10,6 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
@@ -28,12 +25,10 @@ export const Microphone = (props: {
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const strings = useLocale().strings.call;
-  /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
 
-  /* @conditional-compile-remove(capabilities) */
   const unmuteMicCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.unmuteMic;
 
   /**
@@ -70,7 +65,6 @@ export const Microphone = (props: {
         props.disabled ||
         /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
       }
-      /* @conditional-compile-remove(capabilities) */
       onRenderOffIcon={
         unmuteMicCapability && !unmuteMicCapability.isPresent
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />

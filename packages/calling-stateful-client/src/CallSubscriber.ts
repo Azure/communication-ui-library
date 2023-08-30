@@ -26,7 +26,6 @@ import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscrib
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
-/* @conditional-compile-remove(capabilities) */
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 
 /**
@@ -52,7 +51,6 @@ export class CallSubscriber {
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
-  /* @conditional-compile-remove(capabilities) */
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
@@ -92,7 +90,6 @@ export class CallSubscriber {
     /* @conditional-compile-remove(video-background-effects) */
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
-    /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber = new CapabilitiesSubscriber(
       this._callIdRef,
       this._context,
@@ -111,7 +108,6 @@ export class CallSubscriber {
     this._call.on('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.on('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.on('isMutedChanged', this.isMuteChanged);
-    /* @conditional-compile-remove(rooms) */
     this._call.on('roleChanged', this.callRoleChangedHandler);
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
@@ -149,7 +145,6 @@ export class CallSubscriber {
     this._call.off('remoteParticipantsUpdated', this.remoteParticipantsUpdated);
     this._call.off('localVideoStreamsUpdated', this.localVideoStreamsUpdated);
     this._call.off('isMutedChanged', this.isMuteChanged);
-    /* @conditional-compile-remove(rooms) */
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
@@ -182,7 +177,6 @@ export class CallSubscriber {
     this._captionsSubscriber?.unsubscribe();
     /* @conditional-compile-remove(raise-hand) */
     this._raiseHandSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
   };
 
@@ -237,7 +231,6 @@ export class CallSubscriber {
     this._context.setCallIsMicrophoneMuted(this._callIdRef.callId, this._call.isMuted);
   };
 
-  /* @conditional-compile-remove(rooms) */
   private callRoleChangedHandler = (): void => {
     this._context.setRole(this._callIdRef.callId, this._call.role);
   };

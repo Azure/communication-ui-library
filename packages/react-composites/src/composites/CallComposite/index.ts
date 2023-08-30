@@ -74,6 +74,7 @@ export type {
   CallCompositePage,
   CallEndedListener,
   CallIdChangedListener,
+  CapabilitiesChangedListener,
   DiagnosticChangedEventListner,
   DisplayNameChangedListener,
   IsLocalScreenSharingActiveChangedListener,
@@ -97,7 +98,4 @@ export type {
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferRequestedListener } from './adapter';
 
-/* @conditional-compile-remove(capabilities) */
-export type { CapabilitiesChangedListener } from './adapter';
-/* @conditional-compile-remove(capabilities) */
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';

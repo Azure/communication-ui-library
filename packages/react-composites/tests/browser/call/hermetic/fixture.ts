@@ -13,10 +13,12 @@ import type {
   MockVideoStreamRendererViewState
 } from '../../../common';
 /* @conditional-compile-remove(teams-identity-support) */
-import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import type { ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
+import type {
+  CallKind,
+  DominantSpeakersInfo,
+  ParticipantCapabilities,
+  ParticipantRole
+} from '@azure/communication-calling';
 import { CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
@@ -112,7 +114,6 @@ export function defaultMockCallAdapterState(
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
-      /* @conditional-compile-remove(capabilities) */
       capabilitiesFeature: role ? getCapabilitiesFromRole(role) : undefined
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
@@ -297,7 +298,6 @@ export const stubLocalCameraName = async (page: Page): Promise<void> => {
   });
 };
 
-/* @conditional-compile-remove(capabilities) */
 const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesFeatureState => {
   switch (role) {
     case 'Attendee':
@@ -318,7 +318,6 @@ const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesFeatureStat
   }
 };
 
-/* @conditional-compile-remove(capabilities) */
 const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -338,7 +337,6 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   turnVideoOn: { isPresent: false, reason: 'RoleRestricted' }
 };
 
-/* @conditional-compile-remove(capabilities) */
 const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -358,7 +356,6 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   turnVideoOn: { isPresent: true, reason: 'Capable' }
 };
 
-/* @conditional-compile-remove(capabilities) */
 const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },

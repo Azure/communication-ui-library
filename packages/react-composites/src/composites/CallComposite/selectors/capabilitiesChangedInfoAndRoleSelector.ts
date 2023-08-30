@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-/* @conditional-compile-remove(capabilities) */
 import * as reselect from 'reselect';
-/* @conditional-compile-remove(capabilities) */
 import { getLatestCapabilitiesChangedInfo, getRole } from './baseSelectors';
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */

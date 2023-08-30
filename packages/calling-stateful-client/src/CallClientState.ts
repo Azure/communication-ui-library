@@ -7,17 +7,18 @@ import {
   CallEndReason,
   CallerInfo,
   CallState as CallStatus,
+  CapabilitiesChangeInfo,
   DeviceAccess,
   DominantSpeakersInfo,
   LatestMediaDiagnostics,
   LatestNetworkDiagnostics,
   MediaStreamType,
+  ParticipantCapabilities,
+  ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -26,8 +27,6 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
-import { ParticipantRole } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
@@ -137,11 +136,10 @@ export interface TranscriptionCallFeatureState {
   isTranscriptionActive: boolean;
 }
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
- * @beta
+ * @public
  */
 export interface CapabilitiesFeatureState {
   /**
@@ -469,7 +467,6 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
-  /* @conditional-compile-remove(rooms) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */
@@ -485,7 +482,6 @@ export interface CallState {
    * Transfer state of call
    */
   transfer: TransferFeatureState;
-  /* @conditional-compile-remove(capabilities) */
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */

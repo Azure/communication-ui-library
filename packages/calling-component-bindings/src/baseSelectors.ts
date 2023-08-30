@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
-import { DominantSpeakersInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { DominantSpeakersInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
@@ -43,7 +41,6 @@ export const getRole = (state: CallClientState, props: CallingBaseSelectorProps)
   return 'Unknown';
 };
 
-/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */
