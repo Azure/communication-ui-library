@@ -3,8 +3,6 @@
 
 import { Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { IPersonaProps } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
 import {
@@ -37,8 +35,9 @@ import { mergeClasses } from '@fluentui/react-components';
 import {
   chatBlockedMessageClasses,
   chatBlockedMyMessageClasses,
-  defaultChatItemMessageContainerNoOverlap,
-  defaultChatItemMessageContainerOverlap,
+  // defaultChatItemMessageContainerNoOverlap,
+  // defaultChatItemMessageContainerOverlap,
+  defaultChatItemMessageContainerStyles,
   gutterWithAvatar,
   gutterWithHiddenAvatar,
   useChatMyMessageClasses,
@@ -312,6 +311,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
   const rootLayout = _useChatMyMessageLayout();
 
+  const classes = defaultChatItemMessageContainerStyles();
+  const className = mergeClasses(
+    classes.body,
+    shouldOverlapAvatarAndMessage ? classes.bodyOverlap : classes.bodyOverlap
+  );
+
   console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
   const chatMessage = (
     <>
@@ -377,15 +382,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             attached={attached}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
-              className: mergeClasses(
-                mergeStyles(
-                  messageContainerStyle,
-                  shouldOverlapAvatarAndMessage
-                    ? defaultChatItemMessageContainerOverlap
-                    : defaultChatItemMessageContainerNoOverlap
-                ),
-                messageContainerClasses?.body
-              )
+              className: className
             }}
             data-ui-id="chat-composite-message"
             onTouchStart={() => setWasInteractionByTouch(true)}

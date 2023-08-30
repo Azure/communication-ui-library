@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { ActiveErrorMessage } from '@internal/react-components';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AreEqual } from '@internal/acs-ui-common';

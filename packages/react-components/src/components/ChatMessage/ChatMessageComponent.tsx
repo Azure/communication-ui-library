@@ -48,11 +48,7 @@ type ChatMessageComponentProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
-  /**
-   * Inline the accept and reject edit buttons when editing a message.
-   * Setting to false will mean they are on a new line inside the editable chat message.
-   */
-  inlineAcceptRejectEditButtons: boolean;
+
   /**
    * Whether to overlap avatar and message when the view is width constrained.
    */
@@ -136,7 +132,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     return (
       <ChatMessageComponentAsEditBox
         message={message}
-        inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&

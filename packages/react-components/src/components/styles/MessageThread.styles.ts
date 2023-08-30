@@ -113,11 +113,24 @@ const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): Comp
 /**
  * @private
  */
-export const defaultChatItemMessageContainerNoOverlap = makeStyles(defaultChatItemMessageContainer(false));
-/**
- * @private
- */
-export const defaultChatItemMessageContainerOverlap = makeStyles(defaultChatItemMessageContainer(true));
+export const defaultChatItemMessageContainerStyles = makeStyles({
+  body: {
+    marginRight: '0rem',
+    zIndex: CHAT_MESSAGE_ZINDEX,
+    '& msft-mention': {
+      color: '#D83B01',
+      fontWeight: 600
+    }
+  },
+  bodyNoOverlap: {
+    marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`,
+  },
+  bodyOverlap: {
+    marginLeft: `$10rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + MESSAGE_AVATAR_OVERLAP_REM}rem)`,
+  }
+})
 
 /**
  * @private

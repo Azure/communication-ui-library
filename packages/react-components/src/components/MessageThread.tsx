@@ -3,7 +3,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chat } from '@fluentui-contrib/react-chat';
-import { mergeClasses } from '@fluentui/react-components';
+import { mergeClasses, FluentProvider } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -19,8 +19,6 @@ import {
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
 import { Icon, IStyle, mergeStyles, PrimaryButton, Theme } from '@fluentui/react';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { IPersonaProps } from '@fluentui/react';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -51,6 +49,7 @@ import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
+import { createV9Theme, useFluentV9Wrapper } from './../theming/v9ThemeShim';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
@@ -1067,7 +1066,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-            inlineAcceptRejectEditButtons={!isNarrow}
             shouldOverlapAvatarAndMessage={isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
@@ -1094,7 +1092,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       strings,
       props.userId,
       participantCount,
-      isNarrow,
       onRenderAvatar,
       showMessageStatus,
       onActionButtonClickMemo,
@@ -1235,15 +1232,20 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const classes = useChatStyles();
+  const fluentV9Wrapper = useFluentV9Wrapper();
+
   const chatBody = useMemo(() => {
+    const v9Theme = createV9Theme(theme);
     return (
       <LiveAnnouncer>
-        <Chat className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}>
-          {messagesToDisplay}
-        </Chat>
+        <FluentProvider className={fluentV9Wrapper.body} theme={v9Theme} dir={theme.rtl ? 'rtl' : 'ltr'}>
+          <Chat className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}>
+            {messagesToDisplay}
+          </Chat>
+        </FluentProvider>
       </LiveAnnouncer>
     );
-  }, [theme, styles?.chatContainer, messagesToDisplay, classes]);
+  }, [theme, fluentV9Wrapper.body, classes.root, styles?.chatContainer, messagesToDisplay]);
 
   return (
     <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>

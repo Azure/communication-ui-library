@@ -102,6 +102,13 @@ export const newLineButtonsContainerStyle: IStyle = {
 /**
  * @private
  */
+export const sameLineButtonsContainerStyle: IStyle = {
+  alignSelf: 'end'
+};
+
+/**
+ * @private
+ */
 export const inputButtonTooltipStyle = mergeStyles({
   // The toolTip host container show be a flex box, so that alignItems: 'center' works for inside buttons
   display: 'flex'

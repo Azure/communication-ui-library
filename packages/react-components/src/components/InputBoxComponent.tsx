@@ -25,6 +25,7 @@ import {
   textFieldStyle,
   textContainerStyle,
   newLineButtonsContainerStyle,
+  sameLineButtonsContainerStyle,
   inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle,
   iconWrapperStyle
@@ -113,7 +114,9 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     }
   });
 
-  const mergedChildrenStyle = mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle);
+  const mergedChildrenStyle = mergeStyles(
+    props.inlineChildren ? sameLineButtonsContainerStyle : newLineButtonsContainerStyle
+  );
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {

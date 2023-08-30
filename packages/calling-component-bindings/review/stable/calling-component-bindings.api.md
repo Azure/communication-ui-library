@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { ActiveErrorMessage } from '@internal/react-components';
 import { AreEqual } from '@internal/acs-ui-common';
 import { AudioDeviceInfo } from '@azure/communication-calling';

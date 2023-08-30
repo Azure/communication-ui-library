@@ -33,6 +33,8 @@ const createCallAdapterLocator = (locator: string): CallAdapterLocator | undefin
     return { meetingLink: locator };
   } else if (isGroupID(locator)) {
     return { groupId: locator };
+  } else if (/^\d+$/.test(locator)) {
+    return { roomId: locator };
   }
   return undefined;
 };

@@ -2,9 +2,8 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { ThemeProvider, PartialTheme, Theme as V8Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
-import { FluentProvider, Theme as V9Theme, teamsLightTheme } from '@fluentui/react-components';
-import { Theme, lightTheme } from './themes';
+import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
+import { lightTheme } from './themes';
 
 /**
  * Props for {@link FluentThemeProvider}.
@@ -32,8 +31,7 @@ const wrapper = mergeStyles({
 });
 
 const defaultTheme: Theme = {
-  ...mergeThemes(getTheme(), lightTheme),
-  fluent9Theme: { ...teamsLightTheme, ...lightTheme.fluent9Theme }
+  ...mergeThemes(getTheme(), lightTheme)
 };
 
 /** Theme context for library's react components */
@@ -50,22 +48,15 @@ const ThemeContext = createContext<Theme>(defaultTheme);
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children } = props;
-  const v8Theme: Omit<V8Theme, 'fluent9Theme'> = defaultTheme;
 
-  let fluentV8Theme: V8Theme = mergeThemes(v8Theme, fluentTheme);
-  const fluentV9Theme: V9Theme = { ...defaultTheme.fluent9Theme };
+  let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
 
   // merge in rtl from FluentThemeProviderProps
   fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
-
-  const combinedThemes: Theme = { ...fluentV8Theme, fluent9Theme: fluentV9Theme };
-
   return (
-    <ThemeContext.Provider value={combinedThemes}>
+    <ThemeContext.Provider value={fluentV8Theme}>
       <ThemeProvider theme={fluentV8Theme} className={wrapper}>
-        <FluentProvider className={wrapper} theme={fluentV9Theme} dir={rtl ? 'rtl' : 'ltr'}>
-          {children}
-        </FluentProvider>
+        {children}
       </ThemeProvider>
     </ThemeContext.Provider>
   );

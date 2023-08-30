@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Theme as V8Theme, PartialTheme as PartialV8Theme } from '@fluentui/react';
-import { Theme as V9Theme, PartialTheme as PartialV9Theme } from '@fluentui/react-components';
+import { PartialTheme } from '@fluentui/react';
 
 /**
- * Custom Fluent theme pallette used by calling related components in this library.
+ * Custom Fluent theme palette used by calling related components in this library.
  *
  * @public
  */
@@ -20,29 +19,33 @@ export interface CallingTheme {
   };
 }
 
+/* @conditional-compile-remove(image-gallery) */
 /**
- * Theme wrapper for components used by this library.
+ * Custom Fluent theme palette used by chat related components in this library.
  *
- * @public
+ * @beta
  */
-export type Theme = V8Theme & { fluent9Theme: V9Theme };
-
-/**
- * Theme override wrapper for components used by this library.
- *
- * @public
- */
-export type PartialTheme = PartialV8Theme & { fluent9Theme: PartialV9Theme };
+export interface ChatTheme {
+  /**
+   * Custom Fluent theme palette used by chat related components in this library.
+   *
+   * @beta
+   */
+  chatPalette: {
+    modalOverlayBlack: string;
+    modalTitleWhite: string;
+    modalButtonBackground: string;
+    modalButtonBackgroundHover: string;
+    modalButtonBackgroundActive: string;
+  };
+}
 
 /**
  * Preset light theme for components exported from this library.
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme = {
-  fluent9Theme: {
-    colorBrandBackground2: '#C7E0F4'
-  },
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -75,6 +78,14 @@ export const lightTheme: PartialTheme & CallingTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-gallery) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
+  },
   semanticColors: {
     errorText: '#a80000'
   }
@@ -85,10 +96,7 @@ export const lightTheme: PartialTheme & CallingTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme = {
-  fluent9Theme: {
-    colorBrandBackground2: '#0C2E49'
-  },
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -120,6 +128,14 @@ export const darkTheme: PartialTheme & CallingTheme = {
     iconWhite: '#ffffff',
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
+  },
+  /* @conditional-compile-remove(image-gallery) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#f1707b'

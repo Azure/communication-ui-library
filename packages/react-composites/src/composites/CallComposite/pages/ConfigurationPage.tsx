@@ -49,6 +49,8 @@ import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { useIsParticularSidePaneOpen } from '../components/SidePane/SidePaneProvider';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -69,6 +71,8 @@ export interface ConfigurationPageProps {
   }) => void;
   /* @conditional-compile-remove(call-readiness) */
   onNetworkingTroubleShootingClick?: () => void;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**

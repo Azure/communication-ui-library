@@ -19,6 +19,8 @@ import {
   VideoOff20Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(capabilities) */
+import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(gallery-layouts) */
 import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -59,6 +61,10 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LocalCameraSwitch: <CameraSwitch24Regular />,
   ControlBarChatButtonActive: <Chat20Filled />,
   ControlBarChatButtonInactive: <Chat20Regular />,
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited: <VideoProhibited20Filled />,
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited: <MicProhibited20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,
   MoreDrawerPeople: <People20Regular />,
@@ -161,6 +167,10 @@ export type CallCompositeIcons = {
   ControlButtonParticipants?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
   ControlButtonRaiseHand?: JSX.Element;
   /* @conditional-compile-remove(raise-hand) */
@@ -268,6 +278,10 @@ export type CallWithChatCompositeIcons = {
   ControlButtonOptions?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;

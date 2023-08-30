@@ -19,7 +19,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
-import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -64,8 +64,7 @@ import { MicrosoftBotKind } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
-import { PartialTheme as PartialTheme_2 } from '@fluentui/react';
-import { PartialTheme as PartialTheme_3 } from '@fluentui/react-components';
+import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
@@ -87,8 +86,7 @@ import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { Theme as Theme_2 } from '@fluentui/react';
-import { Theme as Theme_3 } from '@fluentui/react-components';
+import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { UnknownIdentifier } from '@azure/communication-common';
@@ -217,7 +215,7 @@ export type AzureCommunicationChatAdapterOptions = {
 
 // @public
 export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> {
-    fluentTheme?: PartialTheme_2 | Theme_2;
+    fluentTheme?: PartialTheme | Theme;
     icons?: TIcons;
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -529,6 +527,8 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonMicProhibited?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
@@ -619,6 +619,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
@@ -851,7 +852,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    capabilities?: CapabilitiesCallFeature;
+    capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1109,6 +1110,8 @@ export type CallWithChatCompositeIcons = {
     ControlButtonOptions?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonMicProhibited?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -1180,7 +1183,7 @@ export type CallWithChatCompositeOptions = {
 export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithChatCompositeIcons> {
     // (undocumented)
     adapter: CallWithChatAdapter;
-    fluentTheme?: PartialTheme_2 | Theme_2;
+    fluentTheme?: PartialTheme | Theme;
     formFactor?: 'desktop' | 'mobile';
     joinInvitationURL?: string;
     options?: CallWithChatCompositeOptions;
@@ -1320,12 +1323,29 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
-export interface CapabilitiesCallFeature {
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+// @beta
+export interface CapabilitiesFeatureState {
     capabilities: ParticipantCapabilities;
+    latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
 // @beta
-export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+export interface CapabilityChangedNotificationStrings {
+    shareScreen?: {
+        lostDueToRoleChangeToAttendee?: string;
+        grantedDueToRoleChangeToPresenter?: string;
+    };
+    turnVideoOn?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+    unmuteMic?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+}
 
 // @beta
 export interface CaptionLanguageStrings {
@@ -1633,6 +1653,17 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
+
+// @beta
+export interface ChatTheme {
+    chatPalette: {
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
+    };
+}
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -2187,7 +2218,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -2310,6 +2341,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element | undefined;
+    ControlButtonMicProhibited?: JSX.Element | undefined;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     RaiseHandContextualMenuItem: JSX.Element;
@@ -2696,7 +2729,7 @@ export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Eleme
 // @public
 export interface FluentThemeProviderProps {
     children: React_2.ReactNode;
-    fluentTheme?: PartialTheme_2 | Theme;
+    fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
 
@@ -2887,7 +2920,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -3249,11 +3282,6 @@ export interface OptionsDevice {
 
 // @beta
 export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
-
-// @public
-export type PartialTheme = PartialTheme_2 & {
-    fluent9Theme: PartialTheme_3;
-};
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3809,11 +3837,6 @@ export interface TeamsCallingHandlers extends CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall;
 }
-
-// @public
-export type Theme = Theme_2 & {
-    fluent9Theme: Theme_3;
-};
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
