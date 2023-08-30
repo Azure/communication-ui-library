@@ -21,7 +21,7 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
-import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -619,6 +619,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
@@ -851,7 +852,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
-    capabilities?: CapabilitiesCallFeature;
+    capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -1320,12 +1321,29 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 export type CancelEditCallback = (messageId: string) => void;
 
 // @beta
-export interface CapabilitiesCallFeature {
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+// @beta
+export interface CapabilitiesFeatureState {
     capabilities: ParticipantCapabilities;
+    latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
 // @beta
-export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+export interface CapabilityChangedNotificationStrings {
+    shareScreen?: {
+        lostDueToRoleChangeToAttendee?: string;
+        grantedDueToRoleChangeToPresenter?: string;
+    };
+    turnVideoOn?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+    unmuteMic?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+}
 
 // @beta
 export interface CaptionLanguageStrings {
@@ -1633,6 +1651,17 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 
 // @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
+
+// @beta
+export interface ChatTheme {
+    chatPalette: {
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
+    };
+}
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -2187,7 +2216,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @beta
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
@@ -2887,7 +2916,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';

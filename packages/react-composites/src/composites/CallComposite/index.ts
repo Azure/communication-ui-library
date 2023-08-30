@@ -99,3 +99,5 @@ export type { TransferRequestedListener } from './adapter';
 
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilitiesChangedListener } from './adapter';
+/* @conditional-compile-remove(capabilities) */
+export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';

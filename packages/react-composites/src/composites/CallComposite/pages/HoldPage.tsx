@@ -11,6 +11,8 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
  * @beta
@@ -23,6 +25,8 @@ export interface HoldPageProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
