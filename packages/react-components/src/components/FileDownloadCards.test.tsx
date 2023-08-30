@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 import React from 'react';
-import { FileMetadata, _FileDownloadCards, FileSharingMetadata, ImageFileMetadata } from './FileDownloadCards';
+import { FileMetadata, _FileDownloadCards, FileSharingMetadata } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { ImageFileMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -10,7 +12,8 @@ describe('FileDownloadCards should be rendered properly', () => {
     registerIcons({
       icons: {
         downloadfile: <></>,
-        docx24_svg: <></>
+        docx24_svg: <></>,
+        editboxcancel: <></>
       }
     });
   });
@@ -33,6 +36,7 @@ describe('FileDownloadCards should be rendered properly', () => {
     expect(card).toBeDefined();
   });
 
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('should not render if it is ImageFileMetadata', async () => {
     const metadata = {
       name: 'MockImageFileCard',
@@ -49,7 +53,6 @@ describe('FileDownloadCards should be rendered properly', () => {
     };
     renderFileDownloadCardsWithDefaults(props);
     const card = await screen.queryByText('MockImageFileCard');
-    console.log('card=================', card);
     expect(card).toBeNull();
   });
 });
