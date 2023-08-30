@@ -8708,7 +8708,7 @@ packages:
       object.getownpropertydescriptors: 2.1.6
       object.values: 1.1.7
       promise.allsettled: 1.0.6
-      promise.prototype.finally: 3.1.4
+      promise.prototype.finally: 3.1.5
       string.prototype.matchall: 4.0.9
       string.prototype.padend: 3.1.4
       string.prototype.padstart: 3.1.5
@@ -9040,8 +9040,8 @@ packages:
       is-string: 1.0.7
     dev: false
 
-  /array.prototype.reduce@1.0.5:
-    resolution: {integrity: sha512-kDdugMl7id9COE8R7MHF5jWk7Dqt/fs4Pv+JXoICnYwqpjjjbUurz6w5fT5IG6brLdJhv6/VoHB0H7oyIBXd+Q==}
+  /array.prototype.reduce@1.0.6:
+    resolution: {integrity: sha512-UW+Mz8LG/sPSU8jRDCjVr6J/ZKAGpHfwrZ6kWTG5qCxIEiXdVshqGnu5vEZA8S1y6X4aCSbQZ0/EEsfvEvBiSg==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
@@ -16298,7 +16298,7 @@ packages:
     resolution: {integrity: sha512-lq+61g26E/BgHv0ZTFgRvi7NMEPuAxLkFU7rukXjc/AlwH4Am5xXVnIXy3un1bg/JPbXHrixRkK1itUzzPiIjQ==}
     engines: {node: '>= 0.8'}
     dependencies:
-      array.prototype.reduce: 1.0.5
+      array.prototype.reduce: 1.0.6
       call-bind: 1.0.2
       define-properties: 1.2.0
       es-abstract: 1.22.1
@@ -17200,8 +17200,8 @@ packages:
       iterate-value: 1.0.2
     dev: false
 
-  /promise.prototype.finally@3.1.4:
-    resolution: {integrity: sha512-nNc3YbgMfLzqtqvO/q5DP6RR0SiHI9pUPGzyDf1q+usTwCN2kjvAnJkBb7bHe3o+fFSBPpsGMoYtaSi+LTNqng==}
+  /promise.prototype.finally@3.1.5:
+    resolution: {integrity: sha512-4TQ3Dk8yyUZGyU+UXInKdkQ2b6xtiBXAIScGAtGnXVmJtG1uOrxRgbF1ggIu72uzoWFzUfT3nUKa1SuMm9NBdg==}
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.2
