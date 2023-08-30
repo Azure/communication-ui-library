@@ -27,7 +27,7 @@ export const useVideoTileContextualMenuProps = (props: {
   isPinned?: boolean;
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
-  updateScalingModeForRemoteUser?: (userId: string, scalingMode: ViewScalingMode) => void;
+  onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
   disablePinMenuItem?: boolean;
   toggleAnnouncerString?: (announcerString: string) => void;
 }): IContextualMenuProps | undefined => {
@@ -38,7 +38,7 @@ export const useVideoTileContextualMenuProps = (props: {
     isPinned,
     onPinParticipant,
     onUnpinParticipant,
-    updateScalingModeForRemoteUser,
+    onUpdateScalingMode,
     disablePinMenuItem,
     toggleAnnouncerString
   } = props;
@@ -111,7 +111,7 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {
-            updateScalingModeForRemoteUser?.(remoteParticipant.userId, 'Fit');
+            onUpdateScalingMode?.(remoteParticipant.userId, 'Fit');
             view?.updateScalingMode('Fit');
           },
           'data-ui-id': 'video-tile-fit-to-frame',
@@ -127,7 +127,7 @@ export const useVideoTileContextualMenuProps = (props: {
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
             },
             onClick: () => {
-              updateScalingModeForRemoteUser?.(remoteParticipant.userId, 'Crop');
+              onUpdateScalingMode?.(remoteParticipant.userId, 'Crop');
               view?.updateScalingMode('Crop');
             },
             'data-ui-id': 'video-tile-fill-frame',
@@ -148,7 +148,7 @@ export const useVideoTileContextualMenuProps = (props: {
     isPinned,
     onPinParticipant,
     onUnpinParticipant,
-    updateScalingModeForRemoteUser,
+    onUpdateScalingMode,
     remoteParticipant.userId,
     remoteParticipant.displayName,
     disablePinMenuItem,

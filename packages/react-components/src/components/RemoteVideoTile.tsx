@@ -55,7 +55,7 @@ export const _RemoteVideoTile = React.memo(
     drawerMenuHostId?: string;
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
-    updateScalingModeForRemoteUser?: (userId: string, scalingMode: ViewScalingMode) => void;
+    onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
@@ -77,7 +77,7 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
-      updateScalingModeForRemoteUser,
+      onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
       strings
@@ -119,7 +119,7 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
-      updateScalingModeForRemoteUser,
+      onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString
     });
