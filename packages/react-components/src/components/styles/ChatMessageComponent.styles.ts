@@ -11,9 +11,14 @@ import {
   IIconStyles
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { tokens } from '@fluentui/react-components';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
+import {
+  defaultSendBoxInactiveBorderThicknessREM,
+  defaultSendBoxActiveBorderThicknessREM
+} from '../styles/SendBox.styles';
 
 const MINIMUM_TOUCH_TARGET_HEIGHT_REM = 3;
+const errorTextColor = 'var(--errorText)';
 
 /**
  * @private
@@ -92,13 +97,36 @@ export const chatMessageMenuStyle = mergeStyles({
 /**
  * @private
  */
-export const chatMessageEditContainerStyle = {
-  margin: 0,
-  padding: 0,
-  maxWidth: 'unset',
-  minWidth: 'unset',
-  backgroundColor: 'transparent'
-};
+export const _useChatMessageEditContainerStyles = makeStyles({
+  body: {
+    ...shorthands.padding(0),
+    backgroundColor: 'transparent',
+    maxWidth: 'unset',
+    minWidth: 'unset',
+    boxSizing: 'border-box',
+    ...shorthands.border(`${defaultSendBoxInactiveBorderThicknessREM}rem`, 'solid'),
+    ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    // The border thickness changes on hover, to prevent the border thickness change causing the
+    // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
+    ...shorthands.margin(`${defaultSendBoxActiveBorderThicknessREM - defaultSendBoxInactiveBorderThicknessREM}rem`),
+
+    '&:hover, &:active, &:focus, &:focus-within': {
+      // ':hover, :active, :focus, :focus-within': {
+      ...shorthands.margin('0rem'),
+      // this one
+      ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`)
+    }
+  },
+  bodyError: {
+    ...shorthands.borderColor(errorTextColor)
+  },
+  bodyDefault: {
+    ...shorthands.borderColor(tokens.colorNeutralStrokeAccessible),
+    '&:hover, &:active, &:focus, &:focus-within': {
+      ...shorthands.borderColor(tokens.colorCompoundBrandStroke)
+    }
+  }
+});
 
 /**
  * Styles that can be applied to ensure flyout items have the minimum touch target size.
