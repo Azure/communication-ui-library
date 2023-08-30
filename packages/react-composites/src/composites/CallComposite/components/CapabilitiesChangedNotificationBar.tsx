@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(capabilities) */
 import React from 'react';
 /* @conditional-compile-remove(capabilities) */
-import { IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
+import { IIconProps, IMessageBarProps, MessageBar, MessageBarType, Stack } from '@fluentui/react';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangedReason, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
@@ -69,6 +69,7 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
         if (!message) {
           return null;
         }
+        const iconProps = getNotificationIconProps(notification);
         return (
           <MessageBar
             key={notification.capabilityName}
@@ -76,6 +77,7 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
             messageBarType={MessageBarType.warning}
             dismissIconProps={{ iconName: 'ErrorBarClear' }}
             onDismiss={() => props.onDismissNotification(notification)}
+            messageBarIconProps={iconProps}
           >
             {message}
           </MessageBar>
@@ -113,6 +115,23 @@ const getCapabilityChangedNotificationString = (
         return strings?.shareScreen?.lostDueToRoleChangeToAttendee;
       }
       break;
+  }
+  return undefined;
+};
+
+/* @conditional-compile-remove(capabilities) */
+const getNotificationIconProps = (notification: CapabalityChangedNotification): IIconProps | undefined => {
+  switch (notification.capabilityName) {
+    case 'turnVideoOn':
+      if (notification.isPresent) {
+        return { iconName: 'ControlButtonCameraOn' };
+      }
+      return { iconName: 'ControlButtonCameraProhibited' };
+    case 'unmuteMic':
+      if (notification.isPresent) {
+        return { iconName: 'ControlButtonMicOn' };
+      }
+      return { iconName: 'ControlButtonMicProhibited' };
   }
   return undefined;
 };

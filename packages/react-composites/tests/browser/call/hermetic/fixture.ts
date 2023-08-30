@@ -85,7 +85,7 @@ export function defaultMockCallAdapterState(
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
       state: 'Connected',
       localVideoStreams: [],
-      isMuted: false,
+      isMuted: role === 'Consumer', // default is false unless the role is Consumer
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
