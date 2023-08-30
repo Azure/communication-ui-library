@@ -34,13 +34,13 @@ jest.useFakeTimers();
 const mockParticipants: SignalingChatParticipant[] = [
   {
     id: { kind: 'communicationUser', communicationUserId: 'user1' },
-    displayName: 'user1',
-    metadata: {}
+    displayName: 'user1'
+    // metadata: {}
   },
   {
     id: { kind: 'communicationUser', communicationUserId: 'user2' },
-    displayName: 'user1',
-    metadata: {}
+    displayName: 'user1'
+    // metadata: {}
   }
 ];
 
