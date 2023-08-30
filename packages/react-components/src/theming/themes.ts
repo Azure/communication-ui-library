@@ -5,7 +5,7 @@ import { Theme as V8Theme, PartialTheme as PartialV8Theme } from '@fluentui/reac
 import { Theme as V9Theme, PartialTheme as PartialV9Theme } from '@fluentui/react-components';
 
 /**
- * Custom Fluent theme pallette used by calling related components in this library.
+ * Custom Fluent theme palette used by calling related components in this library.
  *
  * @public
  */
@@ -17,6 +17,27 @@ export interface CallingTheme {
     iconWhite: string;
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: string;
+  };
+}
+
+/* @conditional-compile-remove(image-gallery) */
+/**
+ * Custom Fluent theme palette used by chat related components in this library.
+ *
+ * @beta
+ */
+export interface ChatTheme {
+  /**
+   * Custom Fluent theme palette used by chat related components in this library.
+   *
+   * @beta
+   */
+  chatPalette: {
+    modalOverlayBlack: string;
+    modalTitleWhite: string;
+    modalButtonBackground: string;
+    modalButtonBackgroundHover: string;
+    modalButtonBackgroundActive: string;
   };
 }
 
@@ -39,7 +60,7 @@ export type PartialTheme = PartialV8Theme & { fluent9Theme: PartialV9Theme };
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme = {
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   fluent9Theme: {
     colorBrandBackground2: '#C7E0F4'
   },
@@ -75,6 +96,14 @@ export const lightTheme: PartialTheme & CallingTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
+  /* @conditional-compile-remove(image-gallery) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
+  },
   semanticColors: {
     errorText: '#a80000'
   }
@@ -85,7 +114,7 @@ export const lightTheme: PartialTheme & CallingTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme = {
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   fluent9Theme: {
     colorBrandBackground2: '#0C2E49'
   },
@@ -120,6 +149,14 @@ export const darkTheme: PartialTheme & CallingTheme = {
     iconWhite: '#ffffff',
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
+  },
+  /* @conditional-compile-remove(image-gallery) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#f1707b'
