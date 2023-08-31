@@ -12,7 +12,7 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -392,11 +392,15 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(capabilities) */
-  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+  public setCapabilities(
+    callId: string,
+    capabilities: ParticipantCapabilities,
+    capabilitiesChangeInfo: CapabilitiesChangeInfo
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.capabilities = { capabilities: capabilities };
+        call.capabilitiesFeature = { capabilities, latestCapabilitiesChangeInfo: capabilitiesChangeInfo };
       }
     });
   }
@@ -549,6 +553,27 @@ export class CallContext {
           const stream = participant.videoStreams[streamId];
           if (stream) {
             stream.isReceiving = isReceiving;
+          }
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(pinned-participants) */
+  public setRemoteVideoStreamSize(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream) {
+            stream.streamSize = size;
           }
         }
       }

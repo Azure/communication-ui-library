@@ -17,7 +17,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -148,6 +148,10 @@ export interface CapabilitiesFeatureState {
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
    */
   capabilities: ParticipantCapabilities;
+  /**
+   * Proxy of the latest {@link @azure/communication-calling#CapabilitiesChangeInfo}
+   */
+  latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
 /**
@@ -273,6 +277,11 @@ export interface RemoteVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
+   */
+  streamSize?: { width: number; height: number };
 }
 
 /**
@@ -480,7 +489,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
-  capabilities?: CapabilitiesFeatureState;
+  capabilitiesFeature?: CapabilitiesFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */

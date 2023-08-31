@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "fix",
+  "workstream": "Pinned Layouts",
+  "comment": "Add stream size to remote video stream",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

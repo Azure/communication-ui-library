@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import { CameraButton, ControlBarButtonStyles } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
@@ -28,6 +30,10 @@ export const Camera = (props: {
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
+
+  /* @conditional-compile-remove(capabilities) */
+  const turnVideoOnCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.turnVideoOn;
+
   return (
     <CameraButton
       data-ui-id="call-composite-camera-button"
@@ -39,6 +45,12 @@ export const Camera = (props: {
         cameraButtonProps.disabled ||
         props.disabled ||
         /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+      }
+      /* @conditional-compile-remove(capabilities) */
+      onRenderOffIcon={
+        turnVideoOnCapability && !turnVideoOnCapability.isPresent
+          ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonCameraProhibited'} />
+          : undefined
       }
       /* @conditional-compile-remove(video-background-effects) */
       onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}

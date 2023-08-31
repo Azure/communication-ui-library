@@ -27,10 +27,9 @@ import {
 /* @conditional-compile-remove(image-gallery) */
 import { useTheme } from '../theming/FluentThemeProvider';
 /* @conditional-compile-remove(image-gallery) */
-import { isDarkThemed } from '../theming/themeUtils';
-/* @conditional-compile-remove(image-gallery) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(image-gallery) */
+import { ChatTheme } from '../theming';
 /**
  * Props for {@link ImageGallery}.
  *
@@ -104,17 +103,16 @@ export interface ImageGalleryStrings {
  */
 export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const { isOpen, images, onImageDownloadButtonClicked, onDismiss, onError, startIndex = 0 } = props;
-  const theme = useTheme();
-  const isDarkTheme = isDarkThemed(theme);
+  const theme = useTheme() as unknown as ChatTheme;
+
   /* @conditional-compile-remove(image-gallery) */
   const localeStrings = useLocale().strings.imageGallery;
 
   const [isImageLoaded, setIsImageLoaded] = useState<boolean>(true);
 
-  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme, isDarkTheme);
+  const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme);
 
   if (images.length <= startIndex) {
-    console.log('Unable to display Image Gallery due to startIndex is out of range.');
     return <></>;
   }
   const image = images[startIndex];
@@ -123,13 +121,13 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {image.titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme, isDarkTheme))} aria-label={image.title}>
+          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={image.title}>
             {image.title}
           </Stack.Item>
         </Stack>
         <Stack className={mergeStyles(controlBarContainerStyle)}>
           <DefaultButton
-            className={mergeStyles(downloadButtonStyle(theme, isDarkTheme))}
+            className={mergeStyles(downloadButtonStyle(theme))}
             /* @conditional-compile-remove(image-gallery) */
             text={localeStrings.downloadButtonLabel}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
@@ -140,7 +138,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
           <IconButton
             iconProps={downloadIcon}
-            className={mergeStyles(smallDownloadButtonContainerStyle(theme, isDarkTheme))}
+            className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
             onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
@@ -148,7 +146,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           />
           <IconButton
             iconProps={cancelIcon}
-            className={mergeStyles(closeButtonStyles(theme, isDarkTheme))}
+            className={mergeStyles(closeButtonStyles(theme))}
             onClick={onDismiss}
             /* @conditional-compile-remove(image-gallery) */
             ariaLabel={localeStrings.dismissButtonAriaLabel}
@@ -178,11 +176,15 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             className={mergeStyles(imageStyle)}
             alt={image.altText || 'image'}
             aria-label={'image-gallery-main-image'}
+            aria-live={'polite'}
             onError={(event) => {
               setIsImageLoaded(false);
               onError && onError(event);
             }}
             onClick={(event) => event.stopPropagation()}
+            onDoubleClick={(event) => {
+              event.persist();
+            }}
           />
         </FocusTrapZone>
       </Stack>
@@ -194,7 +196,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
       titleAriaId={image.title}
       isOpen={isOpen}
       onDismiss={onDismiss}
-      overlay={{ styles: { ...overlayStyles(theme, isDarkTheme) } }}
+      overlay={{ styles: { ...overlayStyles(theme) } }}
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >

@@ -17,7 +17,7 @@ import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/com
 /* @conditional-compile-remove(capabilities) */
 import type { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesCallFeature } from '@internal/calling-stateful-client';
+import { CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -85,7 +85,7 @@ export function defaultMockCallAdapterState(
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
       state: 'Connected',
       localVideoStreams: [],
-      isMuted: false,
+      isMuted: role === 'Consumer', // default is false unless the role is Consumer
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
@@ -113,7 +113,7 @@ export function defaultMockCallAdapterState(
         maxRemoteVideoStreams: 4
       },
       /* @conditional-compile-remove(capabilities) */
-      capabilities: role ? getCapabilitiesFromRole(role) : undefined
+      capabilitiesFeature: role ? getCapabilitiesFromRole(role) : undefined
     },
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
@@ -298,19 +298,22 @@ export const stubLocalCameraName = async (page: Page): Promise<void> => {
 };
 
 /* @conditional-compile-remove(capabilities) */
-const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesCallFeature => {
+const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesFeatureState => {
   switch (role) {
     case 'Attendee':
       return {
-        capabilities: attendeeCapabilitiesInRoomsCall
+        capabilities: attendeeCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     case 'Consumer':
       return {
-        capabilities: consumerCapabilitiesInRoomsCall
+        capabilities: consumerCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     default:
       return {
-        capabilities: presenterCapabilitiesInRoomsCall
+        capabilities: presenterCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
   }
 };

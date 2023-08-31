@@ -454,6 +454,17 @@ export interface ChatMessage extends MessageCommon {
 }
 
 // @beta
+export interface ChatTheme {
+    chatPalette: {
+        modalOverlayBlack: string;
+        modalTitleWhite: string;
+        modalButtonBackground: string;
+        modalButtonBackgroundHover: string;
+        modalButtonBackgroundActive: string;
+    };
+}
+
+// @beta
 export interface CommonSitePermissionsProps {
     appName: string;
     browserHint?: 'safari' | 'unset';
@@ -710,7 +721,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme;
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -1249,7 +1260,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme;
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';
@@ -1799,6 +1810,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     drawerMenuHostId?: string | undefined;
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
+    onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
@@ -2336,6 +2348,10 @@ export interface VideoGalleryStream {
     isReceiving?: boolean;
     renderElement?: HTMLElement;
     scalingMode?: ViewScalingMode;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
 }
 
 // @public

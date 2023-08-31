@@ -18,6 +18,8 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
+/* @conditional-compile-remove(pinned-participants) */
+import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
 import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
@@ -374,6 +376,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
   /* @conditional-compile-remove(pinned-participants) */
+  const [selectedScalingModeState, setselectedScalingModeState] = React.useState<Record<string, VideoStreamOptions>>(
+    {}
+  );
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const onUpdateScalingMode = useCallback(
+    (remoteUserId: string, scalingMode: ViewScalingMode) => {
+      setselectedScalingModeState((current) => ({
+        ...current,
+        [remoteUserId]: {
+          scalingMode,
+          isMirrored: remoteVideoViewOptions?.isMirrored
+        }
+      }));
+    },
+    [remoteVideoViewOptions?.isMirrored]
+  );
+  /* @conditional-compile-remove(pinned-participants) */
   useEffect(() => {
     props.pinnedParticipants?.forEach((pinParticipant) => {
       if (!props.remoteParticipants?.find((t) => t.userId === pinParticipant)) {
@@ -511,9 +531,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
+      /* @conditional-compile-remove(pinned-participants) */
+      const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
 
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
+
+      const createViewOptions = (): VideoStreamOptions | undefined => {
+        /* @conditional-compile-remove(pinned-participants) */
+        if (selectedScalingMode) {
+          return selectedScalingMode;
+        }
+        /* @conditional-compile-remove(pinned-participants) */
+        return remoteVideoStream?.streamSize &&
+          remoteVideoStream.streamSize?.height > remoteVideoStream.streamSize?.width
+          ? ({
+              scalingMode: 'Fit',
+              isMirrored: remoteVideoViewOptions?.isMirrored
+            } as VideoStreamOptions)
+          : remoteVideoViewOptions;
+        return remoteVideoViewOptions;
+      };
 
       return (
         <_RemoteVideoTile
@@ -525,7 +563,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
+          remoteVideoViewOptions={isVideoParticipant && createViewOptions() ? createViewOptions() : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
@@ -548,6 +586,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           /* @conditional-compile-remove(pinned-participants) */
           onUnpinParticipant={onUnpinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
+          onUpdateScalingMode={onUpdateScalingMode}
+          /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
           /* @conditional-compile-remove(pinned-participants) */
           disablePinMenuItem={pinnedParticipants.length >= MAX_PINNED_REMOTE_VIDEO_TILES}
@@ -566,10 +606,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       strings,
       /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
       /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenu,
+      /* @conditional-compile-remove(pinned-participants) */ selectedScalingModeState,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString
+      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
+      /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode
     ]
   );
 

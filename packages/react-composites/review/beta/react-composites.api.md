@@ -330,6 +330,8 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonMicProhibited?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
@@ -420,6 +422,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
@@ -805,6 +808,8 @@ export type CallWithChatCompositeIcons = {
     ControlButtonOptions?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonMicProhibited?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -933,6 +938,22 @@ export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMut
 
 // @beta
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+// @beta
+export interface CapabilityChangedNotificationStrings {
+    shareScreen?: {
+        lostDueToRoleChangeToAttendee?: string;
+        grantedDueToRoleChangeToPresenter?: string;
+    };
+    turnVideoOn?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+    unmuteMic?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+}
 
 // @beta
 export type CaptionsReceivedListener = (event: {
@@ -1274,6 +1295,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element | undefined;
+    ControlButtonMicProhibited?: JSX.Element | undefined;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     RaiseHandContextualMenuItem: JSX.Element;
