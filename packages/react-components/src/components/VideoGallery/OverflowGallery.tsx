@@ -10,9 +10,8 @@ import { ResponsiveVerticalGallery } from '../ResponsiveVerticalGallery';
 import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styles/HorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from '../VerticalGallery';
-/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(pinned-participants) */
+/* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
@@ -39,7 +38,7 @@ export const OverflowGallery = (props: {
   horizontalGalleryStyles?: HorizontalGalleryStyles;
   /* @conditional-compile-remove(vertical-gallery) */
   verticalGalleryStyles?: VerticalGalleryStyles;
-  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(pinned-participants) */
+  /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }): JSX.Element => {

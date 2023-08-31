@@ -151,7 +151,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
   verticalGallery?: VerticalGalleryStyles;
 }
 
-/* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(pinned-participants) */
+/* @conditional-compile-remove(vertical-gallery) */
 /**
  * Different modes and positions of the overflow gallery in the VideoGallery
  *
