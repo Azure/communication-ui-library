@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Promoting OVC and 3x3 to GA",
+  "comment": "Promoting OVC and 3x3 to GA",
+  "packageName": "@azure/communication-react",
+  "email": "vriosrada@microsoft.com",
+  "dependentChangeType": "patch"
+}

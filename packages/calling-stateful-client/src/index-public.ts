@@ -40,5 +40,4 @@ export type { CapabilitiesFeatureState } from './CallClientState';
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
 /* @conditional-compile-remove(call-transfer) */
 export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';
-/* @conditional-compile-remove(optimal-video-count) */
 export type { OptimalVideoCountFeatureState } from './CallClientState';

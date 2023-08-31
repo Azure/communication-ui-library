@@ -2436,7 +2436,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
     CaptionsOffIcon: JSX.Element;
-    CaptionsSettingsIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element; /**
+    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
+    * This wrapper ensures the icon name is being type-checked helping ensure no typos
+    * and ensure that icon is customizable through the composite API.
+    *
+    * @private
+    */
     ChangeSpokenLanguageIcon: JSX.Element;
     ChangeCaptionLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
@@ -3269,7 +3275,7 @@ export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffect
 // @beta
 export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
-// @beta
+// @public
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
