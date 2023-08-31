@@ -117,7 +117,6 @@ export const getLocalVideoStreams = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): LocalVideoStreamState[] | undefined => state.calls[props.callId]?.localVideoStreams;
-
 /**
  * @private
  */
