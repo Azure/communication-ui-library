@@ -555,6 +555,7 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
+    optimalVideoCount: OptimalVideoCountFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -2147,6 +2148,11 @@ userId?: string, options?: CustomAvatarOptions,
 defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => JSX.Element;
 
 // @public
+export interface OptimalVideoCountFeatureState {
+    maxRemoteVideoStreams: number;
+}
+
+// @public
 export interface OptionsDevice {
     id: string;
     name: string;
@@ -2635,6 +2641,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
+    optimalVideoCount?: number;
 };
 
 // @public

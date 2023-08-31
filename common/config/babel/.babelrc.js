@@ -101,6 +101,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // Optimal Video Count
+        'optimal-video-count'
       ]
     }
   ]);

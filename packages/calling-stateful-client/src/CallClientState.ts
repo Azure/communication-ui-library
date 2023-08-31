@@ -239,7 +239,7 @@ export interface LocalVideoStreamVideoEffectsState {
 /**
  * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
  *
- * @beta
+ * @public
  */
 export interface OptimalVideoCountFeatureState {
   /**
