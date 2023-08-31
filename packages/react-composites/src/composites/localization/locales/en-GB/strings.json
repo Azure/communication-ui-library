@@ -100,7 +100,7 @@
     "startCaptionsButtonOffLabel": "Turn off captions",
     "startCaptionsButtonTooltipOnContent": "Turn off captions",
     "startCaptionsButtonTooltipOffContent": "Turn on captions",
-    "captionsSettingsModalTitle": "What language is being spoken?",
+    "captionsSettingsModalTitle": "Captions Settings",
     "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
     "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
     "captionsSettingsSpokenLanguageDropdownInfoText": "Language that everyone on this call is speaking.",
