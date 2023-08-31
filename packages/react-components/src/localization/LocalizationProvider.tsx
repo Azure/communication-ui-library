@@ -47,6 +47,7 @@ import { ParticipantListStrings } from '../components/ParticipantList';
 import { MentionPopoverStrings } from '../components/MentionPopover';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGalleryStrings } from '../components/ImageGallery';
+import { SurveyStrings } from '../components/Survey/Survey';
 
 /**
  * Locale information for all components exported from this library.
@@ -174,6 +175,7 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
+  Survey: SurveyStrings;
 }
 
 /**

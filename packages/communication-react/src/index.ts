@@ -164,6 +164,10 @@ export { RaiseHandButton } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 
+
+export {Survey} from '../../react-components/src';
+export type {SurveyProps, SurveyStrings, SurveyStyles} from'../../react-components/src';
+
 /* @conditional-compile-remove(call-readiness) */
 export {
   CameraAndMicrophoneSitePermissions,
