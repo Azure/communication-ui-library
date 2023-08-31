@@ -54,7 +54,6 @@ export const useChatStyles = makeStyles({
   root: {
     ...shorthands.padding(0),
     paddingBottom: '0.5rem',
-    // paddingTop: '0.8rem',
     ...shorthands.border('none'),
     ...shorthands.overflow('auto'),
     // `height: 100%` ensures that the Chat component covers 100% of it's parents height
