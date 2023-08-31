@@ -96,19 +96,19 @@ export const chatMessageDateStyle: CSSProperties = {
   fontWeight: 600
 };
 
-const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
-  const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
-  return {
-    marginRight: '0rem',
-    marginLeft: `${messageAvatarGap}rem`,
-    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
-    zIndex: CHAT_MESSAGE_ZINDEX,
-    '& msft-mention': {
-      color: '#D83B01',
-      fontWeight: 600
-    }
-  };
-};
+// const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
+//   const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
+//   return {
+//     marginRight: '0rem',
+//     marginLeft: `${messageAvatarGap}rem`,
+//     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
+//     zIndex: CHAT_MESSAGE_ZINDEX,
+//     '& msft-mention': {
+//       color: '#D83B01',
+//       fontWeight: 600
+//     }
+//   };
+// };
 
 /**
  * @private
@@ -122,13 +122,19 @@ export const defaultChatItemMessageContainerStyles = makeStyles({
       fontWeight: 600
     }
   },
-  bodyNoOverlap: {
+  bodyAvatarNoOverlap: {
     marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`,
   },
-  bodyOverlap: {
+  bodyAvatarOverlap: {
     marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + -MESSAGE_AVATAR_OVERLAP_REM}rem)`,
+  },
+  bodyFailed: {
+    backgroundColor: 'rgba(168, 0, 0, 0.2)'
+  },
+  bodyBlocked: {
+    backgroundColor: 'rgb(199, 224, 244)'
   }
 })
 
@@ -143,78 +149,79 @@ export const defaultMyChatMessageContainer: ComponentSlotStyle = {
   border: '1px solid transparent'
 };
 
-const useChatFailedMyMessageClasses = makeStyles({
-  body: {
-    ...defaultChatItemMessageContainer,
-    backgroundColor: 'rgba(168, 0, 0, 0.2)'
-  }
-});
+// const useChatFailedMyMessageClasses = makeStyles({
+//   body: {
+//     ...defaultChatItemMessageContainer,
+//     backgroundColor: 'rgba(168, 0, 0, 0.2)'
+//   }
+// });
 
-const chatNormalMyMessageClasses = makeStyles({
-  body: {
-    ...defaultChatItemMessageContainer
-  }
-});
-const useChatFailedMessageClasses = makeStyles({
-  body: {
-    ...defaultChatItemMessageContainer,
-    backgroundColor: 'rgba(168, 0, 0, 0.2)'
-  }
-});
+// const chatNormalMyMessageClasses = makeStyles({
+//   body: {
+//     ...defaultChatItemMessageContainer
+//   }
+// });
+// const useChatFailedMessageClasses = makeStyles({
+//   body: {
+//     ...defaultChatItemMessageContainer,
+//     backgroundColor: 'rgba(168, 0, 0, 0.2)'
+//   }
+// });
 
-const chatNormalMessageClasses = makeStyles({
-  body: {
-    ...defaultChatItemMessageContainer
-  }
-});
+// const chatNormalMessageClasses = makeStyles({
+//   body: {
+//     ...defaultChatItemMessageContainer
+//   }
+// });
 
-/**
- * @private
- */
-export const FailedMyChatMessageContainer: ComponentSlotStyle = {
-  ...defaultChatItemMessageContainer,
-  backgroundColor: 'rgba(168, 0, 0, 0.2)'
-};
+// /**
+//  * @private
+//  */
+// export const FailedMyChatMessageContainer: ComponentSlotStyle = {
+//   ...defaultChatItemMessageContainer,
+//   backgroundColor: 'rgba(168, 0, 0, 0.2)'
+// };
 
-/**
- * @private
- */
-export const chatBlockedMyMessageClasses = makeStyles({
-  body: {
-    ...defaultChatItemMessageContainer,
-    backgroundColor: 'rgb(199, 224, 244)'
-  }
-});
+// /**
+//  * @private
+//  */
+// export const chatBlockedMyMessageClasses = makeStyles({
+//   body: {
+//     ...defaultChatItemMessageContainer,
+//     backgroundColor: 'rgb(199, 224, 244)'
+//   }
+// });
 
-/**
- * @private
- */
-export const useChatMyMessageClasses: (messageState?: MessageStatus) => Record<'body', string> = (
-  messageState?: MessageStatus
-) => {
-  const failedClasses = useChatFailedMyMessageClasses();
-  const normalClasses = chatNormalMyMessageClasses();
-  return messageState === 'failed' ? failedClasses : normalClasses;
-};
-/**
- * @private
- */
-export const chatBlockedMessageClasses = makeStyles({
-  body: {
-    ...defaultChatItemMessageContainer
-  }
-});
+// /**
+//  * @private
+//  */
+// export const useChatMyMessageClasses: (messageState?: MessageStatus) => Record<'body', string> = (
+//   messageState?: MessageStatus
+// ) => {
+//   const failedClasses = useChatFailedMyMessageClasses();
+//   const normalClasses = chatNormalMyMessageClasses();
+//   return messageState === 'failed' ? failedClasses : normalClasses;
+// };
+// /**
+//  * @private
+//  */
+// export const chatBlockedMyMessageClasses = makeStyles({
+//   body: {
+//     ...defaultChatItemMessageContainer,
+//     backgroundColor: 'rgb(199, 224, 244)'
+//   }
+// });
 
-/**
- * @private
- */
-export const useChatMessageClasses: (messageState?: MessageStatus) => Record<'body', string> = (
-  messageState?: MessageStatus
-) => {
-  const failedClasses = useChatFailedMessageClasses();
-  const normalClasses = chatNormalMessageClasses();
-  return messageState === 'failed' ? failedClasses : normalClasses;
-};
+// /**
+//  * @private
+//  */
+// export const useChatMessageClasses: (messageState?: MessageStatus) => Record<'body', string> = (
+//   messageState?: MessageStatus
+// ) => {
+//   const failedClasses = useChatFailedMessageClasses();
+//   const normalClasses = chatNormalMessageClasses();
+//   return messageState === 'failed' ? failedClasses : normalClasses;
+// };
 
 /**
  * @private
