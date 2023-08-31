@@ -124,20 +124,22 @@ export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBas
 // @internal
 export const _captionsBannerSelector: _CaptionsBannerSelector;
 
-// @beta
-export type CaptionsOptions = {
-    spokenLanguage: string;
-};
-
 // @internal
-export type _ChangeSpokenLanguageSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedCaptionLanguages: string[];
+    currentCaptionLanguage: string;
     supportedSpokenLanguages: string[];
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
 };
 
 // @internal
-export const _changeSpokenLanguageSelector: _ChangeSpokenLanguageSelector;
+export const _captionSettingsSelector: _CaptionSettingsSelector;
+
+// @beta
+export type CaptionsOptions = {
+    spokenLanguage: string;
+};
 
 // @public
 export interface CommonCallingHandlers {
@@ -163,6 +165,10 @@ export interface CommonCallingHandlers {
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
+    // (undocumented)
+    onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onRaiseHand: () => Promise<void>;
     // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
@@ -201,6 +207,8 @@ export interface CommonCallingHandlers {
     onToggleHold: () => Promise<void>;
     // (undocumented)
     onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleRaiseHand: () => Promise<void>;
     // (undocumented)
     onToggleScreenShare: () => Promise<void>;
 }
@@ -291,6 +299,15 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
     participants: CallParticipantListParticipant[];
     myUserId: string;
 };
+
+// @public
+export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export const raiseHandButtonSelector: RaiseHandButtonSelector;
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {

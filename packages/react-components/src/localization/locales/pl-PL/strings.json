@@ -9,6 +9,9 @@
     "participantStateRinging": "Trwa łączenie…",
     "participantStateHold": "Zawieszony"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} więcej"
+  },
   "typingIndicator": {
     "singleUser": "Użytkownik {user} pisze...",
     "multipleUsers": "{users} piszą...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Pobierz",
+    "dismissButtonAriaLabel": "Zamknij"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wiadomość została wysłana",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "Prezentowanie jest wyłączone",
     "tooltipOnContent": "Prezentowanie ekranu",
     "tooltipOffContent": "Prezentuj swój ekran"
+  },
+  "raiseHandButton": {
+    "offLabel": "Podnieś",
+    "onLabel": "Opuść",
+    "tooltipDisabledContent": "Akcja Podnieś rękę jest wyłączona",
+    "tooltipOnContent": "Opuść rękę",
+    "tooltipOffContent": "Podnieś rękę"
   },
   "messageThread": {
     "yesterday": "Wczoraj",

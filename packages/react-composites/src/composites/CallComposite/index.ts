@@ -87,7 +87,17 @@ export type {
 } from './adapter';
 
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './adapter';
+export type {
+  CaptionsReceivedListener,
+  IsCaptionsActiveChangedListener,
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
+} from './adapter';
 
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferRequestedListener } from './adapter';
+
+/* @conditional-compile-remove(capabilities) */
+export type { CapabilitiesChangedListener } from './adapter';
+/* @conditional-compile-remove(capabilities) */
+export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';

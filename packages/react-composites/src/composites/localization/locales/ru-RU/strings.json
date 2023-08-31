@@ -53,7 +53,7 @@
     "peoplePaneTitle": "Люди",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
-    "peoplePaneSubTitle": "В этом звонке",
+    "peoplePaneSubTitle": "В этом вызове {numberOfPeople}",
     "privacyPolicy": "Политика конфиденциальности",
     "rejoinCallButtonLabel": "Повторно присоединиться к звонку",
     "removedFromCallMoreDetails": "Другой участник удалил вас из беседы.",
@@ -164,7 +164,13 @@
     "unableToResolveTenantTitle": "Не удалось разрешить идентификатор клиента для целевого участника",
     "unableToResolveTenantMoreDetails": "Проверьте, что идентификатор участника введен правильно",
     "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
-    "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате"
+    "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате",
+    "moreButtonGalleryControlLabel": "Параметры коллекции",
+    "moreButtonGalleryPositionToggleLabel": "Переместить коллекцию вверх",
+    "moreButtonGallerySpeakerLayoutLabel": "Макет динамика",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический макет",
+    "moreButtonGalleryDefaultLayoutLabel": "Макет коллекции",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы"
   },
   "chat": {
     "chatListHeader": "В этом чате",

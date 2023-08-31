@@ -31,6 +31,10 @@
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },
+  "imageGallery": {
+    "downloadButtonLabel": "Download",
+    "dismissButtonAriaLabel": "Close"
+  },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
     "deliveredTooltipText": "Sent",
@@ -111,6 +115,13 @@
     "tooltipDisabledContent": "Presenting is disabled",
     "tooltipOnContent": "Presenting your screen",
     "tooltipOffContent": "Present your screen"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise",
+    "onLabel": "Lower",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
   },
   "messageThread": {
     "yesterday": "Yesterday",

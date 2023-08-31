@@ -5,11 +5,22 @@ import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react'
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
-import { concatStyleSets, IStyle, ITheme, mergeStyles, mergeStyleSets, Stack, useTheme } from '@fluentui/react';
+import {
+  concatStyleSets,
+  IButton,
+  IStyle,
+  ITheme,
+  mergeStyles,
+  mergeStyleSets,
+  Stack,
+  useTheme
+} from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
@@ -22,7 +33,7 @@ import {
   generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { DesktopMoreButton } from './DesktopMoreButton';
 import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
@@ -30,7 +41,8 @@ import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /**
  * @private
  */
@@ -49,7 +61,17 @@ export interface CommonCallControlBarProps {
   onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsOn?: boolean;
   displayVertical?: boolean;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
+  peopleButtonRef?: React.RefObject<IButton>;
+  cameraButtonRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -142,6 +164,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
+      selectedLabel: callWithChatStrings.selectedPeopleButtonLabel,
       tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
       tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
     }),
@@ -220,6 +243,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             <CaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
+              changeCaptionLanguage={props.isCaptionsOn}
             />
           )
         }
@@ -271,8 +295,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         /* @conditional-compile-remove(video-background-effects) */
                         onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                        componentRef={props.cameraButtonRef}
                       />
                     )}
+                    {
+                      /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
+                        isEnabled(options.raiseHandButton) && (
+                          <RaiseHand
+                            displayType={options.displayType}
+                            styles={commonButtonStyles}
+                            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                            disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                          />
+                        )
+                    }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
@@ -307,7 +343,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       />
                     )}
                     {
-                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
                         options?.moreButton
                       ) &&
                         /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
@@ -317,6 +353,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           <DesktopMoreButton
                             disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                             styles={commonButtonStyles}
+                            /*@conditional-compile-remove(PSTN-calls) */
                             onClickShowDialpad={props.onClickShowDialpad}
                             /* @conditional-compile-remove(control-bar-button-injection) */
                             callControls={props.callControls}
@@ -324,6 +361,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             isCaptionsSupported={props.isCaptionsSupported}
                             /* @conditional-compile-remove(close-captions) */
                             onCaptionsSettingsClick={openCaptionsSettingsModal}
+                            /* @conditional-compile-remove(gallery-layouts) */
+                            onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                            /* @conditional-compile-remove(gallery-layouts) */
+                            onUserSetGalleryLayout={props.onUserSetGalleryLayout}
+                            /* @conditional-compile-remove(gallery-layouts) */
+                            userSetGalleryLayout={props.userSetGalleryLayout}
                           />
                         )
                     }
@@ -341,7 +384,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
-                    ariaLabel={peopleButtonStrings?.label}
+                    ariaLabel={
+                      props.peopleButtonChecked ? peopleButtonStrings?.selectedLabel : peopleButtonStrings?.label
+                    }
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
@@ -352,6 +397,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
+                    componentRef={props.peopleButtonRef}
                   />
                 )}
                 {customButtons['secondary']

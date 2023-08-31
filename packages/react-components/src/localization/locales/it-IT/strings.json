@@ -9,6 +9,9 @@
     "participantStateRinging": "Chiamata in corso...",
     "participantStateHold": "Per l'attesa"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} altro"
+  },
   "typingIndicator": {
     "singleUser": "{user} sta scrivendo ...",
     "multipleUsers": "{users} stanno scrivendo ...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Scarica",
+    "dismissButtonAriaLabel": "Chiudi"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "La presentazione è disabilitata.",
     "tooltipOnContent": "Presentazione dello schermo",
     "tooltipOffContent": "Presenta lo schermo"
+  },
+  "raiseHandButton": {
+    "offLabel": "Alza",
+    "onLabel": "Abbassa",
+    "tooltipDisabledContent": "L'azione Alza la mano è disabilitata",
+    "tooltipOnContent": "Abbassa la mano",
+    "tooltipOffContent": "Alza la mano"
   },
   "messageThread": {
     "yesterday": "Ieri",

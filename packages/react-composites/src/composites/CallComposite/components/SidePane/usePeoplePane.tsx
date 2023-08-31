@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { RefObject, useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
-import { CompositeLocale, useLocale } from '../../../localization';
+import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
+import { IButton } from '@fluentui/react';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -19,6 +20,7 @@ export const usePeoplePane = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
+  peopleButtonRef?: RefObject<IButton>;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -30,14 +32,16 @@ export const usePeoplePane = (props: {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     setDrawerMenuItems,
-    mobileView
+    mobileView,
+    peopleButtonRef
   } = props;
 
   const closePane = useCallback(() => {
     updateSidePaneRenderer(undefined);
-  }, [updateSidePaneRenderer]);
+    peopleButtonRef?.current?.focus();
+  }, [peopleButtonRef, updateSidePaneRenderer]);
 
-  const localeStrings = localeTrampoline(useLocale());
+  const localeStrings = useLocale().strings.call;
 
   const onRenderHeader = useCallback(
     () => (
@@ -86,12 +90,4 @@ export const usePeoplePane = (props: {
   }, [isOpen, openPane]);
 
   return { openPeoplePane: openPane, closePeoplePane: closePane, isPeoplePaneOpen: isOpen };
-};
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const localeTrampoline = (locale: CompositeLocale): any => {
-  /* @conditional-compile-remove(new-call-control-bar) */
-  return locale.strings.call;
-
-  return locale.strings.callWithChat;
 };

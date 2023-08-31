@@ -80,21 +80,23 @@ jobs:
       # e.g. https://github.com/Azure/communication-ui-library/pull/2441 was needed to unbreak CI
       # on a stable release branch.
       - name: Force build flavor to `stable`
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable-minor') || startsWith(github.event.inputs.branch, 'prerelease-stable-patch')}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
         run: |
           node ./common/scripts/force-build-flavor.mjs stable
           rush update
 
       - name: Force build flavor to `beta-release`
-        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
+        if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta') }}
         run: node ./common/scripts/force-build-flavor.mjs beta-release
 
       # Synchronize the telemetry package versions.
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
 
-      - name: Add changelog
-        run: node ./common/scripts/changelog/change.mjs -m 'Create release branch and update SDK versions' --type none
+      - name: Disabled - DO THIS MANUALLY! Add changelog
+        run: |
+          echo "This step should be enabled when parameters can be added to the changelog command
+          Previous version of the command: node ./common/scripts/changelog/change.mjs -m 'Create release branch and update SDK versions' --type none"
 
       # Commit new dependencies
       - name: Commit changes
@@ -131,10 +133,11 @@ jobs:
           echo "See example: https://github.com/Azure/communication-ui-library/pull/2631"
 
       # if a stable release bump the package versions to beta.0 numbers for next beta release
+      # otherwise prerelease type isn't shown for beachball changelog
       - name: Bump versions for pre-release branch if stable release
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-stable') }}
         run: |
-          node common/scripts/bump-beta-version.js
+          node common/scripts/bump-beta-release-version.js beta
           rush update
           git add .
           git commit -m "Bump package versions to beta.0 for next release"

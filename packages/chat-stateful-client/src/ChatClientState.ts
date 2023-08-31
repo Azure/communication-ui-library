@@ -155,4 +155,5 @@ export type ChatErrorTarget =
   | 'ChatThreadClient.sendReadReceipt'
   | 'ChatThreadClient.sendTypingNotification'
   | 'ChatThreadClient.updateMessage'
+  | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties'
   | 'ChatThreadClient.updateTopic';

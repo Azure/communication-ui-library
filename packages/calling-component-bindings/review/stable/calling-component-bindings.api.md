@@ -214,7 +214,6 @@ export const microphoneButtonSelector: MicrophoneButtonSelector;
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     participants: CallParticipantListParticipant[];
     myUserId: string;
-    totalParticipantCount?: number;
 };
 
 // @public

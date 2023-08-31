@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { mergeStyles, Stack } from '@fluentui/react';
+import { IButton, mergeStyles, Stack } from '@fluentui/react';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import {
   _ComplianceBanner,
@@ -15,6 +15,8 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useEffect } from 'react';
@@ -50,7 +52,7 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { getPage } from '../selectors/baseSelectors';
+import { getCaptionsStatus, getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
 import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
@@ -73,6 +75,11 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 /* @conditional-compile-remove(video-background-effects) */
 import { localVideoSelector } from '../../CallComposite/selectors/localVideoStreamSelector';
+/* @conditional-compile-remove(capabilities) */
+import {
+  CapabilitiesChangedNotificationBar,
+  CapabilitiesChangeNotificationBarProps
+} from './CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -93,6 +100,14 @@ export interface CallArrangementProps {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
@@ -108,6 +123,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     () => galleryParentContainerStyles(theme.palette.neutralLighterAlt),
     [theme.palette.neutralLighterAlt]
   );
+
+  const peopleButtonRef = useRef<IButton>(null);
+  const cameraButtonRef = useRef<IButton>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -137,7 +155,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
-      mobileView: props.mobileView
+      mobileView: props.mobileView,
+      peopleButtonRef
     }),
     [
       updateSidePaneRenderer,
@@ -145,7 +164,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.callControlProps?.onFetchParticipantMenuItems,
       /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
       props.onFetchAvatarPersonaData,
-      props.mobileView
+      props.mobileView,
+      peopleButtonRef
     ]
   );
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane(peoplePaneProps);
@@ -192,7 +212,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     props.updateSidePaneRenderer,
     props.mobileView,
     props.latestErrors,
-    props.onDismissError
+    props.onDismissError,
+    cameraButtonRef
   );
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
@@ -255,11 +276,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const isTeamsCall = useSelector(getIsTeamsCall);
   /* @conditional-compile-remove(close-captions) */
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
+  /* @conditional-compile-remove(close-captions) */
+  const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
   const pipStyles = useMemo(() => getPipStyles(theme), [theme]);
 
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
+
+  /* @conditional-compile-remove(capabilities) */
+  // Filter out shareScreen capability notifications if on mobile
+  const filteredCapabilitesChangedNotifications = props.mobileView
+    ? props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications.filter(
+        (notification) => notification.capabilityName !== 'shareScreen'
+      )
+    : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -304,11 +335,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onMoreButtonClicked={onMoreButtonClicked}
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                  /* @conditional-compile-remove(close-captions) */
+                  isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
                   onShowVideoEffectsPicker={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                  /* @conditional-compile-remove(gallery-layouts) */
+                  userSetGalleryLayout={props.userSetGalleryLayout}
+                  peopleButtonRef={peopleButtonRef}
+                  cameraButtonRef={cameraButtonRef}
                 />
               )}
             </Stack>
@@ -359,6 +400,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         />
                       </Stack>
                     )}
+                    {
+                      /* @conditional-compile-remove(capabilities) */
+                      props.capabilitiesChangedNotificationBarProps &&
+                        props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <CapabilitiesChangedNotificationBar
+                              {...props.capabilitiesChangedNotificationBarProps}
+                              capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                            />
+                          </Stack>
+                        )
+                    }
                     {canUnmute && !!props.mutedNotificationProps && (
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
@@ -413,13 +466,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 };
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
-  /* @conditional-compile-remove(new-call-control-bar) */
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
-
-  // In stable builds, we default to legacy until new-call-control-bar feature is stablized.
-  return (
-    options === undefined || options === true || (options as _CallControlOptions)?.legacyControlBarExperience !== false
-  );
 };
 
 const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {

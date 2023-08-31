@@ -12,7 +12,7 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -51,6 +51,8 @@ import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
+/* @conditional-compile-remove(raise-hand) */
+import { convertFromSDKToRaisedHandState } from './Converter';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -351,11 +353,18 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.raiseHand.raisedHands = raisedHands;
-        call.raiseHand.localParticipantRaisedHand = raisedHands.find(
+        call.raiseHand.raisedHands = raisedHands.map((raisedHand) => {
+          return convertFromSDKToRaisedHandState(raisedHand);
+        });
+        const raisedHand = raisedHands.find(
           (raisedHand) =>
             toFlatCommunicationIdentifier(raisedHand.identifier) === toFlatCommunicationIdentifier(this._state.userId)
         );
+        if (raisedHand) {
+          call.raiseHand.localParticipantRaisedHand = convertFromSDKToRaisedHandState(raisedHand);
+        } else {
+          call.raiseHand.localParticipantRaisedHand = undefined;
+        }
       }
     });
   }
@@ -367,7 +376,7 @@ export class CallContext {
       if (call) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
-          participant.raisedHand = raisedHand;
+          participant.raisedHand = raisedHand ? convertFromSDKToRaisedHandState(raisedHand) : raisedHand;
         }
       }
     });
@@ -383,11 +392,15 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(capabilities) */
-  public setCapabilities(callId: string, capabilities: ParticipantCapabilities): void {
+  public setCapabilities(
+    callId: string,
+    capabilities: ParticipantCapabilities,
+    capabilitiesChangeInfo: CapabilitiesChangeInfo
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.capabilities = { capabilities: capabilities };
+        call.capabilitiesFeature = { capabilities, latestCapabilitiesChangeInfo: capabilitiesChangeInfo };
       }
     });
   }
@@ -540,6 +553,27 @@ export class CallContext {
           const stream = participant.videoStreams[streamId];
           if (stream) {
             stream.isReceiving = isReceiving;
+          }
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(pinned-participants) */
+  public setRemoteVideoStreamSize(
+    callId: string,
+    participantKey: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[participantKey];
+        if (participant) {
+          const stream = participant.videoStreams[streamId];
+          if (stream) {
+            stream.streamSize = size;
           }
         }
       }
@@ -785,10 +819,28 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+        const currentCaptionLanguage = call.captionsFeature.currentCaptionLanguage;
+        if (
+          caption.captionLanguage.toUpperCase() === currentCaptionLanguage.toUpperCase() ||
+          currentCaptionLanguage === '' ||
+          currentCaptionLanguage === undefined
+        ) {
+          this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+        }
       }
     });
   }
+
+  /* @conditional-compile-remove(close-captions) */
+  public clearCaptions(callId: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.captionsFeature.captions = [];
+      }
+    });
+  }
+
   /* @conditional-compile-remove(close-captions) */
   setIsCaptionActive(callId: string, isCaptionsActive: boolean): void {
     this.modifyState((draft: CallClientState) => {

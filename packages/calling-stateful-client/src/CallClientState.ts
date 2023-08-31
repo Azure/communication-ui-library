@@ -16,10 +16,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
-import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { ParticipantCapabilities } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsResultType } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
@@ -150,6 +148,10 @@ export interface CapabilitiesFeatureState {
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature.capabilities}.
    */
   capabilities: ParticipantCapabilities;
+  /**
+   * Proxy of the latest {@link @azure/communication-calling#CapabilitiesChangeInfo}
+   */
+  latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
 /**
@@ -176,13 +178,22 @@ export interface RaiseHandCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  raisedHands: RaisedHand[];
+  raisedHands: RaisedHandState[];
   /**
    * Contains information for local participant from list {@link @azure/communication-calling#RaiseHandCallFeature.raisedHands}.
    */
-  localParticipantRaisedHand?: RaisedHand;
+  localParticipantRaisedHand?: RaisedHandState;
 }
-``;
+
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * Raised hand state with order
+ *
+ * @public
+ */
+export type RaisedHandState = {
+  raisedHandOrderPosition: number;
+};
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
@@ -266,6 +277,11 @@ export interface RemoteVideoStreamState {
    * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
    */
   view?: VideoStreamRendererViewState;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
+   */
+  streamSize?: { width: number; height: number };
 }
 
 /**
@@ -340,7 +356,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.RaisedHand.raisedHands}.
    */
-  raisedHand?: RaisedHand;
+  raisedHand?: RaisedHandState;
 }
 
 /**
@@ -473,7 +489,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
-  capabilities?: CapabilitiesFeatureState;
+  capabilitiesFeature?: CapabilitiesFeatureState;
 }
 
 /* @conditional-compile-remove(call-transfer) */
