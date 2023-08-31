@@ -14,7 +14,7 @@ import {
   noMessageStatusStyle,
   defaultMyChatMessageContainer,
   defaultChatMessageContainer,
-  FailedMyChatMessageContainer
+  // FailedMyChatMessageContainer
 } from './styles/MessageThread.styles';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
