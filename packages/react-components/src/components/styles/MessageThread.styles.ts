@@ -20,7 +20,7 @@ const AVATAR_MESSAGE_GAP_REM = 0.5;
 const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 
 // Avatars should display on top of chat messages when the chat thread is narrow
-const MESSAGE_AVATAR_OVERLAP_REM = 0.425;
+const MESSAGE_AVATAR_OVERLAP_REM = 0.925;
 const CHAT_MESSAGE_ZINDEX = 1;
 const AVATAR_ZINDEX = 2;
 // new message button should be on top of chat message
@@ -127,8 +127,8 @@ export const defaultChatItemMessageContainerStyles = makeStyles({
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`,
   },
   bodyOverlap: {
-    marginLeft: `$10rem`,
-    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + MESSAGE_AVATAR_OVERLAP_REM}rem)`,
+    marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + -MESSAGE_AVATAR_OVERLAP_REM}rem)`,
   }
 })
 
