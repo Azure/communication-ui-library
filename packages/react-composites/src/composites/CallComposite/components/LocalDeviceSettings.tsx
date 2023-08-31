@@ -17,7 +17,7 @@ import {
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';

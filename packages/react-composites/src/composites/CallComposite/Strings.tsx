@@ -217,7 +217,7 @@ export interface CallCompositeStrings {
    * control bar Chat button label.
    */
   chatButtonLabel: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(video-background-effects) */
   /**
    * Label for SidePaneHeader dismiss button
    */

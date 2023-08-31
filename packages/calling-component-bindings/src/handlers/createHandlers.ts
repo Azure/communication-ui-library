@@ -36,7 +36,7 @@ export interface CallingHandlers extends CommonCallingHandlers {
 /* @conditional-compile-remove(video-background-effects) */
 /**
  * Configuration options to include video effect background dependency.
- * @beta
+ * @public
  */
 export type CallingHandlersOptions = {
   onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;

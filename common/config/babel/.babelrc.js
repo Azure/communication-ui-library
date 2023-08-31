@@ -59,8 +59,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'total-participant-count',
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
-        // feature for blurred background and replace background effects
-        'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
         // Feature for updates needed for Click to Call (C2C) scenarios
@@ -94,6 +92,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // feature for blurred background and replace background effects
+        'video-background-effects'
       ]
     }
   ]);

@@ -33,8 +33,8 @@ export type {
   TeamsCallAdapter,
   TeamsCallAdapterArgs,
   TeamsAdapterOptions,
-  OnFetchProfileCallback,
-  Profile
+  Profile,
+  OnFetchProfileCallback
 } from './adapter';
 
 export type {

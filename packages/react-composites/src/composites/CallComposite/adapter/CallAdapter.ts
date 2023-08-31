@@ -251,7 +251,7 @@ export type DiagnosticChangedEventListner = (
 /**
  * Contains the attibutes of a background image like url, name etc.
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundImage {
   /**
@@ -321,7 +321,7 @@ export type TransferRequestedListener = (event: TransferRequestedEventArgs) => v
 /**
  * Contains the attibutes of a selected video background effect
  *
- * @beta
+ * @public
  */
 export type VideoBackgroundEffect =
   | VideoBackgroundNoEffect
@@ -331,7 +331,7 @@ export type VideoBackgroundEffect =
 /**
  * Contains the attibutes to remove video background effect
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundNoEffect {
   /**
@@ -344,7 +344,7 @@ export interface VideoBackgroundNoEffect {
 /**
  * Contains the attibutes of the blur video background effect
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   /**
@@ -357,7 +357,7 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 /**
  * Contains the attibutes of a selected replacement video background effect
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
   /**
