@@ -54,13 +54,11 @@ export const useChatStyles = makeStyles({
   root: {
     ...shorthands.padding(0),
     paddingBottom: '0.5rem',
-    // paddingTop: '0.8rem',
     ...shorthands.border('none'),
-    ...shorthands.overflow('auto hidden'),
+    ...shorthands.overflow('auto'),
     // `height: 100%` ensures that the Chat component covers 100% of it's parents height
     // to prevent intermittent scrollbars when GIFs are present in the chat.
-    height: '100%',
-    width: 'auto'
+    height: '100%'
   }
 });
 
@@ -210,6 +208,10 @@ export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle =>
   maxWidth: '100%',
   minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
   marginRight: '0rem',
+  '& msft-mention': {
+    color: '#D83B01',
+    fontWeight: 600
+  },
   '& img': {
     maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
     height: 'auto !important'

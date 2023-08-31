@@ -1137,7 +1137,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
-
+  const v9Theme = createV9Theme(theme);
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -1234,17 +1234,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const fluentV9Wrapper = useFluentV9Wrapper();
 
   const chatBody = useMemo(() => {
-    const v9Theme = createV9Theme(theme);
     return (
       <LiveAnnouncer>
         <FluentProvider className={fluentV9Wrapper.body} theme={v9Theme} dir={theme.rtl ? 'rtl' : 'ltr'}>
-          <Chat className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}>
+          <Chat
+            className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}
+            ref={chatScrollDivRef}
+          >
             {messagesToDisplay}
           </Chat>
         </FluentProvider>
       </LiveAnnouncer>
     );
-  }, [theme, fluentV9Wrapper.body, classes.root, styles?.chatContainer, messagesToDisplay]);
+  }, [theme, fluentV9Wrapper.body, classes.root, styles?.chatContainer, messagesToDisplay, v9Theme]);
 
   return (
     <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>
@@ -1260,7 +1262,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           )}
         </div>
       )}
-      <div ref={chatScrollDivRef}>{chatBody}</div>
+      {chatBody}
     </div>
   );
 };
