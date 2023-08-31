@@ -33,7 +33,7 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
       <Heading>Cover iOS safe area</Heading>
       <Description>
-        To have the image gallery covers the safeArea on iOS devices, we can add `viewport-fit=cover` to the viewport
+        To have the image gallery cover the safeArea on iOS devices, we can add `viewport-fit=cover` to the viewport
         meta tag of the app.
       </Description>
       <Source code={metaTagExample} />
