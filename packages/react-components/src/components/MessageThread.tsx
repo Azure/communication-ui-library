@@ -1238,7 +1238,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     return (
       <LiveAnnouncer>
         <FluentProvider className={fluentV9Wrapper.body} theme={v9Theme} dir={theme.rtl ? 'rtl' : 'ltr'}>
-          <Chat className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}>
+          <Chat
+            className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}
+            ref={chatScrollDivRef}
+          >
             {messagesToDisplay}
           </Chat>
         </FluentProvider>
@@ -1260,7 +1263,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           )}
         </div>
       )}
-      <div ref={chatScrollDivRef}>{chatBody}</div>
+      {chatBody}
     </div>
   );
 };
