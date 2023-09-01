@@ -207,7 +207,21 @@
     "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
     "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content",
+    "capabilityChangedNotification": {
+      "turnVideoOn": {
+        "lostDueToMeetingOption": "Your camera has been disabled. You can no longer share video.",
+        "grantedDueToMeetingOption": "Your camera has been enabled. Turn it on if you'd like to share video."
+      },
+      "unmuteMic": {
+        "lostDueToMeetingOption": "Your mic has been disabled. You can no longer unmute.",
+        "grantedDueToMeetingOption": "Your mic has been enabled. Unmute if you'd like to speak."
+      },
+      "shareScreen": {
+        "lostDueToRoleChangeToAttendee": "Your role has been changed. Some actions, like sharing content, won't be available to you.",
+        "grantedDueToRoleChangeToPresenter": "You're a presenter. You can share content and facilitate the meeting."
+      }
+    }
   },
   "chat": {
     "chatListHeader": "In this chat",
