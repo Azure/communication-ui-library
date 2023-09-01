@@ -139,6 +139,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
   /* @conditional-compile-remove(image-gallery) */
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+  /* @conditional-compile-remove(image-gallery) */
+  const [isImageGalleryOpen, setIsImageGalleryOpen] = useState<boolean>(false);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -259,6 +261,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         saveAsName: attachment.id,
         imageUrl: ''
       };
+      setIsImageGalleryOpen(true);
 
       if (attachment.id in fullSizeAttachments) {
         setGalleryImages([
@@ -267,6 +270,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             imageUrl: fullSizeAttachments[attachment.id]
           }
         ]);
+        setIsImageGalleryOpen(true);
+
         return;
       }
 
@@ -281,6 +286,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               imageUrl: blobUrl
             }
           ]);
+          setIsImageGalleryOpen(true);
         }
       }
     },
@@ -289,6 +295,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(image-gallery) */
   const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
+    if (imageUrl === '') {
+      return;
+    }
     if (isIOS()) {
       window.open(imageUrl, '_blank');
     } else {
@@ -390,9 +399,12 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       {
         /* @conditional-compile-remove(image-gallery) */
         <ImageGallery
-          isOpen={galleryImages.length > 0}
+          isOpen={isImageGalleryOpen}
           images={galleryImages}
-          onDismiss={() => setGalleryImages([])}
+          onDismiss={() => {
+            setGalleryImages([]);
+            setIsImageGalleryOpen(false);
+          }}
           onImageDownloadButtonClicked={onImageDownloadButtonClicked}
         />
       }
