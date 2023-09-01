@@ -3,6 +3,8 @@
 
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { useLocale } from '../../../localization';
@@ -30,6 +32,9 @@ export const Microphone = (props: {
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
+
+  /* @conditional-compile-remove(capabilities) */
+  const unmuteMicCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.unmuteMic;
 
   /**
    * When call is in Lobby, microphone button should be disabled.
@@ -64,6 +69,12 @@ export const Microphone = (props: {
         microphoneButtonProps.disabled ||
         props.disabled ||
         /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+      }
+      /* @conditional-compile-remove(capabilities) */
+      onRenderOffIcon={
+        unmuteMicCapability && !unmuteMicCapability.isPresent
+          ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />
+          : undefined
       }
     />
   );

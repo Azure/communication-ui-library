@@ -77,8 +77,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
       {
         ...this.baseChatThreadEvent(),
         properties: {
-          topic: topic,
-          metadata: {}
+          topic: topic
+          // metadata: {}
         },
         updatedOn: new Date(Date.now()),
         updatedBy: chatToSignalingParticipant(this.checkedGetMe())
@@ -341,8 +341,8 @@ export class FakeChatThreadClient implements IChatThreadClient {
         {
           ...this.baseChatThreadEvent(),
           properties: {
-            topic: request.topic,
-            metadata: {}
+            topic: request.topic
+            // metadata: {}
           },
           updatedOn: new Date(Date.now()),
           updatedBy: chatToSignalingParticipant(this.checkedGetMe())

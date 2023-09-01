@@ -50,6 +50,10 @@ import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
+/* @conditional-compile-remove(capabilities) */
+import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 
 /**
  * Props for {@link CallComposite}.
@@ -107,7 +111,7 @@ export interface DeviceCheckOptions {
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface RemoteVideoTileMenuOptions {
   /**
@@ -213,7 +217,7 @@ export type CallCompositeOptions = {
   /**
    * Remote participant video tile menu options
    */
-  remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
@@ -297,6 +301,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
+
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedNotificationBarProps =
+    useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
+
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -356,6 +367,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -422,6 +435,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -438,6 +453,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -459,6 +476,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           galleryLayout={
             props.options?.galleryOptions?.layout ? props.options.galleryOptions.layout : 'floatingLocalVideo'
           }
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -475,6 +494,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               mobileChatTabHeader={props.mobileChatTabHeader}
               latestErrors={latestErrors}
               onDismissError={onDismissError}
+              /* @conditional-compile-remove(capabilities) */
+              capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }
         </>

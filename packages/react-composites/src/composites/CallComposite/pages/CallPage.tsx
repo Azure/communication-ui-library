@@ -32,6 +32,8 @@ import { networkReconnectTileSelector } from '../selectors/networkReconnectTileS
 import { reduceCallControlsForMobile } from '../utils';
 import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 
 /**
  * @private
@@ -50,6 +52,8 @@ export interface CallPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   galleryLayout: VideoGalleryLayout;
+  /* @conditional-compile-remove(capabilities) */
+  capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
 
 /**
@@ -117,7 +121,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               /* @conditional-compile-remove(pinned-participants) */
-              remoteVideoTileMenuOptions={options?.remoteVideoTileMenu}
+              remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
               drawerMenuHostId={drawerMenuHostId}
               /* @conditional-compile-remove(click-to-call) */
               localVideoTileOptions={options?.localVideoTile}
@@ -144,6 +148,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
       /* @conditional-compile-remove(gallery-layouts) */
       userSetGalleryLayout={userSetGalleryLayout}
+      /* @conditional-compile-remove(capabilities) */
+      capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
     />
   );
 };
