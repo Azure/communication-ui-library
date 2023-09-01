@@ -69,7 +69,7 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
         if (!message) {
           return null;
         }
-        const iconProps = getNotificationIconProps(notification);
+        const iconProps = getCustomMessageBarIconProps(notification);
         return (
           <MessageBar
             key={notification.capabilityName}
@@ -120,20 +120,27 @@ const getCapabilityChangedNotificationString = (
 };
 
 /* @conditional-compile-remove(capabilities) */
-const getNotificationIconProps = (notification: CapabalityChangedNotification): IIconProps | undefined => {
+const getCustomMessageBarIconProps = (notification: CapabalityChangedNotification): IIconProps | undefined => {
+  let iconName: string | undefined = undefined;
   switch (notification.capabilityName) {
     case 'turnVideoOn':
       if (notification.isPresent) {
-        return { iconName: 'ControlButtonCameraOn' };
+        iconName = 'ControlButtonCameraOn';
+      } else {
+        iconName = 'ControlButtonCameraProhibited';
       }
-      return { iconName: 'ControlButtonCameraProhibited' };
+      break;
     case 'unmuteMic':
       if (notification.isPresent) {
-        return { iconName: 'ControlButtonMicOn' };
+        iconName = 'ControlButtonMicOn';
+      } else {
+        iconName = 'ControlButtonMicProhibited';
       }
-      return { iconName: 'ControlButtonMicProhibited' };
+      break;
+    default:
+      return undefined;
   }
-  return undefined;
+  return { iconName, styles: { root: { '> *': { height: '1rem', width: '1rem' } } } };
 };
 
 /* @conditional-compile-remove(capabilities) */

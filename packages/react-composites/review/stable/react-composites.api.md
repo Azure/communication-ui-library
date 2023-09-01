@@ -287,6 +287,7 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -961,6 +962,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
+    VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
     SplitButtonPrimaryActionCameraOn: JSX.Element;
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
@@ -1093,6 +1100,11 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
+
+// @public
+export interface RemoteVideoTileMenuOptions {
+    isHidden?: boolean;
+}
 
 // @public
 export type TopicChangedListener = (event: {

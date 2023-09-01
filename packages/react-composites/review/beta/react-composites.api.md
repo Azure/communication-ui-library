@@ -396,7 +396,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -1618,7 +1618,7 @@ export type Profile = {
     displayName?: string;
 };
 
-// @beta
+// @public
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }

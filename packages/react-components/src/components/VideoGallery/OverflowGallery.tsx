@@ -12,7 +12,6 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styl
 import { VerticalGalleryStyles } from '../VerticalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
-/* @conditional-compile-remove(pinned-participants) */
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
