@@ -315,7 +315,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const className = mergeClasses(
     messageContainerClasses?.body,
     classes.body,
-    shouldOverlapAvatarAndMessage ? classes.bodyAvatarOverlap : classes.bodyAvatarOverlap
+    shouldOverlapAvatarAndMessage ? classes.bodyOverlap : classes.bodyOverlap
   );
 
   console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
