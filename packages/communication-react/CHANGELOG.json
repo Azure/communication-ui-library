@@ -2,6 +2,779 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 28 Aug 2023 22:17:59 GMT",
+      "tag": "@azure/communication-react_v1.8.0-beta.1",
+      "version": "1.8.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dc3a812f68c44968c0fa02413d7cefb896d26af1",
+            "area": "fix",
+            "workstream": "Pinned Layouts",
+            "comment": "Add stream size to remote video stream"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "048c56cb19231d1217259fe3f04d78751209b7cd",
+            "comment": "Removes the role hint and permissions provider from the CallAdapter state allowing for simpler use of the CallComposite with a rooms call"
+          },
+          {
+            "author": "ruslanzdor@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f39bab5bc738cbc6efcf1371eed8f19e4291d158",
+            "area": "feature",
+            "workstream": "Raise hand feature",
+            "comment": "Add Raise hand feature to the package"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b2c93c33f79b99977bdd37f532285ad8405409d0",
+            "comment": "Update Rooms API for naming clarity in icons"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6fff1d88a52fef357c00131b83db4f12ad06dc43",
+            "area": "improvement",
+            "workstream": "Tracking correct dependencies",
+            "comment": "updating stable dependencies to use caret for calling and chat"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8b87309b2d36cb535b138e42a35caaf3d061747f",
+            "area": "improvement",
+            "workstream": "Change caption banner width to fixed width, change spoken/caption drawer text size",
+            "comment": "ui change"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "288d779889f81e18d86afbcc5c01b76efc264ea6",
+            "area": "feature",
+            "workstream": "Gallery layouts",
+            "comment": "Introduce speaker layout and other layout controls to composites"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ac094d80d42c09881095416c395daee9c40dd469",
+            "area": "feature",
+            "workstream": "Call composite and CallWithChat composite",
+            "comment": "Update Call and CallWithChat composites to use the same control bar"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cdd03e8028f22cfd3c3008b1b185944ec6ed50ff",
+            "area": "feature",
+            "workstream": "Update captions based on new sdk changes, allow changing caption language",
+            "comment": "Update captions based on new sdk changes, allow changing caption language"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "694623a58bcab2b2200be7ff85dc1daa8732beb3",
+            "area": "feature",
+            "workstream": "total participant count",
+            "comment": "remove feature from stable API"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a9e0bd43635abe71cd776b87a5e85f0a69a1f832",
+            "area": "feature",
+            "workstream": "gallery layouts",
+            "comment": "Introduce testing for the focused content layout"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7e187677bbc50da21a0ead122e661e10e91ac08d",
+            "area": "feature",
+            "workstream": "video-background-effects",
+            "comment": "Add missing CallAdapterOptions to createAzureCommunicationCallWithChatAdapterFromClients"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "203af3e63ffc1ddb85d56a45130c18985683b4ad",
+            "comment": "Introduce total participant counts to participant list and people pane in composites"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a71e9f404d5cfd3fb06fd438d57813ff3c483fcf",
+            "area": "feature",
+            "workstream": "Custom gallery layouts",
+            "comment": "Introduce E2E tests for validating the movement of the overflow gallery to the top of the video gallery"
+          },
+          {
+            "author": "ruslanzdor@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "96919ef4c23a856f45bd1314e1eb3e1f3593aacb",
+            "comment": "Add Raise hand feature to the UI library"
+          },
+          {
+            "author": "ruslanzdor@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ad6f4ce584b095b1664e6d2135906e8e9bcac54e",
+            "comment": "add Raise hand feature stateful client changes"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f68db425ddbb8889fea2dc0acd808aab384dae28",
+            "area": "feature",
+            "workstream": "Gallery layouts",
+            "comment": "Introduce component testing and e2e testing for speaker layout"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "67ca6b5e4f449032989b1e40238a6dbdcde5d94a",
+            "area": "feature",
+            "workstream": "Custom Layouts",
+            "comment": "Introduces Speaker gallery layout to the video gallery component"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5f95f3093e82b8d1613f22580f873bfd65cc725e",
+            "area": "feature",
+            "workstream": "gallery layouts",
+            "comment": "Introduce FocusedContent layout for optimizing screenshare for local user"
+          },
+          {
+            "author": "ruslanzdor@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "comment": "adding raised hand functionality to stateful client"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "010023f5d26bb3d2ed3bab6565c5d04cf55f5edb",
+            "area": "improvement",
+            "workstream": "Chat SDK beta upgrade",
+            "comment": "Upgrade ChatSDK to 1.3.2"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fac1ceb6948b91c762b5439fa1cc2dae304f5e2d",
+            "comment": "Update captions banner width and height for better readibility"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8182171ee15598b8f5663edf8e174846ff7bf876",
+            "area": "improvement",
+            "workstream": "Calling SDK beta upgrade",
+            "comment": "Upgrade calling beta to 1.16.3-beta.1"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cf000f6e78b2af8fc9ee15e4285171ae91c5a6c1",
+            "area": "improvement",
+            "workstream": "Chat SDK beta upgrade",
+            "comment": "Update ChatSDK version to 1.4.0-beta.1"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "15c678437e0ce5b26eebcd842448aab6cc9fb3e0",
+            "comment": "Add support for depencdency isolation for video background effects (Treeshaking + Lazy loading)"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "19116083897ba09f1d3443800f0405c32cf3ef1e",
+            "area": "feature",
+            "workstream": "Capabilities",
+            "comment": "Added CapabilitiesChangedListener to CallAdapter"
+          },
+          {
+            "author": "ruslanzdor@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "86b495df5325f92b05d259fe45c43954ce10046d",
+            "area": "feature",
+            "workstream": "raise hand feature",
+            "comment": "update storybook"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "887d40231377848fa41fce6e717f2ebd0653533f",
+            "comment": "add ovc to storybook"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "135adb37ebc465cb63a08abdde35870a17d8f3b2",
+            "comment": "Update captions banner width and height for better readibility"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5b37462d1f801f70ff52c8978d0fc2cb9a26b724",
+            "comment": "Make overflow gallery movable by the user"
+          },
+          {
+            "author": "ruslanzdor@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "879e55937b75ed094262928fbe0a6c722751074a",
+            "area": "fix",
+            "workstream": "raise hand feature",
+            "comment": "disable raise hand button in lobby"
+          }
+        ],
+        "none": [
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5779cdd15d566e5ae98119778b995daf76af04af",
+            "area": "improvement",
+            "workstream": "Release",
+            "comment": "Disable Changelog step for release branch script"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "49b520460b59eab99cc47da2a2953b03e9e58683",
+            "area": "improvement",
+            "workstream": "KTLO",
+            "comment": "Fix deviceorientationevent not found error in samples in safari"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0f5b5524890a9adb4e332fe3fe17d15efaa09748",
+            "area": "fix",
+            "workstream": "KTLO",
+            "comment": "Fix nightly alpha releases having || in the version dependencies"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8c3ecc69466ea2c7da2a5dbfc661c1c338b30b47",
+            "area": "improvement",
+            "workstream": "CI",
+            "comment": "Fixed a script for release branch creation"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5b18abe71a8ed549ce80b27893d0f2d58d77b62e",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Enable keyboard navigation for inlineImage"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e58a594011e8a9c772163b1ab486c368cf3d7f49",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Update onInlineImageClicked API"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "312d99de51fb230e63e84c334293495887ad861e",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Add download image functionality to composite"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "7b289fa161d0e332ba9eb0f33a8e8a72f30c564e",
+            "comment": "Update creating-a-release.md"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "dc0477364605b711b976699711147487efbabcc9",
+            "area": "improvement",
+            "workstream": "Storybook",
+            "comment": "Update gifs and image for VideoGallery pinning docs"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cb920f52dbfa0ca7946d5f14abe3306b4848850f",
+            "area": "fix",
+            "workstream": "Image Gallery",
+            "comment": "Remove and revert storybook"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4079ed828b7af700f39d3becdb5351e5ecd209b9",
+            "area": "fix",
+            "workstream": "Image Gallery",
+            "comment": "Fix image gallery double click to use default behaviour"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d7b14c8c96c5d4dc253fee957a6dff6286e8d461",
+            "area": "improvement",
+            "workstream": "CI",
+            "comment": "Versions bump scripts update"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "435e8730e2ddbf96001d7e6ad9dc4b731c11c5d6",
+            "area": "fix",
+            "workstream": "Image Gallery",
+            "comment": "Adding new image gallery conditional conditional flage"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5bd9cd6fae97685ed6ffb56298bc9a955ede753",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Add isOpen to ImageGallery API"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5471e4361dfdfc020e9d54009de18010ecb7d6c1",
+            "area": "fix",
+            "workstream": "KTLO",
+            "comment": "Improve shake to send logs: capture all console and window logging events, do not log on desktop, fix iOS asking for permissions everytime page is opened"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7d5709b942d7ff15d37e637ce6df52d7e6eb0c1f",
+            "area": "improvement",
+            "workstream": "Documentation",
+            "comment": "Updated documentation to reflect onSendMessage behaviour"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "7305a3dffbadcd1ae3e35fcb50f27d4d070e4c91",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Remove redundant cc comment"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "b98bbf7e64a216d362e517a7c165753eefb43312",
+            "comment": "Add type check to stable sample calling app"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f4a78b865bb3e2fc04e53d1baa52a14471573bed",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Add new storybook page for image gallery"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ab322a76524623a8c0ceab22b2e8427c33bfe6bb",
+            "comment": "Adding Feature request through Microsoft QNA template"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "692d3143f1ce4c77e16a0e234a40f47ac3c421b4",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Rearrange Image Gallery layout"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9f2a4f1fe9e748bb383999653231c68956455a19",
+            "area": "improvement",
+            "workstream": "CI",
+            "comment": "Fix alpha packages to have well defined beta dependencies and not leak stable deps that break builds"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2d205814ab74c6d79773daa3b47f4c03adf2fce5",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Add e2e tests for different themes for Image Gallery"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b2bea859be0618d0a316bb51938e977a6014a464",
+            "comment": "Intermediate fix for capabilites not being provided correctly by beta of Calling SDK (do not include this in release change log)"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "96b589a2a81c882bc71de0b4e5f383236db3cd4c",
+            "comment": "Add ImageGallery as a new UI component"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "377c271eb8b2e8073646d50478205e25e0c9d1b3",
+            "area": "improvement",
+            "workstream": "Update chat SDK dependency",
+            "comment": "Update dep formally to chat 1.3.1 stable"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "afa9d51d7d498a8607f58a7baabe01a2d1215e8c",
+            "area": "improvement",
+            "workstream": "Storybook",
+            "comment": "Add image gallery implementation into storybook examples"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "629b5ec93dd4466f790955234c26dbcce53eb932",
+            "area": "fix",
+            "workstream": "storybook",
+            "comment": "Fix storybook bot missing displayName"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5779cdd15d566e5ae98119778b995daf76af04af",
+            "area": "improvement",
+            "workstream": "Release",
+            "comment": "Change log grooming for 1.7.0"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "acd057654c3da712894bfbd698499b6b076caaca",
+            "comment": "removing feature issue type"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "691d291a5e72ef31e82af4b91147c45031b989bc",
+            "area": "feature",
+            "workstream": "ImageGallery",
+            "comment": "Add unit tests for Image Gallery component"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "010096e7f8b14e89fd7a4638d4923f14aab0daa9",
+            "area": "improvement",
+            "workstream": "Contribution Guide",
+            "comment": "Introduce new guideline for how to make changelog entry"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "669391793a31ae0d8254b4ccbaf57af5384b4a9d",
+            "area": "improvement",
+            "workstream": "Release",
+            "comment": "Updated `stable-remove-beta-version` option to `stable-remove-beta-suffix` in create-prerelease-branch.yml"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1b7d04825619958e7253b6d02f9d34f5877e0a29",
+            "comment": "Update updating-npm-publishing.md to include detailed steps on PAT Token generation and troubleshooting guide"
+          },
+          {
+            "author": "41898282+github-actions[bot]@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "not available",
+            "comment": "Bumped"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "07bbd05910bc10f38c957b1867b9aaa386d0afbd",
+            "comment": "Fix icon documentation"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e504b8e65daf49ad46aab0f58eb44865458d4cea",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Fetch translation strings"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3daf21d18b906e053e0a7a161c3db73cca89e899",
+            "area": "improvement",
+            "workstream": "Packages",
+            "comment": "Rush version update"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cf573bd72e37f101c7bc5fca9b04eeb0b2339b5c",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Add localization strings for ImageGallery"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "de5c373c1e54494c8cbbf030ef6555f5e8f18cfb",
+            "area": "improvement",
+            "workstream": "Documentation Update",
+            "comment": "Update documentation of CallwithChat Adapter API for clarification"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6cb849a1e99cbfcf7f795ee21ecf04ba30cae99b",
+            "area": "improvement",
+            "workstream": "Sample apps",
+            "comment": "Fixed CC statements for the calling sample app"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "73a825edd307bf30ef4c95688b5a3bd700574f78",
+            "area": "improvement",
+            "workstream": "KTLO",
+            "comment": "Add 'shake to send logs' feature to sample apps"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c7c0589c4b3ab24a8932522958777ca1c4e195e",
+            "comment": "Group call readiness icons together in icon list of storybook documentation "
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0dec467fa8ae588dbc358b9671af6ff058d3b1be",
+            "area": "improvement",
+            "workstream": "Localization",
+            "comment": "Updating localized resource files"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "685993625b8ae5ad16ee88d943a989d57059df27",
+            "comment": "Fix home screen error of stable Calling sample"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "80d98406dfe570b2d63b57c390929ba0129cc9e5",
+            "comment": "Add capabilities selector to disable camera, microphone and screenshare buttons when corresponding capability is not present"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e504b8e65daf49ad46aab0f58eb44865458d4cea",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Fetch translation strings"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "87bc23c5fce96c47c9583d8e9cc29bc2a8834167",
+            "area": "improvement",
+            "workstream": "KTLO",
+            "comment": "Handle 413 error when uploading logs in sample apps"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1c16af3e1a491433f4913ef1d9d9e69dde30849b",
+            "area": "fix",
+            "workstream": "Calling sample app",
+            "comment": "Fixed logic of when to show display name field in Calling sample app"
+          }
+        ],
+        "patch": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c91f72ead474aaca7bd1754889295a7454887f73",
+            "area": "fix",
+            "workstream": "A11y bug",
+            "comment": "Fixes side pane to refocus the people button when user closes the people pane with keyboard."
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fbe266be534f00f805c6bf6c1e5d3f7c770f5e8c",
+            "area": "improvement",
+            "workstream": "Release",
+            "comment": "Fetch translated strings"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "02b605eb3e32245ddac4c764882225d0cd391125",
+            "comment": "Improve Czech translated strings"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "860457870b4c6d7039c7b6264fada4f23cad1888",
+            "area": "fix",
+            "workstream": "OCE",
+            "comment": "Fix typo on Custom data model page in the CallComposite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d04b8a63bf1f5c7a28a848c6021182921cf72fc1",
+            "area": "fix",
+            "workstream": "Bug",
+            "comment": "Fixes issue where when local participant stops screen share their local stream would disappear but still be showing to others in the call"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a1a8f90f44eb64583f74f3441abb359b426fe178",
+            "area": "improvement",
+            "workstream": "Updating (stable) Calling SDK dependency",
+            "comment": "Updating to include latest Calling SDK Hotfix"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eeecb7c9caba70f9d86354ef69b271f76c994c27",
+            "area": "fix",
+            "workstream": "Image Gallery",
+            "comment": "Fix to allow iOS browsers to open the image in a new tab"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2ab44b4a1739e6a7f0596e0e9caa2911e47222b7",
+            "area": "fix",
+            "workstream": "bugfix, A11y",
+            "comment": "Autofocus on Resume Call button in OnHold screen page"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ff606af5c7c9a8d14b9870554e32bb2acae4bfa7",
+            "area": "fix",
+            "workstream": "video-background-effects",
+            "comment": "Add default aria label for video effect items"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fa8e570f5d17de61998f0e353ca18262567bae2c",
+            "area": "fix",
+            "workstream": "Bugs",
+            "comment": "Ensure camera and microphone permissions are re-requested when the number of devices goes from 0 to n"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1c92da0d38de8c322a71373e894730cef3e431a3",
+            "area": "fix",
+            "workstream": "Fix bug where people button does not announce selected state",
+            "comment": "people button announce seleted state"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a231cacfe093f184a28dcb88174568d9451a74ae",
+            "area": "improvement",
+            "workstream": "Beachball",
+            "comment": "Updated Beachball config with new prompts"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8af7943464219c1a8ffc50d4ab5c3597d98bbf90",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where chat keyboard would dismiss randomly during interop meetings."
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b6d9163f439ad2090188e92c3933585aa9cbe6ad",
+            "area": "fix",
+            "workstream": "Stateful Client",
+            "comment": "Fix message type being hard coded in sending state"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0ecc13ed4da51ebf78b95acf4fe5d800c0db4a51",
+            "area": "fix",
+            "workstream": "control-bar",
+            "comment": "Remove controlBar shadow in landscape mobile view"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "41a13025fe3ac1bf39d03eb662969b7df28c7baf",
+            "area": "fix",
+            "workstream": "Participant count",
+            "comment": "Fix participant count when you are alone in a call"
+          }
+        ],
+        "minor": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "7a28a44a79a4ca0305c554c8c812cb3472d9dee8",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Bump version to 1.7.0-beta.2"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2f16cc8cccb77a4ba3a2fa34fad52c63ac704115",
+            "area": "feature",
+            "workstream": "ImageGallery",
+            "comment": "Remove the styles props for image gallery"
+          },
+          {
+            "author": "joshlai@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2c496cbf16d9dee134c90ef01b604ea90fef8123",
+            "area": "improvement",
+            "workstream": "Signaling",
+            "comment": "Updating signaling sdk to 1.0.0-beta19"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "56d459fce2861b55c8d0d1dc2a50b860f67eaa66",
+            "comment": "Deprecate old joinCall API and replace with joinCall API with options bag"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b1aaf48b6745ff45af650a31cda1b5f5530ccd54",
+            "area": "feature",
+            "workstream": "ImageGallery",
+            "comment": "Add functionality to open image gallery when user taps on an inline image"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Aug 2023 18:28:26 GMT",
       "tag": "@azure/communication-react_v1.7.0",
       "version": "1.7.0",
