@@ -311,12 +311,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
   const rootLayout = _useChatMyMessageLayout();
 
-  const classes = defaultChatItemMessageContainerStyles();
-  const className = mergeClasses(
+  const chatItemMessageContainerClasses = defaultChatItemMessageContainerStyles();
+  const chatItemMessageContainerClassName = mergeClasses(
     messageContainerClasses?.body,
-    mergeStyles(messageContainerStyle),
-    classes.body,
-    shouldOverlapAvatarAndMessage ? classes.bodyAvatarOverlap : classes.bodyAvatarNoOverlap
+    chatItemMessageContainerClasses.body,
+    shouldOverlapAvatarAndMessage ? chatItemMessageContainerClasses.bodyAvatarOverlap : chatItemMessageContainerClasses.bodyAvatarNoOverlap
   );
 
   console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
@@ -384,7 +383,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             attached={attached}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
-              className: className
+              className: chatItemMessageContainerClassName
             }}
             data-ui-id="chat-composite-message"
             onTouchStart={() => setWasInteractionByTouch(true)}
