@@ -3,7 +3,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Chat } from '@fluentui-contrib/react-chat';
-import { mergeClasses, FluentProvider } from '@fluentui/react-components';
+import { mergeClasses } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -49,7 +49,7 @@ import { FileMetadata } from './FileDownloadCards';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
-import { createV9Theme, useFluentV9Wrapper } from './../theming/v9ThemeShim';
+import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
@@ -1137,7 +1137,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
-  const v9Theme = createV9Theme(theme);
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -1231,22 +1230,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const classes = useChatStyles();
-  const fluentV9Wrapper = useFluentV9Wrapper();
 
   const chatBody = useMemo(() => {
     return (
       <LiveAnnouncer>
-        <FluentProvider className={fluentV9Wrapper.body} theme={v9Theme} dir={theme.rtl ? 'rtl' : 'ltr'}>
+        <FluentV9ThemeProvider v8Theme={theme}>
           <Chat
             className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}
             ref={chatScrollDivRef}
           >
             {messagesToDisplay}
           </Chat>
-        </FluentProvider>
+        </FluentV9ThemeProvider>
       </LiveAnnouncer>
     );
-  }, [theme, fluentV9Wrapper.body, classes.root, styles?.chatContainer, messagesToDisplay, v9Theme]);
+  }, [theme, classes.root, styles?.chatContainer, messagesToDisplay]);
 
   return (
     <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>
