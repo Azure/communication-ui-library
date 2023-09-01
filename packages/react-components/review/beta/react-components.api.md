@@ -1231,8 +1231,8 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 // @beta
 export interface ImageGalleryImageProps {
     altText?: string;
-    imageUrl: string;
     downloadFilename: string;
+    imageUrl: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
