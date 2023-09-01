@@ -130,13 +130,11 @@ export const defaultChatItemMessageContainerStyles = makeStyles({
     marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + -MESSAGE_AVATAR_OVERLAP_REM}rem)`,
   },
-  bodyDefault: {
-  },
   bodyFailed: {
-    backgroundColor: 'rgba(168, 0, 0, 0.2)' // Should be themed?
+    backgroundColor: 'rgba(168, 0, 0, 0.2)'
   },
   bodyBlocked: {
-    backgroundColor: 'rgb(199, 224, 244)' // Should be themed?
+    backgroundColor: 'rgb(199, 224, 244)'
   }
 })
 

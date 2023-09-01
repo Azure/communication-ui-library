@@ -33,15 +33,15 @@ import { MentionDisplayOptions } from '../MentionPopover';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { mergeClasses } from '@fluentui/react-components';
 import {
-  // chatBlockedMessageClasses,
-  // chatBlockedMyMessageClasses,
+  chatBlockedMessageClasses,
+  chatBlockedMyMessageClasses,
   // defaultChatItemMessageContainerNoOverlap,
   // defaultChatItemMessageContainerOverlap,
   defaultChatItemMessageContainerStyles,
   gutterWithAvatar,
   gutterWithHiddenAvatar,
-  // useChatMyMessageClasses,
-  // useChatMessageClasses,
+  useChatMyMessageClasses,
+  useChatMessageClasses,
   _useChatMyMessageLayout
 } from '../styles/MessageThread.styles';
 
@@ -301,22 +301,21 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   let renderedStatusIcon =
     showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
   renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
-  // const chatMyMessageClass = useChatMyMessageClasses(message.status);
-  // const chatMessageClass = useChatMessageClasses(message.status);
-  // const chatBlockedMyMessageClass = chatBlockedMyMessageClasses();
-  // const chatBlockedMessageClass = chatBlockedMessageClasses();
+  const chatMyMessageClass = useChatMyMessageClasses(message.status);
+  const chatMessageClass = useChatMessageClasses(message.status);
+  const chatBlockedMyMessageClass = chatBlockedMyMessageClasses();
+  const chatBlockedMessageClass = chatBlockedMessageClasses();
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
-  // const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
-  // const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
+  const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
+  const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
   const rootLayout = _useChatMyMessageLayout();
 
   const classes = defaultChatItemMessageContainerStyles();
   const className = mergeClasses(
+    messageContainerClasses?.body,
     classes.body,
-    shouldOverlapAvatarAndMessage ? classes.bodyAvatarOverlap : classes.bodyAvatarOverlap,
-    message.status === 'failed' ? classes.bodyFailed : classes.bodyDefault,
-    message.messageType === 'blocked' ? classes.bodyBlocked : classes.bodyDefault
+    shouldOverlapAvatarAndMessage ? classes.bodyAvatarOverlap : classes.bodyAvatarOverlap
   );
 
   console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
