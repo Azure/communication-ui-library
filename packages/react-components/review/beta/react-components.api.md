@@ -1232,7 +1232,7 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 export interface ImageGalleryImageProps {
     altText?: string;
     imageUrl: string;
-    saveAsName: string;
+    downloadFilename: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -1243,7 +1243,7 @@ export interface ImageGalleryProps {
     isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
     startIndex?: number;
 }
 

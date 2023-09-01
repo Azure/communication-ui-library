@@ -258,7 +258,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const galleryImage: ImageGalleryImageProps = {
         title: attachment.name,
         titleIcon: titleIcon,
-        saveAsName: attachment.id,
+        downloadFilename: attachment.id,
         imageUrl: ''
       };
       setIsImageGalleryOpen(true);
@@ -294,7 +294,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(image-gallery) */
-  const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
+  const onImageDownloadButtonClicked = useCallback((imageUrl: string, downloadFilename: string): void => {
     if (imageUrl === '') {
       return;
     }
@@ -305,7 +305,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const a = document.createElement('a');
       // Set the href and download attributes for the anchor element
       a.href = imageUrl;
-      a.download = saveAsName;
+      a.download = downloadFilename;
       a.rel = 'noopener noreferrer';
       a.target = '_blank';
 

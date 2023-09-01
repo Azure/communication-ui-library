@@ -39,7 +39,7 @@ export interface ImageGalleryImageProps {
   /** Image Url used to display the image in a large scale. */
   imageUrl: string;
   /** String used as a file name when downloading this image to user's local device. */
-  saveAsName: string;
+  downloadFilename: string;
   /** Optional string used as a alt text for the image. @default 'image' */
   altText?: string;
   /** Optional string used as the title of the image and displayed on the top left corner of the ImageGallery. */
@@ -69,7 +69,7 @@ export interface ImageGalleryProps {
   /**
    * Callback called when the download button is clicked.
    */
-  onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+  onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
   /**
    * Callback called when there's an error loading the image.
    */
@@ -127,7 +127,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             className={mergeStyles(downloadButtonStyle(theme))}
             /* @conditional-compile-remove(image-gallery) */
             text={localeStrings.downloadButtonLabel}
-            onClick={() => onImageDownloadButtonClicked(image?.imageUrl || '', image?.saveAsName || 'image')}
+            onClick={() => onImageDownloadButtonClicked(image?.imageUrl || '', image?.downloadFilename || 'image')}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
             /* @conditional-compile-remove(image-gallery) */
@@ -136,7 +136,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
-            onClick={() => onImageDownloadButtonClicked(image?.imageUrl, image?.saveAsName)}
+            onClick={() => onImageDownloadButtonClicked(image?.imageUrl, image?.downloadFilename)}
             /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
