@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "OCE",
-  "comment": "Fix typo on Custom data model page in the CallComposite",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

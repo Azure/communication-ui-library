@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "Storybook",
-  "comment": "Add image gallery implementation into storybook examples",
-  "packageName": "@azure/communication-react",
-  "email": "joshlai@microsoft.com",
-  "dependentChangeType": "none"
-}
