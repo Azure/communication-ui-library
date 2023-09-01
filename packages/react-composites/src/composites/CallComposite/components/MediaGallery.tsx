@@ -166,7 +166,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
         onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
-        remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
+        remoteVideoTileMenu={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(rooms) */
