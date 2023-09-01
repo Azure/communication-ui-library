@@ -122,11 +122,11 @@ export const defaultChatItemMessageContainerStyles = makeStyles({
       fontWeight: 600
     }
   },
-  bodyNoOverlap: {
+  bodyAvatarNoOverlap: {
     marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`,
   },
-  bodyOverlap: {
+  bodyAvatarOverlap: {
     marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`,
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + -MESSAGE_AVATAR_OVERLAP_REM}rem)`,
   }

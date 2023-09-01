@@ -314,8 +314,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const classes = defaultChatItemMessageContainerStyles();
   const className = mergeClasses(
     messageContainerClasses?.body,
+    mergeStyles(messageContainerStyle),
     classes.body,
-    shouldOverlapAvatarAndMessage ? classes.bodyOverlap : classes.bodyOverlap
+    shouldOverlapAvatarAndMessage ? classes.bodyAvatarOverlap : classes.bodyAvatarNoOverlap
   );
 
   console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
