@@ -93,6 +93,7 @@ export interface CallState {
     isMuted: boolean;
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
+    optimalVideoCount: OptimalVideoCountFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -175,6 +176,11 @@ export interface MediaDiagnosticsState {
 export interface NetworkDiagnosticsState {
     // (undocumented)
     latest: LatestNetworkDiagnostics;
+}
+
+// @public
+export interface OptimalVideoCountFeatureState {
+    maxRemoteVideoStreams: number;
 }
 
 // @public

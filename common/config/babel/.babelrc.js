@@ -100,7 +100,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Do not use in production code.
         'stabilizedDemo',
         // Pinned Participants
-        'pinned-participants'
+        'pinned-participants',
+        // Optimal Video Count
+        'optimal-video-count'
       ]
     }
   ]);

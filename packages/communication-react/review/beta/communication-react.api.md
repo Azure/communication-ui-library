@@ -3269,7 +3269,7 @@ export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffect
 // @beta
 export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
-// @beta
+// @public
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
