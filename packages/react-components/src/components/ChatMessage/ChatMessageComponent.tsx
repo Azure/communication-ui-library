@@ -48,7 +48,6 @@ type ChatMessageComponentProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
-
   /**
    * Whether to overlap avatar and message when the view is width constrained.
    */

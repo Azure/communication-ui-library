@@ -313,12 +313,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const chatItemMessageContainerClasses = defaultChatItemMessageContainerStyles();
   const chatItemMessageContainerClassName = mergeClasses(
+    // Need to merge the styles injected with props - Future PR
     messageContainerClasses?.body,
     chatItemMessageContainerClasses.body,
     shouldOverlapAvatarAndMessage ? chatItemMessageContainerClasses.bodyAvatarOverlap : chatItemMessageContainerClasses.bodyAvatarNoOverlap
   );
-
-  console.log('Should overlap avatar and message: ' + shouldOverlapAvatarAndMessage);
+  
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>
