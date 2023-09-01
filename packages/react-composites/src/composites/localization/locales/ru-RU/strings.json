@@ -50,6 +50,7 @@
     "deniedPermissionToRoomDetails": "У вас нет разрешения на присоединение к этой комнате.",
     "deniedPermissionToRoomTitle": "Отказано в разрешении для помещения",
     "peopleButtonLabel": "Люди",
+    "selectedPeopleButtonLabel": "Нажата кнопка \"Люди\"",
     "peoplePaneTitle": "Люди",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
@@ -99,16 +100,18 @@
     "startCaptionsButtonOffLabel": "Отключить автоматические субтитры",
     "startCaptionsButtonTooltipOnContent": "Отключить автоматические субтитры",
     "startCaptionsButtonTooltipOffContent": "Включить автоматические субтитры",
-    "captionsSettingsModalTitle": "На каком языке говорят?",
-    "captionsSettingsDropdownLabel": "Язык речи",
-    "captionsSettingsDropdownInfoText": "Язык, на котором говорят все участники звонка.",
+    "captionsSettingsModalTitle": "Параметры субтитров",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Язык речи",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Язык субтитров",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Язык, на котором говорят все участники звонка.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Субтитры будут отображаться на этом языке.",
     "captionsSettingsConfirmButtonLabel": "Подтвердить",
     "captionsSettingsCancelButtonLabel": "Отменить",
     "captionsSettingsModalAriaLabel": "Модальное окно параметров субтитров",
     "captionsSettingsCloseModalButtonAriaLabel": "Закрыть параметры субтитров",
     "captionsBannerMoreButtonCallingLabel": "Дополнительно",
     "captionsBannerMoreButtonTooltip": "Дополнительные параметры",
-    "captionsAvailableLanguageStrings": {
+    "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
       "da-dk": "Датский",
@@ -151,6 +154,40 @@
       "sk-sk": "Словацкий",
       "zh-tw": "Китайский (Тайвань)"
     },
+    "captionLanguageStrings": {
+      "ar": "Арабский",
+      "da": "Датский",
+      "de": "Немецкий",
+      "en": "Английский",
+      "es": "Испанский",
+      "fi": "Финский",
+      "fr-ca": "Французский (Канада)",
+      "fr": "Французский (Франция)",
+      "hi": "Хинди",
+      "it": "Итальянский",
+      "ja": "Японский",
+      "ko": "Корейский",
+      "nb": "Норвежский (букмол)",
+      "nl": "Нидерландский",
+      "pl": "Польский",
+      "pt": "Португальский (Бразилия)",
+      "ru": "Русский",
+      "sv": "Шведский",
+      "zh-Hans": "китайский, упрощенное письмо",
+      "zh-Hant": "Китайский (традиционное письмо)",
+      "cs": "Чешский",
+      "pt-pt": "Португальский (Португалия)",
+      "tr": "Турецкий",
+      "vi": "Вьетнамский",
+      "th": "Тайский",
+      "he": "Иврит",
+      "cy": "Валлийский",
+      "uk": "Украинский",
+      "el": "Греческий",
+      "hu": "Венгерский",
+      "ro": "Румынский",
+      "sk": "Словацкий"
+    },
     "captionsBannerSpinnerText": "Запуск субтитров...",
     "transferPageTransferorText": "Идет переключение...",
     "transferPageTransferTargetText": "Подключение...",
@@ -170,7 +207,21 @@
     "moreButtonGallerySpeakerLayoutLabel": "Макет динамика",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический макет",
     "moreButtonGalleryDefaultLayoutLabel": "Макет коллекции",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы",
+    "capabilityChangedNotification": {
+      "turnVideoOn": {
+        "lostDueToMeetingOption": "Камера отключена. Вы больше не можете делиться видео.",
+        "grantedDueToMeetingOption": "Камера включена. Включите этот параметр, если хотите поделиться видео."
+      },
+      "unmuteMic": {
+        "lostDueToMeetingOption": "Ваш микрофон отключен. Вы больше не можете включить звук.",
+        "grantedDueToMeetingOption": "Ваш микрофон подключен. Включите звук, если хотите выступить."
+      },
+      "shareScreen": {
+        "lostDueToRoleChangeToAttendee": "Ваша роль изменилась. Некоторые действия, например общий доступ к содержимому, будут вам недоступны.",
+        "grantedDueToRoleChangeToPresenter": "Вы ведущий. Вы можете предоставлять доступ к содержимому и помогать вести собрание."
+      }
+    }
   },
   "chat": {
     "chatListHeader": "В этом чате",
@@ -193,7 +244,9 @@
     "moreDrawerSpeakerMenuTitle": "Динамик",
     "moreDrawerCaptionsMenuTitle": "Автоматические субтитры",
     "moreDrawerSpokenLanguageMenuTitle": "Язык речи",
+    "moreDrawerCaptionLanguageMenuTitle": "Язык субтитров",
     "peopleButtonLabel": "Люди",
+    "selectedPeopleButtonLabel": "Нажата кнопка \"Люди\"",
     "peopleButtonTooltipOpen": "Показать участников",
     "peopleButtonTooltipClose": "Скрыть участников",
     "peoplePaneSubTitle": "В этом звонке",
