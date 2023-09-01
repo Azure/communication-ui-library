@@ -52,9 +52,9 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { getCaptionsStatus, getPage } from '../selectors/baseSelectors';
+import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
-import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
+import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';

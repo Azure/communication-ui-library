@@ -1347,7 +1347,7 @@ export interface CapabilityChangedNotificationStrings {
     };
 }
 
-// @beta
+// @public
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1415,7 +1415,7 @@ export interface CaptionLanguageStrings {
     vi: string;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -1426,7 +1426,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
@@ -1437,7 +1437,7 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @beta
+// @public
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
@@ -3653,7 +3653,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @beta
+// @public
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;

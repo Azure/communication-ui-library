@@ -13,6 +13,7 @@ import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CaptionsResultType } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -85,6 +86,7 @@ export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.fea
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
@@ -104,6 +106,28 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     transcription: TranscriptionCallFeature;
+}
+
+// @public (undocumented)
+export interface CaptionsCallFeatureState {
+    captions: CaptionsInfo[];
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
+    startCaptionsInProgress: boolean;
+    supportedCaptionLanguages: string[];
+    supportedSpokenLanguages: string[];
+}
+
+// @public (undocumented)
+export interface CaptionsInfo {
+    captionLanguage?: string;
+    captionText: string;
+    resultType: CaptionsResultType;
+    speaker: CallerInfo;
+    spokenLanguage: string;
+    spokenText?: string;
+    timestamp: Date;
 }
 
 // @public

@@ -143,7 +143,7 @@ export interface CapabilitiesFeatureState {
     latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -154,7 +154,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
