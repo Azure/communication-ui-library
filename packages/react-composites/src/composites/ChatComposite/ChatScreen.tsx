@@ -270,8 +270,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
             imageUrl: fullSizeAttachments[attachment.id]
           }
         ]);
-        setIsImageGalleryOpen(true);
-
         return;
       }
 
@@ -286,7 +284,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
               imageUrl: blobUrl
             }
           ]);
-          setIsImageGalleryOpen(true);
         }
       }
     },
