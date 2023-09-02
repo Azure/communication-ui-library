@@ -96,6 +96,7 @@ export interface CallState {
     isScreenSharingOn: boolean;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -208,6 +209,17 @@ export interface OptimalVideoCountFeatureState {
 }
 
 // @public
+export type RaisedHandState = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export interface RaiseHandCallFeature {
+    localParticipantRaisedHand?: RaisedHandState;
+    raisedHands: RaisedHandState[];
+}
+
+// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }
@@ -219,6 +231,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    raisedHand?: RaisedHandState;
     state: RemoteParticipantState_2;
     videoStreams: {
         [key: number]: RemoteVideoStreamState;
