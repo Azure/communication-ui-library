@@ -66,7 +66,7 @@ rush build
 
 To switch back to beta-release flavor:
 ```bash
-rush switch-flavor:beta
+rush switch-flavor:beta-release
 # Need to rebuild from scratch because that command cleans all build caches.
 rush build
 ```
