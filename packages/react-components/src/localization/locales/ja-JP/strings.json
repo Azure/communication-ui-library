@@ -9,6 +9,9 @@
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "その他 {overflowCount} 個"
+  },
   "typingIndicator": {
     "singleUser": "{user} さんが入力しています...",
     "multipleUsers": "{users} さんが入力しています...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "ダウンロード",
+    "dismissButtonAriaLabel": "閉じる"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "プレゼンテーションは無効です",
     "tooltipOnContent": "画面の表示",
     "tooltipOffContent": "画面のプレゼンテーション"
+  },
+  "raiseHandButton": {
+    "offLabel": "手を挙げる",
+    "onLabel": "低い",
+    "tooltipDisabledContent": "手を挙げる操作が無効になっています",
+    "tooltipOnContent": "手を下げる",
+    "tooltipOffContent": "手を挙げる"
   },
   "messageThread": {
     "yesterday": "昨日",

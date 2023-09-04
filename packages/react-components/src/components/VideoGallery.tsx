@@ -18,6 +18,8 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
+/* @conditional-compile-remove(pinned-participants) */
+import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
 import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
@@ -36,6 +38,10 @@ import { floatingLocalVideoTileStyle } from './VideoGallery/styles/FloatingLocal
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(vertical-gallery) */
 import { VerticalGalleryStyles } from './VerticalGallery';
+/* @conditional-compile-remove(gallery-layouts) */
+import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
+/* @conditional-compile-remove(gallery-layouts) */
+import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 
 /**
  * @private
@@ -123,7 +129,11 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout =
+  | 'default'
+  | 'floatingLocalVideo'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
  * {@link VideoGallery} Component Styles.
@@ -147,7 +157,10 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  *
  * @beta
  */
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight';
+export type OverflowGalleryPosition =
+  | 'HorizontalBottom'
+  | 'VerticalRight'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
@@ -250,7 +263,7 @@ export interface VideoGalleryProps {
    *
    * @defaultValue \{ kind: 'contextual' \}
    */
-  remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+  remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
   /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery inside the VideoGallery.
@@ -271,7 +284,7 @@ export interface VideoGalleryProps {
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface VideoTileContextualMenuProps {
   /**
@@ -284,7 +297,7 @@ export interface VideoTileContextualMenuProps {
 /**
  * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface VideoTileDrawerMenuProps {
   /**
@@ -330,7 +343,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     onUnpinParticipant: onUnpinParticipantHandler,
     /* @conditional-compile-remove(pinned-participants) */
-    remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
+    remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
     /* @conditional-compile-remove(rooms) */
@@ -344,13 +357,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostIdFromProp =
-    remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.kind === 'drawer'
-      ? (remoteVideoTileMenuOptions as VideoTileDrawerMenuProps).hostId
+    remoteVideoTileMenu && remoteVideoTileMenu.kind === 'drawer'
+      ? (remoteVideoTileMenu as VideoTileDrawerMenuProps).hostId
       : undefined;
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const shouldFloatLocalVideo = !!(layout === 'floatingLocalVideo' && remoteParticipants.length > 0);
+  const localTileNotInGrid = !!(
+    (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
+    remoteParticipants.length > 0
+  );
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -359,6 +375,24 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(pinned-participants) */
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
+  /* @conditional-compile-remove(pinned-participants) */
+  const [selectedScalingModeState, setselectedScalingModeState] = React.useState<Record<string, VideoStreamOptions>>(
+    {}
+  );
+
+  /* @conditional-compile-remove(pinned-participants) */
+  const onUpdateScalingMode = useCallback(
+    (remoteUserId: string, scalingMode: ViewScalingMode) => {
+      setselectedScalingModeState((current) => ({
+        ...current,
+        [remoteUserId]: {
+          scalingMode,
+          isMirrored: remoteVideoViewOptions?.isMirrored
+        }
+      }));
+    },
+    [remoteVideoViewOptions?.isMirrored]
+  );
   /* @conditional-compile-remove(pinned-participants) */
   useEffect(() => {
     props.pinnedParticipants?.forEach((pinParticipant) => {
@@ -385,7 +419,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
 
     const localVideoTileStyles = concatStyleSets(
-      shouldFloatLocalVideo ? floatingLocalVideoTileStyle : {},
+      localTileNotInGrid ? floatingLocalVideoTileStyle : {},
       {
         root: { borderRadius: theme.effects.roundedCorner4 }
       },
@@ -415,7 +449,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onRenderAvatar={onRenderAvatar}
           showLabel={
             !(
-              (shouldFloatLocalVideo && isNarrow) ||
+              (localTileNotInGrid && isNarrow) ||
               /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
                 '9:16'
             )
@@ -426,6 +460,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           localVideoCameraSwitcherLabel={strings.localVideoCameraSwitcherLabel}
           localVideoSelectedDescription={strings.localVideoSelectedDescription}
           styles={localVideoTileStyles}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={localParticipant.raisedHand}
         />
       </Stack>
     );
@@ -438,7 +474,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onRenderAvatar,
     onRenderLocalVideoTile,
-    shouldFloatLocalVideo,
+    localTileNotInGrid,
     showCameraSwitcherInLocalPreview,
     showMuteIndicator,
     strings.localVideoCameraSwitcherLabel,
@@ -495,9 +531,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const defaultOnRenderVideoTile = useCallback(
     (participant: VideoGalleryRemoteParticipant, isVideoParticipant?: boolean) => {
       const remoteVideoStream = participant.videoStream;
+      /* @conditional-compile-remove(pinned-participants) */
+      const selectedScalingMode = remoteVideoStream ? selectedScalingModeState[participant.userId] : undefined;
 
       /* @conditional-compile-remove(pinned-participants) */
       const isPinned = pinnedParticipants?.includes(participant.userId);
+
+      const createViewOptions = (): VideoStreamOptions | undefined => {
+        /* @conditional-compile-remove(pinned-participants) */
+        if (selectedScalingMode) {
+          return selectedScalingMode;
+        }
+        /* @conditional-compile-remove(pinned-participants) */
+        return remoteVideoStream?.streamSize &&
+          remoteVideoStream.streamSize?.height > remoteVideoStream.streamSize?.width
+          ? ({
+              scalingMode: 'Fit',
+              isMirrored: remoteVideoViewOptions?.isMirrored
+            } as VideoStreamOptions)
+          : remoteVideoViewOptions;
+        return remoteVideoViewOptions;
+      };
 
       return (
         <_RemoteVideoTile
@@ -509,7 +563,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={isVideoParticipant ? remoteVideoStream?.isAvailable : false}
           isReceiving={isVideoParticipant ? remoteVideoStream?.isReceiving : false}
           renderElement={isVideoParticipant ? remoteVideoStream?.renderElement : undefined}
-          remoteVideoViewOptions={isVideoParticipant ? remoteVideoViewOptions : undefined}
+          remoteVideoViewOptions={isVideoParticipant && createViewOptions() ? createViewOptions() : undefined}
           onRenderAvatar={onRenderAvatar}
           showMuteIndicator={showMuteIndicator}
           strings={strings}
@@ -519,8 +573,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           menuKind={
             participant.userId === localParticipant.userId
               ? undefined
-              : remoteVideoTileMenuOptions
-              ? remoteVideoTileMenuOptions.kind === 'drawer'
+              : remoteVideoTileMenu
+              ? remoteVideoTileMenu.kind === 'drawer'
                 ? 'drawer'
                 : 'contextual'
               : undefined
@@ -531,6 +585,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onPinParticipant={onPinParticipant}
           /* @conditional-compile-remove(pinned-participants) */
           onUnpinParticipant={onUnpinParticipant}
+          /* @conditional-compile-remove(pinned-participants) */
+          onUpdateScalingMode={onUpdateScalingMode}
           /* @conditional-compile-remove(pinned-participants) */
           isPinned={isPinned}
           /* @conditional-compile-remove(pinned-participants) */
@@ -549,11 +605,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       showMuteIndicator,
       strings,
       /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
-      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenu,
+      /* @conditional-compile-remove(pinned-participants) */ selectedScalingModeState,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
-      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString
+      /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
+      /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode
     ]
   );
 
@@ -614,11 +672,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const videoGalleryLayout = useMemo(() => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (screenShareParticipant && layout === 'focusedContent') {
+      return <FocusedContentLayout {...layoutProps} />;
+    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (layout === 'speaker') {
+      return <SpeakerVideoLayout {...layoutProps} />;
+    }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps]);
+  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
 
   return (
     <div

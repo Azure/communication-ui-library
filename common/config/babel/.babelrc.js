@@ -12,6 +12,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
         'calling-beta-sdk',
+        // Flag to add API only available in beta chat SDK to mocks and internal types.
+        // This feature should be stabilized whenever chat SDK is stabilized.
+        'chat-beta-sdk',
         // Flag to add API only available in the communication-common beta v3
         'communication-common-beta-v3',
         // Participant pane in the `ChatComposite`.
@@ -34,8 +37,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'file-sharing',
         // Mention feature
         'mention',
-        // feature for enabling new call control bar in CallComposite
-        'new-call-control-bar',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 
@@ -53,8 +54,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
-        // Pinned Participants
-        'pinned-participants',
         // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
         'total-participant-count',
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
@@ -72,7 +71,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Optimal Video Count
         'optimal-video-count',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+        // Feature for custom video gallery layouts
+        'gallery-layouts',
+        // Feature image gallery
+        'image-gallery'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -81,10 +84,12 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // raise hands feature
-        'raise-hand',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+        // Feature for custom video gallery layouts
+        'gallery-layouts',
+        // Feature image gallery
+        'image-gallery'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -94,6 +99,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // Pinned Participants
+        'pinned-participants',
+        // Optimal Video Count
+        'optimal-video-count'
       ]
     }
   ]);

@@ -87,7 +87,12 @@ import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(close-captions) */
-import { IsCaptionsActiveChangedListener, CaptionsReceivedListener } from '../../CallComposite/adapter/CallAdapter';
+import {
+  IsCaptionsActiveChangedListener,
+  CaptionsReceivedListener,
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
+} from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
@@ -184,6 +189,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.unmute.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
+    /* @conditional-compile-remove(raise-hand) */
+    this.raiseHand.bind(this);
+    /* @conditional-compile-remove(raise-hand) */
+    this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
@@ -344,6 +353,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /** Stop the current active screen share. */
   public async stopScreenShare(): Promise<void> {
     await this.callAdapter.stopScreenShare();
+  }
+  /* @conditional-compile-remove(raise-hand) */
+  /** Raise hand for local user. */
+  public async raiseHand(): Promise<void> {
+    await this.callAdapter.raiseHand();
+  }
+  /* @conditional-compile-remove(raise-hand) */
+  /** Lower hand for local user. */
+  public async lowerHand(): Promise<void> {
+    await this.callAdapter.lowerHand();
   }
   /** Create a stream view for a remote participants video feed. */
   public async createStreamView(
@@ -523,6 +542,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -564,6 +587,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       /* @conditional-compile-remove(close-captions) */
       case 'isCaptionsActiveChanged':
         this.callAdapter.on('isCaptionsActiveChanged', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'isCaptionLanguageChanged':
+        this.callAdapter.on('isCaptionLanguageChanged', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'isSpokenLanguageChanged':
+        this.callAdapter.on('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.on('messageReceived', listener);
@@ -613,6 +644,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
+  /* @conditional-compile-remove(close-captions) */
+  off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
@@ -654,6 +689,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       /* @conditional-compile-remove(close-captions) */
       case 'isCaptionsActiveChanged':
         this.callAdapter.off('isCaptionsActiveChanged', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'isCaptionLanguageChanged':
+        this.callAdapter.off('isCaptionLanguageChanged', listener);
+        break;
+      /* @conditional-compile-remove(close-captions) */
+      case 'isSpokenLanguageChanged':
+        this.callAdapter.off('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
         this.chatAdapter.off('messageReceived', listener);
@@ -891,14 +934,17 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   callClient: StatefulCallClient;
   chatClient: StatefulChatClient;
   chatThreadClient: ChatThreadClient;
+  /* @conditional-compile-remove(video-background-effects) */
+  callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  options?: AzureCommunicationChatAdapterOptions;
+  chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
 /**
  * Create a {@link CallWithChatAdapter} using the provided {@link StatefulChatClient} and {@link StatefulCallClient}.
  *
  * Useful if you want to keep a reference to {@link StatefulChatClient} and {@link StatefulCallClient}.
+ * Please note that chatThreadClient has to be created by StatefulChatClient via chatClient.getChatThreadClient(chatThreadId) API.
  * Consider using {@link createAzureCommunicationCallWithChatAdapter} for a simpler API.
  *
  * @public
@@ -909,15 +955,23 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   callLocator,
   chatClient,
   chatThreadClient,
+  /* @conditional-compile-remove(video-background-effects) */
+  callAdapterOptions,
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  options
+  chatAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
-  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(callClient, callAgent, callLocator);
+  const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(
+    callClient,
+    callAgent,
+    callLocator,
+    /* @conditional-compile-remove(video-background-effects) */
+    callAdapterOptions
+  );
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    options
+    chatAdapterOptions
   );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);

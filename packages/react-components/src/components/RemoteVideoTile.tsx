@@ -10,7 +10,8 @@ import {
   OnRenderAvatarCallback,
   ParticipantState,
   VideoGalleryRemoteParticipant,
-  VideoStreamOptions
+  VideoStreamOptions,
+  ViewScalingMode
 } from '../types';
 import { _DrawerMenu, _DrawerMenuItemProps } from './Drawer';
 import { StreamMedia } from './StreamMedia';
@@ -54,6 +55,7 @@ export const _RemoteVideoTile = React.memo(
     drawerMenuHostId?: string;
     onPinParticipant?: (userId: string) => void;
     onUnpinParticipant?: (userId: string) => void;
+    onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
@@ -75,6 +77,7 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
       strings
@@ -116,6 +119,7 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
+      onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString
     });
@@ -172,6 +176,8 @@ export const _RemoteVideoTile = React.memo(
           displayName={remoteParticipant.displayName || strings?.displayNamePlaceholder}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
+          /* @conditional-compile-remove(raise-hand) */
+          raisedHand={remoteParticipant.raisedHand}
           isSpeaking={remoteParticipant.isSpeaking}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}

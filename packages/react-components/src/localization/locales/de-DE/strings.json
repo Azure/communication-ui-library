@@ -9,6 +9,9 @@
     "participantStateRinging": "Anrufen...",
     "participantStateHold": "In der Warteschleife"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} weitere"
+  },
   "typingIndicator": {
     "singleUser": "{user} schreibt ...",
     "multipleUsers": "{users} schreiben ...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Herunterladen",
+    "dismissButtonAriaLabel": "Schließen"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Nachricht gesendet",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "Präsentieren ist deaktiviert",
     "tooltipOnContent": "Ihr Bildschirm wird präsentiert",
     "tooltipOffContent": "Präsentieren Sie Ihren Bildschirm"
+  },
+  "raiseHandButton": {
+    "offLabel": "Heben",
+    "onLabel": "Senken",
+    "tooltipDisabledContent": "Aktion „Hand heben“ ist deaktiviert",
+    "tooltipOnContent": "Hand senken",
+    "tooltipOffContent": "Hand heben"
   },
   "messageThread": {
     "yesterday": "Gestern",

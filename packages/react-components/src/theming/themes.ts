@@ -4,7 +4,7 @@
 import { PartialTheme } from '@fluentui/react';
 
 /**
- * Custom Fluent theme pallete used by calling related components in this library.
+ * Custom Fluent theme palette used by calling related components in this library.
  *
  * @public
  */
@@ -14,6 +14,29 @@ export interface CallingTheme {
     callRedDark: string;
     callRedDarker: string;
     iconWhite: string;
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHandGold: string;
+  };
+}
+
+/* @conditional-compile-remove(image-gallery) */
+/**
+ * Custom Fluent theme palette used by chat related components in this library.
+ *
+ * @beta
+ */
+export interface ChatTheme {
+  /**
+   * Custom Fluent theme palette used by chat related components in this library.
+   *
+   * @beta
+   */
+  chatPalette: {
+    modalOverlayBlack: string;
+    modalTitleWhite: string;
+    modalButtonBackground: string;
+    modalButtonBackgroundHover: string;
+    modalButtonBackgroundActive: string;
   };
 }
 
@@ -22,7 +45,7 @@ export interface CallingTheme {
  *
  * @public
  */
-export const lightTheme: PartialTheme & CallingTheme = {
+export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#0078d4',
     themeLighterAlt: '#eff6fc',
@@ -51,7 +74,17 @@ export const lightTheme: PartialTheme & CallingTheme = {
     callRed: '#a42e43',
     callRedDark: '#8b2c3d',
     callRedDarker: '#772a38',
-    iconWhite: '#ffffff'
+    iconWhite: '#ffffff',
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHandGold: '#eaa300'
+  },
+  /* @conditional-compile-remove(image-gallery) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#a80000'
@@ -63,7 +96,7 @@ export const lightTheme: PartialTheme & CallingTheme = {
  *
  * @public
  */
-export const darkTheme: PartialTheme & CallingTheme = {
+export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -92,7 +125,17 @@ export const darkTheme: PartialTheme & CallingTheme = {
     callRed: '#c4314b',
     callRedDark: '#a42e43',
     callRedDarker: '#8b2c3d',
-    iconWhite: '#ffffff'
+    iconWhite: '#ffffff',
+    /* @conditional-compile-remove(raise-hand) */
+    raiseHandGold: '#eaa300'
+  },
+  /* @conditional-compile-remove(image-gallery) */
+  chatPalette: {
+    modalOverlayBlack: '#000000',
+    modalTitleWhite: '#ffffff',
+    modalButtonBackground: '#1b1a19',
+    modalButtonBackgroundHover: '#252423',
+    modalButtonBackgroundActive: '#292827'
   },
   semanticColors: {
     errorText: '#f1707b'

@@ -199,7 +199,6 @@ export const microphoneButtonSelector: MicrophoneButtonSelector;
 export type ParticipantListSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     participants: CallParticipantListParticipant[];
     myUserId: string;
-    totalParticipantCount?: number;
 };
 
 // @public
@@ -246,6 +245,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
+    optimalVideoCount?: number;
 };
 
 // (No @packageDocumentation comment for this package)

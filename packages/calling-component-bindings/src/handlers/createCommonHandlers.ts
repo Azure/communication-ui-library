@@ -26,8 +26,10 @@ import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPrev
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */
 import { Features } from '@azure/communication-calling';
+/* @conditional-compile-remove(close-captions) */
+import { TeamsCaptions } from '@azure/communication-calling';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -48,6 +50,12 @@ export interface CommonCallingHandlers {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: (forEveryone?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onRaiseHand: () => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onLowerHand: () => Promise<void>;
+  /* @conditional-compile-remove(raise-hand) */
+  onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
@@ -260,6 +268,29 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           },
           options
         );
+      }
+    };
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
+
+    /* @conditional-compile-remove(raise-hand) */
+    const onToggleRaiseHand = async (): Promise<void> => {
+      const raiseHandFeature = call?.feature(Features.RaiseHand);
+      const localUserId = callClient.getState().userId;
+      const isLocalRaisedHand = raiseHandFeature
+        ?.getRaisedHands()
+        .find(
+          (publishedState) =>
+            toFlatCommunicationIdentifier(publishedState.identifier) === toFlatCommunicationIdentifier(localUserId)
+        );
+      if (isLocalRaisedHand) {
+        await raiseHandFeature?.lowerHand();
+      } else {
+        await raiseHandFeature?.raiseHand();
       }
     };
 
@@ -507,21 +538,26 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         );
       }
     };
+
     /* @conditional-compile-remove(close-captions) */
     const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).startCaptions(options);
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.startCaptions(options);
     };
     /* @conditional-compile-remove(close-captions) */
     const onStopCaptions = async (): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).stopCaptions();
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.stopCaptions();
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetSpokenLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setSpokenLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions).captions;
+      await captionsFeature?.setSpokenLanguage(language);
     };
     /* @conditional-compile-remove(close-captions) */
     const onSetCaptionLanguage = async (language: string): Promise<void> => {
-      await call?.feature(Features.TeamsCaptions).setCaptionLanguage(language);
+      const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
+      await captionsFeature.setCaptionLanguage(language);
     };
 
     return {
@@ -543,6 +579,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
+      /* @conditional-compile-remove(raise-hand) */
+      onRaiseHand,
+      /* @conditional-compile-remove(raise-hand) */
+      onLowerHand,
+      /* @conditional-compile-remove(raise-hand) */
+      onToggleRaiseHand,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,

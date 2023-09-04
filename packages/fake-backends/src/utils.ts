@@ -70,6 +70,7 @@ export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatPar
     id: identifier,
     displayName: p.displayName ?? '',
     shareHistoryTime: p.shareHistoryTime
+    // metadata: {}
   };
 };
 

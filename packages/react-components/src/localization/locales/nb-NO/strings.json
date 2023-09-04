@@ -9,6 +9,9 @@
     "participantStateRinging": "Ringer ...",
     "participantStateHold": "På vent"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} flere"
+  },
   "typingIndicator": {
     "singleUser": "{user} skriver ...",
     "multipleUsers": "{users} skriver ...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Last ned",
+    "dismissButtonAriaLabel": "Lukk"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Melding sendt",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "Presentasjon er deaktivert",
     "tooltipOnContent": "Presenterer skjermen din",
     "tooltipOffContent": "Presenter skjermen din"
+  },
+  "raiseHandButton": {
+    "offLabel": "Rekk opp",
+    "onLabel": "Ta ned",
+    "tooltipDisabledContent": "Rekk opp hånden-handlingen er deaktivert",
+    "tooltipOnContent": "Ta ned hånden",
+    "tooltipOffContent": "Rekke opp hånden"
   },
   "messageThread": {
     "yesterday": "I går",

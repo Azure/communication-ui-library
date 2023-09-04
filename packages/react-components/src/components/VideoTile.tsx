@@ -9,6 +9,12 @@ import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { CallingTheme } from '../theming';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHand } from '../types';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
@@ -128,6 +134,10 @@ export interface VideoTileProps {
   /** Whether the participant in the videoTile is speaking. Shows a speaking indicator (border). */
   isSpeaking?: boolean;
 
+  /* @conditional-compile-remove(raise-hand) */
+  /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
+  raisedHand?: RaisedHand;
+
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**
@@ -235,6 +245,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(pinned-participants) */
@@ -332,6 +344,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const participantStateString = participantStateStringTrampoline(props, locale);
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
+  let raisedHandBackgroundColor = '';
+  /* @conditional-compile-remove(raise-hand) */
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+  /* @conditional-compile-remove(raise-hand) */
+  raisedHandBackgroundColor = callingPalette.raiseHandGold;
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -341,11 +358,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        isSpeaking && {
+        (isSpeaking || /* @conditional-compile-remove(raise-hand) */ raisedHand) && {
           '&::after': {
             content: `''`,
             position: 'absolute',
-            border: `0.25rem solid ${theme.palette.themePrimary}`,
+            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
             borderRadius: theme.effects.roundedCorner4,
             width: '100%',
             height: '100%',
@@ -430,6 +447,31 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         {children && (
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
+        {
+          /* @conditional-compile-remove(raise-hand) */ raisedHand && canShowLabel && (
+            <Stack
+              horizontal={true}
+              tokens={{ childrenGap: '0.2rem' }}
+              style={{
+                alignItems: 'center',
+                padding: '0.2rem 0.3rem',
+                backgroundColor: theme.palette.white,
+                opacity: 0.9,
+                borderRadius: '1rem',
+                margin: '0.5rem',
+                width: 'fit-content',
+                position: 'absolute'
+              }}
+            >
+              <Stack.Item>
+                <Text>{raisedHand.raisedHandOrderPosition}</Text>
+              </Stack.Item>
+              <Stack.Item>
+                <RaisedHandIcon />
+              </Stack.Item>
+            </Stack>
+          )
+        }
       </div>
     </Stack>
   );

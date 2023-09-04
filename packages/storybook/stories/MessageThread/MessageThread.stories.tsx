@@ -371,7 +371,6 @@ const MessageThreadStory = (args): JSX.Element => {
         console.log('Invalid message type');
     }
   };
-
   return (
     <Stack verticalFill style={MessageThreadStoryContainerStyles} tokens={{ childrenGap: '1rem' }}>
       <MessageThreadComponent

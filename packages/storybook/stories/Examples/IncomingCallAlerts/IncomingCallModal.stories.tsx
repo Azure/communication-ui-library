@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useState } from 'react';
 import { EXAMPLES_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { useVideoStreams } from '../../utils';
@@ -13,6 +13,8 @@ const IncomingCallModalStory = (args): JSX.Element => {
   const videoStreamElements = useVideoStreams(args.localVideoStreamEnabled ? 1 : 0);
   const videoStreamElement = videoStreamElements[0] ? videoStreamElements[0] : null;
 
+  const [showLocalVideo, setShowLocalVideo] = useState<boolean>(false);
+
   return (
     <IncomingCallModalComponent
       callerName={args.callerName}
@@ -20,12 +22,12 @@ const IncomingCallModalStory = (args): JSX.Element => {
       callerTitle={args.callerTitle}
       alertText={args.alertText}
       avatar={args.images.length > 0 ? args.images[0] : undefined}
-      onClickVideoToggle={() => null}
+      onClickVideoToggle={() => setShowLocalVideo(!showLocalVideo)}
       onClickAccept={() => null}
       onClickReject={() => null}
       localParticipantDisplayName={args.localParticipantDisplayName}
       localVideoInverted={args.localVideoInverted}
-      localVideoStreamElement={videoStreamElement}
+      localVideoStreamElement={showLocalVideo ? videoStreamElement : null}
     />
   );
 };

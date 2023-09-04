@@ -9,6 +9,9 @@
     "participantStateRinging": "전화 거는 중...",
     "participantStateHold": "대기 중"
   },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount}개 더 보기"
+  },
   "typingIndicator": {
     "singleUser": "{user} 님이 입력 중...",
     "multipleUsers": "{users} 님이 입력하는 중...",
@@ -27,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "다운로드",
+    "dismissButtonAriaLabel": "닫기"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",
@@ -108,6 +115,13 @@
     "tooltipDisabledContent": "프레젠테이션 사용 안 함",
     "tooltipOnContent": "화면을 프레젠테이션하는 중",
     "tooltipOffContent": "화면 프레젠테이션"
+  },
+  "raiseHandButton": {
+    "offLabel": "손 들기",
+    "onLabel": "낮추기",
+    "tooltipDisabledContent": "손 올리기 작업이 비활성화되었습니다.",
+    "tooltipOnContent": "손 내리기",
+    "tooltipOffContent": "손 들기"
   },
   "messageThread": {
     "yesterday": "어제",

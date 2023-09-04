@@ -61,7 +61,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(gallery-layouts) */ layout: 'default'
   });
 
   let activeVideoStreams = 0;
@@ -111,7 +112,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         verticalGalleryStyles={styles?.verticalGallery}
-        /* @conditional-compile-remove(pinned-participants) */
+        /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
         onChildrenPerPageChange={(n: number) => {
@@ -136,6 +137,13 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
+      {
+        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'HorizontalTop' ? (
+          overflowGallery
+        ) : (
+          <></>
+        )
+      }
       {screenShareComponent ? (
         screenShareComponent
       ) : (
@@ -143,7 +151,19 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           {gridTiles}
         </GridLayout>
       )}
-      {overflowGallery}
+      {overflowGalleryTrampoline(
+        overflowGallery,
+        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
+      )}
     </Stack>
   );
+};
+
+const overflowGalleryTrampoline = (
+  gallery: JSX.Element | null,
+  galleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
+): JSX.Element | null => {
+  /* @conditional-compile-remove(gallery-layouts) */
+  return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
+  return gallery;
 };

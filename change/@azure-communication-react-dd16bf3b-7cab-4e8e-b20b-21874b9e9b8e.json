@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "Chat SDK beta upgrade",
+  "comment": "Upgrade ChatSDK to 1.3.2",
+  "packageName": "@azure/communication-react",
+  "email": "77021369+jimchou-dev@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
