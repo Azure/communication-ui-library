@@ -13,6 +13,7 @@ import { CallDirection } from '@azure/communication-calling';
 import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
 import { ChatClientOptions } from '@azure/communication-chat';
@@ -50,6 +51,8 @@ import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
+import { ParticipantCapabilities } from '@azure/communication-calling';
+import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
@@ -259,6 +262,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -275,6 +279,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -351,6 +356,8 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonMicProhibited?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -411,6 +418,7 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
@@ -583,6 +591,7 @@ export interface CallProviderProps {
 export interface CallState {
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
+    capabilitiesFeature?: CapabilitiesFeatureState;
     captionsFeature: CaptionsCallFeatureState;
     diagnostics: DiagnosticsCallFeatureState;
     direction: CallDirection;
@@ -600,6 +609,7 @@ export interface CallState {
     remoteParticipantsEnded: {
         [keys: string]: RemoteParticipantState;
     };
+    role?: ParticipantRole;
     screenShareRemoteParticipant?: string;
     startTime: Date;
     state: CallState_2;
@@ -782,6 +792,8 @@ export type CallWithChatCompositeIcons = {
     ControlButtonOptions?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonMicProhibited?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -939,6 +951,31 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 
 // @public
 export type CancelEditCallback = (messageId: string) => void;
+
+// @public
+export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
+
+// @public
+export interface CapabilitiesFeatureState {
+    capabilities: ParticipantCapabilities;
+    latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
+}
+
+// @public
+export interface CapabilityChangedNotificationStrings {
+    shareScreen?: {
+        lostDueToRoleChangeToAttendee?: string;
+        grantedDueToRoleChangeToPresenter?: string;
+    };
+    turnVideoOn?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+    unmuteMic?: {
+        lostDueToMeetingOption?: string;
+        grantedDueToMeetingOption?: string;
+    };
+}
 
 // @public
 export interface CaptionLanguageStrings {
@@ -1734,6 +1771,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonCameraProhibited?: JSX.Element | undefined;
+    ControlButtonMicProhibited?: JSX.Element | undefined;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -2587,6 +2626,7 @@ export interface ScreenShareButtonProps extends ControlBarButtonProps {
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
+    disabled?: boolean;
 };
 
 // @public

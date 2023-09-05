@@ -1322,16 +1322,16 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 // @public
 export type CancelEditCallback = (messageId: string) => void;
 
-// @beta
+// @public
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
-// @beta
+// @public
 export interface CapabilitiesFeatureState {
     capabilities: ParticipantCapabilities;
     latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
-// @beta
+// @public
 export interface CapabilityChangedNotificationStrings {
     shareScreen?: {
         lostDueToRoleChangeToAttendee?: string;

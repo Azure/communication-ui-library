@@ -245,6 +245,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
+    disabled?: boolean;
 };
 
 // @public
