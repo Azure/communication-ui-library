@@ -2,13 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-
 import { RaiseHandButton } from './RaiseHandButton';
-
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
-
 import { registerIcons } from '@fluentui/react';
-
 import { screen } from '@testing-library/react';
 
 describe('RaiseHandButton strings should be localizable and overridable', () => {

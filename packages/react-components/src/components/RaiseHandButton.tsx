@@ -2,13 +2,9 @@
 // Licensed under the MIT license.
 
 import React from 'react';
-
 import { useLocale } from '../localization';
-
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-
 import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
-
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**

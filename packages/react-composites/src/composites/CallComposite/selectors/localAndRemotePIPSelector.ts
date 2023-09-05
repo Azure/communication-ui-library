@@ -6,7 +6,6 @@ import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
 import { getDisplayName } from './baseSelectors';
-
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 
 /**
@@ -20,7 +19,6 @@ export const localAndRemotePIPSelector = reselect.createSelector(
       localParticipant: {
         displayName,
         videoStream: localVideoStreamInfo,
-
         raisedHand: raisedHand
       },
       dominantRemoteParticipant

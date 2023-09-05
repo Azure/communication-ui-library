@@ -436,7 +436,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RecordingCallFeature}.
    */
   recording: RecordingCallFeatureState;
-
   /**
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */

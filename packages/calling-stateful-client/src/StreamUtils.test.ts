@@ -86,7 +86,6 @@ function createMockCall(mockCallId: string): CallState {
     remoteParticipants: {},
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
-
     raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,

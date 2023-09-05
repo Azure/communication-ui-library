@@ -113,7 +113,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * The connection state of the participant. For example, 'Hold', 'Connecting' etc.
    */
   state?: ParticipantState;
-
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
 }

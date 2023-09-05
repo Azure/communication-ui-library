@@ -273,7 +273,6 @@ export type {
   VideoTileStylesProps,
   ViewScalingMode
 } from '../../react-components/src';
-
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 /* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';

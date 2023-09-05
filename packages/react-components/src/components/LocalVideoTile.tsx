@@ -12,7 +12,6 @@ import {
   LocalVideoStreamLifecycleMaintainerProps
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { VideoTile, VideoTileStylesProps } from './VideoTile';
-
 import { RaisedHand } from '../types';
 /**
  * A memoized version of VideoTile for rendering local participant.
@@ -39,7 +38,6 @@ export const _LocalVideoTile = React.memo(
     localVideoSelectedDescription?: string;
     styles?: VideoTileStylesProps;
     personaMinSize?: number;
-
     raisedHand?: RaisedHand;
   }) => {
     const {
@@ -60,7 +58,6 @@ export const _LocalVideoTile = React.memo(
       localVideoCameraCycleButtonProps,
       localVideoCameraSwitcherLabel,
       localVideoSelectedDescription,
-
       raisedHand
     } = props;
 

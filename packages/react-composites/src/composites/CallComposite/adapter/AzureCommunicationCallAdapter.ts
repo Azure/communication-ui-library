@@ -506,9 +506,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.startCall.bind(this);
     this.startScreenShare.bind(this);
     this.stopScreenShare.bind(this);
-
     this.raiseHand.bind(this);
-
     this.lowerHand.bind(this);
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);

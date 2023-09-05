@@ -12,9 +12,7 @@ import {
   Theme,
   Text
 } from '@fluentui/react';
-
 import { useTheme } from '../theming';
-
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -310,7 +308,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onFetchParticipantMenuItems,
       onRemoveParticipant,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
-
       participantItemStrings.removeButtonLabel
     ]
   );

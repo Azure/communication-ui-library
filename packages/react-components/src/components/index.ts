@@ -166,7 +166,6 @@ export { ScreenShareButton } from './ScreenShareButton';
 export type { ScreenShareButtonProps, ScreenShareButtonStrings } from './ScreenShareButton';
 
 export { RaiseHandButton } from './RaiseHandButton';
-
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 
 export { VideoTile } from './VideoTile';

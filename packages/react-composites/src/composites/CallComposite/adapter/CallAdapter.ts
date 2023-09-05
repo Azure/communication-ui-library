@@ -444,14 +444,12 @@ export interface CallAdapterCallOperations {
    * @public
    */
   startScreenShare(): Promise<void>;
-
   /**
    * Raise hand for current user
    *
    * @public
    */
   raiseHand(): Promise<void>;
-
   /**
    * lower hand for current user
    *

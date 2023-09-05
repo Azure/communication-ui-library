@@ -14,7 +14,6 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
 import { getCapabilites, getRole } from './baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';

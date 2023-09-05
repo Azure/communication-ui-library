@@ -2,19 +2,12 @@
 // Licensed under the MIT license.
 
 import { ControlBarButtonStyles, RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
-
 import React, { useMemo } from 'react';
-
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
-
 import { usePropsFor } from '../../hooks/usePropsFor';
-
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-
 import { useSelector } from '../../hooks/useSelector';
-
 import { getCallStatus } from '../../selectors/baseSelectors';
-
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 
 /** @private */

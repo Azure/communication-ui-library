@@ -19,7 +19,6 @@ import {
   CallFeatureFactory,
   CallFeature
 } from '@azure/communication-calling';
-
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */

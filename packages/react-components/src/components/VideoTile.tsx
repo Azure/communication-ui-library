@@ -9,11 +9,8 @@ import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
-
 import { CallingTheme } from '../theming';
-
 import { RaisedHand } from '../types';
-
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -244,7 +241,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     userId,
     noVideoAvailableAriaLabel,
     isSpeaking,
-
     raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
@@ -344,9 +340,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
-
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
   return (
     <Stack

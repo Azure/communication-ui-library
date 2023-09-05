@@ -22,7 +22,6 @@ import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
-
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
@@ -77,7 +76,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-
     this._raiseHandSubscriber = new RaiseHandSubscriber(
       this._callIdRef,
       this._context,
@@ -180,7 +178,6 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
-
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();

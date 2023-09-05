@@ -94,11 +94,9 @@ export class MockCallAdapter implements CallAdapter {
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
   }
-
   raiseHand(): Promise<void> {
     throw Error('raiseHand not implemented');
   }
-
   lowerHand(): Promise<void> {
     throw Error('lowerHand not implemented');
   }
@@ -220,7 +218,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       isScreenSharingOn: false,
       remoteParticipants: {},
       remoteParticipantsEnded: {},
-
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(rooms) */
       role,

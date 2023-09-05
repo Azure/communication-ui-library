@@ -33,9 +33,7 @@ import { Features } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-
 import { RaisedHand } from '@azure/communication-calling';
-
 import { RaisedHandState } from './CallClientState';
 
 /**
@@ -92,7 +90,6 @@ export function convertSdkParticipantToDeclarativeParticipant(
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
     isSpeaking: participant.isSpeaking,
-
     raisedHand: undefined
   };
 }
@@ -130,7 +127,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
-
     raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,

@@ -17,7 +17,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   isMuted?: boolean;
   /** Whether calling participant is speaking */
   isSpeaking?: boolean;
-
   /** Whether calling participant is raised hand */
   raisedHand?: RaisedHand;
 };

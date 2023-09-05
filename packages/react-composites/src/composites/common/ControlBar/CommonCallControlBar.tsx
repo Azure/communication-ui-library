@@ -41,7 +41,6 @@ import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /**
  * @private

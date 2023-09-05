@@ -165,14 +165,12 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   stopScreenShare(): Promise<void>;
-
   /**
    * Raise hand for local user.
    *
    * @public
    */
   raiseHand(): Promise<void>;
-
   /**
    * Lower hand for local user.
    *

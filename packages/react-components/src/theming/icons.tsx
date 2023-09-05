@@ -42,7 +42,6 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
-
 import {
   HandRight20Filled,
   HandRightOff20Filled,
@@ -243,13 +242,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonParticipantsContextualMenuItem: <People20Regular />,
   ControlButtonScreenShareStart: <ShareScreenStart20Filled />,
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
-
   ControlButtonRaiseHand: <HandRight20Filled />,
-
   ControlButtonLowerHand: <HandRightOff20Filled />,
-
   RaiseHandContextualMenuItem: <HandRight20Regular />,
-
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,

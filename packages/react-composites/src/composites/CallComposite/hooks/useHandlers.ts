@@ -52,15 +52,12 @@ const createCompositeHandlers = memoizeOne(
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
     },
-
     onRaiseHand: async () => {
       await adapter.raiseHand();
     },
-
     onLowerHand: async () => {
       await adapter.lowerHand();
     },
-
     onToggleRaiseHand: async () => {
       adapter.getState().call?.raiseHand.localParticipantRaisedHand
         ? await adapter.lowerHand()

@@ -11,9 +11,7 @@ import {
   _PictureInPictureInPicture,
   _PictureInPictureInPictureTileProps
 } from '@internal/react-components';
-
 import { useLocale } from '../../localization';
-
 import { RaisedHand } from '@internal/react-components';
 
 /**
@@ -69,7 +67,6 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       showCameraSwitcherInLocalPreview: false,
       isAvailable: localParticipant.videoStream?.isAvailable,
       renderElement: localParticipant.videoStream?.renderElement,
-
       raisedHand: localParticipant.raisedHand
     }),
     [
@@ -78,7 +75,6 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       localParticipant.videoStream?.renderElement,
       onCreateLocalStreamView,
       onDisposeLocalStreamView,
-
       localParticipant.raisedHand
     ]
   );

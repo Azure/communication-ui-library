@@ -171,13 +171,9 @@ export type CallCompositeIcons = {
   ControlButtonCameraProhibited?: JSX.Element;
   /* @conditional-compile-remove(capabilities) */
   ControlButtonMicProhibited?: JSX.Element;
-
   ControlButtonRaiseHand?: JSX.Element;
-
   ControlButtonLowerHand?: JSX.Element;
-
   RaiseHandContextualMenuItem?: JSX.Element;
-
   LowerHandContextualMenuItem?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;

@@ -2,11 +2,8 @@
 // Licensed under the MIT license.
 
 import { RaiseHandCallFeature, RaisedHandChangedEvent } from '@azure/communication-calling';
-
 import { CallContext } from './CallContext';
-
 import { CallIdRef } from './CallIdRef';
-
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
 /**

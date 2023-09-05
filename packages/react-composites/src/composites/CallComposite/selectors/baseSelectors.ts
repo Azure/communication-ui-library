@@ -23,7 +23,6 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
-
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /**
  * @private

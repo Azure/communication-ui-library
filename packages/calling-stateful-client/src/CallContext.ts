@@ -9,7 +9,6 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -51,7 +50,6 @@ import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { convertFromSDKToCaptionInfoState } from './Converter';
-
 import { convertFromSDKToRaisedHandState } from './Converter';
 
 enableMapSet();
@@ -163,9 +161,7 @@ export class CallContext {
         /* @conditional-compile-remove(optimal-video-count) */
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
-
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
-
         existingCall.raiseHand.localParticipantRaisedHand = call.raiseHand.localParticipantRaisedHand;
         /* @conditional-compile-remove(rooms) */
         existingCall.role = call.role;

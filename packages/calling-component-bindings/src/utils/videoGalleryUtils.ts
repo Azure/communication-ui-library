@@ -12,9 +12,7 @@ import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
-
 import { RaisedHandState } from '@internal/calling-stateful-client';
-
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
   return dominantSpeakers?.speakersList?.map(toFlatCommunicationIdentifier);
@@ -50,7 +48,6 @@ export const _videoGalleryRemoteParticipantsMemo = (
             participant.videoStreams,
             state,
             participant.displayName,
-
             participant.raisedHand
           );
         })
@@ -76,7 +73,6 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-
       raisedHand as RaisedHandState
     );
   }
@@ -123,7 +119,6 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
     state,
-
     raisedHand: raisedHand as RaisedHandState
   };
 };
@@ -165,7 +160,6 @@ export const memoizeLocalParticipant = memoizeOne(
     },
     /* @conditional-compile-remove(rooms) */
     role,
-
     raisedHand: raisedHand
   })
 );

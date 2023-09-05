@@ -148,7 +148,9 @@ export interface CallAdapterCallOperations {
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
+    lowerHand(): Promise<void>;
     mute(): Promise<void>;
+    raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startScreenShare(): Promise<void>;
@@ -241,6 +243,10 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
+    ControlButtonRaiseHand?: JSX.Element;
+    ControlButtonLowerHand?: JSX.Element;
+    RaiseHandContextualMenuItem?: JSX.Element;
+    LowerHandContextualMenuItem?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -403,10 +409,12 @@ export interface CallWithChatAdapterManagement {
     joinCall(options?: JoinCallOptions): Call | undefined;
     leaveCall(forEveryone?: boolean): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
+    lowerHand(): Promise<void>;
     mute(): Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
+    raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -756,6 +764,10 @@ export type CommonCallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
+    moreButton?: boolean;
+    raiseHandButton?: boolean | {
+        disabled: boolean;
+    };
     peopleButton?: boolean;
 };
 
@@ -886,6 +898,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
