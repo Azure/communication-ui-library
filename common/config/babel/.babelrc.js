@@ -82,8 +82,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for capabilities
-        'capabilities',
         // Feature for custom video gallery layouts
         'gallery-layouts',
         // Feature image gallery
@@ -101,6 +99,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'video-background-effects',
         // Pinned Participants
         'pinned-participants',
+        // Feature for capabilities
+        'capabilities',
          // Closed captions
         'close-captions',
         // Optimal Video Count

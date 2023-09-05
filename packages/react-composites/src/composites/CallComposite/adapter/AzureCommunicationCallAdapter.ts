@@ -49,7 +49,7 @@ import type { CapabilitiesChangeHandler, CapabilitiesChangeInfo } from '@azure/c
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(capabilities) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
