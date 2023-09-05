@@ -2032,11 +2032,6 @@ export const createAzureCommunicationCallAdapter: ({ userId, displayName, creden
 // @public
 export const createAzureCommunicationCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: CallAgent, locator: CallAdapterLocator, options?: AzureCommunicationCallAdapterOptions) => Promise<CallAdapter>;
 
-// Warning: (ae-internal-missing-underscore) The name "createAzureCommunicationCallAdapterInner" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const createAzureCommunicationCallAdapterInner: (userId: CommunicationUserIdentifier, displayName: string, credential: CommunicationTokenCredential, locator: CallAdapterLocator, alternateCallerId?: string | undefined, options?: CommonCallAdapterOptions | undefined, telemetryImplementationHint?: TelemetryImplementationHint) => Promise<CallAdapter>;
-
 // @public
 export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName, credential, endpoint, locator, alternateCallerId, callAdapterOptions }: AzureCommunicationCallWithChatAdapterArgs) => Promise<CallWithChatAdapter>;
 

@@ -34,7 +34,6 @@ import {
   IsSpeakingChangedListener,
   CallAdapter,
   CallAdapterState,
-  createAzureCommunicationCallAdapterInner,
   CallEndedListener
 } from '../../CallComposite';
 import {
@@ -72,7 +71,10 @@ import { getChatThreadFromTeamsLink } from './parseTeamsUrl';
 import { AdapterError } from '../../common/adapters';
 
 /* @conditional-compile-remove(teams-adhoc-call) */
-import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+import {
+  CallParticipantsLocator,
+  createAzureCommunicationCallAdapterInner
+} from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import {
   CallAdapterLocator,
