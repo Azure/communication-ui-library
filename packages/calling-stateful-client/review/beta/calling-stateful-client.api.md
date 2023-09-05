@@ -137,7 +137,7 @@ export interface CallState {
     transfer: TransferFeature;
 }
 
-// @beta
+// @public
 export interface CapabilitiesFeatureState {
     capabilities: ParticipantCapabilities;
     latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
