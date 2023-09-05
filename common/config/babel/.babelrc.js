@@ -102,7 +102,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Pinned Participants
         'pinned-participants',
          // Closed captions
-        'close-captions'
+        'close-captions',
+        // Optimal Video Count
+        'optimal-video-count'
       ]
     }
   ]);

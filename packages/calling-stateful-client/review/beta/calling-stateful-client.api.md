@@ -254,7 +254,7 @@ export interface NetworkDiagnosticsState {
     latest: LatestNetworkDiagnostics;
 }
 
-// @beta
+// @public
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
