@@ -1218,10 +1218,12 @@ export type ParticipantsRemovedListener = (event: {
 }) => void;
 
 // @public
-export type TeamsAdapterOptions = CommonCallAdapterOptions;
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @public
+export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @public
 export type TopicChangedListener = (event: {
