@@ -339,7 +339,7 @@ export type TransferRequestedListener = (event: TransferRequestedEventArgs) => v
 /**
  * Callback for {@link CallAdapterSubscribers} 'capabilitiesChanged' event.
  *
- * @beta
+ * @public
  */
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
