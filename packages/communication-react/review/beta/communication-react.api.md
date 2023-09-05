@@ -3811,7 +3811,7 @@ export interface SystemMessageCommon extends MessageCommon {
     messageType: 'system';
 }
 
-// @beta
+// @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta

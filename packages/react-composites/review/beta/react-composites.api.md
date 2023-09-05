@@ -1623,7 +1623,7 @@ export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
 
-// @beta
+// @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
