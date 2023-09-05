@@ -50,6 +50,7 @@
     "deniedPermissionToRoomDetails": "U bent niet gemachtigd om deel te nemen aan deze ruimte.",
     "deniedPermissionToRoomTitle": "Machtiging voor de ruimte is geweigerd",
     "peopleButtonLabel": "Personen",
+    "selectedPeopleButtonLabel": "Knop Personen geselecteerd",
     "peoplePaneTitle": "Personen",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
@@ -99,16 +100,18 @@
     "startCaptionsButtonOffLabel": "Ondertitels uitschakelen",
     "startCaptionsButtonTooltipOnContent": "Ondertitels uitschakelen",
     "startCaptionsButtonTooltipOffContent": "Bijschriften inschakelen",
-    "captionsSettingsModalTitle": "Welke taal wordt er gesproken?",
-    "captionsSettingsDropdownLabel": "Gesproken taal",
-    "captionsSettingsDropdownInfoText": "Taal die iedereen in dit gesprek spreekt.",
+    "captionsSettingsModalTitle": "Instellingen voor ondertitels",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Gesproken taal",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Taal van ondertitels",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Taal die iedereen in dit gesprek spreekt.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Bijschriften worden weergegeven in deze taal.",
     "captionsSettingsConfirmButtonLabel": "Bevestigen",
     "captionsSettingsCancelButtonLabel": "Annuleren",
     "captionsSettingsModalAriaLabel": "Bijschriften instellen modaal",
     "captionsSettingsCloseModalButtonAriaLabel": "Instelling voor ondertiteling sluiten",
     "captionsBannerMoreButtonCallingLabel": "Meer",
     "captionsBannerMoreButtonTooltip": "Meer opties",
-    "captionsAvailableLanguageStrings": {
+    "spokenLanguageStrings": {
       "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
       "ar-sa": "Arabisch - Saudi-Arabië",
       "da-dk": "Deens",
@@ -151,6 +154,40 @@
       "sk-sk": "Slowaaks",
       "zh-tw": "Chinees - Taiwan"
     },
+    "captionLanguageStrings": {
+      "ar": "Arabisch",
+      "da": "Deens",
+      "de": "Duits",
+      "en": "Engels",
+      "es": "Spaans",
+      "fi": "Fins",
+      "fr-ca": "Frans - Canada",
+      "fr": "Frans - Frankrijk",
+      "hi": "Hindi",
+      "it": "Italiaans",
+      "ja": "Japans",
+      "ko": "Koreaans",
+      "nb": "Noors (Bokmål)",
+      "nl": "Nederlands",
+      "pl": "Pools",
+      "pt": "Portugees - Brazilië",
+      "ru": "Russisch",
+      "sv": "Zweeds",
+      "zh-Hans": "Vereenvoudigd Chinees",
+      "zh-Hant": "Traditioneel Chinees",
+      "cs": "Tsjechisch",
+      "pt-pt": "Portugees - Portugal",
+      "tr": "Turks",
+      "vi": "Vietnamees",
+      "th": "Thai",
+      "he": "Hebreeuws",
+      "cy": "Welsh",
+      "uk": "Oekraïens",
+      "el": "Grieks",
+      "hu": "Hongaars",
+      "ro": "Roemeens",
+      "sk": "Slowaaks"
+    },
     "captionsBannerSpinnerText": "Ondertitels starten...",
     "transferPageTransferorText": "Doorverbinden...",
     "transferPageTransferTargetText": "Verbinding maken...",
@@ -170,7 +207,21 @@
     "moreButtonGallerySpeakerLayoutLabel": "Luidsprekerindeling",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamische indeling",
     "moreButtonGalleryDefaultLayoutLabel": "Galerie-indeling",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Inhoud met prioriteit"
+    "moreButtonGalleryFocusedContentLayoutLabel": "Inhoud met prioriteit",
+    "capabilityChangedNotification": {
+      "turnVideoOn": {
+        "lostDueToMeetingOption": "Uw camera is uitgeschakeld. U kunt geen video meer delen.",
+        "grantedDueToMeetingOption": "Uw camera is ingeschakeld. Schakel deze optie in als u video wilt delen."
+      },
+      "unmuteMic": {
+        "lostDueToMeetingOption": "Uw microfoon is uitgeschakeld. U kunt het dempen niet meer opheffen.",
+        "grantedDueToMeetingOption": "Uw microfoon is ingeschakeld. Hef het dempen op als u wilt spreken."
+      },
+      "shareScreen": {
+        "lostDueToRoleChangeToAttendee": "Uw rol is gewijzigd. Sommige acties, zoals het delen van inhoud, zijn niet beschikbaar voor u.",
+        "grantedDueToRoleChangeToPresenter": "U bent een presentator. U kunt inhoud delen en de vergadering vergemakkelijken."
+      }
+    }
   },
   "chat": {
     "chatListHeader": "In deze chat",
@@ -193,7 +244,9 @@
     "moreDrawerSpeakerMenuTitle": "Luidspreker",
     "moreDrawerCaptionsMenuTitle": "Liveondertitels",
     "moreDrawerSpokenLanguageMenuTitle": "Gesproken taal",
+    "moreDrawerCaptionLanguageMenuTitle": "Taal van ondertiteling",
     "peopleButtonLabel": "Personen",
+    "selectedPeopleButtonLabel": "Knop Personen geselecteerd",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",
     "peopleButtonTooltipClose": "Deelnemers verbergen",
     "peoplePaneSubTitle": "In dit gesprek",
