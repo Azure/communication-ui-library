@@ -8,7 +8,7 @@ import { Meta } from '@storybook/addon-docs';
 
 # usePropsFor <a name="usePropsFor"></a>
 
-If you are using React Component from our communication-react components, usePropsFor is the go-to hook.
+If you are using React Component from our communication-react components, `usePropsFor` is the go-to hook.
 It provides all the required props to power a feature component.
 It subscribes to state changes of stateful clients, gets props designed for your component, and triggers a re-render whenever the props change.
 
@@ -59,7 +59,7 @@ _Calling_
 
 ## Choose your target
 
-usePropsFor() is context-aware. It picks out props from the relevant Provider for the component. One exception is ParticipantList -- a component applicable to both chat and calling settings. Thus, ChatClientProvider and CallingClientProvider both provide props for this component\*. Thus, usePropsFor() can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+`usePropsFor()` is context-aware. It picks out props from the relevant Provider for the component. One exception is `ParticipantList` -- a component applicable to both chat and calling settings. Thus, `ChatClientProvider` and `CallingClientProvider` both provide props for this component\*. Thus, `usePropsFor()` can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
 
 _\*only ParticipantList component is shared by both chat and calling_
 
@@ -82,10 +82,10 @@ export const ParicipantLists = () => {
 
 ## Under the Hood of usePropsFor
 
-usePropsFor() is a function that provides all you need to run a component in our library.
+`usePropsFor()` is a function that provides all you need to run a component in our library.
 It combines 2 tasks for generating the component's props for you:
 
-1. Finds the right selector designed for the component, then call useSelector()
+1. Finds the right selector designed for the component, then call `useSelector()`
 2. Constructs a set of handlers tailored for the component
 
 ## Using usePropsFor with Custom Components
