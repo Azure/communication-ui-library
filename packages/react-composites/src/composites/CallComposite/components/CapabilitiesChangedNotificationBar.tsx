@@ -163,7 +163,7 @@ const messageBarStyles = {
 /* @conditional-compile-remove(capabilities) */
 /**
  * Strings for capability changed notification
- * @beta
+ * @public
  */
 export interface CapabilityChangedNotificationStrings {
   /**
