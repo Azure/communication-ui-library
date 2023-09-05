@@ -1442,7 +1442,7 @@ export type CaptionsOptions = {
     spokenLanguage: string;
 };
 
-// @beta
+// @public
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -2875,12 +2875,12 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
 
-// @beta
+// @public
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -2902,7 +2902,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @beta
+// @public
 export type IsSpokenLanguageChangedListener = (event: {
     activeSpokenLanguage: string;
 }) => void;
