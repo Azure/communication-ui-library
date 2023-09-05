@@ -16,5 +16,4 @@ export type ExcludeList =
   | 'useAzureCommunicationCallAdapter'
   | 'CallComposite'
   | 'useAzureCommunicationChatAdapter'
-  | 'ChatComposite'
-  | 'CallErrors';
+  | 'ChatComposite';
