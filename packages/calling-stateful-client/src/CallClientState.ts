@@ -55,7 +55,7 @@ export interface CallAgentState {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @beta
+ * @public
  */
 export interface CaptionsInfo {
   /**
@@ -90,7 +90,7 @@ export interface CaptionsInfo {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @beta
+ * @public
  */
 export interface CaptionsCallFeatureState {
   /**
@@ -239,7 +239,7 @@ export interface LocalVideoStreamVideoEffectsState {
 /**
  * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
  *
- * @beta
+ * @public
  */
 export interface OptimalVideoCountFeatureState {
   /**

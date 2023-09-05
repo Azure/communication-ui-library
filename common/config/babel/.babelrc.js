@@ -100,7 +100,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Pinned Participants
         'pinned-participants',
         // Feature for capabilities
-        'capabilities'
+        'capabilities',
+         // Closed captions
+        'close-captions',
+        // Optimal Video Count
+        'optimal-video-count'
       ]
     }
   ]);

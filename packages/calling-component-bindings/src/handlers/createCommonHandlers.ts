@@ -104,7 +104,7 @@ export interface CommonCallingHandlers {
 /**
  * options bag to start captions
  *
- * @beta
+ * @public
  */
 export type CaptionsOptions = {
   spokenLanguage: string;

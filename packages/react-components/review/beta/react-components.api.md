@@ -256,7 +256,7 @@ export type CancelEditCallback = (messageId: string) => void;
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
-// @beta
+// @public
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1231,8 +1231,8 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 // @beta
 export interface ImageGalleryImageProps {
     altText?: string;
+    downloadFilename: string;
     imageUrl: string;
-    saveAsName: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -1243,7 +1243,7 @@ export interface ImageGalleryProps {
     isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
     startIndex?: number;
 }
 
@@ -1900,7 +1900,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @beta
+// @public
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;
