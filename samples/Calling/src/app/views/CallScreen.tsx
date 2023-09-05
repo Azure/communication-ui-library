@@ -18,7 +18,7 @@ import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-reac
 import { AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy } from '@azure/communication-react';
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(teams-identity-support) */
 import type { TeamsAdapterOptions } from '@azure/communication-react';
 import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
