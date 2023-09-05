@@ -1334,7 +1334,7 @@ export type AzureCommunicationCallAdapterArgs = {
 /**
  * Optional parameters to create {@link TeamsCallAdapter}
  *
- * @beta
+ * @public
  */
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
