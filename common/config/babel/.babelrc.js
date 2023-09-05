@@ -101,6 +101,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'stabilizedDemo',
         // Pinned Participants
         'pinned-participants',
+         // Closed captions
+        'close-captions',
         // Optimal Video Count
         'optimal-video-count'
       ]
