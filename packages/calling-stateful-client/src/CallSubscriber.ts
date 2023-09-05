@@ -22,7 +22,7 @@ import { RecordingSubscriber } from './RecordingSubscriber';
 import { disposeView } from './StreamUtils';
 import { TranscriptionSubscriber } from './TranscriptionSubscriber';
 import { UserFacingDiagnosticsSubscriber } from './UserFacingDiagnosticsSubscriber';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
@@ -48,7 +48,7 @@ export class CallSubscriber {
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   /* @conditional-compile-remove(close-captions) */
   private _captionsSubscriber?: CaptionsSubscriber;
-  /* @conditional-compile-remove(raise-hand) */
+
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
@@ -77,7 +77,7 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Transcription)
     );
-    /* @conditional-compile-remove(raise-hand) */
+
     this._raiseHandSubscriber = new RaiseHandSubscriber(
       this._callIdRef,
       this._context,
@@ -180,7 +180,7 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     /* @conditional-compile-remove(close-captions) */
     this._captionsSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(raise-hand) */
+
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();

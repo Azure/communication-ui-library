@@ -37,9 +37,9 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
 import { CommonCallAdapter } from '../adapter';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaiseHand } from './buttons/RaiseHand';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 /**
  * @private
@@ -106,7 +106,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
-  /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -167,7 +166,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       });
     }
 
-    /* @conditional-compile-remove(raise-hand) */
     if (raiseHandButtonIsEnabled) {
       items.push({
         key: 'raiseHandButtonKey',
@@ -217,7 +215,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
-  /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
 
   return (
@@ -249,11 +246,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           {cameraButtonIsEnabled && (
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
-          {
-            /* @conditional-compile-remove(raise-hand) */ raiseHandButtonIsEnabled && !props.isMobile && (
-              <RaiseHand displayType={options?.displayType} />
-            )
-          }
+          {raiseHandButtonIsEnabled && !props.isMobile && <RaiseHand displayType={options?.displayType} />}
           {screenShareButtonIsEnabled && (
             <ScreenShare
               option={options?.screenShareButton}

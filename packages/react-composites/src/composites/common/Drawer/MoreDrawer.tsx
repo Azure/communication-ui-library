@@ -17,7 +17,7 @@ import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-co
 
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(control-bar-button-injection) */
@@ -163,7 +163,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
 
-  /* @conditional-compile-remove(raise-hand) */
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   const onSpeakerItemClick = useCallback(
@@ -267,7 +266,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  /* @conditional-compile-remove(raise-hand) */
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.raiseHandButton)) {
     const raiseHandIcon = raiseHandButtonProps.checked ? 'LowerHandContextualMenuItem' : 'RaiseHandContextualMenuItem';
     drawerMenuItems.push({

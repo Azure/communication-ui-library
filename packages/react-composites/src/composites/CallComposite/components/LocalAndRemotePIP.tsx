@@ -14,7 +14,6 @@ import {
 
 import { useLocale } from '../../localization';
 
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '@internal/react-components';
 
 /**
@@ -24,7 +23,7 @@ export interface LocalAndRemotePIPProps {
   localParticipant: {
     displayName?: string;
     videoStream?: VideoGalleryStream;
-    /* @conditional-compile-remove(raise-hand) */ raisedHand?: RaisedHand;
+    raisedHand?: RaisedHand;
   };
   dominantRemoteParticipant?: {
     userId: string;
@@ -70,7 +69,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       showCameraSwitcherInLocalPreview: false,
       isAvailable: localParticipant.videoStream?.isAvailable,
       renderElement: localParticipant.videoStream?.renderElement,
-      /* @conditional-compile-remove(raise-hand) */
+
       raisedHand: localParticipant.raisedHand
     }),
     [
@@ -79,7 +78,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
       localParticipant.videoStream?.renderElement,
       onCreateLocalStreamView,
       onDisposeLocalStreamView,
-      /* @conditional-compile-remove(raise-hand) */
+
       localParticipant.raisedHand
     ]
   );

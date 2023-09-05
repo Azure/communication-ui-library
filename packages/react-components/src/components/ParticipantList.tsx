@@ -13,9 +13,9 @@ import {
 } from '@fluentui/react';
 /* @conditional-compile-remove(total-participant-count) */
 import { Text } from '@fluentui/react';
-/* @conditional-compile-remove(raise-hand) */
+
 import { useTheme } from '../theming';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
 import { useIdentifiers } from '../identifiers';
@@ -140,34 +140,30 @@ const onRenderParticipantDefault = (
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
   const onRenderIcon =
-    callingParticipant?.isScreenSharing ||
-    callingParticipant?.isMuted ||
-    /* @conditional-compile-remove(raise-hand) */ callingParticipant?.raisedHand
+    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-            {
-              /* @conditional-compile-remove(raise-hand) */ callingParticipant.raisedHand && (
-                <Stack
-                  horizontal={true}
-                  tokens={{ childrenGap: '0.2rem' }}
-                  style={{
-                    alignItems: 'center',
-                    padding: '0.1rem 0.2rem',
-                    backgroundColor: theme?.palette.neutralLighter,
-                    borderRadius: '0.3rem'
-                  }}
-                >
-                  {callingParticipant.raisedHand.raisedHandOrderPosition && (
-                    <Stack.Item>
-                      <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
-                    </Stack.Item>
-                  )}
+            {callingParticipant.raisedHand && (
+              <Stack
+                horizontal={true}
+                tokens={{ childrenGap: '0.2rem' }}
+                style={{
+                  alignItems: 'center',
+                  padding: '0.1rem 0.2rem',
+                  backgroundColor: theme?.palette.neutralLighter,
+                  borderRadius: '0.3rem'
+                }}
+              >
+                {callingParticipant.raisedHand.raisedHandOrderPosition && (
                   <Stack.Item>
-                    <RaisedHandIcon />
+                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                   </Stack.Item>
-                </Stack>
-              )
-            }
+                )}
+                <Stack.Item>
+                  <RaisedHandIcon />
+                </Stack.Item>
+              </Stack>
+            )}
             {callingParticipant.isScreenSharing && (
               <Icon
                 iconName="ParticipantItemScreenShareStart"
@@ -207,12 +203,10 @@ const onRenderParticipantDefault = (
  * Sort participants by raised hand order position
  */
 const sortParticipants = (participants: ParticipantListParticipant[]): ParticipantListParticipant[] => {
-  /* @conditional-compile-remove(raise-hand) */
   const isParticipantListCallParticipant = function (participant: ParticipantListParticipant): boolean {
     return 'raisedHand' in participant;
   };
 
-  /* @conditional-compile-remove(raise-hand) */
   participants.sort((a, b) => {
     if (!isParticipantListCallParticipant(a) || !isParticipantListCallParticipant(b)) {
       return 0;
@@ -276,7 +270,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     participantAriaLabelledBy
   } = props;
 
-  /* @conditional-compile-remove(raise-hand) */
   const theme = useTheme();
   const ids = useIdentifiers();
   const participantItemStrings = useLocale().strings.participantItem;
@@ -318,7 +311,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
       onFetchParticipantMenuItems,
       onRemoveParticipant,
       props.styles?.participantItemStyles?.participantSubMenuItemsStyles,
-      /* @conditional-compile-remove(raise-hand) */
+
       participantItemStrings.removeButtonLabel
     ]
   );
@@ -351,7 +344,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               props.onParticipantClick,
               showParticipantOverflowTooltip,
               participantAriaLabelledBy,
-              /* @conditional-compile-remove(raise-hand) */
+
               theme
             )
       )}

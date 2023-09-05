@@ -33,9 +33,9 @@ import { Features } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaisedHandState } from './CallClientState';
 
 /**
@@ -92,7 +92,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
     videoStreams: declarativeVideoStreams,
     isMuted: participant.isMuted,
     isSpeaking: participant.isSpeaking,
-    /* @conditional-compile-remove(raise-hand) */
+
     raisedHand: undefined
   };
 }
@@ -130,7 +130,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     remoteParticipants: declarativeRemoteParticipants,
     remoteParticipantsEnded: {},
     recording: { isRecordingActive: false },
-    /* @conditional-compile-remove(raise-hand) */
+
     raiseHand: { raisedHands: [] },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
@@ -204,7 +204,6 @@ export function convertFromSDKToDeclarativeVideoStreamVideoEffects(
   };
 }
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

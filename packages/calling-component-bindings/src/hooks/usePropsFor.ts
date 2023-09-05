@@ -15,9 +15,7 @@ import {
 import { Dialpad } from '@internal/react-components';
 /* @conditional-compile-remove(PSTN-calls) */
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton } from '@internal/react-components';
-/* @conditional-compile-remove(raise-hand) */
 import { raiseHandButtonSelector } from '../callControlSelectors';
 import {
   CameraButtonSelector,
@@ -133,10 +131,6 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === HoldButton) {
     return findConditionalCompiledSelector(component);
   }
-  /* @conditional-compile-remove(raise-hand) */
-  if (component === RaiseHandButton) {
-    return findConditionalCompiledSelector(component);
-  }
   return findSelector(component);
 };
 
@@ -166,18 +160,16 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return emptySelector;
     case ErrorBar:
       return errorBarSelector;
+    case RaiseHandButton:
+      return raiseHandButtonSelector;
   }
   return undefined;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
+/* @conditional-compile-remove(PSTN-calls) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
     case HoldButton:
       return holdButtonSelector;
-    /* @conditional-compile-remove(raise-hand) */
-    case RaiseHandButton:
-      /* @conditional-compile-remove(raise-hand) */
-      return raiseHandButtonSelector;
   }
 };

@@ -14,7 +14,7 @@ export interface CallingTheme {
     callRedDark: string;
     callRedDarker: string;
     iconWhite: string;
-    /* @conditional-compile-remove(raise-hand) */
+
     raiseHandGold: string;
   };
 }
@@ -75,7 +75,7 @@ export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-r
     callRedDark: '#8b2c3d',
     callRedDarker: '#772a38',
     iconWhite: '#ffffff',
-    /* @conditional-compile-remove(raise-hand) */
+
     raiseHandGold: '#eaa300'
   },
   /* @conditional-compile-remove(image-gallery) */
@@ -126,7 +126,7 @@ export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-re
     callRedDark: '#a42e43',
     callRedDarker: '#8b2c3d',
     iconWhite: '#ffffff',
-    /* @conditional-compile-remove(raise-hand) */
+
     raiseHandGold: '#eaa300'
   },
   /* @conditional-compile-remove(image-gallery) */

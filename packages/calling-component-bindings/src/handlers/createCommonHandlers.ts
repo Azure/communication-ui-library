@@ -50,11 +50,8 @@ export interface CommonCallingHandlers {
   onStopScreenShare: () => Promise<void>;
   onToggleScreenShare: () => Promise<void>;
   onHangUp: (forEveryone?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onRaiseHand: () => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onLowerHand: () => Promise<void>;
-  /* @conditional-compile-remove(raise-hand) */
   onToggleRaiseHand: () => Promise<void>;
   /* @conditional-compile-remove(PSTN-calls) */
   onToggleHold: () => Promise<void>;
@@ -271,13 +268,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(raise-hand) */
     const onRaiseHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.raiseHand();
 
-    /* @conditional-compile-remove(raise-hand) */
     const onLowerHand = async (): Promise<void> => await call?.feature(Features.RaiseHand)?.lowerHand();
 
-    /* @conditional-compile-remove(raise-hand) */
     const onToggleRaiseHand = async (): Promise<void> => {
       const raiseHandFeature = call?.feature(Features.RaiseHand);
       const localUserId = callClient.getState().userId;
@@ -579,11 +573,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onDisposeLocalStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
-      /* @conditional-compile-remove(raise-hand) */
       onRaiseHand,
-      /* @conditional-compile-remove(raise-hand) */
       onLowerHand,
-      /* @conditional-compile-remove(raise-hand) */
       onToggleRaiseHand,
       /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: notImplemented,

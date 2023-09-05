@@ -23,7 +23,7 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaisedHandState } from '@internal/calling-stateful-client';
 /**
  * @private
@@ -55,7 +55,6 @@ export const getDeviceManager = (state: CallAdapterState): DeviceManagerState =>
  */
 export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.call?.isScreenSharingOn ?? false;
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

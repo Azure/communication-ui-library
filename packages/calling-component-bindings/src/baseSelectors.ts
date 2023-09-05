@@ -17,7 +17,6 @@ import {
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 
 /**
@@ -80,7 +79,6 @@ export const getRemoteParticipants = (
   return state.calls[props.callId]?.remoteParticipants;
 };
 
-/* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

@@ -6,7 +6,7 @@ import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
 import { getDisplayName } from './baseSelectors';
-/* @conditional-compile-remove(raise-hand) */
+
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 
 /**
@@ -14,23 +14,13 @@ import { getLocalParticipantRaisedHand } from './baseSelectors';
  * @private
  */
 export const localAndRemotePIPSelector = reselect.createSelector(
-  [
-    getDisplayName,
-    dominantRemoteParticipantSelector,
-    localVideoSelector,
-    /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand
-  ],
-  (
-    displayName,
-    dominantRemoteParticipant,
-    localVideoStreamInfo,
-    /* @conditional-compile-remove(raise-hand) */ raisedHand
-  ) => {
+  [getDisplayName, dominantRemoteParticipantSelector, localVideoSelector, getLocalParticipantRaisedHand],
+  (displayName, dominantRemoteParticipant, localVideoStreamInfo, raisedHand) => {
     return {
       localParticipant: {
         displayName,
         videoStream: localVideoStreamInfo,
-        /* @conditional-compile-remove(raise-hand) */
+
         raisedHand: raisedHand
       },
       dominantRemoteParticipant

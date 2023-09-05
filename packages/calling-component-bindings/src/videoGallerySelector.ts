@@ -28,7 +28,6 @@ import {
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant
 } from './utils/videoGalleryUtils';
-/* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 
 /**
@@ -66,7 +65,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getOptimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     getRole,
-    /* @conditional-compile-remove(raise-hand) */
     getLocalParticipantRaisedHand
   ],
   (
@@ -82,7 +80,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     optimalVideoCount,
     /* @conditional-compile-remove(rooms) */
     role,
-    /* @conditional-compile-remove(raise-hand) */
     raisedHand
   ) => {
     const screenShareRemoteParticipant =
@@ -105,7 +102,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
-            /* @conditional-compile-remove(raise-hand) */
             screenShareRemoteParticipant.raisedHand
           )
         : undefined,
@@ -117,7 +113,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         localVideoStream,
         /* @conditional-compile-remove(rooms) */
         role,
-        /* @conditional-compile-remove(raise-hand) */
         raisedHand
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(

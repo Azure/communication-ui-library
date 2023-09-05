@@ -41,7 +41,7 @@ import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-/* @conditional-compile-remove(raise-hand) */
+
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /**
  * @private
@@ -298,17 +298,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         componentRef={props.cameraButtonRef}
                       />
                     )}
-                    {
-                      /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
-                        isEnabled(options.raiseHandButton) && (
-                          <RaiseHand
-                            displayType={options.displayType}
-                            styles={commonButtonStyles}
-                            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-                            disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
-                          />
-                        )
-                    }
+                    {!props.mobileView && isEnabled(options.raiseHandButton) && (
+                      <RaiseHand
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                        disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                      />
+                    )}
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
