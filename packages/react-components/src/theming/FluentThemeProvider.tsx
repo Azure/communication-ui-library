@@ -27,7 +27,10 @@ const wrapper = mergeStyles({
   margin: 0,
   overflow: 'hidden',
   padding: 0,
-  width: '100%'
+  width: '100%',
+  '& [hidden]': {
+    display: 'none !important'
+  }
 });
 
 const defaultTheme: Theme = {
