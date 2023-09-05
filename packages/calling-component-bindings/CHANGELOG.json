@@ -2,6 +2,33 @@
   "name": "@internal/calling-component-bindings",
   "entries": [
     {
+      "date": "Mon, 28 Aug 2023 22:18:09 GMT",
+      "tag": "@internal/calling-component-bindings_v1.8.0-beta.1",
+      "version": "1.8.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/acs-ui-common to v1.8.0-beta.1",
+            "commit": "7cbfc7206c14ac0fe95813b579399c7d6673ce4f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/calling-stateful-client to v1.8.0-beta.1",
+            "commit": "7cbfc7206c14ac0fe95813b579399c7d6673ce4f"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/calling-component-bindings",
+            "comment": "Bump @internal/react-components to v1.8.0-beta.1",
+            "commit": "7cbfc7206c14ac0fe95813b579399c7d6673ce4f"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Aug 2023 18:28:42 GMT",
       "tag": "@internal/calling-component-bindings_v1.7.0",
       "version": "1.7.0",

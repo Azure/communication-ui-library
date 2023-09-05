@@ -396,7 +396,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -955,7 +955,7 @@ export interface CapabilityChangedNotificationStrings {
     };
 }
 
-// @beta
+// @public
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -1507,12 +1507,12 @@ export interface FileUploadState {
 // @beta
 export type FileUploadsUiState = Record<string, FileUploadState>;
 
-// @beta
+// @public
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
 
-// @beta
+// @public
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -1534,7 +1534,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @beta
+// @public
 export type IsSpokenLanguageChangedListener = (event: {
     activeSpokenLanguage: string;
 }) => void;
@@ -1618,7 +1618,7 @@ export type Profile = {
     displayName?: string;
 };
 
-// @beta
+// @public
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }

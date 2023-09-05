@@ -11,7 +11,7 @@ export const ImageGalleryExample: () => JSX.Element = () => {
     const title = 'Image';
     const galleryImage: ImageGalleryImageProps = {
       title: title,
-      saveAsName: source,
+      downloadFilename: source,
       imageUrl: source
     };
     setGalleryImages([galleryImage]);

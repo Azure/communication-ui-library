@@ -593,7 +593,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -1347,7 +1347,7 @@ export interface CapabilityChangedNotificationStrings {
     };
 }
 
-// @beta
+// @public
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1415,7 +1415,7 @@ export interface CaptionLanguageStrings {
     vi: string;
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -1426,7 +1426,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
@@ -1437,12 +1437,12 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @beta
+// @public
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
 
-// @beta
+// @public
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -2839,8 +2839,8 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 // @beta
 export interface ImageGalleryImageProps {
     altText?: string;
+    downloadFilename: string;
     imageUrl: string;
-    saveAsName: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -2851,7 +2851,7 @@ export interface ImageGalleryProps {
     isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
     startIndex?: number;
 }
 
@@ -2875,12 +2875,12 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @beta
+// @public
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
 
-// @beta
+// @public
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -2902,7 +2902,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @beta
+// @public
 export type IsSpokenLanguageChangedListener = (event: {
     activeSpokenLanguage: string;
 }) => void;
@@ -3269,7 +3269,7 @@ export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffect
 // @beta
 export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
-// @beta
+// @public
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
@@ -3549,7 +3549,7 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @beta
+// @public
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
@@ -3653,7 +3653,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @beta
+// @public
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -4095,7 +4095,7 @@ export interface VideoGalleryProps {
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+    remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
@@ -4178,12 +4178,12 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @beta
+// @public
 export interface VideoTileContextualMenuProps {
     kind: 'contextual';
 }
 
-// @beta
+// @public
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
     kind: 'drawer';
