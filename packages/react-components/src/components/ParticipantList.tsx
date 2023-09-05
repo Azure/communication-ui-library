@@ -9,10 +9,9 @@ import {
   mergeStyles,
   PersonaPresence,
   Stack,
-  Theme
+  Theme,
+  Text
 } from '@fluentui/react';
-/* @conditional-compile-remove(total-participant-count) */
-import { Text } from '@fluentui/react';
 
 import { useTheme } from '../theming';
 
