@@ -24,10 +24,9 @@ import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */
-import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptions } from '@azure/communication-calling';
 
