@@ -69,7 +69,7 @@ const CaptionsSettingsModalStory = (args): JSX.Element => {
         onDismissCaptionsSettings={onDismissCaptionsSettings}
         strings={strings}
         supportedCaptionLanguages={[]}
-        onSetCaptionLanguage={() => Promise.resolve()}
+        onSetCaptionLanguage={Promise.resolve}
         currentCaptionLanguage={''}
       />{' '}
     </Stack>
