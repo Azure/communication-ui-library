@@ -35,8 +35,6 @@ import { mergeClasses } from '@fluentui/react-components';
 import {
   chatBlockedMessageClasses,
   chatBlockedMyMessageClasses,
-  // defaultChatItemMessageContainerNoOverlap,
-  // defaultChatItemMessageContainerOverlap,
   defaultChatItemMessageContainerStyles,
   gutterWithAvatar,
   gutterWithHiddenAvatar,
