@@ -75,6 +75,14 @@ export const _useChatMyMessageLayout = makeStyles({
     gridGap: '0',
     paddingTop: '0'
   },
+  body: {
+    '&:hover ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    },
+    '&:focus ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    }
+  },
   menu: {
     boxShadow: tokens.shadow4,
     backgroundColor: tokens.colorNeutralBackground1,
@@ -85,17 +93,15 @@ export const _useChatMyMessageLayout = makeStyles({
     lineHeight: tokens.lineHeightBase100,
     visibility: 'hidden',
 
-    '&:focus, &:hover': {
+    '&:hover, &:focus': {
       visibility: 'visible'
     }
   },
-  body: {
-    '&:focus ~ .fui-ChatMyMessage__actions': {
-      visibility: 'visible'
-    },
-    '&:hover ~ .fui-ChatMyMessage__actions': {
-      visibility: 'visible'
-    }
+  menuHidden: {
+    visibility: 'hidden'
+  },
+  menuVisible: {
+    visibility: 'visible'
   }
 });
 
