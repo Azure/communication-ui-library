@@ -8,7 +8,6 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  margin: 0;
   /* bring your own prefixes */
   transform: translate(-50%, -50%);
 }
