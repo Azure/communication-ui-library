@@ -11,7 +11,7 @@ import {
   Stack,
   Theme
 } from '@fluentui/react';
-/* @conditional-compile-remove(total-participant-count) */
+/* @conditional-compile-remove(total-participant-count) */ /* @conditional-compile-remove(raise-hand) */
 import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme } from '../theming';
