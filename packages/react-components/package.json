@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.7.1-beta.0",
+  "version": "1.8.0-beta.1",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -42,8 +42,7 @@
     "@fluentui/react-migration-v0-v9": "~9.0.17",
     "@fluentui/react-migration-v8-v9": "~9.4.0",
     "@fluentui/react-window-provider": "~2.2.3",
-    "@internal/acs-ui-common": "1.7.1-beta.0",
-    "@fluentui-contrib/react-chat": "0.1.6",
+    "@internal/acs-ui-common": "1.8.0-beta.1",
     "copy-to-clipboard": "~3.3.1",
     "dompurify": "^3.0.3",
     "html-to-react": "~1.5.0",

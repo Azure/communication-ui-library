@@ -15,6 +15,7 @@ import { CallClientState } from '@internal/calling-stateful-client';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { CallState } from '@azure/communication-calling';
 import { CameraButton } from '@internal/react-components';
+import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
@@ -97,6 +98,32 @@ export type CameraButtonSelector = (state: CallClientState, props: CallingBaseSe
 // @public
 export const cameraButtonSelector: CameraButtonSelector;
 
+// @internal
+export type _CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    captions: _CaptionsInfo[];
+    isCaptionsOn: boolean;
+};
+
+// @internal
+export const _captionsBannerSelector: _CaptionsBannerSelector;
+
+// @internal
+export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedCaptionLanguages: string[];
+    currentCaptionLanguage: string;
+    supportedSpokenLanguages: string[];
+    currentSpokenLanguage: string;
+    isCaptionsFeatureActive: boolean;
+};
+
+// @internal
+export const _captionSettingsSelector: _CaptionSettingsSelector;
+
+// @public
+export type CaptionsOptions = {
+    spokenLanguage: string;
+};
+
 // @public
 export interface CommonCallingHandlers {
     // (undocumented)
@@ -122,11 +149,19 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     // (undocumented)
+    onSetCaptionLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
     onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    // (undocumented)
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
+    // (undocumented)
+    onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
     // (undocumented)
@@ -210,10 +245,21 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
+    disabled?: boolean;
 };
 
 // @public
 export const screenShareButtonSelector: ScreenShareButtonSelector;
+
+// @internal
+export type _StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked: boolean;
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+};
+
+// @internal
+export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector;
 
 // @public
 export const useCall: () => Call | undefined;
@@ -245,6 +291,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
+    optimalVideoCount?: number;
 };
 
 // (No @packageDocumentation comment for this package)

@@ -163,6 +163,16 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     });
   }, [supportedCaptionLanguages, captionLanguageStrings]);
 
+  const sortedSpokenLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
+    const copy = [...spokenLanguageDropdownOptions];
+    return copy.sort((a, b) => (a.text > b.text ? 1 : -1));
+  }, [spokenLanguageDropdownOptions]);
+
+  const sortedCaptionLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
+    const copy = [...captionLanguageDropdownOptions];
+    return copy.sort((a, b) => (a.text > b.text ? 1 : -1));
+  }, [captionLanguageDropdownOptions]);
+
   const onSpokenLanguageChange = (
     event: React.FormEvent<HTMLDivElement>,
     option: IDropdownOption | undefined
@@ -202,7 +212,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
           onChange={onSpokenLanguageChange}
           calloutProps={calloutProps}
           placeholder={placeholderSpokenLanguage}
-          options={spokenLanguageDropdownOptions}
+          options={sortedSpokenLanguageDropdownOptions}
           styles={dropdownStyles}
         />
         <Text className={dropdownInfoTextStyle(theme)}>{strings?.captionsSettingsSpokenLanguageDropdownInfoText}</Text>
@@ -214,7 +224,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
               onChange={onCaptionLanguageChange}
               calloutProps={calloutProps}
               placeholder={placeholderCaptionLanguage}
-              options={captionLanguageDropdownOptions}
+              options={sortedCaptionLanguageDropdownOptions}
               styles={dropdownStyles}
             />
             <Text className={dropdownInfoTextStyle(theme)}>
@@ -228,8 +238,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     calloutProps,
     currentSpokenLanguage,
     currentCaptionLanguage,
-    spokenLanguageDropdownOptions,
-    captionLanguageDropdownOptions,
+    sortedSpokenLanguageDropdownOptions,
+    sortedCaptionLanguageDropdownOptions,
     selectedCaptionLanguage,
     selectedSpokenLanguage,
     strings?.captionsSettingsSpokenLanguageDropdownInfoText,

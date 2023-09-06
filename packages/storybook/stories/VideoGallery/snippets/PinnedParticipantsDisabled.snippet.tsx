@@ -71,7 +71,7 @@ export const PinnedParticipantsDisabledExample: () => JSX.Element = () => {
         layout="floatingLocalVideo"
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        remoteVideoTileMenuOptions={false}
+        remoteVideoTileMenu={false}
       />
     </Stack>
   );

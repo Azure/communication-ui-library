@@ -256,7 +256,7 @@ export type CancelEditCallback = (messageId: string) => void;
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
-// @beta
+// @public
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1231,8 +1231,8 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 // @beta
 export interface ImageGalleryImageProps {
     altText?: string;
+    downloadFilename: string;
     imageUrl: string;
-    saveAsName: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -1243,7 +1243,7 @@ export interface ImageGalleryProps {
     isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
     startIndex?: number;
 }
 
@@ -1810,6 +1810,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     drawerMenuHostId?: string | undefined;
     onPinParticipant?: ((userId: string) => void) | undefined;
     onUnpinParticipant?: ((userId: string) => void) | undefined;
+    onUpdateScalingMode?: ((userId: string, scalingMode: ViewScalingMode) => void) | undefined;
     isPinned?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
@@ -1899,7 +1900,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @beta
+// @public
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -2322,7 +2323,7 @@ export interface VideoGalleryProps {
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+    remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
@@ -2389,12 +2390,12 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @beta
+// @public
 export interface VideoTileContextualMenuProps {
     kind: 'contextual';
 }
 
-// @beta
+// @public
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
     kind: 'drawer';
