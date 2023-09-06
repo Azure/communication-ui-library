@@ -592,14 +592,14 @@ export interface CallAdapterCallOperations {
   /**
    * Start the video background effect.
    *
-   * @beta
+   * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
    *
-   * @beta
+   * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
@@ -608,14 +608,14 @@ export interface CallAdapterCallOperations {
    *
    * @param backgroundImages - Array of custom background images.
    *
-   * @beta
+   * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Update the selected video background effect.
    *
-   * @beta
+   * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }

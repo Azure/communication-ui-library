@@ -217,7 +217,7 @@ export interface LocalVideoStreamState {
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stores the state of the video effects.
-   * @beta
+   * @public
    */
   videoEffects?: LocalVideoStreamVideoEffectsState;
 }
@@ -226,7 +226,7 @@ export interface LocalVideoStreamState {
 /**
  * State only version of a LocalVideoStream's {@link @azure/communication-calling#VideoEffectsFeature}.
  *
- * @beta
+ * @public
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**

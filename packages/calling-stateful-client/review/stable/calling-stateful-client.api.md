@@ -200,12 +200,11 @@ export const _isTeamsCallAgent: (callAgent: CallAgentCommon) => callAgent is nev
 export interface LocalVideoStreamState {
     mediaStreamType: MediaStreamType;
     source: VideoDeviceInfo;
-    // @beta
     videoEffects?: LocalVideoStreamVideoEffectsState;
     view?: VideoStreamRendererViewState;
 }
 
-// @beta
+// @public
 export interface LocalVideoStreamVideoEffectsState {
     activeEffects?: VideoEffectName[];
 }
@@ -279,7 +278,6 @@ export type StatefulCallClientOptions = {
 
 // @public
 export interface StatefulDeviceManager extends DeviceManager {
-    // @beta
     getUnparentedVideoStreams: () => LocalVideoStream[];
     selectCamera: (VideoDeviceInfo: any) => void;
 }
