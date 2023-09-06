@@ -107,7 +107,7 @@ export type AzureCommunicationCallAdapterArgs = {
     options?: AzureCommunicationCallAdapterOptions;
 };
 
-// @beta
+// @public
 export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 // @public
@@ -212,17 +212,13 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
     stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
@@ -644,15 +640,12 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
     stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
@@ -661,7 +654,6 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
-    // @beta
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
@@ -1078,7 +1070,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
 }
 
-// @beta
+// @public
 export type CommonCallAdapterOptions = {
     videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
@@ -1585,10 +1577,10 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 // @beta
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
-// @beta
+// @public
 export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
 
-// @beta
+// @public
 export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @public
@@ -1623,7 +1615,7 @@ export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
 
-// @beta
+// @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
@@ -1670,27 +1662,27 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
-// @beta
+// @public
 export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
     effectName: 'blur';
 }
 
-// @beta
+// @public
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
-// @beta
+// @public
 export interface VideoBackgroundImage {
     key: string;
     tooltipText?: string;
     url: string;
 }
 
-// @beta
+// @public
 export interface VideoBackgroundNoEffect {
     effectName: 'none';
 }
 
-// @beta
+// @public
 export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
     effectName: 'replacement';
     key?: string;

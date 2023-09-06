@@ -58,7 +58,7 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
-  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
+  onClickVideoEffects?: (showVideoEffects: boolean) => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   /* @conditional-compile-remove(close-captions) */
@@ -294,7 +294,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         /* @conditional-compile-remove(video-background-effects) */
-                        onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                        onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
                       />
                     )}

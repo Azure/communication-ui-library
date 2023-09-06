@@ -338,7 +338,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
-                  onShowVideoEffectsPicker={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
+                  onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
