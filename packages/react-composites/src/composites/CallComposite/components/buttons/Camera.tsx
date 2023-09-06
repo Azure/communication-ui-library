@@ -21,7 +21,7 @@ export const Camera = (props: {
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
   /* @conditional-compile-remove(video-background-effects) */
-  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
+  onClickVideoEffects?: (showVideoEffects: boolean) => void;
   componentRef?: React.RefObject<IButton>;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
@@ -53,7 +53,7 @@ export const Camera = (props: {
           : undefined
       }
       /* @conditional-compile-remove(video-background-effects) */
-      onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+      onClickVideoEffects={props.onClickVideoEffects}
       componentRef={props.componentRef}
     />
   );

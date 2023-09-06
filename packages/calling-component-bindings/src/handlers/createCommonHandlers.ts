@@ -120,7 +120,7 @@ export const areStreamsEqual = (prevStream: LocalVideoStream, newStream: LocalVi
 /**
  * Dependency type to be injected for video background effects
  *
- * @beta
+ * @public
  */
 export type VideoBackgroundEffectsDependency = {
   createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
