@@ -129,9 +129,9 @@ const mapAliasColors = (palette: IPalette, inverted: boolean): ColorTokens => {
     colorCompoundBrandBackgroundHover: palette.themeDarkAlt,
     colorCompoundBrandBackgroundPressed: palette.themeDark,
     colorBrandBackgroundStatic: palette.themePrimary,
-    colorBrandBackground2: palette.themeLight, // updated from palette.themeLighterAlt
-    colorBrandBackground2Hover: palette.themeLight, // updated from palette.themeLighterAlt
-    colorBrandBackground2Pressed: palette.themeLight, // updated from palette.themeLighterAlt
+    colorBrandBackground2: palette.themeLighterAlt,
+    colorBrandBackground2Hover: palette.themeLighterAlt,
+    colorBrandBackground2Pressed: palette.themeLighterAlt,
     colorBrandBackgroundInverted: palette.white,
     colorBrandBackgroundInvertedHover: palette.themeLighterAlt,
     colorBrandBackgroundInvertedPressed: palette.themeLight,
@@ -215,7 +215,9 @@ export const createV9Theme = (themeV8: ThemeV8, baseThemeV9?: ThemeV9): ThemeV9 
     ...baseTheme,
     ...mapAliasColors(themeV8.palette, themeV8.isInverted),
     ...mapShadowTokens(themeV8.effects),
-    ...mapBorderRadiusTokens(themeV8.effects),
+    colorBrandBackground2: themeV8.palette.themeLight, // updated from palette.themeLighterAlt
+    colorBrandBackground2Hover: themeV8.palette.themeLight, // updated from palette.themeLighterAlt
+    colorBrandBackground2Pressed: themeV8.palette.themeLight, // updated from palette.themeLighterAlt
     colorStatusWarningBackground3: '#D83B01',
     errorText: themeV8.semanticColors.errorText
   };

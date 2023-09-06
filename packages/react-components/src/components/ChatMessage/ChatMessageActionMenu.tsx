@@ -35,6 +35,7 @@ export const chatMessageActionMenuProps = (menuProps: {
   const actionMenuProps: ChatMessageActionMenuProps = {
     children: (
       <div
+        tabIndex={0} //make div focusable, as Icon below is migrated to v9, this can be deleted
         key="menuButton"
         data-ui-id="chat-composite-message-action-icon"
         ref={menuProps.menuButtonRef}
@@ -42,7 +43,6 @@ export const chatMessageActionMenuProps = (menuProps: {
       >
         <Icon
           iconName="ChatMessageOptions"
-          data-ui-id="chat-composite-message-action-icon"
           aria-label={menuProps.ariaLabel}
           styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
         />

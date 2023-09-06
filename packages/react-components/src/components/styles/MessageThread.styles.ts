@@ -67,13 +67,41 @@ export const useChatStyles = makeStyles({
  */
 export const _useChatMyMessageLayout = makeStyles({
   root: {
-    gridTemplateColumns: 'auto fit-content(0)',
+    gridTemplateColumns: 'auto auto fit-content(0)',
     gridTemplateAreas: `
-    "body actions"
-    "body status"
-    `,
+        ". actions ."
+        "body body status"
+      `,
     gridGap: '0',
-    paddingBottom: '0.5rem'
+    paddingTop: '0'
+  },
+  body: {
+    '&:hover ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    },
+    '&:focus ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    }
+  },
+  menu: {
+    boxShadow: tokens.shadow4,
+    backgroundColor: tokens.colorNeutralBackground1,
+    marginBottom: '-10px',
+    marginRight: '1px',
+    ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    zIndex: 1,
+    lineHeight: tokens.lineHeightBase100,
+    visibility: 'hidden',
+
+    '&:hover, &:focus': {
+      visibility: 'visible'
+    }
+  },
+  menuHidden: {
+    visibility: 'hidden'
+  },
+  menuVisible: {
+    visibility: 'visible'
   }
 });
 

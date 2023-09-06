@@ -176,6 +176,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
+  // `focused` state is used for show/hide actionMenu
+  const [focused, setFocused] = React.useState<boolean>(false);
 
   // The chat message action flyout should target the Chat.Message action menu if clicked,
   // or target the chat message if opened via touch press.
@@ -327,10 +329,28 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             key={props.message.messageId}
             attached={attached}
             body={{
-              className: mergeClasses(mergeStyles(messageContainerStyle), myMessageContainerClasses?.body)
+              className: mergeClasses(
+                rootLayout.body,
+                mergeStyles(messageContainerStyle),
+                myMessageContainerClasses?.body
+              )
             }}
             root={{
-              className: rootLayout.root
+              className: rootLayout.root,
+              onBlur: (e) => {
+                // copy behavior from North*
+                // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
+                // with keyboard the focused element will be changed and there is no way to use `:focus` selector
+                const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
+
+                setFocused(shouldPreserveFocusState);
+              },
+              onFocus: () => {
+                // copy behavior from North*
+                // react onFocus is called even when nested component receives focus (i.e. it bubbles)
+                // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
+                setFocused(true);
+              }
             }}
             data-ui-id="chat-composite-message"
             author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
@@ -340,11 +360,18 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
               </Text>
             }
             details={getMessageDetails()}
-            actions={actionMenuProps}
+            actions={{
+              children: actionMenuProps?.children,
+              className: mergeClasses(
+                rootLayout.menu,
+                // Make actions menu visible when the message is focused or the flyout is shown
+                focused || chatMessageActionFlyoutTarget ? rootLayout.menuVisible : rootLayout.menuHidden
+              )
+            }}
             onTouchStart={() => setWasInteractionByTouch(true)}
             onPointerDown={() => setWasInteractionByTouch(false)}
             onKeyDown={() => setWasInteractionByTouch(false)}
-            onBlur={() => setWasInteractionByTouch(false)}
+            onBlur={() => setWasInteractionByTouch(false)} // onBlur is applied to body, not root
             onClick={() => {
               if (!wasInteractionByTouch) {
                 return;
@@ -386,24 +413,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
               className: chatItemMessageContainerClassName
             }}
             data-ui-id="chat-composite-message"
-            onTouchStart={() => setWasInteractionByTouch(true)}
-            onPointerDown={() => setWasInteractionByTouch(false)}
-            onKeyDown={() => setWasInteractionByTouch(false)}
-            onBlur={() => setWasInteractionByTouch(false)}
-            onClick={() => {
-              if (!wasInteractionByTouch) {
-                return;
-              }
-              // If the message was touched via touch we immediately open the menu
-              // flyout (when using mouse the 3-dot menu that appears on hover
-              // must be clicked to open the flyout).
-              // In doing so here we set the target of the flyout to be the message and
-              // not the 3-dot menu button to position the flyout correctly.
-              setChatMessageActionFlyoutTarget(messageRef);
-              if (message.messageType === 'chat') {
-                props.onActionButtonClick(message, setMessageReadBy);
-              }
-            }}
             timestamp={
               <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
                 {formattedTimestamp}
