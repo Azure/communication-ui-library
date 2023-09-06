@@ -141,7 +141,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   const renderTextField = (): JSX.Element => {
     const textFieldProps: ITextFieldProps = {
       autoFocus: props.autoFocus === 'sendBoxTextField',
-      multiline: false,
+      multiline: true,
       autoAdjustHeight: true,
       multiple: false,
       resizable: false,

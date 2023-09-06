@@ -17,6 +17,7 @@ import { fileUploadCardsStyles } from './styles/SendBox.styles';
 import { SendBoxErrorBarError } from './SendBoxErrorBar';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from './MentionPopover';
+import { Console } from 'console';
 
 const EMPTY_MESSAGE_REGEX = /^\s*$/;
 const MAXIMUM_LENGTH_OF_MESSAGE = 8000;
@@ -250,13 +251,13 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
 
     const message = textValue;
-    console.log('sendMessageOnClick::::' + message);
 
     // we don't want to send empty messages including spaces, newlines, tabs
     // Message can be empty if there is a valid file upload
     if (!EMPTY_MESSAGE_REGEX.test(message) || hasFile(props)) {
       onSendMessage && onSendMessage(sanitizeText(message));
       setTextValue('');
+      console.log('sendMessageOnClick::::' + message);
     }
     sendTextFieldRef.current?.focus();
   };
@@ -265,12 +266,12 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     if (newValue === undefined) {
       return;
     }
-
     if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
       setTextValueOverflow(true);
     } else {
       setTextValueOverflow(false);
     }
+    // // console.log('setText::::' + newValue);
     setTextValue(newValue);
   };
 
