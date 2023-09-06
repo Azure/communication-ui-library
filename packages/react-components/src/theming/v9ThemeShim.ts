@@ -213,7 +213,8 @@ export const createV9Theme = (themeV8: ThemeV8, baseThemeV9?: ThemeV9): ThemeV9 
   const baseTheme = baseThemeV9 ?? webLightTheme;
   const updatedBaseTheme: ThemeV9 & { errorText: string } = {
     ...baseTheme,
-    errorText: themeV8.semanticColors.errorText
+    errorText: themeV8.semanticColors.errorText,
+    colorStatusWarningBackground3: '#D83B01'
   };
   return {
     ...updatedBaseTheme,

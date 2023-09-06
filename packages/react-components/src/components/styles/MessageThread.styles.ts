@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
-import { makeStyles, shorthands } from '@fluentui/react-components';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
@@ -116,8 +116,8 @@ export const defaultChatItemMessageContainerStyles = makeStyles({
     marginRight: '0rem',
     zIndex: CHAT_MESSAGE_ZINDEX,
     '& msft-mention': {
-      color: '#D83B01',
-      fontWeight: 600
+      color: tokens.colorStatusWarningBackground3,
+      fontWeight: tokens.fontWeightSemibold
     }
   },
   bodyAvatarNoOverlap: {
