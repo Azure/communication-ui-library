@@ -331,8 +331,8 @@ const memoizeAllMessages = memoizeFnAll(
     message: Message,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    onRenderAvatar: OnRenderAvatarCallback | undefined, // Is this still used?
-    shouldOverlapAvatarAndMessage: boolean, // REMOVE
+    onRenderAvatar: OnRenderAvatarCallback | undefined,
+    shouldOverlapAvatarAndMessage: boolean,
     styles: MessageThreadStyles | undefined,
     onRenderMessageStatus:
       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
