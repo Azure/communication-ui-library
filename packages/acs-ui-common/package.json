@@ -40,8 +40,8 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",
-    "@microsoft/api-documenter": "^7.12.11",
-    "@microsoft/api-extractor": "^7.18.0",
+    "@microsoft/api-documenter": "~7.12.11",
+    "@microsoft/api-extractor": "~7.18.0",
     "@types/jest": "^29.5.2",
     "@types/react": "18.2.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
