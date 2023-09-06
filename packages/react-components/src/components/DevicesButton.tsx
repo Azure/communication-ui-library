@@ -149,7 +149,6 @@ export interface DevicesButtonProps extends ControlBarButtonProps {
   styles?: DevicesButtonStyles;
 }
 
-// eslint-disable-next-line ae-internal-missing-underscore
 /**
  * Subset props for various buttons that show device selection menus.
  *
@@ -168,7 +167,6 @@ export interface DeviceMenuProps {
   styles?: Partial<DeviceMenuStyles>;
 }
 
-// eslint-disable-next-line ae-internal-missing-underscore
 /**
  * Subset of strings for various buttons that show device selection menus.
  *
@@ -217,7 +215,6 @@ export interface DeviceMenuStrings {
   speakerMenuTooltip?: string;
 }
 
-// eslint-disable-next-line ae-internal-missing-underscore
 /**
  * Styles for flyouts used by various buttons for device selection flyouts.
  *
@@ -227,7 +224,6 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
   menuItemStyles?: IContextualMenuItemStyles;
 }
 
-// eslint-disable-next-line ae-internal-missing-underscore
 /**
  * Generates default {@link IContextualMenuProps} for buttons that
  * show a drop-down to select devices to use.
