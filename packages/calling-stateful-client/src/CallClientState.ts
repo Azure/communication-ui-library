@@ -26,7 +26,7 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
@@ -141,7 +141,7 @@ export interface TranscriptionCallFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
- * @beta
+ * @public
  */
 export interface CapabilitiesFeatureState {
   /**
@@ -469,7 +469,7 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */

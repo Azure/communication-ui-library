@@ -260,6 +260,7 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector;
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
+    disabled?: boolean;
 };
 
 // @public
