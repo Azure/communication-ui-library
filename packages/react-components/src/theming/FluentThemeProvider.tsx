@@ -5,6 +5,8 @@ import React, { createContext, useContext } from 'react';
 import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
 import { lightTheme } from './themes';
 
+import { _pxToRem } from '@internal/acs-ui-common';
+
 /**
  * Props for {@link FluentThemeProvider}.
  *
@@ -28,8 +30,26 @@ const wrapper = mergeStyles({
   overflow: 'hidden',
   padding: 0,
   width: '100%',
-  '& [hidden]': {
-    display: 'none !important'
+  // Add northstar styles for the teams theme
+  body: {
+    padding: 0,
+    margin: 0,
+    fontFamily: '"Segoe UI", system-ui, "Apple Color Emoji", "Segoe UI Emoji", sans-serif',
+    fontSize: _pxToRem(14),
+    lineHeight: 1.4286
+  },
+  '*': {
+    boxSizing: 'border-box'
+  },
+  '*:before': {
+    boxSizing: 'border-box'
+  },
+  '*:after': {
+    boxSizing: 'border-box'
+  },
+  /* Adding priority for HTML `hidden` attribute to be applied correctly */
+  '[hidden]': {
+    display: 'none!important'
   }
 });
 
