@@ -211,14 +211,12 @@ const mapBorderRadiusTokens = (effects: IEffects): Partial<BorderRadiusTokens> =
  */
 export const createV9Theme = (themeV8: ThemeV8, baseThemeV9?: ThemeV9): ThemeV9 & { errorText: string } => {
   const baseTheme = baseThemeV9 ?? webLightTheme;
-  const updatedBaseTheme: ThemeV9 & { errorText: string } = {
-    ...baseTheme,
-    errorText: themeV8.semanticColors.errorText
-  };
   return {
-    ...updatedBaseTheme,
+    ...baseTheme,
     ...mapAliasColors(themeV8.palette, themeV8.isInverted),
     ...mapShadowTokens(themeV8.effects),
-    ...mapBorderRadiusTokens(themeV8.effects)
+    ...mapBorderRadiusTokens(themeV8.effects),
+    colorStatusWarningBackground3: '#D83B01',
+    errorText: themeV8.semanticColors.errorText
   };
 };

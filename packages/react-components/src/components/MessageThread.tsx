@@ -1068,6 +1068,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
+            shouldOverlapAvatarAndMessage={isNarrow}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
@@ -1093,6 +1094,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       participantCount,
       onRenderAvatar,
       showMessageStatus,
+      isNarrow,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,

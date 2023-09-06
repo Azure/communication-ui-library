@@ -49,6 +49,10 @@ type ChatMessageComponentProps = {
    */
   showMessageStatus?: boolean;
   /**
+   * Whether to overlap avatar and message when the view is width constrained.
+   */
+  shouldOverlapAvatarAndMessage: boolean;
+  /**
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
