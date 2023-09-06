@@ -25,12 +25,8 @@ export interface FluentThemeProviderProps {
 const wrapper = mergeStyles({
   height: '100%',
   width: '100%',
-  // Add NorthStar styling used in the library
+  // Add NorthStar styling used previously in the library
   body: {
-    padding: undefined,
-    margin: undefined,
-    fontSize: undefined,
-    font: undefined,
     lineHeight: 1.4286
   },
   '*': {
