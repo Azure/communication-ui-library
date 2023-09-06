@@ -54,7 +54,6 @@ export const useChatStyles = makeStyles({
   root: {
     paddingTop: '0.8rem',
     paddingBottom: '0.5rem',
-    paddingLeft: '16px',
     paddingRight: '16px',
     ...shorthands.border('none'),
     ...shorthands.overflow('auto'),

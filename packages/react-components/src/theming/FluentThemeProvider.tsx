@@ -26,9 +26,6 @@ const wrapper = mergeStyles({
   height: '100%',
   width: '100%',
   // Add NorthStar styling used previously in the library
-  body: {
-    lineHeight: 1.4286
-  },
   '*': {
     boxSizing: 'border-box'
   },
