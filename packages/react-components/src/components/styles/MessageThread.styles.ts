@@ -52,8 +52,9 @@ export const noMessageStatusStyle = mergeStyles({
  */
 export const useChatStyles = makeStyles({
   root: {
-    ...shorthands.padding(0),
+    paddingTop: '0.8rem',
     paddingBottom: '0.5rem',
+    paddingRight: '16px',
     ...shorthands.border('none'),
     ...shorthands.overflow('auto'),
     // `height: 100%` ensures that the Chat component covers 100% of it's parents height

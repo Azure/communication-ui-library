@@ -24,12 +24,20 @@ export interface FluentThemeProviderProps {
 
 const wrapper = mergeStyles({
   height: '100%',
-  margin: 0,
-  overflow: 'hidden',
-  padding: 0,
   width: '100%',
-  '& [hidden]': {
-    display: 'none !important'
+  // Add NorthStar styling used previously in the library
+  '*': {
+    boxSizing: 'border-box'
+  },
+  '*:before': {
+    boxSizing: 'border-box'
+  },
+  '*:after': {
+    boxSizing: 'border-box'
+  },
+  /* Adding priority for HTML `hidden` attribute to be applied correctly */
+  '[hidden]': {
+    display: 'none!important'
   }
 });
 
