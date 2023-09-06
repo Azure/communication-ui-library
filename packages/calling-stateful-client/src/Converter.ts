@@ -27,7 +27,7 @@ import { CaptionsInfo } from './CallClientState';
 import { _isACSCall } from './TypeGuards';
 import { CallCommon, IncomingCallCommon } from './BetaToStableTypes';
 
-/* @conditional-compile-remove(video-background-effects) */
+/* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(optimal-video-count) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoEffectName } from '@azure/communication-calling';
