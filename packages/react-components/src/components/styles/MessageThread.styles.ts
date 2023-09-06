@@ -20,7 +20,7 @@ const AVATAR_MESSAGE_GAP_REM = 0.5;
 const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 
 // Avatars should display on top of chat messages when the chat thread is narrow
-const MESSAGE_AVATAR_OVERLAP_REM = 0.425;
+const MESSAGE_AVATAR_OVERLAP_REM = 0.925;
 const CHAT_MESSAGE_ZINDEX = 1;
 const AVATAR_ZINDEX = 2;
 // new message button should be on top of chat message
@@ -139,11 +139,24 @@ const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): Comp
 /**
  * @private
  */
-export const defaultChatItemMessageContainerNoOverlap = makeStyles(defaultChatItemMessageContainer(false));
-/**
- * @private
- */
-export const defaultChatItemMessageContainerOverlap = makeStyles(defaultChatItemMessageContainer(true));
+export const defaultChatItemMessageContainerStyles = makeStyles({
+  body: {
+    marginRight: '0rem',
+    zIndex: CHAT_MESSAGE_ZINDEX,
+    '& msft-mention': {
+      color: tokens.colorStatusWarningBackground3,
+      fontWeight: tokens.fontWeightSemibold
+    }
+  },
+  bodyAvatarNoOverlap: {
+    marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
+  },
+  bodyAvatarOverlap: {
+    marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`,
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + -MESSAGE_AVATAR_OVERLAP_REM}rem)`
+  }
+});
 
 /**
  * @private
