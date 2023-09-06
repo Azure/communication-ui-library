@@ -6,9 +6,7 @@ import {
   ColorTokens,
   ShadowTokens,
   Theme as ThemeV9,
-  webLightTheme,
-  makeStyles,
-  shorthands
+  webLightTheme
 } from '@fluentui/react-components';
 import { blackAlpha, whiteAlpha, grey, grey10Alpha, grey12Alpha } from './themeDuplicates';
 
@@ -206,32 +204,21 @@ const mapBorderRadiusTokens = (effects: IEffects): Partial<BorderRadiusTokens> =
 };
 
 /**
- * Chat message actions flyout that contains actions such as Edit Message, or Remove Message.
+ * Creates a v9 theme from a v8 theme and base v9 theme.
+ * FluentUI webLightTheme is used in case if no baseThemeV9 is provided.
  *
  * @private
  */
-export const createV9Theme = (themeV8: ThemeV8): ThemeV9 & { errorText: string } => {
-  const baseTheme: ThemeV9 & { errorText: string } = {
-    ...webLightTheme,
+export const createV9Theme = (themeV8: ThemeV8, baseThemeV9?: ThemeV9): ThemeV9 & { errorText: string } => {
+  const baseTheme = baseThemeV9 ?? webLightTheme;
+  const updatedBaseTheme: ThemeV9 & { errorText: string } = {
+    ...baseTheme,
     errorText: themeV8.semanticColors.errorText
   };
   return {
-    ...baseTheme,
+    ...updatedBaseTheme,
     ...mapAliasColors(themeV8.palette, themeV8.isInverted),
     ...mapShadowTokens(themeV8.effects),
     ...mapBorderRadiusTokens(themeV8.effects)
   };
 };
-
-/**
- * @private
- */
-export const useFluentV9Wrapper = makeStyles({
-  body: {
-    height: '100%',
-    ...shorthands.margin(0),
-    ...shorthands.overflow('hidden'),
-    ...shorthands.padding(0),
-    width: '100%'
-  }
-});
