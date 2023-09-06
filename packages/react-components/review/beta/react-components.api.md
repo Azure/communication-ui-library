@@ -204,8 +204,8 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onClickVideoEffects?: (showVideoEffects: boolean) => void;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
-    onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
     strings?: Partial<CameraButtonStrings>;
