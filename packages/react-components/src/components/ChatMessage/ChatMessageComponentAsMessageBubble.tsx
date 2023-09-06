@@ -314,9 +314,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     // Need to merge the styles injected with props - Future PR
     messageContainerClasses?.body,
     chatItemMessageContainerClasses.body,
-    shouldOverlapAvatarAndMessage ? chatItemMessageContainerClasses.bodyAvatarOverlap : chatItemMessageContainerClasses.bodyAvatarNoOverlap
+    shouldOverlapAvatarAndMessage
+      ? chatItemMessageContainerClasses.bodyAvatarOverlap
+      : chatItemMessageContainerClasses.bodyAvatarNoOverlap
   );
-  
+
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>
