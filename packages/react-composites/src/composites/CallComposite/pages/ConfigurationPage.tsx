@@ -334,7 +334,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     setIsPermissionsModalDismissed(true);
                   }}
                   /* @conditional-compile-remove(video-background-effects) */
-                  onVideoEffectsClick={toggleVideoEffectsPane}
+                  onClickVideoEffects={toggleVideoEffectsPane}
                 />
               </>
             )}

@@ -2,7 +2,7 @@
   "type": "minor",
   "area": "feature",
   "workstream": "Calling",
-  "comment": "stabilize blur",
+  "comment": "General Availability release of Background Effects - your users can now blur or replace their video background",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

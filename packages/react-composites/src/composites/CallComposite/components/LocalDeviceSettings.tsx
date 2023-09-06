@@ -92,7 +92,7 @@ export interface LocalDeviceSettingsType {
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
-  onVideoEffectsClick?: () => void;
+  onClickVideoEffects?: () => void;
 }
 
 /**
@@ -226,7 +226,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
                 <DefaultButton
                   iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
                   styles={effectsButtonStyles(theme)}
-                  onClick={props.onVideoEffectsClick}
+                  onClick={props.onClickVideoEffects}
                   data-ui-id={'call-config-video-effects-button'}
                 >
                   {locale.strings.call.configurationPageVideoEffectsButtonLabel}
