@@ -42,7 +42,6 @@ export const chatMessageActionMenuProps = (menuProps: {
       >
         <Icon
           iconName="ChatMessageOptions"
-          data-ui-id="chat-composite-message-action-icon"
           aria-label={menuProps.ariaLabel}
           styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
         />

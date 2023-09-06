@@ -311,7 +311,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             key={props.message.messageId}
             attached={attached}
             body={{
-              className: mergeClasses(mergeStyles(messageContainerStyle), myMessageContainerClasses?.body)
+              className: mergeClasses(
+                rootLayout.body,
+                mergeStyles(messageContainerStyle),
+                myMessageContainerClasses?.body
+              )
             }}
             root={{
               className: rootLayout.root
@@ -324,7 +328,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
               </Text>
             }
             details={getMessageDetails()}
-            actions={actionMenuProps}
+            actions={{ children: actionMenuProps?.children, className: rootLayout.menu }}
             onTouchStart={() => setWasInteractionByTouch(true)}
             onPointerDown={() => setWasInteractionByTouch(false)}
             onKeyDown={() => setWasInteractionByTouch(false)}

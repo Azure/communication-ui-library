@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
-import { makeStyles, shorthands } from '@fluentui/react-components';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
@@ -67,13 +67,35 @@ export const useChatStyles = makeStyles({
  */
 export const _useChatMyMessageLayout = makeStyles({
   root: {
-    gridTemplateColumns: 'auto fit-content(0)',
+    gridTemplateColumns: 'auto auto fit-content(0)',
     gridTemplateAreas: `
-    "body actions"
-    "body status"
-    `,
+        ". actions ."
+        "body body status"
+      `,
     gridGap: '0',
-    paddingBottom: '0.5rem'
+    paddingTop: '0'
+  },
+  menu: {
+    boxShadow: tokens.shadow4,
+    backgroundColor: tokens.colorNeutralBackground1,
+    marginBottom: '-10px',
+    marginRight: '1px',
+    ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    zIndex: 1,
+    lineHeight: tokens.lineHeightBase100,
+    visibility: 'hidden',
+
+    '&:focus, &:hover': {
+      visibility: 'visible'
+    }
+  },
+  body: {
+    '&:focus ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    },
+    '&:hover ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    }
   }
 });
 
