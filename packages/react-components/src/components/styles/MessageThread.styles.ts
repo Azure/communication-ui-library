@@ -52,7 +52,7 @@ export const noMessageStatusStyle = mergeStyles({
  */
 export const useChatStyles = makeStyles({
   root: {
-    ...shorthands.padding(0),
+    paddingTop: '0.8rem',
     paddingBottom: '0.5rem',
     ...shorthands.border('none'),
     ...shorthands.overflow('auto'),

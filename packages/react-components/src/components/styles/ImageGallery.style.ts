@@ -88,7 +88,6 @@ export const titleBarContainerStyle: IStyle = {
 export const titleStyle = (theme: ChatTheme): IStyle => {
   return {
     paddingLeft: '0.5rem',
-    marginLeft: '0.5rem',
     color: theme.chatPalette.modalTitleWhite,
     fontFamily: 'inherit',
     fontSize: '0.875rem',

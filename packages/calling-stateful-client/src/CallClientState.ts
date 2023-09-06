@@ -26,7 +26,7 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
@@ -55,7 +55,7 @@ export interface CallAgentState {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @beta
+ * @public
  */
 export interface CaptionsInfo {
   /**
@@ -90,7 +90,7 @@ export interface CaptionsInfo {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @beta
+ * @public
  */
 export interface CaptionsCallFeatureState {
   /**
@@ -141,7 +141,7 @@ export interface TranscriptionCallFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
- * @beta
+ * @public
  */
 export interface CapabilitiesFeatureState {
   /**
@@ -239,7 +239,7 @@ export interface LocalVideoStreamVideoEffectsState {
 /**
  * State only version of Optimal Video Count Feature {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
  *
- * @beta
+ * @public
  */
 export interface OptimalVideoCountFeatureState {
   /**
@@ -469,7 +469,7 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */
