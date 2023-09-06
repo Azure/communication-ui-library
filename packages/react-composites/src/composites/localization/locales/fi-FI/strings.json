@@ -50,7 +50,6 @@
     "deniedPermissionToRoomDetails": "Sinulla ei ole oikeutta liittyä tähän ryhmään.",
     "deniedPermissionToRoomTitle": "Lupaa tilan käyttöön ei myönnetty",
     "peopleButtonLabel": "Ihmiset",
-    "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peoplePaneTitle": "Ihmiset",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
@@ -100,18 +99,16 @@
     "startCaptionsButtonOffLabel": "Poista tekstitykset käytöstä",
     "startCaptionsButtonTooltipOnContent": "Poista tekstitykset käytöstä",
     "startCaptionsButtonTooltipOffContent": "Ota tekstitykset käyttöön",
-    "captionsSettingsModalTitle": "Tekstitysasetukset",
-    "captionsSettingsSpokenLanguageDropdownLabel": "Puhuttu kieli",
-    "captionsSettingsCaptionLanguageDropdownLabel": "Tekstitysten kieli",
-    "captionsSettingsSpokenLanguageDropdownInfoText": "Kieli, jota kaikki tähän puheluun osallistuvat puhuvat.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Tekstitys näkyy tällä kielellä.",
+    "captionsSettingsModalTitle": "Mitä kieltä puhutaan?",
+    "captionsSettingsDropdownLabel": "Puhuttu kieli",
+    "captionsSettingsDropdownInfoText": "Kieli, jota kaikki tähän puheluun osallistuvat puhuvat.",
     "captionsSettingsConfirmButtonLabel": "Vahvista",
     "captionsSettingsCancelButtonLabel": "Peruuta",
     "captionsSettingsModalAriaLabel": "Tekstitysasetus, modaalinen valintaikkuna",
     "captionsSettingsCloseModalButtonAriaLabel": "Sulje tekstitysasetus",
     "captionsBannerMoreButtonCallingLabel": "Lisää",
     "captionsBannerMoreButtonTooltip": "Lisää vaihtoehtoja",
-    "spokenLanguageStrings": {
+    "captionsAvailableLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
       "da-dk": "tanska",
@@ -154,40 +151,6 @@
       "sk-sk": "slovakki",
       "zh-tw": "kiina – Taiwan"
     },
-    "captionLanguageStrings": {
-      "ar": "arabia",
-      "da": "tanska",
-      "de": "saksa",
-      "en": "englanti",
-      "es": "espanja",
-      "fi": "suomi",
-      "fr-ca": "ranska – Kanada",
-      "fr": "ranska – Ranska",
-      "hi": "hindi",
-      "it": "italia",
-      "ja": "japani",
-      "ko": "korea",
-      "nb": "norja (bokmål)",
-      "nl": "hollanti",
-      "pl": "puola",
-      "pt": "portugali – Brasilia",
-      "ru": "venäjä",
-      "sv": "ruotsi",
-      "zh-Hans": "kiina (yksinkertaistettu)",
-      "zh-Hant": "kiinalainen (perinteinen)",
-      "cs": "tšekki",
-      "pt-pt": "portugali – Portugali",
-      "tr": "turkki",
-      "vi": "vietnam",
-      "th": "thai",
-      "he": "heprea",
-      "cy": "kymri",
-      "uk": "ukraina",
-      "el": "kreikka",
-      "hu": "unkari",
-      "ro": "romania",
-      "sk": "slovakki"
-    },
     "captionsBannerSpinnerText": "Aloitetaan tekstitystä...",
     "transferPageTransferorText": "Siirretään...",
     "transferPageTransferTargetText": "Yhdistetään...",
@@ -207,21 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Kaiuttimen asettelu",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
     "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö",
-    "capabilityChangedNotification": {
-      "turnVideoOn": {
-        "lostDueToMeetingOption": "Kamerasi on poistettu käytöstä. Et voi enää jakaa videota.",
-        "grantedDueToMeetingOption": "Kamera on otettu käyttöön. Ota se käyttöön, jos haluat jakaa videota."
-      },
-      "unmuteMic": {
-        "lostDueToMeetingOption": "Mikrofonisi on poistettu käytöstä. Et voi enää poistaa mykistystä.",
-        "grantedDueToMeetingOption": "Mikrofoni on otettu käyttöön. Poista mykistys, jos haluat puhua."
-      },
-      "shareScreen": {
-        "lostDueToRoleChangeToAttendee": "Roolisi on muuttunut. Jotkin toiminnot, kuten sisällön jakaminen, eivät ole käytettävissäsi.",
-        "grantedDueToRoleChangeToPresenter": "Olet esittäjä. Voit jakaa sisältöä ja johtaa kokousta."
-      }
-    }
+    "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö"
   },
   "chat": {
     "chatListHeader": "Tässä keskustelussa",
@@ -244,9 +193,7 @@
     "moreDrawerSpeakerMenuTitle": "Kaiutin",
     "moreDrawerCaptionsMenuTitle": "Live-tekstitykset",
     "moreDrawerSpokenLanguageMenuTitle": "Puhuttu kieli",
-    "moreDrawerCaptionLanguageMenuTitle": "Tekstityksen kieli",
     "peopleButtonLabel": "Ihmiset",
-    "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
     "peopleButtonTooltipClose": "Piilota osallistujat",
     "peoplePaneSubTitle": "Tässä puhelussa",

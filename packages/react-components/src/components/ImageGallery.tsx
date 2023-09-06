@@ -39,7 +39,7 @@ export interface ImageGalleryImageProps {
   /** Image Url used to display the image in a large scale. */
   imageUrl: string;
   /** String used as a file name when downloading this image to user's local device. */
-  downloadFilename: string;
+  saveAsName: string;
   /** Optional string used as a alt text for the image. @default 'image' */
   altText?: string;
   /** Optional string used as the title of the image and displayed on the top left corner of the ImageGallery. */
@@ -69,7 +69,7 @@ export interface ImageGalleryProps {
   /**
    * Callback called when the download button is clicked.
    */
-  onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
+  onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
   /**
    * Callback called when there's an error loading the image.
    */
@@ -112,14 +112,17 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
 
   const imageStyle = isImageLoaded ? normalImageStyle : brokenImageStyle(theme);
 
+  if (images.length <= startIndex) {
+    return <></>;
+  }
   const image = images[startIndex];
   const renderHeaderBar = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
-          {image?.titleIcon}
-          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={image?.title}>
-            {image?.title}
+          {image.titleIcon}
+          <Stack.Item className={mergeStyles(titleStyle(theme))} aria-label={image.title}>
+            {image.title}
           </Stack.Item>
         </Stack>
         <Stack className={mergeStyles(controlBarContainerStyle)}>
@@ -127,7 +130,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
             className={mergeStyles(downloadButtonStyle(theme))}
             /* @conditional-compile-remove(image-gallery) */
             text={localeStrings.downloadButtonLabel}
-            onClick={() => onImageDownloadButtonClicked(image?.imageUrl || '', image?.downloadFilename || 'image')}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             onRenderIcon={() => <Icon iconName={downloadIcon.iconName} className={mergeStyles(downloadIconStyle)} />}
             aria-live={'polite'}
             /* @conditional-compile-remove(image-gallery) */
@@ -136,7 +139,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           <IconButton
             iconProps={downloadIcon}
             className={mergeStyles(smallDownloadButtonContainerStyle(theme))}
-            onClick={() => onImageDownloadButtonClicked(image?.imageUrl, image?.downloadFilename)}
+            onClick={() => onImageDownloadButtonClicked(image.imageUrl, image.saveAsName)}
             /* @conditional-compile-remove(image-gallery) */
             aria-label={localeStrings.downloadButtonLabel}
             aria-live={'polite'}
@@ -168,23 +171,21 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
           isClickableOutsideFocusTrap={true}
           className={mergeStyles(bodyFocusZone)}
         >
-          {images.length > startIndex && (
-            <img
-              src={image?.imageUrl}
-              className={mergeStyles(imageStyle)}
-              alt={image?.altText || 'image'}
-              aria-label={'image-gallery-main-image'}
-              aria-live={'polite'}
-              onError={(event) => {
-                setIsImageLoaded(false);
-                onError && onError(event);
-              }}
-              onClick={(event) => event.stopPropagation()}
-              onDoubleClick={(event) => {
-                event.persist();
-              }}
-            />
-          )}
+          <img
+            src={image.imageUrl}
+            className={mergeStyles(imageStyle)}
+            alt={image.altText || 'image'}
+            aria-label={'image-gallery-main-image'}
+            aria-live={'polite'}
+            onError={(event) => {
+              setIsImageLoaded(false);
+              onError && onError(event);
+            }}
+            onClick={(event) => event.stopPropagation()}
+            onDoubleClick={(event) => {
+              event.persist();
+            }}
+          />
         </FocusTrapZone>
       </Stack>
     );
@@ -192,7 +193,7 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
 
   return (
     <Modal
-      titleAriaId={image?.title}
+      titleAriaId={image.title}
       isOpen={isOpen}
       onDismiss={onDismiss}
       overlay={{ styles: { ...overlayStyles(theme) } }}

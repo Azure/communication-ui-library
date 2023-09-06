@@ -8,9 +8,6 @@ import { AudioDeviceInfo } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
-import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
-import { CaptionLanguageStrings } from '@internal/react-components';
-import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { ChatMessage } from '@azure/communication-chat';
 import { ChatParticipant } from '@azure/communication-chat';
 import { ChatThreadClient } from '@azure/communication-chat';
@@ -37,9 +34,7 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
-import { SpokenLanguageStrings } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
-import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -155,13 +150,9 @@ export interface CallAdapterCallOperations {
     leaveCall(forEveryone?: boolean): Promise<void>;
     mute(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
-    setCaptionLanguage(language: string): Promise<void>;
-    setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
-    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
-    stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
 }
@@ -209,11 +200,6 @@ export interface CallAdapterSubscribers {
     off(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     off(event: 'error', listener: (e: AdapterError) => void): void;
-    off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -226,11 +212,6 @@ export interface CallAdapterSubscribers {
     on(event: 'selectedMicrophoneChanged', listener: PropertyChangedEvent): void;
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
-    on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 }
 
 // @public
@@ -260,8 +241,6 @@ export type CallCompositeIcons = {
     ControlButtonParticipants?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
-    ControlButtonCameraProhibited?: JSX.Element;
-    ControlButtonMicProhibited?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -303,7 +282,6 @@ export type CallCompositeIcons = {
 export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
-    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 };
 
 // @public
@@ -322,21 +300,6 @@ export interface CallCompositeStrings {
     cameraLabel: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    capabilityChangedNotification?: CapabilityChangedNotificationStrings;
-    captionLanguageStrings?: CaptionLanguageStrings;
-    captionsBannerMoreButtonCallingLabel?: string;
-    captionsBannerMoreButtonTooltip?: string;
-    captionsBannerSpinnerText?: string;
-    captionsSettingsCancelButtonLabel?: string;
-    captionsSettingsCaptionLanguageDropdownInfoText?: string;
-    captionsSettingsCaptionLanguageDropdownLabel?: string;
-    captionsSettingsCloseModalButtonAriaLabel?: string;
-    captionsSettingsConfirmButtonLabel?: string;
-    captionsSettingsLabel?: string;
-    captionsSettingsModalAriaLabel?: string;
-    captionsSettingsModalTitle?: string;
-    captionsSettingsSpokenLanguageDropdownInfoText?: string;
-    captionsSettingsSpokenLanguageDropdownLabel?: string;
     chatButtonLabel: string;
     close: string;
     complianceBannerNowOnlyRecording: string;
@@ -364,7 +327,6 @@ export interface CallCompositeStrings {
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
     leftCallTitle: string;
-    liveCaptionsLabel?: string;
     lobbyScreenConnectingToCallMoreDetails?: string;
     lobbyScreenConnectingToCallTitle: string;
     lobbyScreenWaitingToBeAdmittedMoreDetails?: string;
@@ -394,12 +356,7 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
-    spokenLanguageStrings?: SpokenLanguageStrings;
     startCallButtonLabel: string;
-    startCaptionsButtonOffLabel?: string;
-    startCaptionsButtonOnLabel?: string;
-    startCaptionsButtonTooltipOffContent?: string;
-    startCaptionsButtonTooltipOnContent?: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     twoParticipantJoinedNoticeString: string;
@@ -454,16 +411,12 @@ export interface CallWithChatAdapterManagement {
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
-    setCaptionLanguage(language: string): Promise<void>;
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
-    setSpokenLanguage(language: string): Promise<void>;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
-    startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
     stopCamera(): Promise<void>;
-    stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     unmute(): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
@@ -498,14 +451,6 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'callError', listener: (e: AdapterError) => void): void;
     // (undocumented)
-    off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    // (undocumented)
-    off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    // (undocumented)
-    off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-    // (undocumented)
-    off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageSent', listener: MessageSentListener): void;
@@ -539,14 +484,6 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     // (undocumented)
     on(event: 'callError', listener: (e: AdapterError) => void): void;
-    // (undocumented)
-    on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    // (undocumented)
-    on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    // (undocumented)
-    on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
-    // (undocumented)
-    on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -602,8 +539,6 @@ export type CallWithChatCompositeIcons = {
     ControlButtonOptions?: JSX.Element;
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
-    ControlButtonCameraProhibited?: JSX.Element;
-    ControlButtonMicProhibited?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -681,11 +616,8 @@ export interface CallWithChatCompositeStrings {
     moreDrawerAudioDeviceMenuTitle?: string;
     moreDrawerButtonLabel: string;
     moreDrawerButtonTooltip: string;
-    moreDrawerCaptionLanguageMenuTitle: string;
-    moreDrawerCaptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
-    moreDrawerSpokenLanguageMenuTitle: string;
     peopleButtonLabel: string;
     peopleButtonTooltipClose: string;
     peopleButtonTooltipOpen: string;
@@ -704,31 +636,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
-
-// @public
-export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
-
-// @public
-export interface CapabilityChangedNotificationStrings {
-    shareScreen?: {
-        lostDueToRoleChangeToAttendee?: string;
-        grantedDueToRoleChangeToPresenter?: string;
-    };
-    turnVideoOn?: {
-        lostDueToMeetingOption?: string;
-        grantedDueToMeetingOption?: string;
-    };
-    unmuteMic?: {
-        lostDueToMeetingOption?: string;
-        grantedDueToMeetingOption?: string;
-    };
-}
-
-// @public
-export type CaptionsReceivedListener = (event: {
-    captionsInfo: CaptionsInfo;
-}) => void;
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable & ChatAdapterSubscribers;
@@ -847,7 +755,6 @@ export type CommonCallControlOptions = {
     screenShareButton?: boolean | {
         disabled: boolean;
     };
-    moreButton?: boolean;
     peopleButton?: boolean;
 };
 
@@ -978,8 +885,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    ControlButtonCameraProhibited?: JSX.Element | undefined;
-    ControlButtonMicProhibited?: JSX.Element | undefined;
     ErrorBarCallCameraAccessDenied: JSX.Element;
     ErrorBarCallCameraAlreadyInUse: JSX.Element;
     ErrorBarCallLocalVideoFreeze: JSX.Element;
@@ -1027,21 +932,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoRecoveredBySystem: JSX.Element;
     ErrorBarCallVideoStoppedBySystem: JSX.Element;
     MessageResend: JSX.Element;
-    VideoTilePinned: JSX.Element;
-    VideoTileMoreOptions: JSX.Element;
-    VideoTileScaleFit: JSX.Element;
-    VideoTileScaleFill: JSX.Element;
-    PinParticipant: JSX.Element;
-    UnpinParticipant: JSX.Element;
     SplitButtonPrimaryActionCameraOn: JSX.Element;
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
-    CaptionsIcon: JSX.Element;
-    CaptionsOffIcon: JSX.Element;
-    CaptionsSettingsIcon: JSX.Element;
-    ChangeSpokenLanguageIcon: JSX.Element;
-    ChangeCaptionLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
@@ -1095,16 +989,6 @@ export interface _FakeChatAdapters {
 }
 
 // @public
-export type IsCaptionLanguageChangedListener = (event: {
-    activeCaptionLanguage: string;
-}) => void;
-
-// @public
-export type IsCaptionsActiveChangedListener = (event: {
-    isActive: boolean;
-}) => void;
-
-// @public
 export type IsLocalScreenSharingActiveChangedListener = (event: {
     isScreenSharingOn: boolean;
 }) => void;
@@ -1119,11 +1003,6 @@ export type IsMutedChangedListener = (event: {
 export type IsSpeakingChangedListener = (event: {
     identifier: CommunicationIdentifierKind;
     isSpeaking: boolean;
-}) => void;
-
-// @public
-export type IsSpokenLanguageChangedListener = (event: {
-    activeSpokenLanguage: string;
 }) => void;
 
 // @public
@@ -1185,11 +1064,6 @@ export type ParticipantsRemovedListener = (event: {
     participantsRemoved: ChatParticipant[];
     removedBy: ChatParticipant;
 }) => void;
-
-// @public
-export interface RemoteVideoTileMenuOptions {
-    isHidden?: boolean;
-}
 
 // @public
 export type TopicChangedListener = (event: {

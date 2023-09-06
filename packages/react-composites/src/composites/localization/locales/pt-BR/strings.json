@@ -50,7 +50,6 @@
     "deniedPermissionToRoomDetails": "Você não tem permissão para ingressar nesta sala.",
     "deniedPermissionToRoomTitle": "Permissão negada para a sala",
     "peopleButtonLabel": "Pessoas",
-    "selectedPeopleButtonLabel": "Botão Pessoas Selecionado",
     "peoplePaneTitle": "Pessoas",
     "peopleButtonTooltipOpen": "Mostrar participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
@@ -100,18 +99,16 @@
     "startCaptionsButtonOffLabel": "Desativar legendas",
     "startCaptionsButtonTooltipOnContent": "Desativar legendas",
     "startCaptionsButtonTooltipOffContent": "Ativar legendas",
-    "captionsSettingsModalTitle": "Configurações de Legendas",
-    "captionsSettingsSpokenLanguageDropdownLabel": "Idioma falado",
-    "captionsSettingsCaptionLanguageDropdownLabel": "Idioma das legendas",
-    "captionsSettingsSpokenLanguageDropdownInfoText": "Idioma que todos nesta chamada estão falando.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "As legendas serão exibidas neste idioma.",
+    "captionsSettingsModalTitle": "Qual idioma está sendo falado?",
+    "captionsSettingsDropdownLabel": "Idioma falado",
+    "captionsSettingsDropdownInfoText": "Idioma que todos nesta chamada estão falando.",
     "captionsSettingsConfirmButtonLabel": "Confirmar",
     "captionsSettingsCancelButtonLabel": "Cancelar",
     "captionsSettingsModalAriaLabel": "Configuração de Legendas Modal",
     "captionsSettingsCloseModalButtonAriaLabel": "Fechar Configuração de Legendas",
     "captionsBannerMoreButtonCallingLabel": "Mais",
     "captionsBannerMoreButtonTooltip": "Mais opções",
-    "spokenLanguageStrings": {
+    "captionsAvailableLanguageStrings": {
       "ar-ae": "Árabe - Emirados Árabes Unidos",
       "ar-sa": "Árabe - Arábia Saudita",
       "da-dk": "Dinamarquês",
@@ -154,40 +151,6 @@
       "sk-sk": "Eslovaco",
       "zh-tw": "Chinês - Taiwan"
     },
-    "captionLanguageStrings": {
-      "ar": "Árabe",
-      "da": "Dinamarquês",
-      "de": "Alemão",
-      "en": "Inglês",
-      "es": "Espanhol",
-      "fi": "Finlandês",
-      "fr-ca": "Francês - Canadá",
-      "fr": "Francês - França",
-      "hi": "Híndi",
-      "it": "Italiano",
-      "ja": "Japonês",
-      "ko": "Coreano",
-      "nb": "Norueguês (Bokmål)",
-      "nl": "Holandês",
-      "pl": "Polonês",
-      "pt": "Português - Brasil",
-      "ru": "Russo",
-      "sv": "Sueco",
-      "zh-Hans": "Chinês (Simplificado)",
-      "zh-Hant": "Chinês (Tradicional)",
-      "cs": "Tcheco",
-      "pt-pt": "Português - Portugal",
-      "tr": "Turco",
-      "vi": "Vietnamita",
-      "th": "Tailandês",
-      "he": "Hebraico",
-      "cy": "Galês",
-      "uk": "Ucraniano",
-      "el": "Grego",
-      "hu": "Húngaro",
-      "ro": "Romeno",
-      "sk": "Eslovaco"
-    },
     "captionsBannerSpinnerText": "Iniciando legendas...",
     "transferPageTransferorText": "Transferindo...",
     "transferPageTransferTargetText": "Conectando...",
@@ -207,21 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Layout do alto-falante",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Layout dinâmico",
     "moreButtonGalleryDefaultLayoutLabel": "Layout da galeria",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Conteúdo focado",
-    "capabilityChangedNotification": {
-      "turnVideoOn": {
-        "lostDueToMeetingOption": "Sua câmera foi desabilitada. Você não pode mais compartilhar vídeo.",
-        "grantedDueToMeetingOption": "Sua câmera foi habilitada. Ative-o se quiser compartilhar vídeo."
-      },
-      "unmuteMic": {
-        "lostDueToMeetingOption": "Seu microfone foi desabilitado. Você não pode mais ativar o som.",
-        "grantedDueToMeetingOption": "O seu microfone foi habilitado. Desative o mudo se quiser falar."
-      },
-      "shareScreen": {
-        "lostDueToRoleChangeToAttendee": "Sua função foi alterada. Algumas ações, como o compartilhamento de conteúdo, não estarão disponíveis para você.",
-        "grantedDueToRoleChangeToPresenter": "Você é um apresentador. Você pode compartilhar conteúdo e facilitar a reunião."
-      }
-    }
+    "moreButtonGalleryFocusedContentLayoutLabel": "Conteúdo focado"
   },
   "chat": {
     "chatListHeader": "Neste chat",
@@ -244,9 +193,7 @@
     "moreDrawerSpeakerMenuTitle": "Alto-falante",
     "moreDrawerCaptionsMenuTitle": "Legendas ao Vivo",
     "moreDrawerSpokenLanguageMenuTitle": "Idioma falado",
-    "moreDrawerCaptionLanguageMenuTitle": "Idioma da legenda",
     "peopleButtonLabel": "Pessoas",
-    "selectedPeopleButtonLabel": "Botão Pessoas Selecionado",
     "peopleButtonTooltipOpen": "Mostrar Participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
     "peoplePaneSubTitle": "Nesta chamada",

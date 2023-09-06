@@ -54,6 +54,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
+        // Pinned Participants
+        'pinned-participants',
         // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
         'total-participant-count',
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
@@ -84,6 +86,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
+        // Feature for capabilities
+        'capabilities',
         // Feature for custom video gallery layouts
         'gallery-layouts',
         // Feature image gallery
@@ -97,14 +101,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
-        // Pinned Participants
-        'pinned-participants',
-        // Feature for capabilities
-        'capabilities',
-         // Closed captions
-        'close-captions',
-        // Optimal Video Count
-        'optimal-video-count'
       ]
     }
   ]);

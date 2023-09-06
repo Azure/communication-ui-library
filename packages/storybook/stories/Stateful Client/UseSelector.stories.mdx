@@ -60,7 +60,7 @@ const threadProps = useSelector(threadSelector);
 
 ### Choose your target
 
-Similar to `usePropsFor`, `useSelector()` is context-aware. It picks out props from available context from providers. Thus, when it is under both `ChatClientProvider` and `CallingClientProvider`, it can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
+Similar to usePropsFor, useSelector() is context-aware. It picks out props from available context from providers. Thus, when it is under both ChatClientProvider and CallingClientProvider, it can not determine which provider should be used to satisfy the props. You must explicitly set the target to use:
 
 ```tsx
 const threadSelector = (state, props) => ({

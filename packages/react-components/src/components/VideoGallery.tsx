@@ -263,7 +263,7 @@ export interface VideoGalleryProps {
    *
    * @defaultValue \{ kind: 'contextual' \}
    */
-  remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+  remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
   /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery inside the VideoGallery.
@@ -284,7 +284,7 @@ export interface VideoGalleryProps {
 /**
  * Properties for showing contextual menu for remote {@link VideoTile} components in {@link VideoGallery}.
  *
- * @public
+ * @beta
  */
 export interface VideoTileContextualMenuProps {
   /**
@@ -297,7 +297,7 @@ export interface VideoTileContextualMenuProps {
 /**
  * Properties for showing drawer menu on remote {@link VideoTile} long touch in {@link VideoGallery}.
  *
- * @public
+ * @beta
  */
 export interface VideoTileDrawerMenuProps {
   /**
@@ -343,7 +343,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     onUnpinParticipant: onUnpinParticipantHandler,
     /* @conditional-compile-remove(pinned-participants) */
-    remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
+    remoteVideoTileMenuOptions = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition = 'HorizontalBottom',
     /* @conditional-compile-remove(rooms) */
@@ -357,8 +357,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostIdFromProp =
-    remoteVideoTileMenu && remoteVideoTileMenu.kind === 'drawer'
-      ? (remoteVideoTileMenu as VideoTileDrawerMenuProps).hostId
+    remoteVideoTileMenuOptions && remoteVideoTileMenuOptions.kind === 'drawer'
+      ? (remoteVideoTileMenuOptions as VideoTileDrawerMenuProps).hostId
       : undefined;
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
@@ -573,8 +573,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           menuKind={
             participant.userId === localParticipant.userId
               ? undefined
-              : remoteVideoTileMenu
-              ? remoteVideoTileMenu.kind === 'drawer'
+              : remoteVideoTileMenuOptions
+              ? remoteVideoTileMenuOptions.kind === 'drawer'
                 ? 'drawer'
                 : 'contextual'
               : undefined
@@ -604,13 +604,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
-      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenu,
       /* @conditional-compile-remove(pinned-participants) */ selectedScalingModeState,
+      /* @conditional-compile-remove(pinned-participants) */ remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
       /* @conditional-compile-remove(pinned-participants) */ onPinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ onUnpinParticipant,
       /* @conditional-compile-remove(pinned-participants) */ toggleAnnouncerString,
+      /* @conditional-compile-remove(pinned-participants) */ drawerMenuHostId,
       /* @conditional-compile-remove(pinned-participants) */ onUpdateScalingMode
     ]
   );

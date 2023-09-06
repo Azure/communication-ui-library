@@ -256,7 +256,7 @@ export type CancelEditCallback = (messageId: string) => void;
 // @internal
 export const _Caption: (props: _CaptionProps) => JSX.Element;
 
-// @public
+// @beta
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1231,8 +1231,8 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 // @beta
 export interface ImageGalleryImageProps {
     altText?: string;
-    downloadFilename: string;
     imageUrl: string;
+    saveAsName: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -1243,7 +1243,7 @@ export interface ImageGalleryProps {
     isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
 }
 
@@ -1900,7 +1900,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @public
+// @beta
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -2323,7 +2323,7 @@ export interface VideoGalleryProps {
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
@@ -2390,12 +2390,12 @@ export interface VideoStreamOptions {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @public
+// @beta
 export interface VideoTileContextualMenuProps {
     kind: 'contextual';
 }
 
-// @public
+// @beta
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
     kind: 'drawer';

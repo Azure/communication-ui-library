@@ -1,73 +1,14 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 28 Aug 2023 22:17:59 GMT and should not be manually modified.
+This log was last generated on Mon, 24 Jul 2023 17:34:36 GMT and should not be manually modified.
 
 <!-- Start content -->
 
-## [1.8.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.8.0-beta.1)
-
-
-
-Mon, 28 Aug 2023 22:17:59 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.7.0...1.8.0-beta.1)
-
-### Raise Hand - Public Preview
-The Web UI Call and CallWitihChat composite now supports Raise Hand feature. This enables users to raise and lower hand in Teams interop meetings.
-
-### Features
-- Add Raise hand feature to the UI Library ([PR #3420](https://github.com/azure/communication-ui-library/pull/3420) by ruslanzdor@microsoft.com)
-- Introduce speaker layout and other layout controls to composites ([PR #3458](https://github.com/azure/communication-ui-library/pull/3458) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Update captions based on new sdk changes, allow changing caption language ([PR #3385](https://github.com/azure/communication-ui-library/pull/3385) by carolinecao@microsoft.com)
-- Introduce Speaker gallery layout to the video gallery component ([PR #3443](https://github.com/azure/communication-ui-library/pull/3443) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduce FocusedContent layout for optimizing screenshare for local user ([PR #3473](https://github.com/azure/communication-ui-library/pull/3473) by 94866715+dmceachernmsft@users.noreply.github.com)
-
-### Bug Fixes
-- Fix image gallery double click to use default behaviour ([PR #3515](https://github.com/azure/communication-ui-library/pull/3515) by 9044372+JoshuaLai@users.noreply.github.com)
-- Fix side pane to refocus the people button when user closes the people pane with keyboard ([PR #3403](https://github.com/azure/communication-ui-library/pull/3403) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Fix typo on Custom data model page in the CallComposite ([PR #3493](https://github.com/azure/communication-ui-library/pull/3493) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Fix issue when local participant stops screen share their local stream would disappear but still be showing to others in the call ([PR #3419](https://github.com/azure/communication-ui-library/pull/3419) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Fix to allow iOS browsers to open the image in a new tab ([PR #3502](https://github.com/azure/communication-ui-library/pull/3502) by 9044372+JoshuaLai@users.noreply.github.com)
-- Autofocus on Resume Call button in OnHold screen page ([PR #3480](https://github.com/azure/communication-ui-library/pull/3480) by edwardlee@microsoft.com)
-- Add default aria label for video effect items ([PR #3477](https://github.com/azure/communication-ui-library/pull/3477) by edwardlee@microsoft.com)
-- Ensure camera and microphone permissions are re-requested when the number of devices goes from 0 to n ([PR #3439](https://github.com/azure/communication-ui-library/pull/3439) by 2684369+JamesBurnside@users.noreply.github.com)
-- People button announces seleted state ([PR #3496](https://github.com/azure/communication-ui-library/pull/3496) by carolinecao@microsoft.com)
-- Resolve issue where chat keyboard would dismiss randomly during interop meetings ([PR #3421](https://github.com/azure/communication-ui-library/pull/3421) by 73612854+palatter@users.noreply.github.com)
-- Fix message type being hard coded in sending state ([PR #3442](https://github.com/azure/communication-ui-library/pull/3442) by 109105353+jpeng-ms@users.noreply.github.com)
-- Remove controlBar shadow in landscape mobile view ([PR #3501](https://github.com/azure/communication-ui-library/pull/3501) by edwardlee@microsoft.com)
-- Fix participant count when you are alone in a call ([PR #3432](https://github.com/azure/communication-ui-library/pull/3432) by 94866715+dmceachernmsft@users.noreply.github.com)
-
-### Improvements
-- Add stream size to remote video stream ([PR #3516](https://github.com/azure/communication-ui-library/pull/3516) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Add support for dependency isolation for video background effects (Treeshaking + Lazy loading) ([PR #3352](https://github.com/azure/communication-ui-library/pull/3352) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Update captions banner width and height for better readibility ([PR #3412](https://github.com/azure/communication-ui-library/pull/3412) by carolinecao@microsoft.com)
-- Make overflow gallery movable by the user ([PR #3411](https://github.com/azure/communication-ui-library/pull/3411) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Add type check to stable sample calling app ([PR #3313](https://github.com/azure/communication-ui-library/pull/3313) by jiangnanhello@live.com)
-- Add capabilities selector to disable camera, microphone and screenshare buttons when corresponding capability is not present ([PR #3374](https://github.com/azure/communication-ui-library/pull/3374) by 79475487+mgamis-msft@users.noreply.github.com)
-- Improve Czech translated strings ([PR #3367](https://github.com/azure/communication-ui-library/pull/3367) by 79475487+mgamis-msft@users.noreply.github.com)
-- Deprecate old joinCall API and replace with joinCall API with options bag ([PR #3337](https://github.com/azure/communication-ui-library/pull/3337) by carolinecao@microsoft.com)
-- Remove role hint and permissions provider from the CallAdapter state allowing for simpler use of the CallComposite with a rooms call ([PR #3360](https://github.com/azure/communication-ui-library/pull/3360) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Update Rooms API for naming clarity in icons ([PR #3388](https://github.com/azure/communication-ui-library/pull/3388) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduce total participant counts to participant list and people pane in composites ([PR #2911](https://github.com/azure/communication-ui-library/pull/2911) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Update captions banner width and height for better readibility ([PR #3359](https://github.com/azure/communication-ui-library/pull/3359) by carolinecao@microsoft.com)
-- Add functionality to open image gallery when user taps on an inline image ([PR #3406](https://github.com/azure/communication-ui-library/pull/3406) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Add CapabilitiesChangedListener to CallAdapter ([PR #3485](https://github.com/azure/communication-ui-library/pull/3485) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add missing CallAdapterOptions to createAzureCommunicationCallWithChatAdapterFromClients ([PR #3476](https://github.com/azure/communication-ui-library/pull/3476) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update Call and CallWithChat composites to use the same control bar ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update stable dependencies to use caret for calling and chat ([PR #3491](https://github.com/azure/communication-ui-library/pull/3491) by alkwa@microsoft.com)
-- Fix deviceOrientationEvent not found error in samples in safari ([PR #3453](https://github.com/azure/communication-ui-library/pull/3453) by 2684369+JamesBurnside@users.noreply.github.com)
-- Enable keyboard navigation for inlineImage ([PR #3504](https://github.com/azure/communication-ui-library/pull/3504) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Add download image functionality to composite ([PR #3460](https://github.com/azure/communication-ui-library/pull/3460) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Update gifs and image for VideoGallery pinning docs ([PR #3391](https://github.com/azure/communication-ui-library/pull/3391) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update documentation of CallwithChat Adapter API for clarification ([PR #3446](https://github.com/azure/communication-ui-library/pull/3446) by 109105353+jpeng-ms@users.noreply.github.com)
-- Handle 413 error when uploading logs in sample apps ([PR #3448](https://github.com/azure/communication-ui-library/pull/3448) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update signaling sdk to 1.0.0-beta19 ([PR #3414](https://github.com/azure/communication-ui-library/pull/3414) by joshlai@microsoft.com)
-- Update ChatSDK to 1.3.2 ([PR #3510](https://github.com/azure/communication-ui-library/pull/3510) by 77021369+jimchou-dev@users.noreply.github.com)
-- Update ChatSDK version to 1.4.0-beta.1 ([PR #3499](https://github.com/azure/communication-ui-library/pull/3499) by 77021369+jimchou-dev@users.noreply.github.com)
-
-## [1.7.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.7.0-beta.2)
+## [1.7.0-beta.2](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.7.0-beta.2)
 
 Mon, 24 Jul 2023 17:34:36 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.7.0-beta.1...1.7.0-beta.2)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.7.0-beta.1...@azure/communication-react_v1.7.0-beta.2)
+
 
 ### Improvements
   - Update SDKs dependencies ([PR #3355](https://github.com/azure/communication-ui-library/pull/3355) by 2684369+JamesBurnside@users.noreply.github.com)

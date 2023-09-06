@@ -593,7 +593,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -1322,16 +1322,16 @@ export type CameraSitePermissionsStrings = SitePermissionsStrings;
 // @public
 export type CancelEditCallback = (messageId: string) => void;
 
-// @public
+// @beta
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
-// @public
+// @beta
 export interface CapabilitiesFeatureState {
     capabilities: ParticipantCapabilities;
     latestCapabilitiesChangeInfo: CapabilitiesChangeInfo;
 }
 
-// @public
+// @beta
 export interface CapabilityChangedNotificationStrings {
     shareScreen?: {
         lostDueToRoleChangeToAttendee?: string;
@@ -1347,7 +1347,7 @@ export interface CapabilityChangedNotificationStrings {
     };
 }
 
-// @public
+// @beta
 export interface CaptionLanguageStrings {
     // (undocumented)
     'fr-ca': string;
@@ -1415,7 +1415,7 @@ export interface CaptionLanguageStrings {
     vi: string;
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface CaptionsCallFeatureState {
     captions: CaptionsInfo[];
     currentCaptionLanguage: string;
@@ -1426,7 +1426,7 @@ export interface CaptionsCallFeatureState {
     supportedSpokenLanguages: string[];
 }
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
@@ -1437,12 +1437,12 @@ export interface CaptionsInfo {
     timestamp: Date;
 }
 
-// @public
+// @beta
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
 
-// @public
+// @beta
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -2839,8 +2839,8 @@ export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 // @beta
 export interface ImageGalleryImageProps {
     altText?: string;
-    downloadFilename: string;
     imageUrl: string;
+    saveAsName: string;
     title?: string;
     titleIcon?: JSX.Element;
 }
@@ -2851,7 +2851,7 @@ export interface ImageGalleryProps {
     isOpen: boolean;
     onDismiss: () => void;
     onError?: (event: SyntheticEvent<HTMLImageElement, Event>) => void;
-    onImageDownloadButtonClicked: (imageUrl: string, downloadFilename: string) => void;
+    onImageDownloadButtonClicked: (imageUrl: string, saveAsName: string) => void;
     startIndex?: number;
 }
 
@@ -2875,12 +2875,12 @@ export interface IncomingCallState {
     startTime: Date;
 }
 
-// @public
+// @beta
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
 
-// @public
+// @beta
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -2902,7 +2902,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @public
+// @beta
 export type IsSpokenLanguageChangedListener = (event: {
     activeSpokenLanguage: string;
 }) => void;
@@ -3269,7 +3269,7 @@ export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffect
 // @beta
 export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
-// @public
+// @beta
 export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
@@ -3549,7 +3549,7 @@ export interface RemoteVideoStreamState {
     view?: VideoStreamRendererViewState;
 }
 
-// @public
+// @beta
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
@@ -3653,7 +3653,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
-// @public
+// @beta
 export interface SpokenLanguageStrings {
     // (undocumented)
     'ar-ae': string;
@@ -4095,7 +4095,7 @@ export interface VideoGalleryProps {
     overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
+    remoteVideoTileMenuOptions?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
@@ -4178,12 +4178,12 @@ export interface VideoStreamRendererViewState {
 // @public
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
-// @public
+// @beta
 export interface VideoTileContextualMenuProps {
     kind: 'contextual';
 }
 
-// @public
+// @beta
 export interface VideoTileDrawerMenuProps {
     hostId?: string;
     kind: 'drawer';

@@ -50,7 +50,6 @@
     "deniedPermissionToRoomDetails": "Du har ikke tillatelse til å bli med i dette rommet.",
     "deniedPermissionToRoomTitle": "Tillatelsen er avslått for rommet",
     "peopleButtonLabel": "Personer",
-    "selectedPeopleButtonLabel": "Personer-knappen er valgt",
     "peoplePaneTitle": "Personer",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
@@ -100,18 +99,16 @@
     "startCaptionsButtonOffLabel": "Deaktiver undertekster",
     "startCaptionsButtonTooltipOnContent": "Deaktiver undertekster",
     "startCaptionsButtonTooltipOffContent": "Slå på undertekster",
-    "captionsSettingsModalTitle": "Tekstinnstillinger",
-    "captionsSettingsSpokenLanguageDropdownLabel": "Talespråk",
-    "captionsSettingsCaptionLanguageDropdownLabel": "Undertekstspråk",
-    "captionsSettingsSpokenLanguageDropdownInfoText": "Språket som alle i denne samtalen snakker.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Undertekster vises på dette språket.",
+    "captionsSettingsModalTitle": "Hvilket språk snakkes?",
+    "captionsSettingsDropdownLabel": "Talespråk",
+    "captionsSettingsDropdownInfoText": "Språket som alle i denne samtalen snakker.",
     "captionsSettingsConfirmButtonLabel": "Bekreft",
     "captionsSettingsCancelButtonLabel": "Avbryt",
     "captionsSettingsModalAriaLabel": "Sperre for innstillinger for undertekster",
     "captionsSettingsCloseModalButtonAriaLabel": "Lukk innstilling for undertekster",
     "captionsBannerMoreButtonCallingLabel": "Mer",
     "captionsBannerMoreButtonTooltip": "Flere alternativer",
-    "spokenLanguageStrings": {
+    "captionsAvailableLanguageStrings": {
       "ar-ae": "Arabisk – De forente arabiske emirater",
       "ar-sa": "Arabisk – Saudi-Arabia",
       "da-dk": "Dansk",
@@ -154,40 +151,6 @@
       "sk-sk": "Slovakisk",
       "zh-tw": "Kinesisk – Taiwan"
     },
-    "captionLanguageStrings": {
-      "ar": "Arabisk",
-      "da": "Dansk",
-      "de": "Tysk",
-      "en": "Engelsk",
-      "es": "Spansk",
-      "fi": "Finsk",
-      "fr-ca": "Fransk – Canada",
-      "fr": "Fransk – Frankrike",
-      "hi": "Hindi",
-      "it": "Italiensk",
-      "ja": "Japansk",
-      "ko": "Koreansk",
-      "nb": "Norsk (bokmål)",
-      "nl": "Nederlandsk",
-      "pl": "Polsk",
-      "pt": "Portugisisk – Brasil",
-      "ru": "Russisk",
-      "sv": "Svensk",
-      "zh-Hans": "Kinesisk (forenklet)",
-      "zh-Hant": "Kinesisk (tradisjonell)",
-      "cs": "Tsjekkisk",
-      "pt-pt": "Portugisisk – Portugal",
-      "tr": "Tyrkisk",
-      "vi": "Vietnamesisk",
-      "th": "Thai",
-      "he": "Hebraisk",
-      "cy": "Walisisk",
-      "uk": "Ukrainsk",
-      "el": "Gresk",
-      "hu": "Ungarsk",
-      "ro": "Rumensk",
-      "sk": "Slovakisk"
-    },
     "captionsBannerSpinnerText": "Starter teksting...",
     "transferPageTransferorText": "Overfører...",
     "transferPageTransferTargetText": "Kobler til...",
@@ -207,21 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Høyttaleroppsett",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisk oppsett",
     "moreButtonGalleryDefaultLayoutLabel": "Gallerioppsett",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Fokusert innhold",
-    "capabilityChangedNotification": {
-      "turnVideoOn": {
-        "lostDueToMeetingOption": "Kameraet er deaktivert. Du kan ikke lenger dele video.",
-        "grantedDueToMeetingOption": "Kameraet er aktivert. Slå den på hvis du vil dele video."
-      },
-      "unmuteMic": {
-        "lostDueToMeetingOption": "Mikrofonen er deaktivert. Du kan ikke lenger oppheve dempingen.",
-        "grantedDueToMeetingOption": "Mikrofonen er aktivert. Opphev demping hvis du vil snakke."
-      },
-      "shareScreen": {
-        "lostDueToRoleChangeToAttendee": "Rollen din er endret. Noen handlinger, for eksempel deling av innhold, vil ikke være tilgjengelige for deg.",
-        "grantedDueToRoleChangeToPresenter": "Du er presentatør. Du kan dele innhold og tilrettelegge møtet."
-      }
-    }
+    "moreButtonGalleryFocusedContentLayoutLabel": "Fokusert innhold"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
@@ -244,9 +193,7 @@
     "moreDrawerSpeakerMenuTitle": "Høyttaler",
     "moreDrawerCaptionsMenuTitle": "Undertekster",
     "moreDrawerSpokenLanguageMenuTitle": "Talespråk",
-    "moreDrawerCaptionLanguageMenuTitle": "Språk for undertekst",
     "peopleButtonLabel": "Personer",
-    "selectedPeopleButtonLabel": "Personer-knappen er valgt",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
     "peoplePaneSubTitle": "I denne samtalen",

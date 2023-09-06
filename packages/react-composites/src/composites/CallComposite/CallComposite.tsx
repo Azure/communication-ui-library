@@ -111,7 +111,7 @@ export interface DeviceCheckOptions {
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
- * @public
+ * @beta
  */
 export interface RemoteVideoTileMenuOptions {
   /**
@@ -217,7 +217,7 @@ export type CallCompositeOptions = {
   /**
    * Remote participant video tile menu options
    */
-  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+  remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.

@@ -70,7 +70,7 @@ export const PinnedParticipantsMobileExample: () => JSX.Element = () => {
         layout="floatingLocalVideo"
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        remoteVideoTileMenu={{ kind: 'drawer' }}
+        remoteVideoTileMenuOptions={{ kind: 'drawer' }}
       />
     </div>
   );

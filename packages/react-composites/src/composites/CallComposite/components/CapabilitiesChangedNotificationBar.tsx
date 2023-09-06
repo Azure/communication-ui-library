@@ -69,7 +69,7 @@ export const CapabilitiesChangedNotificationBar = (props: CapabilitiesChangeNoti
         if (!message) {
           return null;
         }
-        const iconProps = getCustomMessageBarIconProps(notification);
+        const iconProps = getNotificationIconProps(notification);
         return (
           <MessageBar
             key={notification.capabilityName}
@@ -120,27 +120,20 @@ const getCapabilityChangedNotificationString = (
 };
 
 /* @conditional-compile-remove(capabilities) */
-const getCustomMessageBarIconProps = (notification: CapabalityChangedNotification): IIconProps | undefined => {
-  let iconName: string | undefined = undefined;
+const getNotificationIconProps = (notification: CapabalityChangedNotification): IIconProps | undefined => {
   switch (notification.capabilityName) {
     case 'turnVideoOn':
       if (notification.isPresent) {
-        iconName = 'ControlButtonCameraOn';
-      } else {
-        iconName = 'ControlButtonCameraProhibited';
+        return { iconName: 'ControlButtonCameraOn' };
       }
-      break;
+      return { iconName: 'ControlButtonCameraProhibited' };
     case 'unmuteMic':
       if (notification.isPresent) {
-        iconName = 'ControlButtonMicOn';
-      } else {
-        iconName = 'ControlButtonMicProhibited';
+        return { iconName: 'ControlButtonMicOn' };
       }
-      break;
-    default:
-      return undefined;
+      return { iconName: 'ControlButtonMicProhibited' };
   }
-  return { iconName, styles: { root: { '> *': { height: '1rem', width: '1rem' } } } };
+  return undefined;
 };
 
 /* @conditional-compile-remove(capabilities) */
@@ -163,7 +156,7 @@ const messageBarStyles = {
 /* @conditional-compile-remove(capabilities) */
 /**
  * Strings for capability changed notification
- * @public
+ * @beta
  */
 export interface CapabilityChangedNotificationStrings {
   /**

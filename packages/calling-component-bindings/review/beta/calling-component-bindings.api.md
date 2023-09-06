@@ -136,7 +136,7 @@ export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBa
 // @internal
 export const _captionSettingsSelector: _CaptionSettingsSelector;
 
-// @public
+// @beta
 export type CaptionsOptions = {
     spokenLanguage: string;
 };

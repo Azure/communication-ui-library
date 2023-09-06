@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add Raise hand feature stateful client changes",
+  "packageName": "@azure/communication-react",
+  "email": "ruslanzdor@microsoft.com",
+  "dependentChangeType": "patch"
+}

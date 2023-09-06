@@ -50,7 +50,6 @@
     "deniedPermissionToRoomDetails": "Nemáte oprávnění připojit se k této místnosti.",
     "deniedPermissionToRoomTitle": "Oprávnění k místnosti bylo odepřeno",
     "peopleButtonLabel": "Lidé",
-    "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peoplePaneTitle": "Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
@@ -100,18 +99,16 @@
     "startCaptionsButtonOffLabel": "Vypnout titulky",
     "startCaptionsButtonTooltipOnContent": "Vypnout titulky",
     "startCaptionsButtonTooltipOffContent": "Zapnout titulky",
-    "captionsSettingsModalTitle": "Nastavení titulků",
-    "captionsSettingsSpokenLanguageDropdownLabel": "Mluvený jazyk",
-    "captionsSettingsCaptionLanguageDropdownLabel": "Jazyk titulků",
-    "captionsSettingsSpokenLanguageDropdownInfoText": "Jazyk, kterým mluví všichni účastníci tohoto hovoru.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Titulky se zobrazí v tomto jazyce. ",
+    "captionsSettingsModalTitle": "V jakém jazyce se mluví?",
+    "captionsSettingsDropdownLabel": "Mluvený jazyk",
+    "captionsSettingsDropdownInfoText": "Jazyk, kterým mluví všichni účastníci tohoto hovoru.",
     "captionsSettingsConfirmButtonLabel": "Potvrdit",
     "captionsSettingsCancelButtonLabel": "Zrušit",
     "captionsSettingsModalAriaLabel": "Modální nastavení titulků",
     "captionsSettingsCloseModalButtonAriaLabel": "Nastavení titulků",
     "captionsBannerMoreButtonCallingLabel": "Další",
     "captionsBannerMoreButtonTooltip": "Další možnosti",
-    "spokenLanguageStrings": {
+    "captionsAvailableLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
       "da-dk": "Dánština",
@@ -154,40 +151,6 @@
       "sk-sk": "Slovenština",
       "zh-tw": "Čínština – Tchaj-wan"
     },
-    "captionLanguageStrings": {
-      "ar": "Arabština",
-      "da": "Dánština",
-      "de": "Němčina",
-      "en": "Angličtina",
-      "es": "Španělština",
-      "fi": "Finština",
-      "fr-ca": "Francouzština - Kanada",
-      "fr": "Francouzština - Francie",
-      "hi": "Hindština",
-      "it": "Italština",
-      "ja": "Japonština",
-      "ko": "Korejština",
-      "nb": "Norština (Bokmål)",
-      "nl": "Nizozemština",
-      "pl": "Polština",
-      "pt": "Portugalština – Brazílie",
-      "ru": "Ruština",
-      "sv": "Švédština",
-      "zh-Hans": "Čínština (zjednodušená)",
-      "zh-Hant": "Čínština (tradiční)",
-      "cs": "Čeština",
-      "pt-pt": "Portugalština – Portugalsko",
-      "tr": "Turečtina",
-      "vi": "Vietnamština",
-      "th": "Thajština",
-      "he": "Hebrejština",
-      "cy": "Velština",
-      "uk": "Ukrajinština",
-      "el": "Řečtina",
-      "hu": "Maďarština",
-      "ro": "Rumunština",
-      "sk": "Slovenština"
-    },
     "captionsBannerSpinnerText": "Spouští se titulky...",
     "transferPageTransferorText": "Probíhá přenos...",
     "transferPageTransferTargetText": "Připojování...",
@@ -207,21 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "Rozložení reproduktoru",
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamické rozložení",
     "moreButtonGalleryDefaultLayoutLabel": "Rozložení galerie",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Prioritní obsah",
-    "capabilityChangedNotification": {
-      "turnVideoOn": {
-        "lostDueToMeetingOption": "Vaše kamera byla zakázána. Už nemůžete sdílet video.",
-        "grantedDueToMeetingOption": "Vaše kamera je povolená. Pokud chcete sdílet video, zapněte ji."
-      },
-      "unmuteMic": {
-        "lostDueToMeetingOption": "Váš mikrofon byl zakázán. Už nemůžete zrušit ztlumení.",
-        "grantedDueToMeetingOption": "Váš mikrofon je povolený. Zrušte ztlumení, pokud chcete mluvit."
-      },
-      "shareScreen": {
-        "lostDueToRoleChangeToAttendee": "Vaše role se změnila. Některé akce, jako je sdílení obsahu, pro vás nebudou k dispozici.",
-        "grantedDueToRoleChangeToPresenter": "Jste prezentující. Můžete sdílet obsah a moderovat schůzku."
-      }
-    }
+    "moreButtonGalleryFocusedContentLayoutLabel": "Prioritní obsah"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
@@ -244,9 +193,7 @@
     "moreDrawerSpeakerMenuTitle": "Mluvčí",
     "moreDrawerCaptionsMenuTitle": "Živé titulky",
     "moreDrawerSpokenLanguageMenuTitle": "Mluvený jazyk",
-    "moreDrawerCaptionLanguageMenuTitle": "Jazyk titulků",
     "peopleButtonLabel": "Lidé",
-    "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
     "peoplePaneSubTitle": "V tomto hovoru",

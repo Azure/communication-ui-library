@@ -139,8 +139,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
   /* @conditional-compile-remove(image-gallery) */
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
-  /* @conditional-compile-remove(image-gallery) */
-  const [isImageGalleryOpen, setIsImageGalleryOpen] = useState<boolean>(false);
 
   const adapter = useAdapter();
   const theme = useTheme();
@@ -258,10 +256,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const galleryImage: ImageGalleryImageProps = {
         title: attachment.name,
         titleIcon: titleIcon,
-        downloadFilename: attachment.id,
+        saveAsName: attachment.id,
         imageUrl: ''
       };
-      setIsImageGalleryOpen(true);
 
       if (attachment.id in fullSizeAttachments) {
         setGalleryImages([
@@ -291,10 +288,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(image-gallery) */
-  const onImageDownloadButtonClicked = useCallback((imageUrl: string, downloadFilename: string): void => {
-    if (imageUrl === '') {
-      return;
-    }
+  const onImageDownloadButtonClicked = useCallback((imageUrl: string, saveAsName: string): void => {
     if (isIOS()) {
       window.open(imageUrl, '_blank');
     } else {
@@ -302,7 +296,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const a = document.createElement('a');
       // Set the href and download attributes for the anchor element
       a.href = imageUrl;
-      a.download = downloadFilename;
+      a.download = saveAsName;
       a.rel = 'noopener noreferrer';
       a.target = '_blank';
 
@@ -396,12 +390,9 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       {
         /* @conditional-compile-remove(image-gallery) */
         <ImageGallery
-          isOpen={isImageGalleryOpen}
+          isOpen={galleryImages.length > 0}
           images={galleryImages}
-          onDismiss={() => {
-            setGalleryImages([]);
-            setIsImageGalleryOpen(false);
-          }}
+          onDismiss={() => setGalleryImages([])}
           onImageDownloadButtonClicked={onImageDownloadButtonClicked}
         />
       }

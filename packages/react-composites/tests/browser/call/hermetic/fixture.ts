@@ -108,7 +108,7 @@ export function defaultMockCallAdapterState(
       transfer: {
         acceptedTransfers: {}
       },
-      /* @conditional-compile-remove(optimal-video-count) */
+      /* @conditional-compile-remove(call-transfer) */
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },

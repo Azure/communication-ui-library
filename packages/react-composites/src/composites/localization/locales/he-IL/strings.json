@@ -50,7 +50,6 @@
     "deniedPermissionToRoomDetails": "אין לך הרשאה להצטרף לחדר זה.",
     "deniedPermissionToRoomTitle": "ההרשאה לחדר נדחתה",
     "peopleButtonLabel": "אנשים",
-    "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peoplePaneTitle": "אנשים",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
@@ -100,18 +99,16 @@
     "startCaptionsButtonOffLabel": "כבה כתוביות",
     "startCaptionsButtonTooltipOnContent": "כבה כתוביות",
     "startCaptionsButtonTooltipOffContent": "הפעל כתוביות",
-    "captionsSettingsModalTitle": "הגדרות כתוביות",
-    "captionsSettingsSpokenLanguageDropdownLabel": "שפה מדוברת",
-    "captionsSettingsCaptionLanguageDropdownLabel": "שפת כתוביות",
-    "captionsSettingsSpokenLanguageDropdownInfoText": "השפה שכולם בשיחה זו מדברים.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "הכתוביות יופיעו בשפה זו.",
+    "captionsSettingsModalTitle": "איזו שפה מדוברת?",
+    "captionsSettingsDropdownLabel": "שפה מדוברת",
+    "captionsSettingsDropdownInfoText": "השפה שכולם בשיחה זו מדברים.",
     "captionsSettingsConfirmButtonLabel": "אשר",
     "captionsSettingsCancelButtonLabel": "ביטול",
     "captionsSettingsModalAriaLabel": "מודאל הגדרת כתוביות",
     "captionsSettingsCloseModalButtonAriaLabel": "סגור הגדרת כתוביות",
     "captionsBannerMoreButtonCallingLabel": "עוד",
     "captionsBannerMoreButtonTooltip": "אפשרויות נוספות",
-    "spokenLanguageStrings": {
+    "captionsAvailableLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
       "da-dk": "דנית",
@@ -154,40 +151,6 @@
       "sk-sk": "סלובקית",
       "zh-tw": "סינית - טייוואן"
     },
-    "captionLanguageStrings": {
-      "ar": "ערבית",
-      "da": "דנית",
-      "de": "גרמנית",
-      "en": "אנגלית",
-      "es": "ספרדית",
-      "fi": "פינית",
-      "fr-ca": "צרפתית - קנדה",
-      "fr": "צרפתית - צרפת",
-      "hi": "הינדי",
-      "it": "איטלקית",
-      "ja": "יפנית",
-      "ko": "קוריאנית",
-      "nb": "נורווגית (בוּקמוֹל)",
-      "nl": "הולנדית",
-      "pl": "פולנית",
-      "pt": "פורטוגזית - ברזיל",
-      "ru": "רוסית",
-      "sv": "שוודית",
-      "zh-Hans": "סינית (פשוטה)",
-      "zh-Hant": "סינית (מסורתית)",
-      "cs": "צ׳כית",
-      "pt-pt": "פורטוגזית - פורטוגל",
-      "tr": "טורקית",
-      "vi": "וייטנאמית",
-      "th": "תאית",
-      "he": "עברית",
-      "cy": "וולשית",
-      "uk": "אוקראינית",
-      "el": "יוונית",
-      "hu": "הונגרית",
-      "ro": "רומנית",
-      "sk": "סלובקית"
-    },
     "captionsBannerSpinnerText": "מאתחל כתוביות...",
     "transferPageTransferorText": "מעביר...",
     "transferPageTransferTargetText": "מתחבר...",
@@ -207,21 +170,7 @@
     "moreButtonGallerySpeakerLayoutLabel": "פריסת דובר",
     "moreButtonGalleryFloatingLocalLayoutLabel": "פריסה דינמית",
     "moreButtonGalleryDefaultLayoutLabel": "פריסת גלריה",
-    "moreButtonGalleryFocusedContentLayoutLabel": "תוכן ממוקד",
-    "capabilityChangedNotification": {
-      "turnVideoOn": {
-        "lostDueToMeetingOption": "המצלמה שלך הפכה ללא זמינה. כבר אינך יכול לשתף וידאו.",
-        "grantedDueToMeetingOption": "המצלמה שלך הפכה לזמינה. הפעל אותה אם ברצונך לשתף וידאו."
-      },
-      "unmuteMic": {
-        "lostDueToMeetingOption": "המיקרופון שלך הפך ללא זמין. לא ניתן עוד לבטל השתקה.",
-        "grantedDueToMeetingOption": "המיקרופון שלך הפך לזמין. בטל את ההשתקה אם ברצונך לדבר."
-      },
-      "shareScreen": {
-        "lostDueToRoleChangeToAttendee": "התפקיד שלך השתנה. פעולות מסוימות, כגון שיתוף תוכן, לא יהיו זמינות עבורך.",
-        "grantedDueToRoleChangeToPresenter": "אתה מציג. באפשרותך לשתף תוכן ולסייע בפגישה."
-      }
-    }
+    "moreButtonGalleryFocusedContentLayoutLabel": "תוכן ממוקד"
   },
   "chat": {
     "chatListHeader": "בצ'אט זה",
@@ -244,9 +193,7 @@
     "moreDrawerSpeakerMenuTitle": "רמקול",
     "moreDrawerCaptionsMenuTitle": "כתוביות חיות",
     "moreDrawerSpokenLanguageMenuTitle": "שפה מדוברת",
-    "moreDrawerCaptionLanguageMenuTitle": "שפת כתוביות",
     "peopleButtonLabel": "אנשים",
-    "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peopleButtonTooltipOpen": "הצג משתתפים",
     "peopleButtonTooltipClose": "הסתר משתתפים",
     "peoplePaneSubTitle": "בשיחה זו",

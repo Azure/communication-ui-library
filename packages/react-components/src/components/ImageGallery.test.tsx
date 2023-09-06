@@ -30,7 +30,7 @@ describe('ImageGallery default layout tests', () => {
   /* @conditional-compile-remove(image-gallery) */
   const imageInfo = {
     imageUrl: 'images/inlineImageExample1.png',
-    downloadFilename: 'downloadFilename',
+    saveAsName: 'saveAsName',
     altText: 'altText',
     title: 'title',
     titleIcon: <div data-testid={titleIconTestId1}></div>
@@ -38,7 +38,7 @@ describe('ImageGallery default layout tests', () => {
   /* @conditional-compile-remove(image-gallery) */
   const imageInfo2 = {
     imageUrl: 'images/inlineImageExample2.png',
-    downloadFilename: 'downloadFilename2',
+    saveAsName: 'saveAsName2',
     altText: 'altText2',
     title: 'title2',
     titleIcon: <div data-testid={titleIconTestId2}></div>
@@ -109,6 +109,6 @@ describe('ImageGallery default layout tests', () => {
     const downloadButton: HTMLElement = buttons[0];
     downloadButton.click();
     expect(onImageDownloadButtonClicked).toBeCalledTimes(1);
-    expect(onImageDownloadButtonClicked).toBeCalledWith(imageInfo.imageUrl, imageInfo.downloadFilename);
+    expect(onImageDownloadButtonClicked).toBeCalledWith(imageInfo.imageUrl, imageInfo.saveAsName);
   });
 });

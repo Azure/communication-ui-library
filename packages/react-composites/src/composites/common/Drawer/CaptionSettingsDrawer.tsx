@@ -59,16 +59,11 @@ export const CaptionSettingsDrawer = (props: {
     }));
   }, [props.currentLanguage, props.supportedLanguageStrings, onDrawerItemClick]);
 
-  const sortedDrawerItems: DrawerMenuItemProps[] = useMemo(() => {
-    const copy = [...drawerItems];
-    return copy.sort((a, b) => (a.text && b.text && a.text > b.text ? 1 : -1));
-  }, [drawerItems]);
-
   /* @conditional-compile-remove(close-captions) */
   return (
     <DrawerMenu
       heading={props.strings?.menuTitle}
-      items={sortedDrawerItems ?? []}
+      items={drawerItems ?? []}
       onLightDismiss={() => {
         props.setCurrentLanguage(props.currentLanguage);
         props.onLightDismiss();
