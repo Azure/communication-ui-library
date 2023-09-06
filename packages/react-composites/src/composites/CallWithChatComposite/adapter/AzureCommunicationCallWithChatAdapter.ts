@@ -736,7 +736,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
     /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions,
-    'CallWithChat' as TelemetryImplementationHint
+    'CallWithChat' as TelemetryImplementationHint // We only need to add this hint for call adapter, as adding to chat would double count it.
   );
 
   const threadId = isTeamsMeetingLinkLocator(locator)
