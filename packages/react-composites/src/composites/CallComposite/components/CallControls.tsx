@@ -136,7 +136,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
-  let showParticipantsButtonInControlBar =
+  const showParticipantsButtonInControlBar =
     isEnabled(options?.participantsButton) &&
     /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
     !props.isMobile;
