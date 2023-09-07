@@ -145,8 +145,8 @@ export { RaiseHandButton } from '../../react-components/src';
 export { Dialpad } from '../../react-components/src';
 
 
-export {Survey} from '../../react-components/src';
-export type {SurveyProps, SurveyStrings, SurveyStyles} from'../../react-components/src';
+export {StarSurvey} from '../../react-components/src';
+export type {StarSurveyProps, StarSurveyStrings, StarSurveyStyles} from'../../react-components/src';
 
 /* @conditional-compile-remove(call-readiness) */
 export {
