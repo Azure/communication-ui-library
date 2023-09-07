@@ -12,6 +12,36 @@ Thu, 07 Sep 2023 02:42:30 GMT
 ### Capabilities - General Availability
 The Web UI Call and CallWithChat composite now supports capabilities from the Calling SDK to manage whether microphone, camera, and screen share buttons are enabled or disabled. Notifications are also shown when capabilities to use microphone, turn on camera, or share screen changes. The selectors for the MicrophoneButton, CameraButton, and ScreenShareButton components now disable the respective component based on capabilities of local user.
 
+### Raise Hand - General Availability
+The Web UI Call and CallWitihChat composite now supports Raise Hand feature. This enables users to raise and lower hand in Teams interop meetings.
+
+### Optimal Video Count - General Availability
+The Web UI Calling and CallWithChat composite now supports optimal video count which optimally control the maximum number of remote video renderers to ensure good video quality.
+
+### Closed Captions - General Availability
+The Web UI Calling and CallWithChat composite now supports Closed Captions in Teams Interop and Teams CTE scenarios.
+
+This feature includes:
+- Ability to enable, and show/hide closed captions in a call 
+- Choose or change the captions spoken language
+- Ability to scroll through past 50 dialogues after captions has been enabled
+
+### Blurred and Custom Video Backgrounds - General Availability
+The Web UI Calling and CallWithChat composite now supports blurred and custom video backgrounds in web desktop.
+
+This feature includes:
+- Ability to enable the blur/custom background effect before the call
+- Choose or change the video background effect during the call
+- Ability to use your own hosted images as custom backgrounds
+
+### Pinning Layout and Rendering Options - General Availability
+The VideoGallery now provides the ability to pin remote participants and change rendering option for their video streams.
+
+This feature includes:
+- Contextual menu for each remote video tile
+- Pinning and unpinning participants
+- Ability to change rendering options for remote video streams between fit-to-frame and fill frame
+
 ### Features
 - Add capabilities feature ([PR #3475](https://github.com/azure/communication-ui-library/pull/3475) by 79475487+mgamis-msft@users.noreply.github.com, [PR #3485](https://github.com/azure/communication-ui-library/pull/3485) by 79475487+mgamis-msft@users.noreply.github.com, [PR #3527](https://github.com/azure/communication-ui-library/pull/3527) by 79475487+mgamis-msft@users.noreply.github.com,[PR #3540](https://github.com/azure/communication-ui-library/pull/3540) by 79475487+mgamis-msft@users.noreply.github.com)
 - Promote raise hand feature to GA ([PR #3548](https://github.com/azure/communication-ui-library/pull/3548) by 79475487+mgamis-msft@users.noreply.github.com)
