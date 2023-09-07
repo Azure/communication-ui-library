@@ -23,7 +23,7 @@ The Web UI Calling and CallWithChat composite now supports Closed Captions in Te
 
 This feature includes:
 - Ability to enable, and show/hide closed captions in a call 
-- Choose or change the captions spoken language
+- Choose or change the captions spoken language and caption language
 - Ability to scroll through past 50 dialogues after captions has been enabled
 
 ### Blurred and Custom Video Backgrounds - General Availability
