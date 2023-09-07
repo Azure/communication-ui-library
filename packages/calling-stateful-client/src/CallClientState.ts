@@ -217,7 +217,7 @@ export interface LocalVideoStreamState {
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stores the state of the video effects.
-   * @beta
+   * @public
    */
   videoEffects?: LocalVideoStreamVideoEffectsState;
 }
@@ -226,7 +226,7 @@ export interface LocalVideoStreamState {
 /**
  * State only version of a LocalVideoStream's {@link @azure/communication-calling#VideoEffectsFeature}.
  *
- * @beta
+ * @public
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
@@ -773,7 +773,7 @@ export type CallErrorTarget =
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
-  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
+  | 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
