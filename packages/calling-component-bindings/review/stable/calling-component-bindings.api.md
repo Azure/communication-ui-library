@@ -152,6 +152,10 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
+    onLowerHand: () => Promise<void>;
+    // (undocumented)
+    onRaiseHand: () => Promise<void>;
+    // (undocumented)
     onRemoveParticipant(userId: string): Promise<void>;
     // (undocumented)
     onRemoveVideoBackgroundEffects: () => Promise<void>;
@@ -183,6 +187,8 @@ export interface CommonCallingHandlers {
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
     onToggleMicrophone: () => Promise<void>;
+    // (undocumented)
+    onToggleRaiseHand: () => Promise<void>;
     // (undocumented)
     onToggleScreenShare: () => Promise<void>;
 }
@@ -256,6 +262,15 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
     participants: CallParticipantListParticipant[];
     myUserId: string;
 };
+
+// @public
+export type RaiseHandButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export const raiseHandButtonSelector: RaiseHandButtonSelector;
 
 // @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
