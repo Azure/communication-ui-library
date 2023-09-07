@@ -157,35 +157,23 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const renderBodyWithLightDismiss = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(bodyContainer)} onClick={() => props.onDismiss()}>
-        <FocusTrapZone
-          onKeyDown={(e) => {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-              onDismiss();
-            }
-          }}
-          // Ensure when the focus trap has focus, the light dismiss area can still be clicked with mouse to dismiss.
-          // Note: this still correctly captures keyboard focus, this just allows mouse click outside of the focus trap.
-          isClickableOutsideFocusTrap={true}
-          className={mergeStyles(bodyFocusZone)}
-        >
-          {images.length > startIndex && (
-            <img
-              src={image?.imageUrl}
-              className={mergeStyles(imageStyle)}
-              alt={image?.altText || 'image'}
-              aria-label={'image-gallery-main-image'}
-              aria-live={'polite'}
-              onError={(event) => {
-                setIsImageLoaded(false);
-                onError && onError(event);
-              }}
-              onClick={(event) => event.stopPropagation()}
-              onDoubleClick={(event) => {
-                event.persist();
-              }}
-            />
-          )}
-        </FocusTrapZone>
+        {images.length > startIndex && (
+          <img
+            src={image?.imageUrl}
+            className={mergeStyles(imageStyle)}
+            alt={image?.altText || 'image'}
+            aria-label={'image-gallery-main-image'}
+            aria-live={'polite'}
+            onError={(event) => {
+              setIsImageLoaded(false);
+              onError && onError(event);
+            }}
+            onClick={(event) => event.stopPropagation()}
+            onDoubleClick={(event) => {
+              event.persist();
+            }}
+          />
+        )}
       </Stack>
     );
   };
