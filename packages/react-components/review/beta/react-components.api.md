@@ -813,6 +813,54 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: JSX.Element;
 };
 
+// Warning: (ae-internal-missing-underscore) The name "DeviceMenuProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface DeviceMenuProps {
+    // (undocumented)
+    cameras?: OptionsDevice[];
+    // (undocumented)
+    microphones?: OptionsDevice[];
+    // (undocumented)
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: OptionsDevice;
+    // (undocumented)
+    selectedMicrophone?: OptionsDevice;
+    // (undocumented)
+    selectedSpeaker?: OptionsDevice;
+    // (undocumented)
+    speakers?: OptionsDevice[];
+    // (undocumented)
+    styles?: Partial<DeviceMenuStyles>;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "DeviceMenuStrings" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface DeviceMenuStrings {
+    audioDeviceMenuTitle?: string;
+    audioDeviceMenuTooltip?: string;
+    cameraMenuTitle?: string;
+    cameraMenuTooltip?: string;
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
+}
+
+// Warning: (ae-internal-missing-underscore) The name "DeviceMenuStyles" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export interface DeviceMenuStyles extends IContextualMenuStyles {
+    // (undocumented)
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
 
@@ -1129,6 +1177,13 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
+
+// Warning: (ae-internal-missing-underscore) The name "generateDefaultDeviceMenuProps" should be prefixed with an underscore because the declaration is marked as @internal
+//
+// @internal
+export const generateDefaultDeviceMenuProps: (props: DeviceMenuProps, strings: DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+    items: IContextualMenuItem[];
+} | undefined;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
