@@ -706,6 +706,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
+    // (undocumented)
+    StarSurvey: StarSurveyStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -2169,6 +2171,50 @@ export const _spokenLanguageToCaptionLanguage: {
     'sk-sk': string;
     'zh-tw': string;
 };
+
+// @beta
+export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
+
+// @beta
+export interface StarSurveyProps {
+    onSubmitStarSurvey: (ratings: number) => Promise<void>;
+    selectedIcon?: string;
+    // (undocumented)
+    showSurvey?: boolean;
+    // (undocumented)
+    strings?: StarSurveyStrings;
+    // (undocumented)
+    styles?: StarSurveyStyles;
+    unselectedIcon?: string;
+}
+
+// @beta
+export interface StarSurveyStrings {
+    // (undocumented)
+    confirmButtonLabel: string;
+    // (undocumented)
+    fiveStarText: string;
+    // (undocumented)
+    fourStarText: string;
+    // (undocumented)
+    helperText: string;
+    // (undocumented)
+    oneStarText: string;
+    // (undocumented)
+    question: string;
+    // (undocumented)
+    thankYouText: string;
+    // (undocumented)
+    threeStarText: string;
+    // (undocumented)
+    twoStarText: string;
+}
+
+// @beta
+export interface StarSurveyStyles {
+    // (undocumented)
+    root?: IStyle;
+}
 
 // @internal
 export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
