@@ -7,6 +7,7 @@ import {
   dataUiId,
   hidePiPiP,
   isTestProfileDesktop,
+  isTestProfileMobile,
   pageClick,
   stableScreenshot,
   waitForSelector
@@ -14,21 +15,38 @@ import {
 import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
-  test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
+  test('All devices are shown for Presenter', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForSelector(page, dataUiId(IDS.deviceButton));
-    await pageClick(page, dataUiId(IDS.deviceButton));
+
+    if (isTestProfileDesktop(testInfo)) {
+      await waitForSelector(page, dataUiId(IDS.deviceButton));
+      await pageClick(page, dataUiId(IDS.deviceButton));
+    } else if (isTestProfileMobile(testInfo)) {
+      await waitForSelector(page, dataUiId(IDS.moreButton));
+      await pageClick(page, dataUiId(IDS.moreButton));
+      await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
+      await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
+    }
+
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
   });
 
-  test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
+  test('All devices are shown for Attendee', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForSelector(page, dataUiId(IDS.deviceButton));
-    await pageClick(page, dataUiId(IDS.deviceButton));
+
+    if (isTestProfileDesktop(testInfo)) {
+      await waitForSelector(page, dataUiId(IDS.deviceButton));
+      await pageClick(page, dataUiId(IDS.deviceButton));
+    } else if (isTestProfileMobile(testInfo)) {
+      await waitForSelector(page, dataUiId(IDS.moreButton));
+      await pageClick(page, dataUiId(IDS.moreButton));
+      await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
+      await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Attendee.png');
   });
 });

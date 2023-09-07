@@ -243,7 +243,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       text: localeStrings.component.strings.devicesButton.label,
       iconProps: { iconName: 'ControlButtonOptions', styles: { root: { lineHeight: 0 } } },
       subMenuProps: devicesButtonMenu,
-      ['data-ui-id']: 'devices-button'
+      ['data-ui-id']: 'call-composite-more-menu-devices-button'
     });
   }
 
@@ -264,7 +264,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         styles: buttonFlyoutIncreasedSizeStyles
       },
       disabled: isDisabled(options?.raiseHandButton),
-      ['data-ui-id']: 'raise-hand-button'
+      ['data-ui-id']: 'call-composite-more-menu-raise-hand-button'
     });
   }
 
