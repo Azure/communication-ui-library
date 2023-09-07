@@ -49,7 +49,7 @@ This feature includes:
 - Promote captions feature to GA ([PR #3547](https://github.com/azure/communication-ui-library/pull/3547) by carolinecao@microsoft.com)
 - Promote background effects feature to GA ([PR #3551](https://github.com/azure/communication-ui-library/pull/3551) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Promote pinning layouts and rendering options feature to GA ([PR #3394](https://github.com/azure/communication-ui-library/pull/3394) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Update Call composite to use new control bar ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com) 
+- Update CallComposite to use new control bar ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com) 
 - Add call control option property 'legacyControlBarExperience' to CallComposite to use legacy control bar ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com)
 ### Improvements
 - Add missing CallAdapterOptions to createAzureCommunicationCallWithChatAdapterFromClients ([PR #3476](https://github.com/azure/communication-ui-library/pull/3476) by 2684369+JamesBurnside@users.noreply.github.com)
