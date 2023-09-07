@@ -813,10 +813,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuSpeakerIcon: JSX.Element;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "DeviceMenuProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export interface DeviceMenuProps {
+export interface _DeviceMenuProps {
     // (undocumented)
     cameras?: OptionsDevice[];
     // (undocumented)
@@ -836,13 +834,11 @@ export interface DeviceMenuProps {
     // (undocumented)
     speakers?: OptionsDevice[];
     // (undocumented)
-    styles?: Partial<DeviceMenuStyles>;
+    styles?: Partial<_DeviceMenuStyles>;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "DeviceMenuStrings" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export interface DeviceMenuStrings {
+export interface _DeviceMenuStrings {
     audioDeviceMenuTitle?: string;
     audioDeviceMenuTooltip?: string;
     cameraMenuTitle?: string;
@@ -853,10 +849,8 @@ export interface DeviceMenuStrings {
     speakerMenuTooltip?: string;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "DeviceMenuStyles" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export interface DeviceMenuStyles extends IContextualMenuStyles {
+export interface _DeviceMenuStyles extends IContextualMenuStyles {
     // (undocumented)
     menuItemStyles?: IContextualMenuItemStyles;
 }
@@ -1178,10 +1172,8 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
-// Warning: (ae-internal-missing-underscore) The name "generateDefaultDeviceMenuProps" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export const generateDefaultDeviceMenuProps: (props: DeviceMenuProps, strings: DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
     items: IContextualMenuItem[];
 } | undefined;
 

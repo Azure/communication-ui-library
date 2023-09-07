@@ -41,7 +41,7 @@ import { CommonCallAdapter } from '../adapter';
 import { RaiseHand } from './buttons/RaiseHand';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
-import { generateDefaultDeviceMenuProps } from '@internal/react-components';
+import { _generateDefaultDeviceMenuProps } from '@internal/react-components';
 /**
  * @private
  */
@@ -234,7 +234,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   if (!showDevicesButtonInControlBar) {
-    const devicesButtonMenu = generateDefaultDeviceMenuProps(
+    const devicesButtonMenu = _generateDefaultDeviceMenuProps(
       devicesButtonProps,
       localeStrings.component.strings.devicesButton
     );

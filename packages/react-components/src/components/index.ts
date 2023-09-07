@@ -111,16 +111,16 @@ export type {
   MicrophoneButtonStrings
 } from './MicrophoneButton';
 
-export { DevicesButton, generateDefaultDeviceMenuProps } from './DevicesButton';
+export { DevicesButton, generateDefaultDeviceMenuProps as _generateDefaultDeviceMenuProps } from './DevicesButton';
 export type {
   OptionsDevice,
   DevicesButtonProps,
   DevicesButtonStrings,
   DevicesButtonStyles,
   DevicesButtonContextualMenuStyles,
-  DeviceMenuProps,
-  DeviceMenuStrings,
-  DeviceMenuStyles
+  DeviceMenuProps as _DeviceMenuProps,
+  DeviceMenuStrings as _DeviceMenuStrings,
+  DeviceMenuStyles as _DeviceMenuStyles
 } from './DevicesButton';
 
 /* @conditional-compile-remove(call-readiness) */
