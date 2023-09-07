@@ -485,7 +485,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     },
     [closeChat]
   );
-  console.log('CallCompositeOptions', callCompositeOptions);
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
