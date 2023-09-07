@@ -41,8 +41,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
-        // raise hands feature
-        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -83,9 +81,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Do not use in production code.
         'in-progress-beta-feature-demo',
         // Feature for custom video gallery layouts
-        'gallery-layouts',
-        // Feature image gallery
-        'image-gallery'
+        'gallery-layouts'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -104,7 +100,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
          // Closed captions
         'close-captions',
         // Optimal Video Count
-        'optimal-video-count'
+        'optimal-video-count',
+        // raise hands feature
+        'raise-hand'
       ]
     }
   ]);
