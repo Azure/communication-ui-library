@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+import { IPersona, Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -321,6 +321,16 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       : chatItemMessageContainerClasses.bodyAvatarNoOverlap
   );
 
+  const personaOptions: IPersona = {
+    hidePersonaDetails: true,
+
+    size: PersonaSize.size32,
+
+    text: message.senderDisplayName,
+
+    showOverflowTooltip: false
+  };
+
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>
@@ -394,18 +404,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           <FluentChatMessage
             key={props.message.messageId}
             avatar={
-              onRenderAvatar ? (
-                onRenderAvatar?.(message.senderId)
-              ) : (
-                <div className={mergeStyles(chatAvatarStyle)}>
-                  <Persona
-                    hidePersonaDetails
-                    size={PersonaSize.size32}
-                    text={message.senderDisplayName}
-                    showOverflowTooltip={false}
-                  />
-                </div>
-              )
+              <div className={mergeStyles(chatAvatarStyle)}>
+                {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
+              </div>
             }
             attached={attached}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
