@@ -33,6 +33,7 @@ This feature includes:
 - Ability to enable the blur/custom background effect before the call
 - Choose or change the video background effect during the call
 - Ability to use your own hosted images as custom backgrounds
+- Provides an optional way for developers to inject the dependency for video background effects that is not bundled your app
 
 ### Pinning Layout and Rendering Options - General Availability
 The VideoGallery now provides the ability to pin remote participants and change rendering option for their video streams.
