@@ -697,6 +697,7 @@ export type CallWithChatCompositeIcons = {
 // @public
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
 };
 
 // @public
