@@ -522,7 +522,10 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
     rootFocused: {
       '@media (forced-colors: active)': {
         background: 'highlight',
-        border: '1px solid'
+        color: 'highlightText',
+        borderColor: theme.palette.black,
+        borderRadius: 'unset',
+        outline: `3px solid ${theme.palette.black}`
       }
     },
     icon: {
