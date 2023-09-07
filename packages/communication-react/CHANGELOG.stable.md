@@ -4,103 +4,44 @@ This log was last generated on Thu, 07 Sep 2023 02:42:30 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.8.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.8.0)
+## [1.8.0](https://github.com/azure/communication-ui-library/tree/1.8.0)
 
 Thu, 07 Sep 2023 02:42:30 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.8.0-beta.1...@azure/communication-react_v1.8.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.8.0-beta.1...1.8.0)
+
+### Capabilities - General Availability
+The Web UI Call and CallWithChat composite now supports capabilities from the Calling SDK to manage whether microphone, camera, and screen share buttons are enabled on disabled. Notifications are also shown when capabilities to use microphone, turn on camera, or share screen changes. The selectors for the MicrophoneButton, CameraButton, and ScreenButton components now disable the respective component based on capabilities of local user.
 
 ### Features
-- Update camera and mic buttons to have disabled icons when capability is not present. Update capability notification bar to use camera and mic button icons. ([PR #3527](https://github.com/azure/communication-ui-library/pull/3527) by 79475487+mgamis-msft@users.noreply.github.com)
-- Show notification bar when camera, mic and screen share capabilities changes ([PR #3475](https://github.com/azure/communication-ui-library/pull/3475) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add unit tests for Image Gallery component ([PR #3415](https://github.com/azure/communication-ui-library/pull/3415) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Added CapabilitiesChangedListener to CallAdapter ([PR #3485](https://github.com/azure/communication-ui-library/pull/3485) by 79475487+mgamis-msft@users.noreply.github.com)
-- update storybook ([PR #3503](https://github.com/azure/communication-ui-library/pull/3503) by ruslanzdor@microsoft.com)
-- Add raise hand feature to stable ([PR #3548](https://github.com/azure/communication-ui-library/pull/3548) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add optimal video count feature to stable ([PR #3539](https://github.com/azure/communication-ui-library/pull/3539) by 79475487+mgamis-msft@users.noreply.github.com)
-- GA Captions ([PR #3547](https://github.com/azure/communication-ui-library/pull/3547) by carolinecao@microsoft.com)
-- Add capabilities feature to stable ([PR #3540](https://github.com/azure/communication-ui-library/pull/3540) by 79475487+mgamis-msft@users.noreply.github.com)
-- Build composite ([PR #3420](https://github.com/azure/communication-ui-library/pull/3420) by ruslanzdor@microsoft.com)
-- Introduce speaker layout and other layout controls to composites ([PR #3458](https://github.com/azure/communication-ui-library/pull/3458) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Update Call and CallWithChat composites to use the same control bar ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update captions based on new sdk changes, allow changing caption language ([PR #3385](https://github.com/azure/communication-ui-library/pull/3385) by carolinecao@microsoft.com)
-- remove feature from stable API ([PR #3457](https://github.com/azure/communication-ui-library/pull/3457) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduce testing for the focused content layout ([PR #3478](https://github.com/azure/communication-ui-library/pull/3478) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Add missing CallAdapterOptions to createAzureCommunicationCallWithChatAdapterFromClients ([PR #3476](https://github.com/azure/communication-ui-library/pull/3476) by 2684369+JamesBurnside@users.noreply.github.com)
-- Introduce E2E tests for validating the movement of the overflow gallery to the top of the video gallery ([PR #3422](https://github.com/azure/communication-ui-library/pull/3422) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduce component testing and e2e testing for speaker layout ([PR #3464](https://github.com/azure/communication-ui-library/pull/3464) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduces Speaker gallery layout to the video gallery component ([PR #3443](https://github.com/azure/communication-ui-library/pull/3443) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Introduce FocusedContent layout for optimizing screenshare for local user ([PR #3473](https://github.com/azure/communication-ui-library/pull/3473) by 94866715+dmceachernmsft@users.noreply.github.com)
-- GA Captions ([PR #3547](https://github.com/azure/communication-ui-library/pull/3547) by carolinecao@microsoft.com)
-- Remove the styles props for image gallery ([PR #3462](https://github.com/azure/communication-ui-library/pull/3462) by joshlai@microsoft.com)
-- General Availability release of Background Effects - your users can now blur or replace their video background ([PR #3551](https://github.com/azure/communication-ui-library/pull/3551) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add capabilities feature ([PR #3475](https://github.com/azure/communication-ui-library/pull/3475) by 79475487+mgamis-msft@users.noreply.github.com, [PR #3485](https://github.com/azure/communication-ui-library/pull/3485) by 79475487+mgamis-msft@users.noreply.github.com, [PR #3527](https://github.com/azure/communication-ui-library/pull/3527) by 79475487+mgamis-msft@users.noreply.github.com,[PR #3540](https://github.com/azure/communication-ui-library/pull/3540) by 79475487+mgamis-msft@users.noreply.github.com)
+- Promote raise hand feature to GA ([PR #3548](https://github.com/azure/communication-ui-library/pull/3548) by 79475487+mgamis-msft@users.noreply.github.com)
+- Promote optimal video count feature to GA ([PR #3539](https://github.com/azure/communication-ui-library/pull/3539) by 79475487+mgamis-msft@users.noreply.github.com)
+- Promote captions feature to GA ([PR #3547](https://github.com/azure/communication-ui-library/pull/3547) by carolinecao@microsoft.com)
+- Promote background effects feature to GA ([PR #3551](https://github.com/azure/communication-ui-library/pull/3551) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Promote pinning layouts and rendering options feature to GA ([PR #3394](https://github.com/azure/communication-ui-library/pull/3394) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update Call composite to use new control bar. ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com) 
+- Add call control option property 'legacyControlBarExperience' for CallComposite to use legacy control bar. ([PR #3417](https://github.com/azure/communication-ui-library/pull/3417) by 79475487+mgamis-msft@users.noreply.github.com)
 ### Improvements
+- Add missing CallAdapterOptions to createAzureCommunicationCallWithChatAdapterFromClients ([PR #3476](https://github.com/azure/communication-ui-library/pull/3476) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update documentation of CallwithChat Adapter API for clarification ([PR #3446](https://github.com/azure/communication-ui-library/pull/3446) by 109105353+jpeng-ms@users.noreply.github.com)
-- Fixed CC statements for the calling sample app ([PR #3494](https://github.com/azure/communication-ui-library/pull/3494) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- @azure/communication-signaling update ([PR #3524](https://github.com/azure/communication-ui-library/pull/3524) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Add documentation for how to cover the safe area on iOS devices ([PR #3536](https://github.com/azure/communication-ui-library/pull/3536) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Open the gallery before large image is fetched ([PR #3545](https://github.com/azure/communication-ui-library/pull/3545) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Updating localized resource files ([PR #3467](https://github.com/azure/communication-ui-library/pull/3467) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fetch translation strings ([PR #3489](https://github.com/azure/communication-ui-library/pull/3489) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Handle 413 error when uploading logs in sample apps ([PR #3448](https://github.com/azure/communication-ui-library/pull/3448) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update test runner for beta release flavor ([PR #3529](https://github.com/azure/communication-ui-library/pull/3529) by jiangnanhello@live.com)
-- Disable Changelog step for release branch script ([PR #3451](https://github.com/azure/communication-ui-library/pull/3451) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fix deviceorientationevent not found error in samples in safari ([PR #3453](https://github.com/azure/communication-ui-library/pull/3453) by 2684369+JamesBurnside@users.noreply.github.com)
-- Enable keyboard navigation for inlineImage ([PR #3504](https://github.com/azure/communication-ui-library/pull/3504) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Update onInlineImageClicked API ([PR #3461](https://github.com/azure/communication-ui-library/pull/3461) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Add download image functionality to composite ([PR #3460](https://github.com/azure/communication-ui-library/pull/3460) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Add isOpen to ImageGallery API ([PR #3470](https://github.com/azure/communication-ui-library/pull/3470) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Fix internal storybook build error in captions setting modal ([PR #3554](https://github.com/azure/communication-ui-library/pull/3554) by 2684369+JamesBurnside@users.noreply.github.com)
-- Add new storybook page for image gallery ([PR #3465](https://github.com/azure/communication-ui-library/pull/3465) by joshlai@microsoft.com)
-- Add ChatTheme for ImageGallery colors ([PR #3506](https://github.com/azure/communication-ui-library/pull/3506) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Improve storybook readability with tick quotes ([PR #3550](https://github.com/azure/communication-ui-library/pull/3550) by 77021369+jimchou-dev@users.noreply.github.com)
-- Update localized strings ([PR #3542](https://github.com/azure/communication-ui-library/pull/3542) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update dep formally to chat 1.3.1 stable ([PR #3449](https://github.com/azure/communication-ui-library/pull/3449) by 3941071+emlynmac@users.noreply.github.com)
-- Collect CHANGELOG ([PR #3544](https://github.com/azure/communication-ui-library/pull/3544) by edwardlee@microsoft.com)
-- Add image gallery implementation into storybook examples ([PR #3437](https://github.com/azure/communication-ui-library/pull/3437) by joshlai@microsoft.com)
-- Change log grooming for 1.7.0 ([PR #3451](https://github.com/azure/communication-ui-library/pull/3451) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Updated `stable-remove-beta-version` option to `stable-remove-beta-suffix` in create-prerelease-branch.yml ([PR #3500](https://github.com/azure/communication-ui-library/pull/3500) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fetch translation strings ([PR #3489](https://github.com/azure/communication-ui-library/pull/3489) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Rush version update ([PR #3518](https://github.com/azure/communication-ui-library/pull/3518) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Add localization strings for ImageGallery ([PR #3474](https://github.com/azure/communication-ui-library/pull/3474) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Updating to include latest Calling SDK Hotfix ([PR #3482](https://github.com/azure/communication-ui-library/pull/3482) by alkwa@microsoft.com)
-- updating calling sdk version to 1.16.3 ([PR #3508](https://github.com/azure/communication-ui-library/pull/3508) by alkwa@microsoft.com)
-- updating stable dependencies to use caret for calling and chat ([PR #3491](https://github.com/azure/communication-ui-library/pull/3491) by alkwa@microsoft.com)
-- ui change ([PR #3511](https://github.com/azure/communication-ui-library/pull/3511) by carolinecao@microsoft.com)
-- Upgrade ChatSDK to 1.3.2 ([PR #3510](https://github.com/azure/communication-ui-library/pull/3510) by 77021369+jimchou-dev@users.noreply.github.com)
-- Upgrade calling beta to 1.16.3-beta.1 ([PR #3471](https://github.com/azure/communication-ui-library/pull/3471) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update ChatSDK version to 1.4.0-beta.1 ([PR #3499](https://github.com/azure/communication-ui-library/pull/3499) by 77021369+jimchou-dev@users.noreply.github.com)
-- Bump version to 1.7.0-beta.2 ([PR #3509](https://github.com/azure/communication-ui-library/pull/3509) by jiangnanhello@live.com)
+- Update @azure/communication-signaling ([PR #3524](https://github.com/azure/communication-ui-library/pull/3524) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update localized strings ([PR #3489](https://github.com/azure/communication-ui-library/pull/3489) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com, [PR #3542](https://github.com/azure/communication-ui-library/pull/3542) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update @azure/communication-calling to 1.16.3 ([PR #3508](https://github.com/azure/communication-ui-library/pull/3508) by alkwa@microsoft.com)
+- Update stable dependencies to use caret for calling and chat ([PR #3491](https://github.com/azure/communication-ui-library/pull/3491) by alkwa@microsoft.com)
+- Upgrade @azure/communication-chat to 1.3.2 ([PR #3510](https://github.com/azure/communication-ui-library/pull/3510) by 77021369+jimchou-dev@users.noreply.github.com)
 ### Bug Fixes
-- Validate if locator entered in storybook 'Join Existing Call' preview is a room Id ([PR #3521](https://github.com/azure/communication-ui-library/pull/3521) by 79475487+mgamis-msft@users.noreply.github.com)
-- Adding new unit test for FileCardGroup ([PR #3519](https://github.com/azure/communication-ui-library/pull/3519) by 9044372+JoshuaLai@users.noreply.github.com)
-- Remove and revert storybook ([PR #3513](https://github.com/azure/communication-ui-library/pull/3513) by 9044372+JoshuaLai@users.noreply.github.com)
-- Fix image gallery double click to use default behaviour ([PR #3515](https://github.com/azure/communication-ui-library/pull/3515) by 9044372+JoshuaLai@users.noreply.github.com)
-- Add new unit tests for FileDownloadCards ([PR #3531](https://github.com/azure/communication-ui-library/pull/3531) by 9044372+JoshuaLai@users.noreply.github.com)
-- Adding new image gallery conditional conditional flage ([PR #3507](https://github.com/azure/communication-ui-library/pull/3507) by 9044372+JoshuaLai@users.noreply.github.com)
-- Fix icon size of capability changed notification ([PR #3541](https://github.com/azure/communication-ui-library/pull/3541) by 79475487+mgamis-msft@users.noreply.github.com)
-- Improve shake to send logs: capture all console and window logging events, do not log on desktop, fix iOS asking for permissions everytime page is opened ([PR #3486](https://github.com/azure/communication-ui-library/pull/3486) by 2684369+JamesBurnside@users.noreply.github.com)
-- Remove redundant cc comment ([PR #3455](https://github.com/azure/communication-ui-library/pull/3455) by jiangnanhello@live.com)
-- Add new unit test for FileUploadCards ([PR #3534](https://github.com/azure/communication-ui-library/pull/3534) by 9044372+JoshuaLai@users.noreply.github.com)
-- Fix storybook bot missing displayName ([PR #3490](https://github.com/azure/communication-ui-library/pull/3490) by 77021369+jimchou-dev@users.noreply.github.com)
 - Remove controlBar shadow in landscape mobile view ([PR #3501](https://github.com/azure/communication-ui-library/pull/3501) by edwardlee@microsoft.com)
-- Increase mention popover's z-index ([PR #3526](https://github.com/azure/communication-ui-library/pull/3526) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Fix typo on Custom data model page in the CallComposite ([PR #3493](https://github.com/azure/communication-ui-library/pull/3493) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Fix to allow iOS browsers to open the image in a new tab ([PR #3502](https://github.com/azure/communication-ui-library/pull/3502) by 9044372+JoshuaLai@users.noreply.github.com)
-- Scaling mode of participants update when screen sharing is turned off by remote user ([PR #3468](https://github.com/azure/communication-ui-library/pull/3468) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Autofocus on Resume Call button in OnHold screen page ([PR #3480](https://github.com/azure/communication-ui-library/pull/3480) by edwardlee@microsoft.com)
+- Maintain scaling mode of remote participants when screen sharing is turned off by remote participant ([PR #3468](https://github.com/azure/communication-ui-library/pull/3468) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Add default aria label for video effect items ([PR #3477](https://github.com/azure/communication-ui-library/pull/3477) by edwardlee@microsoft.com)
 - Ensure camera and microphone permissions are re-requested when the number of devices goes from 0 to n ([PR #3439](https://github.com/azure/communication-ui-library/pull/3439) by 2684369+JamesBurnside@users.noreply.github.com)
-- people button announce seleted state ([PR #3496](https://github.com/azure/communication-ui-library/pull/3496) by carolinecao@microsoft.com)
-- disable raise hand button in lobby ([PR #3512](https://github.com/azure/communication-ui-library/pull/3512) by ruslanzdor@microsoft.com)
+- Announce people button selected state ([PR #3496](https://github.com/azure/communication-ui-library/pull/3496) by carolinecao@microsoft.com)
+- Disable raise hand button in lobby ([PR #3512](https://github.com/azure/communication-ui-library/pull/3512) by ruslanzdor@microsoft.com)
 - Add stream size to remote video stream ([PR #3516](https://github.com/azure/communication-ui-library/pull/3516) by 97124699+prabhjot-msft@users.noreply.github.com)
-### Other Changes
-- Stablize Pinning layouts and rendering options ([PR #3394](https://github.com/azure/communication-ui-library/pull/3394) by 97124699+prabhjot-msft@users.noreply.github.com)
 
-
-## [1.7.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.7.0)
+## [1.7.0](https://github.com/azure/communication-ui-library/tree/1.7.0)
 
 Mon, 14 Aug 2023 18:28:26 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.7.0-beta.2...@azure/communication-react_v1.7.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.7.0-beta.2...1.7.0)
 
 ### Improvements
 - Update signaling sdk to 1.0.0-beta19 ([PR #3414](https://github.com/azure/communication-ui-library/pull/3414) by joshlai@microsoft.com)
@@ -139,10 +80,10 @@ Mon, 14 Aug 2023 18:28:26 GMT
 - CallComposite to control the local tile aspect ratio based on screen aspect ratio and formfactor ([PR #3309](https://github.com/azure/communication-ui-library/pull/3309) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 
-## [1.6.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.6.0)
+## [1.6.0](https://github.com/azure/communication-ui-library/tree/1.6.0)
 
 Mon, 12 Jun 2023 19:04:18 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.5.1-beta.5...@azure/communication-react_v1.6.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.5.1-beta.5...1.6.0)
 
 ### Minor changes
 
@@ -242,10 +183,10 @@ Mon, 12 Jun 2023 19:04:18 GMT
 - VideoGallery in call composite will use a vertical overflow gallery when its aspect ratio is 16:9 or greater ([PR #2786](https://github.com/azure/communication-ui-library/pull/2786) by 79475487+mgamis-msft@users.noreply.github.com)
 - Video tile ellipsis should only appear on hover ([PR #2661](https://github.com/azure/communication-ui-library/pull/2661) by 97124699+prabhjot-msft@users.noreply.github.com)
 
-## [1.5.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.5.0)
+## [1.5.0](https://github.com/azure/communication-ui-library/tree/1.5.0)
 
 Wed, 04 Jan 2023 23:56:34 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.4.1-beta.1...@azure/communication-react_v1.5.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.4.1-beta.1...1.5.0)
 
 This minor release contains minor package updates, and a series of small patches.
 
