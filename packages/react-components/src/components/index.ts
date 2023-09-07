@@ -204,8 +204,8 @@ export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './Complia
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
-export {Survey} from './Survey/Survey'
-export type {SurveyProps, SurveyStrings, SurveyStyles} from './Survey/Survey'
+export { StarSurvey } from './Survey/StarSurvey/StarSurvey';
+export type { StarSurveyProps, StarSurveyStrings, StarSurveyStyles } from './Survey/StarSurvey/StarSurvey';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';

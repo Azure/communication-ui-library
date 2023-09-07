@@ -342,7 +342,7 @@
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
   },
-  "Survey": {
+  "StarSurvey": {
     "question": "How was your call today?",
     "thankYouText": "Thanks for letting us know",
     "confirmButtonLabel": "Submit response",
