@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 /* @conditional-compile-remove(image-gallery) */
-import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
+import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
 import React, { SyntheticEvent, useState } from 'react';
 /* @conditional-compile-remove(image-gallery) */
 import {
   bodyContainer,
-  bodyFocusZone,
   brokenImageStyle,
   cancelIcon,
   closeButtonStyles,
