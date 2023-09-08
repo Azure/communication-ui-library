@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "feature",
+  "workstream": "Capabilities",
+  "comment": "Add capabilitiesChanged event to CallWithChatAdapter",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
