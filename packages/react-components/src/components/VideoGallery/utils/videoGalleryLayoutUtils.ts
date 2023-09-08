@@ -150,13 +150,16 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current.concat(callingParticipants)
-        : [];
-      return visibleGridParticipants.current.length > 0 ? visibleOverflowGalleryParticipants.current : [];
+        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number).concat(callingParticipants);
+      return visibleGridParticipants.current.length > 0
+        ? visibleOverflowGalleryParticipants.current
+        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number).concat(callingParticipants);
     }
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
-    localParticipant
+    localParticipant,
+    maxRemoteVideoStreams
   ]);
 
   const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants();
