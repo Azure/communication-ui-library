@@ -270,9 +270,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         </div>
       );
     }
-    return messageRenderer ? (
-      messageRenderer({ message, strings })
-    ) : (
+    return (
       <div tabIndex={0}>
         <ChatMessageContent
           message={message}
@@ -291,7 +289,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     );
   }, [
     message,
-    messageRenderer,
     strings,
     props,
     /* @conditional-compile-remove(image-gallery) */ handleOnInlineImageClicked,
@@ -349,23 +346,27 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 myMessageContainerClasses?.body
               )
             }}
-            root={{
-              className: rootLayout.root,
-              onBlur: (e) => {
-                // copy behavior from North*
-                // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
-                // with keyboard the focused element will be changed and there is no way to use `:focus` selector
-                const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
+            root={
+              messageRenderer
+                ? messageRenderer({ message, strings })
+                : {
+                    className: rootLayout.root,
+                    onBlur: (e) => {
+                      // copy behavior from North*
+                      // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
+                      // with keyboard the focused element will be changed and there is no way to use `:focus` selector
+                      const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
 
-                setFocused(shouldPreserveFocusState);
-              },
-              onFocus: () => {
-                // copy behavior from North*
-                // react onFocus is called even when nested component receives focus (i.e. it bubbles)
-                // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
-                setFocused(true);
-              }
-            }}
+                      setFocused(shouldPreserveFocusState);
+                    },
+                    onFocus: () => {
+                      // copy behavior from North*
+                      // react onFocus is called even when nested component receives focus (i.e. it bubbles)
+                      // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
+                      setFocused(true);
+                    }
+                  }
+            }
             data-ui-id="chat-composite-message"
             author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
             timestamp={
@@ -414,9 +415,13 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             }
             attached={attached}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
-            body={{
-              className: chatItemMessageContainerClassName
-            }}
+            body={
+              messageRenderer
+                ? messageRenderer({ message, strings })
+                : {
+                    className: chatItemMessageContainerClassName
+                  }
+            }
             data-ui-id="chat-composite-message"
             timestamp={
               <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
