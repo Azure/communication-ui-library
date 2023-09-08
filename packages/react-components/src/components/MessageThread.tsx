@@ -343,7 +343,7 @@ const memoizeAllMessages = memoizeFnAll(
       participantCount: number,
       readCount: number
     ) => JSX.Element,
-    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
+    chatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
     strings: MessageThreadStrings,
     theme: Theme,
     _attached?: boolean | string,
@@ -379,11 +379,7 @@ const memoizeAllMessages = memoizeFnAll(
             : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
 
-      const chatMessageComponent =
-        onRenderMessage === undefined
-          ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
-          : onRenderMessage(messageProps, defaultChatMessageRenderer);
-
+      const chatMessageComponent = chatMessageRenderer({ ...messageProps, messageStatusRenderer });
       return <div key={_messageKey}>{chatMessageComponent}</div>;
     };
 
@@ -1050,8 +1046,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-  // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
-  const defaultChatMessageRenderer = useCallback(
+  // To rerender the chatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
+  const chatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       if (
         messageProps.message.messageType === 'chat' ||
@@ -1068,6 +1064,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
+            onRenderMessageStatus={onRenderMessageStatus}
+            onRenderMessage={onRenderMessage}
             shouldOverlapAvatarAndMessage={isNarrow}
             messageStatus={messageProps.message.status}
             onActionButtonClick={onActionButtonClickMemo}
@@ -1094,6 +1092,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       participantCount,
       onRenderAvatar,
       showMessageStatus,
+      onRenderMessageStatus,
+      onRenderMessage,
       isNarrow,
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
@@ -1184,7 +1184,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
-            defaultChatMessageRenderer,
+            chatMessageRenderer,
             strings,
             theme,
             // Temporary solution to make sure we re-render if attach attribute is changed.
@@ -1214,7 +1214,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,
-      defaultChatMessageRenderer,
+      chatMessageRenderer,
       strings,
       theme,
       participantCount,
