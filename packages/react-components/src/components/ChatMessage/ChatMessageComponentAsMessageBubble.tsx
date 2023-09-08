@@ -289,7 +289,15 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [message, messageRenderer, strings, props, handleOnInlineImageClicked, userId, defaultOnRenderFileDownloads]);
+  }, [
+    message,
+    messageRenderer,
+    strings,
+    props,
+    /* @conditional-compile-remove(image-gallery) */ handleOnInlineImageClicked,
+    userId,
+    defaultOnRenderFileDownloads
+  ]);
 
   const attached = message.attached === 'top' || message.attached === false ? 'top' : 'center';
   const chatAvatarStyle =
