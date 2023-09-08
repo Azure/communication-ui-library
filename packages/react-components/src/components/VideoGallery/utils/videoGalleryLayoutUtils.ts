@@ -106,17 +106,20 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     if (isScreenShareActive) {
       return [];
     }
+    // if we have no video participants we need to cap the max number of audio participants in the grid
+    // we will use the max streams provided to the function to find the max participants that can go in the grid
+    // if there are less participants than max streams then we will use all participants including joining in the grid
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
+      : visibleOverflowGalleryParticipants.current.length > (maxRemoteVideoStreams as number)
+      ? visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams as number)
       : visibleOverflowGalleryParticipants.current
           .slice(0, maxRemoteVideoStreams as number)
           .concat(callingParticipants);
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleOverflowGalleryParticipants.current
-          .slice(0, maxRemoteVideoStreams as number)
-          .concat(callingParticipants);
+      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams as number);
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
@@ -147,13 +150,17 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     } else {
       // If screen sharing is not active, then assign all video tiles as grid tiles.
       // If there are no video tiles, then assign audio tiles as grid tiles.
+      // if there are more overflow tiles than max streams then find the tiles that don't fit in the grid and put them in overflow
+      // overflow should be empty if total participants including calling participants is less than max streams
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current.concat(callingParticipants)
-        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number).concat(callingParticipants);
+        : visibleOverflowGalleryParticipants.current.length > (maxRemoteVideoStreams as number)
+        ? visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number).concat(callingParticipants)
+        : [];
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current
-        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number).concat(callingParticipants);
+        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number);
     }
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
