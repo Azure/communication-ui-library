@@ -262,7 +262,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     sendTextFieldRef.current?.focus();
   };
 
-  const setText = (newValue?: string | undefined): void => {
+  const setText = useCallback((newValue?: string | undefined): void => {
     if (newValue === undefined) {
       return;
     }
@@ -273,7 +273,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     }
     // // console.log('setText::::' + newValue);
     setTextValue(newValue);
-  };
+  }, []);
 
   const textTooLongMessage = textValueOverflow ? strings.textTooLong : undefined;
   const errorMessage = systemMessage ?? textTooLongMessage;
@@ -373,7 +373,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           id="sendbox"
           placeholderText={strings.placeholderText}
           textValue={textValue}
-          onChange={(newValue) => setText(newValue)}
+          onChange={setText}
           onKeyDown={(ev) => {
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
             if (!keyWasSendingMessage) {

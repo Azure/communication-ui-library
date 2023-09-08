@@ -14,9 +14,7 @@ import {
 import {
   Rooster,
   createRibbonPlugin,
-  RibbonPlugin,
   createPasteOptionPlugin,
-  createEmojiPlugin,
   createUpdateContentPlugin,
   Ribbon,
   RibbonButton,
@@ -28,12 +26,10 @@ import {
 import { InputBoxButton } from '../InputBoxComponent';
 import { IconButton, formProperties } from '@fluentui/react';
 import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
-import EditorViewState from './EditorViewState';
 import AtMentionPlugin from './Plugins/atMentionPlugin';
 import { suggestions, trigger } from './Plugins/mentionLoopupData';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
-  //   editorCreator?: (div: HTMLDivElement, options: EditorOptions) => IEditor;
   content?: string;
   onChange: (newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -45,11 +41,12 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
   const { content, onChange, mentionLookupOptions, children } = props;
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
-  const ribbonPlugin = React.useRef(createRibbonPlugin());
+  const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
 
   React.useEffect(() => {
-    console.log('RichTextEditor::useEffect::editorDiv.current', editorDiv.current);
-    editor.current.setContent(content || '');
+    if (content != editor.current.getContent()) {
+      editor.current.setContent(content || '');
+    }
   }, [content]);
 
   function renderRibbon() {
@@ -64,25 +61,26 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
 
     return (
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Ribbon buttons={buttons} plugin={ribbonPlugin.current} />
+        <Ribbon buttons={buttons} plugin={ribbonPlugin} />
         <div style={{ flex: 1 }} />
         {children()}
       </div>
     );
   }
+  const editorCreator = React.useMemo(() => {
+    return (div: HTMLDivElement, options: EditorOptions) => {
+      defaultEditorCreator(div, onChange);
+    };
+  }, [onChange]);
 
   return (
     <div>
-      <Rooster style={editorStyle} editorCreator={defaultEditorCreator} />
+      <Rooster plugins={[ribbonPlugin]} style={editorStyle} editorCreator={editorCreator} />
       {renderRibbon()}
     </div>
   );
 
-  function defaultEditorCreator(div: HTMLDivElement) {
-    // if (editor.current) {
-    //   console.log('return editor.current:::::::::::');
-    //   return editor.current;
-    // }
+  function defaultEditorCreator(div: HTMLDivElement, onChange: (text: string) => void): IEditor {
     const updateContentPlugin = createUpdateContentPlugin(
       UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
       (content: String) => {
@@ -94,7 +92,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
     const contentEdit = new ContentEdit();
     const options: EditorOptions = {
       plugins: [
-        ribbonPlugin.current,
+        ribbonPlugin,
         atMentionPluginInstance.Picker,
         getWaterMarkPlugin(),
         getContentEdit(),
@@ -110,10 +108,6 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
   }
 
   function getContentEdit(): EditorPlugin {
-    // const allFeatures = getAllFeatures();
-    // const features: ContentEditFeatureSettings = {
-    //   defaultShortcut: true
-    // };
     return new ContentEdit();
   }
 };
