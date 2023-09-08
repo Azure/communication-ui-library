@@ -678,10 +678,10 @@ jobs:
     runs-on: ubuntu-latest
     # update to check to run for if event_name = 'pull_request'
     name: Compare unit tests coverage from pr head ref to base ref
-    needs: get_matrix
+    # needs: get_matrix
     # needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    # strategy:
+    #   matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
@@ -704,34 +704,43 @@ jobs:
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
+      # - name: Switch flavor for build
+      #   id: switch-flavor
+      #   if: ${{ matrix.flavor != 'beta' }}
+      #   run: |
+      #     rush switch-flavor:${{ matrix.flavor }}
+      #     node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      # - name: Run dependency update for stable
+      #   if: ${{ matrix.flavor == 'stable' }}
+      #   run: rush update:stable
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      - name: Get jest tests coverage of main from gist
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/67224b1799c92f0e1cd2da24798e4dd5/raw/communication-react-jest-report.json" --create-dirs -L
-      - name: Get base report summary
-        run: npx istanbul report --include temp/jest/base/coverage-report.json --dir temp/jest/base/summary/ json-summary
+        # comment before the something is uploaded
+      # - name: Get jest tests coverage of main from gist
+      #   run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/67224b1799c92f0e1cd2da24798e4dd5/raw/communication-react-jest-report.json" --create-dirs -L
+      # - name: Get base report summary
+      #   run: npx nyc report --temp-dir temp/jest/base/coverage-report.json --report-dir temp/jest/base/summary/ --reporter json-summary
       - name: Get jest test coverage of the current branch
         run: rush test:ci-coverage -t @azure/communication-react
       - name: Merge all jest test coverage reports from the current branch
         run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/coverage-report.json
       - name: Create a summary report from the detailed report
-        run: npx istanbul report --include temp/jest/current/coverage-report.json --dir temp/jest/current/summary/ json-summary
+        run: npx nyc report --temp-dir temp/jest/current/coverage-report.json --report-dir temp/jest/current/summary/ --reporter json-summary
       # upload coverage-report.json which will be consumed later
       - uses: actions/upload-artifact@v3
         # add reports for both stable and beta
         with:
           name: Stable-jest-report
           path: temp/jest/current/full/coverage-report.json
+      - name: Upload bundle report to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: 67224b1799c92f0e1cd2da24798e4dd5
+          gist_description: 'Jest report for tracking tests coverage'
+          gist_file_name: communication-react-jest-report-beta.json
+          file_path: temp/jest/current/coverage-report.json
 
   # compare_base_bundle_stats:
   #   runs-on: ubuntu-latest
