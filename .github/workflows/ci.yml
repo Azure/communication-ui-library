@@ -724,9 +724,9 @@ jobs:
       - name: Get jest test coverage of the current branch
         run: rush test:ci-coverage -t @azure/communication-react
       - name: Merge all jest test coverage reports from the current branch
-        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/coverage-report.json
+        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/detailed-full/coverage-report.json
       - name: Create a summary report from the detailed report
-        run: npx nyc report --temp-dir temp/jest/current/coverage-report.json --report-dir temp/jest/current/summary/ --reporter json-summary
+        run: npx nyc report --temp-dir temp/jest/current/detailed-full/ --report-dir temp/jest/current/summary/ --reporter json-summary
       # upload coverage-report.json which will be consumed later
       - uses: actions/upload-artifact@v3
         # add reports for both stable and beta
@@ -740,7 +740,7 @@ jobs:
           gist_id: 67224b1799c92f0e1cd2da24798e4dd5
           gist_description: 'Jest report for tracking tests coverage'
           gist_file_name: communication-react-jest-report-beta.json
-          file_path: temp/jest/current/coverage-report.json
+          file_path: temp/jest/current/detailed-full/coverage-report.json
 
   # compare_base_bundle_stats:
   #   runs-on: ubuntu-latest
