@@ -109,13 +109,18 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleOverflowGalleryParticipants.current.concat(callingParticipants);
+      : visibleOverflowGalleryParticipants.current
+          .slice(0, maxRemoteVideoStreams as number)
+          .concat(callingParticipants);
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleOverflowGalleryParticipants.current;
+      : visibleOverflowGalleryParticipants.current
+          .slice(0, maxRemoteVideoStreams as number)
+          .concat(callingParticipants);
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
-    isScreenShareActive
+    isScreenShareActive,
+    maxRemoteVideoStreams
   ]);
 
   const gridParticipants = getGridParticipants();
