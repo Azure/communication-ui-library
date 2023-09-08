@@ -323,11 +323,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const personaOptions: IPersona = {
     hidePersonaDetails: true,
-
     size: PersonaSize.size32,
-
     text: message.senderDisplayName,
-
     showOverflowTooltip: false
   };
 
