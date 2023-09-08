@@ -50,6 +50,11 @@ module.exports = {
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
+
   // The directory where Jest should output its coverage files
-  coverageDirectory: '../../../temp/jest/coverage/' // communication-ui-library/temp/jest/coverage
+  coverageDirectory: '../../../temp/jest/coverage/', // communication-ui-library/temp/jest/coverage
+
+  // Specifies the memory limit for workers before they are recycled and
+  // is primarily a work- around for https://github.com/jestjs/jest/issues/11956
+  workerIdleMemoryLimit: 0.7,
 };
