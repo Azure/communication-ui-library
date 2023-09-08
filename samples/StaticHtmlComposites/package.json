@@ -9,6 +9,7 @@
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "rushx _by-flavor \"webpack serve --config webpack.config.dev.js\"",
     "test": "echo skip",
+    "test:ci-coverage": "echo skip",
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",
     "lint:fix": "echo skip",

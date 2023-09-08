@@ -69,6 +69,7 @@
     "copy-northstar": "cpx \"../northstar-wrapper/dist/dist-esm/**/*\" dist/dist-esm/northstar-wrapper/src --clean",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "test": "",
+    "test:ci-coverage": "",
     "test:coverage": "",
     "check-deps": "node scripts/verifyDependencies",
     "api-extractor": "rushx _by-flavor \"rushx build:esm && rushx _api-extractor:by-flavor\"",

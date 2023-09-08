@@ -10,6 +10,7 @@
     "build:stable": "",
     "clean": "",
     "test": "",
+    "test:ci-coverage": "",
     "test:stable": "",
     "prettier": "",
     "prettier:check": ""
