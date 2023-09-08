@@ -23,14 +23,13 @@ import { FileMetadata } from '../FileDownloadCards';
 import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
-import { MessageThreadStrings } from '../MessageThread';
+import { MessageProps, MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
-import { MessageStatus } from '@internal/acs-ui-common';
 import { mergeClasses } from '@fluentui/react-components';
 import {
   chatBlockedMessageClasses,
@@ -58,7 +57,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
-  messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+  messageStatusRenderer?: (message: ChatMessage) => JSX.Element | null;
   /**
    * Whether to overlap avatar and message when the view is width constrained.
    */
@@ -82,7 +81,10 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  /**
+   * Override of the default message renderer.
+   */
+  messageRenderer?: (messageProps: MessageProps) => JSX.Element;
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -158,6 +160,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     remoteParticipantsCount = 0,
     onRenderAvatar,
     messageStatusRenderer,
+    messageRenderer,
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
@@ -267,7 +270,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         </div>
       );
     }
-    return (
+    return messageRenderer ? (
+      messageRenderer({ message, strings })
+    ) : (
       <div tabIndex={0}>
         <ChatMessageContent
           message={message}
@@ -284,22 +289,16 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [
-    defaultOnRenderFileDownloads,
-    message,
-    props,
-    strings,
-    userId,
-    /* @conditional-compile-remove(image-gallery) */
-    handleOnInlineImageClicked
-  ]);
+  }, [message, messageRenderer, strings, props, handleOnInlineImageClicked, userId, defaultOnRenderFileDownloads]);
 
   const attached = message.attached === 'top' || message.attached === false ? 'top' : 'center';
   const chatAvatarStyle =
     message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
 
   let renderedStatusIcon =
-    showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
+    showMessageStatus && messageStatusRenderer && message.status && 'contentType' in message
+      ? messageStatusRenderer(message)
+      : undefined;
   renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
   const chatMyMessageClass = useChatMyMessageClasses(message.status);
   const chatMessageClass = useChatMessageClasses(message.status);

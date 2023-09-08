@@ -4,7 +4,7 @@
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
-import { MessageThreadStrings } from '../MessageThread';
+import { MessageProps, MessageThreadStrings } from '../MessageThread';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
@@ -71,7 +71,8 @@ type ChatMessageComponentProps = {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  onRenderMessage?: (messageProps: MessageProps) => JSX.Element;
+  onRenderMessageStatus?: (message: ChatMessage) => JSX.Element | null;
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -165,6 +166,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
+        messageStatusRenderer={props.onRenderMessageStatus}
+        messageRenderer={props.onRenderMessage}
       />
     );
   }
