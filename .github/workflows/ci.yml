@@ -680,6 +680,36 @@ jobs:
     name: Compare unit tests coverage from pr head ref to base ref
     # needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.100.1
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
+      # Switch flavor if necessary
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       - name: Get jest tests coverage of main from gist
         run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/67224b1799c92f0e1cd2da24798e4dd5/raw/communication-react-jest-report.json" --create-dirs -L
       # - name: Get base report summary
