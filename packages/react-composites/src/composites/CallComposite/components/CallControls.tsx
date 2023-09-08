@@ -207,6 +207,13 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
     numberOfButtons++;
   }
 
+  const customButtons = useMemo(
+    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    [options]
+  );
+
+  numberOfButtons += React.Children.count(customButtons['primary']) + React.Children.count(customButtons['secondary']);
+
   let showDevicesButtonInControlBar = isEnabled(options?.devicesButton);
   if (showDevicesButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
     numberOfButtons++;
@@ -272,11 +279,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const [showDialpad, setShowDialpad] = useState(false);
 
   const theme = useTheme();
-
-  const customButtons = useMemo(
-    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
-    [options]
-  );
 
   // when props.options is false then we want to hide the whole control bar.
   if (props.options === false) {
