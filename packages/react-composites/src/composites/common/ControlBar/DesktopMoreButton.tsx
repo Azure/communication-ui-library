@@ -320,7 +320,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
               }
             }
           }
-        ]
+        ],
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
       }
     });
   }
