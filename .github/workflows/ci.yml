@@ -678,6 +678,7 @@ jobs:
     runs-on: ubuntu-latest
     # update to check to run for if event_name = 'pull_request'
     name: Compare unit tests coverage from pr head ref to base ref
+    needs: get_matrix
     # needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
