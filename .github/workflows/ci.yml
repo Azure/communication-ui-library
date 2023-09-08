@@ -713,23 +713,25 @@ jobs:
       - name: Run dependency update for stable
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
-      - name: Get jest tests coverage of main from gist
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/67224b1799c92f0e1cd2da24798e4dd5/raw/communication-react-jest-report.json" --create-dirs -L
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
-      # - name: Get base report summary
-      #   run: npx istanbul report --include temp/jest/base/coverage-report.json --dir temp/jest/base/summary/ json-summary
+      - name: Get jest tests coverage of main from gist
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/67224b1799c92f0e1cd2da24798e4dd5/raw/communication-react-jest-report.json" --create-dirs -L
+      - name: Get base report summary
+        run: npx istanbul report --include temp/jest/base/coverage-report.json --dir temp/jest/base/summary/ json-summary
       - name: Get jest test coverage of the current branch
         run: rush test:ci-coverage -t @azure/communication-react
       - name: Merge all jest test coverage reports from the current branch
-        run: npx nyc merge temp/jest/coverage/summary/ temp/jest/current/coverage-report.json
+        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/coverage-report.json
+      - name: Create a summary report from the detailed report
+        run: npx istanbul report --include temp/jest/current/coverage-report.json --dir temp/jest/current/summary/ json-summary
       # upload coverage-report.json which will be consumed later
       - uses: actions/upload-artifact@v3
         # add reports for both stable and beta
         with:
           name: Stable-jest-report
-          path: temp/jest/current/coverage-report.json
+          path: temp/jest/current/full/coverage-report.json
 
   # compare_base_bundle_stats:
   #   runs-on: ubuntu-latest
