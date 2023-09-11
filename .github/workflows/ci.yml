@@ -755,10 +755,10 @@ jobs:
           echo "current_lines_total=${current_lines_total}" >> $GITHUB_OUTPUT
           echo "current_lines_pct=${current_lines_pct}" >> $GITHUB_OUTPUT
           echo "current_lines=${current_lines_covered}/${current_lines_total} <br /> ${current_lines_pct}" >> $GITHUB_OUTPUT
-          echo "lines_covered_diff=$(($current_lines_covered - $base_lines_covered))" >> $GITHUB_OUTPUT
-          echo "lines_total_diff=$(($current_lines_total - $base_lines_total))" >> $GITHUB_OUTPUT
-          echo "lines_pct_diff=$(($current_lines_pct - $base_lines_pct))" >> $GITHUB_OUTPUT
-          echo "lines_diff=${lines_covered_diff}/${lines_total_diff} <br /> ${lines_pct_diff}" >> $GITHUB_OUTPUT
+          echo "lines_covered_diff=$(($current_lines_covered - $base_lines_covered))"
+          echo "lines_total_diff=$(($current_lines_total - $base_lines_total))"
+          echo "lines_pct_diff=$(($current_lines_pct - $base_lines_pct))"
+          echo "lines_diff=${lines_covered_diff}/${lines_total_diff} <br /> ${lines_pct_diff}"
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
