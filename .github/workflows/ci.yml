@@ -678,10 +678,15 @@ jobs:
     runs-on: ubuntu-latest
     # update to check to run for if event_name = 'pull_request'
     name: Compare unit tests coverage from pr head ref to base ref
-    # needs: get_matrix
+    needs: get_matrix
     # needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-    # strategy:
-    #   matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    strategy:
+      matrix:
+        include:
+          - flavor: stable
+            gistId: d1528e50153e6f7ea569040d7b437abb
+          - flavor: beta
+            gistId: 67224b1799c92f0e1cd2da24798e4dd5
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
@@ -704,21 +709,21 @@ jobs:
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
-      # - name: Switch flavor for build
-      #   id: switch-flavor
-      #   if: ${{ matrix.flavor != 'beta' }}
-      #   run: |
-      #     rush switch-flavor:${{ matrix.flavor }}
-      #     node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      # - name: Run dependency update for stable
-      #   if: ${{ matrix.flavor == 'stable' }}
-      #   run: rush update:stable
+      - name: Switch flavor for build
+        id: switch-flavor
+        if: ${{ matrix.flavor != 'beta' }}
+        run: |
+          rush switch-flavor:${{ matrix.flavor }}
+          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
+      - name: Run dependency update for stable
+        if: ${{ matrix.flavor == 'stable' }}
+        run: rush update:stable
       # Builds
       - name: Build Packages
         run: rush build -t @azure/communication-react
-        # comment before the something is uploaded
+        # comment for the first run (to upload versions) need to change ids of gists!!
       # - name: Get jest tests coverage of main from gist
-      #   run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/67224b1799c92f0e1cd2da24798e4dd5/raw/communication-react-jest-report.json" --create-dirs -L
+      #   run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gistId }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       # - name: Get base report summary
       #   run: npx nyc report --temp-dir temp/jest/base/coverage-report.json --report-dir temp/jest/base/summary/ --reporter json-summary
       - name: Get jest test coverage of the current branch
@@ -729,18 +734,35 @@ jobs:
         run: npx nyc report --temp-dir temp/jest/current/detailed-full/ --report-dir temp/jest/current/summary/ --reporter json-summary
       # upload coverage-report.json which will be consumed later
       - uses: actions/upload-artifact@v3
-        # add reports for both stable and beta
         with:
-          name: Stable-jest-report
-          path: temp/jest/current/full/coverage-report.json
+          name: ${{ matrix.flavor }}-jest-coverage-report
+          path: temp/jest/current/detailed-full/coverage-report.json
+      # - name: Calculate size change
+      #   id: bundles
+      #   run: |
+      #     base_lines_covered=$(jq -r ".total.lines.covered" temp/jest/base/coverage-report.json)
+      #     base_lines_total=$(jq -r ".total.lines.total" temp/jest/base/coverage-report.json)
+      #     base_lines_pct=$(jq -r ".total.lines.pct" temp/jest/base/coverage-report.json)
+      #     echo "base_lines_covered=${base_lines_covered}" >> $GITHUB_OUTPUT
+      #     echo "base_lines_total=${base_lines_total}" >> $GITHUB_OUTPUT
+      #     echo "base_lines_pct=${base_lines_pct}" >> $GITHUB_OUTPUT
+      #     current_lines_covered=$(jq -r ".total.lines.covered" temp/jest/current/summary/coverage-summary.json)
+      #     current_lines_total=$(jq -r ".total.lines.total" temp/jest/current/summary/coverage-summary.json)
+      #     current_lines_pct=$(jq -r ".total.lines.pct" temp/jest/current/summary/coverage-summary.json)
+      #     echo "current_lines_covered=${current_lines_covered}" >> $GITHUB_OUTPUT
+      #     echo "current_lines_total=${current_lines_total}" >> $GITHUB_OUTPUT
+      #     echo "current_lines_pct=${current_lines_pct}" >> $GITHUB_OUTPUT
+      #     echo "lines_covered_diff=${current_lines_covered}-${base_lines_covered}" >> $GITHUB_OUTPUT
+      #     echo "lines_total_diff=${current_lines_total}-${base_lines_total}" >> $GITHUB_OUTPUT
+      #     echo "lines_pct_diff=${current_lines_pct}-${base_lines_pct}" >> $GITHUB_OUTPUT
       - name: Upload bundle report to gist
         uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: 67224b1799c92f0e1cd2da24798e4dd5
+          gist_id: ${{ matrix.gistId }}
           gist_description: 'Jest report for tracking tests coverage'
-          gist_file_name: communication-react-jest-report-beta.json
-          file_path: temp/jest/current/detailed-full/coverage-report.json
+          gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
+          file_path: temp/jest/current/summary/coverage-summary.json
 
   # compare_base_bundle_stats:
   #   runs-on: ubuntu-latest
