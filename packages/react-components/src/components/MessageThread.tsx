@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Chat } from '@fluentui-contrib/react-chat';
+import {
+  Chat,
+  ChatMessage as FluentChatMessage,
+  ChatMyMessage as FluentChatMyMessage
+} from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import {
   DownIconStyle,
@@ -380,10 +384,13 @@ const memoizeAllMessages = memoizeFnAll(
           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
 
       const chatMessageComponent =
-        onRenderMessage === undefined
-          ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
-          : onRenderMessage(messageProps, defaultChatMessageRenderer);
-
+        onRenderMessage === undefined ? (
+          defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
+        ) : message.mine ?? false ? (
+          <FluentChatMyMessage body={onRenderMessage(messageProps, defaultChatMessageRenderer)} />
+        ) : (
+          <FluentChatMessage body={onRenderMessage(messageProps, defaultChatMessageRenderer)} />
+        );
       return <div key={_messageKey}>{chatMessageComponent}</div>;
     };
 
