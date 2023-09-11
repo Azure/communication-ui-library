@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorType } from '@azure/communication-react';
-import { PartialTheme } from '@fluentui/react';
+import { ErrorType, lightTheme } from '@azure/communication-react';
+import { FluentTheme, PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
   mediaGalleryWidthDefault,
@@ -399,6 +399,18 @@ export const controlsToAdd = {
       displayType: 'default'
     },
     name: 'Control Bar Customizations'
+  },
+  callCompositeTheme: {
+    control: 'object',
+    defaultValue: lightTheme,
+    name: 'Composite Theme',
+    type: FluentTheme
+  },
+  callPage: {
+    control: 'select',
+    defaultValue: 'configuration',
+    options: ['unsupportedEnvironment', 'lobby', 'leftCall', 'hold', 'call', 'configuration'],
+    name: 'Composite page'
   }
 };
 
