@@ -677,7 +677,7 @@ jobs:
   compare_jest_tests_coverage:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
-    name: Compare unit tests coverage from pr head ref to base ref
+    name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
     needs: get_matrix
     # needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
@@ -744,15 +744,16 @@ jobs:
           base_lines_covered=$(jq -r ".total.lines.covered" temp/jest/base/coverage-report.json)
           base_lines_total=$(jq -r ".total.lines.total" temp/jest/base/coverage-report.json)
           base_lines_pct=$(jq -r ".total.lines.pct" temp/jest/base/coverage-report.json)
-          echo "base_lines=${base_lines_covered}/${base_lines_total} <br /> ${base_lines_pct}" >> $GITHUB_OUTPUT
+          echo "base_lines=${base_lines_covered}/${base_lines_total} <br /> ${base_lines_pct}%" >> $GITHUB_OUTPUT
           current_lines_covered=$(jq -r ".total.lines.covered" temp/jest/current/summary/coverage-summary.json)
           current_lines_total=$(jq -r ".total.lines.total" temp/jest/current/summary/coverage-summary.json)
           current_lines_pct=$(jq -r ".total.lines.pct" temp/jest/current/summary/coverage-summary.json)
-          echo "current_lines=${current_lines_covered}/${current_lines_total} <br /> ${current_lines_pct}" >> $GITHUB_OUTPUT
+          echo "current_lines=${current_lines_covered}/${current_lines_total} <br /> ${current_lines_pct}%" >> $GITHUB_OUTPUT
           lines_covered_diff=$(($current_lines_covered - $base_lines_covered))
           lines_total_diff=$(($current_lines_total - $base_lines_total))
           lines_pct_diff=$(($current_lines_pct - $base_lines_pct))
-          echo "lines_diff=${lines_covered_diff}/${lines_total_diff} <br /> ${lines_pct_diff}" >> $GITHUB_OUTPUT
+          echo "${lines_pct_diff}%"
+          echo "lines_diff=${lines_covered_diff}/${lines_total_diff} <br /> ${lines_pct_diff}%" >> $GITHUB_OUTPUT
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
@@ -769,10 +770,10 @@ jobs:
             ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
 
             |   | Lines | Statements | Functions | Branches |
-            | --- | ------- | ----------- | ---------- | ---------- |
-            | Base | ${{steps.coverage.outputs.base_lines }} | || |
-            | Current |${{steps.coverage.outputs.current_lines }}| || |
-            | Diff | ${{steps.coverage.outputs.lines_diff }} | || |
+            | --- | :-------: | :-------: | :-------: | :-------: |
+            | Base | ${{ steps.coverage.outputs.base_lines }} | || |
+            | Current |${{ steps.coverage.outputs.current_lines }}| || |
+            | Diff | ${{ steps.coverage.outputs.lines_diff }} | || |
           edit-mode: replace
 
       # - name: Upload bundle report to gist
