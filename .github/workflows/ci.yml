@@ -684,9 +684,9 @@ jobs:
       matrix:
         include:
           - flavor: stable
-            gistId: d1528e50153e6f7ea569040d7b437abb
+            gist_id: d1528e50153e6f7ea569040d7b437abb
           - flavor: beta
-            gistId: 67224b1799c92f0e1cd2da24798e4dd5
+            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
@@ -723,11 +723,13 @@ jobs:
         run: rush build -t @azure/communication-react
         # comment for the first run (to upload versions) need to change ids of gists!!
       # - name: Get jest tests coverage of main from gist
-      #   run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gistId }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+      #   run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       # - name: Get base report summary
       #   run: npx nyc report --temp-dir temp/jest/base/coverage-report.json --report-dir temp/jest/base/summary/ --reporter json-summary
       - name: Get jest test coverage of the current branch
         run: rush test:ci-coverage -t @azure/communication-react
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
       - name: Merge all jest test coverage reports from the current branch
         run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/detailed-full/coverage-report.json
       - name: Create a summary report from the detailed report
@@ -735,7 +737,7 @@ jobs:
       # upload coverage-report.json which will be consumed later
       - uses: actions/upload-artifact@v3
         with:
-          name: ${{ matrix.flavor }}-jest-coverage-report
+          name: jest-coverage-report-${{ matrix.flavor }}
           path: temp/jest/current/detailed-full/coverage-report.json
       # - name: Calculate size change
       #   id: bundles
@@ -759,7 +761,7 @@ jobs:
         uses: exuanbo/actions-deploy-gist@v1
         with:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
-          gist_id: ${{ matrix.gistId }}
+          gist_id: ${{ matrix.gist_id }}
           gist_description: 'Jest report for tracking tests coverage'
           gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
           file_path: temp/jest/current/summary/coverage-summary.json
