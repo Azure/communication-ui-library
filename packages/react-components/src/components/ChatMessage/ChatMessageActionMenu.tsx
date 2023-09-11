@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Icon, mergeStyles, Theme } from '@fluentui/react';
-import { MenuProps, Ref } from '@internal/northstar-wrapper';
-import { _formatString } from '@internal/acs-ui-common';
+import { Icon, Theme } from '@fluentui/react';
+import { MenuProps } from '@fluentui/react-components';
 import React from 'react';
-import { chatActionsCSS, iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
+import { iconWrapperStyle } from '../styles/ChatMessageComponent.styles';
 
 /** @private */
 export type ChatMessageActionMenuProps = MenuProps & {
@@ -25,7 +24,7 @@ export const chatMessageActionMenuProps = (menuProps: {
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
   forceShow: boolean;
-  menuButtonRef: React.MutableRefObject<HTMLElement | null>;
+  menuButtonRef: React.MutableRefObject<HTMLDivElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
 }): ChatMessageActionMenuProps | undefined => {
@@ -33,33 +32,22 @@ export const chatMessageActionMenuProps = (menuProps: {
     return undefined;
   }
 
-  const menuClass = mergeStyles(chatActionsCSS, {
-    'ul&': { boxShadow: menuProps.theme.effects.elevation4, backgroundColor: menuProps.theme.palette.white }
-  });
-
   const actionMenuProps: ChatMessageActionMenuProps = {
-    showActionMenu: menuProps.forceShow === true ? true : undefined,
-    iconOnly: true,
-    activeIndex: -1,
-    className: menuClass,
-    onItemClick: () => menuProps.onActionButtonClick(),
-    items: [
-      {
-        children: (
-          <Ref innerRef={menuProps.menuButtonRef}>
-            <Icon
-              iconName="ChatMessageOptions"
-              data-ui-id="chat-composite-message-action-icon"
-              aria-label={menuProps.ariaLabel}
-              styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
-            />
-          </Ref>
-        ),
-
-        key: 'menuButton',
-        indicator: false
-      }
-    ]
+    children: (
+      <div
+        tabIndex={0} //make div focusable, as Icon below is migrated to v9, this can be deleted
+        key="menuButton"
+        data-ui-id="chat-composite-message-action-icon"
+        ref={menuProps.menuButtonRef}
+        onClick={() => menuProps.onActionButtonClick()}
+      >
+        <Icon
+          iconName="ChatMessageOptions"
+          aria-label={menuProps.ariaLabel}
+          styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
+        />
+      </div>
+    )
   };
 
   return actionMenuProps;

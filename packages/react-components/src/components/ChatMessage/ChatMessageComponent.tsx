@@ -49,10 +49,9 @@ type ChatMessageComponentProps = {
    */
   showMessageStatus?: boolean;
   /**
-   * Inline the accept and reject edit buttons when editing a message.
-   * Setting to false will mean they are on a new line inside the editable chat message.
+   * Whether to overlap avatar and message when the view is width constrained.
    */
-  inlineAcceptRejectEditButtons: boolean;
+  shouldOverlapAvatarAndMessage: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -132,7 +131,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     return (
       <ChatMessageComponentAsEditBox
         message={message}
-        inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&

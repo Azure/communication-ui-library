@@ -2,8 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { createContext, useContext } from 'react';
-import { ThemeProvider, Theme, PartialTheme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
-import { mergeThemes as mergeNorthstarThemes, Provider, teamsTheme } from '@internal/northstar-wrapper';
+import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
 import { lightTheme } from './themes';
 
 /**
@@ -26,78 +25,48 @@ export interface FluentThemeProviderProps {
 const wrapper = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'auto'
+  overflow: 'auto',
+  // Add NorthStar styling used previously in the library
+  '*': {
+    boxSizing: 'border-box'
+  },
+  '*:before': {
+    boxSizing: 'border-box'
+  },
+  '*:after': {
+    boxSizing: 'border-box'
+  },
+  /* Adding priority for HTML `hidden` attribute to be applied correctly */
+  '[hidden]': {
+    display: 'none!important'
+  }
 });
 
-const defaultTheme = mergeThemes(getTheme(), lightTheme);
+const defaultTheme: Theme = {
+  ...mergeThemes(getTheme(), lightTheme)
+};
 
 /** Theme context for library's react components */
 const ThemeContext = createContext<Theme>(defaultTheme);
-
-const initialFluentNorthstarTheme = mergeNorthstarThemes(teamsTheme, {
-  componentStyles: {
-    ChatMessage: {
-      root: {
-        lineHeight: '1.4286'
-      }
-    }
-  },
-  fontFaces: [], // suppressing font faces from teamsTheme as recommended by FluentUI N* to avoid font styling to other elements
-  siteVariables: {
-    // suppressing body styles from teamsTheme to avoid inherited styling to other elements
-    bodyPadding: undefined,
-    bodyFontSize: undefined,
-    bodyFontFamily: undefined,
-    bodyBackground: undefined,
-    bodyColor: undefined,
-    bodyLineHeight: undefined
-  }
-});
 
 /**
  * Provider to apply a Fluent theme across this library's react components.
  *
  * @remarks Components in this library are composed primarily from [Fluent UI](https://developer.microsoft.com/fluentui#/controls/web),
- * controls, and also from [Fluent React Northstar](https://fluentsite.z22.web.core.windows.net/0.53.0) controls.
- * This provider handles applying any theme provided to both the underlying Fluent UI controls, as well as the Fluent React Northstar controls.
- *
+ * controls, mixing v8 and v9 controls.
+ * This provider handles applying any theme provided to the underlying Fluent UI controls. *
  * @public
  */
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children } = props;
 
-  let fluentUITheme: Theme = mergeThemes(defaultTheme, fluentTheme);
+  let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
   // merge in rtl from FluentThemeProviderProps
-  fluentUITheme = mergeThemes(fluentUITheme, { rtl });
-
-  const fluentNorthstarTheme = mergeNorthstarThemes(initialFluentNorthstarTheme, {
-    componentVariables: {
-      Chat: {
-        backgroundColor: fluentUITheme.palette.white
-      },
-      ChatMessage: {
-        authorColor: fluentUITheme.palette.neutralPrimary,
-        contentColor: fluentUITheme.palette.neutralPrimary,
-        backgroundColor: fluentUITheme.palette.neutralLighter,
-        backgroundColorMine: fluentUITheme.palette.themeLight
-      }
-    },
-    componentStyles: {
-      ChatMessage: {
-        timestamp: {
-          WebkitTextFillColor: fluentUITheme.palette.neutralSecondary
-        }
-      }
-    }
-    // add more northstar components to align with Fluent UI theme
-  });
-
+  fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
   return (
-    <ThemeContext.Provider value={fluentUITheme}>
-      <ThemeProvider theme={fluentUITheme} className={wrapper}>
-        <Provider theme={fluentNorthstarTheme} className={wrapper} rtl={rtl}>
-          {children}
-        </Provider>
+    <ThemeContext.Provider value={fluentV8Theme}>
+      <ThemeProvider theme={fluentV8Theme} className={wrapper}>
+        {children}
       </ThemeProvider>
     </ThemeContext.Provider>
   );

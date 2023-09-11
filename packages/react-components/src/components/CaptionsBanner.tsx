@@ -3,7 +3,6 @@
 import { Stack, FocusZone, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
-import { Ref } from '@internal/northstar-wrapper';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
@@ -60,7 +59,7 @@ export interface _CaptionsBannerProps {
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings, formFactor = 'default' } = props;
-  const captionsScrollDivRef = useRef<HTMLElement>(null);
+  const captionsScrollDivRef = useRef<HTMLDivElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
   const scrollToBottom = (): void => {
@@ -101,7 +100,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
       {startCaptionsInProgress && (
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
-            <Ref innerRef={captionsScrollDivRef}>
+            <div ref={captionsScrollDivRef}>
               <Stack verticalAlign="start" styles={captionsBannerStyles(formFactor)}>
                 {captions.map((caption) => {
                   return (
@@ -111,7 +110,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
                   );
                 })}
               </Stack>
-            </Ref>
+            </div>
           )}
           {!isCaptionsOn && (
             <Stack verticalAlign="center" styles={loadingBannerStyles(formFactor)} data-is-focusable={true}>

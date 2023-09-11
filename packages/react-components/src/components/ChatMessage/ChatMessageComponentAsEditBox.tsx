@@ -2,7 +2,8 @@
 // Licensed under the MIT license.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
-import { Chat } from '@internal/northstar-wrapper';
+import { ChatMyMessage } from '@fluentui-contrib/react-chat';
+import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -10,11 +11,10 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
-import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, chatMessageEditContainerStyle } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle, _useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -42,11 +42,6 @@ export type ChatMessageComponentAsEditBoxProps = {
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
-  /**
-   * Inline the accept and reject edit buttons when editing a message.
-   * Setting to false will mean they are on a new line inside the editable chat message.
-   */
-  inlineEditButtons: boolean;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
 };
@@ -118,20 +113,12 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const getContent = (): JSX.Element => {
     return (
-      <Stack
-        className={mergeStyles(
-          borderAndBoxShadowStyle({
-            theme,
-            hasErrorMessage: message.failureReason !== undefined,
-            disabled: false
-          })
-        )}
-      >
+      <Stack>
         <InputBoxComponent
-          inlineChildren={props.inlineEditButtons}
+          inlineChildren={false}
           id={'editbox'}
           textFieldRef={editTextFieldRef}
-          inputClassName={editBoxStyle(props.inlineEditButtons)}
+          inputClassName={editBoxStyle}
           placeholderText={strings.editBoxPlaceholderText}
           textValue={textValue}
           onChange={setText}
@@ -188,7 +175,20 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  return <Chat.Message styles={chatMessageEditContainerStyle} content={getContent()} />;
+  const classes = _useChatMessageEditContainerStyles();
+  const className = mergeClasses(
+    classes.body,
+    message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
+  );
+  return (
+    <ChatMyMessage
+      body={{
+        className: className
+      }}
+    >
+      {getContent()}
+    </ChatMyMessage>
+  );
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;

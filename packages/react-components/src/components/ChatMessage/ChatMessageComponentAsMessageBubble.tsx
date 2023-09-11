@@ -1,14 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
-import { Chat, Text } from '@internal/northstar-wrapper';
+import { IPersona, Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
 import {
   chatMessageEditedTagStyle,
   chatMessageDateStyle,
-  chatMessageFailedTagStyle
+  chatMessageFailedTagStyle,
+  chatMessageAuthorStyle
 } from '../styles/ChatMessageComponent.styles';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from '../utils/Datetime';
 import { useIdentifiers } from '../../identifiers/IdentifierProvider';
@@ -29,6 +30,18 @@ import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
+import { MessageStatus } from '@internal/acs-ui-common';
+import { mergeClasses } from '@fluentui/react-components';
+import {
+  chatBlockedMessageClasses,
+  chatBlockedMyMessageClasses,
+  defaultChatItemMessageContainerStyles,
+  gutterWithAvatar,
+  gutterWithHiddenAvatar,
+  useChatMyMessageClasses,
+  useChatMessageClasses,
+  _useChatMyMessageLayout
+} from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -45,6 +58,11 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
+  messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+  /**
+   * Whether to overlap avatar and message when the view is width constrained.
+   */
+  shouldOverlapAvatarAndMessage: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -139,11 +157,13 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onEditClick,
     remoteParticipantsCount = 0,
     onRenderAvatar,
+    messageStatusRenderer,
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked
+    onInlineImageClicked,
+    shouldOverlapAvatarAndMessage
   } = props;
 
   const defaultTimeStamp = message.createdOn
@@ -156,12 +176,14 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   // Track if the action menu was opened by touch - if so we increase the touch targets for the items
   const [wasInteractionByTouch, setWasInteractionByTouch] = useState(false);
+  // `focused` state is used for show/hide actionMenu
+  const [focused, setFocused] = React.useState<boolean>(false);
 
   // The chat message action flyout should target the Chat.Message action menu if clicked,
   // or target the chat message if opened via touch press.
   // Undefined indicates the flyout menu should not be being shown.
   const messageRef = useRef<HTMLDivElement | null>(null);
-  const messageActionButtonRef = useRef<HTMLElement | null>(null);
+  const messageActionButtonRef = useRef<HTMLDivElement | null>(null);
   const [chatMessageActionFlyoutTarget, setChatMessageActionFlyoutTarget] = useState<
     React.MutableRefObject<HTMLElement | null> | undefined
   >(undefined);
@@ -272,39 +294,132 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     handleOnInlineImageClicked
   ]);
 
+  const attached = message.attached === 'top' || message.attached === false ? 'top' : 'center';
+  const chatAvatarStyle =
+    message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
+
+  let renderedStatusIcon =
+    showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
+  renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
+  const chatMyMessageClass = useChatMyMessageClasses(message.status);
+  const chatMessageClass = useChatMessageClasses(message.status);
+  const chatBlockedMyMessageClass = chatBlockedMyMessageClasses();
+  const chatBlockedMessageClass = chatBlockedMessageClasses();
+  const isBlockedMessage =
+    false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
+  const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
+  const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
+  const rootLayout = _useChatMyMessageLayout();
+
+  const chatItemMessageContainerClasses = defaultChatItemMessageContainerStyles();
+  const chatItemMessageContainerClassName = mergeClasses(
+    // Need to merge the styles injected with props - Future PR
+    messageContainerClasses?.body,
+    chatItemMessageContainerClasses.body,
+    shouldOverlapAvatarAndMessage
+      ? chatItemMessageContainerClasses.bodyAvatarOverlap
+      : chatItemMessageContainerClasses.bodyAvatarNoOverlap
+  );
+
+  const personaOptions: IPersona = {
+    hidePersonaDetails: true,
+    size: PersonaSize.size32,
+    text: message.senderDisplayName,
+    showOverflowTooltip: false
+  };
+
   const chatMessage = (
     <>
-      <div ref={messageRef}>
-        <Chat.Message
-          data-ui-id="chat-composite-message"
-          className={mergeStyles(messageContainerStyle as IStyle)}
-          styles={messageContainerStyle}
-          content={getContent()}
-          author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
-          mine={message.mine}
-          timestamp={<Text data-ui-id={ids.messageTimestamp}>{formattedTimestamp}</Text>}
-          details={getMessageDetails()}
-          positionActionMenu={false}
-          actionMenu={actionMenuProps}
-          onTouchStart={() => setWasInteractionByTouch(true)}
-          onPointerDown={() => setWasInteractionByTouch(false)}
-          onKeyDown={() => setWasInteractionByTouch(false)}
-          onBlur={() => setWasInteractionByTouch(false)}
-          onClick={() => {
-            if (!wasInteractionByTouch) {
-              return;
+      <div key={props.message.messageId} ref={messageRef}>
+        {message.mine ? (
+          <ChatMyMessage
+            key={props.message.messageId}
+            attached={attached}
+            body={{
+              className: mergeClasses(
+                rootLayout.body,
+                mergeStyles(messageContainerStyle),
+                myMessageContainerClasses?.body
+              )
+            }}
+            root={{
+              className: rootLayout.root,
+              onBlur: (e) => {
+                // copy behavior from North*
+                // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
+                // with keyboard the focused element will be changed and there is no way to use `:focus` selector
+                const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
+
+                setFocused(shouldPreserveFocusState);
+              },
+              onFocus: () => {
+                // copy behavior from North*
+                // react onFocus is called even when nested component receives focus (i.e. it bubbles)
+                // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
+                setFocused(true);
+              }
+            }}
+            data-ui-id="chat-composite-message"
+            author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+            timestamp={
+              <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
+                {formattedTimestamp}
+              </Text>
             }
-            // If the message was touched via touch we immediately open the menu
-            // flyout (when using mouse the 3-dot menu that appears on hover
-            // must be clicked to open the flyout).
-            // In doing so here we set the target of the flyout to be the message and
-            // not the 3-dot menu button to position the flyout correctly.
-            setChatMessageActionFlyoutTarget(messageRef);
-            if (message.messageType === 'chat') {
-              props.onActionButtonClick(message, setMessageReadBy);
+            details={getMessageDetails()}
+            actions={{
+              children: actionMenuProps?.children,
+              className: mergeClasses(
+                rootLayout.menu,
+                // Make actions menu visible when the message is focused or the flyout is shown
+                focused || chatMessageActionFlyoutTarget ? rootLayout.menuVisible : rootLayout.menuHidden
+              )
+            }}
+            onTouchStart={() => setWasInteractionByTouch(true)}
+            onPointerDown={() => setWasInteractionByTouch(false)}
+            onKeyDown={() => setWasInteractionByTouch(false)}
+            onBlur={() => setWasInteractionByTouch(false)} // onBlur is applied to body, not root
+            onClick={() => {
+              if (!wasInteractionByTouch) {
+                return;
+              }
+              // If the message was touched via touch we immediately open the menu
+              // flyout (when using mouse the 3-dot menu that appears on hover
+              // must be clicked to open the flyout).
+              // In doing so here we set the target of the flyout to be the message and
+              // not the 3-dot menu button to position the flyout correctly.
+              setChatMessageActionFlyoutTarget(messageRef);
+              if (message.messageType === 'chat') {
+                props.onActionButtonClick(message, setMessageReadBy);
+              }
+            }}
+            statusIcon={<div className={mergeStyles({ paddingLeft: 4 })}>{renderedStatusIcon}</div>}
+          >
+            {getContent()}
+          </ChatMyMessage>
+        ) : (
+          <FluentChatMessage
+            key={props.message.messageId}
+            avatar={
+              <div className={mergeStyles(chatAvatarStyle)}>
+                {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
+              </div>
             }
-          }}
-        />
+            attached={attached}
+            author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
+            body={{
+              className: chatItemMessageContainerClassName
+            }}
+            data-ui-id="chat-composite-message"
+            timestamp={
+              <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
+                {formattedTimestamp}
+              </Text>
+            }
+          >
+            {getContent()}
+          </FluentChatMessage>
+        )}
       </div>
       {chatActionsEnabled && (
         <ChatMessageActionFlyout
