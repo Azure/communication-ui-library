@@ -765,14 +765,14 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: '## @azure/communication-react jest test coverage for ${{ matrix.flavor }}'
+          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## @azure/communication-react jest test coverage for *** ${{ matrix.flavor }} ***.
+            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
 
             |   | Lines | Statements | Functions | Branches |
             | --- | ------- | ----------- | ---------- | ---------- |
