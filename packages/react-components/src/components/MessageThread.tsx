@@ -2,7 +2,11 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Chat } from '@fluentui-contrib/react-chat';
+import {
+  Chat,
+  ChatMessage as FluentChatMessage,
+  ChatMyMessage as FluentChatMyMessage
+} from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import {
   DownIconStyle,
@@ -372,6 +376,7 @@ const memoizeAllMessages = memoizeFnAll(
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
     ): JSX.Element => {
+      const messageStatus = message.status;
       const messageStatusRenderer =
         showMessageStatus && statusToRender
           ? onRenderMessageStatus
@@ -380,10 +385,16 @@ const memoizeAllMessages = memoizeFnAll(
           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
 
       const chatMessageComponent =
-        onRenderMessage === undefined
-          ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
-          : onRenderMessage(messageProps, defaultChatMessageRenderer);
-
+        onRenderMessage === undefined ? (
+          defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
+        ) : message.mine ?? false ? (
+          <FluentChatMyMessage
+            root={onRenderMessage(messageProps, defaultChatMessageRenderer)}
+            statusIcon={messageStatusRenderer && messageStatus && messageStatusRenderer(messageStatus)}
+          />
+        ) : (
+          <FluentChatMessage root={onRenderMessage(messageProps, defaultChatMessageRenderer)} />
+        );
       return <div key={_messageKey}>{chatMessageComponent}</div>;
     };
 
