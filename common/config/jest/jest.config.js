@@ -56,5 +56,5 @@ module.exports = {
 
   // Specifies the memory limit for workers before they are recycled and
   // is primarily a work- around for https://github.com/jestjs/jest/issues/11956
-  workerIdleMemoryLimit: 0.7,
+  workerIdleMemoryLimit: 0.85,
 };
