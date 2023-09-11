@@ -387,9 +387,19 @@ const memoizeAllMessages = memoizeFnAll(
         onRenderMessage === undefined ? (
           defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
         ) : message.mine ?? false ? (
-          <FluentChatMyMessage body={onRenderMessage(messageProps, defaultChatMessageRenderer)} />
+          <FluentChatMyMessage
+            body={onRenderMessage(messageProps, defaultChatMessageRenderer)}
+            root={{
+              className: ''
+            }}
+          />
         ) : (
-          <FluentChatMessage body={onRenderMessage(messageProps, defaultChatMessageRenderer)} />
+          <FluentChatMessage
+            body={onRenderMessage(messageProps, defaultChatMessageRenderer)}
+            root={{
+              className: ''
+            }}
+          />
         );
       return <div key={_messageKey}>{chatMessageComponent}</div>;
     };
