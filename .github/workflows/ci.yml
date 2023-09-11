@@ -749,9 +749,9 @@ jobs:
           current_lines_total=$(jq -r ".total.lines.total" temp/jest/current/summary/coverage-summary.json)
           current_lines_pct=$(jq -r ".total.lines.pct" temp/jest/current/summary/coverage-summary.json)
           echo "current_lines=${current_lines_covered}/${current_lines_total} <br /> ${current_lines_pct}%" >> $GITHUB_OUTPUT
-          lines_covered_diff= echo "${current_lines_covered} - ${base_lines_covered}"" | bc
-          lines_total_diff=echo "${current_lines_total} - ${base_lines_total}"" | bc
-          lines_pct_diff=echo "${current_lines_pct} - ${base_lines_pct}"" | bc
+          lines_covered_diff= echo "${current_lines_covered} - ${base_lines_covered}" | bc
+          lines_total_diff=echo "${current_lines_total} - ${base_lines_total}" | bc
+          lines_pct_diff=echo "${current_lines_pct} - ${base_lines_pct}" | bc
           echo "${lines_pct_diff}%"
           echo "lines_diff=${lines_covered_diff}/${lines_total_diff} <br /> ${lines_pct_diff}%" >> $GITHUB_OUTPUT
       - name: Find Comment
