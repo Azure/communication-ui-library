@@ -747,32 +747,32 @@ jobs:
           echo "base_lines_covered=${base_lines_covered}" >> $GITHUB_OUTPUT
           echo "base_lines_total=${base_lines_total}" >> $GITHUB_OUTPUT
           echo "base_lines_pct=${base_lines_pct}" >> $GITHUB_OUTPUT
-          echo "base_lines=${base_lines_covered}/${base_lines_total} \n ${base_lines_pct}" >> $GITHUB_OUTPUT
+          echo "base_lines=${base_lines_covered}/${base_lines_total} <br /> ${base_lines_pct}" >> $GITHUB_OUTPUT
           current_lines_covered=$(jq -r ".total.lines.covered" temp/jest/current/summary/coverage-summary.json)
           current_lines_total=$(jq -r ".total.lines.total" temp/jest/current/summary/coverage-summary.json)
           current_lines_pct=$(jq -r ".total.lines.pct" temp/jest/current/summary/coverage-summary.json)
           echo "current_lines_covered=${current_lines_covered}" >> $GITHUB_OUTPUT
           echo "current_lines_total=${current_lines_total}" >> $GITHUB_OUTPUT
           echo "current_lines_pct=${current_lines_pct}" >> $GITHUB_OUTPUT
-          echo "current_lines=${current_lines_covered}/${current_lines_total} \n ${current_lines_pct}" >> $GITHUB_OUTPUT
-          echo "lines_covered_diff=${current_lines_covered}-${base_lines_covered}" >> $GITHUB_OUTPUT
-          echo "lines_total_diff=${current_lines_total}-${base_lines_total}" >> $GITHUB_OUTPUT
-          echo "lines_pct_diff=${current_lines_pct}-${base_lines_pct}" >> $GITHUB_OUTPUT
-          echo "lines_diff=${lines_covered_diff}/${lines_total_diff} \n ${lines_pct_diff}" >> $GITHUB_OUTPUT
+          echo "current_lines=${current_lines_covered}/${current_lines_total} <br /> ${current_lines_pct}" >> $GITHUB_OUTPUT
+          echo "lines_covered_diff=$(($current_lines_covered - $base_lines_covered))" >> $GITHUB_OUTPUT
+          echo "lines_total_diff=$(($current_lines_total - $base_lines_total))" >> $GITHUB_OUTPUT
+          echo "lines_pct_diff=$(($current_lines_pct - $base_lines_pct))" >> $GITHUB_OUTPUT
+          echo "lines_diff=${lines_covered_diff}/${lines_total_diff} <br /> ${lines_pct_diff}" >> $GITHUB_OUTPUT
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: '## @azure/communication-react jest test coverage'
+          body-includes: '## @azure/communication-react jest test coverage for ${{ matrix.flavor }}'
       - name: Create or update comment
         uses: peter-evans/create-or-update-comment@v2
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## @azure/communication-react jest test coverage for ${{ matrix.flavor }} ***.
+            ## @azure/communication-react jest test coverage for *** ${{ matrix.flavor }} ***.
 
             |   | Lines | Statements | Functions | Branches |
             | --- | ------- | ----------- | ---------- | ---------- |
