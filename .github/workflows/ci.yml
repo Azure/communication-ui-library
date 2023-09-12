@@ -678,7 +678,7 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'pull_request' }}
     name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
-    # needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
+    needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     strategy:
       matrix:
         include:
@@ -718,8 +718,8 @@ jobs:
         if: ${{ matrix.flavor == 'stable' }}
         run: rush update:stable
       # Builds
-      # - name: Build Packages
-      #   run: rush build -t @azure/communication-react
+      - name: Build Packages
+        run: rush build -t @azure/communication-react
       - name: Get jest tests coverage of main from gist
         run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Get jest test coverage of the current branch
