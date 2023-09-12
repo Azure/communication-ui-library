@@ -82,11 +82,10 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   const [callPage, setCallPage] = useState(args.callPage);
   mockCallAdapterState.page = callPage;
   const adapter = new MockCallAdapter(mockCallAdapterState);
+
   useEffect(() => {
-    console.log('Setting call page to', args.callPage);
     setCallPage(args.callPage);
   }, [args.callPage]);
-  console.log(adapter.getState().page);
 
   const updateColor = React.useCallback(
     (ev: any, colorObj: IColor) => {
