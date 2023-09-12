@@ -400,12 +400,6 @@ export const controlsToAdd = {
     },
     name: 'Control Bar Customizations'
   },
-  callCompositeTheme: {
-    control: 'object',
-    defaultValue: lightTheme,
-    name: 'Composite Theme',
-    type: FluentTheme
-  },
   callPage: {
     control: 'select',
     defaultValue: 'configuration',

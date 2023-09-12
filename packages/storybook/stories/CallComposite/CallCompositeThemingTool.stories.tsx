@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 /* eslint-disable import/no-duplicates */
 
-import { CallComposite, CallingTheme, ChatTheme } from '@azure/communication-react';
+import { CallComposite, CallingTheme, ChatTheme, lightTheme } from '@azure/communication-react';
 import {
   Stack,
   ColorPicker,
@@ -57,8 +57,7 @@ const docs = (): JSX.Element => {
 };
 
 const storyControls = {
-  callPage: controlsToAdd.callPage,
-  theme: controlsToAdd.callCompositeTheme
+  callPage: controlsToAdd.callPage
 };
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -76,7 +75,7 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
 
   const [themeColourToEdit, setThemeColourToEdit] = useState<string>('themePrimary');
 
-  const [userTheme, setUserTheme] = useState<PartialTheme & CallingTheme & ChatTheme>(args.theme);
+  const [userTheme, setUserTheme] = useState<PartialTheme & CallingTheme & ChatTheme>(lightTheme);
   const [showTheme, setShowTheme] = useState<boolean>(false);
 
   const [color, setColor] = useState(white);
@@ -92,23 +91,27 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   const updateColor = React.useCallback(
     (ev: any, colorObj: IColor) => {
       setColor(colorObj);
-      args.theme.palette[themeColourToEdit] = colorObj.str;
-      setUserTheme(args.theme);
+      if (userTheme.palette) {
+        userTheme.palette[themeColourToEdit] = colorObj.str;
+      }
+      setUserTheme(userTheme);
     },
-    [args.theme, themeColourToEdit]
+    [themeColourToEdit, userTheme]
   );
 
   const changeSlot = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption): void => {
     if (option) {
       setThemeColourToEdit(option.text);
-      setColor(args.theme.palette[option.text]);
+      if (userTheme.palette) {
+        setColor(userTheme.palette[option.text]);
+      }
     }
   };
   return (
     <Stack tokens={{ childrenGap: '1rem' }} style={{ padding: '3rem' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
         <Stack style={{ width: '55rem', height: '25rem' }}>
-          <CallComposite adapter={adapter} key={Math.random()} fluentTheme={args.theme} />
+          <CallComposite adapter={adapter} key={Math.random()} fluentTheme={userTheme} />
         </Stack>
         <Stack>
           <ColorPicker
