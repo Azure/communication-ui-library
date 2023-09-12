@@ -128,9 +128,7 @@ const withThemeProvider = (Story: any, context: any) => {
 
   if (context !== undefined) {
     return (
-      <FluentThemeProvider fluentTheme={theme} rtl={rtl}>
         <Story {...context} theme={theme} />
-      </FluentThemeProvider>
     );
   }
   else {

@@ -107,7 +107,7 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
     }
   };
   return (
-    <Stack tokens={{ childrenGap: '1rem' }} style={{ padding: '3rem' }}>
+    <Stack tokens={{ childrenGap: '1rem' }} style={{ padding: '3rem', background: 'white', height: '100%' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
         <Stack style={{ width: '55rem', height: '25rem' }}>
           <CallComposite adapter={adapter} key={Math.random()} fluentTheme={userTheme} />
