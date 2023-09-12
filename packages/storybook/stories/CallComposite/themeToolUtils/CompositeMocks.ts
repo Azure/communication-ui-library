@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+import EventEmitter from 'events';
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import { produce } from 'immer';
 import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
-import { produce } from 'immer';
-import EventEmitter from 'events';
 
 /**
  * Mock class that implements CallAdapter interface for UI snapshot tests. The handler implementation is currently limited so

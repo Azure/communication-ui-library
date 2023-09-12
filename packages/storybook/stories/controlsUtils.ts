@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { ErrorType, lightTheme } from '@azure/communication-react';
-import { FluentTheme, PartialTheme } from '@fluentui/react';
+import { ErrorType } from '@azure/communication-react';
+import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
   mediaGalleryWidthDefault,
