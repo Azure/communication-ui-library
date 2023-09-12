@@ -2,8 +2,18 @@
 // Licensed under the MIT license.
 /* eslint-disable import/no-duplicates */
 
-import { CallComposite } from '@azure/communication-react';
-import { Stack, ColorPicker, IColor, getColorFromString, IColorPickerStyles } from '@fluentui/react';
+import { CallComposite, CallingTheme, ChatTheme } from '@azure/communication-react';
+import {
+  Stack,
+  ColorPicker,
+  IColor,
+  getColorFromString,
+  IColorPickerStyles,
+  Dropdown,
+  IDropdownOption,
+  PrimaryButton,
+  PartialTheme
+} from '@fluentui/react';
 
 import { Description, Heading, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
@@ -64,6 +74,11 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
 
   const mockCallAdapterState = defaultMockCallAdapterState(remoteParticipants);
 
+  const [themeColourToEdit, setThemeColourToEdit] = useState<string>('themePrimary');
+
+  const [userTheme, setUserTheme] = useState<PartialTheme & CallingTheme & ChatTheme>(args.theme);
+  const [showTheme, setShowTheme] = useState<boolean>(false);
+
   const [color, setColor] = useState(white);
   const [callPage, setCallPage] = useState(args.callPage);
   mockCallAdapterState.page = callPage;
@@ -74,7 +89,21 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   }, [args.callPage]);
   console.log(adapter.getState().page);
 
-  const updateColor = React.useCallback((ev: any, colorObj: IColor) => setColor(colorObj), []);
+  const updateColor = React.useCallback(
+    (ev: any, colorObj: IColor) => {
+      setColor(colorObj);
+      args.theme.palette[themeColourToEdit] = colorObj.str;
+      setUserTheme(args.theme);
+    },
+    [args.theme, themeColourToEdit]
+  );
+
+  const changeSlot = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption): void => {
+    if (option) {
+      setThemeColourToEdit(option.text);
+      setColor(args.theme.palette[option.text]);
+    }
+  };
   return (
     <Stack tokens={{ childrenGap: '1rem' }} style={{ padding: '3rem' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
@@ -90,6 +119,23 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
             alphaType={'transparency'}
           ></ColorPicker>
         </Stack>
+      </Stack>
+      <Dropdown
+        placeholder={'Select a color to edit'}
+        style={{ width: '20rem' }}
+        onChange={changeSlot}
+        options={dropDownOptions}
+        label={'Color to edit'}
+      />
+      <Stack>
+        <PrimaryButton onClick={() => setShowTheme(!showTheme)} style={{ width: '20rem' }}>
+          Show Theme
+        </PrimaryButton>
+        {showTheme && (
+          <pre style={{ width: '20rem', height: '20rem', overflow: 'scroll' }}>
+            {JSON.stringify(userTheme, null, 2)}
+          </pre>
+        )}
       </Stack>
     </Stack>
   );
@@ -123,3 +169,28 @@ const colorPickerStyles: Partial<IColorPickerStyles> = {
   },
   colorRectangle: { height: 268 }
 };
+
+const dropDownOptions: IDropdownOption[] = [
+  { key: 'themePrimary', text: 'themePrimary' },
+  { key: 'themeLighterAlt', text: 'themeLighterAlt' },
+  { key: 'themeLighter', text: 'themeLighter' },
+  { key: 'themeLight', text: 'themeLight' },
+  { key: 'themeTertiary', text: 'themeTertiary' },
+  { key: 'themeSecondary', text: 'themeSecondary' },
+  { key: 'themeDarkAlt', text: 'themeDarkAlt' },
+  { key: 'themeDark', text: 'themeDark' },
+  { key: 'themeDarker', text: 'themeDarker' },
+  { key: 'neutralLighterAlt', text: 'neutralLighterAlt' },
+  { key: 'neutralLighter', text: 'neutralLighter' },
+  { key: 'neutralLight', text: 'neutralLight' },
+  { key: 'neutralQuaternaryAlt', text: 'neutralQuaternaryAlt' },
+  { key: 'neutralQuaternary', text: 'neutralQuaternary' },
+  { key: 'neutralTertiaryAlt', text: 'neutralTertiaryAlt' },
+  { key: 'neutralTertiary', text: 'neutralTertiary' },
+  { key: 'neutralSecondary', text: 'neutralSecondary' },
+  { key: 'neutralPrimaryAlt', text: 'neutralPrimaryAlt' },
+  { key: 'neutralPrimary', text: 'neutralPrimary' },
+  { key: 'neutralDark', text: 'neutralDark' },
+  { key: 'black', text: 'black' },
+  { key: 'white', text: 'white' }
+];
