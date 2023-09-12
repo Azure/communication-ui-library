@@ -5,14 +5,46 @@
 import { CallComposite } from '@azure/communication-react';
 import { Stack, ColorPicker, IColor, getColorFromString, IColorPickerStyles } from '@fluentui/react';
 
+import { Description, Heading, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls } from '../controlsUtils';
-import { Docs } from './CallCompositeDocs';
 import { MockCallAdapter } from './themeToolUtils/CompositeMocks';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from './themeToolUtils/ThemeCallCompositeUtils';
+
+const docs = (): JSX.Element => {
+  return (
+    <Stack>
+      <Title>Call Composite Theming Tool</Title>
+      <Description>
+        This Tool is to help with the customization of the Azure Communication Services Call Composite. Please see our
+        CallComposite documentation for more information about how the props for our composite works.
+      </Description>
+      <Heading>Using the tool</Heading>
+      <Description>
+        On the preview tab of this page you will find the tool. You will be greeted by a CallComposite and a color
+        picker. Currently our CallComposite takes its theme through a similar object as a Fluent theme. This tool is
+        meant to be a playground for you to change those theme values without needing to run our CallComposite in your
+        application. We provide a colour picker to find the hex values for the colours that you maybe are not bringing
+        with you when approaching this tool.
+      </Description>
+      <Subheading>The Controls</Subheading>
+      <Description>We have provided a couple of storybook controls to help with your customization.</Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>Call Page - This control is to select the current page of the CallComposite</li>
+        <li>Theme - Here is where you can change the individual colors in the theme for the CallComposite</li>
+      </ul>
+      <Description>
+        Using these controls you can navigate the CallComposite manually to each page to see how the theme you have
+        created is applied. Once you have a theme you like you can use the `RAW` button in the `Theme` control to get
+        the raw JSON object and copy it out. Once you have it copied you can dump it into the theme prop of the
+        CallComposite you are using inside your application.
+      </Description>
+    </Stack>
+  );
+};
 
 const storyControls = {
   callPage: controlsToAdd.callPage,
@@ -78,7 +110,7 @@ export default {
     docs: {
       //Prevent Docs auto scroll to top
       container: null,
-      page: () => Docs()
+      page: () => docs()
     }
   }
 } as Meta;
