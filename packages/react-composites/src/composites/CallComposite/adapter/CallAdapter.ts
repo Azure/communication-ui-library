@@ -793,7 +793,7 @@ export interface CallAdapterSubscribers {
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
   /**
-   * Unsubscribe function for 'capabilitiesChanged' event.
+   * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 
