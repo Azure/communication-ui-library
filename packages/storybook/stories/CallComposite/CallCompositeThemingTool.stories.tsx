@@ -135,8 +135,12 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   const changeSlot = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption): void => {
     if (option) {
       setThemeColourToEdit(option.text);
-      if (userTheme.palette) {
-        setColor(userTheme.palette[option.text]);
+      if (userTheme.palette && option.text === 'Theme color') {
+        setColor(userTheme.palette['themePrimary'] as unknown as IColor);
+      } else if (userTheme.palette && option.text === 'Neutral color') {
+        setColor(userTheme.palette['neutralPrimary'] as unknown as IColor);
+      } else if (userTheme.palette && option.text === 'Background') {
+        setColor(userTheme.palette['white'] as unknown as IColor);
       }
     }
   };
