@@ -51,7 +51,7 @@ addons.register('toolbar', () => {
     //👇 Sets the type of UI element in Storybook
     type: types.TOOL,
     //👇 Shows the Toolbar UI element only when Canvas tab is active. Also excluding it from teams theme story.
-    match: ({ viewMode, storyId }) => !!(viewMode && viewMode.match(/^(story)$/)) && !!(storyId && !storyId.match(/(teams-theme-component)$/)),
+    match: ({ viewMode, storyId }) => !!(viewMode && viewMode.match(/^(story)$/)) && !!(storyId && (!storyId.match(/(teams-theme-component)$/) || !storyId.includes('theme'))),
     render: ({ active }) => <ThemeToolTipWithPanel active={active} />
   });
 
