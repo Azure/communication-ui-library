@@ -215,6 +215,9 @@ const dropDownOptions: IDropdownOption[] = [
   { key: 'themeNeutralPrimary', text: 'Neutral color' },
   { key: 'white', text: 'Background' }
 ];
+/**
+ * Function for creating a colour gradient to black or white based on the color given
+ */
 // steps for calculating gradient
 // 1. convert hex to rgb
 // 2. set number of steps in gradient
