@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import { Image, MessageBar, Stack } from '@fluentui/react';
-import { Title, Description, Heading, Source } from '@storybook/addon-docs';
+import { Title, Description, Heading, Source, Subheading } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../constants';
@@ -127,8 +127,9 @@ export const Docs: () => JSX.Element = () => {
         Controls](./?path=/docs/composites-call-basicexample--basic-example#customize-call-controls) to learn more.
       </Description>
 
-      <Heading>Adding file sharing in ACS Chat</Heading>
+      <Heading>Adding file sharing</Heading>
       <SingleLineBetaBanner />
+      <Subheading>In ACS Chat</Subheading>
       <Description>
         In a chat thread where participants are ACS users, the `CallWithChat` Composite supports file capabilities in
         conjunction with your choice of a storage solution. Using the provided APIs, you can enable the composite to
@@ -138,8 +139,7 @@ export const Docs: () => JSX.Element = () => {
         [tutorial](https://docs.microsoft.com/azure/communication-services/tutorials/file-sharing-tutorial).
       </Description>
       <Source code={addFileSharingSnippet} />
-
-      <Heading>Adding file sharing in Teams Interop Chat</Heading>
+      <Subheading>In Teams Interop Chat</Subheading>
       <SingleLineBetaBanner />
       <Description>
         When using the `CallWithChat` Composite in a Teams interop scenario, the ACS user can recieve file attachments
