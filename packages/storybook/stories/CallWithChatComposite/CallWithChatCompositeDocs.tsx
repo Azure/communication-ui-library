@@ -130,7 +130,7 @@ export const Docs: () => JSX.Element = () => {
       <Heading>Adding file sharing in ACS Chat</Heading>
       <SingleLineBetaBanner />
       <Description>
-        In a chat thread where participants are ACS users, The `CallWithChat` Composite supports file capabilities in
+        In a chat thread where participants are ACS users, the `CallWithChat` Composite supports file capabilities in
         conjunction with your choice of a storage solution. Using the provided APIs, you can enable the composite to
         support uploading files and displaying them on the send box before sending, and the message thread once they
         have been sent or received. For an end to end tutorial on enabling file sharing with Azure Blob Storage as your
@@ -144,7 +144,7 @@ export const Docs: () => JSX.Element = () => {
       <Description>
         When using the `CallWithChat` Composite in a Teams interop scenario, the ACS user can recieve file attachments
         the Teams user without any additional setup as long as you are using `@azure/communication-react` version
-        `1.7.0-beta.1` or higher (please note that ACS sending file attachments to the Teams user is currently not
+        `1.7.0-beta.1` or higher (please note that ACS users sending file attachments to Teams users is currently not
         supported). Simply join the Teams meeting as an ACS user, as soon as the Teams user sends a file (with file
         permission set to "Anyone" or "People you choose") from the Teams client, the ACS user will be able to see
         shared files in the chat thread.
