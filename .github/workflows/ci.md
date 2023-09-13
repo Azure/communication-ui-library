@@ -10,6 +10,7 @@ Many of checks build and test the library code in both the [`beta` and `stable` 
   - Run linting tool `eslint`
   - Build the [`@azure/communication-react`](../../packages/communication-react/) library and its dependencies.
   - Run all `jest` unittests.
+  - Create detailed json and json summary `jest` tests coverage reports and uploads them to Artifacts. The reports can be used to create an HTML report.
   - Make sure that there are no unexpected API changes (using `api-extractor`).
   - Run a tool to check that customers can continue to effectively tree-shake `@azure/communication-react` and its dependencies.
 
@@ -35,7 +36,7 @@ Many of checks build and test the library code in both the [`beta` and `stable` 
   - Build storybook using `webpack`.
   - Run unit-tests.
 
-  - Informational jobs to track jest tests coverage (`compare_jest_tests_coverage`, `update_jest_coverage_report`): These jobs track the jest tests coverage (lines, functions, statements, branches) for `@azure/communication-react`. Detailed json and json summary reports are uploaded to Artifacts and can be used to create an HTML report. Any differences in the coverage are reported as Pull Request comments, _but do not block Pull Request from being merged_. This jobs are build flavor aware.
+  - Informational jobs to track jest tests coverage (`compare_jest_tests_coverage`, `update_jest_coverage_report`): These jobs track the jest tests coverage (lines, functions, statements, branches) for `@azure/communication-react` built in the previous steps. Any differences in the coverage are reported as Pull Request comments, _but do not block Pull Request from being merged_. This jobs are build flavor aware.
 
 - Informational jobs to track sample bundle size (`compare_base_bundle_stats`, `update_base_bundle_report`): These jobs track the expected bundle size of the sample applications built in the previous steps. Any differences in the size are reported as Pull Request comments, _but do not block Pull Request from being merged_. This job is not build flavor aware.
 
