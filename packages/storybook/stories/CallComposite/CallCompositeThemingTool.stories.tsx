@@ -39,8 +39,7 @@ const docs = (): JSX.Element => {
         On the preview tab of this page you will find the tool. You will be greeted by a CallComposite and a color
         picker. Currently our CallComposite takes its theme through a similar object as a Fluent theme. This tool is
         meant to be a playground for you to change those theme values without needing to run our CallComposite in your
-        application. We provide a colour picker to find the hex values for the colours that you maybe are not bringing
-        with you when approaching this tool.
+        application.
       </Description>
       <Subheading>The Controls</Subheading>
       <Description>We have provided a couple of storybook controls to help with your customization.</Description>
