@@ -45,14 +45,17 @@ const docs = (): JSX.Element => {
       <Subheading>The Controls</Subheading>
       <Description>We have provided a couple of storybook controls to help with your customization.</Description>
       <ul className={'sbdocs sbdocs-p'}>
-        <li>Call Page - This control is to select the current page of the CallComposite</li>
+        <li>Call Page - This control is to select the current page of the CallComposite.</li>
         <li>
-          Selected color dropdown - This dropdown is to change the currently selected section of the Composite's theme
+          Selected color dropdown - This dropdown is to change the currently selected section of the Composite's theme.
         </li>
-        <li>Color picker - Use this to choose a color to base the theme secion on</li>
+        <li>
+          Color picker - Use this to choose a color to base the theme section on. Will show the currently selected
+          colour in the picker.
+        </li>
         <li>
           Show theme button - Once you are finished with the customization press this to get the completed theme object
-          for your application
+          for your application.
         </li>
       </ul>
       <Description>
