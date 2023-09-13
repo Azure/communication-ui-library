@@ -36,7 +36,7 @@ Many of checks build and test the library code in both the [`beta` and `stable` 
   - Build storybook using `webpack`.
   - Run unit-tests.
 
-  - Informational jobs to track jest tests coverage (`compare_jest_tests_coverage`, `update_jest_coverage_report`): These jobs track the jest tests coverage (lines, functions, statements, branches) for `@azure/communication-react` built in the previous steps. Any differences in the coverage are reported as Pull Request comments, _but do not block Pull Request from being merged_. This jobs are build flavor aware.
+- Informational jobs to track jest tests coverage (`compare_jest_tests_coverage`, `update_jest_coverage_report`): These jobs track the jest tests coverage (lines, functions, statements, branches) for `@azure/communication-react` built in the previous steps. Any differences in the coverage are reported as Pull Request comments, _but do not block Pull Request from being merged_. This jobs are build flavor aware.
 
 - Informational jobs to track sample bundle size (`compare_base_bundle_stats`, `update_base_bundle_report`): These jobs track the expected bundle size of the sample applications built in the previous steps. Any differences in the size are reported as Pull Request comments, _but do not block Pull Request from being merged_. This job is not build flavor aware.
 
