@@ -128,7 +128,7 @@ export function defaultMockCallAdapterState(
       diagnostics: { network: { latest: {} }, media: { latest: {} } },
       state: 'Connected',
       localVideoStreams: [],
-      isMuted: role === 'Consumer', // default is false unless the role is Consumer
+      isMuted: true, // default is false unless the role is Consumer
       isScreenSharingOn: false,
       remoteParticipants,
       remoteParticipantsEnded: {},
@@ -221,24 +221,3 @@ export const defaultMockConfigurationPageState = (role?: ParticipantRole): MockC
   state.call = undefined;
   return state;
 };
-
-// /* @conditional-compile-remove(capabilities) */
-// const getCapabilitiesFromRole = (role: ParticipantRole): CapabilitiesFeatureState => {
-//   switch (role) {
-//     case 'Attendee':
-//       return {
-//         capabilities: attendeeCapabilitiesInRoomsCall,
-//         latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
-//       };
-//     case 'Consumer':
-//       return {
-//         capabilities: consumerCapabilitiesInRoomsCall,
-//         latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
-//       };
-//     default:
-//       return {
-//         capabilities: presenterCapabilitiesInRoomsCall,
-//         latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
-//       };
-//   }
-// };
