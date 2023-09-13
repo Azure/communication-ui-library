@@ -128,8 +128,8 @@ export const Docs: () => JSX.Element = () => {
       </Description>
 
       <Heading>Adding file sharing</Heading>
-      <SingleLineBetaBanner />
       <Subheading>In ACS Chat</Subheading>
+      <SingleLineBetaBanner />
       <Description>
         In a chat thread where participants are ACS users, the `CallWithChat` Composite supports file capabilities in
         conjunction with your choice of a storage solution. Using the provided APIs, you can enable the composite to
