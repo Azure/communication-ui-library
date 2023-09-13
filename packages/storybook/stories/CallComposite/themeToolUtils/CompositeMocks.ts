@@ -168,7 +168,6 @@ export class MockCallAdapter implements CallAdapter {
       draft.devices.selectedSpeaker = findDevice(this._state.devices.speakers, sourceInfo);
     });
   }
-  on();
   on(): void {
     throw Error('on not implemented');
   }

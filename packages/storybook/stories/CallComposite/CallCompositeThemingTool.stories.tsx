@@ -47,9 +47,9 @@ const docs = (): JSX.Element => {
       <ul className={'sbdocs sbdocs-p'}>
         <li>Call Page - This control is to select the current page of the CallComposite</li>
         <li>
-          Selected color dropdown - This dropdown is to change the currently selected color of the Composite's theme
+          Selected color dropdown - This dropdown is to change the currently selected section of the Composite's theme
         </li>
-        <li>Color picker - Use this to change the color of the selected color</li>
+        <li>Color picker - Use this to choose a color to base the theme secion on</li>
         <li>
           Show theme button - Once you are finished with the customization press this to get the completed theme object
           for your application
