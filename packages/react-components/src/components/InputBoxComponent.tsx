@@ -139,6 +139,8 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   };
 
   const renderTextField = (): JSX.Element => {
+    console.log('autoFocus: ' + props.autoFocus + ' bool: ');
+    console.log(props.autoFocus === 'sendBoxTextField');
     const textFieldProps: ITextFieldProps = {
       autoFocus: props.autoFocus === 'sendBoxTextField',
       multiline: true,
@@ -173,7 +175,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <RichTextEditor content={textValue} onChange={onChange}>
+      <RichTextEditor content={textValue} onChange={onChange} placeholderText={placeholderText}>
         {onRenderChildren}
       </RichTextEditor>
       // <TextField

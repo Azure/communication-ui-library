@@ -31,14 +31,17 @@ import { suggestions, trigger } from './Plugins/mentionLoopupData';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   content?: string;
+  'data-ui-id'?: string;
   onChange: (newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onEnterKeyDown?: () => void;
   mentionLookupOptions?: MentionLookupOptions;
   children: ReactNode;
+  placeholderText?: string;
+  disabled?: boolean;
+  autoFocus?: boolean;
 }
 const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
-  const { content, onChange, mentionLookupOptions, children } = props;
+  const { content, onChange, mentionLookupOptions, children, placeholderText, disabled, autoFocus } = props;
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
   const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
@@ -90,25 +93,15 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
 
     const atMentionPluginInstance = new AtMentionPlugin(mentionLookupOptions);
     const contentEdit = new ContentEdit();
+    const placeholderPlugin = new Watermark(placeholderText || '');
     const options: EditorOptions = {
-      plugins: [
-        ribbonPlugin,
-        atMentionPluginInstance.Picker,
-        getWaterMarkPlugin(),
-        getContentEdit(),
-        updateContentPlugin
-      ]
+      plugins: [ribbonPlugin, atMentionPluginInstance.Picker, placeholderPlugin, contentEdit, updateContentPlugin]
     };
     editor.current = new Editor(div, options);
+    if (focus) {
+      editor.current.focus();
+    }
     return editor.current;
-  }
-
-  function getWaterMarkPlugin(): EditorPlugin {
-    return new Watermark('Placeholder string');
-  }
-
-  function getContentEdit(): EditorPlugin {
-    return new ContentEdit();
   }
 };
 
