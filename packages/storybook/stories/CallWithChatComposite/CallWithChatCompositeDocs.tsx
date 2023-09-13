@@ -152,7 +152,7 @@ export const Docs: () => JSX.Element = () => {
       <Stack horizontalAlign="center">
         <Image
           src="images/call-with-chat-composite-teams-file-sharing.png"
-          alt="Call with chat composite mobile preview image"
+          alt="Call with chat composite shown file sharing with Teams user"
         />
       </Stack>
 
