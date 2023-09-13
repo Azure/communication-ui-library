@@ -19,6 +19,7 @@ import { Description, Heading, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
 import { ArgsFrom, controlsToAdd, defaultCallCompositeHiddenControls } from '../controlsUtils';
 import { MockCallAdapter } from './themeToolUtils/CompositeMocks';
@@ -28,6 +29,7 @@ const docs = (): JSX.Element => {
   return (
     <Stack>
       <Title>Call Composite Theming Tool</Title>
+      <SingleLineBetaBanner></SingleLineBetaBanner>
       <Description>
         This Tool is to help with the customization of the Azure Communication Services Call Composite. Please see our
         CallComposite documentation for more information about how the props for our composite works.
@@ -44,13 +46,18 @@ const docs = (): JSX.Element => {
       <Description>We have provided a couple of storybook controls to help with your customization.</Description>
       <ul className={'sbdocs sbdocs-p'}>
         <li>Call Page - This control is to select the current page of the CallComposite</li>
-        <li>Theme - Here is where you can change the individual colors in the theme for the CallComposite</li>
+        <li>
+          Selected color dropdown - This dropdown is to change the currently selected color of the Composite's theme
+        </li>
+        <li>Color picker - Use this to change the color of the selected color</li>
+        <li>
+          Show theme button - Once you are finished with the customization press this to get the completed theme object
+          for you application
+        </li>
       </ul>
       <Description>
-        Using these controls you can navigate the CallComposite manually to each page to see how the theme you have
-        created is applied. Once you have a theme you like you can use the `RAW` button in the `Theme` control to get
-        the raw JSON object and copy it out. Once you have it copied you can dump it into the theme prop of the
-        CallComposite you are using inside your application.
+        Using these controls you can navigate the CallComposite manually to each page to see how the colors that you
+        changed affect these different screens.
       </Description>
     </Stack>
   );
