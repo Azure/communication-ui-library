@@ -130,7 +130,7 @@ export const Docs: () => JSX.Element = () => {
       <Heading>Adding file sharing in ACS Chat</Heading>
       <SingleLineBetaBanner />
       <Description>
-        In a Chat thread where participants are the Communication users, The CallWithChat Composite supports file
+        In a Chat thread where participants are the Communication users, The `CallWithChat` Composite supports file
         sharing capabilities in conjunction with your choice of a storage solution. Using the provided APIs, you can
         enable the composite to support uploading files and displaying them on the send box before sending, and the
         message thread once they have been sent or received. For an end to end tutorial on enabling file sharing with
@@ -142,9 +142,9 @@ export const Docs: () => JSX.Element = () => {
       <Heading>Adding file sharing in Teams Interop Chat</Heading>
       <SingleLineBetaBanner />
       <Description>
-        When using the CallWithChatComposite in a Teams interop scenario, the ACS user can recieve file attachments from
-        the Teams user without any additional setup as long as you are using @azure/communication-react version
-        1.7.0-beta.1 or higher (please note that ACS sending file attachments to the Teams user is currently not
+        When using the `CallWithChat` Composite in a Teams interop scenario, the ACS user can recieve file attachments
+        the Teams user without any additional setup as long as you are using `@azure/communication-react` version
+        `1.7.0-beta.1` or higher (please note that ACS sending file attachments to the Teams user is currently not
         supported). Simply join the Teams meeting as an ACS user, as soon as the Teams user sends a file (with file
         permission set to "Anyone" or "People you choose") from the Teams client. The ACS user will recieve the file
         attachment as the following:
@@ -153,6 +153,7 @@ export const Docs: () => JSX.Element = () => {
         <Image
           src="images/call-with-chat-composite-teams-file-sharing.png"
           alt="Call with chat composite shown file sharing with Teams user"
+          style={{ maxWidth: '100%' }}
         />
       </Stack>
 
