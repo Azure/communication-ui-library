@@ -31,6 +31,7 @@ export class MockCallAdapter implements CallAdapter {
   }
   onStateChange(handler: (state: CallAdapterState) => void): void {
     this._emitter.on('stateChanged', handler);
+    this._state = populateViewTargets(this._state);
   }
   offStateChange(handler: (state: CallAdapterState) => void): void {
     this._emitter.off('stateChanged', handler);
@@ -72,11 +73,26 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('stopScreenShare not implemented');
   }
   raiseHand(): Promise<void> {
-    this._state.call.raisedHand.localParticipantRaisedHand = 0;
+    console.log('raiseHand');
+    this._state = populateViewTargets({
+      ...this._state,
+      call: {
+        ...this._state.call,
+        raisedHand: { ...this._state.call.raisedHand, localParticipantRaisedHand: { raisedHandOrderPosition: 1 } }
+      }
+    });
     return Promise.resolve();
   }
   lowerHand(): Promise<void> {
-    throw Error('lowerHand not implemented');
+    console.log('lowerHand');
+    this._state = populateViewTargets({
+      ...this._state,
+      call: {
+        ...this._state.call,
+        raisedHand: { raisedHands: [] }
+      }
+    });
+    return Promise.resolve();
   }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');
@@ -152,6 +168,7 @@ export class MockCallAdapter implements CallAdapter {
       draft.devices.selectedSpeaker = findDevice(this._state.devices.speakers, sourceInfo);
     });
   }
+  on();
   on(): void {
     throw Error('on not implemented');
   }

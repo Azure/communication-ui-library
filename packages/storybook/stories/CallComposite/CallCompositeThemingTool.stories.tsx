@@ -97,10 +97,37 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   const updateColor = React.useCallback(
     (ev: any, colorObj: IColor) => {
       setColor(colorObj);
-      if (userTheme.palette) {
-        userTheme.palette[themeColourToEdit] = colorObj.str;
+      if (themeColourToEdit === 'Theme color' && userTheme.palette) {
+        const lightGradient = findGradient(colorObj.str, 6, 'light');
+        const darkGradient = findGradient(colorObj.str, 4, 'dark');
+        userTheme.palette['themePrimary'] = colorObj.str;
+        userTheme.palette['themeSecondary'] = lightGradient[0];
+        userTheme.palette['themeTertiary'] = lightGradient[1];
+        userTheme.palette['themeLight'] = lightGradient[2];
+        userTheme.palette['themeLighter'] = lightGradient[3];
+        userTheme.palette['themeLighterAlt'] = lightGradient[4];
+        userTheme.palette['themeDark'] = darkGradient[0];
+        userTheme.palette['themeDarker'] = darkGradient[1];
+        userTheme.palette['themeDarkAlt'] = darkGradient[2];
+        setUserTheme(userTheme);
+      } else if (themeColourToEdit === 'Neutral color' && userTheme.palette) {
+        const gradient = findGradient(colorObj.str, 9, 'light');
+        const darkGradient = findGradient(colorObj.str, 2, 'dark');
+        userTheme.palette['neutralPrimary'] = colorObj.str;
+        userTheme.palette['neutralSecondary'] = gradient[0];
+        userTheme.palette['neutralTertiary'] = gradient[1];
+        userTheme.palette['neutralTertiaryAlt'] = gradient[2];
+        userTheme.palette['neutralQuaternary'] = gradient[3];
+        userTheme.palette['neutralQuaternaryAlt'] = gradient[4];
+        userTheme.palette['neutralLight'] = gradient[5];
+        userTheme.palette['neutralLighter'] = gradient[6];
+        userTheme.palette['neutralLighterAlt'] = gradient[7];
+        userTheme.palette['neutralDark'] = darkGradient[1];
+        setUserTheme(userTheme);
+      } else if (themeColourToEdit === 'Background' && userTheme.palette) {
+        userTheme.palette['white'] = colorObj.str;
+        setUserTheme(userTheme);
       }
-      setUserTheme(userTheme);
     },
     [themeColourToEdit, userTheme]
   );
@@ -180,26 +207,54 @@ const colorPickerStyles: Partial<IColorPickerStyles> = {
 };
 
 const dropDownOptions: IDropdownOption[] = [
-  { key: 'themePrimary', text: 'themePrimary' },
-  { key: 'themeLighterAlt', text: 'themeLighterAlt' },
-  { key: 'themeLighter', text: 'themeLighter' },
-  { key: 'themeLight', text: 'themeLight' },
-  { key: 'themeTertiary', text: 'themeTertiary' },
-  { key: 'themeSecondary', text: 'themeSecondary' },
-  { key: 'themeDarkAlt', text: 'themeDarkAlt' },
-  { key: 'themeDark', text: 'themeDark' },
-  { key: 'themeDarker', text: 'themeDarker' },
-  { key: 'neutralLighterAlt', text: 'neutralLighterAlt' },
-  { key: 'neutralLighter', text: 'neutralLighter' },
-  { key: 'neutralLight', text: 'neutralLight' },
-  { key: 'neutralQuaternaryAlt', text: 'neutralQuaternaryAlt' },
-  { key: 'neutralQuaternary', text: 'neutralQuaternary' },
-  { key: 'neutralTertiaryAlt', text: 'neutralTertiaryAlt' },
-  { key: 'neutralTertiary', text: 'neutralTertiary' },
-  { key: 'neutralSecondary', text: 'neutralSecondary' },
-  { key: 'neutralPrimaryAlt', text: 'neutralPrimaryAlt' },
-  { key: 'neutralPrimary', text: 'neutralPrimary' },
-  { key: 'neutralDark', text: 'neutralDark' },
-  { key: 'black', text: 'black' },
-  { key: 'white', text: 'white' }
+  { key: 'themePrimary', text: 'Theme color' },
+  { key: 'themeNeutralPrimary', text: 'Neutral color' },
+  { key: 'white', text: 'Background' }
 ];
+// steps for calculating gradient
+// 1. convert hex to rgb
+// 2. set number of steps in gradient
+// 3. calculate difference between rgb values and white <- reverse if for black
+// 4. divide difference by number of steps - 1
+// 5. add difference to rgb values
+// 6. convert rgb to hex
+// 7. add hex values to array
+const findGradient = (color: string, steps: number, direction: string): string[] => {
+  console.log('calculating gradient');
+  const gradient: string[] = [];
+  const rgb = [
+    parseInt(color.substring(1, 3), 16),
+    parseInt(color.substring(3, 5), 16),
+    parseInt(color.substring(5, 7), 16)
+  ];
+  if (direction === 'light') {
+    const redDiff = 255 - rgb[0];
+    const greenDiff = 255 - rgb[1];
+    const blueDiff = 255 - rgb[2];
+    const redStep = redDiff / (steps - 1);
+    const greenStep = greenDiff / (steps - 1);
+    const blueStep = blueDiff / (steps - 1);
+    for (let i = 0; i < steps; i++) {
+      const red = Math.round(rgb[0] + redStep * i);
+      const green = Math.round(rgb[1] + greenStep * i);
+      const blue = Math.round(rgb[2] + blueStep * i);
+      const hex = `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
+      gradient.push(hex);
+    }
+  } else {
+    const redDiff = rgb[0] - 0;
+    const greenDiff = rgb[1] - 0;
+    const blueDiff = rgb[2] - 0;
+    const redStep = redDiff / (steps - 1);
+    const greenStep = greenDiff / (steps - 1);
+    const blueStep = blueDiff / (steps - 1);
+    for (let i = 0; i < steps; i++) {
+      const red = Math.round(rgb[0] - redStep * i);
+      const green = Math.round(rgb[1] - greenStep * i);
+      const blue = Math.round(rgb[2] - blueStep * i);
+      const hex = `#${red.toString(16)}${green.toString(16)}${blue.toString(16)}`;
+      gradient.push(hex);
+    }
+  }
+  return gradient;
+};
