@@ -52,7 +52,7 @@ const docs = (): JSX.Element => {
         <li>Color picker - Use this to change the color of the selected color</li>
         <li>
           Show theme button - Once you are finished with the customization press this to get the completed theme object
-          for you application
+          for your application
         </li>
       </ul>
       <Description>
@@ -125,7 +125,7 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
             onChange={updateColor}
             showPreview={true}
             styles={colorPickerStyles}
-            alphaType={'transparency'}
+            alphaType={'none'}
           ></ColorPicker>
         </Stack>
       </Stack>
