@@ -375,6 +375,8 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
           textValue={textValue}
           onChange={setText}
           onKeyDown={(ev) => {
+            // console.log('onKeyDown::::' + ev.key);
+
             const keyWasSendingMessage = ev.key === 'Enter' && (ev.shiftKey === false || !supportNewline);
             if (!keyWasSendingMessage) {
               onTyping?.();

@@ -27,7 +27,9 @@ import { InputBoxButton } from '../InputBoxComponent';
 import { IconButton, formProperties } from '@fluentui/react';
 import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
 import AtMentionPlugin from './Plugins/atMentionPlugin';
+import MyPlugin from './Plugins/customizedPlugins';
 import { suggestions, trigger } from './Plugins/mentionLoopupData';
+import { MentionLookupOptions } from '../MentionPopover';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   content?: string;
@@ -41,14 +43,14 @@ export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes
   autoFocus?: boolean;
 }
 const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
-  const { content, onChange, mentionLookupOptions, children, placeholderText, disabled, autoFocus } = props;
+  const { content, onChange, mentionLookupOptions, children, placeholderText, disabled, autoFocus, onKeyDown } = props;
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
   const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
 
   React.useEffect(() => {
-    if (content != editor.current.getContent()) {
-      editor.current.setContent(content || '');
+    if (content !== editor.current?.getContent()) {
+      editor.current?.setContent(content || '');
     }
   }, [content]);
 
@@ -86,19 +88,26 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
   function defaultEditorCreator(div: HTMLDivElement, onChange: (text: string) => void): IEditor {
     const updateContentPlugin = createUpdateContentPlugin(
       UpdateMode.OnContentChangedEvent | UpdateMode.OnUserInput,
-      (content: String) => {
+      (content: string) => {
         onChange(content);
       }
     );
-
+    const myPlugin = new MyPlugin(onKeyDown);
     const atMentionPluginInstance = new AtMentionPlugin(mentionLookupOptions);
     const contentEdit = new ContentEdit();
     const placeholderPlugin = new Watermark(placeholderText || '');
     const options: EditorOptions = {
-      plugins: [ribbonPlugin, atMentionPluginInstance.Picker, placeholderPlugin, contentEdit, updateContentPlugin]
+      plugins: [
+        ribbonPlugin,
+        atMentionPluginInstance.Picker,
+        placeholderPlugin,
+        contentEdit,
+        updateContentPlugin,
+        myPlugin
+      ]
     };
     editor.current = new Editor(div, options);
-    if (focus) {
+    if (autoFocus) {
       editor.current.focus();
     }
     return editor.current;
