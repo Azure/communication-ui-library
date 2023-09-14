@@ -42,16 +42,17 @@ export const Docs: () => JSX.Element = () => {
 
   useEffect(() => {
     const url = document.URL;
-    if (url.includes('joining-a-teams-meeting') && refTeamsMeeting.current) {
-      scrollToRef(refTeamsMeeting);
-    } else if (url.includes('adding-file-sharing') && refFileSharing.current) {
+
+    if (url.includes('adding-file-sharing') && refFileSharing.current) {
       scrollToRef(refFileSharing);
     } else if (url.includes('in-teams-interop-meeting-chat-thread') && refFileSharingTeams.current) {
       scrollToRef(refFileSharingTeams);
     } else if (url.includes('in-azure-communication-services-chat-thread') && refFileSharingACS.current) {
       scrollToRef(refFileSharingACS);
+    } else if (url.includes('teams-meeting') && refTeamsMeeting.current) {
+      scrollToRef(refTeamsMeeting);
     }
-  }, [refTeamsMeeting]);
+  }, [refTeamsMeeting, refFileSharingACS, refFileSharingTeams, refFileSharing]);
 
   return (
     <>
