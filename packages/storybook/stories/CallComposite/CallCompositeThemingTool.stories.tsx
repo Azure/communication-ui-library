@@ -181,9 +181,21 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
           ]
         }
       },
-      { key: 'white', text: 'Background' }
+      {
+        key: 'white',
+        text: 'Background',
+        onClick: () => {
+          if (userTheme.palette) {
+            setColor(userTheme.palette['white'] as unknown as IColor);
+            setThemeColourToEdit('white');
+          }
+        }
+      }
     ];
-    return { items: menuOptions, subMenuHoverDelay: 250 };
+    return {
+      items: menuOptions,
+      subMenuHoverDelay: 250
+    };
   }, [userTheme.palette]);
 
   useEffect(() => {
@@ -257,6 +269,7 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
             userTheme.palette['white'] = colorObj.str;
             setUserTheme(userTheme);
           }
+          return;
         }
       }
     },
