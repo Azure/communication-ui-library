@@ -115,7 +115,7 @@ test.describe('New call control bar renders correctly', () => {
       })
     );
 
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
+    /* @conditional-compile-remove(PSTN-calls) */
     await pageClick(page, dataUiId('common-call-composite-more-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
