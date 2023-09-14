@@ -111,7 +111,7 @@ test.describe('Captions buttons in call control', () => {
       initialState.isTeamsCall = false;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
-    /* @conditional-compile-remove(PSTN-calls) */
+    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
   });
