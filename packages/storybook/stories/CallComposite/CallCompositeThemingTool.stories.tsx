@@ -9,18 +9,19 @@ import {
   IColor,
   getColorFromString,
   IColorPickerStyles,
-  Dropdown,
-  IDropdownOption,
   PrimaryButton,
   PartialTheme,
   IChoiceGroupOption,
   ChoiceGroup,
-  Label
+  Label,
+  IContextualMenuItem,
+  DefaultButton,
+  IContextualMenuProps
 } from '@fluentui/react';
 
 import { Description, Heading, Subheading, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useState, useEffect } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { COMPOSITE_FOLDER_PREFIX } from '../constants';
@@ -92,7 +93,7 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
 
   const mockCallAdapterState = defaultMockCallAdapterState(remoteParticipants);
 
-  const [themeColourToEdit, setThemeColourToEdit] = useState<string>('themePrimary');
+  const [themeColourToEdit, setThemeColourToEdit] = useState<string>();
 
   const [userTheme, setUserTheme] = useState<PartialTheme & CallingTheme & ChatTheme>(lightTheme);
   const [showTheme, setShowTheme] = useState<boolean>(false);
@@ -102,6 +103,89 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   mockCallAdapterState.page = callPage;
   const adapter = new MockCallAdapter(mockCallAdapterState);
 
+  const colorMenuProps: IContextualMenuProps = useMemo(() => {
+    const menuOptions: IContextualMenuItem[] = [
+      {
+        key: 'theme',
+        text: 'Theme color',
+        subMenuProps: {
+          items: [
+            {
+              key: 'themePrimary',
+              text: 'Theme primary color',
+              onClick: () => {
+                if (userTheme.palette) {
+                  setColor(userTheme.palette['themePrimary'] as unknown as IColor);
+                  setThemeColourToEdit('themePrimary');
+                }
+              }
+            },
+            {
+              key: 'themeSecondary',
+              text: 'Theme secondary color',
+              onClick: () => {
+                if (userTheme.palette) {
+                  setColor(userTheme.palette['themeSecondary'] as unknown as IColor);
+                  setThemeColourToEdit('themeSecondary');
+                }
+              }
+            },
+            {
+              key: 'themeTertiary',
+              text: 'Theme tertiary color',
+              onClick: () => {
+                if (userTheme.palette) {
+                  setColor(userTheme.palette['themeTertiary'] as unknown as IColor);
+                  setThemeColourToEdit('themeTertiary');
+                }
+              }
+            },
+            {
+              key: 'themeDark',
+              text: 'Dark theme color',
+              onClick: () => {
+                if (userTheme.palette) {
+                  setColor(userTheme.palette['themeDark'] as unknown as IColor);
+                  setThemeColourToEdit('themeDark');
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        key: 'neutral',
+        text: 'Neutral color',
+        subMenuProps: {
+          items: [
+            {
+              key: 'themeNeutralPrimary',
+              text: 'Neutral color',
+              onClick: () => {
+                if (userTheme.palette) {
+                  setColor(userTheme.palette['themeNeutralPrimary'] as unknown as IColor);
+                  setThemeColourToEdit('themeNeutralPrimary');
+                }
+              }
+            },
+            {
+              key: 'themeNeutralDark',
+              text: 'Neutral dark color',
+              onClick: () => {
+                if (userTheme.palette) {
+                  setColor(userTheme.palette['themeNeutralDark'] as unknown as IColor);
+                  setThemeColourToEdit('themeNeutralDark');
+                }
+              }
+            }
+          ]
+        }
+      },
+      { key: 'white', text: 'Background' }
+    ];
+    return { items: menuOptions, subMenuHoverDelay: 250 };
+  }, [userTheme.palette]);
+
   useEffect(() => {
     setCallPage(args.callPage);
   }, [args.callPage]);
@@ -109,53 +193,76 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   const updateColor = React.useCallback(
     (ev: any, colorObj: IColor) => {
       setColor(colorObj);
-      if (themeColourToEdit === 'Theme color' && userTheme.palette) {
-        const lightGradient = findGradient(colorObj.str, 6, 'light');
-        const darkGradient = findGradient(colorObj.str, 4, 'dark');
-        userTheme.palette['themePrimary'] = colorObj.str;
-        userTheme.palette['themeSecondary'] = lightGradient[0];
-        userTheme.palette['themeTertiary'] = lightGradient[1];
-        userTheme.palette['themeLight'] = lightGradient[2];
-        userTheme.palette['themeLighter'] = lightGradient[3];
-        userTheme.palette['themeLighterAlt'] = lightGradient[4];
-        userTheme.palette['themeDark'] = darkGradient[0];
-        userTheme.palette['themeDarker'] = darkGradient[1];
-        userTheme.palette['themeDarkAlt'] = darkGradient[2];
-        setUserTheme(userTheme);
-      } else if (themeColourToEdit === 'Neutral color' && userTheme.palette) {
-        const gradient = findGradient(colorObj.str, 9, 'light');
-        const darkGradient = findGradient(colorObj.str, 2, 'dark');
-        userTheme.palette['neutralPrimary'] = colorObj.str;
-        userTheme.palette['neutralSecondary'] = gradient[0];
-        userTheme.palette['neutralTertiary'] = gradient[1];
-        userTheme.palette['neutralTertiaryAlt'] = gradient[2];
-        userTheme.palette['neutralQuaternary'] = gradient[3];
-        userTheme.palette['neutralQuaternaryAlt'] = gradient[4];
-        userTheme.palette['neutralLight'] = gradient[5];
-        userTheme.palette['neutralLighter'] = gradient[6];
-        userTheme.palette['neutralLighterAlt'] = gradient[7];
-        userTheme.palette['neutralDark'] = darkGradient[1];
-        setUserTheme(userTheme);
-      } else if (themeColourToEdit === 'Background' && userTheme.palette) {
-        userTheme.palette['white'] = colorObj.str;
-        setUserTheme(userTheme);
+      switch (themeColourToEdit) {
+        case 'themePrimary': {
+          if (userTheme.palette) {
+            const lightGradient = findGradient(colorObj.str, 5, 'light');
+            userTheme.palette['themePrimary'] = colorObj.str;
+            userTheme.palette['themeLight'] = lightGradient[1];
+            userTheme.palette['themeLighter'] = lightGradient[2];
+            userTheme.palette['themeLighterAlt'] = lightGradient[3];
+            setUserTheme(userTheme);
+          }
+          return;
+        }
+        case 'themeSecondary': {
+          if (userTheme.palette) {
+            userTheme.palette['themeSecondary'] = colorObj.str;
+            setUserTheme(userTheme);
+          }
+          return;
+        }
+        case 'themeTertiary': {
+          if (userTheme.palette) {
+            userTheme.palette['themeTertiary'] = colorObj.str;
+            setUserTheme(userTheme);
+          }
+          return;
+        }
+        case 'themeDark': {
+          if (userTheme.palette) {
+            const darkGradient = findGradient(colorObj.str, 4, 'dark');
+            userTheme.palette['themeDark'] = darkGradient[0];
+            userTheme.palette['themeDarker'] = darkGradient[1];
+            userTheme.palette['themeDarkAlt'] = darkGradient[2];
+            setUserTheme(userTheme);
+          }
+          return;
+        }
+        case 'themeNeutralPrimary': {
+          if (userTheme.palette) {
+            const gradient = findGradient(colorObj.str, 9, 'light');
+            userTheme.palette['neutralPrimary'] = colorObj.str;
+            userTheme.palette['neutralSecondary'] = gradient[0];
+            userTheme.palette['neutralTertiary'] = gradient[1];
+            userTheme.palette['neutralTertiaryAlt'] = gradient[2];
+            userTheme.palette['neutralQuaternary'] = gradient[3];
+            userTheme.palette['neutralQuaternaryAlt'] = gradient[4];
+            userTheme.palette['neutralLight'] = gradient[5];
+            userTheme.palette['neutralLighter'] = gradient[6];
+            userTheme.palette['neutralLighterAlt'] = gradient[7];
+            setUserTheme(userTheme);
+          }
+          return;
+        }
+        case 'themeNeutralDark': {
+          if (userTheme.palette) {
+            userTheme.palette['neutralDark'] = colorObj.str;
+            setUserTheme(userTheme);
+          }
+          return;
+        }
+        case 'white': {
+          if (userTheme.palette) {
+            userTheme.palette['white'] = colorObj.str;
+            setUserTheme(userTheme);
+          }
+        }
       }
     },
     [themeColourToEdit, userTheme]
   );
 
-  const changeSlot = (event: React.FormEvent<HTMLDivElement>, option?: IDropdownOption): void => {
-    if (option) {
-      setThemeColourToEdit(option.text);
-      if (userTheme.palette && option.text === 'Theme color') {
-        setColor(userTheme.palette['themePrimary'] as unknown as IColor);
-      } else if (userTheme.palette && option.text === 'Neutral color') {
-        setColor(userTheme.palette['neutralPrimary'] as unknown as IColor);
-      } else if (userTheme.palette && option.text === 'Background') {
-        setColor(userTheme.palette['white'] as unknown as IColor);
-      }
-    }
-  };
   return (
     <Stack tokens={{ childrenGap: '1rem' }} style={{ padding: '3rem', background: 'white', height: '100%' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
@@ -190,17 +297,12 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
             styles={colorPickerStyles}
             alphaType={'none'}
           ></ColorPicker>
+          <Label>Color being edited: {themeColourToEdit}</Label>
         </Stack>
       </Stack>
       <Stack horizontal tokens={{ childrenGap: '2rem' }}>
         <Stack tokens={{ childrenGap: '2rem' }}>
-          <Dropdown
-            placeholder={'Select a color to edit'}
-            style={{ width: '20rem' }}
-            onChange={changeSlot}
-            options={dropDownOptions}
-            label={'Color to edit'}
-          />
+          <DefaultButton text="Select a color to edit" menuProps={colorMenuProps} />
           <PrimaryButton onClick={() => setShowTheme(!showTheme)} style={{ width: '20rem' }}>
             Show Theme
           </PrimaryButton>
@@ -261,11 +363,6 @@ const colorPickerStyles: Partial<IColorPickerStyles> = {
   colorRectangle: { height: 268 }
 };
 
-const dropDownOptions: IDropdownOption[] = [
-  { key: 'themePrimary', text: 'Theme color' },
-  { key: 'themeNeutralPrimary', text: 'Neutral color' },
-  { key: 'white', text: 'Background' }
-];
 /**
  * Function for creating a colour gradient to black or white based on the color given
  */
