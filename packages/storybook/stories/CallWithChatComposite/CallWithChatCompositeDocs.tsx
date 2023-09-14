@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Image, MessageBar, Stack } from '@fluentui/react';
+import { Image, MessageBar, Stack, Text } from '@fluentui/react';
 import { Title, Description, Heading, Source, Subheading } from '@storybook/addon-docs';
 import React, { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
@@ -40,6 +40,11 @@ export const Docs: () => JSX.Element = () => {
       refTeamsMeeting.current.scrollIntoView({ behavior: 'auto' });
     }
   }, [refTeamsMeeting]);
+
+  const teamsInteropFileSharingBulletinPoints =
+    '<ul><li>`@azure/communication-react@1.7.0-beta.1` or higher</li>' +
+    '<li>`@azure/communication-chat@1.3.2-beta.2` or higher</li>' +
+    '<li>When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you choose".</li></ul>';
 
   return (
     <>
@@ -150,12 +155,18 @@ export const Docs: () => JSX.Element = () => {
       <Description>
         Please note there are few things to keep in mind when using file sharing in Teams interop scenario:
       </Description>
-      <ul className={'sbdocs sbdocs-p'}>
-        <li>@azure/communication-react@1.7.0-beta.1 or higher</li>
-        <li>@azure/communication-chat@1.3.2-beta.2 or higher</li>
+      <ul style={{ color: 'black' }}>
         <li>
-          When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you
-          choose".
+          <Text style={{ color: 'black' }}>@azure/communication-react@1.7.0-beta.1 or higher</Text>
+        </li>
+        <li>
+          <Text style={{ color: 'black' }}>@azure/communication-chat@1.3.2-beta.2 or higher </Text>
+        </li>
+        <li>
+          <Text style={{ color: 'black' }}>
+            When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you
+            choose".
+          </Text>
         </li>
       </ul>
 
