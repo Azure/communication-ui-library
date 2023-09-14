@@ -150,12 +150,14 @@ export const Docs: () => JSX.Element = () => {
       <Description>
         Please note there are few things to keep in mind when using file sharing in Teams interop scenario:
       </Description>
-      <Description>- `@azure/communication-react@1.7.0-beta.1` or higher </Description>
-      <Description>- `@azure/communication-chat@1.3.2-beta.2` or higher </Description>
-      <Description>
-        - When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you
-        choose".
-      </Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>@azure/communication-react@1.7.0-beta.1 or higher</li>
+        <li>@azure/communication-chat@1.3.2-beta.2 or higher</li>
+        <li>
+          When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you
+          choose".
+        </li>
+      </ul>
 
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner />
