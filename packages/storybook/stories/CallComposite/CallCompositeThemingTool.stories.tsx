@@ -12,7 +12,10 @@ import {
   Dropdown,
   IDropdownOption,
   PrimaryButton,
-  PartialTheme
+  PartialTheme,
+  IChoiceGroupOption,
+  ChoiceGroup,
+  Label
 } from '@fluentui/react';
 
 import { Description, Heading, Subheading, Title } from '@storybook/addon-docs';
@@ -79,6 +82,13 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   const Berry = defaultMockRemoteParticipant('Berry');
 
   const remoteParticipants = [gary, Larry, Berry];
+
+  const compositeFormFactors: IChoiceGroupOption[] = [
+    { key: 'desktop', text: 'Desktop' },
+    { key: 'mobile', text: 'Mobile' },
+    { key: 'widget', text: 'Widget' }
+  ];
+  const [chosenFormFactor, setChosenFormFactor] = useState<IChoiceGroupOption>(compositeFormFactors[0]);
 
   const mockCallAdapterState = defaultMockCallAdapterState(remoteParticipants);
 
@@ -149,8 +159,28 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
   return (
     <Stack tokens={{ childrenGap: '1rem' }} style={{ padding: '3rem', background: 'white', height: '100%' }}>
       <Stack horizontal tokens={{ childrenGap: '1rem' }}>
-        <Stack style={{ width: '55rem', height: '25rem' }}>
-          <CallComposite adapter={adapter} key={Math.random()} fluentTheme={userTheme} />
+        <Stack
+          style={{
+            width: chosenFormFactor.key === 'mobile' ? '25rem' : chosenFormFactor.key === 'widget' ? '30rem' : '55rem',
+            height: chosenFormFactor.key === 'mobile' ? '44rem' : chosenFormFactor.key === 'widget' ? '22rem' : '25rem'
+          }}
+        >
+          <CallComposite
+            adapter={adapter}
+            key={Math.random()}
+            fluentTheme={userTheme}
+            formFactor={chosenFormFactor.key === 'mobile' ? 'mobile' : 'desktop'}
+            options={{
+              callControls: {
+                peopleButton: !(chosenFormFactor.key === 'widget'),
+                screenShareButton: !(chosenFormFactor.key === 'widget'),
+                displayType: !(chosenFormFactor.key === 'widget') ? 'default' : 'compact'
+              },
+              localVideoTile: {
+                position: chosenFormFactor.key === 'widget' ? 'grid' : undefined
+              }
+            }}
+          />
         </Stack>
         <Stack>
           <ColorPicker
@@ -162,22 +192,41 @@ const ThemeToolStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Elem
           ></ColorPicker>
         </Stack>
       </Stack>
-      <Dropdown
-        placeholder={'Select a color to edit'}
-        style={{ width: '20rem' }}
-        onChange={changeSlot}
-        options={dropDownOptions}
-        label={'Color to edit'}
-      />
-      <Stack>
-        <PrimaryButton onClick={() => setShowTheme(!showTheme)} style={{ width: '20rem' }}>
-          Show Theme
-        </PrimaryButton>
-        {showTheme && (
-          <pre style={{ width: '20rem', height: '20rem', overflow: 'scroll' }}>
-            {JSON.stringify(userTheme, null, 2)}
-          </pre>
-        )}
+      <Stack horizontal tokens={{ childrenGap: '2rem' }}>
+        <Stack tokens={{ childrenGap: '2rem' }}>
+          <Dropdown
+            placeholder={'Select a color to edit'}
+            style={{ width: '20rem' }}
+            onChange={changeSlot}
+            options={dropDownOptions}
+            label={'Color to edit'}
+          />
+          <PrimaryButton onClick={() => setShowTheme(!showTheme)} style={{ width: '20rem' }}>
+            Show Theme
+          </PrimaryButton>
+        </Stack>
+        <Stack>
+          <ChoiceGroup
+            defaultSelectedKey={chosenFormFactor.key}
+            options={compositeFormFactors}
+            label={'Composite form factor'}
+            onChange={(ev?: React.FormEvent<HTMLInputElement | HTMLElement>, option?: IChoiceGroupOption) => {
+              if (option) {
+                setChosenFormFactor(option);
+              }
+            }}
+          ></ChoiceGroup>
+        </Stack>
+        <Stack>
+          {showTheme && (
+            <Stack>
+              <Label>Theme - copy this for use in your application</Label>
+              <pre style={{ width: '20rem', height: '20rem', overflow: 'scroll' }}>
+                {JSON.stringify(userTheme, null, 2)}
+              </pre>
+            </Stack>
+          )}
+        </Stack>
       </Stack>
     </Stack>
   );
