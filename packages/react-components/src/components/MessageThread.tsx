@@ -16,13 +16,8 @@ import {
   useChatStyles,
   buttonWithIconStyles,
   newMessageButtonStyle,
-  noMessageStatusStyle,
-  defaultMyChatMessageContainer,
-  defaultChatMessageContainer,
-  FailedMyChatMessageContainer
+  noMessageStatusStyle
 } from './styles/MessageThread.styles';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { defaultBlockedMessageStyleContainer } from './styles/MessageThread.styles';
 import { delay } from './utils/delay';
 import {
   BaseCustomStyles,
@@ -59,6 +54,7 @@ import LiveAnnouncer from './Announcer/LiveAnnouncer';
 import { MentionOptions } from './MentionPopover';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+import { createStyleFromV8Style } from './styles/v8StyleShim';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -137,6 +133,7 @@ const didUserSendTheLatestMessage = (
  * @public
  */
 export interface MessageThreadStyles extends BaseCustomStyles {
+  //not used
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
@@ -144,8 +141,10 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for chat container. */
   chatContainer?: ComponentSlotStyle;
   /** styles for my chat items.  */
+  //TODO:was removed?
   myChatItemMessageContainer?: ComponentSlotStyle;
   /** styles for chat items.  */
+  //TODO:was removed?
   chatItemMessageContainer?: ComponentSlotStyle;
   /** Styles for my chat message container. */
   myChatMessageContainer?: ComponentSlotStyle;
@@ -158,6 +157,7 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for blocked message container. */
   /* @conditional-compile-remove(data-loss-prevention) */
   blockedMessageContainer?: ComponentSlotStyle;
+  //TODO: not used
   /** Styles for message status indicator container. */
   messageStatusContainer?: (mine: boolean) => IStyle;
 }
@@ -383,7 +383,6 @@ const memoizeAllMessages = memoizeFnAll(
             ? (status: MessageStatus) => onRenderMessageStatus({ status })
             : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
-
       const chatMessageComponent =
         onRenderMessage === undefined ? (
           defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
@@ -403,9 +402,9 @@ const memoizeAllMessages = memoizeFnAll(
     if (message.messageType === 'blocked') {
       const myChatMessageStyle =
         message.status === 'failed'
-          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
-          : styles?.myChatMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
-      const blockedMessageStyle = styles?.blockedMessageContainer ?? defaultBlockedMessageStyleContainer(theme);
+          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
+          : styles?.myChatMessageContainer;
+      const blockedMessageStyle = styles?.blockedMessageContainer;
       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
       return chatMessage(message, messageProps);
     }
@@ -414,11 +413,10 @@ const memoizeAllMessages = memoizeFnAll(
       case 'chat': {
         const myChatMessageStyle =
           message.status === 'failed'
-            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer ?? FailedMyChatMessageContainer
-            : styles?.myChatMessageContainer ?? defaultMyChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer ?? defaultChatMessageContainer(theme);
+            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
+            : styles?.myChatMessageContainer;
+        const chatMessageStyle = styles?.chatMessageContainer;
         messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
-
         return chatMessage(message, messageProps);
       }
 
@@ -430,13 +428,21 @@ const memoizeAllMessages = memoizeFnAll(
           ) : (
             onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
           );
-        return <div key={_messageKey}>{systemMessageComponent}</div>;
+        return (
+          <div key={_messageKey} style={{ paddingTop: '1rem' }}>
+            {systemMessageComponent}
+          </div>
+        );
       }
 
       default: {
         // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
         const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
-        return <div key={_messageKey}>{customMessageComponent}</div>;
+        return (
+          <div key={_messageKey} style={{ paddingTop: '1rem', paddingBottom: '0.25rem' }}>
+            {customMessageComponent}
+          </div>
+        );
       }
     }
   }
@@ -1249,8 +1255,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
           <Chat
-            className={mergeClasses(classes.root, mergeStyles(linkStyles(theme), styles?.chatContainer))}
+            // styles?.chatContainer used in className and style as style can't handle actions
+            className={(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
+            style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
           >
             {messagesToDisplay}
           </Chat>
@@ -1284,21 +1292,4 @@ const onRenderFileDownloadsTrampoline = (
   /* @conditional-compile-remove(file-sharing) */
   return props.onRenderFileDownloads;
   return undefined;
-};
-
-const linkStyles = (theme: Theme): ComponentSlotStyle => {
-  return {
-    '& a:link': {
-      color: theme.palette.themePrimary
-    },
-    '& a:visited': {
-      color: theme.palette.themeDarker
-    },
-    '& a:hover': {
-      color: theme.palette.themeDarker
-    },
-    '& a:selected': {
-      color: theme.palette.themeDarker
-    }
-  };
 };

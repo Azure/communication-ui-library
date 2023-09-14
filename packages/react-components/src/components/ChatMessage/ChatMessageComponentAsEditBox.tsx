@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, _useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
+import { chatMessageFailedTagStyle, useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -175,7 +175,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  const classes = _useChatMessageEditContainerStyles();
+  const classes = useChatMessageEditContainerStyles();
   const className = mergeClasses(
     classes.body,
     message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
