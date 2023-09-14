@@ -4,12 +4,7 @@
 /* @conditional-compile-remove(capabilities) */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(capabilities) */
-import {
-  CapabilitiesChangeInfo,
-  CapabilitiesChangedReason,
-  ParticipantCapabilityName,
-  ParticipantRole
-} from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import {
   CapabalityChangedNotification,
@@ -30,18 +25,17 @@ export const useTrackedCapabilityChangedNotifications = (
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedCapabilityChangedNotifications>({});
 
-  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
-
-  // Keep track of capabilities changed info to ignore
-  const capabilitiesChangedInfoToIgnore = useRef<
-    Partial<Record<ParticipantCapabilityName, { isPresent: boolean; reason: CapabilitiesChangedReason }>>
-  >({ shareScreen: { isPresent: true, reason: 'RoleChanged' } });
+  // Initialize a share screen capability changed notification with 'RoleChanged' reason so that the initial
+  // share screen capability changed info from the Calling SDK when joining Teams interop will be ignored because
+  // being able to share screen is assumed by default. This is inline with what Teams is doing.
+  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({
+    shareScreen: { capabilityName: 'shareScreen', isPresent: true, changedReason: 'RoleChanged' }
+  });
 
   useEffect(() => {
     activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
       capabilitiesChangedAndRoleInfo,
-      activeNotifications.current,
-      capabilitiesChangedInfoToIgnore.current
+      activeNotifications.current
     );
     setTrackedCapabilityChangedNotifications((prev) =>
       updateTrackedCapabilityChangedNotificationsWithActiveNotifications(
@@ -154,28 +148,23 @@ type LatestCapabilityChangedNotificationRecord = Partial<
 /* @conditional-compile-remove(capabilities) */
 const updateLatestCapabilityChangedNotificationMap = (
   capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
-  activeNotifications: LatestCapabilityChangedNotificationRecord,
-  capabilitiesChangedInfoToIgnore: Partial<
-    Record<ParticipantCapabilityName, { isPresent: boolean; reason: CapabilitiesChangedReason }>
-  >
+  latestNotifications: LatestCapabilityChangedNotificationRecord
 ): LatestCapabilityChangedNotificationRecord => {
   if (!capabilitiesChangedInfoAndRole.capabilitiesChangeInfo) {
-    return activeNotifications;
+    return latestNotifications;
   }
 
   for (const [capabilityName, newCapabilityValue] of Object.entries(
     capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
   )) {
+    // If the latest notification for a capability has the same `isPresent` value for the same reason we will not
+    // create a new notification
     if (
-      capabilitiesChangedInfoToIgnore[capabilityName] &&
-      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason ===
-        capabilitiesChangedInfoToIgnore[capabilityName].reason
+      latestNotifications[capabilityName] &&
+      newCapabilityValue.isPresent === latestNotifications[capabilityName].isPresent &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === latestNotifications[capabilityName].changedReason
     ) {
-      if (newCapabilityValue.isPresent === capabilitiesChangedInfoToIgnore[capabilityName].isPresent) {
-        continue;
-      } else {
-        capabilitiesChangedInfoToIgnore[capabilityName].isPresent = newCapabilityValue.isPresent;
-      }
+      continue;
     }
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
       capabilityName: capabilityName as ParticipantCapabilityName,
@@ -184,7 +173,7 @@ const updateLatestCapabilityChangedNotificationMap = (
       role: capabilitiesChangedInfoAndRole.participantRole,
       timestamp: new Date(Date.now())
     };
-    activeNotifications[capabilityName] = newCapabilityChangeNotification;
+    latestNotifications[capabilityName] = newCapabilityChangeNotification;
   }
-  return activeNotifications;
+  return latestNotifications;
 };
