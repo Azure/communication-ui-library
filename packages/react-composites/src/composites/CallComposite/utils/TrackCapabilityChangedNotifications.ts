@@ -32,20 +32,16 @@ export const useTrackedCapabilityChangedNotifications = (
 
   const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
 
-  // Take note of first capabilities changed reason
-  const firstCapabilitiesChangedReason = useRef<CapabilitiesChangedReason>();
+  // Keep track of capabilities changed info to ignore
+  const capabilitiesChangedInfoToIgnore = useRef<
+    Partial<Record<ParticipantCapabilityName, { isPresent: boolean; reason: CapabilitiesChangedReason }>>
+  >({ shareScreen: { isPresent: true, reason: 'RoleChanged' } });
 
   useEffect(() => {
-    if (firstCapabilitiesChangedReason.current === undefined) {
-      firstCapabilitiesChangedReason.current = capabilitiesChangedAndRoleInfo.capabilitiesChangeInfo?.reason;
-      // Skip the first notifications if they are role related to be inline with Teams behavior
-      if (firstCapabilitiesChangedReason.current === 'RoleChanged') {
-        return;
-      }
-    }
     activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
       capabilitiesChangedAndRoleInfo,
-      activeNotifications.current
+      activeNotifications.current,
+      capabilitiesChangedInfoToIgnore.current
     );
     setTrackedCapabilityChangedNotifications((prev) =>
       updateTrackedCapabilityChangedNotificationsWithActiveNotifications(
@@ -158,7 +154,10 @@ type LatestCapabilityChangedNotificationRecord = Partial<
 /* @conditional-compile-remove(capabilities) */
 const updateLatestCapabilityChangedNotificationMap = (
   capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
-  activeNotifications: LatestCapabilityChangedNotificationRecord
+  activeNotifications: LatestCapabilityChangedNotificationRecord,
+  capabilitiesChangedInfoToIgnore: Partial<
+    Record<ParticipantCapabilityName, { isPresent: boolean; reason: CapabilitiesChangedReason }>
+  >
 ): LatestCapabilityChangedNotificationRecord => {
   if (!capabilitiesChangedInfoAndRole.capabilitiesChangeInfo) {
     return activeNotifications;
@@ -167,6 +166,17 @@ const updateLatestCapabilityChangedNotificationMap = (
   for (const [capabilityName, newCapabilityValue] of Object.entries(
     capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
   )) {
+    if (
+      capabilitiesChangedInfoToIgnore[capabilityName] &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason ===
+        capabilitiesChangedInfoToIgnore[capabilityName].reason
+    ) {
+      if (newCapabilityValue.isPresent === capabilitiesChangedInfoToIgnore[capabilityName].isPresent) {
+        continue;
+      } else {
+        capabilitiesChangedInfoToIgnore[capabilityName].isPresent = newCapabilityValue.isPresent;
+      }
+    }
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
       capabilityName: capabilityName as ParticipantCapabilityName,
       isPresent: newCapabilityValue.isPresent,
