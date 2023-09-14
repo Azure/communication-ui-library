@@ -41,11 +41,6 @@ export const Docs: () => JSX.Element = () => {
     }
   }, [refTeamsMeeting]);
 
-  const teamsInteropFileSharingBulletinPoints =
-    '<ul><li>`@azure/communication-react@1.7.0-beta.1` or higher</li>' +
-    '<li>`@azure/communication-chat@1.3.2-beta.2` or higher</li>' +
-    '<li>When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you choose".</li></ul>';
-
   return (
     <>
       <Title>CallWithChatComposite</Title>
@@ -155,15 +150,15 @@ export const Docs: () => JSX.Element = () => {
       <Description>
         Please note there are few things to keep in mind when using file sharing in Teams interop scenario:
       </Description>
-      <ul style={{ color: 'black' }}>
+      <ul className="list-content">
         <li>
-          <Text style={{ color: 'black' }}>@azure/communication-react@1.7.0-beta.1 or higher</Text>
+          <Text className="list-content">@azure/communication-react@1.7.0-beta.1 or higher</Text>
         </li>
         <li>
-          <Text style={{ color: 'black' }}>@azure/communication-chat@1.3.2-beta.2 or higher </Text>
+          <Text className="list-content">@azure/communication-chat@1.3.2-beta.2 or higher </Text>
         </li>
         <li>
-          <Text style={{ color: 'black' }}>
+          <Text className="list-content">
             When the file is sent from Teams, the Teams user must set the file permission to "Anyone" or "People you
             choose".
           </Text>
