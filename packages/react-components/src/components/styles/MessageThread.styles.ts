@@ -334,14 +334,6 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
 /**
  * @private
  */
-export const messageStatusContainerStyle = (mine: boolean): string =>
-  mergeStyles({
-    marginLeft: mine ? '0.25rem' : '0rem'
-  });
-
-/**
- * @private
- */
 export const newMessageButtonStyle = mergeStyles({
   float: 'right',
   width: 'fit-content'

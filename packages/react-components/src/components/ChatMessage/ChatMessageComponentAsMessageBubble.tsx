@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { Text, mergeStyles } from '@fluentui/react';
+import { Text, mergeStyles, IStyle } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -42,6 +42,8 @@ import {
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   messageContainerStyle?: ComponentSlotStyle;
+  /** Styles for message status indicator container. */
+  messageStatusContainer?: (mine: boolean) => IStyle;
   showDate?: boolean;
   disableEditing?: boolean;
   onEditClick: () => void;
@@ -149,6 +151,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     disableEditing,
     showDate,
     messageContainerStyle,
+    messageStatusContainer: messageStatusContainerStyle,
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
@@ -387,7 +390,16 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 props.onActionButtonClick(message, setMessageReadBy);
               }
             }}
-            statusIcon={<div className={mergeStyles({ paddingLeft: 4 })}>{renderedStatusIcon}</div>}
+            statusIcon={
+              <div
+                className={mergeStyles(
+                  { paddingLeft: '0.25rem' },
+                  messageStatusContainerStyle ? messageStatusContainerStyle(message.mine ?? false) : ''
+                )}
+              >
+                {renderedStatusIcon}
+              </div>
+            }
           >
             {getContent()}
           </ChatMyMessage>
