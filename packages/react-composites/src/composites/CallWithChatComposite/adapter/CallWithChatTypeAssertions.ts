@@ -52,7 +52,7 @@ type CallWithChatControlOptionsInternal = Omit<
   | 'devicesButton'
   | /* @conditional-compile-remove(control-bar-button-injection) */ 'onFetchCustomButtonProps'
   | 'participantsButton'
-  | 'legacyControlBarExperience'
+  | /* @conditional-compile-remove(legacy-control-bar) */ 'legacyControlBarExperience'
 >;
 
 const CallWithChatControlOptionsTypeAssertion = (

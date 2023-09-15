@@ -466,7 +466,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 };
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
+  /* @conditional-compile-remove(legacy-control-bar) */
   return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
+
+  // In stable builds, we default to legacy until new-call-control-bar feature is stablized.
+  return (
+    options === undefined || options === true || (options as _CallControlOptions)?.legacyControlBarExperience !== false
+  );
 };
 
 const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {

@@ -71,7 +71,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for custom video gallery layouts
         'gallery-layouts',
         // Feature image gallery
-        'image-gallery'
+        'image-gallery',
+        // Legacy control bar
+        'legacy-control-bar'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"

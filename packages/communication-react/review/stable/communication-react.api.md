@@ -547,7 +547,6 @@ export type CallControlOptions = (CommonCallControlOptions & {
     participantsButton?: boolean | {
         disabled: boolean;
     };
-    legacyControlBarExperience?: boolean;
 });
 
 // @public
