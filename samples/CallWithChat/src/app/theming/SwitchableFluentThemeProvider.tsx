@@ -21,7 +21,7 @@ type NamedTheme = {
  */
 type ThemeCollection = Record<string, NamedTheme>;
 
-const defaultThemes: ThemeCollection = {
+export const defaultThemes: ThemeCollection = {
   Light: {
     name: 'Light',
     theme: lightTheme
@@ -29,6 +29,35 @@ const defaultThemes: ThemeCollection = {
   Dark: {
     name: 'Dark',
     theme: darkTheme
+  },
+  Teams: {
+    name: 'Teams',
+    theme: {
+      palette: {
+        themePrimary: '#4b53bc',
+        themeLighterAlt: '#030308',
+        themeLighter: '#0c0d1e',
+        themeLight: '#171939',
+        themeTertiary: '#2d3271',
+        themeSecondary: '#4249a6',
+        themeDarkAlt: '#5a61c3',
+        themeDark: '#6f76cd',
+        themeDarker: '#9196da',
+        neutralLighterAlt: '#1e1e1e',
+        neutralLighter: '#1d1d1d',
+        neutralLight: '#1c1c1c',
+        neutralQuaternaryAlt: '#1a1a1a',
+        neutralQuaternary: '#191919',
+        neutralTertiaryAlt: '#181818',
+        neutralTertiary: '#c8c8c8',
+        neutralSecondary: '#d0d0d0',
+        neutralPrimaryAlt: '#dadada',
+        neutralPrimary: '#ffffff',
+        neutralDark: '#f4f4f4',
+        black: '#f8f8f8',
+        white: '#1f1f1f'
+      }
+    }
   }
 };
 

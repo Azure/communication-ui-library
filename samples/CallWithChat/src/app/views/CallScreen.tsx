@@ -1,24 +1,32 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
+import { CallState, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   toFlatCommunicationIdentifier,
-  useAzureCommunicationCallWithChatAdapter,
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  createStatefulChatClient
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
-import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { defaultThemes, useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import {
+  OverridableStatefulCallClient,
+  StatefulCallClient,
+  createOverridableStatefulCallClient,
+  createStatefulCallClient
+} from '@internal/calling-stateful-client';
+import { createAzureCommunicationCallWithChatAdapterFromClients } from '@internal/react-composites';
+import { LocalOverrides, SidePane } from './LocalOverrides';
 
 export interface CallScreenProps {
   token: string;
@@ -97,7 +105,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }, []);
 
   const callIdRef = useRef<string>();
-  const { currentTheme, currentRtl } = useSwitchableFluentTheme();
+  const { currentTheme, currentRtl, setCurrentRtl, setCurrentTheme } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
 
   const credential = useMemo(
@@ -131,18 +139,89 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     [callIdRef]
   );
 
-  const adapter = useAzureCommunicationCallWithChatAdapter(
-    {
-      userId,
-      displayName,
-      credential,
-      endpoint,
-      locator,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-      /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
-    },
-    afterAdapterCreate
-  );
+  const [ogCallClient, setOgCallClient] = useState<StatefulCallClient>();
+  const [overridableClient, setOveridableClient] = useState<OverridableStatefulCallClient>();
+  const [overrides, setOverrides] = useState<LocalOverrides>({});
+
+  useEffect(() => {
+    const remotePCount = overrides.remoteParticipants ?? 0;
+    const remoteParticipants: { [key: string]: any } = {};
+    for (let i = 0; i < remotePCount; i++) {
+      remoteParticipants[`8:acs:participantId${i}`] = {
+        identifier: {
+          communicationUserId: `8:acs:participantId${i}`
+        },
+        displayName: `Injected User ${i}!`,
+        state: 'Connected',
+        isMuted: i === 0,
+        isSpeaking: i === 1,
+        raisedHand:
+          i === 2
+            ? {
+                raisedHandOrderPosition: 3
+              }
+            : undefined,
+        videoStreams: {}
+      };
+    }
+
+    const call = Object.values(overridableClient?.getState().calls ?? {})[0];
+
+    const convertedLocalOverrides = {};
+
+    if (remotePCount > 0 && call?.id) {
+      convertedLocalOverrides['calls'] = {
+        [call.id]: {
+          remoteParticipants
+        }
+      };
+    }
+
+    if (overrides.cameraEnabled === false) {
+      convertedLocalOverrides['deviceManager'] = {
+        cameras: []
+      };
+    }
+
+    overridableClient?.updateLocalOverrides(convertedLocalOverrides, true);
+    setCurrentRtl(!!overrides.rtl);
+
+    if (overrides.theme) {
+      setCurrentTheme(defaultThemes[overrides.theme]);
+    }
+  }, [overrides, overridableClient, setCurrentRtl, setCurrentTheme]);
+
+  const [adapter, setAdapter] = useState<CallWithChatAdapter>();
+  useEffect(() => {
+    (async () => {
+      const baseClient = createStatefulCallClient({ userId });
+      const overridableClient = createOverridableStatefulCallClient(baseClient);
+      const callAgent = await overridableClient.createCallAgent(credential, { displayName });
+      const chatClient = createStatefulChatClient({ userId, displayName, credential, endpoint });
+      const chatThreadClient = await chatClient.getChatThreadClient((locator as CallAndChatLocator).chatThreadId);
+      await chatClient.startRealtimeNotifications();
+      const adapter = await createAzureCommunicationCallWithChatAdapterFromClients({
+        callClient: overridableClient as unknown as StatefulCallClient,
+        callLocator: (locator as CallAndChatLocator).callLocator,
+        callAgent,
+        chatClient,
+        chatThreadClient
+      });
+      setAdapter(adapter);
+      afterAdapterCreate(adapter);
+      setOgCallClient(baseClient);
+      setOveridableClient(overridableClient);
+    })();
+  }, [userId, credential, endpoint, locator, displayName, afterAdapterCreate]);
+
+  useEffect(() => {
+    const intervalHandle = setInterval(() => {
+      console.log('local overrides:', overridableClient?.getLocalOverrides?.());
+    }, 5000);
+    return () => {
+      clearInterval(intervalHandle);
+    };
+  }, [overridableClient]);
 
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
@@ -158,13 +237,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
 
   return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={window.location.href}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
+    <>
+      <CallWithChatComposite
+        adapter={adapter}
+        fluentTheme={currentTheme.theme}
+        rtl={currentRtl}
+        joinInvitationURL={window.location.href}
+        formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      />
+      <SidePane onOverridesUpdated={setOverrides} />
+    </>
   );
 };
 

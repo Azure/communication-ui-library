@@ -350,15 +350,15 @@ export const createStatefulCallClientWithDeps = (
   internalContext: InternalCallContext
 ): StatefulCallClient => {
   Object.defineProperty(callClient, 'getState', {
-    configurable: false,
+    configurable: true,
     value: () => context.getState()
   });
   Object.defineProperty(callClient, 'onStateChange', {
-    configurable: false,
+    configurable: true,
     value: (handler: (state: CallClientState) => void) => context.onStateChange(handler)
   });
   Object.defineProperty(callClient, 'offStateChange', {
-    configurable: false,
+    configurable: true,
     value: (handler: (state: CallClientState) => void) => context.offStateChange(handler)
   });
   Object.defineProperty(callClient, 'createView', {
