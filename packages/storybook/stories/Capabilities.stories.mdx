@@ -22,7 +22,7 @@ the call composite like shown in the screenshot below.
 
 <img style={{ width: 'auto', height: 'auto' }} src="images/capabilities-in-call-composite.png" />
 
-Currently the only capabilities that are reflected in the Teams interop scenario are:
+Currently, the only capabilities that are reflected in the Teams interop scenario are:
 
 - unmuting microphone
 - turning on video
@@ -36,26 +36,30 @@ For the Teams interop scenario, user roles and capabilities can be configured in
 To learn more about the capabilities available for each role in a Teams meeting click
 [here](https://support.microsoft.com/en-us/office/roles-in-microsoft-teams-meetings-c16fa7d0-1666-4dde-8686-0a0bfe16e019)
 
-Rooms calls also have roles for ACS users which define their capabilities. Rooms call are supported in beta version
+Rooms calls also have roles for ACS users which define their capabilities. Rooms call is supported in beta version
 **1.3.2-beta.1** or later. To learn more about Rooms calls and the different roles within click [here](path=/docs/rooms).
 
 ## Teams policies
 
-Teams policies can be assigned to Teams users which also control which capabilities of Teams users in a tenant. To
-learn more about Teams policies click
-[here](https://learn.microsoft.com/en-us/microsoftteams/assign-policies-users-and-groups). Currently, only some
-capabilities like share screen are reflected in Teams meeting when using Teams identity. Teams policies cannot be
-applied to ACS users.
+Teams policies can be assigned to Teams users which include defining the capabilities of the assigned Teams users within
+a tenant. To learn more about Teams policies click
+[here](https://learn.microsoft.com/en-us/microsoftteams/assign-policies-users-and-groups). It is important to note that
+Teams policies cannot be applied to ACS users so their capabilities are not affected by Teams policies.
+
+Teams policies do, however, affect Teams users who use ACS to join a Teams meeting also known as CTE users. CTE is
+supported in beta version **1.5.1-beta.1** or later. For more on CTE users, click
+[here](path=/docs/communicationasteamsuser--page). Currently, the only capabilities affected by Teams policies for CTE
+users in Teams meetings are share screen.
 
 ## Handling changes of capabilities
 
-The [CallAdapter](path=/docs/composite-adapters--page#call-adapter) is able to listen for `capabilitiesChanged` events
-and allows you to handle these events by defining your own `CapabilitiesChangedListener` callback. The following code
-snippet shows an example of a `CapabilitiesChangedListener` that simply logs the capabilities changed info to the
-browser console.
+The CallAdapter and CallWithChatAdapter are able to listen for 'capabilitiesChanged' events and allow you to handle
+these events by defining your own `CapabilitiesChangedListener` callback. The following code snippet shows an example
+of the CallAdapter using a `CapabilitiesChangedListener` that simply logs the capabilities changed info to the browser
+console.
 
 <Source code={CapabilitiesChangedListenerSnippetText} />
 
-It is important to note using the CapabilitiesChangedListener` callback will not override the behavior of the Call and
+It is important to note using the `CapabilitiesChangedListener` callback will not override the behavior of the Call and
 CallWithChat composite that handles enabling/disabling controls and show notifications based on the capabilities
 changed.
