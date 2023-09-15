@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Icon, IStyle, mergeStyles, PrimaryButton, Theme } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, PrimaryButton, Theme, IPersona, Persona, PersonaSize } from '@fluentui/react';
 import {
   Chat,
   ChatMessage as FluentChatMessage,
@@ -16,7 +16,10 @@ import {
   useChatStyles,
   buttonWithIconStyles,
   newMessageButtonStyle,
-  noMessageStatusStyle
+  noMessageStatusStyle,
+  useChatMessageRenderStyles,
+  gutterWithAvatar,
+  gutterWithHiddenAvatar
 } from './styles/MessageThread.styles';
 import { delay } from './utils/delay';
 import {
@@ -350,6 +353,16 @@ const memoizeAllMessages = memoizeFnAll(
     defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
     strings: MessageThreadStrings,
     theme: Theme,
+    chatMessageRenderStyles: Record<
+      | 'body'
+      | 'rootMyMessage'
+      | 'rootMessage'
+      | 'bodyWithoutAvatar'
+      | 'bodyWithAvatar'
+      | 'avatarNoOverlap'
+      | 'avatarOverlap',
+      string
+    >,
     _attached?: boolean | string,
     statusToRender?: MessageStatus,
     participantCount?: number,
@@ -383,17 +396,55 @@ const memoizeAllMessages = memoizeFnAll(
             ? (status: MessageStatus) => onRenderMessageStatus({ status })
             : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
-      const chatMessageComponent =
-        onRenderMessage === undefined ? (
-          defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
-        ) : message.mine ?? false ? (
+
+      let chatMessageComponent: JSX.Element;
+      const shouldShowAvatar = message.attached === 'top' || message.attached === false;
+      const attached = shouldShowAvatar ? 'top' : 'center';
+      if (message.mine === true) {
+        chatMessageComponent = (
           <FluentChatMyMessage
-            root={onRenderMessage(messageProps, defaultChatMessageRenderer)}
-            statusIcon={messageStatusRenderer && messageStatus && messageStatusRenderer(messageStatus)}
-          />
-        ) : (
-          <FluentChatMessage root={onRenderMessage(messageProps, defaultChatMessageRenderer)} />
+            attached={attached}
+            root={{ className: chatMessageRenderStyles.rootMyMessage }}
+            body={{ className: chatMessageRenderStyles.body }}
+          >
+            {onRenderMessage === undefined
+              ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
+              : onRenderMessage(messageProps, defaultChatMessageRenderer)}
+          </FluentChatMyMessage>
         );
+      } else {
+        const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
+        const personaOptions: IPersona = {
+          hidePersonaDetails: true,
+          size: PersonaSize.size32,
+          text: message.senderDisplayName,
+          showOverflowTooltip: false
+        };
+        chatMessageComponent = (
+          <FluentChatMessage
+            attached={attached}
+            root={{ className: chatMessageRenderStyles.rootMessage }}
+            body={{
+              className: mergeClasses(
+                chatMessageRenderStyles.body,
+                !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
+                shouldOverlapAvatarAndMessage
+                  ? chatMessageRenderStyles.avatarOverlap
+                  : chatMessageRenderStyles.avatarNoOverlap
+              )
+            }}
+            avatar={
+              <div className={mergeStyles(chatAvatarStyle)}>
+                {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
+              </div>
+            }
+          >
+            {onRenderMessage === undefined
+              ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
+              : onRenderMessage(messageProps, defaultChatMessageRenderer)}
+          </FluentChatMessage>
+        );
+      }
       return <div key={_messageKey}>{chatMessageComponent}</div>;
     };
 
@@ -1156,6 +1207,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
+  const chatMessageRenderStyles = useChatMessageRenderStyles();
 
   const messagesToDisplay = useMemo(
     () =>
@@ -1205,6 +1257,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             defaultChatMessageRenderer,
             strings,
             theme,
+            chatMessageRenderStyles,
             // Temporary solution to make sure we re-render if attach attribute is changed.
             // The proper fix should be in selector.
             message.messageType === 'chat' ||
@@ -1235,6 +1288,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       defaultChatMessageRenderer,
       strings,
       theme,
+      chatMessageRenderStyles,
       participantCount,
       readCountForHoveredIndicator,
       onRenderMessage,
@@ -1242,10 +1296,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       onCancelEditMessage,
       onDeleteMessage,
       onSendMessage,
+      props.disableEditing,
       lastSeenChatMessage,
       lastSendingChatMessage,
-      lastDeliveredChatMessage,
-      props.disableEditing
+      lastDeliveredChatMessage
     ]
   );
 
@@ -1256,7 +1310,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         <FluentV9ThemeProvider v8Theme={theme}>
           <Chat
             // styles?.chatContainer used in className and style as style can't handle actions
-            className={(classes.root, mergeStyles(styles?.chatContainer))}
+            className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
           >

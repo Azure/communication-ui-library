@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IPersona, Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+import { Text, mergeStyles } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -35,8 +35,6 @@ import { MessageStatus } from '@internal/acs-ui-common';
 import { mergeClasses } from '@fluentui/react-components';
 import {
   useChatMessageStyles,
-  gutterWithAvatar,
-  gutterWithHiddenAvatar,
   useChatMyMessageStyles,
   useChatMessageCommonStyles
 } from '../styles/MessageThread.styles';
@@ -292,10 +290,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     handleOnInlineImageClicked
   ]);
 
-  const attached = message.attached === 'top' || message.attached === false ? 'top' : 'center';
-  const chatAvatarStyle =
-    message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
   let renderedStatusIcon =
     showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
   renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
@@ -314,15 +308,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       ? chatMessageCommonStyles.failed
       : undefined,
     shouldOverlapAvatarAndMessage ? chatMessageStyles.avatarOverlap : chatMessageStyles.avatarNoOverlap,
+    message.attached === 'top' || message.attached === false
+      ? chatMessageStyles.bodyWithAvatar
+      : chatMessageStyles.bodyWithoutAvatar,
     mergeStyles(messageContainerStyle)
   );
-
-  const personaOptions: IPersona = {
-    hidePersonaDetails: true,
-    size: PersonaSize.size32,
-    text: message.senderDisplayName,
-    showOverflowTooltip: false
-  };
 
   const chatMessage = (
     <>
@@ -330,7 +320,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         {message.mine ? (
           <ChatMyMessage
             key={props.message.messageId}
-            attached={attached}
+            // attached={attached}
             body={{
               // messageContainerStyle used in className and style as style can't handle actions
               className: mergeClasses(
@@ -404,12 +394,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         ) : (
           <FluentChatMessage
             key={props.message.messageId}
-            avatar={
-              <div className={mergeStyles(chatAvatarStyle)}>
-                {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
-              </div>
-            }
-            attached={attached}
+            root={{ className: chatMessageStyles.root }}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
               className: chatItemMessageContainerClassName,

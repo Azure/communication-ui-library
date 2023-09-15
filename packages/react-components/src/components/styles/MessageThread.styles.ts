@@ -15,7 +15,8 @@ const CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM = 6.25;
 // When calculating the width of a message we also must take into account
 // the width of the avatar/gutter and the gap between the message and avatar/gutter.
 const AVATAR_WIDTH_REM = 2;
-const AVATAR_MESSAGE_GAP_REM = 0.5;
+const AVATAR_MARGIN_LEFT = 2.5;
+const AVATAR_MESSAGE_GAP_REM = 0.125;
 const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 
 // Avatars should display on top of chat messages when the chat thread is narrow
@@ -36,7 +37,7 @@ export const messageThreadContainerStyle = mergeStyles({
   position: 'relative',
   alignSelf: 'center'
 });
-// TODO: check styles here
+
 /**
  * @private
  */
@@ -68,10 +69,52 @@ export const useChatStyles = makeStyles({
     },
     '& a:hover': {
       color: tokens.colorBrandForegroundLinkHover
-    },
-    '& a:selected': {
-      color: tokens.colorBrandForegroundLinkHover
     }
+  }
+});
+
+/**
+ * @private
+ */
+export const useChatMessageRenderStyles = makeStyles({
+  rootMessage: {
+    ...shorthands.padding('0'),
+    ...shorthands.margin('0'),
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+  },
+  rootMyMessage: {
+    gridTemplateColumns: 'auto',
+    gridTemplateAreas: `
+        "body"
+      `,
+    columnGap: '0',
+    gridGap: '0',
+    ...shorthands.padding('0'),
+    ...shorthands.margin('0'),
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+  },
+  body: {
+    ...shorthands.padding('0'),
+    marginRight: `0`,
+    marginTop: `0`,
+    marginBottom: `0`,
+    backgroundColor: 'transparent',
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+  },
+  bodyWithoutAvatar: {
+    marginLeft: `${AVATAR_MARGIN_LEFT}rem`
+  },
+  bodyWithAvatar: {
+    marginLeft: `0`
+  },
+  avatarNoOverlap: {
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
+  },
+  avatarOverlap: {
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM - MESSAGE_AVATAR_OVERLAP_REM}rem)`
   }
 });
 
@@ -80,12 +123,13 @@ export const useChatStyles = makeStyles({
  */
 export const useChatMyMessageStyles = makeStyles({
   root: {
-    gridTemplateColumns: 'auto auto fit-content(0)',
+    gridTemplateColumns: 'auto auto auto',
     gridTemplateAreas: `
         ". actions ."
         "body body status"
       `,
     gridGap: '0',
+    columnGap: '0',
     paddingTop: '0'
   },
   body: {
@@ -150,13 +194,17 @@ export const chatMessageDateStyle: CSSProperties = {
  * @private
  */
 export const useChatMessageStyles = makeStyles({
+  root: {
+    paddingTop: '0'
+  },
   body: {
-    flexShrink: 0,
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginRight: '0rem',
     paddingBottom: '10px',
     zIndex: CHAT_MESSAGE_ZINDEX,
+    // This makes message bubble show border in high contrast mode making each message distinguishable
+    ...shorthands.border('1px solid transparent'),
     '& msft-mention': {
       color: tokens.colorStatusWarningBackground3,
       fontWeight: tokens.fontWeightSemibold
@@ -206,17 +254,19 @@ export const useChatMessageStyles = makeStyles({
           paddingRight: '5px'
         }
       }
-    },
-    // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px solid transparent')
+    }
+  },
+  bodyWithoutAvatar: {
+    marginTop: '0.125rem'
+  },
+  bodyWithAvatar: {
+    marginTop: `0.5rem`
   },
   avatarNoOverlap: {
-    marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`,
-    maxWidth: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
+    marginLeft: `${-AVATAR_MARGIN_LEFT + AVATAR_MESSAGE_GAP_REM}rem`
   },
   avatarOverlap: {
-    marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`,
-    maxWidth: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + -MESSAGE_AVATAR_OVERLAP_REM}rem)`
+    marginLeft: `${-AVATAR_MARGIN_LEFT - MESSAGE_AVATAR_OVERLAP_REM}rem`
   }
 });
 
@@ -261,7 +311,7 @@ export const useChatMessageCommonStyles = makeStyles({
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
-  paddingTop: '0.5rem',
+  paddingTop: '1.125rem',
   width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
