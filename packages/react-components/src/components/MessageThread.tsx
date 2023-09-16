@@ -136,7 +136,6 @@ const didUserSendTheLatestMessage = (
  * @public
  */
 export interface MessageThreadStyles extends BaseCustomStyles {
-  //not used
   /** Styles for load previous messages container. */
   loadPreviousMessagesButtonContainer?: IStyle;
   /** Styles for new message container. */
@@ -144,10 +143,8 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for chat container. */
   chatContainer?: ComponentSlotStyle;
   /** styles for my chat items.  */
-  //TODO:was removed?
   myChatItemMessageContainer?: ComponentSlotStyle;
   /** styles for chat items.  */
-  //TODO:was removed?
   chatItemMessageContainer?: ComponentSlotStyle;
   /** Styles for my chat message container. */
   myChatMessageContainer?: ComponentSlotStyle;
@@ -160,7 +157,6 @@ export interface MessageThreadStyles extends BaseCustomStyles {
   /** Styles for blocked message container. */
   /* @conditional-compile-remove(data-loss-prevention) */
   blockedMessageContainer?: ComponentSlotStyle;
-  //TODO: not used
   /** Styles for message status indicator container. */
   messageStatusContainer?: (mine: boolean) => IStyle;
 }
@@ -404,7 +400,17 @@ const memoizeAllMessages = memoizeFnAll(
         chatMessageComponent = (
           <FluentChatMyMessage
             attached={attached}
-            root={{ className: chatMessageRenderStyles.rootMyMessage }}
+            root={{
+              // myChatItemMessageContainer used in className and style as style can't handle actions
+              className: mergeClasses(
+                chatMessageRenderStyles.rootMyMessage,
+                mergeStyles(styles?.myChatItemMessageContainer)
+              ),
+              style:
+                styles?.myChatItemMessageContainer !== undefined
+                  ? createStyleFromV8Style(styles?.myChatItemMessageContainer)
+                  : {}
+            }}
             body={{ className: chatMessageRenderStyles.body }}
           >
             {onRenderMessage === undefined
@@ -425,13 +431,19 @@ const memoizeAllMessages = memoizeFnAll(
             attached={attached}
             root={{ className: chatMessageRenderStyles.rootMessage }}
             body={{
+              // chatItemMessageContainer used in className and style as style can't handle actions
               className: mergeClasses(
                 chatMessageRenderStyles.body,
                 !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
                 shouldOverlapAvatarAndMessage
                   ? chatMessageRenderStyles.avatarOverlap
-                  : chatMessageRenderStyles.avatarNoOverlap
-              )
+                  : chatMessageRenderStyles.avatarNoOverlap,
+                mergeStyles(styles?.chatItemMessageContainer)
+              ),
+              style:
+                styles?.chatItemMessageContainer !== undefined
+                  ? createStyleFromV8Style(styles?.chatItemMessageContainer)
+                  : {}
             }}
             avatar={
               <div className={mergeStyles(chatAvatarStyle)}>
