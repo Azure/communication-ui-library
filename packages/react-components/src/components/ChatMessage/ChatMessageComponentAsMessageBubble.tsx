@@ -323,7 +323,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         {message.mine ? (
           <ChatMyMessage
             key={props.message.messageId}
-            // attached={attached}
             body={{
               // messageContainerStyle used in className and style as style can't handle actions
               className: mergeClasses(
