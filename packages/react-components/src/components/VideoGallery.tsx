@@ -42,6 +42,7 @@ import { VerticalGalleryStyles } from './VerticalGallery';
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 /* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
+import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 
 /**
  * @private
@@ -683,6 +684,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
+    }
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (layout === 'largeGallery') {
+      return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
