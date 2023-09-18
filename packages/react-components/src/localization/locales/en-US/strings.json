@@ -345,7 +345,6 @@
   "StarSurvey": {
     "question": "How was your call today?",
     "thankYouText": "Thanks for letting us know",
-    "confirmButtonLabel": "Submit response",
     "helperText": "Your feedback will help us improve your experience.",
     "oneStarText": "The quality was bad",
     "twoStarText": "The quality was poor",

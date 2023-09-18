@@ -32,7 +32,7 @@ export const helperTextStyle = (theme: Theme): string =>
 /**
  * @private
  */
-export const ratingStyles = (theme: Theme): Partial<IRatingStyles> => {
+export const ratingStyles = (): Partial<IRatingStyles> => {
   return {
     root: {
       marginBottom: _pxToRem(24),

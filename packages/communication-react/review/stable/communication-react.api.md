@@ -1269,6 +1269,8 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
+    // (undocumented)
+    StarSurvey: StarSurveyStrings;
     typingIndicator: TypingIndicatorStrings;
     videoGallery: VideoGalleryStrings;
 }
@@ -2418,6 +2420,41 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textField?: IStyle;
     textFieldContainer?: IStyle;
 }
+
+// @public
+export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
+
+// @public
+export interface StarSurveyProps {
+    onSubmitStarSurvey: (ratings: number, type: StarSurveyTypes) => Promise<void>;
+    selectedIcon?: string;
+    showSurvey?: boolean;
+    strings?: StarSurveyStrings;
+    styles?: StarSurveyStyles;
+    type?: StarSurveyTypes;
+    unselectedIcon?: string;
+}
+
+// @public
+export interface StarSurveyStrings {
+    fiveStarText: string;
+    fourStarText: string;
+    helperText: string;
+    oneStarText: string;
+    question: string;
+    thankYouText: string;
+    threeStarText: string;
+    twoStarText: string;
+}
+
+// @public
+export interface StarSurveyStyles {
+    // (undocumented)
+    root?: IStyle;
+}
+
+// @public
+export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
 
 // @public
 export interface StatefulCallClient extends CallClient {
