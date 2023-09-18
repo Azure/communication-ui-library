@@ -14,7 +14,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 /**
  * Dependency resolution for video background effects.
  *
- * @beta
+ * @public
  */
 export const onResolveVideoEffectDependency = async (): Promise<VideoBackgroundEffectsDependency> => {
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {

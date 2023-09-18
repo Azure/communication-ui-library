@@ -41,8 +41,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
-        // raise hands feature
-        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -58,8 +56,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'total-participant-count',
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
-        // feature for blurred background and replace background effects
-        'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
         // Feature for updates needed for Click to Call (C2C) scenarios
@@ -84,12 +80,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for capabilities
-        'capabilities',
         // Feature for custom video gallery layouts
-        'gallery-layouts',
-        // Feature image gallery
-        'image-gallery'
+        'gallery-layouts'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -99,8 +91,18 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // feature for blurred background and replace background effects
+        'video-background-effects',
         // Pinned Participants
-        'pinned-participants'
+        'pinned-participants',
+        // Feature for capabilities
+        'capabilities',
+         // Closed captions
+        'close-captions',
+        // Optimal Video Count
+        'optimal-video-count',
+        // raise hands feature
+        'raise-hand'
       ]
     }
   ]);

@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "Release",
-  "comment": "Updated `stable-remove-beta-version` option to `stable-remove-beta-suffix` in create-prerelease-branch.yml",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

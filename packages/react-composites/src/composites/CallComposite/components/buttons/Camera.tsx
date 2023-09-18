@@ -8,7 +8,7 @@ import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 import { IButton } from '@fluentui/react';
 
@@ -21,12 +21,12 @@ export const Camera = (props: {
   splitButtonsForDeviceSelection?: boolean;
   disabled?: boolean;
   /* @conditional-compile-remove(video-background-effects) */
-  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
+  onClickVideoEffects?: (showVideoEffects: boolean) => void;
   componentRef?: React.RefObject<IButton>;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
@@ -53,7 +53,7 @@ export const Camera = (props: {
           : undefined
       }
       /* @conditional-compile-remove(video-background-effects) */
-      onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+      onClickVideoEffects={props.onClickVideoEffects}
       componentRef={props.componentRef}
     />
   );

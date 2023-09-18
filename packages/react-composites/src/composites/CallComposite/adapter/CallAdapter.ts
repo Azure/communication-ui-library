@@ -253,7 +253,7 @@ export type DiagnosticChangedEventListner = (
 /**
  * Contains the attibutes of a background image like url, name etc.
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundImage {
   /**
@@ -299,7 +299,7 @@ export interface JoinCallOptions {
 /**
  * Callback for {@link CallAdapterSubscribers} 'captionsReceived' event.
  *
- * @beta
+ * @public
  */
 export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) => void;
 
@@ -307,7 +307,7 @@ export type CaptionsReceivedListener = (event: { captionsInfo: CaptionsInfo }) =
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionsActiveChanged' event.
  *
- * @beta
+ * @public
  */
 export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => void;
 
@@ -315,7 +315,7 @@ export type IsCaptionsActiveChangedListener = (event: { isActive: boolean }) => 
 /**
  * Callback for {@link CallAdapterSubscribers} 'isCaptionLanguageChanged' event.
  *
- * @beta
+ * @public
  */
 export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: string }) => void;
 
@@ -323,7 +323,7 @@ export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: 
 /**
  * Callback for {@link CallAdapterSubscribers} 'isSpokenLanguageChanged' event.
  *
- * @beta
+ * @public
  */
 export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
 
@@ -339,7 +339,7 @@ export type TransferRequestedListener = (event: TransferRequestedEventArgs) => v
 /**
  * Callback for {@link CallAdapterSubscribers} 'capabilitiesChanged' event.
  *
- * @beta
+ * @public
  */
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
@@ -347,7 +347,7 @@ export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void
 /**
  * Contains the attibutes of a selected video background effect
  *
- * @beta
+ * @public
  */
 export type VideoBackgroundEffect =
   | VideoBackgroundNoEffect
@@ -357,7 +357,7 @@ export type VideoBackgroundEffect =
 /**
  * Contains the attibutes to remove video background effect
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundNoEffect {
   /**
@@ -370,7 +370,7 @@ export interface VideoBackgroundNoEffect {
 /**
  * Contains the attibutes of the blur video background effect
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
   /**
@@ -383,7 +383,7 @@ export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
 /**
  * Contains the attibutes of a selected replacement video background effect
  *
- * @beta
+ * @public
  */
 export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
   /**
@@ -592,14 +592,14 @@ export interface CallAdapterCallOperations {
   /**
    * Start the video background effect.
    *
-   * @beta
+   * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stop the video background effect.
    *
-   * @beta
+   * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
@@ -608,14 +608,14 @@ export interface CallAdapterCallOperations {
    *
    * @param backgroundImages - Array of custom background images.
    *
-   * @beta
+   * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Update the selected video background effect.
    *
-   * @beta
+   * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
@@ -793,7 +793,7 @@ export interface CallAdapterSubscribers {
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
   /**
-   * Unsubscribe function for 'capabilitiesChanged' event.
+   * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 

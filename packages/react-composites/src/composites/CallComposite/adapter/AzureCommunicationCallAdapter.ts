@@ -49,7 +49,7 @@ import type { CapabilitiesChangeHandler, CapabilitiesChangeInfo } from '@azure/c
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(capabilities) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -1279,7 +1279,7 @@ export type CallAdapterLocator =
 /**
  * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
  *
- * @beta
+ * @public
  */
 export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(video-background-effects) */
@@ -1290,6 +1290,7 @@ export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   };
+  /* @conditional-compile-remove(teams-identity-support) */
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
    * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
@@ -1301,7 +1302,7 @@ export type CommonCallAdapterOptions = {
 /**
  * Optional parameters to create {@link AzureCommunicationCallAdapter}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
@@ -1333,7 +1334,7 @@ export type AzureCommunicationCallAdapterArgs = {
 /**
  * Optional parameters to create {@link TeamsCallAdapter}
  *
- * @beta
+ * @public
  */
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 

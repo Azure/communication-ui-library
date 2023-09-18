@@ -50,6 +50,7 @@
     "deniedPermissionToRoomDetails": "ليس لديك الإذن بالانضمام إلى هذه الغرفة.",
     "deniedPermissionToRoomTitle": "تم رفض الإذن بالغرفة",
     "peopleButtonLabel": "الأشخاص",
+    "selectedPeopleButtonLabel": "تم تحديد زر الأشخاص",
     "peoplePaneTitle": "الأشخاص",
     "peopleButtonTooltipOpen": "إظهار المشاركين",
     "peopleButtonTooltipClose": "إخفاء المشاركين",
@@ -99,16 +100,18 @@
     "startCaptionsButtonOffLabel": "تعطيل نص الكلام",
     "startCaptionsButtonTooltipOnContent": "تعطيل نص الكلام",
     "startCaptionsButtonTooltipOffContent": "تمكين نص الكلام",
-    "captionsSettingsModalTitle": "ما اللغة التي يتم التحدث بها؟",
-    "captionsSettingsDropdownLabel": "اللغة المنطوقة",
-    "captionsSettingsDropdownInfoText": "اللغة التي يتحدث بها كل شخص في هذه المكالمة.",
+    "captionsSettingsModalTitle": "إعدادات التسميات التوضيحية",
+    "captionsSettingsSpokenLanguageDropdownLabel": "اللغة المنطوقة",
+    "captionsSettingsCaptionLanguageDropdownLabel": "لغة التسميات التوضيحية",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "اللغة التي يتحدث بها كل شخص في هذه المكالمة.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "ستظهر التسميات التوضيحية بهذه اللغة.",
     "captionsSettingsConfirmButtonLabel": "تأكيد",
     "captionsSettingsCancelButtonLabel": "إلغاء",
     "captionsSettingsModalAriaLabel": "مربع حوار إعدادات نص الكلام المشروط",
     "captionsSettingsCloseModalButtonAriaLabel": "إغلاق إعداد نص الكلام",
     "captionsBannerMoreButtonCallingLabel": "المزيد",
     "captionsBannerMoreButtonTooltip": "خيارات إضافية",
-    "captionsAvailableLanguageStrings": {
+    "spokenLanguageStrings": {
       "ar-ae": "العربية - الإمارات العربية المتحدة",
       "ar-sa": "العربية - السعودية",
       "da-dk": "الدانمركية",
@@ -151,6 +154,40 @@
       "sk-sk": "السلوفاكية",
       "zh-tw": "الصينية - تايوان"
     },
+    "captionLanguageStrings": {
+      "ar": "العربية",
+      "da": "الدانمركية",
+      "de": "الألمانية",
+      "en": "الإنجليزية",
+      "es": "الإسبانية",
+      "fi": "الفنلندية",
+      "fr-ca": "الفرنسية - كندا",
+      "fr": "الفرنسية - فرنسا",
+      "hi": "الهندية",
+      "it": "الإيطالية",
+      "ja": "اليابانية",
+      "ko": "الكورية",
+      "nb": "النرويجية (بوكمال)",
+      "nl": "الهولندية",
+      "pl": "البولندية",
+      "pt": "البرتغالية - البرازيل",
+      "ru": "الروسية",
+      "sv": "السويدية",
+      "zh-Hans": "الصينية (المبسطة)",
+      "zh-Hant": "الصينية (التقليدية)",
+      "cs": "التشيكية",
+      "pt-pt": "البرتغالية - البرتغال",
+      "tr": "التركية",
+      "vi": "الفيتنامية",
+      "th": "التايلاندية",
+      "he": "العبرية",
+      "cy": "الويلزية",
+      "uk": "الأوكرانية",
+      "el": "اليونانية",
+      "hu": "الهنغارية",
+      "ro": "الرومانية",
+      "sk": "السلوفاكية"
+    },
     "captionsBannerSpinnerText": "يتم الآن بدء التسميات التوضيحية...",
     "transferPageTransferorText": "يتم الآن التحويل...",
     "transferPageTransferTargetText": "جارٍ الاتصال...",
@@ -170,7 +207,21 @@
     "moreButtonGallerySpeakerLayoutLabel": "تخطيط السماعة",
     "moreButtonGalleryFloatingLocalLayoutLabel": "تخطيط ديناميكي",
     "moreButtonGalleryDefaultLayoutLabel": "تخطيط المعرض",
-    "moreButtonGalleryFocusedContentLayoutLabel": "المحتوى المركز عليه"
+    "moreButtonGalleryFocusedContentLayoutLabel": "المحتوى المركز عليه",
+    "capabilityChangedNotification": {
+      "turnVideoOn": {
+        "lostDueToMeetingOption": "تم تعطيل الكاميرا الخاصة بك. لم يعد بإمكانك مشاركة الفيديو.",
+        "grantedDueToMeetingOption": "تم تمكين الكاميرا الخاصة بك. قم بتشغيله إذا كنت ترغب في مشاركة الفيديو."
+      },
+      "unmuteMic": {
+        "lostDueToMeetingOption": "لقد تم تعطيل الميكروفون الخاص بك. لم يعد بإمكانك إلغاء كتم الصوت.",
+        "grantedDueToMeetingOption": "تم تمكين الميكروفون لديك. قم بإلغاء كتم الصوت إذا كنت ترغب في التحدث."
+      },
+      "shareScreen": {
+        "lostDueToRoleChangeToAttendee": "تم تغيير دورك. لن تتوفر بعض الإجراءات، مثل مشاركة المحتوى، لك.",
+        "grantedDueToRoleChangeToPresenter": "أنت مقدم العرض. يمكنك مشاركة المحتوى وتسهيل الاجتماع."
+      }
+    }
   },
   "chat": {
     "chatListHeader": "في هذه الدردشة",
@@ -193,7 +244,9 @@
     "moreDrawerSpeakerMenuTitle": "مكبر الصوت",
     "moreDrawerCaptionsMenuTitle": "نص الكلام مباشرةً",
     "moreDrawerSpokenLanguageMenuTitle": "اللغة المنطوقة",
+    "moreDrawerCaptionLanguageMenuTitle": "لغة التسمية التوضيحية",
     "peopleButtonLabel": "الأشخاص",
+    "selectedPeopleButtonLabel": "تم تحديد زر الأشخاص",
     "peopleButtonTooltipOpen": "إظهار المشاركين",
     "peopleButtonTooltipClose": "إخفاء المشاركين",
     "peoplePaneSubTitle": "في هذه المكالمة",
