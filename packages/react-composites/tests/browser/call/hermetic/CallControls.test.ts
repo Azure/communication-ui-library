@@ -5,6 +5,7 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemote
 import { expect } from '@playwright/test';
 import {
   dataUiId,
+  existsOnPage,
   isTestProfileDesktop,
   isTestProfileMobile,
   pageClick,
@@ -115,8 +116,9 @@ test.describe('New call control bar renders correctly', () => {
       })
     );
 
-    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    if (await existsOnPage(page, dataUiId('common-call-composite-more-button'))) {
+      await pageClick(page, dataUiId('common-call-composite-more-button'));
+    }
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
   });
