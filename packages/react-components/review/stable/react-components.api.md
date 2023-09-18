@@ -1579,6 +1579,137 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
 }
 
 // @public
+export interface SpokenLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
+}
+
+// @internal
+export const _spokenLanguageToCaptionLanguage: {
+    'ar-ae': string;
+    'ar-sa': string;
+    'da-dk': string;
+    'de-de': string;
+    'en-au': string;
+    'en-ca': string;
+    'en-gb': string;
+    'en-in': string;
+    'en-nz': string;
+    'en-us': string;
+    'es-es': string;
+    'es-mx': string;
+    'fi-fi': string;
+    'fr-ca': string;
+    'fr-fr': string;
+    'hi-in': string;
+    'it-it': string;
+    'ja-jp': string;
+    'ko-kr': string;
+    'nb-no': string;
+    'nl-be': string;
+    'nl-nl': string;
+    'pl-pl': string;
+    'pt-br': string;
+    'ru-ru': string;
+    'sv-se': string;
+    'zh-cn': string;
+    'zh-hk': string;
+    'cs-cz': string;
+    'pt-pt': string;
+    'tr-tr': string;
+    'vi-vn': string;
+    'th-th': string;
+    'he-il': string;
+    'cy-gb': string;
+    'uk-ua': string;
+    'el-gr': string;
+    'hu-hu': string;
+    'ro-ro': string;
+    'sk-sk': string;
+    'zh-tw': string;
+};
+
+// @public
 export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
 
 // @public
@@ -1612,6 +1743,26 @@ export interface StarSurveyStyles {
 
 // @public
 export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
+}
 
 // @public
 export const StreamMedia: (props: StreamMediaProps) => JSX.Element;

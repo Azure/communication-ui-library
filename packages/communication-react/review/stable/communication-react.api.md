@@ -2921,6 +2921,41 @@ export interface SpokenLanguageStrings {
 }
 
 // @public
+export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
+
+// @public
+export interface StarSurveyProps {
+    onSubmitStarSurvey: (ratings: number, type: StarSurveyTypes) => Promise<void>;
+    selectedIcon?: string;
+    showSurvey?: boolean;
+    strings?: StarSurveyStrings;
+    styles?: StarSurveyStyles;
+    type?: StarSurveyTypes;
+    unselectedIcon?: string;
+}
+
+// @public
+export interface StarSurveyStrings {
+    fiveStarText: string;
+    fourStarText: string;
+    helperText: string;
+    oneStarText: string;
+    question: string;
+    thankYouText: string;
+    threeStarText: string;
+    twoStarText: string;
+}
+
+// @public
+export interface StarSurveyStyles {
+    // (undocumented)
+    root?: IStyle;
+}
+
+// @public
+export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
+
+// @public
 export interface StatefulCallClient extends CallClient {
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
