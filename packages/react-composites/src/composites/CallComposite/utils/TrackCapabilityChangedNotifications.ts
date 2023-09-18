@@ -148,21 +148,21 @@ type LatestCapabilityChangedNotificationRecord = Partial<
 /* @conditional-compile-remove(capabilities) */
 const updateLatestCapabilityChangedNotificationMap = (
   capabilitiesChangedInfoAndRole: CapabilitiesChangedInfoAndRole,
-  latestNotifications: LatestCapabilityChangedNotificationRecord
+  activeNotifications: LatestCapabilityChangedNotificationRecord
 ): LatestCapabilityChangedNotificationRecord => {
   if (!capabilitiesChangedInfoAndRole.capabilitiesChangeInfo) {
-    return latestNotifications;
+    return activeNotifications;
   }
 
   for (const [capabilityName, newCapabilityValue] of Object.entries(
     capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
   )) {
-    // If the latest notification for a capability has the same `isPresent` value for the same reason we will not
-    // create a new notification
+    // If the active notification for a capability has the same `isPresent` value and the same reason as the new
+    // capability value from the SDK then we will not create a new notification to avoid redundancy
     if (
-      latestNotifications[capabilityName] &&
-      newCapabilityValue.isPresent === latestNotifications[capabilityName].isPresent &&
-      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === latestNotifications[capabilityName].changedReason
+      activeNotifications[capabilityName] &&
+      newCapabilityValue.isPresent === activeNotifications[capabilityName].isPresent &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === activeNotifications[capabilityName].changedReason
     ) {
       continue;
     }
@@ -173,7 +173,7 @@ const updateLatestCapabilityChangedNotificationMap = (
       role: capabilitiesChangedInfoAndRole.participantRole,
       timestamp: new Date(Date.now())
     };
-    latestNotifications[capabilityName] = newCapabilityChangeNotification;
+    activeNotifications[capabilityName] = newCapabilityChangeNotification;
   }
-  return latestNotifications;
+  return activeNotifications;
 };
