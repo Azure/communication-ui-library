@@ -50,12 +50,11 @@ supported in beta version **1.5.1-beta.1** or later. For more on CTE users, clic
 [here](path=/docs/communicationasteamsuser--page). Currently, the only capabilities affected by Teams policies for CTE
 users in Teams meetings are share screen.
 
-## Listening for changes in capabilities
+## Listening to changes in capabilities
 
-The CallAdapter and CallWithChatAdapter are able to listen for 'capabilitiesChanged' events and allow you to handle
-these events by defining your own `CapabilitiesChangedListener` callback. The following code snippet shows an example
-of the CallAdapter using a `CapabilitiesChangedListener` that simply logs the capabilities changed info to the browser
-console.
+The CallAdapter and CallWithChatAdapter allow you to listen to 'capabilitiesChanged' events by defining your own
+`CapabilitiesChangedListener` callback. The following code snippet shows an example of the CallAdapter using a
+`CapabilitiesChangedListener` that simply logs the capabilities changed information to the browser console.
 
 <Source code={CapabilitiesChangedListenerSnippetText} />
 
