@@ -19,6 +19,6 @@ module.exports = {
   plugins: ['header'],
   rules: {
     eqeqeq: 'warn',
-    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT license.']
+    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT License.']
   }
 };

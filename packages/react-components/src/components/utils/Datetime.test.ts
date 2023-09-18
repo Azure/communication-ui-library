@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { formatDateForChatMessage, formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { COMPONENT_LOCALE_EN_US } from '../../localization/locales';

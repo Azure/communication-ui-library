@@ -76,7 +76,7 @@
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
-    "lint:fix": "rushx lint -- --fix",
+    "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet",
     "postpack": "copyfiles -E \"./*.tgz\" release",
     "check-breaking-change": "tsc --project breaking-change-check/tsconfig.json --strict --noEmit --allowSyntheticDefaultImports",

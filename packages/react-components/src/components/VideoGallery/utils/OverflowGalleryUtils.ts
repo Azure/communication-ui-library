@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
 import { LARGE_HORIZONTAL_GALLERY_TILE_SIZE_REM } from '../styles/VideoGalleryResponsiveHorizontalGallery.styles';

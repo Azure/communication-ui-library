@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ControlBarButton } from '@azure/communication-react';
 import { Airplane20Filled, VehicleBus20Filled, VehicleShip20Filled } from '@fluentui/react-icons';

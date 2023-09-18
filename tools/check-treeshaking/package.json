@@ -14,7 +14,7 @@
     "test:stable": "echo skip",
     "test:coverage": "echo skip",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts,tsx}\"",
-    "lint:fix": "rushx lint -- --fix",
+    "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {

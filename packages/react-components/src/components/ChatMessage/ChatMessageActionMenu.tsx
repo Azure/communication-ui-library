@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon, mergeStyles, Theme } from '@fluentui/react';
 import { MenuProps, Ref } from '@internal/northstar-wrapper';

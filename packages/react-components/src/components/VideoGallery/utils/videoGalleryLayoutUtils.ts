@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { useCallback, useRef } from 'react';
 import { smartDominantSpeakerParticipants } from '../../../gallery';

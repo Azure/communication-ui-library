@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { UNSUPPORTED_CHAT_THREAD_TYPE, TEAMS_LIMITATION_LEARN_MORE } from '../../common/constants';
 /**

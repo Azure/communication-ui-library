@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useContext, createContext } from 'react';
 import { Call } from '@azure/communication-calling';

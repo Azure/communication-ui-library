@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';

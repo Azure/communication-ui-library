@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
