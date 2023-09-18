@@ -54,7 +54,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     const galleryImage: ImageGalleryImageProps = {
       title,
       titleIcon,
-      saveAsName: attachment.id,
+      downloadFilename: attachment.id,
       imageUrl: attachment.url
     };
     setGalleryImages([galleryImage]);
