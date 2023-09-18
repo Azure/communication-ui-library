@@ -1720,26 +1720,6 @@ export const _spokenLanguageToCaptionLanguage: {
     'zh-tw': string;
 };
 
-// @internal
-export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
-
-// @internal (undocumented)
-export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
-    currentSpokenLanguage: string;
-    onSetSpokenLanguage: (language: string) => Promise<void>;
-    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
-    onStopCaptions: () => Promise<void>;
-    strings?: _StartCaptionsButtonStrings;
-}
-
-// @internal
-export interface _StartCaptionsButtonStrings {
-    offLabel: string;
-    onLabel: string;
-    tooltipOffContent: string;
-    tooltipOnContent: string;
-}
-
 // @public
 export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
 
@@ -1774,6 +1754,26 @@ export interface StarSurveyStyles {
 
 // @public
 export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
+}
 
 // @public
 export const StreamMedia: (props: StreamMediaProps) => JSX.Element;
