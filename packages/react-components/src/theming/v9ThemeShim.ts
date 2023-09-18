@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
+
 import { IEffects, IPalette, Theme as ThemeV8 } from '@fluentui/react';
 import {
   BorderRadiusTokens,
@@ -220,6 +221,10 @@ export const createV9Theme = (themeV8: ThemeV8, baseThemeV9?: ThemeV9): ThemeV9 
     colorBrandBackground2Hover: themeV8.palette.themeLight, // updated from palette.themeLighterAlt
     colorBrandBackground2Pressed: themeV8.palette.themeLight, // updated from palette.themeLighterAlt
     colorStatusWarningBackground3: '#D83B01',
-    errorText: themeV8.semanticColors.errorText
+    errorText: themeV8.semanticColors.errorText,
+    colorNeutralStroke1Selected: themeV8.palette.neutralQuaternary,
+    colorNeutralForeground2: themeV8.palette.neutralSecondary,
+    colorBrandForegroundLink: themeV8.palette.themePrimary,
+    colorBrandForegroundLinkHover: themeV8.palette.themeDarker
   };
 };

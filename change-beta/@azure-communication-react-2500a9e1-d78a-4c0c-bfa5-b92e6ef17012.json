@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "FLuentUI v9",
+  "comment": "Added styles and fixed custom rendering for messages",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

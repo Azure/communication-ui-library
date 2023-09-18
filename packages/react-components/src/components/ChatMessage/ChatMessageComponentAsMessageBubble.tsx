@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IPersona, Persona, PersonaSize, Text, mergeStyles } from '@fluentui/react';
+import { Text, mergeStyles, IStyle } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage, ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useRef, useState } from 'react';
@@ -30,22 +30,20 @@ import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
+import { createStyleFromV8Style } from '../styles/v8StyleShim';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { mergeClasses } from '@fluentui/react-components';
 import {
-  chatBlockedMessageClasses,
-  chatBlockedMyMessageClasses,
-  defaultChatItemMessageContainerStyles,
-  gutterWithAvatar,
-  gutterWithHiddenAvatar,
-  useChatMyMessageClasses,
-  useChatMessageClasses,
-  _useChatMyMessageLayout
+  useChatMessageStyles,
+  useChatMyMessageStyles,
+  useChatMessageCommonStyles
 } from '../styles/MessageThread.styles';
 
 type ChatMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
   messageContainerStyle?: ComponentSlotStyle;
+  /** Styles for message status indicator container. */
+  messageStatusContainer?: (mine: boolean) => IStyle;
   showDate?: boolean;
   disableEditing?: boolean;
   onEditClick: () => void;
@@ -153,6 +151,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     disableEditing,
     showDate,
     messageContainerStyle,
+    messageStatusContainer: messageStatusContainerStyle,
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
@@ -294,39 +293,29 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     handleOnInlineImageClicked
   ]);
 
-  const attached = message.attached === 'top' || message.attached === false ? 'top' : 'center';
-  const chatAvatarStyle =
-    message.attached === 'top' || message.attached === false ? gutterWithAvatar : gutterWithHiddenAvatar;
-
   let renderedStatusIcon =
     showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
   renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
-  const chatMyMessageClass = useChatMyMessageClasses(message.status);
-  const chatMessageClass = useChatMessageClasses(message.status);
-  const chatBlockedMyMessageClass = chatBlockedMyMessageClasses();
-  const chatBlockedMessageClass = chatBlockedMessageClasses();
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
-  const myMessageContainerClasses = isBlockedMessage ? chatBlockedMyMessageClass : chatMyMessageClass;
-  const messageContainerClasses = isBlockedMessage ? chatBlockedMessageClass : chatMessageClass;
-  const rootLayout = _useChatMyMessageLayout();
+  const chatMyMessageStyles = useChatMyMessageStyles();
+  const chatMessageCommonStyles = useChatMessageCommonStyles();
 
-  const chatItemMessageContainerClasses = defaultChatItemMessageContainerStyles();
+  const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
-    // Need to merge the styles injected with props - Future PR
-    messageContainerClasses?.body,
-    chatItemMessageContainerClasses.body,
-    shouldOverlapAvatarAndMessage
-      ? chatItemMessageContainerClasses.bodyAvatarOverlap
-      : chatItemMessageContainerClasses.bodyAvatarNoOverlap
+    // messageContainerStyle used in className and style as style can't handle actions
+    chatMessageStyles.body,
+    isBlockedMessage
+      ? chatMessageCommonStyles.blocked
+      : props.message.status === 'failed'
+      ? chatMessageCommonStyles.failed
+      : undefined,
+    shouldOverlapAvatarAndMessage ? chatMessageStyles.avatarOverlap : chatMessageStyles.avatarNoOverlap,
+    message.attached === 'top' || message.attached === false
+      ? chatMessageStyles.bodyWithAvatar
+      : chatMessageStyles.bodyWithoutAvatar,
+    mergeStyles(messageContainerStyle)
   );
-
-  const personaOptions: IPersona = {
-    hidePersonaDetails: true,
-    size: PersonaSize.size32,
-    text: message.senderDisplayName,
-    showOverflowTooltip: false
-  };
 
   const chatMessage = (
     <>
@@ -334,16 +323,21 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         {message.mine ? (
           <ChatMyMessage
             key={props.message.messageId}
-            attached={attached}
             body={{
+              // messageContainerStyle used in className and style as style can't handle actions
               className: mergeClasses(
-                rootLayout.body,
-                mergeStyles(messageContainerStyle),
-                myMessageContainerClasses?.body
-              )
+                chatMyMessageStyles.body,
+                isBlockedMessage
+                  ? chatMessageCommonStyles.blocked
+                  : props.message.status === 'failed'
+                  ? chatMessageCommonStyles.failed
+                  : undefined,
+                mergeStyles(messageContainerStyle)
+              ),
+              style: { ...createStyleFromV8Style(messageContainerStyle) }
             }}
             root={{
-              className: rootLayout.root,
+              className: chatMyMessageStyles.root,
               onBlur: (e) => {
                 // copy behavior from North*
                 // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
@@ -370,9 +364,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             actions={{
               children: actionMenuProps?.children,
               className: mergeClasses(
-                rootLayout.menu,
+                chatMyMessageStyles.menu,
                 // Make actions menu visible when the message is focused or the flyout is shown
-                focused || chatMessageActionFlyoutTarget ? rootLayout.menuVisible : rootLayout.menuHidden
+                focused || chatMessageActionFlyoutTarget
+                  ? chatMyMessageStyles.menuVisible
+                  : chatMyMessageStyles.menuHidden
               )
             }}
             onTouchStart={() => setWasInteractionByTouch(true)}
@@ -393,22 +389,27 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 props.onActionButtonClick(message, setMessageReadBy);
               }
             }}
-            statusIcon={<div className={mergeStyles({ paddingLeft: 4 })}>{renderedStatusIcon}</div>}
+            statusIcon={
+              <div
+                className={mergeStyles(
+                  { paddingLeft: '0.25rem' },
+                  messageStatusContainerStyle ? messageStatusContainerStyle(message.mine ?? false) : ''
+                )}
+              >
+                {renderedStatusIcon}
+              </div>
+            }
           >
             {getContent()}
           </ChatMyMessage>
         ) : (
           <FluentChatMessage
             key={props.message.messageId}
-            avatar={
-              <div className={mergeStyles(chatAvatarStyle)}>
-                {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
-              </div>
-            }
-            attached={attached}
+            root={{ className: chatMessageStyles.root }}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
-              className: chatItemMessageContainerClassName
+              className: chatItemMessageContainerClassName,
+              style: { ...createStyleFromV8Style(messageContainerStyle) }
             }}
             data-ui-id="chat-composite-message"
             timestamp={
