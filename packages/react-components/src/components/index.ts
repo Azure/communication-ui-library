@@ -205,7 +205,7 @@ export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
 
 export { StarSurvey } from './Survey/StarSurvey/StarSurvey';
-export type { StarSurveyProps, StarSurveyStrings, StarSurveyStyles } from './Survey/StarSurvey/StarSurvey';
+export type { StarSurveyProps, StarSurveyStrings, StarSurveyStyles, StarSurveyTypes } from './Survey/StarSurvey/StarSurvey';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';

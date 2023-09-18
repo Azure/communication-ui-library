@@ -15,37 +15,76 @@ import {
 } from './StarSurvey.styles';
 
 /**
- * Strings of {@link Survey} that can be overridden.
+ * Strings of {@link StarSurvey} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface StarSurveyStrings {
+  /**
+   * Survey question
+   */
   question: string;
+  /**
+   * Text that's displayed after user select a star response
+   */
   thankYouText: string;
-  confirmButtonLabel: string;
+  /**
+   * Helper text displayed below survey question before user choose a response
+   */
   helperText: string;
+  /**
+   * Helper text displayed below survey question after user select one star
+   */
   oneStarText: string;
+  /**
+   * Helper text displayed below survey question after user select two star
+   */
   twoStarText: string;
+  /**
+   * Helper text displayed below survey question after user select three star
+   */
   threeStarText: string;
+  /**
+   * Helper text displayed below survey question after user select four star
+   */
   fourStarText: string;
+  /**
+   * Helper text displayed below survey question after user select five star
+   */
   fiveStarText: string;
 }
 
 /**
  * Styles for {@link StarSurvey} component.
  *
- * @beta
+ * @public
  */
 export interface StarSurveyStyles {
   root?: IStyle;
 }
 
 /**
+ * {@link StarSurvey} types
+ *
+ * @public
+ */
+export type StarSurveyTypes  = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating'
+
+/**
  * Props for {@link StarSurvey} component.
  *
- * @beta
+ * @public
  */
 export interface StarSurveyProps {
+  /**
+   * Purpose of survey, overallRating,audioRating,videoRating, or ScreenshareRating
+   * @defaultvalue overallRating
+   */
+  type?: StarSurveyTypes;
+  /**
+   * Boolean value to open the survey modal
+   * @defaultvalue false
+   */
   showSurvey?: boolean;
   /**
    * Custom icon name for selected rating elements.
@@ -57,21 +96,26 @@ export interface StarSurveyProps {
    * @defaultvalue FavoriteStar
    */
   unselectedIcon?: string;
-  /**  function to send StarSurvey results*/
-  onSubmitStarSurvey: (ratings: number) => Promise<void>;
+  /** Function to send StarSurvey results*/
+  onSubmitStarSurvey: (
+    ratings: number,
+    type: StarSurveyTypes
+  ) => Promise<void>;
+  /** Star survey strings */
   strings?: StarSurveyStrings;
+  /** Star Survey styles */
   styles?: StarSurveyStyles;
 }
 
 /**
  * A component to allow users to send numerical ratings regarding call quality
  *
- * @beta
+ * @public
  */
 export const StarSurvey = (props: StarSurveyProps): JSX.Element => {
   const strings = useLocale().strings.StarSurvey;
 
-  const { onSubmitStarSurvey, showSurvey, selectedIcon, unselectedIcon } = props;
+  const { onSubmitStarSurvey, showSurvey, selectedIcon, unselectedIcon, type } = props;
 
   const [rating, setRating] = useState(0);
   const [showSurveyModal, setShowSurveyModal] = useState(showSurvey);
@@ -110,9 +154,10 @@ export const StarSurvey = (props: StarSurveyProps): JSX.Element => {
     }
   };
 
-  const onDismissTriggered = async () => {
-    await onSubmitStarSurvey(rating);
+  const onDismissTriggered = async (): Promise<void> => {
+    await onSubmitStarSurvey(rating, type ?? 'overallRating');
     setShowSurveyModal(false);
+    setRating(0);
   };
 
   return (
@@ -139,7 +184,7 @@ export const StarSurvey = (props: StarSurveyProps): JSX.Element => {
           ariaLabelFormat="{0} of {1} stars"
           rating={rating}
           onChange={onRatingChange}
-          styles={ratingStyles(theme)}
+          styles={ratingStyles}
           icon={selectedIcon}
           unselectedIcon={unselectedIcon}
         />

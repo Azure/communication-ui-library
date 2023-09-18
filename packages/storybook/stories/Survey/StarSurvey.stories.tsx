@@ -1,46 +1,61 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StarSurvey as StarSurveyComponent, useTheme } from '@azure/communication-react';
+import { StarSurvey as StarSurveyComponent, StarSurveyTypes, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
-import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
+import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
+import { useLocale } from '../../../react-components/src/localization';
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { hiddenControl } from '../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomStarSurveyExample } from './snippets/CustomStarSurvey.snippet';
 import { StarSurveyExample } from './snippets/StarSurvey.snippet';
 
-const ExampleSurveyText = require('!!raw-loader!./snippets/StarSurvey.snippet.tsx').default;
 const ExampleCustomSurveyText = require('!!raw-loader!./snippets/CustomStarSurvey.snippet.tsx').default;
+const ExampleSurveyText = require('!!raw-loader!./snippets/StarSurvey.snippet.tsx').default;
+
+const importStatement = `
+import {StarSurvey, StarSurveyProps, StarSurveyStrings, StarSurveyStyles, StarSurveyTypes } from '@azure/communication-react';`;
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
   return (
     <>
-      <SingleLineBetaBanner version={'1.3.2-beta.1'} topOfPage={true} />
       <Title>Star Survey</Title>
-      <Description>Component to render a Five Star Survey</Description>
-      <Heading>Example Survey</Heading>
+      <Description>Component to render a modal containing a star survey scaling from 1 to 5</Description>
+
+      <Heading>Importing</Heading>
+      <Source code={importStatement} />
+
+      <Heading>Usage</Heading>
+      <Description>Here is an example of how to use `StarSurvey`</Description>
       <Canvas mdxSource={ExampleSurveyText}>
         <StarSurveyExample />
       </Canvas>
-      <Heading>Example Survey with custom icons</Heading>
+
+      <Heading>Custom icons</Heading>
+      <Description>
+        To customize the star survey icons, use the `selectedIcon` and `unSelectedIcon` property like in the example
+        below.
+      </Description>
       <Canvas mdxSource={ExampleCustomSurveyText}>
         <CustomStarSurveyExample />
       </Canvas>
-      <Heading>Star Survey Props</Heading>
+
+      <Heading>Props</Heading>
       <Props of={StarSurveyComponent} />
     </>
   );
 };
 
-const StarSurveyStory = (): JSX.Element => {
+const StarSurveyStory = (args): JSX.Element => {
   const theme = useTheme();
+  const strings = useLocale().strings.StarSurvey;
+  strings.question = args.surveyQuestion;
 
-  const onSubmitSurvey = async (ratings: number) => {
-    console.log(ratings);
+  const onSubmitSurvey = async (ratings: number, type: StarSurveyTypes): Promise<void> => {
+    alert(`${type}: ${ratings}`);
     await Promise.resolve;
   };
 
@@ -53,7 +68,7 @@ const StarSurveyStory = (): JSX.Element => {
         height: '75%'
       })}
     >
-      <StarSurveyComponent onSubmitStarSurvey={onSubmitSurvey} showSurvey/>
+      <StarSurveyComponent onSubmitStarSurvey={onSubmitSurvey} {...args} {...strings} />
     </div>
   );
 };
@@ -65,8 +80,14 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Survey/StarSurvey`,
   component: StarSurveyComponent,
   argTypes: {
+    type: controlsToAdd.surveyType,
+    showSurvey: controlsToAdd.showSurvey,
+    surveyQuestion: controlsToAdd.surveyQuestion,
     strings: hiddenControl,
-    onSendDtmfTone: hiddenControl
+    onSubmitStarSurvey: hiddenControl,
+    selectedIcon: hiddenControl,
+    unselectedIcon: hiddenControl,
+    styles: hiddenControl
   },
   parameters: {
     docs: {

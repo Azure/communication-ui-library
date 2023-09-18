@@ -2083,49 +2083,40 @@ export const _spokenLanguageToCaptionLanguage: {
     'zh-tw': string;
 };
 
-// @beta
+// @public
 export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
 
-// @beta
+// @public
 export interface StarSurveyProps {
-    onSubmitStarSurvey: (ratings: number) => Promise<void>;
+    onSubmitStarSurvey: (ratings: number, type: StarSurveyTypes) => Promise<void>;
     selectedIcon?: string;
-    // (undocumented)
     showSurvey?: boolean;
-    // (undocumented)
     strings?: StarSurveyStrings;
-    // (undocumented)
     styles?: StarSurveyStyles;
+    type?: StarSurveyTypes;
     unselectedIcon?: string;
 }
 
-// @beta
+// @public
 export interface StarSurveyStrings {
-    // (undocumented)
-    confirmButtonLabel: string;
-    // (undocumented)
     fiveStarText: string;
-    // (undocumented)
     fourStarText: string;
-    // (undocumented)
     helperText: string;
-    // (undocumented)
     oneStarText: string;
-    // (undocumented)
     question: string;
-    // (undocumented)
     thankYouText: string;
-    // (undocumented)
     threeStarText: string;
-    // (undocumented)
     twoStarText: string;
 }
 
-// @beta
+// @public
 export interface StarSurveyStyles {
     // (undocumented)
     root?: IStyle;
 }
+
+// @public
+export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
 
 // @internal
 export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
