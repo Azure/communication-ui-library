@@ -67,6 +67,13 @@ export interface _StarSurveyStrings {
 }
 
 /**
+ * {@link StarSurvey} types
+ *
+ * @public
+ */
+export type StarSurveyTypes  = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating'
+
+/**
  * Props for {@link StarSurvey} component.
  *
  * @internal

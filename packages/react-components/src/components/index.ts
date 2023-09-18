@@ -215,7 +215,7 @@ export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
 export type { _TagsSurveyProps, _TagsSurveyStrings, _IssueCategory, _SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
 
 export { StarSurvey } from './Survey/StarSurvey/StarSurvey';
-export type { StarSurveyProps, StarSurveyStrings, StarSurveyStyles } from './Survey/StarSurvey/StarSurvey';
+export type { StarSurveyProps, StarSurveyStrings, StarSurveyStyles, StarSurveyTypes } from './Survey/StarSurvey/StarSurvey';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';

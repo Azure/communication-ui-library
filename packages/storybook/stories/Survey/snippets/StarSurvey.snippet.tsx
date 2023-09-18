@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StarSurvey } from '@azure/communication-react';
+import { StarSurvey, StarSurveyTypes } from '@azure/communication-react';
 import { PrimaryButton } from '@fluentui/react';
 import React, { useState } from 'react';
 
 export const StarSurveyExample: () => JSX.Element = () => {
   const [showSurvey, setShowSurvey] = useState(false);
 
-  const onSubmitStarSurvey = async (ratings: number) => {
-    console.log(ratings);
+  const onSubmitStarSurvey = async (ratings: number, type: StarSurveyTypes): Promise<void> => {
+    console.log(type, ':', ratings);
     setShowSurvey(false);
     await Promise.resolve;
   };
