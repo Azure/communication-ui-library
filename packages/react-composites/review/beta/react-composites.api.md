@@ -107,7 +107,7 @@ export type AzureCommunicationCallAdapterArgs = {
     options?: AzureCommunicationCallAdapterOptions;
 };
 
-// @beta
+// @public
 export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
 // @public
@@ -212,17 +212,13 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
     stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    // @beta
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
@@ -396,7 +392,7 @@ export type CallCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
-    remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -644,15 +640,12 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsOptions): Promise<void>;
     startScreenShare(): Promise<void>;
-    // @beta
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopCamera(): Promise<void>;
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
-    // @beta
     stopVideoBackgroundEffects(): Promise<void>;
     unmute(): Promise<void>;
-    // @beta
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
@@ -661,7 +654,6 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
-    // @beta
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
 }
 
@@ -701,6 +693,8 @@ export interface CallWithChatAdapterSubscriptions {
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
+    off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -743,6 +737,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
+    on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -872,6 +868,8 @@ export type CallWithChatCompositeOptions = {
     }) => void;
     onNetworkingTroubleShootingClick?: () => void;
     onEnvironmentInfoTroubleshootingClick?: () => void;
+    remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -934,12 +932,12 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | /* @conditional-compile-remove(close-captions) */ 'isCaptionsActiveChanged' | /* @conditional-compile-remove(close-captions) */ 'captionsReceived' | /* @conditional-compile-remove(close-captions) */ 'isCaptionLanguageChanged' | /* @conditional-compile-remove(close-captions) */ 'isSpokenLanguageChanged' | /* @conditional-compile-remove(capabilities) */ 'capabilitiesChanged' | 'messageReceived' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved';
 
-// @beta
+// @public
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
-// @beta
+// @public
 export interface CapabilityChangedNotificationStrings {
     shareScreen?: {
         lostDueToRoleChangeToAttendee?: string;
@@ -955,7 +953,7 @@ export interface CapabilityChangedNotificationStrings {
     };
 }
 
-// @beta
+// @public
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
@@ -1078,7 +1076,7 @@ export interface CommonCallAdapter extends AdapterState<CallAdapterState>, Dispo
     startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): void;
 }
 
-// @beta
+// @public
 export type CommonCallAdapterOptions = {
     videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
@@ -1507,12 +1505,12 @@ export interface FileUploadState {
 // @beta
 export type FileUploadsUiState = Record<string, FileUploadState>;
 
-// @beta
+// @public
 export type IsCaptionLanguageChangedListener = (event: {
     activeCaptionLanguage: string;
 }) => void;
 
-// @beta
+// @public
 export type IsCaptionsActiveChangedListener = (event: {
     isActive: boolean;
 }) => void;
@@ -1534,7 +1532,7 @@ export type IsSpeakingChangedListener = (event: {
     isSpeaking: boolean;
 }) => void;
 
-// @beta
+// @public
 export type IsSpokenLanguageChangedListener = (event: {
     activeSpokenLanguage: string;
 }) => void;
@@ -1585,10 +1583,10 @@ export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & 
 // @beta
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
-// @beta
+// @public
 export const onResolveVideoEffectDependency: () => Promise<VideoBackgroundEffectsDependency>;
 
-// @beta
+// @public
 export const onResolveVideoEffectDependencyLazy: () => Promise<VideoBackgroundEffectsDependency>;
 
 // @public
@@ -1618,12 +1616,12 @@ export type Profile = {
     displayName?: string;
 };
 
-// @beta
+// @public
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
 
-// @beta
+// @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 
 // @beta
@@ -1670,27 +1668,27 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
 // @beta
 export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs>, afterCreate?: ((adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>) | undefined, beforeDispose?: ((adapter: TeamsCallAdapter) => Promise<void>) | undefined) => TeamsCallAdapter | undefined;
 
-// @beta
+// @public
 export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
     effectName: 'blur';
 }
 
-// @beta
+// @public
 export type VideoBackgroundEffect = VideoBackgroundNoEffect | VideoBackgroundBlurEffect | VideoBackgroundReplacementEffect;
 
-// @beta
+// @public
 export interface VideoBackgroundImage {
     key: string;
     tooltipText?: string;
     url: string;
 }
 
-// @beta
+// @public
 export interface VideoBackgroundNoEffect {
     effectName: 'none';
 }
 
-// @beta
+// @public
 export interface VideoBackgroundReplacementEffect extends BackgroundReplacementConfig {
     effectName: 'replacement';
     key?: string;

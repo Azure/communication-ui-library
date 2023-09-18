@@ -111,7 +111,7 @@ export interface DeviceCheckOptions {
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface RemoteVideoTileMenuOptions {
   /**
@@ -136,7 +136,6 @@ export interface LocalVideoTileOptions {
    * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
    * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
    * local video tile rules and be docked in the bottom corner.
-   * 'hidden' - local video tile will not be rendered.
    * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
   position?: 'grid' | 'floating';
@@ -217,7 +216,7 @@ export type CallCompositeOptions = {
   /**
    * Remote participant video tile menu options
    */
-  remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.

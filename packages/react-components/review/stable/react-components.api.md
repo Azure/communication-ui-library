@@ -8,6 +8,7 @@ import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
 import { IContextualMenuItemStyles } from '@fluentui/react';
+import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IDropdownOption } from '@fluentui/react';
 import { IDropdownStyles } from '@fluentui/react';
@@ -71,6 +72,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -80,6 +82,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @public
@@ -95,6 +98,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onClickVideoEffects?: (showVideoEffects: boolean) => void;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
@@ -120,6 +124,7 @@ export interface CameraButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+    videoEffectsMenuItemTitle?: string;
 }
 
 // @public
@@ -129,6 +134,175 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 
 // @public
 export type CancelEditCallback = (messageId: string) => void;
+
+// @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @public
+export interface CaptionLanguageStrings {
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'zh-Hans': string;
+    // (undocumented)
+    'zh-Hant': string;
+    // (undocumented)
+    ar: string;
+    // (undocumented)
+    cs: string;
+    // (undocumented)
+    cy: string;
+    // (undocumented)
+    da: string;
+    // (undocumented)
+    de: string;
+    // (undocumented)
+    el: string;
+    // (undocumented)
+    en: string;
+    // (undocumented)
+    es: string;
+    // (undocumented)
+    fi: string;
+    // (undocumented)
+    fr: string;
+    // (undocumented)
+    he: string;
+    // (undocumented)
+    hi: string;
+    // (undocumented)
+    hu: string;
+    // (undocumented)
+    it: string;
+    // (undocumented)
+    ja: string;
+    // (undocumented)
+    ko: string;
+    // (undocumented)
+    nb: string;
+    // (undocumented)
+    nl: string;
+    // (undocumented)
+    pl: string;
+    // (undocumented)
+    pt: string;
+    // (undocumented)
+    ro: string;
+    // (undocumented)
+    ru: string;
+    // (undocumented)
+    sk: string;
+    // (undocumented)
+    sv: string;
+    // (undocumented)
+    th: string;
+    // (undocumented)
+    tr: string;
+    // (undocumented)
+    uk: string;
+    // (undocumented)
+    vi: string;
+}
+
+// @internal
+export interface _CaptionProps extends _CaptionsInfo {
+    onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @internal
+export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsBannerProps {
+    // (undocumented)
+    captions: _CaptionsInfo[];
+    formFactor?: 'default' | 'compact';
+    // (undocumented)
+    isCaptionsOn?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    startCaptionsInProgress?: boolean;
+    // (undocumented)
+    strings?: _CaptionsBannerStrings;
+}
+
+// @internal
+export interface _CaptionsBannerStrings {
+    // (undocumented)
+    captionsBannerSpinnerText?: string;
+}
+
+// @internal
+export type _CaptionsInfo = {
+    id: string;
+    displayName: string;
+    captionText: string;
+    userId?: string;
+};
+
+// @internal
+export type _captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @internal
+export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsSettingsModalProps {
+    // (undocumented)
+    captionLanguageStrings?: CaptionLanguageStrings;
+    // (undocumented)
+    changeCaptionLanguage?: boolean;
+    // (undocumented)
+    currentCaptionLanguage: string;
+    // (undocumented)
+    currentSpokenLanguage: string;
+    // (undocumented)
+    isCaptionsFeatureActive?: boolean;
+    // (undocumented)
+    onDismissCaptionsSettings?: () => void;
+    // (undocumented)
+    onSetCaptionLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    // (undocumented)
+    showModal?: boolean;
+    // (undocumented)
+    spokenLanguageStrings?: SpokenLanguageStrings;
+    // (undocumented)
+    strings?: _CaptionsSettingsModalStrings;
+    // (undocumented)
+    supportedCaptionLanguages: string[];
+    // (undocumented)
+    supportedSpokenLanguages: string[];
+}
+
+// @internal
+export interface _CaptionsSettingsModalStrings {
+    // (undocumented)
+    captionsSettingsCancelButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsCaptionLanguageDropdownInfoText?: string;
+    // (undocumented)
+    captionsSettingsCaptionLanguageDropdownLabel?: string;
+    // (undocumented)
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsConfirmButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsModalAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsModalTitle?: string;
+    // (undocumented)
+    captionsSettingsSpokenLanguageDropdownInfoText?: string;
+    // (undocumented)
+    captionsSettingsSpokenLanguageDropdownLabel?: string;
+}
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -294,6 +468,7 @@ export interface ComponentStrings {
     microphoneButton: MicrophoneButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     // (undocumented)
@@ -393,6 +568,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -428,14 +607,69 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: JSX.Element;
     SendBoxSendHovered: JSX.Element;
     VideoTileMicOff: JSX.Element;
+    VideoTilePinned: JSX.Element;
+    VideoTileMoreOptions: JSX.Element;
+    VideoTileScaleFit: JSX.Element;
+    VideoTileScaleFill: JSX.Element;
+    PinParticipant: JSX.Element;
+    UnpinParticipant: JSX.Element;
     SplitButtonPrimaryActionCameraOn: JSX.Element;
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    ControlButtonVideoEffectsOption: JSX.Element;
+    ConfigurationScreenVideoEffectsButton: JSX.Element;
+    CaptionsIcon: JSX.Element;
+    CaptionsOffIcon: JSX.Element;
+    CaptionsSettingsIcon: JSX.Element;
+    ChangeSpokenLanguageIcon: JSX.Element;
+    ChangeCaptionLanguageIcon: JSX.Element;
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
 };
+
+// @internal
+export interface _DeviceMenuProps {
+    // (undocumented)
+    cameras?: OptionsDevice[];
+    // (undocumented)
+    microphones?: OptionsDevice[];
+    // (undocumented)
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: OptionsDevice;
+    // (undocumented)
+    selectedMicrophone?: OptionsDevice;
+    // (undocumented)
+    selectedSpeaker?: OptionsDevice;
+    // (undocumented)
+    speakers?: OptionsDevice[];
+    // (undocumented)
+    styles?: Partial<_DeviceMenuStyles>;
+}
+
+// @internal
+export interface _DeviceMenuStrings {
+    audioDeviceMenuTitle?: string;
+    audioDeviceMenuTooltip?: string;
+    cameraMenuTitle?: string;
+    cameraMenuTooltip?: string;
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
+}
+
+// @internal
+export interface _DeviceMenuStyles extends IContextualMenuStyles {
+    // (undocumented)
+    menuItemStyles?: IContextualMenuItemStyles;
+}
 
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
@@ -656,6 +890,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
@@ -745,6 +980,11 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
+
+// @internal
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+    items: IContextualMenuItem[];
+} | undefined;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
@@ -867,6 +1107,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
+    raisedHand?: RaisedHand | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1229,6 +1470,29 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 }>;
 
 // @public
+export type RaisedHand = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -1583,6 +1847,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
 }
 
 // @public
@@ -1609,10 +1874,14 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onUnpinParticipant?: (userId: string) => void;
+    pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
     remoteVideoViewOptions?: VideoStreamOptions;
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
@@ -1623,6 +1892,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
 }
 
@@ -1633,17 +1903,30 @@ export interface VideoGalleryStream {
     isMirrored?: boolean;
     isReceiving?: boolean;
     renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
 }
 
 // @public
 export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
+    fillRemoteParticipantFrame: string;
+    fitRemoteParticipantToFrame: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
+    pinnedParticipantAnnouncementAriaLabel: string;
+    pinParticipantForMe: string;
+    pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    unpinnedParticipantAnnouncementAriaLabel: string;
+    unpinParticipantForMe: string;
+    unpinParticipantMenuItemAriaLabel: string;
 }
 
 // @public
@@ -1663,17 +1946,32 @@ export interface VideoStreamOptions {
 export const VideoTile: (props: VideoTileProps) => JSX.Element;
 
 // @public
+export interface VideoTileContextualMenuProps {
+    kind: 'contextual';
+}
+
+// @public
+export interface VideoTileDrawerMenuProps {
+    hostId?: string;
+    kind: 'drawer';
+}
+
+// @public
 export interface VideoTileProps {
     children?: React_2.ReactNode;
+    contextualMenu?: IContextualMenuProps;
     displayName?: string;
     initialsName?: string;
     isMirrored?: boolean;
     isMuted?: boolean;
+    isPinned?: boolean;
     isSpeaking?: boolean;
     noVideoAvailableAriaLabel?: string;
+    onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

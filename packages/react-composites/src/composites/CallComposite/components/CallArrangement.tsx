@@ -52,9 +52,9 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { getCaptionsStatus, getPage } from '../selectors/baseSelectors';
+import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
-import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
+import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
@@ -338,7 +338,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
-                  onShowVideoEffectsPicker={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
+                  onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}

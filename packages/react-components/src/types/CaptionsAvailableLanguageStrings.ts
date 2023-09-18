@@ -2,7 +2,7 @@
 // Licensed under the MIT license.
 
 /**
- * @beta
+ * @public
  * spoken language strings for captions setting modal
  */
 export interface SpokenLanguageStrings {
@@ -50,7 +50,7 @@ export interface SpokenLanguageStrings {
 }
 
 /**
- * @beta
+ * @public
  * caption language strings for captions setting modal
  */
 export interface CaptionLanguageStrings {

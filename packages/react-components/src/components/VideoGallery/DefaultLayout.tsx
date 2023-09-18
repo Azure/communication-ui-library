@@ -112,7 +112,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
         verticalGalleryStyles={styles?.verticalGallery}
-        /* @conditional-compile-remove(pinned-participants) */
+        /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         onFetchTilesToRender={setIndexesToRender}
         onChildrenPerPageChange={(n: number) => {
