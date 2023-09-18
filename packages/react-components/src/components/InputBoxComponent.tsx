@@ -175,19 +175,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <TextField
-        {...textFieldProps}
-        data-ui-id={dataUiId}
-        value={textValue}
-        onChange={onChange}
-        onKeyDown={onTextFieldKeyDown}
-        onFocus={(e) => {
-          // Fix for setting the cursor to the correct position when multiline is true
-          // This approach should be reviewed during migration to FluentUI v9
-          e.currentTarget.value = '';
-          e.currentTarget.value = textValue;
-        }}
-      />
+      <div style={{ padding: '2px 0 5px 5px' }}>
+        <TextField
+          {...textFieldProps}
+          data-ui-id={dataUiId}
+          value={textValue}
+          onChange={onChange}
+          onKeyDown={onTextFieldKeyDown}
+          onFocus={(e) => {
+            // Fix for setting the cursor to the correct position when multiline is true
+            // This approach should be reviewed during migration to FluentUI v9
+            e.currentTarget.value = '';
+            e.currentTarget.value = textValue;
+          }}
+        />
+      </div>
     );
   };
 
