@@ -6,7 +6,7 @@ import { _FileUploadCardsStrings } from './FileUploadCards';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
-  captionsBannerStyles,
+  captionsBannerClassName,
   captionsContainerClassName,
   loadingBannerStyles
 } from './styles/Captions.style';
@@ -100,7 +100,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
       {startCaptionsInProgress && (
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
-            <div ref={captionsScrollDivRef} style={captionsBannerStyles(formFactor)}>
+            <div ref={captionsScrollDivRef} className={captionsBannerClassName(formFactor)}>
               {captions.map((caption) => {
                 return (
                   <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
