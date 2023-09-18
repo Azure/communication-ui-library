@@ -385,7 +385,6 @@ const memoizeAllMessages = memoizeFnAll(
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
     ): JSX.Element => {
-      const messageStatus = message.status;
       const messageStatusRenderer =
         showMessageStatus && statusToRender
           ? onRenderMessageStatus
