@@ -100,15 +100,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
       {startCaptionsInProgress && (
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
-            <div
-              ref={captionsScrollDivRef}
-              style={{
-                overflowX: 'hidden',
-                height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
-                overflowY: 'auto'
-              }}
-            >
-              {/* <Stack verticalAlign="start" styles={captionsBannerStyles(formFactor)}> */}
+            <div ref={captionsScrollDivRef} style={captionsBannerStyles(formFactor)}>
               {captions.map((caption) => {
                 return (
                   <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
@@ -116,7 +108,6 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
                   </div>
                 );
               })}
-              {/* </Stack> */}
             </div>
           )}
           {!isCaptionsOn && (
