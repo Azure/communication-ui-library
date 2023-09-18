@@ -34,6 +34,8 @@ export interface OrganizedParticipantsResult {
 
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 
+const LARGE_GALLERY_MAX_GRID_PARTICIPANTS = 49;
+
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
   const visibleOverflowGalleryParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
@@ -65,7 +67,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           participants: participantsToSortTrampoline(),
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
-          maxDominantSpeakers: maxRemoteVideoStreams as number
+          maxDominantSpeakers:
+            layout !== 'largeGallery' ? (maxRemoteVideoStreams as number) : LARGE_GALLERY_MAX_GRID_PARTICIPANTS
         }).slice(0, maxRemoteVideoStreams);
 
   /* @conditional-compile-remove(gallery-layouts) */
