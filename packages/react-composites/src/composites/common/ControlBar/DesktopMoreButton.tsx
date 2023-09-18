@@ -272,6 +272,23 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             }
           },
           {
+            key: 'largeGallerySelectionKey',
+            text: localeStrings.strings.call.moreButtonLargeGalleryDefaultLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'largeGallery',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
+              setFocusedContentOn(false);
+            },
+            iconProps: {
+              iconName: 'LargeGalleryLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          },
+          {
             key: 'focusedContentSelectionKey',
             text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
             canCheck: true,
