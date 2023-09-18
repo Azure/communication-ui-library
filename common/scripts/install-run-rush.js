@@ -112,7 +112,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var path__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(path__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! fs */ 657147);
 /* harmony import */ var fs__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(fs__WEBPACK_IMPORTED_MODULE_1__);
-// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+// Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License.
 // See the @microsoft/rush package's LICENSE file for license information.
 
 

@@ -3,7 +3,7 @@
 
 import { _isParticipantStateCallingOrHold } from './common';
 
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 describe('_isParticipantStateCallingOrHold', () => {
   test('should return true if participant Idle', () => {
     expect(_isParticipantStateCallingOrHold('Idle')).toBe(true);
