@@ -10,6 +10,7 @@ import { Stack } from '@fluentui/react';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
+import { SHORT_VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
  * Props for {@link LargeGalleryLayout}.
@@ -63,7 +64,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
     /* @conditional-compile-remove(gallery-layouts) */ layout: 'largeGallery'
   });
-
+  console.log('gridParticipants', gridParticipants);
   let activeVideoStreams = 0;
 
   const gridTiles = gridParticipants.map((p) => {
@@ -165,4 +166,8 @@ const overflowGalleryTrampoline = (
   /* @conditional-compile-remove(gallery-layouts) */
   return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
   return gallery;
+};
+
+const calculateMaxTilesInLargeGrid = (parentWidth: number, parentHeight: number): number => {
+  return 0;
 };

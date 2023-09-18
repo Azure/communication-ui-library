@@ -34,7 +34,7 @@ export interface OrganizedParticipantsResult {
 
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 
-const LARGE_GALLERY_MAX_GRID_PARTICIPANTS = 49;
+const LARGE_GALLERY_MAX_GRID_PARTICIPANTS = 48;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
@@ -56,7 +56,9 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const participantsToSortTrampoline = (): VideoGalleryRemoteParticipant[] => {
     /* @conditional-compile-remove(gallery-layouts) */
-    return layout !== 'speaker' ? videoParticipants : remoteParticipants;
+    return layout !== 'speaker' && layout !== 'largeGallery'
+      ? videoParticipants
+      : putVideoParticipantsFirst(remoteParticipants);
     return videoParticipants;
   };
 
@@ -69,7 +71,10 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           lastVisibleParticipants: visibleGridParticipants.current,
           maxDominantSpeakers:
             layout !== 'largeGallery' ? (maxRemoteVideoStreams as number) : LARGE_GALLERY_MAX_GRID_PARTICIPANTS
-        }).slice(0, maxRemoteVideoStreams);
+        }).slice(
+          0,
+          layout !== 'largeGallery' ? (maxRemoteVideoStreams as number) : LARGE_GALLERY_MAX_GRID_PARTICIPANTS
+        );
 
   /* @conditional-compile-remove(gallery-layouts) */
   const dominantSpeakerToGrid =
@@ -109,6 +114,18 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     if (isScreenShareActive) {
       return [];
     }
+
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (layout === 'largeGallery') {
+      return visibleGridParticipants.current.length > 0
+        ? visibleGridParticipants.current
+        : visibleOverflowGalleryParticipants.current.length > (LARGE_GALLERY_MAX_GRID_PARTICIPANTS as number)
+        ? visibleOverflowGalleryParticipants.current.slice(0, LARGE_GALLERY_MAX_GRID_PARTICIPANTS as number)
+        : visibleOverflowGalleryParticipants.current
+            .slice(0, LARGE_GALLERY_MAX_GRID_PARTICIPANTS as number)
+            .concat(callingParticipants);
+    }
+
     // if we have no video participants we need to cap the max number of audio participants in the grid
     // we will use the max streams provided to the function to find the max participants that can go in the grid
     // if there are less participants than max streams then we will use all participants including joining in the grid
@@ -126,7 +143,9 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
-    maxRemoteVideoStreams
+    maxRemoteVideoStreams,
+    /* @conditional-compile-remove(gallery-layouts) */
+    layout
   ]);
 
   const gridParticipants = getGridParticipants();
@@ -151,6 +170,16 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       );
       return visibleGridParticipants.current.concat(visibleOverflowGalleryParticipants.current);
     } else {
+      /* @conditional-compile-remove(gallery-layouts) */
+      if (layout === 'largeGallery') {
+        return visibleGridParticipants.current.length > 0
+          ? visibleOverflowGalleryParticipants.current.concat(callingParticipants)
+          : visibleOverflowGalleryParticipants.current.length > (LARGE_GALLERY_MAX_GRID_PARTICIPANTS as number)
+          ? visibleOverflowGalleryParticipants.current
+              .slice(LARGE_GALLERY_MAX_GRID_PARTICIPANTS as number)
+              .concat(callingParticipants)
+          : [];
+      }
       // If screen sharing is not active, then assign all video tiles as grid tiles.
       // If there are no video tiles, then assign audio tiles as grid tiles.
       // if there are more overflow tiles than max streams then find the tiles that don't fit in the grid and put them in overflow
@@ -169,7 +198,9 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
     localParticipant,
-    maxRemoteVideoStreams
+    maxRemoteVideoStreams,
+    /* @conditional-compile-remove(gallery-layouts) */
+    layout
   ]);
 
   const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants();
