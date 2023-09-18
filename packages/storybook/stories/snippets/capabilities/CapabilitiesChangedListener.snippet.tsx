@@ -50,10 +50,10 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     return adapter;
   }, []);
 
-  const adapter = useAzureCommunicationCallAdapter(callAdapterArgs, afterCallAdapterCreate, leaveCall);
+  const adapter = useAzureCommunicationCallAdapter(callAdapterArgs, afterCallAdapterCreate);
 
   if (!props.meetingLink) {
-    return <>Microsoft Teams user id is not provided.</>;
+    return <>Teams meeting link is not provided.</>;
   }
 
   if (adapter) {
@@ -73,10 +73,4 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
-};
-
-const leaveCall = async (adapter: CallAdapter): Promise<void> => {
-  await adapter.leaveCall().catch((e) => {
-    console.error('Failed to leave call', e);
-  });
 };
