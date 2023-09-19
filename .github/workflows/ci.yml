@@ -709,57 +709,13 @@ jobs:
       - name: Calculate coverage change
         id: coverage
         run: |
-          base_lines_covered=$(jq -r ".total.lines.covered" temp/jest/base/coverage-report.json)
-          base_lines_total=$(jq -r ".total.lines.total" temp/jest/base/coverage-report.json)
-          base_lines_pct=$(jq -r ".total.lines.pct" temp/jest/base/coverage-report.json)
-          echo "base_lines=${base_lines_covered} / ${base_lines_total} <br /> ${base_lines_pct}%" >> $GITHUB_OUTPUT
-          current_lines_covered=$(jq -r ".total.lines.covered" temp/jest/current/merge/summary/coverage-summary.json)
-          current_lines_total=$(jq -r ".total.lines.total" temp/jest/current/merge/summary/coverage-summary.json)
-          current_lines_pct=$(jq -r ".total.lines.pct" temp/jest/current/merge/summary/coverage-summary.json)
-          echo "current_lines=${current_lines_covered} / ${current_lines_total} <br /> ${current_lines_pct}%" >> $GITHUB_OUTPUT
-          lines_covered_diff=$(echo "${current_lines_covered} - ${base_lines_covered}" | bc)
-          lines_total_diff=$(echo "${current_lines_total} - ${base_lines_total}" | bc)
-          lines_pct_diff=$(echo "${current_lines_pct} - ${base_lines_pct}" | bc -l | sed -e 's/^-\./-0./' -e 's/^\./0./')
-          echo "lines_diff=${lines_covered_diff} / ${lines_total_diff} <br /> ${lines_pct_diff}%" >> $GITHUB_OUTPUT
+          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json lines
 
-          base_statements_covered=$(jq -r ".total.statements.covered" temp/jest/base/coverage-report.json)
-          base_statements_total=$(jq -r ".total.statements.total" temp/jest/base/coverage-report.json)
-          base_statements_pct=$(jq -r ".total.statements.pct" temp/jest/base/coverage-report.json)
-          echo "base_statements=${base_statements_covered} / ${base_statements_total} <br /> ${base_statements_pct}%" >> $GITHUB_OUTPUT
-          current_statements_covered=$(jq -r ".total.statements.covered" temp/jest/current/merge/summary/coverage-summary.json)
-          current_statements_total=$(jq -r ".total.statements.total" temp/jest/current/merge/summary/coverage-summary.json)
-          current_statements_pct=$(jq -r ".total.statements.pct" temp/jest/current/merge/summary/coverage-summary.json)
-          echo "current_statements=${current_statements_covered} / ${current_statements_total} <br /> ${current_statements_pct}%" >> $GITHUB_OUTPUT
-          statements_covered_diff=$(echo "${current_statements_covered} - ${base_statements_covered}" | bc)
-          statements_total_diff=$(echo "${current_statements_total} - ${base_statements_total}" | bc)
-          statements_pct_diff=$(echo "${current_statements_pct} - ${base_statements_pct}" | bc -l | sed -e 's/^-\./-0./' -e 's/^\./0./')
-          echo "statements_diff=${statements_covered_diff} / ${statements_total_diff} <br /> ${statements_pct_diff}%" >> $GITHUB_OUTPUT
+          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json statements
 
-          base_functions_covered=$(jq -r ".total.functions.covered" temp/jest/base/coverage-report.json)
-          base_functions_total=$(jq -r ".total.functions.total" temp/jest/base/coverage-report.json)
-          base_functions_pct=$(jq -r ".total.functions.pct" temp/jest/base/coverage-report.json)
-          echo "base_functions=${base_functions_covered} / ${base_functions_total} <br /> ${base_functions_pct}%" >> $GITHUB_OUTPUT
-          current_functions_covered=$(jq -r ".total.functions.covered" temp/jest/current/merge/summary/coverage-summary.json)
-          current_functions_total=$(jq -r ".total.functions.total" temp/jest/current/merge/summary/coverage-summary.json)
-          current_functions_pct=$(jq -r ".total.functions.pct" temp/jest/current/merge/summary/coverage-summary.json)
-          echo "current_functions=${current_functions_covered} / ${current_functions_total} <br /> ${current_functions_pct}%" >> $GITHUB_OUTPUT
-          functions_covered_diff=$(echo "${current_functions_covered} - ${base_functions_covered}" | bc)
-          functions_total_diff=$(echo "${current_functions_total} - ${base_functions_total}" | bc)
-          functions_pct_diff=$(echo "${current_functions_pct} - ${base_functions_pct}" | bc -l | sed -e 's/^-\./-0./' -e 's/^\./0./')
-          echo "functions_diff=${functions_covered_diff} / ${functions_total_diff} <br /> ${functions_pct_diff}%" >> $GITHUB_OUTPUT
+          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json functions
 
-          base_branches_covered=$(jq -r ".total.branches.covered" temp/jest/base/coverage-report.json)
-          base_branches_total=$(jq -r ".total.branches.total" temp/jest/base/coverage-report.json)
-          base_branches_pct=$(jq -r ".total.branches.pct" temp/jest/base/coverage-report.json)
-          echo "base_branches=${base_branches_covered} / ${base_branches_total} <br /> ${base_branches_pct}%" >> $GITHUB_OUTPUT
-          current_branches_covered=$(jq -r ".total.branches.covered" temp/jest/current/merge/summary/coverage-summary.json)
-          current_branches_total=$(jq -r ".total.branches.total" temp/jest/current/merge/summary/coverage-summary.json)
-          current_branches_pct=$(jq -r ".total.branches.pct" temp/jest/current/merge/summary/coverage-summary.json)
-          echo "current_branches=${current_branches_covered} / ${current_branches_total} <br /> ${current_branches_pct}%" >> $GITHUB_OUTPUT
-          branches_covered_diff=$(echo "${current_branches_covered} - ${base_branches_covered}" | bc)
-          branches_total_diff=$(echo "${current_branches_total} - ${base_branches_total}" | bc)
-          branches_pct_diff=$(echo "${current_branches_pct} - ${base_branches_pct}" | bc -l | sed -e 's/^-\./-0./' -e 's/^\./0./')
-          echo "branches_diff=${branches_covered_diff} / ${branches_total_diff} <br /> ${branches_pct_diff}%" >> $GITHUB_OUTPUT
+          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json branches
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
