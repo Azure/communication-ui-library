@@ -10,7 +10,7 @@ import { Stack } from '@fluentui/react';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { SHORT_VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
+import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
  * Props for {@link LargeGalleryLayout}.
@@ -56,7 +56,8 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
-    maxRemoteVideoStreams,
+    maxRemoteVideoStreams:
+      parentWidth && parentHeight ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight) : maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
@@ -169,5 +170,7 @@ const overflowGalleryTrampoline = (
 };
 
 const calculateMaxTilesInLargeGrid = (parentWidth: number, parentHeight: number): number => {
-  return 0;
+  const xAxisTiles = Math.floor(parentWidth / (VERTICAL_GALLERY_TILE_SIZE_REM.width * 16));
+  const yAxisTiles = Math.floor(parentHeight / (VERTICAL_GALLERY_TILE_SIZE_REM.minHeight * 16));
+  return xAxisTiles * yAxisTiles < 48 ? xAxisTiles * yAxisTiles : 48;
 };
