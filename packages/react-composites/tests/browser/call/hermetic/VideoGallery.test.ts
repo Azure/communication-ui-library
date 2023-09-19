@@ -198,10 +198,7 @@ test.describe('VideoGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
-  test.only('VideoGallery should show correct number of tiles based on layout', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test('VideoGallery should show correct number of tiles based on layout', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
 
     const initialState = defaultMockCallAdapterState([]);
