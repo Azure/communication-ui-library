@@ -40,14 +40,13 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     styles,
     maxRemoteVideoStreams,
     parentWidth,
-    /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */ parentHeight,
+    /* @conditional-compile-remove(gallery-layouts) */ parentHeight,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
-
-  /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layouts) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
   const maxStreamsTrampoline = (): number => {
