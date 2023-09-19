@@ -228,7 +228,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     <ContextualMenu
       id="chat-composite-message-contextual-menu"
       alignTargetEdge={true}
-      gapSpace={5 /*px*/}
+      gapSpace={2 /*px*/}
       isBeakVisible={false}
       items={menuItems}
       hidden={props.hidden}
@@ -247,5 +247,6 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
 const preventUnwantedDismissProps = {
   preventDismissOnEvent: (ev: Event | React.FocusEvent | React.KeyboardEvent | React.MouseEvent): boolean => {
     return ev.type === 'resize';
-  }
+  },
+  styles: { root: { marginRight: '3px' } }
 };
