@@ -26,7 +26,7 @@ const currentPct = currentFileJSON.total[criteria].pct;
 // Calculate difference in coverage
 const coveredDiff = currentCovered - baseCovered;
 const totalDiff = currentTotal - baseTotal;
-const pctDiff = 1;//parseFloat((currentPct - basePct).toFixed(3));// up to 3 decimal places (thousandths)
+const pctDiff = parseFloat((currentPct - basePct).toFixed(3));// up to 3 decimal places (thousandths)
 
 // Set output for the Github Action job
 core.setOutput(`base_${criteria}`, `${baseCovered} / ${baseTotal} <br /> ${basePct}%`);
