@@ -3,7 +3,14 @@
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';
-import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
+import {
+  dataUiId,
+  existsOnPage,
+  isTestProfileMobile,
+  pageClick,
+  stableScreenshot,
+  waitForSelector
+} from '../../common/utils';
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 
 /* @conditional-compile-remove(close-captions) */
@@ -111,7 +118,9 @@ test.describe('Captions buttons in call control', () => {
       initialState.isTeamsCall = false;
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
-    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    if (await existsOnPage(page, dataUiId('common-call-composite-more-button'))) {
+      await pageClick(page, dataUiId('common-call-composite-more-button'));
+    }
     expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
   });
 
