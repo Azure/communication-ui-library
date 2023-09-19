@@ -114,7 +114,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     return (
       <OverflowGallery
         isNarrow={isNarrow}
-        /* @conditional-compile-remove(vertical-gallery) */
+        /* @conditional-compile-remove(gallery-layouts) */
         isShort={isShort}
         shouldFloatLocalVideo={false}
         overflowGalleryElements={overflowGalleryTiles}
@@ -131,7 +131,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     );
   }, [
     isNarrow,
-    /* @conditional-compile-remove(vertical-gallery) */ isShort,
+    /* @conditional-compile-remove(gallery-layouts) */ isShort,
     overflowGalleryTiles,
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
