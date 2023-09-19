@@ -39,21 +39,25 @@ To take full advantage of these capabilities, we recommend using the UI Componen
 
 ## Chat Use Cases
 
-| Area         | Use Cases                                            |
-| ------------ | ---------------------------------------------------- |
-| Chat Types   | [Join a Teams Meeting Chat](#teams-interop-use-case) |
-|              | Join an Azure Communication Services chat thread     |
-| Chat Actions | Send chat message                                    |
-|              | Receive chat message                                 |
-|              | Edit chat message                                    |
-|              | Remove chat message                                  |
-| Chat Events  | Typing Indicators                                    |
-|              | Read Receipt                                         |
-|              | Participant added/removed                            |
-|              | Chat title changed                                   |
-| Participants | Participant roster                                   |
+| Area         | Azure Communication Services Chat                | Teams Interoperability Chat                 |
+| ------------ | ------------------------------------------------ | ------------------------------------------- |
+| Chat types   | Join an Azure Communication Services chat thread | Join a Microsoft Teams meeting chat         |
+| Chat actions | Send and receive text messages                      | Send and receive text messages                 |
+|              | Receive rich text messages                          | Receive rich text messages                     |
+|              | -                                                | [Receive inline images\*](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/inline-image-tutorial-interop-chat)                        |
+|              | [Send and receive file attachments](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-acs-chat)                   | [Receive file attachments\*](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat)                 |
+| Chat events  | Send and receive typing indicators                  | Send and receive typing indicators\*\*             |
+|              | Send and receive read receipts                      | Send and receive read receipts                 |
+|              | Show when a participant is added or removed      | Show when a participant is added or removed |
+| Participants | Show a participant roster                        | Show a participant roster                   |
 
-## Teams Interop Use Case
+
+*Inline image and file attachment support are currently in public preview. Preview APIs and SDKs are provided without a service-level agreement. We recommend that you don't use them for production workloads. Some features might not be supported, or they might have constrained capabilities. For more information, review Supplemental Terms of Use for Microsoft Azure Previews.
+
+**The display name of typing event from the Teams user might not be shown properly.
+
+
+## Teams Interoperability
 
 For [Teams Interop](https://docs.microsoft.com/azure/communication-services/concepts/teams-interop) scenarios, developers can use UI Library Components to join Teams meetings through Azure Communication Services.
 To enable Teams Interop, developers can either use calling and chat composites directly or use UI Components to build a custom experience.
@@ -72,8 +76,8 @@ For example:
 
 <SingleLineBetaBanner content="The following features are currently in public preview" />
 
-- [File Sharing](./?path=/docs/ui-components-messagethread--message-thread#display-file-attachments-with-messages): Feature allows Teams users to share file attachments as part of chat messages.
-- [Inline Images](./?path=/docs/ui-components-messagethread--message-thread#display-inline-image-with-messages): Feature allows Teams users to attach images as part of chat messages.
+- [File Sharing](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat): Feature allows Teams users to share file attachments as part of chat messages.
+- [Inline Images](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/inline-image-tutorial-interop-chat): Feature allows Teams users to attach images as part of chat messages.
 
 ## Customization
 
