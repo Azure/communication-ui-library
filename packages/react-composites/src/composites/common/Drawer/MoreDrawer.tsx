@@ -10,7 +10,8 @@ import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
-  _DrawerMenuStyles
+  _DrawerMenuStyles,
+  VideoGalleryLayout
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
@@ -98,6 +99,12 @@ export interface MoreDrawerStrings {
    * @remarks Only displayed when in Teams call, disabled until captions is on
    */
   captionLanguageMenuTitle: string;
+
+  /* @conditional-compile-remove(gallery-options) */
+  /**
+   * Label for gallery options drawerMenuItem
+   */
+  galleryOptionsMenuTitle: string;
 }
 
 /** @private */
@@ -126,6 +133,13 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Callback for when the gallery layout is changed
+   */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
 }
 
 /** @private */
@@ -242,6 +256,51 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
+
+  drawerMenuItems.push({
+    itemKey: 'overflowGalleryPositionKey',
+    iconProps: {
+      iconName: 'GalleryOptions',
+      styles: { root: { lineHeight: 0 } }
+    },
+    text: localeStrings.strings.call.moreButtonGalleryControlLabel,
+    subMenuProps: [
+      {
+        itemKey: 'dynamicSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+        },
+        iconProps: {
+          iconName: 'FloatingLocalVideoGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        }
+      },
+      {
+        itemKey: 'defaultSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+        },
+        iconProps: {
+          iconName: 'DefaultGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        }
+      },
+      {
+        itemKey: 'largeGallerySelectionKey',
+        text: localeStrings.strings.call.moreButtonLargeGalleryDefaultLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
+        },
+        iconProps: {
+          iconName: 'LargeGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        }
+      }
+    ]
+  });
+
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',

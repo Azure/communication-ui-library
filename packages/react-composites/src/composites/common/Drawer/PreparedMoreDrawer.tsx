@@ -8,6 +8,8 @@ import { moreDrawerSelector } from '../../CallWithChatComposite/selectors/moreDr
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
+/* @condtional-compile-remove(gallery-options) */
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -19,6 +21,8 @@ export interface PreparedMoreDrawerProps {
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  userSetGalleryLayout?: VideoGalleryLayout;
 }
 
 /** @private */
@@ -35,7 +39,9 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       /* @conditional-compile-remove(close-captions) */
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
       /* @conditional-compile-remove(close-captions) */
-      captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle
+      captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
+      /* @condtional-compile-remove(gallery-options) */
+      galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle
     }),
     [strings]
   );
