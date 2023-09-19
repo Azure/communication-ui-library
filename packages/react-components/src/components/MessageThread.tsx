@@ -392,6 +392,10 @@ const memoizeAllMessages = memoizeFnAll(
             : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
 
+      //   let renderedStatusIcon =
+      //   showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
+      // renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
+
       let chatMessageComponent: JSX.Element;
       const shouldShowAvatar = message.attached === 'top' || message.attached === false;
       const attached = shouldShowAvatar ? 'top' : 'center';
@@ -411,6 +415,11 @@ const memoizeAllMessages = memoizeFnAll(
                   : {}
             }}
             body={{ className: chatMessageRenderStyles.body }}
+            statusIcon={
+              <div className={mergeStyles({ paddingLeft: '0.25rem' })}>
+                {message.status ? messageStatusRenderer(message.status) : undefined}
+              </div>
+            }
           >
             {onRenderMessage === undefined
               ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })

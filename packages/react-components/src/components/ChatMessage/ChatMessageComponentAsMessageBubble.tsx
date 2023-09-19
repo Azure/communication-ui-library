@@ -151,7 +151,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     disableEditing,
     showDate,
     messageContainerStyle,
-    messageStatusContainer: messageStatusContainerStyle,
     strings,
     onEditClick,
     remoteParticipantsCount = 0,
@@ -389,16 +388,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 props.onActionButtonClick(message, setMessageReadBy);
               }
             }}
-            statusIcon={
-              <div
-                className={mergeStyles(
-                  { paddingLeft: '0.25rem' },
-                  messageStatusContainerStyle ? messageStatusContainerStyle(message.mine ?? false) : ''
-                )}
-              >
-                {renderedStatusIcon}
-              </div>
-            }
           >
             {getContent()}
           </ChatMyMessage>

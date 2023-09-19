@@ -84,9 +84,9 @@ export const useChatMessageRenderStyles = makeStyles({
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
   },
   rootMyMessage: {
-    gridTemplateColumns: 'auto',
+    gridTemplateColumns: 'auto fit-content(0)',
     gridTemplateAreas: `
-        "body"
+        "body status"
       `,
     columnGap: '0',
     gridGap: '0',
@@ -123,10 +123,10 @@ export const useChatMessageRenderStyles = makeStyles({
  */
 export const useChatMyMessageStyles = makeStyles({
   root: {
-    gridTemplateColumns: 'auto auto auto',
+    gridTemplateColumns: 'auto auto',
     gridTemplateAreas: `
-        ". actions ."
-        "body body status"
+        ". actions"
+        "body body"
       `,
     gridGap: '0',
     columnGap: '0',
