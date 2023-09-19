@@ -411,6 +411,16 @@ const memoizeAllMessages = memoizeFnAll(
                   : {}
             }}
             body={{ className: chatMessageRenderStyles.body }}
+            statusIcon={
+              <div
+                className={mergeStyles(
+                  { paddingLeft: '0.25rem' },
+                  styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
+                )}
+              >
+                {message.status ? messageStatusRenderer(message.status) : undefined}
+              </div>
+            }
           >
             {onRenderMessage === undefined
               ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
