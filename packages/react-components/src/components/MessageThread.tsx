@@ -491,7 +491,7 @@ const memoizeAllMessages = memoizeFnAll(
             onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
           );
         return (
-          <div key={_messageKey} style={{ paddingTop: '1rem' }}>
+          <div key={_messageKey} style={{ paddingTop: '0.5rem' }}>
             {systemMessageComponent}
           </div>
         );
