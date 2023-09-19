@@ -175,7 +175,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <div style={{ padding: '2px 0 5px 5px' }}>
+      <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
         <TextField
           {...textFieldProps}
           data-ui-id={dataUiId}
