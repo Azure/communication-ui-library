@@ -2,7 +2,9 @@
 // Licensed under the MIT license.
 
 import React, { useMemo, useRef, useState } from 'react';
-import { isNarrowWidth, isShortHeight } from '../utils/responsive';
+import { isNarrowWidth } from '../utils/responsive';
+/* @conditional-compile-remove(gallery-layouts) */
+import { isShortHeight } from '../utils/responsive';
 import { LayoutProps } from './Layout';
 import { OverflowGallery } from './OverflowGallery';
 import { GridLayout } from '../GridLayout';
@@ -10,6 +12,7 @@ import { Stack } from '@fluentui/react';
 import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
+/* @conditional-compile-remove(gallery-layouts) */
 import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
 
 /**
@@ -48,6 +51,14 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const isShort = parentHeight ? isShortHeight(parentHeight) : false;
 
+  const maxStreamsTrampoline = (): number => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    return parentWidth && parentHeight
+      ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight)
+      : maxRemoteVideoStreams;
+    return maxRemoteVideoStreams;
+  };
+
   // This is for tracking the number of children in the first page of overflow gallery.
   // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
   // We need to add the local participant to the pinned participant count so we are placing the speakers correctly.
@@ -56,8 +67,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     remoteParticipants,
     localParticipant,
     dominantSpeakers,
-    maxRemoteVideoStreams:
-      parentWidth && parentHeight ? calculateMaxTilesInLargeGrid(parentWidth, parentHeight) : maxRemoteVideoStreams,
+    maxRemoteVideoStreams: maxStreamsTrampoline(),
     isScreenShareActive: !!screenShareComponent,
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
@@ -169,6 +179,7 @@ const overflowGalleryTrampoline = (
   return gallery;
 };
 
+/* @conditional-compile-remove(gallery-layouts) */
 const calculateMaxTilesInLargeGrid = (parentWidth: number, parentHeight: number): number => {
   const xAxisTiles = Math.floor(parentWidth / (VERTICAL_GALLERY_TILE_SIZE_REM.width * 16));
   const yAxisTiles = Math.floor(parentHeight / (VERTICAL_GALLERY_TILE_SIZE_REM.minHeight * 16));
