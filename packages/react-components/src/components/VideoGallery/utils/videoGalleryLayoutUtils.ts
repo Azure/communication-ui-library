@@ -116,13 +116,11 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
       : visibleOverflowGalleryParticipants.current.length > (maxRemoteVideoStreams as number)
-      ? visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams as number)
-      : visibleOverflowGalleryParticipants.current
-          .slice(0, maxRemoteVideoStreams as number)
-          .concat(callingParticipants);
+      ? visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams)
+      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams).concat(callingParticipants);
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams as number);
+      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams);
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
@@ -159,11 +157,11 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current.concat(callingParticipants)
         : visibleOverflowGalleryParticipants.current.length > (maxRemoteVideoStreams as number)
-        ? visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number).concat(callingParticipants)
+        ? visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams).concat(callingParticipants)
         : [];
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current
-        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams as number);
+        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams);
     }
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
