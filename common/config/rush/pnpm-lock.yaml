@@ -85,6 +85,19 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /@actions/core@1.10.1:
+    resolution: {integrity: sha512-3lBR9EDAY+iYIpTnTIXmWcNbX3T2kCkAEQGIQx4NVQ0575nk2k3GRZDTPQG+vVtS2izSLmINlxXf0uLtnrTP+g==}
+    dependencies:
+      '@actions/http-client': 2.1.1
+      uuid: 8.3.2
+    dev: false
+
+  /@actions/http-client@2.1.1:
+    resolution: {integrity: sha512-qhrkRMB40bbbLo7gF+0vu+X+UawOvQQqNAA/5Unx774RS8poaOhThDOG6BGmxvAnxhQnDp2BG/ZUm65xZILTpw==}
+    dependencies:
+      tunnel: 0.0.6
+    dev: false
+
   /@adobe/css-tools@4.3.1:
     resolution: {integrity: sha512-/62yikz7NLScCGAAST5SHdnjaDJQBDq0M2muyRTpf2VQhw6StBg2ALiu73zSJQ4fMVLA+0uBhBHAle7Wg+2kSg==}
     dev: false
@@ -765,18 +778,6 @@ packages:
       '@babel/core': 7.16.12
       '@babel/helper-plugin-utils': 7.22.5
       '@babel/plugin-syntax-export-default-from': 7.22.5(@babel/core@7.16.12)
-    dev: false
-
-  /@babel/plugin-proposal-export-namespace-from@7.16.7(@babel/core@7.16.12):
-    resolution: {integrity: sha512-ZxdtqDXLRGBL64ocZcs7ovt71L3jhC1RGSyR996svrCi3PYqHNkb3SwPJCs8RIzD86s+WPpt2S73+EHCGO+NUA==}
-    engines: {node: '>=6.9.0'}
-    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-export-namespace-from instead.
-    peerDependencies:
-      '@babel/core': ^7.0.0-0
-    dependencies:
-      '@babel/core': 7.16.12
-      '@babel/helper-plugin-utils': 7.22.5
-      '@babel/plugin-syntax-export-namespace-from': 7.8.3(@babel/core@7.16.12)
     dev: false
 
   /@babel/plugin-proposal-export-namespace-from@7.18.9(@babel/core@7.16.12):
@@ -2860,15 +2861,15 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.9
     dev: false
 
-  /@microsoft/applicationinsights-common@2.8.15(tslib@2.5.3):
+  /@microsoft/applicationinsights-common@2.8.15(tslib@2.6.2):
     resolution: {integrity: sha512-OZV8pzq2pAa9oRk7PFDQxs7bhAZB1l9CCFU/WYmqtwFyqZGtJDxkigkD/SLnGsg3KzFpk+avsjUGzSPhqeAydA==}
     peerDependencies:
       tslib: '*'
     dependencies:
-      '@microsoft/applicationinsights-core-js': 2.8.15(tslib@2.5.3)
+      '@microsoft/applicationinsights-core-js': 2.8.15(tslib@2.6.2)
       '@microsoft/applicationinsights-shims': 2.0.2
       '@microsoft/dynamicproto-js': 1.1.9
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: false
 
   /@microsoft/applicationinsights-core-js@2.6.5:
@@ -2878,14 +2879,14 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.9
     dev: false
 
-  /@microsoft/applicationinsights-core-js@2.8.15(tslib@2.5.3):
+  /@microsoft/applicationinsights-core-js@2.8.15(tslib@2.6.2):
     resolution: {integrity: sha512-yYAs9MyjGr2YijQdUSN9mVgT1ijI1FPMgcffpaPmYbHAVbQmF7bXudrBWHxmLzJlwl5rfep+Zgjli2e67lwUqQ==}
     peerDependencies:
       tslib: '*'
     dependencies:
       '@microsoft/applicationinsights-shims': 2.0.2
       '@microsoft/dynamicproto-js': 1.1.9
-      tslib: 2.5.3
+      tslib: 2.6.2
     dev: false
 
   /@microsoft/applicationinsights-dependencies-js@2.6.5:
@@ -2906,13 +2907,13 @@ packages:
       '@microsoft/dynamicproto-js': 1.1.9
     dev: false
 
-  /@microsoft/applicationinsights-react-js@3.0.5(react@18.2.0)(tslib@2.5.3):
+  /@microsoft/applicationinsights-react-js@3.0.5(react@18.2.0)(tslib@2.6.2):
     resolution: {integrity: sha512-+cAD9NZXQZB4/5gBkLrxXywtQllTqTPDlGod2Emli0kM9JLi4P4iH/i4Gtn4OBJtjlzcjYzU91AnFrjIisxx9A==}
     peerDependencies:
       react: ^16.0.0
     dependencies:
-      '@microsoft/applicationinsights-common': 2.8.15(tslib@2.5.3)
-      '@microsoft/applicationinsights-core-js': 2.8.15(tslib@2.5.3)
+      '@microsoft/applicationinsights-common': 2.8.15(tslib@2.6.2)
+      '@microsoft/applicationinsights-core-js': 2.8.15(tslib@2.6.2)
       '@microsoft/applicationinsights-shims': 1.0.3
       history: 4.10.1
       react: 18.2.0
@@ -7339,18 +7340,6 @@ packages:
       pako: 1.0.11
     dev: false
 
-  /browserslist@4.20.4:
-    resolution: {integrity: sha512-ok1d+1WpnU24XYN7oC3QWgTyMhY/avPJ/r9T00xxvUOIparA/gc+UPUMaod3i+G6s+nI2nUb9xZ5k794uIwShw==}
-    engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
-    hasBin: true
-    dependencies:
-      caniuse-lite: 1.0.30001524
-      electron-to-chromium: 1.4.504
-      escalade: 3.1.1
-      node-releases: 2.0.13
-      picocolors: 1.0.0
-    dev: false
-
   /browserslist@4.21.10:
     resolution: {integrity: sha512-bipEBdZfVH5/pwrvqc+Ub0kUPVfGUhlKxbvfD+z1BDnPEO/X98ruXGA1WP5ASpAFKan7Qr6j736IacbZQuAlKQ==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -11082,20 +11071,6 @@ packages:
       webpack: 4.46.0(webpack-cli@4.10.0)
     dev: false
 
-  /html-webpack-plugin@5.3.2(webpack@5.76.0):
-    resolution: {integrity: sha512-HvB33boVNCz2lTyBsSiMffsJ+m0YLIQ+pskblXgN9fnjS1BgEcuAfdInfXfGrkdXV406k9FiDi86eVCDBgJOyQ==}
-    engines: {node: '>=10.13.0'}
-    peerDependencies:
-      webpack: ^5.20.0
-    dependencies:
-      '@types/html-minifier-terser': 5.1.2
-      html-minifier-terser: 5.1.1
-      lodash: 4.17.21
-      pretty-error: 3.0.4
-      tapable: 2.2.1
-      webpack: 5.76.0(webpack-cli@4.10.0)
-    dev: false
-
   /html-webpack-plugin@5.5.3(webpack@5.76.0):
     resolution: {integrity: sha512-6YrDKTuqaP/TquFH7h4srYWsZx+x6k6+FbsTm0ziCwGHDP78Unr1r9F/H4+sGmMbX08GQcJ+K64x55b+7VM/jg==}
     engines: {node: '>=10.13.0'}
@@ -14733,13 +14708,6 @@ packages:
       renderkid: 2.0.7
     dev: false
 
-  /pretty-error@3.0.4:
-    resolution: {integrity: sha512-ytLFLfv1So4AO1UkoBF6GXQgJRaKbiSiGFICaOPNwQ3CMvBvXpLRubeQWyPGnsbV/t9ml9qto6IeCsho0aEvwQ==}
-    dependencies:
-      lodash: 4.17.21
-      renderkid: 2.0.7
-    dev: false
-
   /pretty-error@4.0.0:
     resolution: {integrity: sha512-AoJ5YMAcXKYxKhuJGdcvse+Voc6v1RgnsR3nWcYU7q4t6z0Q6T86sv5Zq8VIRbOWWFpvdGE83LtdSMNd+6Y0xw==}
     dependencies:
@@ -17354,10 +17322,6 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: false
 
-  /tslib@2.5.3:
-    resolution: {integrity: sha512-mSxlJJwl3BMEQCUNnxXBU9jP4JBktcEGhURcPR6VQVlnP0FdDEsIaz0C35dXNGLyRfrATNofF0F5p2KPxQgB+w==}
-    dev: false
-
   /tslib@2.6.2:
     resolution: {integrity: sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==}
     dev: false
@@ -18771,7 +18735,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-XFztJW0e3G/Dy0eIbAj13fNM2RWBzySYpixHIJk3txOYP2BGSDg9Q7JaLm5JNzJCWXMGZZS0TA8Cz5DmEFybZQ==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-9WXpwb4jbsP+EHa8NrQqnoTHtvIST5/PKYbRpUKDKsPYJGt9YkNleV34DQu2YPPK9uUX6bcBNfrwzczHXsrc0A==, tarball: file:projects/acs-ui-common.tgz}
     id: file:projects/acs-ui-common.tgz
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
@@ -18817,7 +18781,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-pVgmNvqEJQgWlcT/6tZp7pmGlxJZF5jmMmRdxgxk2tX1JoV53tY41Z+iHWHMwdQQ//XqT75xsGQutnDn79Acdw==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-Q3sc5Wzqheus5Y3R+MViQp99mk7jvKJNqG1qQifW8cGjONQqHUfXSden5tgqxqRGldYW1qE1fatM8SKCbkOj+A==, tarball: file:projects/calling-component-bindings.tgz}
     id: file:projects/calling-component-bindings.tgz
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
@@ -18866,7 +18830,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-zAh5RCMc8gzqJ+prMMGOLBzbstzzp0GyMf8QjdbpE6YHhpA3DHxR7f0jmwN3mxFq7gYl08vuIeVS/IsGJXRhQQ==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-kzE/Q8BSYCLk1YZRmf4pQrsGfmZoQ++ZTpqlsGsDzyonmRrurqXWJvCibK5Y1bANOqA3szjfsTLCxIj5awTh5A==, tarball: file:projects/calling-stateful-client.tgz}
     id: file:projects/calling-stateful-client.tgz
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
@@ -18915,7 +18879,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-L3OYQNIciyIu4rVaCoeR3lKyFsBgzslyNUVdmCMWauedvKl0lveAiRWOVwJY/5UFpSBu0r8ZyiuNpwcGThoCXw==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-Uvi6KhV7uV0Nwwcc1IQlA4eX85TZaC3yKZhNZ/D0gVnMYv6EqsBi2IGMDcOrOXGTG2QEPBYig+qPGb6JrKyciw==, tarball: file:projects/calling.tgz}
     id: file:projects/calling.tgz
     name: '@rush-temp/calling'
     version: 0.0.0
@@ -18959,7 +18923,7 @@ packages:
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
       follow-redirects: 1.14.8
-      html-webpack-plugin: 5.3.2(webpack@5.76.0)
+      html-webpack-plugin: 5.5.3(webpack@5.76.0)
       husky: 4.3.8
       if-env: 1.0.4
       jest: 29.5.0(@types/node@16.18.46)(ts-node@9.1.1)
@@ -19006,7 +18970,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-QJV8UlVyPDJP1ftqgN17IE6CF+SCRyGBWHD52jIpvOeNFTdw42rvm6G1BHNqe2c51u8XfH0raRZ1cvAXgKMlTg==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-5ADL5y1O9W6jZ1PPDdD7gdHde/L2zNJ5Mgx926jRg0ni/q5oNhJ63FKngxHbY7ZcmuCdLeocjXvg9FX05VR19g==, tarball: file:projects/callwithchat.tgz}
     id: file:projects/callwithchat.tgz
     name: '@rush-temp/callwithchat'
     version: 0.0.0
@@ -19050,7 +19014,7 @@ packages:
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
-      html-webpack-plugin: 5.3.2(webpack@5.76.0)
+      html-webpack-plugin: 5.5.3(webpack@5.76.0)
       husky: 4.3.8
       if-env: 1.0.4
       jest: 29.5.0(@types/node@16.18.46)(ts-node@9.1.1)
@@ -19095,7 +19059,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-LGpMvaoVXfzq1a7RZKP8svWWjXVhSt1G8Y3RXJWxcY18/lelY7unipe6VUDP5lNcH0OuSYq5DY0N6oq0jKntag==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-Gv2ZvGbldmIOM2KKWro7wGk7XyOGJAVkGVeAdWEXSQq7GwZLrK/Z3oOhRXuteT322bLyty33E2rbOo1hadVHdw==, tarball: file:projects/chat-component-bindings.tgz}
     id: file:projects/chat-component-bindings.tgz
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
@@ -19139,7 +19103,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-RWG55565LyrNjOseHGnEYcUBpIMiUG7bdWEaPFO0yr39EEKu7Kqdo5z6a0Q56Y/doIfpQuAGq+9dxqLbDx2V/Q==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-R+XSK/hMU0f1Ho6Vt0uiFxcelTtHdDaezR0fEIf890qB4Ebk1Uc8JX7wubHhrcBAO07D2zqr3Sgp9OMpTXUsJQ==, tarball: file:projects/chat-stateful-client.tgz}
     id: file:projects/chat-stateful-client.tgz
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
@@ -19191,7 +19155,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-9uEH1TtrjIhR56OmwymNSgozI2i8jD8ELSM3mumOZb6jtJS/UfLiuWPYUAzE/rOrZY18ewaFCvb3DhYAUTQX4A==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-vZGPqaD/srX8eGBtxeNuV5smIGlYhGFCbfJ4KxVrGmPhZdoqNgIsJ7w/BeSdvB708nCFi1h7YfhU5BgYo+5uBw==, tarball: file:projects/chat.tgz}
     id: file:projects/chat.tgz
     name: '@rush-temp/chat'
     version: 0.0.0
@@ -19230,7 +19194,7 @@ packages:
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
-      html-webpack-plugin: 5.3.2(webpack@5.76.0)
+      html-webpack-plugin: 5.5.3(webpack@5.76.0)
       husky: 4.3.8
       if-env: 1.0.4
       jest: 29.5.0(@types/node@16.18.46)(ts-node@9.1.1)
@@ -19275,12 +19239,12 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-Ee3qwbNMTKD9yT0no8xRL7CnLcZYs1qLiXBUZAgG6wn2TDEwL//OYQWuPyoFrzvkPXk65AsB8ejaQDhcRHUNXQ==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-Lo+ArVocraDWr26m6H972qTgKKxMA3jThACAk4bq2gPXGG/bbBOzfbaFI9aSv+EkAgrBaBxDsrFUlvd1jZ33DQ==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
       '@babel/core': 7.16.12
-      '@babel/plugin-proposal-export-namespace-from': 7.16.7(@babel/core@7.16.12)
+      '@babel/plugin-proposal-export-namespace-from': 7.18.9(@babel/core@7.16.12)
       babel-loader: 8.1.0(@babel/core@7.16.12)(webpack@5.76.0)
       eslint: 7.32.0
       eslint-config-prettier: 6.15.0(eslint@7.32.0)
@@ -19303,7 +19267,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-qjxGwq2DdolMf2jHIAhlz1Rmdm1hkRdYeaU7EdFPfYWZwiQnyoJV2aktyTbm9b9Cu141PCEned/BxpQhaSR4ww==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-+3Dt0l2fcUQr4QKglwC0ghXp6qFtN8c+lCLL/Rg9tzo1n8DGpXWgqQddqo83p6+Ap9VSYb7hc6D0hBAjxfUVrg==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -19320,7 +19284,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-yrJdF1iZPBu53GuCIbHOne+Vs2b0dZDC6bvEPI3jAJScZVc1ZkdOUD3D4/iPymSByhA+wolhYRiVeczR0S2OYQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-MEeybLrMVlWPkSNTpMVYro5oWQxjTzXf9WCzQlnLpReMvf5QZQu1kbOmOVk38LgDXahWb7v67rg8M4fop61Mdw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -19415,7 +19379,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-LaA1klVpvh4a5qxnR/+PFMmochxxA0z0USOwuC80oE5lhhuRh6jfBt03vTcJF3WmzAgADhThprjwaTxNt6d99w==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-JpAkYETesoKaj4E7090N7j5yfFn8KUM25bnANW5Eq1AEgTE8j+LOQVg2zyXvi684mnNQ216Ma1V2gyndegUVZA==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -19446,7 +19410,7 @@ packages:
       eslint-plugin-prettier: 3.4.1(eslint-config-prettier@6.15.0)(eslint@7.32.0)(prettier@2.3.1)
       eslint-plugin-react: 7.33.2(eslint@7.32.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@7.32.0)
-      html-webpack-plugin: 5.3.2(webpack@5.76.0)
+      html-webpack-plugin: 5.5.3(webpack@5.76.0)
       husky: 4.3.8
       if-env: 1.0.4
       prettier: 2.3.1
@@ -19478,10 +19442,11 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-637e3aKSgfcpBsI3RCLGLa1J40Yx8Kuo3ZA4jeq7J9lCDmGSwaBZaaJiSM7xDyRH2pQ+R97uzqyASM/HOCYzWg==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-h6vmfGncxiDMDyYk2xBbGpvp6xw6N7vvFy8URxWaXDD/Wnfys1DqEhU0h47vY0ontFSwYl8AOX3AP7Ir/0L8cw==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
+      '@actions/core': 1.10.1
       '@octokit/rest': 19.0.13
       '@rollup/plugin-commonjs': 17.1.0(rollup@2.42.4)
       '@types/node': 16.18.46
@@ -19496,7 +19461,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz(ts-node@9.1.1)(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-a1BuAM16HtOD4YJawv+4eG6ro8FiOhb1vEFsYGcZk55mlvNik0SShVKc1osDb1kz5q0GH10jiOQs/UJcWdrdow==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-rLdJL+4v/fMSZtXDO9n/is4bzMMVtzdkWJ25J5qYNuNAg4LfYcPmxxkq+6Ie/bKY+MpXxscf1LkWRrSpSPHspw==, tarball: file:projects/fake-backends.tgz}
     id: file:projects/fake-backends.tgz
     name: '@rush-temp/fake-backends'
     version: 0.0.0
@@ -19550,7 +19515,7 @@ packages:
     dev: false
 
   file:projects/northstar-wrapper.tgz:
-    resolution: {integrity: sha512-T2DDFiL5NAmxQhNYdkn77IV4HbGU2RGA7pWaALpTmQNnmEysB4AmpHuxsX4xdaJtXk9rTnV/esRZykVmhe1R4A==, tarball: file:projects/northstar-wrapper.tgz}
+    resolution: {integrity: sha512-r3JjDAMOKsvNeNcxSeKPYVYbKxwNdjar/JfHhH9IRUrogJUxvuhxQ6Jq4RlHhpc8w2Be8EgqqI2bJ9LGOjZ6wA==, tarball: file:projects/northstar-wrapper.tgz}
     name: '@rush-temp/northstar-wrapper'
     version: 0.0.0
     dependencies:
@@ -19584,7 +19549,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-RtANazpfs4jiixzNouDbboCWOxqiCmG9x5wzj6WTTqE8pNmW0BokHWe/lXP8u+180dLB4tu67/KUwuizThcJYw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-jmvkoy3q+IDVX7juDzQao5NQQE7CgLHHNTx6jhsEaskp1TuMW8vZf17gG5jsV31tC03xyNnBbPiZqlfchZqJmQ==, tarball: file:projects/react-components.tgz}
     id: file:projects/react-components.tgz
     name: '@rush-temp/react-components'
     version: 0.0.0
@@ -19682,7 +19647,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-X+/VWlyZa+JITLuGbp938mevW1IO5LsjfxXVRXx/rJCjB+FuHidl7wOq090Drch5K2zMoi1p2sofLLj/atszQw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-y9xGGotPA7IxObbLlvzH5fi9zI2x82Zic9KuumGvzVIWm1qW8KKGTvFg32V2qjipKQ7JTemW2/NDh+RIKHGhJQ==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19746,7 +19711,7 @@ packages:
       events: 3.3.0
       express: 4.18.2
       fs-extra: 10.1.0
-      html-webpack-plugin: 5.3.2(webpack@5.76.0)
+      html-webpack-plugin: 5.5.3(webpack@5.76.0)
       husky: 4.3.8
       if-env: 1.0.4
       immer: 9.0.6
@@ -19801,7 +19766,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-Fkq99kWcHqaadvoE5Sykrq2/h9Q4TgjaVRxrHeyGk+eOjB7t9WN8PvdfaZPW6xeEdaDuA3KAgZC1R7WdV6p6uQ==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-SzWQO1KXGLbulT2V9U0JoEQ+WJdd3rTXvGbCnFUR4CVYi3YIwR4iHdlodYPe1LNSxDhDAVlCsNZEVjauU0CJeg==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -19826,7 +19791,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz(@types/react-dom@18.2.7)(@types/react@18.2.21):
-    resolution: {integrity: sha512-pzunkYYh9tLZck4Ye47/JLymvyCWUX32Aakq+ZFkTTy8E3VDXyuXdR0ySVlgR19A15iBMccmClNXPNGQ0yzewQ==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-bhD9znX94KIJSXkmzJ8FBLFuMQM2ZI39npOBrbxPneo4V8fj8MH6GpNwSTsguS3vhgwfyhB4X5Sc+kZrQBBzVQ==, tarball: file:projects/sample-static-html-composites.tgz}
     id: file:projects/sample-static-html-composites.tgz
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
@@ -19849,7 +19814,7 @@ packages:
       dotenv: 10.0.0
       ecstatic: 4.1.4
       env-cmd: 10.1.0
-      html-webpack-plugin: 5.3.2(webpack@5.76.0)
+      html-webpack-plugin: 5.5.3(webpack@5.76.0)
       http: 0.0.1-security
       http-server: 0.12.3
       if-env: 1.0.4
@@ -19879,7 +19844,7 @@ packages:
     dev: false
 
   file:projects/server.tgz(@babel/core@7.16.12):
-    resolution: {integrity: sha512-ou/MyMILsjeKSwpwhOhEQdspNijmTJOodPtj/TQn6L8qzpNdZu9PmVWGGkK8IZXlmZAmz2omZo3rS/PAcdSCCA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-WreZqVClIpgyYEDhccdoUGmMfLP+TWmHnZpLuSfzA+O7WB47K/Z7yq6aPn0RhBkBKZJNgIWrV06iRUR8z3l9cA==, tarball: file:projects/server.tgz}
     id: file:projects/server.tgz
     name: '@rush-temp/server'
     version: 0.0.0
@@ -19948,7 +19913,7 @@ packages:
     dev: false
 
   file:projects/storybook.tgz(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-Ad7WihmRwgkHMq7+dwI6eEOG1FRE9+ne67NfadO702hXne2ehnVaP9Vy9M9GM3yDu/qyvbO8qvGdWfWaiBcVoA==, tarball: file:projects/storybook.tgz}
+    resolution: {integrity: sha512-atgnXu063a7EezDFDqUAhcAARRXQ9va5nqizD2ISzGyq4Y73GCXn1fLML2fYq+ir9RF4kLgx+Bvnjvm4KjFx5w==, tarball: file:projects/storybook.tgz}
     id: file:projects/storybook.tgz
     name: '@rush-temp/storybook'
     version: 0.0.0
@@ -19968,7 +19933,7 @@ packages:
       '@mdx-js/react': 1.6.22(react@18.2.0)
       '@microsoft/api-documenter': 7.12.22
       '@microsoft/api-extractor': 7.18.21
-      '@microsoft/applicationinsights-react-js': 3.0.5(react@18.2.0)(tslib@2.5.3)
+      '@microsoft/applicationinsights-react-js': 3.0.5(react@18.2.0)(tslib@2.6.2)
       '@microsoft/applicationinsights-web': 2.6.5
       '@storybook/addon-actions': 6.5.16(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-controls': 6.5.16(eslint@7.32.0)(react-dom@18.2.0)(react@18.2.0)(typescript@4.3.5)(webpack-cli@4.10.0)
@@ -20000,7 +19965,7 @@ packages:
       ajv: 6.12.6
       babel-jest: 29.6.4(@babel/core@7.16.12)
       babel-loader: 8.1.0(@babel/core@7.16.12)(webpack@5.76.0)
-      browserslist: 4.20.4
+      browserslist: 4.21.10
       concurrently: 5.3.0
       copy-to-clipboard: 3.3.3
       copyfiles: 2.4.1
@@ -20038,7 +20003,7 @@ packages:
       styled-components: 5.2.3(@babel/core@7.16.12)(react-dom@18.2.0)(react-is@17.0.2)(react@18.2.0)
       ts-jest: 29.1.1(@babel/core@7.16.12)(babel-jest@29.6.4)(jest@29.5.0)(typescript@4.3.5)
       ts-node: 9.1.1(typescript@4.3.5)
-      tslib: 2.5.3
+      tslib: 2.6.2
       typescript: 4.3.5
       uuid: 9.0.0
       webpack: 5.76.0(webpack-cli@4.10.0)
