@@ -155,7 +155,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onEditClick,
     remoteParticipantsCount = 0,
     onRenderAvatar,
-    messageStatusRenderer,
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
@@ -292,9 +291,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     handleOnInlineImageClicked
   ]);
 
-  let renderedStatusIcon =
-    showMessageStatus && messageStatusRenderer && message.status ? messageStatusRenderer(message.status) : undefined;
-  renderedStatusIcon = renderedStatusIcon === null ? undefined : renderedStatusIcon;
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const chatMyMessageStyles = useChatMyMessageStyles();
