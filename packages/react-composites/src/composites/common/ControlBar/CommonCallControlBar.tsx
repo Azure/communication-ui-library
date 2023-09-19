@@ -235,7 +235,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
-  const showMoreButton =
+  const showDesktopMoreButton =
     /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
       options?.moreButton
     ) &&
@@ -244,7 +244,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         options?.holdButton
       ) ||
       /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
-      /* @conditional-compile-remove(gallery-layouts) */ props.onUserSetGalleryLayout ||
       /* @conditional-compile-remove(gallery-layouts) */ props.onUserSetGalleryLayout);
 
   return (
@@ -354,7 +353,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForLobbyPage}
                       />
                     )}
-                    {!props.mobileView && showMoreButton && (
+                    {!props.mobileView && showDesktopMoreButton && (
                       <DesktopMoreButton
                         disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
                         styles={commonButtonStyles}
