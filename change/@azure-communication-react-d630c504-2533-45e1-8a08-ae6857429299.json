@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Call control bar",
+  "comment": "Show more button only if enabled and has at least one context menu button to show",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
