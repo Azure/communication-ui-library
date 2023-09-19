@@ -40,6 +40,7 @@ export const chatMessageActionMenuProps = (menuProps: {
         data-ui-id="chat-composite-message-action-icon"
         ref={menuProps.menuButtonRef}
         onClick={() => menuProps.onActionButtonClick()}
+        style={{ margin: '1px' }}
       >
         <Icon
           iconName="ChatMessageOptions"
