@@ -638,60 +638,60 @@ export interface CallCompositeStrings {
   /**
    * All strings for capability changed notification
    */
-  capabilityChangedNotification?: CapabilityChangedNotificationStrings; 
- /* @conditional-compile-remove(end-of-call-survey) */
+  capabilityChangedNotification?: CapabilityChangedNotificationStrings;
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Survey question
    */
   starSurveyQuestion?: string;
-/* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Text that's displayed after user select a star response
    */
   starSurveyThankYouText?: string;
-/* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question before user choose a response
    */
   starSurveyHelperText?: string;
- /* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select one star
    */
   starSurveyOneStarText?: string;
-/* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select two star
    */
   starSurveyTwoStarText?: string;
-/* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select three star
    */
   starSurveyThreeStarText?: string;
- /* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select four star
    */
   starSurveyFourStarText?: string;
-/* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select five star
    */
   starSurveyFiveStarText?: string;
-/* @conditional-compile-remove(end-of-call-survey) */
-/**
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
    * Confirm Button Label
    */
-  starSurveyConfirmButtonLabel?: string
-/* @conditional-compile-remove(end-of-call-survey) */
-    /**
-   * Aria Label for each individual star rating 
+  starSurveyConfirmButtonLabel?: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Aria Label for each individual star rating
    */
-    starRatingAriaLabel: string
- /* @conditional-compile-remove(end-of-call-survey) */
-      /**
+  starRatingAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
    * Aria Label for cancel button
    */
-   cancelButtonAriaLabel: string
+  cancelButtonAriaLabel: string;
 }
