@@ -729,13 +729,13 @@ jobs:
       - name: Calculate coverage change
         id: coverage
         run: |
-          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json lines
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json lines
 
-          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json statements
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json statements
 
-          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json functions
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json functions
 
-          node common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json branches
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/coverage/summary/react-composites.json ../../../temp/jest/coverage/summary/react-composites.json branches
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
