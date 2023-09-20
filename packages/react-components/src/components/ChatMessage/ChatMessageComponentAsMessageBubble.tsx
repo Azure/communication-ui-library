@@ -312,6 +312,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     mergeStyles(messageContainerStyle)
   );
 
+  const attached = message.attached === true ? 'center' : message.attached === 'bottom' ? 'bottom' : 'top';
   const chatMessage = (
     <>
       <div key={props.message.messageId} ref={messageRef}>
@@ -389,6 +390,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           </ChatMyMessage>
         ) : (
           <FluentChatMessage
+            attached={attached}
             key={props.message.messageId}
             root={{ className: chatMessageStyles.root }}
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
