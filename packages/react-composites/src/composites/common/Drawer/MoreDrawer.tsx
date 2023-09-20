@@ -286,17 +286,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           iconName: 'DefaultGalleryLayout',
           styles: { root: { lineHeight: 0 } }
         }
-      },
-      {
-        itemKey: 'largeGallerySelectionKey',
-        text: localeStrings.strings.call.moreButtonLargeGalleryDefaultLayoutLabel,
-        onItemClick: () => {
-          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
-        },
-        iconProps: {
-          iconName: 'LargeGalleryLayout',
-          styles: { root: { lineHeight: 0 } }
-        }
       }
     ]
   });
