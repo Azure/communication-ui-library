@@ -22,6 +22,11 @@ import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveV
  */
 export type LargeGalleryProps = LayoutProps;
 
+const DEFAULT_CHILDREN_PER_PAGE = 5;
+/* @conditional-compile-remove(gallery-layouts) */
+const REM_TO_PIXEL = 16;
+/* @conditional-compile-remove(gallery-layouts) */
+const LARGE_GALLERY_PARTICIPANT_CAP = 48;
 /**
  * VideoGallery Layout for when user is in a large meeting and wants to see more participants
  *
@@ -60,7 +65,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
   // This is for tracking the number of children in the first page of overflow gallery.
   // This number will be used for the maxOverflowGalleryDominantSpeakers when organizing the remote participants.
   // We need to add the local participant to the pinned participant count so we are placing the speakers correctly.
-  const childrenPerPage = useRef(4);
+  const childrenPerPage = useRef(DEFAULT_CHILDREN_PER_PAGE);
   const { gridParticipants, overflowGalleryParticipants } = useOrganizedParticipants({
     remoteParticipants,
     localParticipant,
@@ -73,7 +78,6 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
     /* @conditional-compile-remove(gallery-layouts) */ layout: 'largeGallery'
   });
-  console.log('gridParticipants', gridParticipants);
   let activeVideoStreams = 0;
 
   const gridTiles = gridParticipants.map((p) => {
@@ -179,7 +183,9 @@ const overflowGalleryTrampoline = (
 
 /* @conditional-compile-remove(gallery-layouts) */
 const calculateMaxTilesInLargeGrid = (parentWidth: number, parentHeight: number): number => {
-  const xAxisTiles = Math.floor(parentWidth / (VERTICAL_GALLERY_TILE_SIZE_REM.width * 16));
-  const yAxisTiles = Math.floor(parentHeight / (VERTICAL_GALLERY_TILE_SIZE_REM.minHeight * 16));
-  return xAxisTiles * yAxisTiles < 48 ? xAxisTiles * yAxisTiles : 48;
+  const xAxisTiles = Math.floor(parentWidth / (VERTICAL_GALLERY_TILE_SIZE_REM.width * REM_TO_PIXEL));
+  const yAxisTiles = Math.floor(parentHeight / (VERTICAL_GALLERY_TILE_SIZE_REM.minHeight * REM_TO_PIXEL));
+  return xAxisTiles * yAxisTiles < LARGE_GALLERY_PARTICIPANT_CAP
+    ? xAxisTiles * yAxisTiles
+    : LARGE_GALLERY_PARTICIPANT_CAP;
 };

@@ -205,7 +205,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   /* @conditional-compile-remove(gallery-layouts) */
   if (props.onUserSetOverflowGalleryPositionChange) {
-    moreButtonContextualMenuItems.push({
+    const galleryOptions = {
       key: 'overflowGalleryPositionKey',
       iconProps: {
         iconName: 'GalleryOptions',
@@ -272,23 +272,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             }
           },
           {
-            key: 'largeGallerySelectionKey',
-            text: localeStrings.strings.call.moreButtonLargeGalleryDefaultLayoutLabel,
-            canCheck: true,
-            itemProps: {
-              styles: buttonFlyoutIncreasedSizeStyles
-            },
-            isChecked: props.userSetGalleryLayout === 'largeGallery',
-            onClick: () => {
-              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
-              setFocusedContentOn(false);
-            },
-            iconProps: {
-              iconName: 'LargeGalleryLayout',
-              styles: { root: { lineHeight: 0 } }
-            }
-          },
-          {
             key: 'focusedContentSelectionKey',
             text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
             canCheck: true,
@@ -342,7 +325,29 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
           preventDismissOnEvent: _preventDismissOnEvent
         }
       }
-    });
+    };
+    /* @conditional-compile-remove(large-gallery) */
+    const largeGalleryOption = {
+      key: 'largeGallerySelectionKey',
+      text: localeStrings.strings.call.moreButtonLargeGalleryDefaultLayoutLabel,
+      canCheck: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      isChecked: props.userSetGalleryLayout === 'largeGallery',
+      onClick: () => {
+        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
+        setFocusedContentOn(false);
+      },
+      iconProps: {
+        iconName: 'LargeGalleryLayout',
+        styles: { root: { lineHeight: 0 } }
+      }
+    };
+    /* @conditional-compile-remove(large-gallery) */
+    galleryOptions.subMenuProps?.items?.push(largeGalleryOption);
+
+    moreButtonContextualMenuItems.push(galleryOptions);
   }
 
   /* @conditional-compile-remove(control-bar-button-injection) */

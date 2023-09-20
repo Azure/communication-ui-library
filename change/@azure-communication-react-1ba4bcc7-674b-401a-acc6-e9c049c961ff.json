@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "raise hand feature",
-  "comment": "update storybook",
-  "packageName": "@azure/communication-react",
-  "email": "ruslanzdor@microsoft.com",
-  "dependentChangeType": "patch"
-}
