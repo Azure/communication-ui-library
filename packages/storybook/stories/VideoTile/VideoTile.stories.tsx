@@ -14,10 +14,10 @@ import { VideoTileExample } from './snippets/VideoTile.snippet';
 import { VideoTileMenuItemsExample } from './snippets/VideoTileMenuItems.snippet';
 import { VideoTilePlaceholderExample } from './snippets/VideoTilePlaceholder.snippet';
 
-const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
 const VideoTileExampleText = require('!!raw-loader!./snippets/VideoTile.snippet').default;
 const VideoTileMenuItemsExampleText = require('!!raw-loader!./snippets/VideoTileMenuItems.snippet').default;
 const VideoTilePlaceholderText = require('!!raw-loader!./snippets/VideoTilePlaceholder.snippet').default;
+const VideoTileStylineExampleText = require('!!raw-loader!../Styling/snippets/StylingVideoTile.snippet').default;
 
 const importStatement = `import { VideoTile } from '@azure/communication-react';`;
 
