@@ -247,8 +247,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
 const preventUnwantedDismissProps = {
   preventDismissOnEvent: (ev: Event | React.FocusEvent | React.KeyboardEvent | React.MouseEvent): boolean => {
     return ev.type === 'resize';
-  },
-  styles: { root: { marginRight: '3px' } }
+  }
 };
 
 const calloutMenuProps = {
