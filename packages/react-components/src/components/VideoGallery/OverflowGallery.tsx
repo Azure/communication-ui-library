@@ -13,7 +13,7 @@ import { VerticalGalleryStyles } from '../VerticalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
 /* @conditional-compile-remove(gallery-layouts) */
-import { VideoGalleryLayout } from '../VideoGalleryLayout';
+import { VideoGalleryLayout } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
