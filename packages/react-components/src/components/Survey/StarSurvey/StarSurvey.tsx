@@ -83,7 +83,7 @@ export interface _StarSurveyProps {
    */
   unselectedIcon?: string;
   /** Function to send StarSurvey results*/
-  onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse>;
+  onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
   /** Function to close star survey modal*/
   onDismissStarSurvey?: () => void;
   /** Star survey strings */
@@ -150,8 +150,6 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
       await onSubmitSurvey({
         overallRating: { score: rating }
       })
-        .then(() => console.log('survey submitted successfully'))
-        .catch((e) => console.log('error when submitting survey: ' + e));
     }
     onDismiss();
   }, [onSubmitSurvey, rating, onDismiss]);
