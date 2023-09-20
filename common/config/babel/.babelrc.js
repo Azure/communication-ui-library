@@ -71,7 +71,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for custom video gallery layouts
         'gallery-layouts',
         // Feature image gallery
-        'image-gallery'
+        'image-gallery',
+        // Feature for large Gallery layout
+        'large-gallery'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -81,7 +83,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Do not use in production code.
         'in-progress-beta-feature-demo',
         // Feature for custom video gallery layouts
-        'gallery-layouts'
+        'gallery-layouts',
+        // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
+        'large-gallery'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
