@@ -69,6 +69,9 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
+// @internal
+export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
+
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
@@ -176,6 +179,28 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
 };
+
+// @internal
+export interface _CallRating<TIssue extends _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue> {
+    issues?: TIssue[];
+    scale?: _RatingScale;
+    score: number;
+}
+
+// @internal
+export interface _CallSurvey {
+    audioRating?: _CallRating<_AudioIssue>;
+    overallRating?: _CallRating<_OverallIssue>;
+    screenshareRating?: _CallRating<_ScreenshareIssue>;
+    videoRating?: _CallRating<_VideoIssue>;
+}
+
+// @internal
+export interface _CallSurveyResponse extends _CallSurvey {
+    readonly callId: string;
+    readonly id: string;
+    readonly localParticipantId: string;
+}
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -633,8 +658,6 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
-    // (undocumented)
-    StarSurvey: StarSurveyStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -813,6 +836,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
+    SurveyStarIcon: JSX.Element;
+    SurveyStarIconFilled: JSX.Element;
 };
 
 // @internal
@@ -1630,6 +1655,9 @@ export interface OptionsDevice {
     name: string;
 }
 
+// @internal
+export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
+
 // @beta
 export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
 
@@ -1830,6 +1858,13 @@ export interface RaiseHandButtonStrings {
     tooltipOnContent?: string;
 }
 
+// @internal
+export interface _RatingScale {
+    lowerBound: number;
+    lowScoreThreshold: number;
+    upperBound: number;
+}
+
 // @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
@@ -1882,6 +1917,9 @@ export interface ScreenShareButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
 }
+
+// @internal
+export type _ScreenshareIssue = 'NoContentLocal' | 'NoContentRemote' | 'CannotPresent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'LargeDelay' | 'OtherIssues';
 
 // @public
 export const SendBox: (props: SendBoxProps) => JSX.Element;
@@ -2080,40 +2118,32 @@ export const _spokenLanguageToCaptionLanguage: {
     'zh-tw': string;
 };
 
-// @public
-export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
+// @internal
+export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
 
-// @public
-export interface StarSurveyProps {
-    onSubmitStarSurvey: (ratings: number, type: StarSurveyTypes) => Promise<void>;
+// @internal
+export interface _StarSurveyProps {
+    onDismissStarSurvey?: () => void;
+    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse>;
     selectedIcon?: string;
-    showSurvey?: boolean;
-    strings?: StarSurveyStrings;
-    styles?: StarSurveyStyles;
-    type?: StarSurveyTypes;
+    strings?: _StarSurveyStrings;
     unselectedIcon?: string;
 }
 
-// @public
-export interface StarSurveyStrings {
-    fiveStarText: string;
-    fourStarText: string;
-    helperText: string;
-    oneStarText: string;
-    question: string;
-    thankYouText: string;
-    threeStarText: string;
-    twoStarText: string;
+// @internal
+export interface _StarSurveyStrings {
+    cancelButtonAriaLabel: string;
+    starRatingAriaLabel: string;
+    starSurveyConfirmButtonLabel: string;
+    starSurveyFiveStarText: string;
+    starSurveyFourStarText: string;
+    starSurveyHelperText: string;
+    starSurveyOneStarText: string;
+    starSurveyQuestion: string;
+    starSurveyThankYouText: string;
+    starSurveyThreeStarText: string;
+    starSurveyTwoStarText: string;
 }
-
-// @public
-export interface StarSurveyStyles {
-    // (undocumented)
-    root?: IStyle;
-}
-
-// @public
-export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
 
 // @internal
 export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
@@ -2464,6 +2494,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
 }
+
+// @internal
+export type _VideoIssue = 'NoVideoReceived' | 'NoVideoSent' | 'LowQuality' | 'Freezes' | 'StoppedUnexpectedly' | 'DarkVideoReceived' | 'AudioVideoOutOfSync' | 'OtherIssues';
 
 // @public
 export interface VideoStreamOptions {
