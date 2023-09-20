@@ -33,6 +33,9 @@ export interface OrganizedParticipantsResult {
 }
 
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
+const DEFAULT_MAX_VIDEO_SREAMS = 4;
+/* @conditional-compile-remove(gallery-layouts) */
+const MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY = 9;
 
 const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedParticipantsResult => {
   const visibleGridParticipants = useRef<VideoGalleryRemoteParticipant[]>([]);
@@ -42,13 +45,25 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     remoteParticipants = [],
     localParticipant,
     dominantSpeakers = [],
-    maxRemoteVideoStreams,
+    maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(gallery-layouts) */
     layout
   } = props;
+
+  const calculateMaxRemoteVideoStreams = (): number => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (maxRemoteVideoStreams > MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY) {
+      return MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY;
+    } else {
+      return maxRemoteVideoStreams;
+    }
+    return maxRemoteVideoStreams;
+  };
+
+  const maxRemoteVideoStreamsToUse = calculateMaxRemoteVideoStreams();
 
   const videoParticipants = remoteParticipants.filter((p) => p.videoStream?.isAvailable);
 
@@ -65,8 +80,8 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
           participants: participantsToSortTrampoline(),
           dominantSpeakers,
           lastVisibleParticipants: visibleGridParticipants.current,
-          maxDominantSpeakers: maxRemoteVideoStreams as number
-        }).slice(0, maxRemoteVideoStreams);
+          maxDominantSpeakers: maxRemoteVideoStreamsToUse
+        }).slice(0, maxRemoteVideoStreamsToUse);
 
   /* @conditional-compile-remove(gallery-layouts) */
   const dominantSpeakerToGrid =
@@ -112,16 +127,16 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleOverflowGalleryParticipants.current.length > (maxRemoteVideoStreams as number)
-      ? visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams)
-      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams).concat(callingParticipants);
+      : visibleOverflowGalleryParticipants.current.length > maxRemoteVideoStreamsToUse
+      ? visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreamsToUse)
+      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreamsToUse).concat(callingParticipants);
     return visibleGridParticipants.current.length > 0
       ? visibleGridParticipants.current
-      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreams);
+      : visibleOverflowGalleryParticipants.current.slice(0, maxRemoteVideoStreamsToUse);
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
-    maxRemoteVideoStreams
+    maxRemoteVideoStreamsToUse
   ]);
 
   const gridParticipants = getGridParticipants();
@@ -153,18 +168,18 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current.concat(callingParticipants)
-        : visibleOverflowGalleryParticipants.current.length > (maxRemoteVideoStreams as number)
-        ? visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams).concat(callingParticipants)
+        : visibleOverflowGalleryParticipants.current.length > maxRemoteVideoStreamsToUse
+        ? visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreamsToUse).concat(callingParticipants)
         : [];
       return visibleGridParticipants.current.length > 0
         ? visibleOverflowGalleryParticipants.current
-        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreams);
+        : visibleOverflowGalleryParticipants.current.slice(maxRemoteVideoStreamsToUse);
     }
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
     localParticipant,
-    maxRemoteVideoStreams
+    maxRemoteVideoStreamsToUse
   ]);
 
   const overflowGalleryParticipants = getOverflowGalleryRemoteParticipants();
