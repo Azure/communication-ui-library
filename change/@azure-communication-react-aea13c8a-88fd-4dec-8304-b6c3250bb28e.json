@@ -2,8 +2,8 @@
   "type": "none",
   "area": "improvement",
   "workstream": "Release",
-  "comment": "Disable Changelog step for release branch script",
+  "comment": "Change log grooming for 1.8.0",
   "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "none"
 }
