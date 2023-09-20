@@ -618,6 +618,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    cancelButtonAriaLabel: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
@@ -730,6 +731,16 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    starRatingAriaLabel: string;
+    starSurveyConfirmButtonLabel?: string;
+    starSurveyFiveStarText?: string;
+    starSurveyFourStarText?: string;
+    starSurveyHelperText?: string;
+    starSurveyOneStarText?: string;
+    starSurveyQuestion?: string;
+    starSurveyThankYouText?: string;
+    starSurveyThreeStarText?: string;
+    starSurveyTwoStarText?: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
@@ -1959,8 +1970,6 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
-    // (undocumented)
-    StarSurvey: StarSurveyStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -2319,6 +2328,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
+    SurveyStarIcon: JSX.Element;
+    SurveyStarIconFilled: JSX.Element;
 };
 
 // @public
@@ -2448,6 +2459,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
+    SurveyStarIcon: JSX.Element;
+    SurveyStarIconFilled: JSX.Element;
 };
 
 // @beta
@@ -3743,41 +3756,6 @@ export interface SpokenLanguageStrings {
     // (undocumented)
     'zh-tw': string;
 }
-
-// @public
-export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
-
-// @public
-export interface StarSurveyProps {
-    onSubmitStarSurvey: (ratings: number, type: StarSurveyTypes) => Promise<void>;
-    selectedIcon?: string;
-    showSurvey?: boolean;
-    strings?: StarSurveyStrings;
-    styles?: StarSurveyStyles;
-    type?: StarSurveyTypes;
-    unselectedIcon?: string;
-}
-
-// @public
-export interface StarSurveyStrings {
-    fiveStarText: string;
-    fourStarText: string;
-    helperText: string;
-    oneStarText: string;
-    question: string;
-    thankYouText: string;
-    threeStarText: string;
-    twoStarText: string;
-}
-
-// @public
-export interface StarSurveyStyles {
-    // (undocumented)
-    root?: IStyle;
-}
-
-// @public
-export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
 
 // @public
 export interface StatefulCallClient extends CallClient {

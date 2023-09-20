@@ -421,6 +421,7 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    cancelButtonAriaLabel: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
@@ -533,6 +534,16 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
+    starRatingAriaLabel: string;
+    starSurveyConfirmButtonLabel?: string;
+    starSurveyFiveStarText?: string;
+    starSurveyFourStarText?: string;
+    starSurveyHelperText?: string;
+    starSurveyOneStarText?: string;
+    starSurveyQuestion?: string;
+    starSurveyThankYouText?: string;
+    starSurveyThreeStarText?: string;
+    starSurveyTwoStarText?: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
@@ -1400,6 +1411,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ContextMenuCameraIcon: JSX.Element;
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
+    SurveyStarIcon: JSX.Element;
+    SurveyStarIconFilled: JSX.Element;
 };
 
 // @beta
