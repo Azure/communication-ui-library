@@ -21,22 +21,6 @@ const showParticipantStatement = `
 <ChatComposite options={{ participantPane: true}}>
 `;
 
-const addFileSharingSnippet = `
-<ChatComposite
-adapter={chatAdapter}
-options={{
-  fileSharing: {
-    uploadHandler: fileUploadHandler,
-    /* If fileDownloadHandler is not provided. The file URL is opened in a new tab.
-    You can find examples of fileDownloadHandler and fileUploadHandler in this tutorial
-    https://docs.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial */
-    downloadHandler: fileDownloadHandler,
-    accept: 'image/png, image/jpeg, text/plain, .docx',
-    multiple: true
-  }
-}} />
-`;
-
 export const Docs: () => JSX.Element = () => {
   const refBasicUsage = useRef(null);
   const refCustomBehavior = useRef(null);
