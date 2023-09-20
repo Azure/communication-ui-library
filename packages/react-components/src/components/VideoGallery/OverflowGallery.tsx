@@ -12,6 +12,8 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styl
 import { VerticalGalleryStyles } from '../VerticalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '../VideoGalleryLayout';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
@@ -41,6 +43,8 @@ export const OverflowGallery = (props: {
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  layout?: VideoGalleryLayout;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -110,6 +114,7 @@ export const OverflowGallery = (props: {
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
+        layout={props.layout}
       />
     );
   }

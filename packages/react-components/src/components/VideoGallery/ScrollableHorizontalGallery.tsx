@@ -8,6 +8,8 @@ import {
   scrollableHorizontalGalleryContainerStyles,
   scrollableHorizontalGalleryStyles
 } from './styles/ScrollableHorizontalGallery.style';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '../VideoGallery';
 
 /**
  * Component to display elements horizontally in a scrollable container
@@ -16,8 +18,12 @@ import {
 export const ScrollableHorizontalGallery = (props: {
   horizontalGalleryElements?: JSX.Element[];
   onFetchTilesToRender?: (indexes: number[]) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  layout?: VideoGalleryLayout;
 }): JSX.Element => {
-  const { horizontalGalleryElements, onFetchTilesToRender } = props;
+  const { horizontalGalleryElements, onFetchTilesToRender, layout } = props;
+
+  const useFullWidth = layout === 'default' ? true : false;
 
   useEffect(() => {
     const indexesArray = [...Array(horizontalGalleryElements?.length).keys()];
@@ -30,7 +36,7 @@ export const ScrollableHorizontalGallery = (props: {
   const { events: dragabbleEvents } = useDraggable(ref);
 
   return (
-    <div ref={ref} {...dragabbleEvents} className={scrollableHorizontalGalleryContainerStyles}>
+    <div ref={ref} {...dragabbleEvents} className={scrollableHorizontalGalleryContainerStyles(useFullWidth)}>
       <Stack
         data-ui-id="scrollable-horizontal-gallery"
         horizontal={true}
