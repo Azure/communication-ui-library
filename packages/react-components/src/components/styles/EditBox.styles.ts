@@ -33,6 +33,6 @@ export const inputBoxIcon = mergeStyles({
  */
 export const editBoxStyleSet = {
   root: {
-    width: '100%'
+    minWidth: '30vw'
   }
 };

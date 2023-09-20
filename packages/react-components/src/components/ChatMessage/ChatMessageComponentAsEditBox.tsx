@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
+import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
@@ -117,7 +117,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const getContent = (): JSX.Element => {
     return (
-      <Stack>
+      <>
         <InputBoxComponent
           inlineChildren={false}
           id={'editbox'}
@@ -175,7 +175,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           </div>
         )}
         {onRenderFileUploads()}
-      </Stack>
+      </>
     );
   };
 
