@@ -135,6 +135,7 @@ export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
   | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
   | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
@@ -685,7 +686,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
     }
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(large-gallery) */
     if (layout === 'largeGallery') {
       return <LargeGalleryLayout {...layoutProps} />;
     }
