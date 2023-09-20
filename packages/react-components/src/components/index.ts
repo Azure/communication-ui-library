@@ -203,11 +203,11 @@ export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
-/* @conditional-compile-remove(gallery-layouts) */
+/* @conditional-compile-remove(end-of-call-survey) */
 export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
-/* @conditional-compile-remove(gallery-layouts) */
+/* @conditional-compile-remove(end-of-call-survey) */
 export type { _StarSurveyProps, _StarSurveyStrings } from './Survey/StarSurvey/StarSurvey';
-/* @conditional-compile-remove(gallery-layouts) */
+/* @conditional-compile-remove(end-of-call-survey) */
 export * from './Survey/StarSurvey/SurveyTypes';
 
 /* @conditional-compile-remove(PSTN-calls) */
