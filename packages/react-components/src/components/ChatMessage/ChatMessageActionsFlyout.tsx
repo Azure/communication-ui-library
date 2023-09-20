@@ -236,7 +236,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
       onDismiss={props.onDismiss}
       directionalHint={DirectionalHint.topRightEdge}
       className={chatMessageMenuStyle}
-      calloutProps={preventUnwantedDismissProps}
+      calloutProps={calloutMenuProps}
     />
   );
 };
@@ -248,5 +248,10 @@ const preventUnwantedDismissProps = {
   preventDismissOnEvent: (ev: Event | React.FocusEvent | React.KeyboardEvent | React.MouseEvent): boolean => {
     return ev.type === 'resize';
   },
+  styles: { root: { marginRight: '3px' } }
+};
+
+const calloutMenuProps = {
+  ...preventUnwantedDismissProps,
   styles: { root: { marginRight: '3px' } }
 };
