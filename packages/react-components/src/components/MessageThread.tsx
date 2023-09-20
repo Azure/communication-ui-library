@@ -400,7 +400,7 @@ const memoizeAllMessages = memoizeFnAll(
           <FluentChatMyMessage
             attached={attached}
             root={{
-              // myChatItemMessageContainer used in className and style as style can't handle actions
+              // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
               className: mergeClasses(
                 chatMessageRenderStyles.rootMyMessage,
                 mergeStyles(styles?.myChatItemMessageContainer)
@@ -440,7 +440,7 @@ const memoizeAllMessages = memoizeFnAll(
             attached={attached}
             root={{ className: chatMessageRenderStyles.rootMessage }}
             body={{
-              // chatItemMessageContainer used in className and style as style can't handle actions
+              // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
               className: mergeClasses(
                 chatMessageRenderStyles.body,
                 !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
@@ -1330,7 +1330,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
           <Chat
-            // styles?.chatContainer used in className and style as style can't handle actions
+            // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
             ref={chatScrollDivRef}
             style={{ ...createStyleFromV8Style(styles?.chatContainer) }}

@@ -298,7 +298,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
 
   const chatMessageStyles = useChatMessageStyles();
   const chatItemMessageContainerClassName = mergeClasses(
-    // messageContainerStyle used in className and style as style can't handle actions
+    // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
     chatMessageStyles.body,
     isBlockedMessage
       ? chatMessageCommonStyles.blocked
@@ -319,7 +319,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           <ChatMyMessage
             key={props.message.messageId}
             body={{
-              // messageContainerStyle used in className and style as style can't handle actions
+              // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors
               className: mergeClasses(
                 chatMyMessageStyles.body,
                 isBlockedMessage
