@@ -35,7 +35,7 @@
   "devDependencies": {
     "@azure/communication-identity": "^1.2.0",
     "@babel/core": "^7.16.0",
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "~1.35.1",
     "@types/copy-webpack-plugin": "^6.4.0",
     "@types/node": "^16.11.7",
     "@types/node-static": "^0.7.7",
