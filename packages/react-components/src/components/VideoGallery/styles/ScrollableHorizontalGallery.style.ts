@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
+import { IStackStyles, mergeStyles } from '@fluentui/react';
 import { SMALL_FLOATING_MODAL_SIZE_REM } from './FloatingLocalVideo.styles';
 import {
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
