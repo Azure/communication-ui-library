@@ -34,8 +34,6 @@ export interface OrganizedParticipantsResult {
 
 const DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS = 6;
 const DEFAULT_MAX_VIDEO_SREAMS = 4;
-/* @conditional-compile-remove(large-gallery) */
-const MAX_VIDEO_STREAMS_FOR_LARGE_GALLERY = 49;
 /* @conditional-compile-remove(gallery-layouts) */
 const MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY = 9;
 
@@ -56,10 +54,6 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   } = props;
 
   const calculateMaxRemoteVideoStreams = (): number => {
-    /* @conditional-compile-remove(large-gallery) */
-    if (layout === 'largeGallery') {
-      return MAX_VIDEO_STREAMS_FOR_LARGE_GALLERY;
-    }
     /* @conditional-compile-remove(gallery-layouts) */
     if (maxRemoteVideoStreams > MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY) {
       return MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY;
