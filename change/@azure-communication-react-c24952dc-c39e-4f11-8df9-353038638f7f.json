@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "\"Merge pre-release 1.8.0-beta.1 branch back to main\"",
-  "comment": "Collect CHANGELOG",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "none"
-}
