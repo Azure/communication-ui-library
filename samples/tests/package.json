@@ -6,6 +6,7 @@
   "scripts": {
     "build": "echo skip",
     "test": "echo skip",
+    "test:ci-coverage": "echo skip",
     "test:e2e:bundle": "rushx _by-flavor \"cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/\"",
     "update:snapshot:bundle": "rushx _by-flavor \"cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/ --update-snapshots\"",
     "test:e2e:examples": "rushx _by-flavor \"cross-env SERVE_PATH=../ComponentExamples/dist/build playwright test ComponentExamples/\"",

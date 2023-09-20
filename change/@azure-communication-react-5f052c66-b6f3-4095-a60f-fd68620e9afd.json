@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "ImageGallery",
-  "comment": "Add new storybook page for image gallery",
+  "workstream": "Storybook",
+  "comment": "Updating documentation to point to latest version of chat sdk",
   "packageName": "@azure/communication-react",
   "email": "joshlai@microsoft.com",
   "dependentChangeType": "none"

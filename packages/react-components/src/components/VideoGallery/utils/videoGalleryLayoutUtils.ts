@@ -54,9 +54,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
 
   const participantsToSortTrampoline = (): VideoGalleryRemoteParticipant[] => {
     /* @conditional-compile-remove(gallery-layouts) */
-    return layout !== 'speaker' && layout !== 'largeGallery'
-      ? videoParticipants
-      : putVideoParticipantsFirst(remoteParticipants);
+    return layout !== 'floatingLocalVideo' ? putVideoParticipantsFirst(remoteParticipants) : videoParticipants;
     return videoParticipants;
   };
 
@@ -108,8 +106,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     if (isScreenShareActive) {
       return [];
     }
-
-    // if we have no video participants we need to cap the max number of audio participants in the grid
+    // if we have no grid participants we need to cap the max number of overflowGallery participants in the grid
     // we will use the max streams provided to the function to find the max participants that can go in the grid
     // if there are less participants than max streams then we will use all participants including joining in the grid
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
