@@ -431,6 +431,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
+    const showDisplayNameTrampoline = (): string => {
+      /* @conditional-compile-remove(gallery-layouts) */
+      return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
+      return isNarrow ? '' : strings.localVideoLabel;
+    };
+
     return (
       <Stack
         styles={localVideoTileContainerStyles}
@@ -446,7 +452,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={localParticipant?.videoStream?.isAvailable}
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
-          displayName={isNarrow ? '' : strings.localVideoLabel}
+          displayName={showDisplayNameTrampoline()}
           initialsName={initialsName}
           localVideoViewOptions={localVideoViewOptions}
           onRenderAvatar={onRenderAvatar}
@@ -455,7 +461,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               (localTileNotInGrid && isNarrow) ||
               /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
                 '9:16'
-            )
+            ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default'
           }
           showMuteIndicator={showMuteIndicator}
           showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
@@ -487,7 +493,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles?.localVideo,
     theme.effects.roundedCorner4,
     /*@conditional-compile-remove(click-to-call) */
-    localVideoTileSize
+    localVideoTileSize,
+    /* @conditional-compile-remove(gallery-layouts) */
+    layout
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
