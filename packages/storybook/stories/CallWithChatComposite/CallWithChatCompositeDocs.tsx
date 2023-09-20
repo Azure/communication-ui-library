@@ -187,9 +187,9 @@ export const Docs: () => JSX.Element = () => {
           Communication Services end user will be able to see shared files in the chat thread. Please check out the
           tutorial for [Enable file sharing using UI Library in Teams Interoperability
           Chat](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/file-sharing-tutorial-interop-chat)
-          for details.
         </Description>
       </div>
+
       <Heading>PSTN and 1:N Calling</Heading>
       <SingleLineBetaBanner />
       <MessageBar>Note: see CallComposite for detailed implementation description</MessageBar>
