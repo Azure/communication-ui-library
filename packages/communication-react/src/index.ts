@@ -164,10 +164,6 @@ export { RaiseHandButton } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
 
-
-export {StarSurvey} from '../../react-components/src';
-export type {StarSurveyProps, StarSurveyStrings, StarSurveyStyles, StarSurveyTypes} from'../../react-components/src';
-
 /* @conditional-compile-remove(call-readiness) */
 export {
   CameraAndMicrophoneSitePermissions,

@@ -399,18 +399,6 @@ export const controlsToAdd = {
       displayType: 'default'
     },
     name: 'Control Bar Customizations'
-  },
-  showSurvey: { control: 'boolean', defaultValue: true, name: 'Show survey' },
-  surveyType: {
-    control: 'select',
-    options: ['overallRating', 'audioRating', 'videoRating', 'ScreenshareRating'],
-    defaultValue: 'overallRating',
-    name: 'Star Survey Type'
-  },
-  surveyQuestion: {
-    control: 'text',
-    defaultValue: 'How was your call today?',
-    name: 'Survey question'
   }
 };
 
