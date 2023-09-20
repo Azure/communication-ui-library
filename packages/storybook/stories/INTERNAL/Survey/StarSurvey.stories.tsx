@@ -1,22 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import { StarSurvey as StarSurveyComponent, StarSurveyTypes, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
-import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
+import { _StarSurvey as StarSurveyComponent, useTheme } from '@internal/react-components';
+import { Canvas, Description, Heading, Props, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React from 'react';
-import { useLocale } from '../../../react-components/src/localization';
-import { COMPONENT_FOLDER_PREFIX } from '../constants';
-import { controlsToAdd, hiddenControl } from '../controlsUtils';
+import React, { useState } from 'react';
+import { COMPONENT_FOLDER_PREFIX } from '../../constants';
+import { hiddenControl } from '../../controlsUtils';
 import { CustomStarSurveyExample } from './snippets/CustomStarSurvey.snippet';
 import { StarSurveyExample } from './snippets/StarSurvey.snippet';
 
 const ExampleCustomSurveyText = require('!!raw-loader!./snippets/CustomStarSurvey.snippet.tsx').default;
 const ExampleSurveyText = require('!!raw-loader!./snippets/StarSurvey.snippet.tsx').default;
-
-const importStatement = `
-import {StarSurvey, StarSurveyProps, StarSurveyStrings, StarSurveyStyles, StarSurveyTypes } from '@azure/communication-react';`;
 
 const getDocs: () => JSX.Element = () => {
   /* eslint-disable react/no-unescaped-entities */
@@ -24,9 +20,6 @@ const getDocs: () => JSX.Element = () => {
     <>
       <Title>Star Survey</Title>
       <Description>Component to render a modal containing a star survey scaling from 1 to 5</Description>
-
-      <Heading>Importing</Heading>
-      <Source code={importStatement} />
 
       <Heading>Usage</Heading>
       <Description>Here is an example of how to use `StarSurvey`</Description>
@@ -51,12 +44,23 @@ const getDocs: () => JSX.Element = () => {
 
 const StarSurveyStory = (args): JSX.Element => {
   const theme = useTheme();
-  const strings = useLocale().strings.StarSurvey;
-  strings.question = args.surveyQuestion;
+  const [showSurvey, setShowSurvey] = useState(true);
 
-  const onSubmitSurvey = async (ratings: number, type: StarSurveyTypes): Promise<void> => {
-    alert(`${type}: ${ratings}`);
-    await Promise.resolve;
+  const onDismiss = (): void => {
+    setShowSurvey(false);
+  };
+  const strings = {
+    starSurveyQuestion: 'How was your call today?',
+    starSurveyThankYouText: 'Thanks for letting us know.',
+    starSurveyHelperText: 'Your feedback will help us improve your experience.',
+    starSurveyOneStarText: 'The quality was bad.',
+    starSurveyTwoStarText: 'The quality was poor.',
+    starSurveyThreeStarText: 'The quality was good.',
+    starSurveyFourStarText: 'The quality was great.',
+    starSurveyFiveStarText: 'The quality was excellent.',
+    starSurveyConfirmButtonLabel: 'Confirm',
+    starRatingAriaLabel: 'Select {0} of {1} stars',
+    cancelButtonAriaLabel: 'Cancel'
   };
 
   return (
@@ -68,26 +72,23 @@ const StarSurveyStory = (args): JSX.Element => {
         height: '75%'
       })}
     >
-      <StarSurveyComponent onSubmitStarSurvey={onSubmitSurvey} {...args} {...strings} />
+      {showSurvey && <StarSurveyComponent {...args} strings={strings} onDismissStarSurvey={onDismiss} />}
     </div>
   );
 };
 
-export const Survey = StarSurveyStory.bind({});
+export const StarSurvey = StarSurveyStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-survey-starSurvey`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Survey/StarSurvey`,
+  id: `${COMPONENT_FOLDER_PREFIX}-internal-star-survey`,
+  title: `${COMPONENT_FOLDER_PREFIX}/Internal/Survey/Star Survey`,
   component: StarSurveyComponent,
   argTypes: {
-    type: controlsToAdd.surveyType,
-    showSurvey: controlsToAdd.showSurvey,
-    surveyQuestion: controlsToAdd.surveyQuestion,
-    strings: hiddenControl,
-    onSubmitStarSurvey: hiddenControl,
     selectedIcon: hiddenControl,
     unselectedIcon: hiddenControl,
-    styles: hiddenControl
+    onSubmitSurvey: hiddenControl,
+    onDismissStarSurvey: hiddenControl,
+    strings: hiddenControl
   },
   parameters: {
     docs: {

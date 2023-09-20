@@ -1,91 +1,77 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT license.
 
-import React, { useEffect, useState } from 'react';
-import { IStyle, Text, useTheme, Stack, Modal, IconButton } from '@fluentui/react';
+import React, { useState, useCallback } from 'react';
+import { Text, useTheme, Stack, Modal, IconButton, PrimaryButton } from '@fluentui/react';
 import { Rating, RatingSize } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
-import { useLocale } from '../../../localization';
 import {
+  confirmButtonClassName,
   helperTextStyle,
   modalStyles,
   questionTextStyle,
   ratingStyles,
   titleContainerClassName
 } from './StarSurvey.styles';
-
+import { _CallSurvey, _CallSurveyResponse } from './SurveyTypes';
 /**
  * Strings of {@link StarSurvey} that can be overridden.
  *
- * @public
+ * @internal
  */
-export interface StarSurveyStrings {
+export interface _StarSurveyStrings {
   /**
    * Survey question
    */
-  question: string;
+  starSurveyQuestion: string;
   /**
    * Text that's displayed after user select a star response
    */
-  thankYouText: string;
+  starSurveyThankYouText: string;
   /**
    * Helper text displayed below survey question before user choose a response
    */
-  helperText: string;
+  starSurveyHelperText: string;
   /**
    * Helper text displayed below survey question after user select one star
    */
-  oneStarText: string;
+  starSurveyOneStarText: string;
   /**
    * Helper text displayed below survey question after user select two star
    */
-  twoStarText: string;
+  starSurveyTwoStarText: string;
   /**
    * Helper text displayed below survey question after user select three star
    */
-  threeStarText: string;
+  starSurveyThreeStarText: string;
   /**
    * Helper text displayed below survey question after user select four star
    */
-  fourStarText: string;
+  starSurveyFourStarText: string;
   /**
    * Helper text displayed below survey question after user select five star
    */
-  fiveStarText: string;
+  starSurveyFiveStarText: string;
+  /**
+   * Confirm Button Label
+   */
+  starSurveyConfirmButtonLabel: string;
+  /**
+   * Aria Label for each individual star rating
+   */
+  starRatingAriaLabel: string;
+  /**
+   * Aria Label for cancel button
+   */
+  cancelButtonAriaLabel: string;
 }
-
-/**
- * Styles for {@link StarSurvey} component.
- *
- * @public
- */
-export interface StarSurveyStyles {
-  root?: IStyle;
-}
-
-/**
- * {@link StarSurvey} types
- *
- * @public
- */
-export type StarSurveyTypes  = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating'
 
 /**
  * Props for {@link StarSurvey} component.
  *
- * @public
+ * @internal
  */
-export interface StarSurveyProps {
-  /**
-   * Purpose of survey, overallRating,audioRating,videoRating, or ScreenshareRating
-   * @defaultvalue overallRating
-   */
-  type?: StarSurveyTypes;
-  /**
-   * Boolean value to open the survey modal
-   * @defaultvalue false
-   */
-  showSurvey?: boolean;
+export interface _StarSurveyProps {
   /**
    * Custom icon name for selected rating elements.
    * @defaultvalue FavoriteStarFill
@@ -97,98 +83,112 @@ export interface StarSurveyProps {
    */
   unselectedIcon?: string;
   /** Function to send StarSurvey results*/
-  onSubmitStarSurvey: (
-    ratings: number,
-    type: StarSurveyTypes
-  ) => Promise<void>;
+  onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse>;
+  /** Function to close star survey modal*/
+  onDismissStarSurvey?: () => void;
   /** Star survey strings */
-  strings?: StarSurveyStrings;
-  /** Star Survey styles */
-  styles?: StarSurveyStyles;
+  strings?: _StarSurveyStrings;
 }
 
 /**
  * A component to allow users to send numerical ratings regarding call quality
  *
- * @public
+ * @internal
  */
-export const StarSurvey = (props: StarSurveyProps): JSX.Element => {
-  const strings = useLocale().strings.StarSurvey;
-
-  const { onSubmitStarSurvey, showSurvey, selectedIcon, unselectedIcon, type } = props;
+export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
+  const { onSubmitSurvey, onDismissStarSurvey, selectedIcon, unselectedIcon, strings } = props;
 
   const [rating, setRating] = useState(0);
-  const [showSurveyModal, setShowSurveyModal] = useState(showSurvey);
 
-  const [helperText, setHelperText] = useState(strings.helperText);
-
-  useEffect(() => {
-    setShowSurveyModal(showSurvey);
-  }, [showSurvey]);
+  const [helperText, setHelperText] = useState(strings?.starSurveyHelperText);
 
   const theme = useTheme();
 
-  const onRatingChange = (ev: React.FormEvent<HTMLElement>, rating?: number | undefined): void => {
-    if (rating) {
-      setRating(rating);
+  const onRatingChange = useCallback(
+    (ev: React.FormEvent<HTMLElement>, rating?: number | undefined): void => {
+      if (rating) {
+        setRating(rating);
 
-      switch (rating) {
-        case 1:
-          setHelperText(strings.oneStarText);
-          break;
-        case 2:
-          setHelperText(strings.twoStarText);
-          break;
-        case 3:
-          setHelperText(strings.threeStarText);
-          break;
-        case 4:
-          setHelperText(strings.fourStarText);
-          break;
-        case 5:
-          setHelperText(strings.fiveStarText);
-          break;
-        default:
-          break;
+        switch (rating) {
+          case 1:
+            setHelperText(strings?.starSurveyOneStarText);
+            break;
+          case 2:
+            setHelperText(strings?.starSurveyTwoStarText);
+            break;
+          case 3:
+            setHelperText(strings?.starSurveyThreeStarText);
+            break;
+          case 4:
+            setHelperText(strings?.starSurveyFourStarText);
+            break;
+          case 5:
+            setHelperText(strings?.starSurveyFiveStarText);
+            break;
+          default:
+            break;
+        }
       }
-    }
-  };
+    },
+    [
+      strings?.starSurveyOneStarText,
+      strings?.starSurveyTwoStarText,
+      strings?.starSurveyThreeStarText,
+      strings?.starSurveyFourStarText,
+      strings?.starSurveyFiveStarText
+    ]
+  );
 
-  const onDismissTriggered = async (): Promise<void> => {
-    await onSubmitStarSurvey(rating, type ?? 'overallRating');
-    setShowSurveyModal(false);
-    setRating(0);
-  };
+  const onDismiss = useCallback((): void => {
+    if (onDismissStarSurvey) {
+      onDismissStarSurvey();
+    }
+  }, [onDismissStarSurvey]);
+
+  const onConfirm = useCallback(async (): Promise<void> => {
+    if (onSubmitSurvey) {
+      await onSubmitSurvey({
+        overallRating: { score: rating }
+      })
+        .then(() => console.log('survey submitted successfully'))
+        .catch((e) => console.log('error when submitting survey: ' + e));
+    }
+    onDismiss();
+  }, [onSubmitSurvey, rating, onDismiss]);
 
   return (
-    <Modal onDismiss={onDismissTriggered} isOpen={showSurveyModal} styles={modalStyles(theme)}>
+    <Modal onDismissed={onDismiss} styles={modalStyles(theme)} isOpen>
       <Stack verticalAlign="center">
         <Stack className={titleContainerClassName}>
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
-            <Text className={questionTextStyle(theme)}>{rating !== 0 ? strings.thankYouText : strings.question}</Text>
+            <Text className={questionTextStyle(theme)}>
+              {rating !== 0 ? strings?.starSurveyThankYouText : strings?.starSurveyQuestion}
+            </Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
-              onClick={onDismissTriggered}
+              onClick={onDismiss}
+              ariaLabel={strings?.cancelButtonAriaLabel}
               style={{ color: theme.palette.black }}
             />
           </Stack>
           <Text className={helperTextStyle(theme)}>{helperText}</Text>
         </Stack>
-
         <Rating
           max={5}
           size={RatingSize.Large}
           defaultRating={0}
           allowZeroStars
-          ariaLabel={strings.question}
-          ariaLabelFormat="{0} of {1} stars"
           rating={rating}
           onChange={onRatingChange}
           styles={ratingStyles}
-          icon={selectedIcon}
-          unselectedIcon={unselectedIcon}
+          icon={selectedIcon ?? 'SurveyStarIconFilled'}
+          unselectedIcon={unselectedIcon ?? 'SurveyStarIcon'}
+          ariaLabelFormat={strings?.starRatingAriaLabel}
         />
       </Stack>
+      <PrimaryButton className={confirmButtonClassName} onClick={() => onConfirm()}>
+        {strings?.starSurveyConfirmButtonLabel}
+      </PrimaryButton>
     </Modal>
   );
 };

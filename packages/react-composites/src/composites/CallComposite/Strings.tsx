@@ -638,5 +638,60 @@ export interface CallCompositeStrings {
   /**
    * All strings for capability changed notification
    */
-  capabilityChangedNotification?: CapabilityChangedNotificationStrings;
+  capabilityChangedNotification?: CapabilityChangedNotificationStrings; 
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Survey question
+   */
+  starSurveyQuestion?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Text that's displayed after user select a star response
+   */
+  starSurveyThankYouText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Helper text displayed below survey question before user choose a response
+   */
+  starSurveyHelperText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Helper text displayed below survey question after user select one star
+   */
+  starSurveyOneStarText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Helper text displayed below survey question after user select two star
+   */
+  starSurveyTwoStarText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Helper text displayed below survey question after user select three star
+   */
+  starSurveyThreeStarText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Helper text displayed below survey question after user select four star
+   */
+  starSurveyFourStarText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+  /**
+   * Helper text displayed below survey question after user select five star
+   */
+  starSurveyFiveStarText?: string;
+  /* @conditional-compile-remove(gallery-layouts) */ 
+/**
+   * Confirm Button Label
+   */
+  starSurveyConfirmButtonLabel?: string
+  /* @conditional-compile-remove(gallery-layouts) */ 
+    /**
+   * Aria Label for each individual star rating 
+   */
+    starRatingAriaLabel: string
+    /* @conditional-compile-remove(gallery-layouts) */ 
+      /**
+   * Aria Label for cancel button
+   */
+   cancelButtonAriaLabel: string
 }
