@@ -133,7 +133,6 @@ export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
   | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'largeGallery'
   | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
