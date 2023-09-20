@@ -42,7 +42,7 @@ import {
   MicProhibited16Filled,
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(gallery-layouts) */
+/* @conditional-compile-remove(end-of-call-survey) */
 import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
 import {
@@ -353,8 +353,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
+ /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIcon: <Star28Regular />,
-  /* @conditional-compile-remove(gallery-layouts) */
+ /* @conditional-compile-remove(end-of-call-survey) */
   SurveyStarIconFilled: <Star28Filled />
 };
