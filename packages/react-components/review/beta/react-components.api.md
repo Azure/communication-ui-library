@@ -2127,7 +2127,7 @@ export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
 // @internal
 export interface _StarSurveyProps {
     onDismissStarSurvey?: () => void;
-    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse>;
+    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
     selectedIcon?: string;
     strings?: _StarSurveyStrings;
     unselectedIcon?: string;
