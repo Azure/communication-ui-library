@@ -2,7 +2,7 @@
   "type": "none",
   "area": "improvement",
   "workstream": "ImageGallery",
-  "comment": "Add documentation for how to cover the safe area on iOS devices",
+  "comment": "Bring back the storybook changes for ImageGallery",
   "packageName": "@azure/communication-react",
   "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
   "dependentChangeType": "none"
