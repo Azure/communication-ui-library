@@ -23,7 +23,9 @@ import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveV
 export type LargeGalleryProps = LayoutProps;
 
 const DEFAULT_CHILDREN_PER_PAGE = 5;
+/* @conditional-compile-remove(gallery-layouts) */
 const REM_TO_PIXEL = 16;
+/* @conditional-compile-remove(gallery-layouts) */
 const LARGE_GALLERY_PARTICIPANT_CAP = 48;
 /**
  * VideoGallery Layout for when user is in a large meeting and wants to see more participants
