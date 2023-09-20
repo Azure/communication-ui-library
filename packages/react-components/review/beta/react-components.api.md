@@ -706,8 +706,6 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
-    // (undocumented)
-    StarSurvey: StarSurveyStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -2172,40 +2170,32 @@ export const _spokenLanguageToCaptionLanguage: {
     'zh-tw': string;
 };
 
-// @public
-export const StarSurvey: (props: StarSurveyProps) => JSX.Element;
+// @internal
+export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
 
-// @public
-export interface StarSurveyProps {
-    onSubmitStarSurvey: (ratings: number, type: StarSurveyTypes) => Promise<void>;
+// @internal
+export interface _StarSurveyProps {
+    onDismissStarSurvey?: () => void;
+    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse>;
     selectedIcon?: string;
-    showSurvey?: boolean;
-    strings?: StarSurveyStrings;
-    styles?: StarSurveyStyles;
-    type?: StarSurveyTypes;
+    strings?: _StarSurveyStrings;
     unselectedIcon?: string;
 }
 
-// @public
-export interface StarSurveyStrings {
-    fiveStarText: string;
-    fourStarText: string;
-    helperText: string;
-    oneStarText: string;
-    question: string;
-    thankYouText: string;
-    threeStarText: string;
-    twoStarText: string;
+// @internal
+export interface _StarSurveyStrings {
+    cancelButtonAriaLabel: string;
+    starRatingAriaLabel: string;
+    starSurveyConfirmButtonLabel: string;
+    starSurveyFiveStarText: string;
+    starSurveyFourStarText: string;
+    starSurveyHelperText: string;
+    starSurveyOneStarText: string;
+    starSurveyQuestion: string;
+    starSurveyThankYouText: string;
+    starSurveyThreeStarText: string;
+    starSurveyTwoStarText: string;
 }
-
-// @public
-export interface StarSurveyStyles {
-    // (undocumented)
-    root?: IStyle;
-}
-
-// @public
-export type StarSurveyTypes = 'overallRating' | 'audioRating' | 'videoRating' | 'ScreenshareRating';
 
 // @internal
 export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
