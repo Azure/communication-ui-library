@@ -98,6 +98,9 @@ export const chatMessageMenuStyle = mergeStyles({
  * @private
  */
 export const useChatMessageEditContainerStyles = makeStyles({
+  root: {
+    paddingTop: '1.25rem' //height of the menu button + marginBottom
+  },
   body: {
     ...shorthands.padding(0),
     backgroundColor: 'transparent',
@@ -111,9 +114,7 @@ export const useChatMessageEditContainerStyles = makeStyles({
     ...shorthands.margin(`${defaultSendBoxActiveBorderThicknessREM - defaultSendBoxInactiveBorderThicknessREM}rem`),
 
     '&:hover, &:active, &:focus, &:focus-within': {
-      // ':hover, :active, :focus, :focus-within': {
       ...shorthands.margin('0rem'),
-      // this one
       ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`)
     }
   },

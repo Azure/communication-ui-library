@@ -11,6 +11,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
+import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
@@ -63,6 +64,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const theme = useTheme();
   const messageState = getMessageState(textValue, attachedFilesMetadata ?? []);
   const submitEnabled = messageState === 'OK';
+
+  const editContainerStyles = useChatMessageEditContainerStyles();
+  const chatMyMessageStyles = useChatMyMessageStyles();
 
   useEffect(() => {
     editTextFieldRef.current?.focus();
@@ -175,15 +179,17 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     );
   };
 
-  const classes = useChatMessageEditContainerStyles();
-  const className = mergeClasses(
-    classes.body,
-    message.failureReason !== undefined ? classes.bodyError : classes.bodyDefault
+  const bodyClassName = mergeClasses(
+    editContainerStyles.body,
+    message.failureReason !== undefined ? editContainerStyles.bodyError : editContainerStyles.bodyDefault
   );
   return (
     <ChatMyMessage
+      root={{
+        className: mergeClasses(chatMyMessageStyles.root, editContainerStyles.root)
+      }}
       body={{
-        className: className
+        className: bodyClassName
       }}
     >
       {getContent()}
