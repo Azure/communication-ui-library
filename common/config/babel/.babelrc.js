@@ -79,7 +79,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for gallery layout in the composite 
         'gallery-layout-composite',
         // conditional-compile for new signaling beta
-        'signaling-beta'
+        'signaling-beta',
+         // Feature for end of call survey
+         'end-of-call-survey'
       ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
