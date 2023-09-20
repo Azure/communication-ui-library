@@ -149,7 +149,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
     if (onSubmitSurvey) {
       await onSubmitSurvey({
         overallRating: { score: rating }
-      })
+      });
     }
     onDismiss();
   }, [onSubmitSurvey, rating, onDismiss]);
