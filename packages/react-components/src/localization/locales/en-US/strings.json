@@ -341,15 +341,5 @@
   "VerticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
-  },
-  "StarSurvey": {
-    "question": "How was your call today?",
-    "thankYouText": "Thanks for letting us know",
-    "helperText": "Your feedback will help us improve your experience.",
-    "oneStarText": "The quality was bad",
-    "twoStarText": "The quality was poor",
-    "threeStarText": "The quality was good",
-    "fourStarText": "The quality was great",
-    "fiveStarText":"The quality was excellent"
   }
 }

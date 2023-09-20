@@ -25,8 +25,7 @@ export const helperTextStyle = (theme: Theme): string =>
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(16),
     color: theme.palette.neutralSecondary,
-    paddingBottom: _pxToRem(24),
-    paddingTop: _pxToRem(12)
+    paddingTop: _pxToRem(20)
   });
 
 /**
@@ -61,5 +60,13 @@ export const modalStyles = (theme: Theme): Partial<IModalStyles> => {
  * @private
  */
 export const titleContainerClassName = mergeStyles({
-  paddingBottom: _pxToRem(20)
+  paddingBottom: _pxToRem(8)
+});
+
+/**
+ * @private
+ */
+export const confirmButtonClassName = mergeStyles({
+  float: 'right',
+  width: 'fit-content'
 });

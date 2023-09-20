@@ -221,7 +221,18 @@
         "lostDueToRoleChangeToAttendee": "Your role has been changed. Some actions, like sharing content, won't be available to you.",
         "grantedDueToRoleChangeToPresenter": "You're a presenter. You can share content and facilitate the meeting."
       }
-    }
+    },
+    "starSurveyQuestion": "How was your call today?",
+    "starSurveyThankYouText": "Thanks for letting us know.",
+    "starSurveyHelperText": "Your feedback will help us improve your experience.",
+    "starSurveyOneStarText": "The quality was bad.",
+    "starSurveyTwoStarText": "The quality was poor.",
+    "starSurveyThreeStarText": "The quality was good.",
+    "starSurveyFourStarText": "The quality was great.",
+    "starSurveyFiveStarText":"The quality was excellent.",
+    "starSurveyConfirmButtonLabel":"Confirm",
+    "starRatingAriaLabel":"Select {0} of {1} stars",
+    "cancelButtonAriaLabel": "Cancel"
   },
   "chat": {
     "chatListHeader": "In this chat",

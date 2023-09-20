@@ -81,7 +81,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Do not use in production code.
         'in-progress-beta-feature-demo',
         // Feature for custom video gallery layouts
-        'gallery-layouts'
+        'gallery-layouts',
+        // Feature for end of call survey
+        'end-of-call-survey'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

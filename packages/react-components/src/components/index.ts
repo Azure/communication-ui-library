@@ -203,9 +203,12 @@ export { _ComplianceBanner } from './ComplianceBanner';
 export type { _ComplianceBannerProps, _ComplianceBannerStrings } from './ComplianceBanner';
 export { Dialpad } from './Dialpad/Dialpad';
 export type { DialpadProps, DialpadStrings, DialpadStyles, DtmfTone } from './Dialpad/Dialpad';
-
-export { StarSurvey } from './Survey/StarSurvey/StarSurvey';
-export type { StarSurveyProps, StarSurveyStrings, StarSurveyStyles, StarSurveyTypes } from './Survey/StarSurvey/StarSurvey';
+/* @conditional-compile-remove(gallery-layouts) */
+export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
+/* @conditional-compile-remove(gallery-layouts) */
+export type { _StarSurveyProps, _StarSurveyStrings } from './Survey/StarSurvey/StarSurvey';
+/* @conditional-compile-remove(gallery-layouts) */
+export * from './Survey/StarSurvey/SurveyTypes';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';
