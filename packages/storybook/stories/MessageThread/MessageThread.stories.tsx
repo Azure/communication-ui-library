@@ -9,7 +9,9 @@ import {
   SystemMessage,
   MessageRenderer,
   FileMetadata,
-  AttachmentDownloadResult
+  AttachmentDownloadResult,
+  ImageGalleryImageProps,
+  ImageGallery
 } from '@azure/communication-react';
 import {
   Persona,
@@ -346,6 +348,40 @@ const MessageThreadStory = (args): JSX.Element => {
       ];
     });
   };
+  const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
+
+  const onInlineImageClicked = (attachmentId: string, messageId: string): Promise<void> => {
+    const messages = chatMessages?.filter((message) => {
+      return message.messageId === messageId;
+    });
+    if (!messages || messages.length <= 0) {
+      return Promise.reject(`Message not found with messageId ${messageId}`);
+    }
+    const chatMessage = messages[0] as ChatMessage;
+
+    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+      return attachment.id === attachmentId;
+    });
+
+    if (!attachments || attachments.length <= 0) {
+      return Promise.reject(`Attachment not found with id ${attachmentId}`);
+    }
+
+    const attachment = attachments[0];
+    attachment.name = chatMessage.senderDisplayName || '';
+    const title = 'Message Thread Image';
+    const titleIcon = (
+      <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
+    );
+    const galleryImage: ImageGalleryImageProps = {
+      title,
+      titleIcon,
+      downloadFilename: attachment.id,
+      imageUrl: attachment.url
+    };
+    setGalleryImages([galleryImage]);
+    return Promise.resolve();
+  };
 
   const onSendHandler = (): void => {
     switch (selectedMessageType.key) {
@@ -382,6 +418,7 @@ const MessageThreadStory = (args): JSX.Element => {
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
         onFetchAttachments={onFetchAttachment}
+        onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {
           return (
@@ -396,6 +433,16 @@ const MessageThreadStory = (args): JSX.Element => {
           );
         }}
       />
+      {
+        <ImageGallery
+          isOpen={galleryImages.length > 0}
+          images={galleryImages}
+          onDismiss={() => setGalleryImages([])}
+          onImageDownloadButtonClicked={() => {
+            alert('Download button clicked');
+          }}
+        />
+      }
       {/* We need to use the component to render more messages in the chat thread. Using storybook controls would trigger the whole story to do a fresh re-render, not just components inside the story. */}
       <Stack horizontal verticalAlign="end" horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
         <Dropdown

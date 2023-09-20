@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "feature",
+  "area": "improvement",
   "workstream": "ImageGallery",
-  "comment": "Add unit tests for Image Gallery component",
+  "comment": "Bring back the storybook changes for ImageGallery",
   "packageName": "@azure/communication-react",
   "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
   "dependentChangeType": "none"
