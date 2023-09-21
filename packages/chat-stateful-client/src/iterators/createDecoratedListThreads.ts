@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatThreadItem, ChatClient, RestListChatThreadsOptions } from '@azure/communication-chat';
 import { ChatContext } from '../ChatContext';

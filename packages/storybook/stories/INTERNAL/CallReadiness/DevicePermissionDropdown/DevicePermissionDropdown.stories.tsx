@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon, IDropdownStyles, mergeStyles } from '@fluentui/react';
 import { useTheme, _DevicePermissionDropdown } from '@internal/react-components';

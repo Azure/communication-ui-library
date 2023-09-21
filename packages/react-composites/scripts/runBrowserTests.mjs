@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { exec, getBuildFlavor } from './common.mjs';
 import path from 'path';

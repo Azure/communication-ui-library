@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { StreamMedia, VideoTile as VideoTileComponent } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title, Subheading } from '@storybook/addon-docs';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Title, Heading, Description, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
 import { Chat } from '@internal/northstar-wrapper';
