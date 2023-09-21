@@ -12,9 +12,6 @@ import {
   CallAdapter,
   toFlatCommunicationIdentifier
 } from '@azure/communication-react';
-import { COMPONENT_LOCALE_EN_GB } from '@azure/communication-react';
-import { COMPONENT_LOCALE_EN_US } from '@azure/communication-react';
-import { COMPONENT_LOCALE_AR_SA } from '@azure/communication-react';
 /* @conditional-compile-remove(teams-identity-support) */
 import { useTeamsCallAdapter, TeamsCallAdapter } from '@azure/communication-react';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
@@ -27,8 +24,6 @@ import React, { useCallback, useMemo, useRef } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
-
-console.log(COMPONENT_LOCALE_EN_US, COMPONENT_LOCALE_EN_GB, COMPONENT_LOCALE_AR_SA);
 export interface CallScreenProps {
   token: string;
   userId:
