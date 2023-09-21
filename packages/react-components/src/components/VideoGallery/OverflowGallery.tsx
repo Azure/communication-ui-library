@@ -114,6 +114,7 @@ export const OverflowGallery = (props: {
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
+        /* @conditional-compile-remove(gallery-layouts) */
         layout={props.layout}
       />
     );

@@ -21,9 +21,14 @@ export const ScrollableHorizontalGallery = (props: {
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
 }): JSX.Element => {
-  const { horizontalGalleryElements, onFetchTilesToRender, layout } = props;
+  const { horizontalGalleryElements, onFetchTilesToRender, /* @conditional-compile-remove(gallery-layouts) */ layout } =
+    props;
 
-  const useFullWidth = layout === 'default' ? true : false;
+  const useFullWidthTrampoline = (): boolean => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    return layout === 'default' ? true : false;
+    return false;
+  };
 
   useEffect(() => {
     const indexesArray = [...Array(horizontalGalleryElements?.length).keys()];
@@ -36,7 +41,11 @@ export const ScrollableHorizontalGallery = (props: {
   const { events: dragabbleEvents } = useDraggable(ref);
 
   return (
-    <div ref={ref} {...dragabbleEvents} className={scrollableHorizontalGalleryContainerStyles(useFullWidth)}>
+    <div
+      ref={ref}
+      {...dragabbleEvents}
+      className={scrollableHorizontalGalleryContainerStyles(useFullWidthTrampoline())}
+    >
       <Stack
         data-ui-id="scrollable-horizontal-gallery"
         horizontal={true}

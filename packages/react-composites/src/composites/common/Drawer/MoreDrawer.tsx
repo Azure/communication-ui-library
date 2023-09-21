@@ -10,9 +10,10 @@ import {
   OptionsDevice,
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,
-  _DrawerMenuStyles,
-  VideoGalleryLayout
+  _DrawerMenuStyles
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
 
@@ -100,7 +101,7 @@ export interface MoreDrawerStrings {
    */
   captionLanguageMenuTitle: string;
 
-  /* @conditional-compile-remove(gallery-options) */
+  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for gallery options drawerMenuItem
    */
@@ -256,7 +257,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
-
+  /* @conditional-compile-remove(gallery-layouts) */
   drawerMenuItems.push({
     itemKey: 'overflowGalleryPositionKey',
     iconProps: {

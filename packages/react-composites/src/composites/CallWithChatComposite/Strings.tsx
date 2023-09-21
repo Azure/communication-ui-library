@@ -80,7 +80,7 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerCaptionLanguageMenuTitle: string;
-  /* @condtional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Title for the gallery options sub-menu in the more button drawer.
    */

@@ -40,7 +40,7 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
       /* @conditional-compile-remove(close-captions) */
       captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
-      /* @condtional-compile-remove(gallery-options) */
+      /* @conditional-compile-remove(gallery-layouts) */
       galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle
     }),
     [strings]
