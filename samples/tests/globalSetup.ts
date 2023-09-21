@@ -15,10 +15,5 @@ async function globalSetup() {
 
   // Expose port to the tests.
   process.env.SERVER_PORT = String(server.address().toString());
-
-  // Return the teardown function.
-  return async () => {
-    await new Promise((done) => server.close(done));
-  };
 }
 export default globalSetup;
