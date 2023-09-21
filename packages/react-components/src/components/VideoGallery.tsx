@@ -42,7 +42,7 @@ import { VerticalGalleryStyles } from './VerticalGallery';
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 /* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
-/* @conditional-compile-remove(gallery-layouts) */
+/* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 
 /**
