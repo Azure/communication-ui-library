@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /// Provide type definitions for html-to-react until they are added to the package (PR in progress)
 declare module 'html-to-react' {

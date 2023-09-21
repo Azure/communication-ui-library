@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ContextualMenu, IDragOptions } from '@fluentui/react';
 import { _convertRemToPx } from '@internal/acs-ui-common';

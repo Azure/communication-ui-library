@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { REPO_ROOT } from './lib/index.mjs';
 import { removeDepsFromAllPackages, updateAllDepVersions } from './package-utils.js';

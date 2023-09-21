@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon, Theme } from '@fluentui/react';
 import { MenuProps } from '@fluentui/react-components';

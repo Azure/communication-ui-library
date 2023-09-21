@@ -18,7 +18,7 @@
     "test:ci-coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage\"",
     "test:coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage --coverageReporters=lcov\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
-    "lint:fix": "rushx lint -- --fix",
+    "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet",
     "api-extractor": "rushx _by-flavor \"rushx build:esm && rushx _api-extractor:by-flavor\"",
     "generate-doc": "api-documenter markdown -i temp -o docGen",

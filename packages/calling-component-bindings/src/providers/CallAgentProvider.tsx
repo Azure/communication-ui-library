@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
