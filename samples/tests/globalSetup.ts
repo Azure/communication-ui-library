@@ -18,7 +18,7 @@ async function globalSetup() {
 
   // Return the teardown function.
   return async () => {
-    await new Promise((done) => server.close(done));
+    new Promise((done) => server.close(done));
   };
 }
 export default globalSetup;
