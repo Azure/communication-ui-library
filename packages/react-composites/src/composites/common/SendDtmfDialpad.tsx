@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React, { useState } from 'react';
 import { useMemo } from 'react';
 import { Dialpad, DialpadStyles } from '@internal/react-components';

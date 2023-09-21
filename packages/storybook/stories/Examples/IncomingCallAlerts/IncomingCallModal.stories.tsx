@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useState } from 'react';

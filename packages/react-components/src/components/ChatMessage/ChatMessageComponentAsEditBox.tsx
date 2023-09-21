@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';

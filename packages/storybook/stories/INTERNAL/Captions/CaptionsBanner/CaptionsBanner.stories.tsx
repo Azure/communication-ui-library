@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { PrimaryButton, Stack } from '@fluentui/react';
 import { _CaptionsInfo, _CaptionsBanner } from '@internal/react-components';

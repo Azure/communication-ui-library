@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Checkbox, IStackStyles, IStackTokens, Stack } from '@fluentui/react';
 import { _ComplianceBanner as ComplianceBannerComponent } from '@internal/react-components';
