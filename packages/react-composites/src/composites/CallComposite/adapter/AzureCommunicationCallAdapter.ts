@@ -117,6 +117,8 @@ import { getBackgroundEffectFromSelectedEffect } from '../utils';
 import { getSelectedCameraFromAdapterState } from '../utils';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(end-of-call-survey) */
+import {CallSurvey, CallSurveyResponse, SubmitSurveyOptions}from '@azure/communication-calling';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -545,6 +547,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.stopVideoBackgroundEffects.bind(this);
     /* @conditional-compile-remove(video-background-effects) */
     this.updateBackgroundPickerImages.bind(this);
+    /* @conditional-compile-remove(end-of-call-survey) */
+    this.submitSurvey.bind(this);
   }
 
   public dispose(): void {
@@ -989,6 +993,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(close-captions) */
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
+  }
+/* @conditional-compile-remove(end-of-call-survey) */
+  public async submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined> {
+    return this.handlers.onSubmitSurvey(survey, options)
   }
 
   public getState(): CallAdapterState {
