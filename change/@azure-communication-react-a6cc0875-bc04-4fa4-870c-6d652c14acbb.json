@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "Updating (stable) Calling SDK dependency",
-  "comment": "Updating to include latest Calling SDK Hotfix",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

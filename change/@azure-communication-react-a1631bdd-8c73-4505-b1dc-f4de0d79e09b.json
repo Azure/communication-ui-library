@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "video-background-effects",
-  "comment": "Add missing CallAdapterOptions to createAzureCommunicationCallWithChatAdapterFromClients",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
