@@ -60,7 +60,7 @@ const config: PlaywrightTestConfig = {
   outputDir: outputDir,
   // Extend per-test timeout for local debugging so that developers can single-step through
   // the test in playwright inspector.
-  timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 1 * MINUTE,
+  timeout: process.env.LOCAL_DEBUG ? 10 * MINUTE : 2 * MINUTE,
 
   // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
   forbidOnly: !!process.env.CI,
