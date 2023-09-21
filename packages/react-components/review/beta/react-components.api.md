@@ -2135,17 +2135,17 @@ export interface _StarSurveyProps {
 
 // @internal
 export interface _StarSurveyStrings {
-    cancelButtonAriaLabel: string;
-    starRatingAriaLabel: string;
-    starSurveyConfirmButtonLabel: string;
-    starSurveyFiveStarText: string;
-    starSurveyFourStarText: string;
-    starSurveyHelperText: string;
-    starSurveyOneStarText: string;
-    starSurveyQuestion: string;
-    starSurveyThankYouText: string;
-    starSurveyThreeStarText: string;
-    starSurveyTwoStarText: string;
+    cancelButtonAriaLabel?: string;
+    starRatingAriaLabel?: string;
+    starSurveyConfirmButtonLabel?: string;
+    starSurveyFiveStarText?: string;
+    starSurveyFourStarText?: string;
+    starSurveyHelperText?: string;
+    starSurveyOneStarText?: string;
+    starSurveyQuestion?: string;
+    starSurveyThankYouText?: string;
+    starSurveyThreeStarText?: string;
+    starSurveyTwoStarText?: string;
 }
 
 // @internal
