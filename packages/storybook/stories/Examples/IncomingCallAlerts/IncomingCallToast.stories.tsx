@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/react/types-6-0';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Call, CallAgent, IncomingCall, IncomingCallEvent } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';

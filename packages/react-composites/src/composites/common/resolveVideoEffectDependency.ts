@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/* @conditional-compile-remove(video-background-effects) */
+// Licensed under the MIT License.
+
 import {
   BackgroundBlurConfig,
   BackgroundBlurEffect,

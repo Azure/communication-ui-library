@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { mergeStyles, Stack, TextField } from '@fluentui/react';
 import React, { useState } from 'react';
 

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
 import React from 'react';

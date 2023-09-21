@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ActiveErrorMessage, ErrorBar } from '@internal/react-components';
 import React from 'react';

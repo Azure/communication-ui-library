@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { useTheme } from '@azure/communication-react';
 import { Image, mergeStyles, Stack } from '@fluentui/react';

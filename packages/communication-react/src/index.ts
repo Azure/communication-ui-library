@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * `@azure/communication-react` is an npm package that exports the functionality of the Azure Communication Services - UI Library.

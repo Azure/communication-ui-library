@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
 import { VideoGalleryStyles } from '../VideoGallery';

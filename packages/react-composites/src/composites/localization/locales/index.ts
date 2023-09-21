@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { COMPONENT_LOCALE_EN_US } from '@internal/react-components';
 import { CompositeLocale } from '../LocalizationProvider';

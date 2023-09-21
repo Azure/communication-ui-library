@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   addScreenshareStream,
@@ -195,5 +195,25 @@ test.describe('VideoGallery tests', async () => {
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Focused content")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('focused-content-layout.png');
+  });
+
+  /* @conditional-compile-remove(large-gallery) */
+  test('VideoGallery should show correct number of tiles based on layout', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+
+    const initialState = defaultMockCallAdapterState([]);
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true',
+        mockRemoteParticipantCount: '65'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-ovc.png');
+    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("Large Gallery")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
 });
