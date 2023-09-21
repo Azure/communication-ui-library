@@ -27,7 +27,7 @@ import { InputBoxButton } from '../InputBoxComponent';
 import { IconButton, formProperties } from '@fluentui/react';
 import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
 import AtMentionPlugin from './Plugins/atMentionPlugin';
-import MyPlugin from './Plugins/customizedPlugins';
+import KeyDownPlugin from './Plugins/customizedPlugins';
 import { suggestions, trigger } from './Plugins/mentionLoopupData';
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -92,7 +92,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
         onChange(content);
       }
     );
-    const myPlugin = new MyPlugin(onKeyDown);
+    const keyDownPlugin = new KeyDownPlugin(onKeyDown);
     const atMentionPluginInstance = new AtMentionPlugin(mentionLookupOptions);
     const contentEdit = new ContentEdit();
     const placeholderPlugin = new Watermark(placeholderText || '');
@@ -103,8 +103,9 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
         placeholderPlugin,
         contentEdit,
         updateContentPlugin,
-        myPlugin
-      ]
+        keyDownPlugin
+      ],
+      imageSelectionBorderColor: 'blue'
     };
     editor.current = new Editor(div, options);
     if (autoFocus) {

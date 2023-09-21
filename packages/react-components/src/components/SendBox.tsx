@@ -267,7 +267,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
       return;
     }
     if (newValue.length > MAXIMUM_LENGTH_OF_MESSAGE) {
-      setTextValueOverflow(true);
+      // setTextValueOverflow(true);
     } else {
       setTextValueOverflow(false);
     }
