@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -72,6 +74,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -81,6 +84,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @public
@@ -466,6 +470,7 @@ export interface ComponentStrings {
     microphoneButton: MicrophoneButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -563,6 +568,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element;
+    ControlButtonLowerHand: JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element;
     EditBoxCancel: JSX.Element;
     EditBoxSubmit: JSX.Element;
     ErrorBarCallCameraAccessDenied: JSX.Element;
@@ -619,6 +628,48 @@ export const DEFAULT_COMPONENT_ICONS: {
     ContextMenuMicIcon: JSX.Element;
     ContextMenuSpeakerIcon: JSX.Element;
 };
+
+// @internal
+export interface _DeviceMenuProps {
+    // (undocumented)
+    cameras?: OptionsDevice[];
+    // (undocumented)
+    microphones?: OptionsDevice[];
+    // (undocumented)
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: OptionsDevice;
+    // (undocumented)
+    selectedMicrophone?: OptionsDevice;
+    // (undocumented)
+    selectedSpeaker?: OptionsDevice;
+    // (undocumented)
+    speakers?: OptionsDevice[];
+    // (undocumented)
+    styles?: Partial<_DeviceMenuStyles>;
+}
+
+// @internal
+export interface _DeviceMenuStrings {
+    audioDeviceMenuTitle?: string;
+    audioDeviceMenuTooltip?: string;
+    cameraMenuTitle?: string;
+    cameraMenuTooltip?: string;
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
+}
+
+// @internal
+export interface _DeviceMenuStyles extends IContextualMenuStyles {
+    // (undocumented)
+    menuItemStyles?: IContextualMenuItemStyles;
+}
 
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
@@ -930,6 +981,11 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
+// @internal
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+    items: IContextualMenuItem[];
+} | undefined;
+
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
@@ -1051,6 +1107,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
+    raisedHand?: RaisedHand | undefined;
 }) => JSX.Element>;
 
 // @public
@@ -1411,6 +1468,29 @@ export interface _PictureInPictureInPictureStrings {
 export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
     orientation: _TileOrientation;
 }>;
+
+// @public
+export type RaisedHand = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -1883,6 +1963,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
 }
 
 // @public
@@ -1927,6 +2008,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
 }
 
@@ -2005,6 +2087,7 @@ export interface VideoTileProps {
     onRenderPlaceholder?: OnRenderAvatarCallback;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

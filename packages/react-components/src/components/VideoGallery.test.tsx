@@ -72,11 +72,11 @@ describe('VideoGallery default layout tests', () => {
     expect(getFloatingLocalVideoModal(container)).toBe(null);
   });
 
-  test('should render all video tiles in the grid', () => {
+  test('should render max allowed video tiles in the grid', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false }
     });
-    const remoteParticipants = Array.from({ length: 10 }, () =>
+    const remoteParticipants = Array.from({ length: 4 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
@@ -88,9 +88,9 @@ describe('VideoGallery default layout tests', () => {
 
     const allTiles = getTiles(container);
     const gridTiles = getGridTiles(container);
-    expect(allTiles.length).toBe(11);
-    expect(gridTiles.length).toBe(allTiles.length);
-    expect(gridTiles.filter(tileIsAudio).length).toBe(11);
+    expect(allTiles.length).toBe(5);
+    expect(gridTiles.length).toBe(5);
+    expect(gridTiles.filter(tileIsAudio).length).toBe(5);
     expect(gridTiles.filter(tileIsVideo).length).toBe(0);
   });
 
@@ -160,7 +160,7 @@ describe('VideoGallery floating local video layout tests', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
     });
-    const remoteParticipants = Array.from({ length: 10 }, () =>
+    const remoteParticipants = Array.from({ length: 4 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
@@ -176,6 +176,36 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const floatingLocalVideoModal = getFloatingLocalVideoModal(container);
     expect(floatingLocalVideoModal).toBeTruthy();
+
+    const gridTiles = getGridTiles(container);
+    expect(
+      gridTiles.some((tile) => {
+        return tile.textContent === 'You';
+      })
+    ).toBe(false);
+  });
+
+  test('should have docked local video tile present when more than max tiles present', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    );
+
+    const { container } = render(
+      <VideoGallery
+        layout="floatingLocalVideo"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+      />
+    );
+
+    const floatingLocalVideoModal = getFloatingLocalVideoModal(container);
+    expect(floatingLocalVideoModal).toBeFalsy();
+    expect(getHorizontalGallery(container)).toBeTruthy();
 
     const gridTiles = getGridTiles(container);
     expect(
@@ -205,11 +235,11 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const allTiles = getTiles(container);
     const gridTiles = getGridTiles(container);
-    expect(allTiles.length).toBe(11);
-    expect(gridTiles.length).toBe(10);
-    expect(gridTiles.filter(tileIsAudio).length).toBe(10);
+    expect(getHorizontalGallery(container)).toBeTruthy();
+    expect(allTiles.length).toBe(7);
+    expect(gridTiles.length).toBe(4);
+    expect(gridTiles.filter(tileIsAudio).length).toBe(4);
     expect(gridTiles.filter(tileIsVideo).length).toBe(0);
-    expect(getHorizontalGallery(container)).toBeFalsy;
   });
 
   test('should render max allowed video tiles with streams in the grid', () => {

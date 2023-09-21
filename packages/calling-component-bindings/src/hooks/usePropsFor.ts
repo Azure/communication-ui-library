@@ -173,7 +173,9 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
   switch (component) {
+    /* @conditional-compile-remove(PSTN-calls) */
     case HoldButton:
+      /* @conditional-compile-remove(PSTN-calls) */
       return holdButtonSelector;
     /* @conditional-compile-remove(raise-hand) */
     case RaiseHandButton:

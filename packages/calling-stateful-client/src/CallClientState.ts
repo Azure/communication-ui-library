@@ -777,7 +777,8 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.setConstraints';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

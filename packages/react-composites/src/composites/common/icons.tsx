@@ -39,7 +39,8 @@ import {
   WindowHeaderHorizontal20Regular,
   TableSimple20Regular,
   PictureInPicture20Regular,
-  ContentView20Regular
+  ContentView20Regular,
+  Table20Regular
 } from '@fluentui/react-icons';
 
 const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
@@ -102,7 +103,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(gallery-layouts) */
   FloatingLocalVideoGalleryLayout: <PictureInPicture20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  FocusedContentGalleryLayout: <ContentView20Regular />
+  FocusedContentGalleryLayout: <ContentView20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  LargeGalleryLayout: <Table20Regular />
 };
 
 /**
@@ -238,6 +241,8 @@ export type CallCompositeIcons = {
   FocusedContentGalleryLayout?: JSX.Element;
   /* @conditional-compile-remove(gallery-layouts) */
   OverflowGalleryTop?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  LargeGalleryLayout?: JSX.Element;
 };
 
 /**
