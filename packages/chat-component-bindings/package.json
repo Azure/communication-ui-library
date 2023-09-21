@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.8.0-beta.1",
+  "version": "1.8.1-beta.0",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -14,8 +14,9 @@
     "preprocess": "cpx \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
+    "test:ci-coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage\"",
     "test": "rushx _by-flavor \"rushx _test:by-flavor\"",
-    "test:coverage": "rushx _by-flavor \"rushx test:_by-flavor -- --coverage\"",
+    "test:coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage --coverageReporters=lcov\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
     "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet",
@@ -32,9 +33,9 @@
   "dependencies": {
     "@azure/communication-common": "3.0.0-beta.1 || ^2.2.1",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.8.0-beta.1",
-    "@internal/chat-stateful-client": "1.8.0-beta.1",
-    "@internal/react-components": "1.8.0-beta.1",
+    "@internal/acs-ui-common": "1.8.1-beta.0",
+    "@internal/chat-stateful-client": "1.8.1-beta.0",
+    "@internal/react-components": "1.8.1-beta.0",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },

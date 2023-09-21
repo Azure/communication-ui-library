@@ -42,6 +42,8 @@ import { VerticalGalleryStyles } from './VerticalGallery';
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 /* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
+/* @conditional-compile-remove(gallery-layouts) */
+import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 
 /**
  * @private
@@ -133,6 +135,7 @@ export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
   | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
   | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
@@ -682,6 +685,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
+    }
+    /* @conditional-compile-remove(large-gallery) */
+    if (layout === 'largeGallery') {
+      return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);

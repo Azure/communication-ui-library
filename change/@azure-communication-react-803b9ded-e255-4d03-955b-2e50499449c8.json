@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Gallery layouts",
-  "comment": "Introduce speaker layout and other layout controls to composites",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

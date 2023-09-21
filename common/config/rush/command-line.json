@@ -105,6 +105,15 @@
     },
     {
       "commandKind": "bulk",
+      "name": "test:ci-coverage",
+      "summary": "Run tests coverage for CI in each project.",
+      "description": "Run tests coverage for CI in each project.",
+      "enableParallelism": true,
+      "allowWarningsInSuccessfulBuild": true,
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
+      "commandKind": "bulk",
       "name": "lint",
       "summary": "Run linting in each project.",
       "description": "Run lint in each project.",

@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "improvement",
-  "workstream": "KTLO",
-  "comment": "Handle 413 error when uploading logs in sample apps",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
