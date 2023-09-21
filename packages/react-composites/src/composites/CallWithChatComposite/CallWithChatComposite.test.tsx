@@ -4,7 +4,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { AdapterError } from '../common/adapters';
-import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales';
+// import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales/zh-TW/ComponentLocale';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatComposite } from './CallWithChatComposite';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
@@ -59,7 +59,7 @@ describe('CallWithChatComposite', () => {
     const mockBaseCompositeProps = {
       fluentTheme: {},
       icons: {},
-      locale: COMPOSITE_LOCALE_ZH_TW,
+      // locale: COMPOSITE_LOCALE_ZH_TW,
       rtl: true,
       onFetchAvatarPersonaData: jest.fn(),
       onFetchParticipantMenuItems: jest.fn()

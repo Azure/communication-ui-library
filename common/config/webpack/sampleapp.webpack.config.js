@@ -69,6 +69,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       }),
       new BundleAnalyzerPlugin({
         analyzerMode: 'json',
+        generateStatsFile: true
       }),
       new CopyPlugin({
         patterns: [
