@@ -265,7 +265,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       );
     }
     return (
-      <div tabIndex={0}>
+      <div tabIndex={0} className="ui-chat__message__content">
         <ChatMessageContent
           message={message}
           strings={strings}
