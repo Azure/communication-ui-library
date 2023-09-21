@@ -13,6 +13,8 @@ import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallState } from '@internal/calling-stateful-client';
+import { CallSurvey } from '@azure/communication-calling';
+import { CallSurveyResponse } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionLanguageStrings } from '@internal/react-components';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
@@ -55,6 +57,7 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { SubmitSurveyOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -217,6 +220,8 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
+    // @beta
+    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
@@ -656,6 +661,8 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
+    // @beta
+    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)

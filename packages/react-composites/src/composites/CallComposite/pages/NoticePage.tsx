@@ -13,6 +13,9 @@ import {
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { StartCallButton } from '../components/StartCallButton';
 import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { StarSurvey } from '../components/StarSurvey';
+
 
 /**
  * @private
@@ -42,6 +45,8 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       data-ui-id={props.dataUiId}
       aria-atomic
     >
+      {/* @conditional-compile-remove(end-of-call-survey) */
+     <StarSurvey/>}
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)} aria-live="assertive">

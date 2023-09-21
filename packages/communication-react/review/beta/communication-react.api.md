@@ -19,6 +19,8 @@ import { CallEndReason } from '@azure/communication-calling';
 import { CallerInfo } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 import { CallState as CallState_2 } from '@azure/communication-calling';
+import { CallSurvey } from '@azure/communication-calling';
+import { CallSurveyResponse } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
 import { ChatClient } from '@azure/communication-chat';
@@ -82,6 +84,7 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
+import { SubmitSurveyOptions } from '@azure/communication-calling';
 import { SyntheticEvent } from 'react';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -365,6 +368,8 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
+    // @beta
+    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
@@ -958,6 +963,8 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
+    // @beta
+    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
     // @beta (undocumented)
@@ -1820,6 +1827,8 @@ export interface CommonCallingHandlers {
     onStopCaptions: () => Promise<void>;
     // (undocumented)
     onStopScreenShare: () => Promise<void>;
+    // (undocumented)
+    onSubmitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
     onToggleCamera: (options?: VideoStreamOptions) => Promise<void>;
     // (undocumented)
