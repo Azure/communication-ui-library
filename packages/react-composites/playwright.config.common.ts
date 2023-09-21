@@ -71,7 +71,7 @@ const config: PlaywrightTestConfig = {
   // Applies to all projects
   use: {
     headless: !process.env.LOCAL_DEBUG,
-    video: 'on-first-retry'
+    video: 'retain-on-failure'
   },
 
   projects: [
