@@ -23,47 +23,47 @@ export interface _StarSurveyStrings {
   /**
    * Survey question
    */
-  starSurveyQuestion: string;
+  starSurveyQuestion?: string;
   /**
    * Text that's displayed after user select a star response
    */
-  starSurveyThankYouText: string;
+  starSurveyThankYouText?: string;
   /**
    * Helper text displayed below survey question before user choose a response
    */
-  starSurveyHelperText: string;
+  starSurveyHelperText?: string;
   /**
    * Helper text displayed below survey question after user select one star
    */
-  starSurveyOneStarText: string;
+  starSurveyOneStarText?: string;
   /**
    * Helper text displayed below survey question after user select two star
    */
-  starSurveyTwoStarText: string;
+  starSurveyTwoStarText?: string;
   /**
    * Helper text displayed below survey question after user select three star
    */
-  starSurveyThreeStarText: string;
+  starSurveyThreeStarText?: string;
   /**
    * Helper text displayed below survey question after user select four star
    */
-  starSurveyFourStarText: string;
+  starSurveyFourStarText?: string;
   /**
    * Helper text displayed below survey question after user select five star
    */
-  starSurveyFiveStarText: string;
+  starSurveyFiveStarText?: string;
   /**
    * Confirm Button Label
    */
-  starSurveyConfirmButtonLabel: string;
+  starSurveyConfirmButtonLabel?: string;
   /**
    * Aria Label for each individual star rating
    */
-  starRatingAriaLabel: string;
+  starRatingAriaLabel?: string;
   /**
    * Aria Label for cancel button
    */
-  cancelButtonAriaLabel: string;
+  cancelButtonAriaLabel?: string;
 }
 
 /**
@@ -149,7 +149,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
     if (onSubmitSurvey) {
       await onSubmitSurvey({
         overallRating: { score: rating }
-      });
+      }).then(()=> console.log('Survey Result submitted')).catch((e)=> console.log(e));
     }
     onDismiss();
   }, [onSubmitSurvey, rating, onDismiss]);
