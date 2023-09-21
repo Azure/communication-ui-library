@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { expect } from '@playwright/test';

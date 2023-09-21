@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 declare let __BUILDTIME__: string; // Injected by webpack
 declare let __CHATVERSION__: string; // Injected by webpack

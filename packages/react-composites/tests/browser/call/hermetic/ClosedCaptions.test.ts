@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 import { expect } from '@playwright/test';

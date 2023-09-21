@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import React, { createContext, useContext, useEffect, useState } from 'react';

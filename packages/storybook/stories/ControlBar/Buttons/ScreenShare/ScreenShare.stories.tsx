@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ScreenShareButton } from '@azure/communication-react';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
