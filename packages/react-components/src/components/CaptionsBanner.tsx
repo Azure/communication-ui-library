@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { Stack, FocusZone, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';

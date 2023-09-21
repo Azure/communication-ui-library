@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * For keyboard navigation - when this component has active focus, enter key and space keys should have the same behavior as mouse click.

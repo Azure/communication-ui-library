@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGallery } from '@azure/communication-react';
 import { registerIcons, Stack } from '@fluentui/react';

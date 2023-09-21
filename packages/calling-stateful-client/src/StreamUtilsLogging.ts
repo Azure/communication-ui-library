@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { MediaStreamType } from '@azure/communication-calling';
 import { _logEvent } from '@internal/acs-ui-common';

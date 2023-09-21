@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';

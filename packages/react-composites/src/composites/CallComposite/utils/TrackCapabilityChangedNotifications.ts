@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(capabilities) */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';

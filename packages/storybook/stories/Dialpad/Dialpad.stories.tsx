@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Dialpad as DialpadComponent, useTheme } from '@azure/communication-react';
 import { mergeStyles } from '@fluentui/react';
