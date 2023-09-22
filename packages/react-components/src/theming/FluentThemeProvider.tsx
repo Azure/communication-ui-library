@@ -67,7 +67,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
    * multiple times and wiping out configuration like RTL
    * FluentThemeProvider
    */
-  const alreadyWrapped = useProvider();
+  const alreadyWrapped = useSingleUsageCheck();
   if (alreadyWrapped) {
     return <>{children}</>;
   }
