@@ -144,6 +144,10 @@ async function runOne(testRoot, args, composite, hermeticity) {
   if (args.failFast) {
     cmdArgs.push('-x');
   }
+  if (args.workers) {
+    cmdArgs.push('--workers', args.workers);
+  }
+
   cmdArgs.push(...args['_']);
 
   const cmd = quote(cmdArgs);
@@ -272,6 +276,11 @@ function parseArgs(argv) {
         type: 'boolean',
         default: false,
         describe: 'Update the test snapshots. In this mode, snapshot conflicts do not cause test failures.\n'
+      },
+      workers: {
+        alias: 'w',
+        type: 'number',
+        describe: 'Number of workers to run tests'
       }
     })
     .parseSync();

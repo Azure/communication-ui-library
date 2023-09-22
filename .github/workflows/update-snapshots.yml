@@ -288,7 +288,7 @@ jobs:
           rush build -t .
       - name: Update CallComposite snapshot
         id: update-call-snapshots
-        run: rushx test:e2e:call:update
+        run: rushx test:e2e:call:update -w 1
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -328,7 +328,7 @@ jobs:
           git push
 
   chat_composite:
-    needs: [call_composite]
+    needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
@@ -378,7 +378,7 @@ jobs:
           rush build -t .
       - name: Update chat snapshot
         id: update-chat-snapshots
-        run: rushx test:e2e:chat:update
+        run: rushx test:e2e:chat:update -w 1
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -418,7 +418,7 @@ jobs:
           git push
 
   callwithchat_composite:
-    needs: [chat_composite]
+    needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
     runs-on: ubuntu-latest
@@ -468,7 +468,7 @@ jobs:
           rush build -t .
       - name: Update call with chat snapshot
         id: update-call-with-chat-snapshots
-        run: rushx test:e2e:callwithchat:update
+        run: rushx test:e2e:callwithchat:update -w 1
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
