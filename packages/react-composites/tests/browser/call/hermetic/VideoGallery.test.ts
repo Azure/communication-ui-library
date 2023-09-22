@@ -216,4 +216,24 @@ test.describe('VideoGallery tests', async () => {
     await page.locator('button:has-text("Large Gallery")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test.only('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileMobile(testInfo));
+
+    const initialState = defaultMockCallAdapterState([]);
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true',
+        mockRemoteParticipantCount: '20'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    expect(await stableScreenshot(page)).toMatchSnapshot('dynamic-layout-mobile.png');
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("Gallery options")').click();
+    await page.locator('span:has-text("Gallery layout")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
+  });
 });
