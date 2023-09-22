@@ -29,7 +29,9 @@ export const StarSurvey = (
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   const onSubmitSurvey = (survey: _CallSurvey): Promise<_CallSurveyResponse | undefined> => {
-    onSubmitStarSurvey(survey.overallRating.score);
+    if (survey?.overallRating?.score){
+      onSubmitStarSurvey(survey.overallRating.score);
+    }
     return starSurveyHandler.onSubmitSurvey(survey);
   };
   /* @conditional-compile-remove(end-of-call-survey) */
