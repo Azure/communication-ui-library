@@ -11,7 +11,10 @@ const config: PlaywrightTestConfig = {
   //
   // We cannot use isolated tests because these are live tests -- the ACS chat service throttles our attempt to create
   // many threads using the same connection string in a short span of time.
-  workers: 1
+  workers: 1,
+
+  // Add an extra retry to mitigate flaky issues.
+  retries: 2
 };
 
 export default config;
