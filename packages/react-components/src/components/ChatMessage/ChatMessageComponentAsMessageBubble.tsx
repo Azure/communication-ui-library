@@ -330,7 +330,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                   : undefined,
                 mergeStyles(messageContainerStyle)
               ),
-              style: { ...createStyleFromV8Style(messageContainerStyle) }
+              style: { ...createStyleFromV8Style(messageContainerStyle) },
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
+              tabIndex: -1
             }}
             root={{
               className: chatMyMessageStyles.root,
@@ -396,7 +399,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
               className: chatItemMessageContainerClassName,
-              style: { ...createStyleFromV8Style(messageContainerStyle) }
+              style: { ...createStyleFromV8Style(messageContainerStyle) },
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
+              tabIndex: -1
             }}
             data-ui-id="chat-composite-message"
             timestamp={

@@ -41,6 +41,8 @@ export const chatMessageActionMenuProps = (menuProps: {
         ref={menuProps.menuButtonRef}
         onClick={() => menuProps.onActionButtonClick()}
         style={{ margin: '1px' }}
+        role="button"
+        aria-label={menuProps.ariaLabel}
       >
         <Icon
           iconName="ChatMessageOptions"
