@@ -149,7 +149,9 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
     if (onSubmitSurvey) {
       await onSubmitSurvey({
         overallRating: { score: rating }
-      }).then(()=> console.log('Survey Result submitted')).catch((e)=> console.log(e));
+      })
+        .then(() => console.log('Survey Result submitted'))
+        .catch((e) => console.log(e));
     }
     onDismiss();
   }, [onSubmitSurvey, rating, onDismiss]);

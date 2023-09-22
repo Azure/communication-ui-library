@@ -171,6 +171,52 @@ export interface CallingTheme {
     };
 }
 
+// @beta
+export interface CallIssuesToTags {
+    // (undocumented)
+    audioRating: {
+        NoLocalAudio: string;
+        NoRemoteAudio: string;
+        Echo: string;
+        AudioNoise: string;
+        LowVolume: string;
+        AudioStoppedUnexpectedly: string;
+        DistortedSpeech: string;
+        AudioInterruption: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        CallCannotJoin: string;
+        CallCannotInvite: string;
+        HadToRejoin: string;
+        CallEndedUnexpectedly: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        NoContentLocal: string;
+        NoContentRemote: string;
+        CannotPresent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        LargeDelay: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        NoVideoReceived: string;
+        NoVideoSent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        DarkVideoReceived: string;
+        AudioVideoOutOfSync: string;
+        OtherIssues: string;
+    };
+}
+
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
@@ -1327,6 +1373,9 @@ export interface ImageGalleryStrings {
     downloadButtonLabel: string;
 }
 
+// @internal (undocumented)
+export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
+
 // @public
 export interface JumpToNewMessageButtonProps {
     onClick: () => void;
@@ -2176,6 +2225,13 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @internal (undocumented)
+export type _SurveyTag = {
+    message: string;
+    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    issueCategory: _IssueCategory;
+};
+
 // @public
 export type SystemMessage = ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage | TopicUpdatedSystemMessage | ContentSystemMessage;
 
@@ -2185,6 +2241,26 @@ export interface SystemMessageCommon extends MessageCommon {
     iconName: string;
     // (undocumented)
     messageType: 'system';
+}
+
+// @internal
+export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
+
+// @internal
+export interface _TagsSurveyProps {
+    callIssuesToTag: CallIssuesToTags;
+    issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
+    onDismissTagsSurvey?: () => void;
+    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+    strings?: _TagsSurveyStrings;
+}
+
+// @internal
+export interface _TagsSurveyStrings {
+    cancelButtonAriaLabel?: string;
+    TagsSurveyCancelButtonLabel?: string;
+    TagsSurveyConfirmButtonLabel?: string;
+    TagsSurveyQuestion?: string;
 }
 
 // @internal (undocumented)
