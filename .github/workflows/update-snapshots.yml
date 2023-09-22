@@ -328,7 +328,7 @@ jobs:
           git push
 
   chat_composite:
-    needs: [precondition, get_matrix]
+    needs: [call_composite]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
@@ -418,7 +418,7 @@ jobs:
           git push
 
   callwithchat_composite:
-    needs: [precondition, get_matrix]
+    needs: [chat_composite]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
     runs-on: ubuntu-latest
