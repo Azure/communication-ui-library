@@ -2,6 +2,8 @@
 // Licensed under the MIT license.
 
 import React from 'react';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { useState } from 'react';
 import { IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import {
   containerStyle,
@@ -15,7 +17,10 @@ import { StartCallButton } from '../components/StartCallButton';
 import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { StarSurvey } from '../components/StarSurvey';
-
+/* @conditional-compile-remove(end-of-call-survey) */
+import { TagsSurvey } from '../components/TagsSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { _AudioIssue, _OverallIssue, _ScreenshareIssue, _VideoIssue } from '@internal/react-components';
 
 /**
  * @private
@@ -36,6 +41,24 @@ export interface NoticePageProps {
  */
 export function NoticePage(props: NoticePageProps): JSX.Element {
   const adapter = useAdapter();
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const [showTagsSurvey, setShowTagsSurvey] = useState(false);
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const onSubmitStarSurvey = (ratings: number): void => {
+    if (ratings <= 3) {
+      setShowTagsSurvey(true);
+    }
+  };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[] = [
+    'NoLocalAudio',
+    'NoRemoteAudio',
+    'AudioNoise',
+    'LowVolume',
+    'CallCannotJoin',
+    'CallCannotInvite'
+  ];
+
   return (
     <Stack
       className={mergeStyles(props.pageStyle)}
@@ -45,8 +68,10 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       data-ui-id={props.dataUiId}
       aria-atomic
     >
-      {/* @conditional-compile-remove(end-of-call-survey) */
-     <StarSurvey/>}
+      {/* @conditional-compile-remove(end-of-call-survey) */ <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />}
+
+      {/* @conditional-compile-remove(end-of-call-survey) */ showTagsSurvey && <TagsSurvey issues={issues} />}
+
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)} aria-live="assertive">
