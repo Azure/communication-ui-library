@@ -3,6 +3,8 @@
 
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { CallIssuesToTags } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
@@ -693,5 +695,30 @@ export interface CallCompositeStrings {
   /**
    * Aria Label for cancel button
    */
-  cancelButtonAriaLabel: string;
+  starRatingCancelButtonAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Tags Survey Question
+   */
+  TagsSurveyQuestion: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Confirm button label for tags survey
+   */
+  TagsSurveyConfirmButtonLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Cancel button label for tags survey
+   */
+  TagsSurveyCancelButtonLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Aria Label for tags survey cancel button
+   */
+  TagsSurveyCancelButtonAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Corresponding texts to each call issue
+   */
+  callIssuesToTags: CallIssuesToTags;
 }
