@@ -309,6 +309,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     message.attached === 'top' || message.attached === false
       ? chatMessageStyles.bodyWithAvatar
       : chatMessageStyles.bodyWithoutAvatar,
+    // handle rtl margins for message without avatar
+    theme.rtl && !(message.attached === 'top' || message.attached === false)
+      ? shouldOverlapAvatarAndMessage
+        ? chatMessageStyles.avatarOverlapRTL
+        : chatMessageStyles.avatarNoOverlapRTL
+      : undefined,
     mergeStyles(messageContainerStyle)
   );
 
