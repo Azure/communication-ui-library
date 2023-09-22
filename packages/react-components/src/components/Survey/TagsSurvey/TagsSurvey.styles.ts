@@ -41,30 +41,27 @@ export const titleContainerClassName = mergeStyles({
 export const confirmButtonClassName = mergeStyles({
   float: 'right',
   width: 'fit-content',
-  marginRight:  _pxToRem(8)
+  marginRight: _pxToRem(8)
 });
 
 /**
  * @private
  */
 export const cancelButtonClassName = mergeStyles({
-    float: 'right',
-    width: 'fit-content'
-  });
+  float: 'right',
+  width: 'fit-content'
+});
 
-
-  /**
+/**
  * @private
  */
 export const checkboxClassName = mergeStyles({
-    padding: _pxToRem(8)
-  })
+  padding: _pxToRem(8)
+});
 
-  /**
+/**
  * @private
  */
 export const buttonsContainerClassName = mergeStyles({
-    marginTop: _pxToRem(16)
-  });
-
-
+  marginTop: _pxToRem(16)
+});

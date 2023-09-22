@@ -45,4 +45,3 @@ export interface CallIssuesToTags {
     OtherIssues: string;
   };
 }
-  
