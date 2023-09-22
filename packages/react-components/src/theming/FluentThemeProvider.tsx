@@ -48,6 +48,7 @@ const defaultTheme: Theme = {
 
 /** Theme context for library's react components */
 const ThemeContext = createContext<Theme>(defaultTheme);
+const SingleUsageCheckContext = createContext<boolean>(false);
 
 /**
  * Provider to apply a Fluent theme across this library's react components.
@@ -60,15 +61,28 @@ const ThemeContext = createContext<Theme>(defaultTheme);
 export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Element => {
   const { fluentTheme, rtl, children } = props;
 
+  /**
+   * Pass only the children if we previously wrapped.
+   * This is to prevent the provider from being applied
+   * multiple times and wiping out configuration like RTL
+   * FluentThemeProvider
+   */
+  const alreadyWrapped = useSingleUsageCheck();
+  if (alreadyWrapped) {
+    return <>{children}</>;
+  }
+
   let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
-  // merge in rtl from FluentThemeProviderProps
   fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
+
   return (
-    <ThemeContext.Provider value={fluentV8Theme}>
-      <ThemeProvider theme={fluentV8Theme} className={wrapper}>
-        {children}
-      </ThemeProvider>
-    </ThemeContext.Provider>
+    <SingleUsageCheckContext.Provider value={true}>
+      <ThemeContext.Provider value={fluentV8Theme}>
+        <ThemeProvider theme={fluentV8Theme} className={wrapper}>
+          {children}
+        </ThemeProvider>
+      </ThemeContext.Provider>
+    </SingleUsageCheckContext.Provider>
   );
 };
 
@@ -78,3 +92,10 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
  * @public
  */
 export const useTheme = (): Theme => useContext(ThemeContext);
+
+/**
+ * This is used to prevent the provider from being applied multiple times.
+ *
+ * @private
+ */
+const useSingleUsageCheck = (): boolean => useContext(SingleUsageCheckContext);
