@@ -48,7 +48,7 @@ const defaultTheme: Theme = {
 
 /** Theme context for library's react components */
 const ThemeContext = createContext<Theme>(defaultTheme);
-const ProviderContext = createContext<boolean>(false);
+const SingleUsageCheckContext = createContext<boolean>(false);
 
 /**
  * Provider to apply a Fluent theme across this library's react components.
@@ -76,13 +76,13 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
 
   return (
-    <ProviderContext.Provider value={true}>
+    <SingleUsageCheckContext.Provider value={true}>
       <ThemeContext.Provider value={fluentV8Theme}>
         <ThemeProvider theme={fluentV8Theme} className={wrapper}>
           {children}
         </ThemeProvider>
       </ThemeContext.Provider>
-    </ProviderContext.Provider>
+    </SingleUsageCheckContext.Provider>
   );
 };
 
@@ -98,4 +98,4 @@ export const useTheme = (): Theme => useContext(ThemeContext);
  *
  * @private
  */
-const useProvider = (): boolean => useContext(ProviderContext);
+const useSingleUsageCheck = (): boolean => useContext(SingleUsageCheckContext);
