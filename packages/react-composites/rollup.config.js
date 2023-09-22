@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import Package from './package.json';
 import commonConfig from '../../common/config/rollup/rollup.config';

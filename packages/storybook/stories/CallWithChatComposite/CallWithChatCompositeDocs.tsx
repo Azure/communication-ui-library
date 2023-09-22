@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Image, MessageBar, Stack, Text } from '@fluentui/react';
 import { Title, Description, Heading, Source, Subheading } from '@storybook/addon-docs';

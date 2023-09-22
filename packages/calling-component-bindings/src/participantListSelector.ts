@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { createSelector } from 'reselect';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot } from '../../common/utils';

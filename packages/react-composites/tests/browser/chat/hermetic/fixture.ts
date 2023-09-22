@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatParticipant } from '@azure/communication-chat';
 import { Page, test as base } from '@playwright/test';

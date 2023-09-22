@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
 import { ChatErrorTarget } from './ChatClientState';
