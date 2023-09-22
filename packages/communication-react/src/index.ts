@@ -377,3 +377,5 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
 export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
+ /* @conditional-compile-remove(end-of-call-survey) */
+export type {CallIssuesToTags}from '../../react-components/src';
