@@ -10,5 +10,4 @@ export * from './ParticipantListParticipant';
 export * from './OnRender';
 export * from './ReadReceiptsBySenderId';
 export * from './CaptionsAvailableLanguageStrings';
-/* @conditional-compile-remove(end-of-call-survey) */
 export * from './CallIssuesToTags';

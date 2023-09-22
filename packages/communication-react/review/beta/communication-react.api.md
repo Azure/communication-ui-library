@@ -839,6 +839,52 @@ export interface CallingTheme {
     };
 }
 
+// @beta
+export interface CallIssuesToTags {
+    // (undocumented)
+    audioRating: {
+        NoLocalAudio: string;
+        NoRemoteAudio: string;
+        Echo: string;
+        AudioNoise: string;
+        LowVolume: string;
+        AudioStoppedUnexpectedly: string;
+        DistortedSpeech: string;
+        AudioInterruption: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        CallCannotJoin: string;
+        CallCannotInvite: string;
+        HadToRejoin: string;
+        CallEndedUnexpectedly: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        NoContentLocal: string;
+        NoContentRemote: string;
+        CannotPresent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        LargeDelay: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        NoVideoReceived: string;
+        NoVideoSent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        DarkVideoReceived: string;
+        AudioVideoOutOfSync: string;
+        OtherIssues: string;
+    };
+}
+
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
