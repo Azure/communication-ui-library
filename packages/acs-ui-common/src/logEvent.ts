@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AzureLogger, AzureLogLevel } from '@azure/logger';
 import { _safeJSONStringify } from './safeStringify';

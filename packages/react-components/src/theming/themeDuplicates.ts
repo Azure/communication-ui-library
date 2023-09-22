@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // These color records are required for createV9Theme
 // For more info, check https://react.fluentui.dev/iframe.html?viewMode=docs&id=concepts-migration-from-v8-components-theme-migration--page#compatible-themes

@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { concatStyleSets, ContextualMenu, IDragOptions, Stack } from '@fluentui/react';
 import React, { useMemo } from 'react';
 import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';

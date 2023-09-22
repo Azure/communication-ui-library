@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
 
@@ -33,6 +33,7 @@ export const inputBoxIcon = mergeStyles({
  */
 export const editBoxStyleSet = {
   root: {
-    minWidth: '30vw'
+    minWidth: '6.25rem',
+    maxWidth: '100%'
   }
 };

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // eslint-disable-next-line no-restricted-imports
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
