@@ -408,9 +408,16 @@ const memoizeAllMessages = memoizeFnAll(
               style:
                 styles?.myChatItemMessageContainer !== undefined
                   ? createStyleFromV8Style(styles?.myChatItemMessageContainer)
-                  : {}
+                  : {},
+              role: 'none'
             }}
-            body={{ className: chatMessageRenderStyles.body }}
+            body={{
+              className: chatMessageRenderStyles.body,
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
+              tabIndex: -1,
+              role: 'none'
+            }}
             statusIcon={
               <div
                 className={mergeStyles(
@@ -452,7 +459,11 @@ const memoizeAllMessages = memoizeFnAll(
               style:
                 styles?.chatItemMessageContainer !== undefined
                   ? createStyleFromV8Style(styles?.chatItemMessageContainer)
-                  : {}
+                  : {},
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
+              tabIndex: -1,
+              role: 'none'
             }}
             avatar={
               <div className={mergeStyles(chatAvatarStyle)}>

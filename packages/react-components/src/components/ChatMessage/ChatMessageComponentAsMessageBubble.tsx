@@ -336,7 +336,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                   : undefined,
                 mergeStyles(messageContainerStyle)
               ),
-              style: { ...createStyleFromV8Style(messageContainerStyle) }
+              style: { ...createStyleFromV8Style(messageContainerStyle) },
+              tabIndex: -1,
+              role: 'presentation'
             }}
             root={{
               className: chatMyMessageStyles.root,
@@ -353,12 +355,18 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // react onFocus is called even when nested component receives focus (i.e. it bubbles)
                 // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
                 setFocused(true);
-              }
+              },
+              role: 'none',
+              tabIndex: -1
             }}
             data-ui-id="chat-composite-message"
-            author={<Text className={chatMessageDateStyle}>{message.senderDisplayName}</Text>}
+            author={
+              <Text className={chatMessageDateStyle} tabIndex={0}>
+                {message.senderDisplayName}
+              </Text>
+            }
             timestamp={
-              <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp}>
+              <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp} tabIndex={0}>
                 {formattedTimestamp}
               </Text>
             }
@@ -402,7 +410,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
             body={{
               className: chatItemMessageContainerClassName,
-              style: { ...createStyleFromV8Style(messageContainerStyle) }
+              style: { ...createStyleFromV8Style(messageContainerStyle) },
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
+              tabIndex: -1,
+              role: 'none'
             }}
             data-ui-id="chat-composite-message"
             timestamp={
