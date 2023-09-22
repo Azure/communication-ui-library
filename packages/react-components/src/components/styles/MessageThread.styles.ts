@@ -269,10 +269,10 @@ export const useChatMessageStyles = makeStyles({
   avatarOverlap: {
     marginLeft: `${-AVATAR_MARGIN_LEFT - MESSAGE_AVATAR_OVERLAP_REM}rem`
   },
-  avatarOverlapRTL: {
+  bodyRTLWithAvatarOverlap: {
     marginLeft: `${-MESSAGE_AVATAR_OVERLAP_REM}rem`
   },
-  avatarNoOverlapRTL: {
+  bodyRTLWithNoAvatarOverlap: {
     marginLeft: `${AVATAR_MESSAGE_GAP_REM}rem`
   }
 });
