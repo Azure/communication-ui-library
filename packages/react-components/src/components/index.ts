@@ -208,7 +208,11 @@ export { _StarSurvey } from './Survey/StarSurvey/StarSurvey';
 /* @conditional-compile-remove(end-of-call-survey) */
 export type { _StarSurveyProps, _StarSurveyStrings } from './Survey/StarSurvey/StarSurvey';
 /* @conditional-compile-remove(end-of-call-survey) */
-export * from './Survey/StarSurvey/SurveyTypes';
+export * from './Survey/SurveyTypes';
+/* @conditional-compile-remove(end-of-call-survey) */
+export { _TagsSurvey } from './Survey/TagsSurvey/TagsSurvey';
+/* @conditional-compile-remove(end-of-call-survey) */
+export type { _TagsSurveyProps, _TagsSurveyStrings,_IssueCategory,_SurveyTag } from './Survey/TagsSurvey/TagsSurvey';
 
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from './HoldButton';

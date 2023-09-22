@@ -13,7 +13,7 @@ import {
   ratingStyles,
   titleContainerClassName
 } from './StarSurvey.styles';
-import { _CallSurvey, _CallSurveyResponse } from './SurveyTypes';
+import { _CallSurvey, _CallSurveyResponse } from '../SurveyTypes';
 /**
  * Strings of {@link StarSurvey} that can be overridden.
  *
