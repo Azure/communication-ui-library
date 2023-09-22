@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { CustomCallControlButtonPlacement } from '../../common/ControlBar/CustomButton';

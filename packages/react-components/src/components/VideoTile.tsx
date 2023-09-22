@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */

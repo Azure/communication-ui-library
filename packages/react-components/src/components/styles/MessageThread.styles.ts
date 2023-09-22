@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IButtonStyles, mergeStyles } from '@fluentui/react';
 import { makeStyles, shorthands, tokens } from '@fluentui/react-components';

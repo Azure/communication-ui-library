@@ -15,7 +15,7 @@
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "node ./scripts/lint.mjs",
-    "lint:fix": "rushx lint -- --fix",
+    "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';

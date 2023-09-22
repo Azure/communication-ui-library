@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStyle, memoizeFunction, mergeStyles } from '@fluentui/react';
 import { MessageThreadStyles } from '@internal/react-components';

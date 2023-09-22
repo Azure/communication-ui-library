@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
 import { ThemeProvider, PartialTheme, Theme, getTheme, mergeThemes, mergeStyles } from '@fluentui/react';
@@ -48,7 +48,7 @@ const defaultTheme: Theme = {
 
 /** Theme context for library's react components */
 const ThemeContext = createContext<Theme>(defaultTheme);
-const ProviderContext = createContext<boolean>(false);
+const SingleUsageCheckContext = createContext<boolean>(false);
 
 /**
  * Provider to apply a Fluent theme across this library's react components.
@@ -67,7 +67,7 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
    * multiple times and wiping out configuration like RTL
    * FluentThemeProvider
    */
-  const alreadyWrapped = useProvider();
+  const alreadyWrapped = useSingleUsageCheck();
   if (alreadyWrapped) {
     return <>{children}</>;
   }
@@ -76,13 +76,13 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
   fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });
 
   return (
-    <ProviderContext.Provider value={true}>
+    <SingleUsageCheckContext.Provider value={true}>
       <ThemeContext.Provider value={fluentV8Theme}>
         <ThemeProvider theme={fluentV8Theme} className={wrapper}>
           {children}
         </ThemeProvider>
       </ThemeContext.Provider>
-    </ProviderContext.Provider>
+    </SingleUsageCheckContext.Provider>
   );
 };
 
@@ -98,4 +98,4 @@ export const useTheme = (): Theme => useContext(ThemeContext);
  *
  * @private
  */
-const useProvider = (): boolean => useContext(ProviderContext);
+const useSingleUsageCheck = (): boolean => useContext(SingleUsageCheckContext);

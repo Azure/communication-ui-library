@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Icon, IStyle, mergeStyles, PrimaryButton, Theme, IPersona, Persona, PersonaSize } from '@fluentui/react';

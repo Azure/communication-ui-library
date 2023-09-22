@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';

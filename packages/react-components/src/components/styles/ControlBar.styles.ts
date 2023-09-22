@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStyle, IButtonStyles, IContextualMenuStyles, IContextualMenuItemStyles } from '@fluentui/react';
 
