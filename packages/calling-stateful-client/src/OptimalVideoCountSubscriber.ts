@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(optimal-video-count) */
 import { OptimalVideoCountCallFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(optimal-video-count) */

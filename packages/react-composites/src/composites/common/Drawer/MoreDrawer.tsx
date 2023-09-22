@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
@@ -271,6 +271,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
         onItemClick: () => {
           props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+          onLightDismiss();
         },
         iconProps: {
           iconName: 'FloatingLocalVideoGalleryLayout',
@@ -282,6 +283,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
         onItemClick: () => {
           props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+          onLightDismiss();
         },
         iconProps: {
           iconName: 'DefaultGalleryLayout',

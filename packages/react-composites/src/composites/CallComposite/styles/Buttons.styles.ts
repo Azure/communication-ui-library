@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets, IButtonStyles, IContextualMenuItemStyles, IStyle } from '@fluentui/react';
 import { DevicesButtonStyles, ParticipantsButtonStyles } from '@internal/react-components';

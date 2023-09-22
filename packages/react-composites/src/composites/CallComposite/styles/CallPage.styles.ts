@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackItemStyles, IStackStyles, IStyle, mergeStyles } from '@fluentui/react';
 import { controlBarContainerStyles } from './CallControls.styles';

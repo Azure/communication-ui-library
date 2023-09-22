@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ParticipantList as ParticipantListComponent, ParticipantListParticipant } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ControlBarButtonStyles, DevicesButton } from '@internal/react-components';
 /* @conditional-compile-remove(rooms) */

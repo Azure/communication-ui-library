@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { FocusZone, IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
 import { useWarnings } from '@fluentui/react-hooks';

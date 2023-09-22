@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, mergeStyles } from '@fluentui/react';
 import { SMALL_FLOATING_MODAL_SIZE_REM } from './FloatingLocalVideo.styles';

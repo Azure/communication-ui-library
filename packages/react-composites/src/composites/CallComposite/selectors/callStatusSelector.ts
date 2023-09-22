@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { getCallStatus, getIsScreenShareOn } from './baseSelectors';
 import { createSelector } from 'reselect';
 import { CallState as SDKCallStatus } from '@azure/communication-calling';

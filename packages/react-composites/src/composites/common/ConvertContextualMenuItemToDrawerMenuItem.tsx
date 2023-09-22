@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { _DrawerMenuItemProps } from '@internal/react-components';

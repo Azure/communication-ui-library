@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, FormEvent, useCallback, useRef } from 'react';
 import { useEffect, useMemo } from 'react';
