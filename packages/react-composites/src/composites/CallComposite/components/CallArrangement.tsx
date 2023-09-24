@@ -22,7 +22,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
-import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
+import { AvatarPersona, AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsBanner } from '../../common/CaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
@@ -292,6 +292,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
 
+  const onRenderAvatar = () => {
+    return <AvatarPersona dataProvider={props.onFetchAvatarPersonaData} />;
+  };
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -421,7 +424,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
                       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
-                        <CaptionsBanner isMobile={props.mobileView} />
+                        <CaptionsBanner isMobile={props.mobileView} onRenderAvatar={onRenderAvatar} />
                       )
                   }
                 </Stack>

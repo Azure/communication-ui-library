@@ -5,7 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useState } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsBanner, _CaptionsBannerStrings } from '@internal/react-components';
+import { _CaptionsBanner, _CaptionsBannerStrings, OnRenderAvatarCallback } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
@@ -30,7 +30,7 @@ const mobileViewBannerWidth = '90%';
 const desktopViewBannerWidth = '35rem';
 
 /** @private */
-export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
+export const CaptionsBanner = (props: { isMobile: boolean; onRenderAvatar?: OnRenderAvatarCallback }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
   /* @conditional-compile-remove(close-captions) */
@@ -81,6 +81,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
               <_CaptionsBanner
                 {...captionsBannerProps}
                 {...handlers}
+                onRenderAvatar={props.onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
               />
