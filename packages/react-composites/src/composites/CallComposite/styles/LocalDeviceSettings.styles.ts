@@ -40,7 +40,8 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   title: {
     fontSize: '0.875rem',
     height: '2.5rem',
-    lineHeight: '2.3125rem'
+    lineHeight: '2.3125rem',
+    borderRadius: '0.25rem'
   },
   label: {
     fontWeight: 600,
