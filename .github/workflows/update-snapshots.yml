@@ -289,7 +289,7 @@ jobs:
           rush build -t .
       - name: Update CallComposite snapshot
         id: update-call-snapshots
-        run: rushx test:e2e:call:update -w 1
+        run: rushx test:e2e:call:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -380,7 +380,7 @@ jobs:
           rush build -t .
       - name: Update chat snapshot
         id: update-chat-snapshots
-        run: rushx test:e2e:chat:update -w 1
+        run: rushx test:e2e:chat:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -471,7 +471,7 @@ jobs:
           rush build -t .
       - name: Update call with chat snapshot
         id: update-call-with-chat-snapshots
-        run: rushx test:e2e:callwithchat:update -w 1
+        run: rushx test:e2e:callwithchat:update
         working-directory: ./packages/react-composites
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
