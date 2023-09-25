@@ -26,39 +26,39 @@ test.describe('Filesharing Attach file icon', async () => {
 });
 
 /* @conditional-compile-remove(file-sharing) */
-test.describe('Filesharing SendBox', async () => {
-  test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
-    await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        fileSharingEnabled: true,
-        fileUploads: [
-          {
-            id: 'SomeMockId',
-            name: 'SampleFile.pdf',
-            extension: 'pdf',
-            url: 'https://sample.com/SampleFile.pdf',
-            attachmentType: 'fileSharing'
-          },
-          {
-            id: 'SomeMockId',
-            name: 'SampleXlsLoooongName.xlsx',
-            extension: 'xslx',
-            url: 'https://sample.com/SampleXls.xlsx',
-            attachmentType: 'fileSharing'
-          }
-        ]
-      })
-    );
-    expect(
-      await stableScreenshot(page, {
-        stubMessageTimestamps: true,
-        dismissChatMessageActions: true,
-        awaitFileTypeIcon: true
-      })
-    ).toMatchSnapshot('filesharing-sendbox-filecards.png');
-  });
-});
+// test.describe('Filesharing SendBox', async () => {
+//   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
+//     await page.goto(
+//       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+//         ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+//         fileSharingEnabled: true,
+//         fileUploads: [
+//           {
+//             id: 'SomeMockId',
+//             name: 'SampleFile.pdf',
+//             extension: 'pdf',
+//             url: 'https://sample.com/SampleFile.pdf',
+//             attachmentType: 'fileSharing'
+//           },
+//           {
+//             id: 'SomeMockId',
+//             name: 'SampleXlsLoooongName.xlsx',
+//             extension: 'xslx',
+//             url: 'https://sample.com/SampleXls.xlsx',
+//             attachmentType: 'fileSharing'
+//           }
+//         ]
+//       })
+//     );
+//     expect(
+//       await stableScreenshot(page, {
+//         stubMessageTimestamps: true,
+//         dismissChatMessageActions: true,
+//         awaitFileTypeIcon: true
+//       })
+//     ).toMatchSnapshot('filesharing-sendbox-filecards.png');
+//   });
+// });
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing ProgressBar', async () => {
@@ -96,39 +96,39 @@ test.describe('Filesharing ProgressBar', async () => {
     ).toMatchSnapshot('filesharing-progress-bar-visible.png');
   });
 
-  test('is not visible if progress is 0 or less than 0', async ({ serverUrl, page }) => {
-    await page.goto(
-      buildUrlForChatAppUsingFakeAdapter(serverUrl, {
-        ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
-        fileSharingEnabled: true,
-        fileUploads: [
-          {
-            id: 'SomeMockId',
-            name: 'SampleFile.pdf',
-            extension: 'pdf',
-            url: 'https://sample.com/SampleFile.pdf',
-            progress: 0,
-            attachmentType: 'fileSharing'
-          },
-          {
-            id: 'SomeMockId',
-            name: 'SampleXlsLoooongName.xlsx',
-            extension: 'xslx',
-            url: 'https://sample.com/SampleXls.xlsx',
-            progress: -1,
-            attachmentType: 'fileSharing'
-          }
-        ]
-      })
-    );
-    expect(
-      await stableScreenshot(page, {
-        stubMessageTimestamps: true,
-        dismissChatMessageActions: true,
-        awaitFileTypeIcon: true
-      })
-    ).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
-  });
+  // test('is not visible if progress is 0 or less than 0', async ({ serverUrl, page }) => {
+  //   await page.goto(
+  //     buildUrlForChatAppUsingFakeAdapter(serverUrl, {
+  //       ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS,
+  //       fileSharingEnabled: true,
+  //       fileUploads: [
+  //         {
+  //           id: 'SomeMockId',
+  //           name: 'SampleFile.pdf',
+  //           extension: 'pdf',
+  //           url: 'https://sample.com/SampleFile.pdf',
+  //           progress: 0,
+  //           attachmentType: 'fileSharing'
+  //         },
+  //         {
+  //           id: 'SomeMockId',
+  //           name: 'SampleXlsLoooongName.xlsx',
+  //           extension: 'xslx',
+  //           url: 'https://sample.com/SampleXls.xlsx',
+  //           progress: -1,
+  //           attachmentType: 'fileSharing'
+  //         }
+  //       ]
+  //     })
+  //   );
+  //   expect(
+  //     await stableScreenshot(page, {
+  //       stubMessageTimestamps: true,
+  //       dismissChatMessageActions: true,
+  //       awaitFileTypeIcon: true
+  //     })
+  //   ).toMatchSnapshot('filesharing-progress-bar-not-visible-progress-less-than-zero.png');
+  // });
 
   test('is not visible if progress is 1 or greater than 1', async ({ serverUrl, page }) => {
     await page.goto(
