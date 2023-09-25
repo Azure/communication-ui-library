@@ -276,7 +276,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconProps: {
           iconName: 'FloatingLocalVideoGalleryLayout',
           styles: { root: { lineHeight: 0 } }
-        }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'floatingLocalVideo' ? { iconName: 'Accept' } : undefined
       },
       {
         itemKey: 'defaultSelectionKey',
@@ -288,7 +289,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconProps: {
           iconName: 'DefaultGalleryLayout',
           styles: { root: { lineHeight: 0 } }
-        }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
       },
       {
         itemKey: 'focusedContentSelectionKey',
@@ -300,7 +302,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconProps: {
           iconName: 'FocusedContentGalleryLayout',
           styles: { root: { lineHeight: 0 } }
-        }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'focusedContent' ? { iconName: 'Accept' } : undefined
       }
     ]
   });
