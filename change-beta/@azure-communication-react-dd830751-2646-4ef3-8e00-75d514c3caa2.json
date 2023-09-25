@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "CI Improvements; Shard chat snapshot updates",
+  "comment": "Shard chat update snapshots to 4",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
