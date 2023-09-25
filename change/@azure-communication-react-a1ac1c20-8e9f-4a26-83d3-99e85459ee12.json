@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "KTLO",
+  "comment": "Update license to License (including lint rule)",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

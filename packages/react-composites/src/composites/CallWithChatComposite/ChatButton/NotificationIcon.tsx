@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import { IIconStyles, IStackStyles, ITheme, memoizeFunction, Stack, useTheme, Text } from '@fluentui/react';

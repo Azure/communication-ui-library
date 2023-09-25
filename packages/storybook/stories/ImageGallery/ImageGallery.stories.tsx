@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ImageGallery as ImageGalleryComponent } from '@azure/communication-react';
 import { ArgsTable, Title, Description, Heading, Source, Canvas } from '@storybook/addon-docs';

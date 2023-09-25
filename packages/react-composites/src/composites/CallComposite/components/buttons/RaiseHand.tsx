@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/* @conditional-compile-remove(raise-hand) */
+// Licensed under the MIT License.
+
 import { ControlBarButtonStyles, RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import React, { useMemo } from 'react';

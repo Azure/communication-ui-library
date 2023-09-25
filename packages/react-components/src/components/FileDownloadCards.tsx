@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';

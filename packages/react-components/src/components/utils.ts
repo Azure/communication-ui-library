@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';

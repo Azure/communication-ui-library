@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */

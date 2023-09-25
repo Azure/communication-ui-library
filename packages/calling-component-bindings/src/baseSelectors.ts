@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilities } from '@azure/communication-calling';

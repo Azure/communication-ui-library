@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { CommandBarButton, DefaultButton, Stack, concatStyleSets } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import { Anchor, DocsContainer } from '@storybook/addon-docs/blocks';
