@@ -289,6 +289,18 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
           iconName: 'DefaultGalleryLayout',
           styles: { root: { lineHeight: 0 } }
         }
+      },
+      {
+        itemKey: 'focusedContentSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'FocusedContentGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        }
       }
     ]
   });
