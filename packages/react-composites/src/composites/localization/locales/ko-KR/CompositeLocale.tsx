@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { COMPONENT_LOCALE_KO_KR } from '@internal/react-components';
 import ko_KR from './strings.json';

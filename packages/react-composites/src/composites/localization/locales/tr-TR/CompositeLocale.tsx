@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { COMPONENT_LOCALE_TR_TR } from '@internal/react-components';
 import tr_TR from './strings.json';

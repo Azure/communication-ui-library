@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { COMPONENT_LOCALE_HE_IL } from '@internal/react-components';
 import he_IL from './strings.json';

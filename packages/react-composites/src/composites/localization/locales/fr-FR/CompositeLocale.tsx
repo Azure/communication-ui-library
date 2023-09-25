@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { COMPONENT_LOCALE_FR_FR } from '@internal/react-components';
 import fr_FR from './strings.json';
