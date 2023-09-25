@@ -86,6 +86,7 @@ async function runAll(testRoot, args) {
   if (!args.liveOnly) {
     for (const composite of args.composites) {
       try {
+        console.log(args);
         await runOne(testRoot, args, composite, 'hermetic');
       } catch (e) {
         if (args.failFast) {
@@ -132,6 +133,10 @@ async function runOne(testRoot, args, composite, hermeticity) {
   if (args.update) {
     cmdArgs.push('--update-snapshots');
   }
+  if (args.shard) {
+    cmdArgs.push('--shard', args.shard);
+  }
+
   if (args.projects) {
     for (const project of args.projects) {
       cmdArgs.push('--project', PLAYWRIGHT_PROJECT[project]);
