@@ -8,13 +8,14 @@
     "start": "node ./scripts/start.mjs",
     "deploy-storybook": "node ./scripts/deploy.mjs",
     "test": "node ./scripts/test.mjs",
-    "test:coverage": "rushx test --coverage",
+    "test:ci-coverage": "echo skip",
+    "test:coverage": "rushx test --coverage --coverageReporters=lcov",
     "test:snippets": "tsc --p tsconfig.snippets.json",
     "snapshot:update": "rushx test --update-snapshot",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "node ./scripts/lint.mjs",
-    "lint:fix": "rushx lint -- --fix",
+    "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {

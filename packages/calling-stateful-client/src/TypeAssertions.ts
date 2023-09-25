@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Call, CallAgent, CallClient, DeviceManager } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */

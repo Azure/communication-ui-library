@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { DefaultButton, PrimaryButton, Stack, Link, Text } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';

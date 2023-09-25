@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(close-captions) */
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */

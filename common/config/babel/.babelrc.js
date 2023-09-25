@@ -73,7 +73,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature image gallery
         'image-gallery',
         // Feature for end of call survey
-        'end-of-call-survey'
+        'end-of-call-survey',
+        // Feature for large Gallery layout
+        'large-gallery'
       ],      
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -85,7 +87,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for custom video gallery layouts
         'gallery-layouts',
         // Feature for end of call survey
-        'end-of-call-survey'
+        'end-of-call-survey',
+        // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
+        'large-gallery'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { FocusTrapZone, IStyle, mergeStyles, mergeStyleSets, Stack } from '@fluentui/react';
 import React from 'react';

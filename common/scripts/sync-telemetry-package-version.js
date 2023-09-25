@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 "use strict";
 
@@ -27,7 +27,7 @@ function _generateTelemetryVersionFile(filePath, packageVersion) {
     fs.writeFileSync(
         filePath,
         '// Copyright (c) Microsoft Corporation.\n' +
-        '// Licensed under the MIT license.\n' +
+        '// Licensed under the MIT License.\n' +
         '\n' +
         '// GENERATED FILE. DO NOT EDIT MANUALLY.\n' +
         '\n' +

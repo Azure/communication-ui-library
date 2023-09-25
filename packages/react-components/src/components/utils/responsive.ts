@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { RefObject, useEffect, useState, useRef } from 'react';
 import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';

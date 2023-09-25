@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Modal, PrimaryButton } from '@fluentui/react';
 import { BrowserPermissionDenied } from '@internal/react-components';
