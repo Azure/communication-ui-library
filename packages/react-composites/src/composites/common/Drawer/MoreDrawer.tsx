@@ -264,6 +264,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       iconName: 'GalleryOptions',
       styles: { root: { lineHeight: 0 } }
     },
+    disabled: props.disableButtonsForHoldScreen,
     text: localeStrings.strings.call.moreButtonGalleryControlLabel,
     subMenuProps: [
       {
