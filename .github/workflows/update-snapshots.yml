@@ -244,6 +244,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+        shard: [1/4, 2/4, 3/4, 4/4]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -334,6 +335,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+        shard: [1/4, 2/4, 3/4, 4/4]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -424,6 +426,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+        shard: [1/4, 2/4, 3/4, 4/4]
     steps:
       - uses: actions/checkout@v3
         with:
