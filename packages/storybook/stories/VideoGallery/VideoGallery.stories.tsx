@@ -122,7 +122,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Speaker layout</Subheading>
       <SingleLineBetaBanner></SingleLineBetaBanner>
       <Description>
-        This Layout is meant to highlight the current dominant speaker in the call. For this view in the video gallery
+        Speaker Layout is meant to highlight the current dominant speaker in the call. For this view in the video gallery
         the only participant that is in the grid view is the participant talking. All other participants are in the
         overflow gallery. When screen sharing the screenshare will replace this participant and the overflow gallery
         will behave like normal.
