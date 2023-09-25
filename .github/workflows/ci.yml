@@ -192,7 +192,7 @@ jobs:
   call_composite_automation_test:
     needs: get_matrix
     name: Call Composite automation test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -265,7 +265,7 @@ jobs:
   chat_composite_automation_test:
     needs: get_matrix
     name: Chat Composite automation test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -338,7 +338,7 @@ jobs:
   call_with_chat_composite_automation_test:
     needs: get_matrix
     name: Call With Chat Composite automation test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
