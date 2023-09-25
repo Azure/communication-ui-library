@@ -163,6 +163,7 @@ export const useChatMyMessageStyles = makeStyles({
     visibility: 'hidden',
 
     '&:hover, &:focus': {
+      cursor: 'pointer',
       visibility: 'visible'
     }
   },
