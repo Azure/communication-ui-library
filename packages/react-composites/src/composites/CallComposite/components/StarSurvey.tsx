@@ -28,11 +28,8 @@ export const StarSurvey = (
     setShowSurvey(false);
   };
   /* @conditional-compile-remove(end-of-call-survey) */
-  const onSubmitSurvey = (survey: _CallSurvey): Promise<_CallSurveyResponse | undefined> => {
-    if (survey?.overallRating?.score){
-      onSubmitStarSurvey(survey.overallRating.score);
-    }
-    return starSurveyHandler.onSubmitSurvey(survey);
+  const onConfirmStarSurvey = (rating: number): void => {
+      onSubmitStarSurvey(rating);
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
@@ -56,7 +53,7 @@ export const StarSurvey = (
   return (
     <>
       {showSurvey && (
-        <_StarSurvey onDismissStarSurvey={onDismiss} strings={StarSurveyStrings} onSubmitSurvey={onSubmitSurvey} />
+        <_StarSurvey onDismissStarSurvey={onDismiss} strings={StarSurveyStrings} onConfirmStarSurvey={onConfirmStarSurvey} {...starSurveyHandler}/>
       )}
     </>
   );
