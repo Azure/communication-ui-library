@@ -244,4 +244,17 @@ test.describe('VideoGallery tests', async () => {
     await page.locator('span:has-text("Gallery layout")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
   });
+
+  test.only('Gallery layouts vailable on mobile are correct', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+
+    const initialState = defaultMockCallAdapterState([paul]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("Gallery options")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
+  });
 });
