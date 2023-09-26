@@ -216,6 +216,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         styles: menuSubIconStyleSet
       },
       text: localeStrings.strings.call.moreButtonGalleryControlLabel,
+      disabled: props.disableButtonsForHoldScreen,
       subMenuProps: {
         items: [
           {
