@@ -288,6 +288,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
   );
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
+    'Responsive'
+  );
 
   const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
   useEffect(() => {
@@ -480,6 +484,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           galleryLayout={userSetGalleryLayout}
           /* @conditional-compile-remove(gallery-layouts) */
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />

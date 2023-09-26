@@ -56,6 +56,10 @@ export interface CallPageProps {
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetOverflowGalleryPosition?: 'Responsive' | 'HorizontalTop';
+  /* @conditional-compile-remove(gallery-layouts) */
+  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
 }
 
 /**
@@ -72,7 +76,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     galleryLayout = 'floatingLocalVideo',
     /* @conditional-compile-remove(gallery-layouts) */
-    onUserSetGalleryLayoutChange
+    onUserSetGalleryLayoutChange,
+    /* @conditional-compile-remove(gallery-layouts) */
+    userSetOverflowGalleryPosition = 'Responsive',
+    /* @conditional-compile-remove(gallery-layouts) */
+    onSetUserSetOverflowGalleryPosition
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -91,11 +99,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const callControlOptions = mobileView ? reduceCallControlsForMobile(options?.callControls) : options?.callControls;
 
   const drawerMenuHostId = useId('drawerMenuHost');
-
-  /* @conditional-compile-remove(gallery-layouts) */
-  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
-    'Responsive'
-  );
 
   return (
     <CallArrangement
@@ -145,7 +148,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(gallery-layouts) */
-      onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
+      onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
       /* @conditional-compile-remove(gallery-layouts) */
       onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
       /* @conditional-compile-remove(gallery-layouts) */
