@@ -240,8 +240,8 @@ test.describe('VideoGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('dynamic-layout-mobile.png');
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('span:has-text("View")').click();
-    await page.locator('span:has-text("Gallery")').click();
+    await page.locator('span:has-text("Gallery options")').click();
+    await page.locator('span:has-text("Gallery layout")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
   });
 
@@ -255,7 +255,7 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('span:has-text("View")').click();
+    await page.locator('span:has-text("Gallery options")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
   });
 });
