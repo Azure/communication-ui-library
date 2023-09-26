@@ -245,7 +245,7 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
   });
 
-  test.only('Gallery layouts vailable on mobile are correct', async ({ page, serverUrl }, testInfo) => {
+  test('Gallery layouts vailable on mobile are correct', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
 
