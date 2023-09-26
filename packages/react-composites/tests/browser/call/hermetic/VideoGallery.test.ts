@@ -3,6 +3,7 @@
 
 import {
   addScreenshareStream,
+  addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
@@ -218,14 +219,21 @@ test.describe('VideoGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
-  test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
+  test.only('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
-
-    const initialState = defaultMockCallAdapterState([]);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    const jerry = defaultMockRemoteParticipant('Jerry Seinfeld');
+    const bob = defaultMockRemoteParticipant('Bob Ross');
+    const tom = defaultMockRemoteParticipant('Tom Hanks');
+    const sheryl = defaultMockRemoteParticipant('Sheryl Sandberg');
+    const joseph = defaultMockRemoteParticipant('Joseph Johnson');
+    const participants = [paul, vasily, jerry, bob, tom, sheryl, joseph];
+    addVideoStream(paul, true);
+    const initialState = defaultMockCallAdapterState(participants);
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, {
-        newControlBarExperience: 'true',
-        mockRemoteParticipantCount: '20'
+        newControlBarExperience: 'true'
       })
     );
 
