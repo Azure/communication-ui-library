@@ -258,8 +258,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
   /* @conditional-compile-remove(gallery-layouts) */
-  const galleryLayoutOptions = {
-    itemKey: 'galleryPositionKey',
+  drawerMenuItems.push({
+    itemKey: 'overflowGalleryPositionKey',
     iconProps: {
       iconName: 'GalleryOptions',
       styles: { root: { lineHeight: 0 } }
@@ -281,6 +281,19 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         secondaryIconProps: props.userSetGalleryLayout === 'floatingLocalVideo' ? { iconName: 'Accept' } : undefined
       },
       {
+        itemKey: 'defaultSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'DefaultGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+      },
+      {
         itemKey: 'focusedContentSelectionKey',
         text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
         onItemClick: () => {
@@ -294,28 +307,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         secondaryIconProps: props.userSetGalleryLayout === 'focusedContent' ? { iconName: 'Accept' } : undefined
       }
     ]
-  };
-
-  /* @conditional-compile-remove(gallery-layout-composite) */
-  const galleryOption = {
-    itemKey: 'defaultSelectionKey',
-    text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
-    onItemClick: () => {
-      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
-      onLightDismiss();
-    },
-    iconProps: {
-      iconName: 'DefaultGalleryLayout',
-      styles: { root: { lineHeight: 0 } }
-    },
-    secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
-  };
-
-  /* @conditional-compile-remove(gallery-layout-composite) */
-  galleryLayoutOptions.subMenuProps?.push(galleryOption);
-
-  /* @conditional-compile-remove(gallery-layouts) */
-  drawerMenuItems.push(galleryLayoutOptions);
+  });
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
