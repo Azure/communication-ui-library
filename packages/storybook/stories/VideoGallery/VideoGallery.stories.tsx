@@ -593,7 +593,10 @@ export default {
     maxRemoteVideoStreams: hiddenControl,
     pinnedParticipants: hiddenControl,
     onPinParticipant: hiddenControl,
-    onUnpinParticipant: hiddenControl
+    onUnpinParticipant: hiddenControl,
+    layout: hiddenControl,
+    onDisposeRemoteVideoStreamView: hiddenControl,
+    onDisposeRemoteScreenShareStreamView: hiddenControl
   },
   parameters: {
     docs: {
