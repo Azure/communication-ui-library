@@ -30,7 +30,7 @@ export const configurationStackTokensMobile: IStackTokens = {
 const configurationContainerStyle: IStyle = {
   height: '100%',
   width: '100%',
-  padding: '1rem'
+  padding: '2rem 1rem 2rem 1rem'
 };
 
 /**
