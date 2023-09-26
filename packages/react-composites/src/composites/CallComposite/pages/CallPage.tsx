@@ -54,6 +54,8 @@ export interface CallPageProps {
   galleryLayout: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
 }
 
 /**
@@ -68,7 +70,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     options,
     mobileView,
     /* @conditional-compile-remove(gallery-layouts) */
-    galleryLayout = 'floatingLocalVideo'
+    galleryLayout = 'floatingLocalVideo',
+    /* @conditional-compile-remove(gallery-layouts) */
+    onUserSetGalleryLayoutChange
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -92,8 +96,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
     'Responsive'
   );
-  /* @conditional-compile-remove(gallery-layouts) */
-  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(galleryLayout);
 
   return (
     <CallArrangement
@@ -128,7 +130,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               /* @conditional-compile-remove(gallery-layouts) */
               userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
               /* @conditional-compile-remove(gallery-layouts) */
-              userSetGalleryLayout={userSetGalleryLayout}
+              userSetGalleryLayout={galleryLayout}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -145,9 +147,9 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       /* @conditional-compile-remove(gallery-layouts) */
       onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
       /* @conditional-compile-remove(gallery-layouts) */
-      onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+      onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
       /* @conditional-compile-remove(gallery-layouts) */
-      userSetGalleryLayout={userSetGalleryLayout}
+      userSetGalleryLayout={galleryLayout}
       /* @conditional-compile-remove(capabilities) */
       capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
     />
