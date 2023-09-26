@@ -32,7 +32,7 @@ test.describe('VideoGallery tests', async () => {
     );
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -49,7 +49,9 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-joining-gridview-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'video-gallery-with-one-joining-gridview-participant.png'
+    );
   });
 
   /*
@@ -75,7 +77,7 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-2-joining-gridview-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-2-joining-gridview-participant.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -91,7 +93,7 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
       'video-gallery-with-1-joining-1-hold-gridview-participant.png'
     );
   });
@@ -129,7 +131,7 @@ test.describe('VideoGallery tests', async () => {
     moreButton.click();
     await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
     // take snapshot to verify pin button is disabled
-    expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
   });
   /* @conditional-compile-remove(gallery-layouts) */
   test('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
@@ -145,7 +147,7 @@ test.describe('VideoGallery tests', async () => {
     );
 
     await waitForSelector(page, dataUiId(IDS.videoGallery), { timeout: 100000 });
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-speaker-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-speaker-participant.png');
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
@@ -162,19 +164,19 @@ test.describe('VideoGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton), { timeout: 100000 });
     await pageClick(page, dataUiId(IDS.moreButton));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls.png');
     await page.locator('button:has-text("Gallery options")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls-open.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls-open.png');
     await page.locator('button:has-text("Speaker layout")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
     await pageClick(page, dataUiId(IDS.moreButton));
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Gallery layout")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
     await pageClick(page, dataUiId(IDS.moreButton));
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Dynamic layout")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
@@ -194,7 +196,7 @@ test.describe('VideoGallery tests', async () => {
     await pageClick(page, dataUiId(IDS.moreButton));
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Focused content")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('focused-content-layout.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('focused-content-layout.png');
   });
 
   /* @conditional-compile-remove(large-gallery) */
@@ -211,9 +213,9 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-ovc.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-ovc.png');
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Large Gallery")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
 });

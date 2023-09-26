@@ -23,7 +23,7 @@ test.describe('Call Composite E2E local video tile control tests', () => {
     );
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-hidden-local-video-tile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-hidden-local-video-tile.png');
   });
 
   test('Call composite should have a video tile in the main gallery when in gird', async ({ page, serverUrl }) => {
@@ -41,7 +41,7 @@ test.describe('Call Composite E2E local video tile control tests', () => {
     );
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-grid-local-video-tile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-grid-local-video-tile.png');
   });
 
   test('Call composite should have a floating video tile when floating', async ({ page, serverUrl }) => {
@@ -59,6 +59,6 @@ test.describe('Call Composite E2E local video tile control tests', () => {
     );
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-floating-local-video-tile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-floating-local-video-tile.png');
   });
 });

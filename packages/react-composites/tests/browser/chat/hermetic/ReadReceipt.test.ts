@@ -25,7 +25,7 @@ test.describe('Chat Composite E2E Tests', () => {
 
     await sendMessage(page, 'How the turn tables');
     await waitForMessageDelivered(page);
-    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('sent-messages.png');
+    await expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('sent-messages.png');
 
     await temporarilyShowHiddenChatComposite(page, messageReader);
     await waitForMessageSeen(page);
@@ -37,7 +37,7 @@ test.describe('Chat Composite E2E Tests', () => {
       async () => await page.click(dataUiId('chat-composite-message-status-icon'), { timeout: perStepLocalTimeout() })
     );
     await waitForSelector(page, dataUiId('chat-composite-message-tooltip'));
-    expect(await stableScreenshot(page, { stubMessageTimestamps: true, dismissTooltips: false })).toMatchSnapshot(
+    await expect(await stableScreenshot(page, { stubMessageTimestamps: true, dismissTooltips: false })).toMatchSnapshot(
       'read-message-tooltip-text.png'
     );
   });
@@ -69,6 +69,6 @@ test.describe('Chat Composite E2E Tests', () => {
       await waitForSelector(page, '[id="chat-composite-message-contextual-menu-read-name-list"]');
     });
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('read-message-contextualMenu.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('read-message-contextualMenu.png');
   });
 });

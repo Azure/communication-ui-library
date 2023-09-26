@@ -25,7 +25,7 @@ test.describe('CallWithChat Composite Pre-Join Tests', () => {
 
   test('Pre-join screen loads correctly', async ({ pages }) => {
     const page = pages[0];
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-pre-join-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-pre-join-screen.png`);
   });
 });
 
@@ -50,7 +50,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
       await waitForPiPiPToHaveLoaded(page);
     }
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-people-pane.png`);
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -59,7 +59,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-dtmf-dialpad.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-dtmf-dialpad.png`);
   });
 
   /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling) */
@@ -70,7 +70,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     await moreButtonHoldCallButton?.click();
 
     await waitForSelector(page, dataUiId('hold-page'));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-hold-call.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-hold-call.png`);
   });
 });
 

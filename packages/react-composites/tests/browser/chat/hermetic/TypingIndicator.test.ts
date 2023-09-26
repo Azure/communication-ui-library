@@ -28,8 +28,8 @@ test.describe('Tests related to typing indicator', async () => {
 
     const indicator = await page.$(dataUiId(IDS.typingIndicator));
 
-    expect(await indicator?.innerHTML()).toContain(typingParticipant.displayName);
-    expect(await stableScreenshot(page)).toMatchSnapshot('typing-indicator.png');
+    await expect(await indicator?.innerHTML()).toContain(typingParticipant.displayName);
+    await expect(await stableScreenshot(page)).toMatchSnapshot('typing-indicator.png');
 
     // TODO: Use waitForAndHideTypingIndicator
     // Advance time by 10 seconds to make typing indicator go away
@@ -40,7 +40,7 @@ test.describe('Tests related to typing indicator', async () => {
     });
     await page.waitForTimeout(1000);
     const indicatorAfter10Seconds = await page.$(dataUiId(IDS.typingIndicator));
-    expect(await indicatorAfter10Seconds?.innerHTML()).toBeFalsy();
-    expect(await stableScreenshot(page)).toMatchSnapshot('typing-indicator-disappears.png');
+    await expect(await indicatorAfter10Seconds?.innerHTML()).toBeFalsy();
+    await expect(await stableScreenshot(page)).toMatchSnapshot('typing-indicator-disappears.png');
   });
 });

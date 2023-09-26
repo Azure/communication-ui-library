@@ -16,7 +16,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     const callState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await loadCallPage(page, serverUrl, callState);
     await pageClick(page, dataUiId('common-call-composite-more-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-screen.png`);
   });
 
   test('Speaker Submenu click on a new audio device displays correctly on mobile', async ({ page, serverUrl }) => {
@@ -32,16 +32,18 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, 'div[role="menu"] >> text=Speaker');
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-screen.png`);
 
     await pageClick(page, 'div[role="menu"] >> text="2nd Speaker"');
 
     // Need to open again because submenu is dismissed automatically after selection
     await pageClick(page, dataUiId('common-call-composite-more-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-new-selected-speaker-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      `call-with-chat-more-drawer-new-selected-speaker-screen.png`
+    );
 
     await pageClick(page, 'div[role="menu"] >> text=Speaker');
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-speaker-select.png`);
   });
 
   test('Microphone Submenu click on a new audio device displays correctly on mobile', async ({ page, serverUrl }) => {
@@ -57,17 +59,21 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, 'div[role="menu"] >> text=Microphone');
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      `call-with-chat-more-drawer-submenu-microphone-screen.png`
+    );
 
     await pageClick(page, 'div[role="menu"] >> text="2nd Microphone"');
 
     // Need to open again because submenu is dismissed automatically after selection
     await pageClick(page, dataUiId('common-call-composite-more-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
       `call-with-chat-more-drawer-new-selected-microphone-screen.png`
     );
 
     await pageClick(page, 'div[role="menu"] >> text=Microphone');
-    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-more-drawer-submenu-microphone-select.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      `call-with-chat-more-drawer-submenu-microphone-select.png`
+    );
   });
 });

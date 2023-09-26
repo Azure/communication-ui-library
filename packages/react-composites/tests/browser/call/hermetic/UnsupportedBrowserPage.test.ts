@@ -23,7 +23,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-no-link.png`);
   });
 
   test('unsupportedBrowser displays correctly with a help link', async ({ page, serverUrl }) => {
@@ -44,7 +44,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-with-link.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserPage-with-link.png`);
   });
 
   test('unsupportedBrowserVersion displays correctly with no help link', async ({ page, serverUrl }) => {
@@ -60,7 +60,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-no-link.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-no-link.png`);
   });
 
   test('unsupportedBrowserVersion displays correctly with help link', async ({ page, serverUrl }) => {
@@ -81,7 +81,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link.png`);
   });
 
   test('unsupportedBrowserVersion displays correctly with help link and continue button', async ({
@@ -105,7 +105,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link-allow-button.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-link-allow-button.png`);
   });
 
   test('unsupportedBrowserVersion displays correctly with continue button', async ({ page, serverUrl }) => {
@@ -121,7 +121,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-allow-button.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedBrowserVersion-with-allow-button.png`);
   });
 
   test('unsupportedBrowserVersion with continue button allows user into config screen', async ({ page, serverUrl }) => {
@@ -148,7 +148,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     await waitForCallCompositeToLoad(page);
     await stubLocalCameraName(page);
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
       `unsupportedBrowserVersion-with-allow-button-config-screen.png`
     );
   });
@@ -166,7 +166,7 @@ test.describe('unsupportedBrowser page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-no-link.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-no-link.png`);
   });
 
   test('unsupportedOperatingSystem displays correctly with link', async ({ page, serverUrl }) => {
@@ -187,7 +187,7 @@ test.describe('unsupportedBrowser page tests', async () => {
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentIcon));
     await waitForSelector(page, dataUiId(IDS.unsupportedEnvironmentLink));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-link.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`unsupportedOperatingSystem-with-link.png`);
   });
 });
 

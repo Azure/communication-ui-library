@@ -29,7 +29,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
       await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
     }
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
   });
 
   test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
@@ -46,7 +46,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
       await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
     }
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Attendee.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Attendee.png');
   });
 });
 
@@ -55,14 +55,14 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
   });
 
   test('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
   });
 
   test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
@@ -72,7 +72,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
   });
 });
 
@@ -84,7 +84,7 @@ test.describe('Rooms Participant RemoveButton tests for different roles', async 
     const initialState = defaultMockCallAdapterState(participants, 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await openRemoveParticipantMenu(page, testInfo);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    await expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       'rooms-call-remove-participant-presenter.png'
     );
   });
@@ -133,7 +133,7 @@ const expectNoRemoveParticipantMenuItem = async (page: Page, testInfo: TestInfo)
 
   if (isTestProfileDesktop(testInfo)) {
     const menuButton = await page.$$(dataUiId('participant-item-menu-button'));
-    expect(menuButton.length).toBe(0);
+    await expect(menuButton.length).toBe(0);
   } else {
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
@@ -143,6 +143,6 @@ const expectNoRemoveParticipantMenuItem = async (page: Page, testInfo: TestInfo)
     await waitForSelector(page, dataUiId('participant-item'));
     await pageClick(page, dataUiId('participant-item'));
     const drawerMenu = await page.$$(dataUiId('drawer-menu'));
-    expect(drawerMenu.length).toBe(0);
+    await expect(drawerMenu.length).toBe(0);
   }
 };

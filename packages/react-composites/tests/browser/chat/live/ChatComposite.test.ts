@@ -17,7 +17,7 @@ test.describe('Chat Composite E2E Tests', () => {
   });
 
   test('composite pages load completely', async ({ pages }) => {
-    expect(await pages[0].screenshot()).toMatchSnapshot(`chat-screen.png`);
+    await expect(await pages[0].screenshot()).toMatchSnapshot(`chat-screen.png`);
   });
 
   test('page[1] can rejoin the chat', async ({ pages }) => {
@@ -39,6 +39,6 @@ test.describe('Chat Composite E2E Tests', () => {
     await stubMessageTimestamps(page1);
     // we are getting read receipt for previous messages, so the message here should be seen, otherwise it could cause flaky test
     await waitForMessageSeen(page1);
-    expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
+    await expect(await page1.screenshot()).toMatchSnapshot('rejoin-thread.png');
   });
 });

@@ -45,7 +45,7 @@ test.describe('Screenshare tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('local-screenshare.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('local-screenshare.png');
   });
 
   test('Remote screen share stream should be displayed in grid area of VideoGallery.', async ({ page, serverUrl }) => {
@@ -78,12 +78,12 @@ test.describe('Screenshare tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-1.png');
 
     /* @conditional-compile-remove(pinned-participants) */
     if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
-      expect(await stableScreenshot(page)).toMatchSnapshot(
+      await expect(await stableScreenshot(page)).toMatchSnapshot(
         'remote-screenshare-scrollable-horizontal-gallery-dragged.png'
       );
       return;
@@ -91,9 +91,11 @@ test.describe('Screenshare tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-2.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-page-2.png');
     await waitForSelector(page, dataUiId(IDS.overflowGalleryLeftNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryLeftNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot('remote-screenshare-horizontal-gallery-back-to-page-1.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'remote-screenshare-horizontal-gallery-back-to-page-1.png'
+    );
   });
 });

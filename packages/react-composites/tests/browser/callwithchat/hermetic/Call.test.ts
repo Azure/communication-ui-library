@@ -17,7 +17,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     addVideoStream(fiona, true);
     const callState = defaultMockCallAdapterState([paul, eryka, fiona]);
     await loadCallPage(page, serverUrl, callState);
-    expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
+    await expect(await stableScreenshot(page, { dismissTooltips: true })).toMatchSnapshot(
       `call-with-chat-gallery-screen.png`
     );
   });

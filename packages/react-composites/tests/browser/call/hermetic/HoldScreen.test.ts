@@ -18,7 +18,7 @@ test.describe('Hold screen tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`Call-screen-morebutton-open.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`Call-screen-morebutton-open.png`);
 
     await waitForSelector(page, dataUiId(IDS.holdButton));
     await pageClick(page, dataUiId(IDS.holdButton));
@@ -26,7 +26,7 @@ test.describe('Hold screen tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.holdPage));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`Call-hold-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`Call-hold-screen.png`);
   });
 
   test('Hold screen should return to call screen upon resume', async ({ page, serverUrl }) => {
@@ -39,7 +39,7 @@ test.describe('Hold screen tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`Call-screen-morebutton-open.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`Call-screen-morebutton-open.png`);
 
     await waitForSelector(page, dataUiId(IDS.holdButton));
     await pageClick(page, dataUiId(IDS.holdButton));
@@ -47,7 +47,7 @@ test.describe('Hold screen tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.holdPage));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`Call-hold-screen.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`Call-hold-screen.png`);
 
     await waitForSelector(page, dataUiId(IDS.resumeCallButton));
     await pageClick(page, dataUiId(IDS.resumeCallButton));
@@ -56,6 +56,6 @@ test.describe('Hold screen tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.callPage));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`Call-screen-resumed.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`Call-screen-resumed.png`);
   });
 });

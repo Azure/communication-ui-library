@@ -17,7 +17,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('banner-when-speaking-while-muted.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('banner-when-speaking-while-muted.png');
   });
 
   test('Tile should be showing when network reconnect is bad ', async ({ page, serverUrl }) => {
@@ -28,7 +28,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
   });
 
   test('Error bar should be showing when camera freezes ', async ({ page, serverUrl }) => {
@@ -39,7 +39,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-when-camera-freezes.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-when-camera-freezes.png');
   });
 
   test('Message bar should show when camera stops unexpectedly', async ({ page, serverUrl }) => {
@@ -50,7 +50,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-camera-stops-unexpectedly.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-camera-stops-unexpectedly.png');
   });
 
   test('Message bar should show when camera recovers', async ({ page, serverUrl }) => {
@@ -61,7 +61,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-camera-recovered.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-camera-recovered.png');
   });
 
   test('Message bar should show when microphone stops unexpectedly', async ({ page, serverUrl }) => {
@@ -72,7 +72,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-microphone-stops-unexpectedly.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-microphone-stops-unexpectedly.png');
   });
 
   test('Message bar should show when microphone recovers', async ({ page, serverUrl }) => {
@@ -83,7 +83,7 @@ test.describe('User Facing Diagnostics tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId('call-composite-hangup-button'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-microphone-recovered.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('error-bar-microphone-recovered.png');
   });
 });
 

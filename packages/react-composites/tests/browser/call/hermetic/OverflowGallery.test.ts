@@ -36,7 +36,7 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-audio-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-audio-participant.png');
   });
 
   test('Overflow gallery should work in right-to-left', async ({ page, serverUrl }) => {
@@ -51,7 +51,7 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { rtl: 'true' }));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-in-rtl-with-1-audio-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-in-rtl-with-1-audio-participant.png');
   });
 
   test('Overflow gallery should have multiple audio participants spanning multiple pages. Navigation buttons should work.', async ({
@@ -83,12 +83,14 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'overflow-gallery-with-many-audio-participants-on-page-1.png'
+    );
 
     /* @conditional-compile-remove(pinned-participants) */
     if (await existsOnPage(page, dataUiId('scrollable-horizontal-gallery'))) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
-      expect(await stableScreenshot(page)).toMatchSnapshot(
+      await expect(await stableScreenshot(page)).toMatchSnapshot(
         'scrollable-horizontal-gallery-with-many-audio-participants-dragged.png'
       );
       return;
@@ -96,10 +98,14 @@ test.describe('Overflow gallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-2.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'overflow-gallery-with-many-audio-participants-on-page-2.png'
+    );
     await waitForSelector(page, dataUiId(IDS.overflowGalleryLeftNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryLeftNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'overflow-gallery-with-many-audio-participants-on-page-1.png'
+    );
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -115,7 +121,7 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-joining-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-joining-participant.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -138,7 +144,7 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
       'overflow-gallery-with-joining-participant-with-audio-participants.png'
     );
   });
@@ -180,7 +186,7 @@ test.describe('Overflow gallery tests', async () => {
       !isTestProfileLandscapeMobile(testInfo)
     ) {
       await dragToRight(page, dataUiId('scrollable-horizontal-gallery'));
-      expect(await stableScreenshot(page)).toMatchSnapshot(
+      await expect(await stableScreenshot(page)).toMatchSnapshot(
         'scrollable-horizontal-gallery-with-joining-participant-dragged.png'
       );
       return;
@@ -188,7 +194,7 @@ test.describe('Overflow gallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.overflowGalleryRightNavButton));
     await pageClick(page, dataUiId(IDS.overflowGalleryRightNavButton));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
       'overflow-gallery-with-joining-participant-with-multi-page.png'
     );
   });
@@ -215,7 +221,7 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot(
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
       'overflow-gallery-with-joining-participant-with-screen-share-and-video.png'
     );
   });
@@ -246,7 +252,7 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-2-joining-participants.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-2-joining-participants.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -262,7 +268,9 @@ test.describe('Overflow gallery tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-joining-1-hold-participants.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'overflow-gallery-with-1-joining-1-hold-participants.png'
+    );
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
@@ -282,11 +290,11 @@ test.describe('Overflow gallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls.png');
     await page.locator('button:has-text("Gallery options")').click();
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls-open.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls-open.png');
     await page.locator('button:has-text("Move gallery to top")').click();
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-moved-to-top.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-moved-to-top.png');
   });
 });

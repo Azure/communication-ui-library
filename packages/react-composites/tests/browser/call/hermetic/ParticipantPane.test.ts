@@ -37,7 +37,7 @@ test.describe('Participant pane tests', async () => {
     }
 
     await waitForSelector(page, dataUiId('people-pane-content'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('call-screen-with-people-pane.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('call-screen-with-people-pane.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -60,7 +60,7 @@ test.describe('Participant pane tests', async () => {
 
     await waitForSelector(page, dataUiId('people-pane-content'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-no-add-people-button.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`ACS-group-call-screen-with-no-add-people-button.png`);
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -84,7 +84,7 @@ test.describe('Participant pane tests', async () => {
 
     await pageClick(page, dataUiId('call-add-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad-dropdown.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad-dropdown.png`);
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -117,7 +117,7 @@ test.describe('Participant pane tests', async () => {
       await drawerDialPhoneNumberDiv?.click();
     }
 
-    expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad.png`);
+    await expect(await stableScreenshot(page)).toMatchSnapshot(`PSTN-call-screen-with-dialpad.png`);
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -139,7 +139,7 @@ test.describe('Participant pane tests', async () => {
     }
     await waitForSelector(page, dataUiId('people-pane-content'));
     await hidePiPiP(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-connecting-participant.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('PSTN-participant-pane-connecting-participant.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -170,7 +170,7 @@ test.describe('Participant pane tests', async () => {
         el.textContent = 'Long Calling String...';
       }
     }, participantStringId);
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-pane-callee-name-truncation.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-pane-callee-name-truncation.png');
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -190,7 +190,7 @@ test.describe('Participant pane tests', async () => {
     }
 
     await waitForSelector(page, dataUiId('people-pane-content'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-with-no-name-unknown-icon.png');
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -208,7 +208,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-desktop.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-desktop.png');
 
     idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -216,7 +216,9 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-desktop.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'pstn-participant-list-connecting-participant-desktop.png'
+    );
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -237,7 +239,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-mobile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-idle-participant-mobile.png');
 
     idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -248,7 +250,9 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('pstn-participant-list-connecting-participant-mobile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'pstn-participant-list-connecting-participant-mobile.png'
+    );
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -266,7 +270,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-mobile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-mobile.png');
 
     idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -277,7 +281,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-mobile.png');
   });
 
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
@@ -292,7 +296,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-desktop.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-idle-participant-desktop.png');
 
     idleRemoteParticipant.state = 'Ringing';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
@@ -300,7 +304,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-connecting-participant-desktop.png');
   });
 
   /* @conditional-compile-remove(total-participant-count) */
@@ -317,7 +321,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-large-number-of-participants.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-large-number-of-participants.png');
   });
 
   /* @conditional-compile-remove(total-participant-count) */
@@ -337,7 +341,9 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('mobile-participant-list-large-number-of-participants.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot(
+      'mobile-participant-list-large-number-of-participants.png'
+    );
   });
   /* @conditional-compile-remove(total-participant-count) */
   test('Participant count should be shown correctly with solo partitipant', async ({ page, serverUrl }, testInfo) => {
@@ -350,7 +356,7 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-participants-button'));
     await pageClick(page, dataUiId('call-composite-participants-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-solo-participant-count.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-solo-participant-count.png');
   });
 
   /* @conditional-compile-remove(total-participant-count) */
@@ -370,6 +376,6 @@ test.describe('Participant pane tests', async () => {
     await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-solo-participant-count-mobile.png');
+    await expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-solo-participant-count-mobile.png');
   });
 });

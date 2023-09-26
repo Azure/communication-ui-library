@@ -47,15 +47,15 @@ test.describe('Vertical gallery resizing tests', async () => {
     const verticalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
     // check that the initial sizes are correct for the vertical tiles.
-    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeGreaterThanOrEqual(108);
-    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeLessThanOrEqual(176);
+    await expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeGreaterThanOrEqual(108);
+    await expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeLessThanOrEqual(176);
 
     // resize the window.
     await page.setViewportSize({ width: 1200, height: 600 });
 
     // verify that the sizes are still within the correct boundaries.
-    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeGreaterThanOrEqual(108);
-    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeLessThanOrEqual(176);
+    await expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeGreaterThanOrEqual(108);
+    await expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBeLessThanOrEqual(176);
   });
   test('resize should appropriately add tiles if room', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -168,7 +168,7 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     let pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
 
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
+    await expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
 
     // increase the page size to remove a page
     await page.setViewportSize({ width: 1200, height: 700 });
@@ -176,7 +176,7 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
 
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
+    await expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
   });
   test('resize should add pages appropriatly', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -208,7 +208,7 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     let pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
 
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
+    await expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 2');
 
     // increase the page size to remove a page
     await page.setViewportSize({ width: 1200, height: 600 });
@@ -216,7 +216,7 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     pageCounter = await waitForSelector(page, dataUiId(IDS.verticalGalleryPageCounter));
 
-    expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
+    await expect(await pageCounter.evaluate((e) => (e as HTMLDivElement).innerText)).toBe('1 / 3');
   });
   test('single user on last page should use largest size', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -245,6 +245,6 @@ test.describe('Vertical gallery resizing tests', async () => {
 
     const verticalTiles = await waitForSelector(page, dataUiId(IDS.verticalGalleryVideoTile));
 
-    expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBe(176);
+    await expect(await verticalTiles.evaluate((e) => (e as HTMLDivElement).clientHeight)).toBe(176);
   });
 });
