@@ -350,7 +350,8 @@ const memoizeAllMessages = memoizeFnAll(
     strings: MessageThreadStrings,
     theme: Theme,
     chatMessageRenderStyles: Record<
-      | 'body'
+      | 'bodyCommon'
+      | 'bodyMyMessage'
       | 'rootMyMessage'
       | 'rootMessage'
       | 'bodyWithoutAvatar'
@@ -412,7 +413,7 @@ const memoizeAllMessages = memoizeFnAll(
               role: 'none'
             }}
             body={{
-              className: chatMessageRenderStyles.body,
+              className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
               // make body not focusable to remove repetitions from narrators.
               // inner components are already focusable
               tabIndex: -1,
@@ -449,7 +450,7 @@ const memoizeAllMessages = memoizeFnAll(
             body={{
               // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
               className: mergeClasses(
-                chatMessageRenderStyles.body,
+                chatMessageRenderStyles.bodyCommon,
                 !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
                 shouldOverlapAvatarAndMessage
                   ? chatMessageRenderStyles.avatarOverlap

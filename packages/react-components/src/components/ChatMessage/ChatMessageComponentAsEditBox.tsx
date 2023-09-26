@@ -82,13 +82,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       : undefined;
 
   const onRenderThemedCancelIcon = useCallback(
-    () => onRenderCancelIcon(theme.palette.neutralSecondary),
-    [theme.palette.neutralSecondary]
+    (isHover: boolean) => onRenderCancelIcon(isHover ? theme.palette.accent : theme.palette.neutralSecondary),
+    [theme.palette.neutralSecondary, theme.palette.accent]
   );
 
   const onRenderThemedSubmitIcon = useCallback(
-    () => onRenderSubmitIcon(theme.palette.neutralSecondary),
-    [theme.palette.neutralSecondary]
+    (isHover: boolean) => onRenderSubmitIcon(isHover ? theme.palette.accent : theme.palette.neutralSecondary),
+    [theme.palette.neutralSecondary, theme.palette.accent]
   );
 
   const editBoxStyles = useMemo(() => {
