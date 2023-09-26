@@ -4,7 +4,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { AdapterError } from '../common/adapters';
-import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales';
+import { COMPOSITE_LOCALE_ZH_TW } from '../localization/locales/zh-TW/CompositeLocale';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatComposite } from './CallWithChatComposite';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
