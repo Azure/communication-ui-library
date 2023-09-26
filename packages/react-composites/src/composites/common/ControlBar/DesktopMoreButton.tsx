@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 import { IContextualMenuItem } from '@fluentui/react';
-/* @conditional-compile-remove(gallery-layouts) */
-import { ContextualMenuItemType } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -293,32 +291,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
               iconName: 'FocusedContentGalleryLayout',
               styles: { root: { lineHeight: 0 } }
             }
-          },
-          { key: 'dividerLayoutsKey', itemType: ContextualMenuItemType.Divider },
-          {
-            key: 'topKey',
-            text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
-            canCheck: true,
-            topDivider: true,
-            itemProps: {
-              styles: buttonFlyoutIncreasedSizeStyles
-            },
-            iconProps: {
-              iconName: 'OverflowGalleryTop',
-              styles: { root: { lineHeight: 0 } }
-            },
-            isChecked: galleryPositionTop,
-            onClick: () => {
-              if (galleryPositionTop === false) {
-                props.onUserSetOverflowGalleryPositionChange &&
-                  props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
-                setGalleryPositionTop(true);
-              } else {
-                props.onUserSetOverflowGalleryPositionChange &&
-                  props.onUserSetOverflowGalleryPositionChange('Responsive');
-                setGalleryPositionTop(false);
-              }
-            }
           }
         ],
         calloutProps: {
@@ -344,9 +316,36 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         styles: { root: { lineHeight: 0 } }
       }
     };
+
+    /* @conditional-compile-remove(gallery-layouts) */
+    const overflowGalleryOption = {
+      key: 'topKey',
+      text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
+      canCheck: true,
+      topDivider: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      iconProps: {
+        iconName: 'OverflowGalleryTop',
+        styles: { root: { lineHeight: 0 } }
+      },
+      isChecked: galleryPositionTop,
+      onClick: () => {
+        if (galleryPositionTop === false) {
+          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
+          setGalleryPositionTop(true);
+        } else {
+          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('Responsive');
+          setGalleryPositionTop(false);
+        }
+      }
+    };
     /* @conditional-compile-remove(large-gallery) */
     galleryOptions.subMenuProps?.items?.push(largeGalleryOption);
-
+    /* @conditional-compile-remove(gallery-layouts) */
+    galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
+    /* @conditional-compile-remove(gallery-layouts) */
     moreButtonContextualMenuItems.push(galleryOptions);
   }
 
