@@ -13,8 +13,6 @@ import {
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
-/* @conditional-compile-remove(gallery-layouts) */
-import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
