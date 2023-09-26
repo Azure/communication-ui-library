@@ -147,7 +147,7 @@ export const useChatMyMessageStyles = makeStyles({
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginLeft: '0rem',
     // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px solid transparent'),
+    ...shorthands.border('1px', 'solid', 'transparent'),
 
     '&:hover ~ .fui-ChatMyMessage__actions': {
       visibility: 'visible'
@@ -214,7 +214,7 @@ export const useChatMessageStyles = makeStyles({
     paddingBottom: '10px',
     zIndex: CHAT_MESSAGE_ZINDEX,
     // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px solid transparent'),
+    ...shorthands.border('1px', 'solid', 'transparent'),
     '& msft-mention': {
       color: tokens.colorStatusWarningBackground3,
       fontWeight: tokens.fontWeightSemibold
@@ -239,8 +239,12 @@ export const useChatMessageStyles = makeStyles({
       width: 'fit-content',
       marginTop: '7px',
       marginRight: '0px',
+      marginLeft: '0px',
+      marginBottom: '7px',
       paddingTop: '7px',
       paddingRight: '15px',
+      paddingLeft: '15px',
+      paddingBottom: '7px',
       ...shorthands.border('solid'),
       ...shorthands.borderRadius('4px'),
       ...shorthands.borderWidth('1px'),
@@ -255,10 +259,10 @@ export const useChatMessageStyles = makeStyles({
       width: '100%',
 
       '& tr': {
-        ...shorthands.border(`1px solid ${tokens.colorNeutralStroke1Selected}`),
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
 
         '& td': {
-          ...shorthands.border(`1px solid ${tokens.colorNeutralStroke1Selected}`),
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
           wordBreak: 'normal',
           paddingTop: '0px',
           paddingRight: '5px'
@@ -301,7 +305,7 @@ export const useChatMessageCommonStyles = makeStyles({
     color: tokens.colorNeutralForeground2,
 
     // This makes message bubble show border in high contrast mode making each message distinguishable
-    ...shorthands.border('1px solid transparent'),
+    ...shorthands.border('1px', 'solid', 'transparent'),
     '& i': {
       paddingTop: '0.25rem'
     },

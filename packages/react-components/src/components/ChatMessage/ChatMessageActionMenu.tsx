@@ -28,27 +28,24 @@ export const chatMessageActionMenuProps = (menuProps: {
   onActionButtonClick: () => void;
   theme: Theme;
 }): ChatMessageActionMenuProps | undefined => {
-  if (!menuProps.enabled) {
-    return undefined;
-  }
+  const { ariaLabel, enabled, forceShow, theme } = menuProps;
+  const showActionMenu = enabled || forceShow;
 
   const actionMenuProps: ChatMessageActionMenuProps = {
     children: (
       <div
-        tabIndex={0} //make div focusable, as Icon below is migrated to v9, this can be deleted
+        tabIndex={showActionMenu ? 0 : undefined} //make div focusable, as Icon below is migrated to v9, this can be deleted
         key="menuButton"
         data-ui-id="chat-composite-message-action-icon"
         ref={menuProps.menuButtonRef}
-        onClick={() => menuProps.onActionButtonClick()}
-        style={{ margin: '1px' }}
+        onClick={showActionMenu ? () => menuProps.onActionButtonClick() : undefined}
+        style={{ margin: showActionMenu ? '1px' : 0, minHeight: showActionMenu ? undefined : '30px' }}
         role="button"
-        aria-label={menuProps.ariaLabel}
+        aria-label={showActionMenu ? ariaLabel : undefined}
       >
-        <Icon
-          iconName="ChatMessageOptions"
-          aria-label={menuProps.ariaLabel}
-          styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
-        />
+        {showActionMenu ? (
+          <Icon iconName="ChatMessageOptions" aria-label={ariaLabel} styles={iconWrapperStyle(theme, forceShow)} />
+        ) : undefined}
       </div>
     )
   };
