@@ -116,7 +116,9 @@ const Docs: () => JSX.Element = () => {
   const refProps = useRef(null);
 
   const scrollToRef = (ref): void => {
-    ref.current.scrollIntoView({ behavior: 'auto' });
+    setTimeout(() => {
+      ref.current.scrollIntoView({ behavior: 'auto' });
+    }, 1000);
   };
 
   useEffect(() => {
