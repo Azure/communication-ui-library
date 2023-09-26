@@ -264,6 +264,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       iconName: 'GalleryOptions',
       styles: { root: { lineHeight: 0 } }
     },
+    disabled: props.disableButtonsForHoldScreen,
     text: localeStrings.strings.call.moreButtonGalleryControlLabel,
     subMenuProps: [
       {
@@ -276,7 +277,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconProps: {
           iconName: 'FloatingLocalVideoGalleryLayout',
           styles: { root: { lineHeight: 0 } }
-        }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'floatingLocalVideo' ? { iconName: 'Accept' } : undefined
       },
       {
         itemKey: 'defaultSelectionKey',
@@ -288,7 +290,21 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconProps: {
           iconName: 'DefaultGalleryLayout',
           styles: { root: { lineHeight: 0 } }
-        }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+      },
+      {
+        itemKey: 'focusedContentSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'FocusedContentGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'focusedContent' ? { iconName: 'Accept' } : undefined
       }
     ]
   });
