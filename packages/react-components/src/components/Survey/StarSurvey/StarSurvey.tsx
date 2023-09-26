@@ -84,6 +84,8 @@ export interface _StarSurveyProps {
   unselectedIcon?: string;
   /** Function to send StarSurvey results*/
   onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+  /** function called on confirm button click*/
+  onConfirmStarSurvey?:(ratings:number) => void
   /** Function to close star survey modal*/
   onDismissStarSurvey?: () => void;
   /** Star survey strings */
@@ -96,7 +98,7 @@ export interface _StarSurveyProps {
  * @internal
  */
 export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
-  const { onSubmitSurvey, onDismissStarSurvey, selectedIcon, unselectedIcon, strings } = props;
+  const { onSubmitSurvey, onConfirmStarSurvey, onDismissStarSurvey, selectedIcon, unselectedIcon, strings } = props;
 
   const [rating, setRating] = useState(0);
 
@@ -152,6 +154,9 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
       })
         .then(() => console.log('Survey Result submitted'))
         .catch((e) => console.log(e));
+    }
+    if (onConfirmStarSurvey) {
+      onConfirmStarSurvey(rating)
     }
     onDismiss();
   }, [onSubmitSurvey, rating, onDismiss]);

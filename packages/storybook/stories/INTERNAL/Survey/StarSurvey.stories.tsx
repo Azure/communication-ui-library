@@ -87,6 +87,7 @@ export default {
     selectedIcon: hiddenControl,
     unselectedIcon: hiddenControl,
     onSubmitSurvey: hiddenControl,
+    onConfirmStarSurvey: hiddenControl,
     onDismissStarSurvey: hiddenControl,
     strings: hiddenControl
   },

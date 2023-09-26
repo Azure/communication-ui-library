@@ -22,6 +22,7 @@ import { useHandlers } from '../hooks/useHandlers';
 
 /** @private */
 export const TagsSurvey = (props: {
+  /* @conditional-compile-remove(end-of-call-survey) */
   issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
 }): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */

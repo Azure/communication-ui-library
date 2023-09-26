@@ -616,11 +616,11 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    callIssuesToTags: CallIssuesToTags;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    cancelButtonAriaLabel: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
@@ -733,6 +733,7 @@ export interface CallCompositeStrings {
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
     starRatingAriaLabel: string;
+    starRatingCancelButtonAriaLabel: string;
     starSurveyConfirmButtonLabel?: string;
     starSurveyFiveStarText?: string;
     starSurveyFourStarText?: string;
@@ -747,6 +748,10 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    TagsSurveyCancelButtonAriaLabel: string;
+    TagsSurveyCancelButtonLabel: string;
+    TagsSurveyConfirmButtonLabel: string;
+    TagsSurveyQuestion: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
