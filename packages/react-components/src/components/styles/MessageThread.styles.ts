@@ -93,10 +93,9 @@ export const useChatMessageRenderStyles = makeStyles({
     gridGap: '0',
     ...shorthands.padding('0'),
     ...shorthands.margin('0'),
-    maxWidth: '100%',
-    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+    width: '100%'
   },
-  body: {
+  bodyCommon: {
     ...shorthands.padding('0'),
     marginRight: `0`,
     marginTop: `0`,
@@ -104,6 +103,9 @@ export const useChatMessageRenderStyles = makeStyles({
     backgroundColor: 'transparent',
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+  },
+  bodyMyMessage: {
+    width: '100%'
   },
   bodyWithoutAvatar: {
     marginLeft: `${AVATAR_MARGIN_LEFT}rem`

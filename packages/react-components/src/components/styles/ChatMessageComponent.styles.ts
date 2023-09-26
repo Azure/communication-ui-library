@@ -104,8 +104,7 @@ export const useChatMessageEditContainerStyles = makeStyles({
   body: {
     ...shorthands.padding(0),
     backgroundColor: 'transparent',
-    maxWidth: 'unset',
-    minWidth: 'unset',
+    width: '100%',
     boxSizing: 'border-box',
     ...shorthands.border(`${defaultSendBoxInactiveBorderThicknessREM}rem`, 'solid'),
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
