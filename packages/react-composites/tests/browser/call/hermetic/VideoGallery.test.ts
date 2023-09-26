@@ -3,6 +3,7 @@
 
 import {
   addScreenshareStream,
+  addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
@@ -215,5 +216,46 @@ test.describe('VideoGallery tests', async () => {
     await page.locator('button:has-text("Gallery options")').click();
     await page.locator('button:has-text("Large Gallery")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    const jerry = defaultMockRemoteParticipant('Jerry Seinfeld');
+    const bob = defaultMockRemoteParticipant('Bob Ross');
+    const tom = defaultMockRemoteParticipant('Tom Hanks');
+    const sheryl = defaultMockRemoteParticipant('Sheryl Sandberg');
+    const joseph = defaultMockRemoteParticipant('Joseph Johnson');
+    const participants = [paul, vasily, jerry, bob, tom, sheryl, joseph];
+    addVideoStream(paul, true);
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    expect(await stableScreenshot(page)).toMatchSnapshot('dynamic-layout-mobile.png');
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("Gallery options")').click();
+    await page.locator('span:has-text("Gallery layout")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('Gallery layouts vailable on mobile are correct', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+
+    const initialState = defaultMockCallAdapterState([paul]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("Gallery options")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
   });
 });
