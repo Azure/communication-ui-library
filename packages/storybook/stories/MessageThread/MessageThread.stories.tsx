@@ -116,13 +116,11 @@ const Docs: () => JSX.Element = () => {
   const refProps = useRef(null);
 
   const scrollToRef = (ref): void => {
-    setTimeout(() => {
-      ref.current.scrollIntoView({ behavior: 'auto' });
-    }, 1000);
+    ref.current.scrollIntoView({ behavior: 'auto' });
   };
 
   useEffect(() => {
-    const url = document.URL;
+    const url = window.top ? window.top.location.href : window.location.href;
     if (url.includes('default-messagethread') && refDefaultMessageThread.current) {
       scrollToRef(refDefaultMessageThread);
     } else if (url.includes('messagethread-with-message-date') && refWithMessageDate.current) {
