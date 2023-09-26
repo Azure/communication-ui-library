@@ -9,6 +9,7 @@ import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../..
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
     serverUrl

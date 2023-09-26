@@ -7,6 +7,7 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemote
 
 /* @conditional-compile-remove(PSTN-calls) */
 test.describe('Dtmf dialpad tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Dtmf dialpad should render in 1:1 PSTN call', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
 

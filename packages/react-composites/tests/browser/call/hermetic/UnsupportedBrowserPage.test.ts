@@ -10,6 +10,7 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, stubLocalCameraNa
 
 /* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {
     const state = defaultMockUnsupportedBrowserPageState();
     const envConfig = {

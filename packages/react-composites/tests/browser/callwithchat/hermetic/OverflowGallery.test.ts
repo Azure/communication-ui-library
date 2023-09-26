@@ -7,6 +7,7 @@ import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSele
 import { loadCallPage, test } from './fixture';
 
 test.describe('Overflow gallery tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Overflow gallery should be present when people or chat pane are open', async ({
     page,
     serverUrl

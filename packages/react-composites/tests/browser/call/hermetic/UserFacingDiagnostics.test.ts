@@ -9,6 +9,7 @@ import type { MockCallAdapterState } from '../../../common';
 import { DiagnosticQuality } from './constants';
 
 test.describe('User Facing Diagnostics tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('A banner is shown when user is speaking while muted', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     setMediaDiagnostic(initialState, {

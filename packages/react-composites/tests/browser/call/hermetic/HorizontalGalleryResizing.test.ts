@@ -14,6 +14,7 @@ import {
 
 /* @conditional-compile-remove(vertical-gallery) */
 test.describe('Height gallery resizing tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('resize should have the tiles all change to the same size within expected bounds', async ({
     page,
     serverUrl

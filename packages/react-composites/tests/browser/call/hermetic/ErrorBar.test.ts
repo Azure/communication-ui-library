@@ -7,6 +7,7 @@ import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils'
 import { IDS } from '../../common/constants';
 
 test.describe('Error bar tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Failure to start video should be shown on error bar', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.latestErrors = {

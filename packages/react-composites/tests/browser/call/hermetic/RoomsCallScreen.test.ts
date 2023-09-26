@@ -15,6 +15,7 @@ import {
 import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
@@ -51,6 +52,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
 });
 
 test.describe('Rooms CallScreen tests for different roles', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('All CallControls are enabled for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
@@ -78,6 +80,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
 
 /* @conditional-compile-remove(rooms) */
 test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];

@@ -15,6 +15,7 @@ import { sendMessage, waitForSendMessageFailure } from '../../common/chatTestHel
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
 test.describe('ErrorBar is shown correctly', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('with wrong thread ID', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {

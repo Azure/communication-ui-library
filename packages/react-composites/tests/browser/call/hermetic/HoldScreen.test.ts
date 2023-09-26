@@ -8,6 +8,7 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemote
 
 /* @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling) */
 test.describe('Hold screen tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Hold screen should render correctly', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');

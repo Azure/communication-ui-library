@@ -14,6 +14,7 @@ import { dataUiId, waitForSelector, stableScreenshot, pageClick, isTestProfileMo
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGallery tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('VideoGallery should show unnamed local and remote participant avatars using person icon instead of initials', async ({
     page,
     serverUrl

@@ -21,6 +21,7 @@ import {
 import type { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Participant pane tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('People pane opens and displays correctly', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();

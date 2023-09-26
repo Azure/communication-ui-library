@@ -13,6 +13,7 @@ import { dataUiId, waitForSelector, stableScreenshot, isTestProfileMobile, pageC
 import { IDS } from '../../common/constants';
 
 test.describe('VideoGalleryLayout tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   /* @conditional-compile-remove(pinned-participants) */
   test('VideoTile contextual menu shows "Fit to frame" by default', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));

@@ -7,6 +7,7 @@ import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
 
 test.describe('Localization tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Configuration page title and participant button in call should be localized', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'configuration';

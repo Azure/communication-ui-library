@@ -8,6 +8,7 @@ import type { MockCallAdapterState } from '../../../common';
 
 /* @conditional-compile-remove(call-readiness) */
 test.describe('Tests for guidance UI on config page to guide users through enabling device permissions', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Configuration page should show enable camera/mic modal when both camera and mic permissions are not set', async ({
     page,
     serverUrl

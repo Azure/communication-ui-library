@@ -16,6 +16,7 @@ import { IDS } from '../../common/constants';
 import type { CallCompositeOptions } from '../../../../src';
 
 test.describe('CallControls tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('CallControls when number of mics drops to zero', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.devices.microphones = [];

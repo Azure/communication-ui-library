@@ -15,6 +15,7 @@ import { IDS } from '../../common/constants';
 import type { MockCallState } from '../../../common';
 
 test.describe('Screenshare tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
     page,
     serverUrl

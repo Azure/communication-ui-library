@@ -13,6 +13,7 @@ import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 
 test.describe('Lobby page tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Lobby page shows correct strings when joining a group call', async ({ page, serverUrl }) => {
     const dina = defaultMockRemoteParticipant('Dina');
     /**

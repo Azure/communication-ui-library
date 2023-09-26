@@ -6,6 +6,7 @@ import { stableScreenshot, waitForPageFontsLoaded, waitForSelector, dataUiId } f
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fixture';
 
 test.describe('Page state tests', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Page when waiting in lobby', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'lobby';

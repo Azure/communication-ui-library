@@ -9,6 +9,7 @@ import { test } from './fixture';
 const TEST_MESSAGE = 'No, sir, this will not do.';
 
 test.describe('Tests related to messaging', async () => {
+  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
   test('Local participant should see their message in thread', async ({ page }) => {
     await waitForChatCompositeToLoad(page);
     expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
