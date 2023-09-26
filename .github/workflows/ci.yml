@@ -139,7 +139,7 @@ jobs:
 
   in-progress-feature-validation:
     name: Check if in progress feature can be removed separately
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
@@ -192,7 +192,7 @@ jobs:
   call_composite_automation_test:
     needs: get_matrix
     name: Call Composite automation test
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -265,7 +265,7 @@ jobs:
   chat_composite_automation_test:
     needs: get_matrix
     name: Chat Composite automation test
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -335,229 +335,10 @@ jobs:
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
-  chat_composite_automation_test_2:
-    needs: get_matrix
-    name: Chat Composite automation test 2
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
-      - name: Build Chat Composite Test App
-        run: |
-          cd packages/react-composites
-          rushx build:e2e:chat
-      - name: Install packlets used by browser tests
-        run: |
-          cd packages/react-composites
-          rush build -t .
-      - name: Chat Composite Visual Regression Tests
-        id: visualregressiontests
-        run: |
-          cd packages/react-composites
-          rushx test:e2e:chat:2
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-          path: packages/react-composites/test-results/*/e2e-results.json
-          if-no-files-found: error
-      - name: Upload snapshot diff
-        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: snapshots
-          path: packages/react-composites/test-results
-      - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-            })
-
-  chat_composite_automation_test_3:
-    needs: get_matrix
-    name: Chat Composite automation test 3
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
-      - name: Build Chat Composite Test App
-        run: |
-          cd packages/react-composites
-          rushx build:e2e:chat
-      - name: Install packlets used by browser tests
-        run: |
-          cd packages/react-composites
-          rush build -t .
-      - name: Chat Composite Visual Regression Tests
-        id: visualregressiontests
-        run: |
-          cd packages/react-composites
-          rushx test:e2e:chat:3
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-          path: packages/react-composites/test-results/*/e2e-results.json
-          if-no-files-found: error
-      - name: Upload snapshot diff
-        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: snapshots
-          path: packages/react-composites/test-results
-      - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-            })
-
-  chat_composite_automation_test_4:
-    needs: get_matrix
-    name: Chat Composite automation test 4
-    runs-on: ubuntu-20.04
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Use Node.js v18.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
-      - name: Install dependencies
-        run: rush install --max-install-attempts 3
-      - name: Switch flavor for build
-        id: switch-flavor
-        if: ${{ matrix.flavor != 'beta' }}
-        run: |
-          rush switch-flavor:${{ matrix.flavor }}
-          node ./common/scripts/force-build-flavor.mjs ${{ matrix.flavor }}
-      - name: Run dependency update for stable
-        if: ${{ matrix.flavor == 'stable' }}
-        run: rush update:stable
-      - name: Build Chat Composite Test App
-        run: |
-          cd packages/react-composites
-          rushx build:e2e:chat
-      - name: Install packlets used by browser tests
-        run: |
-          cd packages/react-composites
-          rush build -t .
-      - name: Chat Composite Visual Regression Tests
-        id: visualregressiontests
-        run: |
-          cd packages/react-composites
-          rushx test:e2e:chat:4
-        env:
-          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
-      - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
-          path: packages/react-composites/test-results/*/e2e-results.json
-          if-no-files-found: error
-      - name: Upload snapshot diff
-        if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
-        with:
-          name: snapshots
-          path: packages/react-composites/test-results
-      - name: Comment on PR
-        if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            github.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
-            })
-
   call_with_chat_composite_automation_test:
     needs: get_matrix
     name: Call With Chat Composite automation test
-    runs-on: ubuntu-20.04
+    runs-on: self-hosted
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
