@@ -5,8 +5,23 @@ import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../..
 import { dataUiId, isTestProfileDesktop, pageClick, stableScreenshot } from '../../common/utils';
 import { loadCallPage, test } from './fixture';
 import { expect } from '@playwright/test';
+import { exec } from 'node:child_process';
 
 test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
+
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
     test.skip(isTestProfileDesktop(testInfo), 'There is no More Drawer on desktop');

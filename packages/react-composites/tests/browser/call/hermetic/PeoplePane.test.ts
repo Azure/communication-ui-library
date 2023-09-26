@@ -22,6 +22,7 @@ import {
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallAdapterState } from '../../../common';
+import { exec } from 'node:child_process';
 
 const participantListShownAsFlyout = (): boolean => {
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -38,6 +39,20 @@ const participantListShownAsFullScreenPane = (testInfo: TestInfo): boolean => {
 };
 
 test.describe('Participant list flyout tests', () => {
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
+
   test.skip(!participantListShownAsFlyout());
 
   test('participant list loads correctly', async ({ page, serverUrl }) => {
@@ -92,6 +107,20 @@ test.describe('Participant list flyout tests', () => {
 });
 
 test.describe('Participant list side pane tests', () => {
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
+
   test('participant list loads correctly', async ({ page, serverUrl }, testInfo) => {
     test.skip(!participantListShownAsSidePane(testInfo));
 

@@ -19,9 +19,22 @@ import {
   test
 } from './fixture';
 import type { MockRemoteParticipantState } from '../../../common';
+import { exec } from 'node:child_process';
 
 test.describe('Participant pane tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   test('People pane opens and displays correctly', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();

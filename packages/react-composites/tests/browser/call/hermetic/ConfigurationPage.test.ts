@@ -14,8 +14,23 @@ import {
 import { IDS } from '../../common/constants';
 import type { MockCallAdapterState } from '../../../common';
 import type { DeviceManagerState } from '@internal/calling-stateful-client';
+import { exec } from 'node:child_process';
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
+
   test('composite pages load completely', async ({ page, serverUrl }) => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
     await waitForCallCompositeToLoad(page);

@@ -5,10 +5,23 @@ import { expect } from '@playwright/test';
 import { sendMessage, waitForMessageDelivered } from '../../common/chatTestHelpers';
 import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test, TEST_PARTICIPANTS } from './fixture';
+import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Attach file icon', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
     expect(
@@ -28,7 +41,19 @@ test.describe('Filesharing Attach file icon', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -64,7 +89,19 @@ test.describe('Filesharing SendBox', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing ProgressBar', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -170,7 +207,19 @@ test.describe('Filesharing ProgressBar', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox Errorbar', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -223,7 +272,19 @@ test.describe('Filesharing SendBox Errorbar', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Global Errorbar', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -259,7 +320,19 @@ test.describe('Filesharing Global Errorbar', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Message Thread', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -314,7 +387,19 @@ test.describe('Filesharing Message Thread', async () => {
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 test.describe('Inline Image Message Thread', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
@@ -336,7 +421,19 @@ test.describe('Inline Image Message Thread', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Edit Message', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {

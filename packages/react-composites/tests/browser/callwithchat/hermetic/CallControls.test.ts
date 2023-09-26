@@ -6,8 +6,23 @@ import { expect } from '@playwright/test';
 import { dataUiId, pageClick, stableScreenshot } from '../../common/utils';
 import type { CallWithChatCompositeOptions } from '../../../../src';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
+import { exec } from 'node:child_process';
 
 test.describe('Custom call control options tests', () => {
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
+
   test('Control bar buttons correctly show as compact with camera disabled and end call button hidden', async ({
     page,
     serverUrl

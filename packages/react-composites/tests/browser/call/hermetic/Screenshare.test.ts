@@ -13,9 +13,22 @@ import { expect } from '@playwright/test';
 import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallState } from '../../../common';
+import { exec } from 'node:child_process';
 
 test.describe('Screenshare tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
     page,
     serverUrl

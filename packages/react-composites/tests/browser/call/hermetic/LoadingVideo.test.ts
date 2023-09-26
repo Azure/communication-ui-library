@@ -13,9 +13,22 @@ import {
   test
 } from './fixture';
 import type { MockRemoteParticipantState } from '../../../common';
+import { exec } from 'node:child_process';
 
 test.describe('Loading Video Spinner tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('Video Gallery shows loading spinners in tiles', async ({ page, serverUrl }) => {
     // Create more than 4 users to ensure that some are placed in the horizontal gallery
     const numParticipants = 10;

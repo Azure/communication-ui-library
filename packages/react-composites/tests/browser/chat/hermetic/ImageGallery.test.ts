@@ -7,9 +7,23 @@ import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './f
 import { expect } from '@playwright/test';
 /* @conditional-compile-remove(image-gallery) */
 import { dataUiId, stableScreenshot } from '../../common/utils';
+import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(image-gallery) */
 test.describe('ImageGallery Modal tests', () => {
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('ImageGallery Modal loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {

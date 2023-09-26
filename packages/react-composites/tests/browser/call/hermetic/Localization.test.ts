@@ -5,9 +5,22 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 import { waitForCallCompositeToLoad, stableScreenshot, waitForSelector, dataUiId } from '../../common/utils';
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
+import { exec } from 'node:child_process';
 
 test.describe('Localization tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('Configuration page title and participant button in call should be localized', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'configuration';

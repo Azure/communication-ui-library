@@ -6,10 +6,23 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState, captionsFeatureStateArabic } from '../../common/constants';
 import { defaultMockCallAdapterState, defaultMockRemoteParticipant } from '../../call/hermetic/fixture';
+import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
     page,
     serverUrl

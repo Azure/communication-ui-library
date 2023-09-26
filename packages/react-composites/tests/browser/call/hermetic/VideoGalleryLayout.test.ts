@@ -11,9 +11,22 @@ import {
 import { expect } from '@playwright/test';
 import { dataUiId, waitForSelector, stableScreenshot, isTestProfileMobile, pageClick } from '../../common/utils';
 import { IDS } from '../../common/constants';
+import { exec } from 'node:child_process';
 
 test.describe('VideoGalleryLayout tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   /* @conditional-compile-remove(pinned-participants) */
   test('VideoTile contextual menu shows "Fit to frame" by default', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));

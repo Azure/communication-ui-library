@@ -7,9 +7,22 @@ import { withHiddenChatCompositeInForeground } from '../../common/hermeticChatTe
 import { IDS } from '../../common/constants';
 import { dataUiId, stableScreenshot } from '../../common/utils';
 import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, test } from './fixture';
+import { exec } from 'node:child_process';
 
 test.describe('Tests related to typing indicator', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('page can view typing indicator within 10s', async ({ serverUrl, page }) => {
     const typingParticipant = DEFAULT_FAKE_CHAT_ADAPTER_ARGS.remoteParticipants[0];
     page.goto(

@@ -13,9 +13,22 @@ import {
   waitForSelector
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
+import { exec } from 'node:child_process';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
@@ -52,7 +65,19 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
 });
 
 test.describe('Rooms CallScreen tests for different roles', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('All CallControls are enabled for Presenter', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
@@ -80,7 +105,19 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
 
 /* @conditional-compile-remove(rooms) */
 test.describe('Rooms Participant RemoveButton tests for different roles', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('Remove button is enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const participants = [paul];

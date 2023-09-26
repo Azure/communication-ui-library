@@ -5,10 +5,23 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 import { expect, Page } from '@playwright/test';
 import { stableScreenshot, waitForPageFontsLoaded } from '../../common/utils';
 import type { MockCallAdapterState } from '../../../common';
+import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(call-readiness) */
 test.describe('Tests for guidance UI on config page to guide users through enabling device permissions', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('Configuration page should show enable camera/mic modal when both camera and mic permissions are not set', async ({
     page,
     serverUrl

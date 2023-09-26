@@ -7,9 +7,22 @@ import { buildUrlWithMockAdapter, defaultMockCallAdapterState, test } from './fi
 import type { LatestMediaDiagnostics, LatestNetworkDiagnostics } from '@azure/communication-calling';
 import type { MockCallAdapterState } from '../../../common';
 import { DiagnosticQuality } from './constants';
+import { exec } from 'node:child_process';
 
 test.describe('User Facing Diagnostics tests', async () => {
-  test.beforeEach(async () => await new Promise((r) => setTimeout(r, 2000)));
+  test.beforeEach(async () => {
+    await new Promise((r) => setTimeout(r, 2000));
+    exec('free -m', (err, output) => {
+      // once the command has completed, the callback function is called
+      if (err) {
+        // log and return if we encounter an error
+        console.error('could not execute command: ', err);
+        return;
+      }
+      // log the output received from the command
+      console.log('RAM STATUS: \n', output);
+    });
+  });
   test('A banner is shown when user is speaking while muted', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     setMediaDiagnostic(initialState, {
