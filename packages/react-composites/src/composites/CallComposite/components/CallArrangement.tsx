@@ -369,6 +369,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                /* @conditional-compile-remove(gallery-layouts) */
+                onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                /* @conditional-compile-remove(gallery-layouts) */
+                userSetGalleryLayout={props.userSetGalleryLayout}
               />
             </Stack>
           )}
