@@ -139,7 +139,7 @@ jobs:
 
   in-progress-feature-validation:
     name: Check if in progress feature can be removed separately
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
