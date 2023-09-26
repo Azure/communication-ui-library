@@ -219,7 +219,7 @@ test.describe('VideoGallery tests', async () => {
   });
 
   /* @conditional-compile-remove(gallery-layouts) */
-  test.only('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
+  test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
