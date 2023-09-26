@@ -20,7 +20,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
     await waitForCallCompositeToLoad(page);
     await stubLocalCameraName(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page.png`);
   });
 
   test('local device buttons should show tooltips on hover', async ({ page, serverUrl }, testInfo) => {
@@ -30,7 +30,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await page.hover(dataUiId('call-composite-local-device-settings-microphone-button'));
     await waitForSelector(page, dataUiId('microphoneButtonLabel-tooltip'));
     await stubLocalCameraName(page);
-    await expect(await stableScreenshot(page, { dismissTooltips: false })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { dismissTooltips: false })).toMatchSnapshot(
       `call-configuration-page-unmute-tooltip.png`
     );
   });
@@ -40,7 +40,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { showCallDescription: 'true' })
     );
     await waitForCallCompositeToLoad(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-call-details.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-call-details.png');
   });
 
   test('Configuration screen desktop should show no devices available', async ({ page, serverUrl }, testInfo) => {
@@ -48,7 +48,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     const state = defaultMockConfigurationPageState();
     state.devices = deviceManagerWithNoDevicesState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, state));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`desktop-call-configuration-page-no-devices.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`desktop-call-configuration-page-no-devices.png`);
   });
 
   test('Configuration screen mobile buttons disabled because no devices', async ({ page, serverUrl }, testInfo) => {
@@ -60,7 +60,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
 
     await waitForSelector(page, dataUiId(IDS.configurationScreenDevicesButton));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`mobile-call-configuration-page-no-devices.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`mobile-call-configuration-page-no-devices.png`);
   });
 
   test('Configuration screen shows error when camera is turned on but in use', async ({ page, serverUrl }) => {
@@ -78,7 +78,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForCallCompositeToLoad(page);
     await stubLocalCameraName(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-camera-error.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-camera-error.png`);
   });
 });
 

@@ -10,7 +10,7 @@ import { buildUrlForChatAppUsingFakeAdapter, DEFAULT_FAKE_CHAT_ADAPTER_ARGS, tes
 test.describe('Filesharing Attach file icon', async () => {
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
-    await expect(
+    expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-attach-file-icon-not-visible.png');
   });
@@ -19,7 +19,7 @@ test.describe('Filesharing Attach file icon', async () => {
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, { ...DEFAULT_FAKE_CHAT_ADAPTER_ARGS, fileSharingEnabled: true })
     );
-    await expect(
+    expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-attach-file-icon-visible.png');
   });
@@ -50,7 +50,7 @@ test.describe('Filesharing SendBox', async () => {
         ]
       })
     );
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -87,7 +87,7 @@ test.describe('Filesharing ProgressBar', async () => {
         ]
       })
     );
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -121,7 +121,7 @@ test.describe('Filesharing ProgressBar', async () => {
         ]
       })
     );
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -155,7 +155,7 @@ test.describe('Filesharing ProgressBar', async () => {
         ]
       })
     );
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -184,7 +184,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
         ]
       })
     );
-    await expect(
+    expect(
       await stableScreenshot(page, { stubMessageTimestamps: true, dismissChatMessageActions: true })
     ).toMatchSnapshot('filesharing-sendbox-file-upload-error.png');
   });
@@ -207,7 +207,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
       })
     );
     await sendMessage(page, 'Hi');
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -242,7 +242,7 @@ test.describe('Filesharing Global Errorbar', async () => {
     await waitForSelector(page, dataUiId('file-download-card-group'));
 
     await page.locator(dataUiId('file-download-card-download-icon')).click();
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -276,7 +276,7 @@ test.describe('Filesharing Message Thread', async () => {
     await sendMessage(page, testMessageText);
     await page.waitForSelector(dataUiId('file-download-card-group'));
 
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -296,7 +296,7 @@ test.describe('Filesharing Message Thread', async () => {
       })
     );
 
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,
@@ -318,7 +318,7 @@ test.describe('Inline Image Message Thread', async () => {
       })
     );
 
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true
@@ -360,7 +360,7 @@ test.describe('Filesharing Edit Message', async () => {
     await page.locator(dataUiId('chat-composite-message-contextual-menu-edit-action')).click();
     await page.waitForSelector('[id="editbox"]');
 
-    await expect(
+    expect(
       await stableScreenshot(page, {
         stubMessageTimestamps: true,
         dismissChatMessageActions: true,

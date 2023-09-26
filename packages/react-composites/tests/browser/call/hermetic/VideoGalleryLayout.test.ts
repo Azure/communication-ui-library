@@ -33,7 +33,7 @@ test.describe('VideoGalleryLayout tests', async () => {
       await moreButton.hover();
       await moreButton.click();
 
-      await expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fit-to-frame.png');
+      expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fit-to-frame.png');
     }
   });
   /* @conditional-compile-remove(pinned-participants) */
@@ -60,7 +60,7 @@ test.describe('VideoGalleryLayout tests', async () => {
       // click pin menu button in contextual menu
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
 
-      await expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fill-frame.png');
+      expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-fill-frame.png');
     }
   });
   /* @conditional-compile-remove(pinned-participants) */
@@ -87,13 +87,13 @@ test.describe('VideoGalleryLayout tests', async () => {
       await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
       await pageClick(page, dataUiId('video-tile-pin-participant-button'));
     }
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-pinned.png');
 
     await videoTile.hover();
     moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
     await moreButton.click();
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
   });
 });

@@ -27,7 +27,7 @@ test.describe('Loading Video Spinner tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page, { hideVideoLoadingSpinner: false })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { hideVideoLoadingSpinner: false })).toMatchSnapshot(
       'video-gallery-with-loading-spinners.png'
     );
   });
@@ -41,7 +41,7 @@ test.describe('Loading Video Spinner tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page, { hideVideoLoadingSpinner: false })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { hideVideoLoadingSpinner: false })).toMatchSnapshot(
       'horizontal-gallery-with-loading-spinners.png'
     );
   });

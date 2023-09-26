@@ -48,7 +48,7 @@ test.describe('Participant list flyout tests', () => {
     const buttonCallOut = await waitForSelector(page, '.ms-Callout');
     // This will ensure no animation is happening for the callout
     await buttonCallOut.waitForElementState('stable');
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
   test('participant list opens and displays ellipses if passing in custom icon', async ({ page, serverUrl }) => {
@@ -64,9 +64,7 @@ test.describe('Participant list flyout tests', () => {
     await pageClick(page, dataUiId(IDS.participantButtonPeopleMenuItem));
     // click on last person (myself) to remove any hover effect on participant items
     await pageClick(page, dataUiId('participant-item') + ' >> nth=3');
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      `video-gallery-page-participants-flyout-custom-ellipses.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
   test('injected menu items appear', async ({ page, serverUrl }) => {
@@ -89,7 +87,7 @@ test.describe('Participant list flyout tests', () => {
 
     const injectedMenuItem = await waitForSelector(page, dataUiId('test-app-participant-menu-item'));
     await injectedMenuItem.waitForElementState('stable', { timeout: perStepLocalTimeout() });
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 });
 
@@ -102,7 +100,7 @@ test.describe('Participant list side pane tests', () => {
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
   test('participant shows unnamed local participant as (you), remote unnamed participant as "Unnamed Participant"', async ({
@@ -135,7 +133,7 @@ test.describe('Participant list side pane tests', () => {
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-no-displayname.png`);
   });
 
   test('participant list opens and displays ellipses if passing in custom icon', async ({
@@ -152,9 +150,7 @@ test.describe('Participant list side pane tests', () => {
     );
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      `video-gallery-page-participants-flyout-custom-ellipses.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
   test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
@@ -174,7 +170,7 @@ test.describe('Participant list side pane tests', () => {
     await pageClick(page, dataUiId(IDS.participantItemMenuButton));
     await waitForSelector(page, '.ms-ContextualMenu-itemText');
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 
   test('participant list opens and do not overlap with error bar', async ({ page, serverUrl }, testInfo) => {
@@ -193,7 +189,7 @@ test.describe('Participant list side pane tests', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { callInvitationUrl: 'testUrl' }));
     await pageClick(page, dataUiId('call-composite-participants-button'));
     await waitForSelector(page, dataUiId('people-pane-content'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('people-pane-with-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('people-pane-with-error-bar.png');
   });
 });
 
@@ -211,7 +207,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     await waitForSelector(page, dataUiId('people-pane-content'));
     await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout.png`);
   });
 
   test('participant list opens and displays ellipses if passing in custom icon', async ({
@@ -233,9 +229,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
     await waitForSelector(page, dataUiId('people-pane-content'));
     await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      `video-gallery-page-participants-flyout-custom-ellipses.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`video-gallery-page-participants-flyout-custom-ellipses.png`);
   });
 
   test('injected menu items appear', async ({ page, serverUrl }, testInfo) => {
@@ -257,7 +251,7 @@ test.describe('Participant list full screen pane with drawer tests', () => {
 
     // wait for drawer to have opened
     await waitForSelector(page, dataUiId('drawer-menu'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`participant-menu-item-flyout.png`);
   });
 });
 

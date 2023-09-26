@@ -21,7 +21,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     const context = await page.context();
     context.clearPermissions();
     await waitForCallCompositeToLoadWithStartCallDisabled(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-enable-both-device-permission.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-enable-both-device-permission.png`);
   });
 
   test('Configuration page should show mic and camera disabled modal when both permissions are denied', async ({
@@ -41,7 +41,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     context.grantPermissions([]);
 
     await waitForCallCompositeToLoadWithStartCallDisabled(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-permission-disabled.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-permission-disabled.png`);
   });
 
   test('Configuration page should show mic disabled modal when only mic permission is denied', async ({
@@ -59,7 +59,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     context.clearPermissions();
     context.grantPermissions(['camera']);
     await waitForCallCompositeToLoadWithStartCallDisabled(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-mic-permission-disabled.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-mic-permission-disabled.png`);
   });
 
   test('Configuration page should show camera disabled modal when only camera permission is denied', async ({
@@ -77,7 +77,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     context.clearPermissions();
     context.grantPermissions(['microphone']);
     await waitForCallCompositeToLoadWithStartCallDisabled(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-camera-permission-disabled.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-camera-permission-disabled.png`);
   });
 
   test('Configuration page should not show any modal when device permissions are all granted', async ({
@@ -97,7 +97,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
     context.clearPermissions();
     context.grantPermissions(['microphone', 'camera']);
     await waitForCallCompositeToLoadWithStartCallDisabled(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-permission-granted.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-readiness-permission-granted.png`);
   });
 });
 

@@ -11,13 +11,13 @@ const TEST_MESSAGE = 'No, sir, this will not do.';
 test.describe('Tests related to messaging', async () => {
   test('Local participant should see their message in thread', async ({ page }) => {
     await waitForChatCompositeToLoad(page);
-    await expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
       'no-messages-in-chat-thread.png'
     );
 
     await sendMessage(page, TEST_MESSAGE);
     await waitForMessageDelivered(page);
-    await expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
       'one-message-in-chat-thread.png'
     );
   });

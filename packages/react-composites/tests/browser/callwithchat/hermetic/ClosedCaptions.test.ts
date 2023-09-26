@@ -24,7 +24,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
   });
 
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
@@ -35,7 +35,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
   });
 
   test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
@@ -46,7 +46,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('show-captions-RTL.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-captions-RTL.png');
   });
 
   test('Captions menu shows correct when clicked on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -60,7 +60,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('captions-banner-more-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('show-menu-on-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-menu-on-banner.png');
   });
 
   test('Hide closed captions banner when disabled', async ({ page, serverUrl }) => {
@@ -75,7 +75,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await loadCallPage(page, serverUrl, initialState);
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
   });
 
   test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -90,7 +90,7 @@ test.describe('Closed Captions Banner tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('captions-banner-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-settings-button"]`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('trigger-settings-from-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('trigger-settings-from-banner.png');
   });
 
   test('Captions menu shows correctly with chat pane', async ({ page, serverUrl }, testInfo) => {
@@ -107,7 +107,7 @@ test.describe('Closed Captions Banner tests', async () => {
 
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
     await waitForSelector(page, dataUiId('sendbox-textfield'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('captions-with-chat-pane.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-with-chat-pane.png');
   });
 
   test('Captions menu shows correctly with people pane', async ({ page, serverUrl }, testInfo) => {
@@ -123,6 +123,6 @@ test.describe('Closed Captions Banner tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
 
     await pageClick(page, dataUiId('common-call-composite-people-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('captions-with-people-pane.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-with-people-pane.png');
   });
 });

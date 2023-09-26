@@ -18,18 +18,18 @@ test.describe('Overflow gallery tests', async () => {
     await loadCallPage(page, serverUrl, initialState);
 
     // wait for responsive-horizontal-gallery or responsive-vertical-gallery to be present
-    await expect(
+    expect(
       (await page.isVisible(dataUiId('responsive-horizontal-gallery'))) ||
         (await page.isVisible(dataUiId('responsive-vertical-gallery')))
     ).toBeTruthy();
-    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants.png');
 
     await waitForSelector(page, dataUiId('common-call-composite-people-button'));
     await pageClick(page, dataUiId('common-call-composite-people-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-people-pane-open.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-people-pane-open.png');
     await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button'));
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-chat-pane-open.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-chat-pane-open.png');
   });
 
   test('Overflow gallery should be present when people or chat pane are open in right-to-left', async ({
@@ -43,18 +43,18 @@ test.describe('Overflow gallery tests', async () => {
     await loadCallPage(page, serverUrl, initialState, { rtl: 'true' });
 
     // wait for responsive-horizontal-gallery or responsive-vertical-gallery to be present
-    await expect(
+    expect(
       (await page.isVisible(dataUiId('responsive-horizontal-gallery'))) ||
         (await page.isVisible(dataUiId('responsive-vertical-gallery')))
     ).toBeTruthy();
-    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants-rtl.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-participants-rtl.png');
 
     await waitForSelector(page, dataUiId('common-call-composite-people-button'));
     await pageClick(page, dataUiId('common-call-composite-people-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-people-pane-open-rtl.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-people-pane-open-rtl.png');
     await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button'));
     await pageClick(page, dataUiId('call-with-chat-composite-chat-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-chat-pane-open-rtl.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-chat-pane-open-rtl.png');
   });
 });
 

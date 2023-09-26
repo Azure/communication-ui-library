@@ -33,7 +33,7 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-group-call.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-group-call.png');
   });
 
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -52,7 +52,7 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-one-to-n-call.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-one-to-n-call.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
@@ -71,6 +71,6 @@ test.describe('Lobby page tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.lobbyScreenTitle));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-pstn-call.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('lobby-page-pstn-call.png');
   });
 });

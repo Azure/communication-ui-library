@@ -47,15 +47,15 @@ test.describe('Height gallery resizing tests', async () => {
     const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
     console.log(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth));
     // check that the initial sizes are correct for the vertical tiles.
-    await expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
-    await expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeLessThanOrEqual(215);
+    expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
+    expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeLessThanOrEqual(215);
 
     // resize the window.
     await page.setViewportSize({ width: 600, height: 500 });
 
     // verify that the sizes are still within the correct boundaries.
-    await expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
-    await expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeLessThanOrEqual(215);
+    expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeGreaterThanOrEqual(120);
+    expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBeLessThanOrEqual(215);
   });
   test('resize should appropriately add tiles if room', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -160,6 +160,6 @@ test.describe('Height gallery resizing tests', async () => {
 
     const horiztonalTiles = await waitForSelector(page, dataUiId(IDS.horizontalGalleryVideoTile));
 
-    await expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBe(215);
+    expect(await horiztonalTiles.evaluate((e) => (e as HTMLDivElement).clientWidth)).toBe(215);
   });
 });

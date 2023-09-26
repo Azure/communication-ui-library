@@ -22,7 +22,7 @@ test.describe('Error bar tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('failure-to-start-video-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('failure-to-start-video-on-error-bar.png');
   });
 
   test('Multiple errors should be shown on error bar', async ({ page, serverUrl }) => {
@@ -45,11 +45,11 @@ test.describe('Error bar tests', async () => {
     };
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('multiple-errors-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('multiple-errors-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('one-error-dismissed-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('one-error-dismissed-on-error-bar.png');
     await dismissFirstErrorOnErrorBar(page);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('all-errors-dismissed-on-error-bar.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('all-errors-dismissed-on-error-bar.png');
   });
 });
 

@@ -21,7 +21,7 @@ test.describe('ImageGallery Modal tests', () => {
     );
 
     await page.locator(dataUiId('SomeImageId1')).click();
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal.png`);
   });
 
   test('ImageGallery Modal should show broken image icon with alt text when url is a broken link', async ({
@@ -39,7 +39,7 @@ test.describe('ImageGallery Modal tests', () => {
     );
 
     await page.locator(dataUiId('SomeImageId1')).click();
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-broken-link.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-broken-link.png`);
   });
 
   test('ImageGallery Modal loads correctly in dark theme', async ({ page, serverUrl }) => {
@@ -53,7 +53,7 @@ test.describe('ImageGallery Modal tests', () => {
       })
     );
     await page.locator(dataUiId('SomeImageId1')).click();
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-dark-mode.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-dark-mode.png`);
   });
 
   test('ImageGallery Modal loads correctly in light theme', async ({ page, serverUrl }) => {
@@ -67,6 +67,6 @@ test.describe('ImageGallery Modal tests', () => {
       })
     );
     await page.locator(dataUiId('SomeImageId1')).click();
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-light-mode.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`inline-image-gallery-modal-light-mode.png`);
   });
 });

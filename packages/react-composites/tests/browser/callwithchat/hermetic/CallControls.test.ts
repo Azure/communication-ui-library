@@ -29,7 +29,7 @@ test.describe('Custom call control options tests', () => {
       customCompositeOptions: JSON.stringify(testOptions)
     });
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
   });
 
   /* @conditional-compile-remove(control-bar-button-injection) */
@@ -50,6 +50,6 @@ test.describe('Custom call control options tests', () => {
 
     await pageClick(page, dataUiId('common-call-composite-more-button'));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-custom-buttons.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-custom-buttons.png`);
   });
 });

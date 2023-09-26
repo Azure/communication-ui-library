@@ -21,7 +21,7 @@ test.describe('CallControls tests', async () => {
     initialState.devices.microphones = [];
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('no-mics.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('no-mics.png');
   });
 
   test('CallControls when number of available cameras drops to zero', async ({ page, serverUrl }) => {
@@ -29,7 +29,7 @@ test.describe('CallControls tests', async () => {
     initialState.devices.cameras = [];
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('no-videos.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('no-videos.png');
   });
 });
 
@@ -38,7 +38,7 @@ test.describe('Call composite custom button injection tests', () => {
   test('injected buttons appear', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { injectCustomButtons: 'true' }));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`custom-buttons.png`);
   });
 });
 
@@ -65,7 +65,7 @@ test.describe('Call composite custom call control options tests', () => {
         customCallCompositeOptions: JSON.stringify(testOptions)
       })
     );
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`user-set-control-bar-button-options.png`);
   });
 });
 
@@ -88,7 +88,7 @@ test.describe('New call control bar renders correctly', () => {
       })
     );
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`new-call-control-experience.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`new-call-control-experience.png`);
   });
 
   /* @conditional-compile-remove(control-bar-button-injection) */
@@ -103,7 +103,7 @@ test.describe('New call control bar renders correctly', () => {
 
     await pageClick(page, dataUiId('common-call-composite-more-button'));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-injected-buttons.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-injected-buttons.png`);
   });
 
   test('Control bar custom buttons render correctly', async ({ page, serverUrl }) => {
@@ -120,7 +120,7 @@ test.describe('New call control bar renders correctly', () => {
       await pageClick(page, dataUiId('common-call-composite-more-button'));
     }
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
   });
 
   test('Control bar people buttons behaves correctly', async ({ page, serverUrl }, testInfo) => {
@@ -140,6 +140,6 @@ test.describe('New call control bar renders correctly', () => {
       await pageClick(page, `[id="call-composite-drawer-people-button"]`);
     }
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-people-button.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-people-button.png`);
   });
 });

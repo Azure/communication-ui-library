@@ -30,7 +30,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('captions-loading-banner.png');
   });
 
   test('Show closed captions banner when enabled', async ({ page, serverUrl }) => {
@@ -41,7 +41,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-captions.png');
   });
 
   test('Show RTL languages from right to left', async ({ page, serverUrl }) => {
@@ -52,7 +52,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('show-captions-RTL.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-captions-RTL.png');
   });
 
   test('Captions menu shows correct when clicked on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -66,7 +66,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('captions-banner-more-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('show-menu-on-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('show-menu-on-banner.png');
   });
 
   test('Hide closed captions banner when disabled', async ({ page, serverUrl }) => {
@@ -81,7 +81,7 @@ test.describe('Closed Captions Banner tests', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('hide-captions-banner.png');
   });
 
   test('Captions settings triggered by caption banner correctly on desktop', async ({ page, serverUrl }, testInfo) => {
@@ -96,7 +96,7 @@ test.describe('Closed Captions Banner tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('captions-banner-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-settings-button"]`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('trigger-settings-from-banner.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('trigger-settings-from-banner.png');
   });
 });
 
@@ -109,7 +109,7 @@ test.describe('Captions buttons in call control', () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-teams-call.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-teams-call.png`);
   });
 
   test('Captions buttons hides when it is not teams call', async ({ page, serverUrl }) => {
@@ -121,7 +121,7 @@ test.describe('Captions buttons in call control', () => {
     if (await existsOnPage(page, dataUiId('common-call-composite-more-button'))) {
       await pageClick(page, dataUiId('common-call-composite-more-button'));
     }
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-button-non-teams-call.png`);
   });
 
   test('Captions settings renders normally', async ({ page, serverUrl }, testInfo) => {
@@ -136,7 +136,7 @@ test.describe('Captions buttons in call control', () => {
     if (!isTestProfileMobile(testInfo)) {
       await pageClick(page, `[id="common-call-composite-captions-settings-button"]`);
     }
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`caption-settings.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-settings.png`);
   });
 
   test('Captions toggle button renders correctly when caption enabled', async ({ page, serverUrl }) => {
@@ -148,7 +148,7 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button.png`);
   });
 
   test('Captions toggle button renders correctly when caption disabled', async ({ page, serverUrl }) => {
@@ -160,6 +160,6 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button-disabled.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`caption-toggle-button-disabled.png`);
   });
 });

@@ -39,10 +39,10 @@ test.describe('Video background effects tests in call screen', async () => {
     await pageClick(page, '.camera-split-button');
     await waitForSelector(page, dataUiId('camera-split-button-video-effects'));
     await pageClick(page, dataUiId('camera-split-button-video-effects'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-none-selected.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-none-selected.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-warning-camera-off.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-side-pane-warning-camera-off.png');
   });
 
   test('blur video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
@@ -59,7 +59,7 @@ test.describe('Video background effects tests in call screen', async () => {
     await pageClick(page, dataUiId('camera-split-button-video-effects'));
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    await expect(
+    expect(
       await stableScreenshot(page, {
         maskVideos: false
       })
@@ -77,10 +77,10 @@ test.describe('Video background effects tests in config screen', async () => {
     await waitForCallCompositeToLoad(page);
     await waitForSelector(page, dataUiId('call-config-video-effects-button'));
     await pageClick(page, dataUiId('call-config-video-effects-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-pane-none-selected.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-pane-none-selected.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-warning-camera-off.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-config-screen-warning-camera-off.png');
   });
 
   test('blur video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
@@ -93,7 +93,7 @@ test.describe('Video background effects tests in config screen', async () => {
     await pageClick(page, dataUiId('call-config-video-effects-button'));
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=1`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=1`);
-    await expect(
+    expect(
       await stableScreenshot(page, {
         maskVideos: false
       })
@@ -115,10 +115,10 @@ test.describe('Custom video background effects tests in call screen', async () =
     await pageClick(page, '.camera-split-button');
     await waitForSelector(page, dataUiId('camera-split-button-video-effects'));
     await pageClick(page, dataUiId('camera-split-button-video-effects'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('custom-video-effects-side-pane-none-selected.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('custom-video-effects-side-pane-none-selected.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=3`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=3`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot('custom-video-effects-side-pane-warning-camera-off.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('custom-video-effects-side-pane-warning-camera-off.png');
   });
 
   test('custom video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
@@ -134,14 +134,14 @@ test.describe('Custom video background effects tests in call screen', async () =
     await pageClick(page, dataUiId('camera-split-button-video-effects'));
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=4`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=4`);
-    await expect(
+    expect(
       await stableScreenshot(page, {
         maskVideos: false
       })
     ).toMatchSnapshot('video-effects-side-pane-camera-on-custom-background-1.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=7`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=7`);
-    await expect(
+    expect(
       await stableScreenshot(page, {
         maskVideos: false
       })
@@ -159,14 +159,10 @@ test.describe('Custom Video background effects tests in config screen', async ()
     await waitForCallCompositeToLoad(page);
     await waitForSelector(page, dataUiId('call-config-video-effects-button'));
     await pageClick(page, dataUiId('call-config-video-effects-button'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      'custom-video-effects-config-screen-pane-none-selected.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('custom-video-effects-config-screen-pane-none-selected.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=2`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=2`);
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      'custom-video-effects-config-screen-warning-camera-off.png'
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot('custom-video-effects-config-screen-warning-camera-off.png');
   });
 
   test('custom video effect is enabled when camera is on', async ({ page, serverUrl }, testInfo) => {
@@ -180,14 +176,14 @@ test.describe('Custom Video background effects tests in config screen', async ()
     await pageClick(page, dataUiId('call-config-video-effects-button'));
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=4`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=4`);
-    await expect(
+    expect(
       await stableScreenshot(page, {
         maskVideos: false
       })
     ).toMatchSnapshot('video-effects-config-screen-camera-on-custom-background-1.png');
     await waitForSelector(page, dataUiId('video-effects-item') + ` >> nth=7`);
     await pageClick(page, dataUiId('video-effects-item') + ` >> nth=7`);
-    await expect(
+    expect(
       await stableScreenshot(page, {
         maskVideos: false
       })
@@ -213,7 +209,7 @@ test.describe('Video background effects error tests', async () => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', enableVideoEffects: 'true' })
     );
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-closed.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-closed.png');
   });
 
   test('video effect error when effect fails and side pane is open', async ({ page, serverUrl }, testInfo) => {
@@ -236,7 +232,7 @@ test.describe('Video background effects error tests', async () => {
     await pageClick(page, '.camera-split-button');
     await waitForSelector(page, dataUiId('camera-split-button-video-effects'));
     await pageClick(page, dataUiId('camera-split-button-video-effects'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-open.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-effects-error-side-pane-open.png');
   });
 });
 

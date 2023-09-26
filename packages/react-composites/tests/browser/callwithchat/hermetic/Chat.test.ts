@@ -54,7 +54,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
     if (isTestProfileMobile(testInfo)) {
       await waitForPiPiPToHaveLoaded(page, { skipVideoCheck: true });
     }
-    await expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
       `call-with-chat-gallery-screen-with-chat-pane.png`
     );
   });
@@ -67,9 +67,7 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
 
     await sendMessageFromHiddenChatComposite(page, chatRemoteParticipant, 'I agree!');
     await waitForSelector(page, dataUiId('call-with-chat-composite-chat-button-unread-icon'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      `call-with-chat-gallery-screen-with-one-unread-messages.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-one-unread-messages.png`);
   });
 
   test('Unread chat message button badge are displayed correctly for >9 messages', async ({ page, serverUrl }) => {
@@ -96,8 +94,6 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
         selector: dataUiId('call-with-chat-composite-chat-button-unread-icon')
       }
     );
-    await expect(await stableScreenshot(page)).toMatchSnapshot(
-      `call-with-chat-gallery-screen-with-10-unread-messages.png`
-    );
+    expect(await stableScreenshot(page)).toMatchSnapshot(`call-with-chat-gallery-screen-with-10-unread-messages.png`);
   });
 });

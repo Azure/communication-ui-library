@@ -22,7 +22,7 @@ test.describe('Dtmf dialpad tests', async () => {
     const moreButtonShowDialpadButton = await page.$('div[role="menu"] >> text="Show dialpad"');
     await moreButtonShowDialpadButton?.click();
     await waitForSelector(page, dataUiId('dialpadContainer'));
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`Call-Dtmf-Dialpad.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`Call-Dtmf-Dialpad.png`);
   });
   test('Dtmf dialpad should not render in non-PSTN call', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
@@ -32,6 +32,6 @@ test.describe('Dtmf dialpad tests', async () => {
     await waitForSelector(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
 
-    await expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`Dtmf-Dialpad-Hidden-Non-PSTN.png`);
   });
 });

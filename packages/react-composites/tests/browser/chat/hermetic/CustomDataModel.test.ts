@@ -24,9 +24,7 @@ test.describe('Chat Composite with custom data model', () => {
 
     await waitForSelector(page, '#custom-data-model-typing-indicator');
     await waitForSelector(page, '#custom-data-model-message');
-    await expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
-      'custom-data-model.png'
-    );
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot('custom-data-model.png');
   });
 });
 
