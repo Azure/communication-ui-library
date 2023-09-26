@@ -23,8 +23,7 @@ import {
   OnContentChangedEvent,
   UpdateMode
 } from 'roosterjs-react';
-import { InputBoxButton } from '../InputBoxComponent';
-import { IconButton, formProperties } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
 import AtMentionPlugin from './Plugins/atMentionPlugin';
 import KeyDownPlugin from './Plugins/customizedPlugins';
@@ -54,14 +53,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
     }
   }, [content]);
 
-  function renderRibbon() {
+  function onRenderRibbon() {
     const buttons = getButtons([
       KnownRibbonButtonKey.Bold,
       KnownRibbonButtonKey.Italic,
-      KnownRibbonButtonKey.InsertLink,
-      KnownRibbonButtonKey.ClearFormat,
-      KnownRibbonButtonKey.Undo,
-      KnownRibbonButtonKey.Redo
+      KnownRibbonButtonKey.BulletedList,
+      KnownRibbonButtonKey.TextColor,
+      KnownRibbonButtonKey.FontSize,
+      KnownRibbonButtonKey.InsertLink
     ]);
 
     return (
@@ -72,6 +71,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
       </div>
     );
   }
+
   const editorCreator = React.useMemo(() => {
     return (div: HTMLDivElement, options: EditorOptions) => {
       defaultEditorCreator(div, onChange);
@@ -81,7 +81,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
   return (
     <div>
       <Rooster plugins={[ribbonPlugin]} style={editorStyle} editorCreator={editorCreator} />
-      {renderRibbon()}
+      {onRenderRibbon()}
     </div>
   );
 
