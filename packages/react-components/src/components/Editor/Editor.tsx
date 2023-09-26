@@ -14,20 +14,16 @@ import {
 import {
   Rooster,
   createRibbonPlugin,
-  createPasteOptionPlugin,
   createUpdateContentPlugin,
   Ribbon,
-  RibbonButton,
   getButtons,
   KnownRibbonButtonKey,
-  OnContentChangedEvent,
   UpdateMode
 } from 'roosterjs-react';
 import { Stack } from '@fluentui/react';
 import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
 import AtMentionPlugin from './Plugins/atMentionPlugin';
 import KeyDownPlugin from './Plugins/customizedPlugins';
-import { suggestions, trigger } from './Plugins/mentionLoopupData';
 import { MentionLookupOptions } from '../MentionPopover';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {

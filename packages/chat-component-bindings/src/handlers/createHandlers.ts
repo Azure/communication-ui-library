@@ -53,6 +53,24 @@ export const createDefaultChatHandlers = memoizeOne(
     let readReceiptIterator: PagedAsyncIterableIterator<ChatMessageReadReceipt> | undefined = undefined;
     return {
       onSendMessage: async (content: string, options?: SendMessageOptions) => {
+        if (options?.type === 'html') {
+          const regex = /<img[^>]+src="([^">]+)/g;
+          const images = content.match(regex)?.map((match) => match.replace('<img src="', ''));
+
+          let imageAttachment;
+          const blob = await readImageasBlobFile(images);
+
+          try {
+            imageAttachment = await chatThreadClient.uploadImage(blob, {
+              name: 'file.name', // make sure file is defined somewhere in your code
+              attachmentType: 'inline'
+            });
+          } catch (e) {
+            throw e;
+          }
+
+          options.attachments = imageAttachment;
+        }
         const sendMessageRequest = {
           content,
           senderDisplayName: chatClient.getState().displayName

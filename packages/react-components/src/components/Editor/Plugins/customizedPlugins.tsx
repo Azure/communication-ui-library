@@ -49,6 +49,7 @@ export default class KeyDownPlugin implements EditorPlugin {
         case PasteType.Normal: {
           beforePasteEvent.fragment.querySelectorAll('img').forEach((image) => {
             image.style.maxHeight = '100px';
+            image.style.objectFit = 'contain';
           });
           break;
         }
