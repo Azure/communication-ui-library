@@ -92,26 +92,31 @@ export const useChatMessageRenderStyles = makeStyles({
     columnGap: '0',
     gridGap: '0',
     ...shorthands.padding('0'),
-    ...shorthands.margin('0'),
-    width: '100%'
+    marginTop: '0',
+    marginRight: '0',
+    marginBottom: '0',
+    marginLeft: '50px',
+    width: `calc(100% - 50px)`
   },
   bodyCommon: {
     ...shorthands.padding('0'),
-    marginRight: `0`,
-    marginTop: `0`,
-    marginBottom: `0`,
+    marginRight: '0',
+    marginBottom: '0',
     backgroundColor: 'transparent',
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
   },
   bodyMyMessage: {
-    width: '100%'
+    width: '100%',
+    marginTop: '0'
   },
   bodyWithoutAvatar: {
-    marginLeft: `${AVATAR_MARGIN_LEFT}rem`
+    marginLeft: `${AVATAR_MARGIN_LEFT}rem`,
+    marginTop: '0'
   },
   bodyWithAvatar: {
-    marginLeft: `0`
+    marginLeft: `0`,
+    marginTop: '0.75rem'
   },
   avatarNoOverlap: {
     width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
@@ -133,7 +138,8 @@ export const useChatMyMessageStyles = makeStyles({
       `,
     gridGap: '0',
     columnGap: '0',
-    paddingTop: '0'
+    paddingTop: '0',
+    marginLeft: '0'
   },
   body: {
     paddingBottom: '10px',
@@ -325,7 +331,7 @@ export const useChatMessageCommonStyles = makeStyles({
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
-  paddingTop: '1.125rem',
+  paddingTop: '1.65rem',
   width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
