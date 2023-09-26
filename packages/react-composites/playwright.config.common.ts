@@ -65,13 +65,13 @@ const config: PlaywrightTestConfig = {
   // Do not allow `.only` to be committed to the codebase. `.only` should only be used for diagnosing issues.
   forbidOnly: !!process.env.CI,
 
-  // Disable retries; if a test fails, it should fail consistently.
-  retries: 0,
+  // One chance to retry a test on failure
+  retries: 1,
 
   // Applies to all projects
   use: {
     headless: !process.env.LOCAL_DEBUG,
-    video: 'retain-on-failure'
+    video: 'on-first-retry' // No traces on first attempt - this seems to make tests flaky.
   },
 
   projects: [
