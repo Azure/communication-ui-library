@@ -28,9 +28,8 @@ export const chatMessageActionMenuProps = (menuProps: {
   onActionButtonClick: () => void;
   theme: Theme;
 }): ChatMessageActionMenuProps | undefined => {
-  if (!menuProps.enabled) {
-    return undefined;
-  }
+  const { enabled, forceShow } = menuProps;
+  const showActionMenu = enabled || forceShow;
 
   const actionMenuProps: ChatMessageActionMenuProps = {
     children: (
@@ -39,16 +38,18 @@ export const chatMessageActionMenuProps = (menuProps: {
         key="menuButton"
         data-ui-id="chat-composite-message-action-icon"
         ref={menuProps.menuButtonRef}
-        onClick={() => menuProps.onActionButtonClick()}
-        style={{ margin: '1px' }}
+        onClick={showActionMenu ? () => menuProps.onActionButtonClick() : undefined}
+        style={{ margin: showActionMenu ? '1px' : 0, minHeight: showActionMenu ? undefined : '30px' }}
         role="button"
         aria-label={menuProps.ariaLabel}
       >
-        <Icon
-          iconName="ChatMessageOptions"
-          aria-label={menuProps.ariaLabel}
-          styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
-        />
+        {showActionMenu ? (
+          <Icon
+            iconName="ChatMessageOptions"
+            aria-label={menuProps.ariaLabel}
+            styles={iconWrapperStyle(menuProps.theme, menuProps.forceShow)}
+          />
+        ) : undefined}
       </div>
     )
   };
