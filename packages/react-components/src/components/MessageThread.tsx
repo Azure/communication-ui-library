@@ -847,15 +847,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     showMessageStatus = false,
     numberOfChatMessagesToReload = 5,
     onMessageSeen,
-    onRenderMessageStatus,
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage,
-    onUpdateMessage,
-    onCancelEditMessage,
-    onDeleteMessage,
-    onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
