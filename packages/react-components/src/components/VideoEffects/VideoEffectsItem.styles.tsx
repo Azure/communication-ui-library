@@ -36,7 +36,6 @@ export const videoEffectsItemContainerStyles = (args: {
       color: args.theme.palette.neutralPrimary,
       cursor: args.disabled ? 'default' : 'pointer',
       height: VideoEffectsItemContainerHeight,
-      // position: 'relative', // Used for absolute positioning of :after
       width: VideoEffectsItemContainerWidth,
       border: args.isSelected
         ? `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
@@ -47,7 +46,6 @@ export const videoEffectsItemContainerStyles = (args: {
       // border thickness changes from hover/selection.
       ':after': {
         content: '""',
-        // position: 'absolute',
         boxSizing: 'border-box',
         height: '100%',
         width: '100%',
