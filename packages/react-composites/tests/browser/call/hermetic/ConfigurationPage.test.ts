@@ -17,8 +17,8 @@ import type { DeviceManagerState } from '@internal/calling-stateful-client';
 import { exec } from 'node:child_process';
 
 test.describe('Call Composite E2E Configuration Screen Tests', () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -27,7 +27,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
 

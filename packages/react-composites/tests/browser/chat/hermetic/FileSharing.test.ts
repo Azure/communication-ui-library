@@ -9,8 +9,8 @@ import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Attach file icon', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -19,7 +19,7 @@ test.describe('Filesharing Attach file icon', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
@@ -41,8 +41,8 @@ test.describe('Filesharing Attach file icon', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -51,7 +51,7 @@ test.describe('Filesharing SendBox', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
@@ -89,8 +89,8 @@ test.describe('Filesharing SendBox', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing ProgressBar', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -99,7 +99,7 @@ test.describe('Filesharing ProgressBar', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
@@ -207,8 +207,8 @@ test.describe('Filesharing ProgressBar', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing SendBox Errorbar', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -217,7 +217,7 @@ test.describe('Filesharing SendBox Errorbar', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('shows file upload error', async ({ serverUrl, page }) => {
@@ -272,8 +272,8 @@ test.describe('Filesharing SendBox Errorbar', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Global Errorbar', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -282,7 +282,7 @@ test.describe('Filesharing Global Errorbar', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('shows file download error', async ({ serverUrl, page }) => {
@@ -320,8 +320,8 @@ test.describe('Filesharing Global Errorbar', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Message Thread', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -330,7 +330,7 @@ test.describe('Filesharing Message Thread', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('contains File Download Card', async ({ serverUrl, page }) => {
@@ -387,8 +387,8 @@ test.describe('Filesharing Message Thread', async () => {
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 test.describe('Inline Image Message Thread', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -397,7 +397,7 @@ test.describe('Inline Image Message Thread', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
@@ -421,8 +421,8 @@ test.describe('Inline Image Message Thread', async () => {
 
 /* @conditional-compile-remove(file-sharing) */
 test.describe('Filesharing Edit Message', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -431,7 +431,7 @@ test.describe('Filesharing Edit Message', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test.beforeEach(async ({ serverUrl, page }) => {

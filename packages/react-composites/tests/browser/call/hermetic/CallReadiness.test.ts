@@ -9,8 +9,8 @@ import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(call-readiness) */
 test.describe('Tests for guidance UI on config page to guide users through enabling device permissions', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -19,7 +19,7 @@ test.describe('Tests for guidance UI on config page to guide users through enabl
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('Configuration page should show enable camera/mic modal when both camera and mic permissions are not set', async ({

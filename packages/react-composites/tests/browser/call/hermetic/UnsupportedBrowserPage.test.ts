@@ -11,8 +11,8 @@ import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(unsupported-browser) */
 test.describe('unsupportedBrowser page tests', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -21,7 +21,7 @@ test.describe('unsupportedBrowser page tests', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('unsupportedBrowser displays correctly without a help link', async ({ page, serverUrl }) => {

@@ -16,8 +16,8 @@ import { exec } from 'node:child_process';
 
 /* @conditional-compile-remove(close-captions) */
 test.describe('Closed Captions Banner tests', async () => {
-  test.beforeEach(async () => {
-    await new Promise((r) => setTimeout(r, 2000));
+  // eslint-disable-next-line no-empty-pattern
+  test.beforeEach(async ({}, testInfo) => {
     exec('free -m', (err, output) => {
       // once the command has completed, the callback function is called
       if (err) {
@@ -26,7 +26,7 @@ test.describe('Closed Captions Banner tests', async () => {
         return;
       }
       // log the output received from the command
-      console.log('RAM STATUS: \n', output);
+      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
     });
   });
   test('Show loading banner when start captions is clicked but captions is not started yet', async ({
