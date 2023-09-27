@@ -843,7 +843,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     readReceiptsBySenderId,
     styles,
     disableJumpToNewMessageButton = false,
-    showMessageDate = false,
     showMessageStatus = false,
     numberOfChatMessagesToReload = 5,
     onMessageSeen,
@@ -1303,7 +1302,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               props.defaultStatusRenderer,
               props.defaultChatMessageRenderer,
               props.strings,
-              // { ...props.messageThreadProps.strings } as Required<MessageThreadStrings>,
               props.theme,
               chatMessageRenderStyles,
               // Temporary solution to make sure we re-render if attach attribute is changed.
