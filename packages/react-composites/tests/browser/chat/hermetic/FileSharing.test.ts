@@ -11,16 +11,25 @@ import { exec } from 'node:child_process';
 test.describe('Filesharing Attach file icon', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('is not visible if filesharing options are undefined', async ({ serverUrl, page }) => {
     await page.goto(buildUrlForChatAppUsingFakeAdapter(serverUrl, DEFAULT_FAKE_CHAT_ADAPTER_ARGS));
@@ -43,16 +52,25 @@ test.describe('Filesharing Attach file icon', async () => {
 test.describe('Filesharing SendBox', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('shows file cards for uploaded files', async ({ serverUrl, page }) => {
     await page.goto(
@@ -91,16 +109,25 @@ test.describe('Filesharing SendBox', async () => {
 test.describe('Filesharing ProgressBar', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('is visible if progress is between 0 and 1', async ({ serverUrl, page }) => {
     await page.goto(
@@ -209,16 +236,25 @@ test.describe('Filesharing ProgressBar', async () => {
 test.describe('Filesharing SendBox Errorbar', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('shows file upload error', async ({ serverUrl, page }) => {
     await page.goto(
@@ -274,16 +310,25 @@ test.describe('Filesharing SendBox Errorbar', async () => {
 test.describe('Filesharing Global Errorbar', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('shows file download error', async ({ serverUrl, page }) => {
     await page.goto(
@@ -322,16 +367,25 @@ test.describe('Filesharing Global Errorbar', async () => {
 test.describe('Filesharing Message Thread', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('contains File Download Card', async ({ serverUrl, page }) => {
     await page.goto(
@@ -389,16 +443,25 @@ test.describe('Filesharing Message Thread', async () => {
 test.describe('Inline Image Message Thread', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test('contains Inline Image in remote message', async ({ serverUrl, page }) => {
     await page.goto(
@@ -423,16 +486,25 @@ test.describe('Inline Image Message Thread', async () => {
 test.describe('Filesharing Edit Message', async () => {
   // eslint-disable-next-line no-empty-pattern
   test.beforeEach(async ({}, testInfo) => {
-    exec('free -m', (err, output) => {
-      // once the command has completed, the callback function is called
-      if (err) {
-        // log and return if we encounter an error
-        console.error('could not execute command: ', err);
+    let freeRam = 0;
+    while (freeRam < 1000) {
+      exec("free -m | awk 'NR==2 {print $4}'", (err, output) => {
+        // once the command has completed, the callback function is called
+        if (err) {
+          // log and return if we encounter an error
+          console.error('could not execute command: ', err);
+          return;
+        }
+        // log the output received from the command
+        console.log(`Free RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
+        freeRam = parseInt(output);
+      });
+      if (freeRam >= 1000) {
         return;
       }
-      // log the output received from the command
-      console.log(`RAM during test ${JSON.stringify(testInfo.title)}: \n`, output);
-    });
+      console.log(`${freeRam}MB is not enough RAM for test ${JSON.stringify(testInfo.title)}. Waiting 10s...\n`);
+      await new Promise((r) => setTimeout(r, 10000));
+    }
   });
   test.beforeEach(async ({ serverUrl, page }) => {
     await page.goto(
