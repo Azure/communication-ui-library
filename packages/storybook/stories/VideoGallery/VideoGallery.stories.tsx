@@ -17,6 +17,7 @@ import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { FocusedContentExample } from './snippets/FocusedContent.snippet';
 import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
 import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
 import { MobileWrapper } from './snippets/MobileWrapper';
@@ -25,6 +26,7 @@ import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipants
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
+import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
 
@@ -32,6 +34,7 @@ const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/Cus
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const focusedContentExampleText = require('!!raw-loader!./snippets/FocusedContent.snippet.tsx').default;
 const LocalVideoCameraCycleButtonExampleText =
   require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
 const ManagedPinnedParticipantsExampleText =
@@ -45,6 +48,7 @@ const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
+const speakerLayoutExampleText = require('!!raw-loader!./snippets/SpeakerLayout.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 const WithVerticalGalleryExampleText = require('!!raw-loader!./snippets/WithVerticalGallery.snippet.tsx').default;
 
@@ -67,7 +71,29 @@ const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
 
       <Heading>Layouts</Heading>
-      <Subheading>Default Layout</Subheading>
+      <Description>
+        This feature allows users to choose from a variety of video gallery layouts. On desktop web, the layouts enabled
+        include default Gallery, Gallery on Top, Focus Mode, and Speaker Mode. On mobile web, the default gallery and
+        large gallery are enabled. This feature will greatly enhance the user experience and provide more flexibility in
+        how users view and interact with video content. Enabling this feature will enable greater productivity and allow
+        for a better flow of discussions and conversations within calls. Here are some example scenarios where custom
+        layouts are useful:
+      </Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>
+          During a meeting with many participants such as a conference call, the large gallery layout can be selected to
+          have greater visibility of the users in a call.{' '}
+        </li>
+        <li>
+          During a patient/doctor call in which the patient wants to show something, the doctor could enable focus mode
+          to hide all other video tiles and focus on the speakers video stream.{' '}
+        </li>
+        <li>
+          In a call with multiple important people that are talking, the speaker mode can be selected which will switch
+          the focus between each speaker as they talk.{' '}
+        </li>
+      </ul>
+      <Subheading>Gallery Layout</Subheading>
       <Description>
         If there are no remote video streams on, all participants are placed in the [Grid
         Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
@@ -92,6 +118,27 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={FloatingLocalVideoExampleText}>
         <FloatingLocalVideoExample />
+      </Canvas>
+      <Subheading>Speaker layout</Subheading>
+      <SingleLineBetaBanner></SingleLineBetaBanner>
+      <Description>
+        Speaker Layout is meant to highlight the current dominant speaker in the call. For this view in the video
+        gallery the only participant that is in the grid view is the participant talking. All other participants are in
+        the overflow gallery. When screen sharing the screenshare will replace this participant and the overflow gallery
+        will behave like normal.
+      </Description>
+      <Canvas mdxSource={speakerLayoutExampleText}>
+        <SpeakerLayoutExample />
+      </Canvas>
+      <Subheading>Focused Content Layout</Subheading>
+      <SingleLineBetaBanner></SingleLineBetaBanner>
+      <Description>
+        This layout is meant to highlight the current screenshare stream. In this view when the screenshare is present
+        the other participants will be removed from the grid view and the overflow gallery will be hidden from view.
+        This allows for the focus of the local participant to be only on the screenshare stream.
+      </Description>
+      <Canvas mdxSource={focusedContentExampleText}>
+        <FocusedContentExample />
       </Canvas>
 
       <Heading>Overflow Gallery</Heading>
@@ -546,7 +593,10 @@ export default {
     maxRemoteVideoStreams: hiddenControl,
     pinnedParticipants: hiddenControl,
     onPinParticipant: hiddenControl,
-    onUnpinParticipant: hiddenControl
+    onUnpinParticipant: hiddenControl,
+    layout: hiddenControl,
+    onDisposeRemoteVideoStreamView: hiddenControl,
+    onDisposeRemoteScreenShareStreamView: hiddenControl
   },
   parameters: {
     docs: {
