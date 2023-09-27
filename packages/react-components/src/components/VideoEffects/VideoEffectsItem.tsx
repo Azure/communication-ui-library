@@ -156,16 +156,18 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
                 }
           }
         >
-          {props.iconProps && (
-            <Stack.Item styles={{ root: props.styles?.iconContainer }}>
-              <Icon {...props.iconProps} />
-            </Stack.Item>
-          )}
-          {props.title && (
-            <Stack.Item styles={{ root: props.styles?.textContainer }}>
-              <Text variant="small">{props.title}</Text>
-            </Stack.Item>
-          )}
+          <Stack horizontalAlign={'center'} tokens={{ childrenGap: '0.15rem' }}>
+            {props.iconProps && (
+              <Stack.Item styles={{ root: props.styles?.iconContainer }}>
+                <Icon {...props.iconProps} />
+              </Stack.Item>
+            )}
+            {props.title && (
+              <Stack.Item styles={{ root: props.styles?.textContainer }}>
+                <Text variant="small">{props.title}</Text>
+              </Stack.Item>
+            )}
+          </Stack>
         </DefaultButton>
       </Stack>
     </TooltipHost>
