@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import {
+  DefaultButton,
   Icon,
   IIconProps,
   IStyle,
@@ -136,33 +137,36 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         className={mergeStyles(props.styles?.root)}
         verticalAlign="center"
         horizontalAlign="center"
-        styles={containerStyles}
         data-ui-id={`video-effects-item`}
-        onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
-        onKeyDown={
-          disabled
-            ? undefined
-            : (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  props.onSelect?.(props.itemKey);
-                }
-              }
-        }
         tabIndex={props.disabled ? -1 : 0}
         aria-label={props.ariaLabel ?? props.itemKey}
         aria-disabled={props.disabled}
         role="button"
       >
-        {props.iconProps && (
-          <Stack.Item styles={{ root: props.styles?.iconContainer }}>
-            <Icon {...props.iconProps} />
-          </Stack.Item>
-        )}
-        {props.title && (
-          <Stack.Item styles={{ root: props.styles?.textContainer }}>
-            <Text variant="small">{props.title}</Text>
-          </Stack.Item>
-        )}
+        <DefaultButton
+          styles={containerStyles()}
+          onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
+          onKeyDown={
+            disabled
+              ? undefined
+              : (e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    props.onSelect?.(props.itemKey);
+                  }
+                }
+          }
+        >
+          {props.iconProps && (
+            <Stack.Item styles={{ root: props.styles?.iconContainer }}>
+              <Icon {...props.iconProps} />
+            </Stack.Item>
+          )}
+          {props.title && (
+            <Stack.Item styles={{ root: props.styles?.textContainer }}>
+              <Text variant="small">{props.title}</Text>
+            </Stack.Item>
+          )}
+        </DefaultButton>
       </Stack>
     </TooltipHost>
   );

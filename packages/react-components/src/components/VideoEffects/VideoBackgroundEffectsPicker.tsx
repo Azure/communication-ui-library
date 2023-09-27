@@ -124,33 +124,33 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
   const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - optionsByRow[optionsByRow.length - 1].length;
 
   return (
-    <Stack tokens={{ childrenGap: '0.5rem' }}>
-      <Label className={mergeStyles(props.styles?.label)}>{props.label}</Label>
-      {optionsByRow.map((options, rowIndex) => (
-        <Stack
-          className={mergeStyles(props.styles?.rowRoot)}
-          wrap={props.itemsPerRow === 'wrap'}
-          horizontal
-          key={rowIndex}
-          tokens={{ childrenGap: '0.5rem' }}
-          data-ui-id="video-effects-picker-row"
-        >
-          {options.map((option) => (
-            <FocusZone key={option.itemKey} shouldFocusOnMount={option.itemKey.includes('none')}>
-              <_VideoEffectsItem {...option} itemKey={option.itemKey} />
-            </FocusZone>
-          ))}
-          {fillCount > 0 &&
-            rowIndex === optionsByRow.length - 1 &&
-            Array.from({ length: fillCount }).map((_, index) => (
-              <Stack
-                key={index}
-                styles={hiddenVideoEffectsItemContainerStyles}
-                data-ui-id="video-effects-hidden-item"
-              />
-            ))}
-        </Stack>
-      ))}
-    </Stack>
+    <FocusZone shouldFocusOnMount={true}>
+      <Stack tokens={{ childrenGap: '0.5rem' }}>
+        <Label className={mergeStyles(props.styles?.label)}>{props.label}</Label>
+        {optionsByRow.map((options, rowIndex) => (
+          <Stack
+            className={mergeStyles(props.styles?.rowRoot)}
+            wrap={props.itemsPerRow === 'wrap'}
+            horizontal
+            key={rowIndex}
+            tokens={{ childrenGap: '0.5rem' }}
+            data-ui-id="video-effects-picker-row"
+          >
+            {options.map((option, i) => {
+              return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;
+            })}
+            {fillCount > 0 &&
+              rowIndex === optionsByRow.length - 1 &&
+              Array.from({ length: fillCount }).map((_, index) => (
+                <Stack
+                  key={index}
+                  styles={hiddenVideoEffectsItemContainerStyles}
+                  data-ui-id="video-effects-hidden-item"
+                />
+              ))}
+          </Stack>
+        ))}
+      </Stack>
+    </FocusZone>
   );
 };
