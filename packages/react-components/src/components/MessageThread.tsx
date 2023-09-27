@@ -8,7 +8,7 @@ import {
   ChatMessage as FluentChatMessage,
   ChatMyMessage as FluentChatMyMessage
 } from '@fluentui-contrib/react-chat';
-import { mergeClasses, useFluent } from '@fluentui/react-components';
+import { mergeClasses } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -1241,7 +1241,21 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const theme = useTheme();
   // const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  const ChatWrapper = (props: MessageThreadProps): JSX.Element => {
+  interface ChatWrapperProps {
+    messageThreadProps: MessageThreadProps;
+    isNarrow: boolean;
+    defaultStatusRenderer: (
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+      status: MessageStatus,
+      participantCount: number,
+      readCount: number
+    ) => JSX.Element;
+    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element;
+    theme: Theme;
+    readCountForHoveredIndicator: number | undefined;
+  }
+
+  const ChatWrapper = (props: ChatWrapperProps): JSX.Element => {
     const classes = useChatStyles();
     const chatMessageRenderStyles = useChatMessageRenderStyles();
 
@@ -1259,7 +1273,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
                 key = message.clientMessageId;
               }
-              if (props.showMessageStatus && message.mine) {
+              if (props.messageThreadProps.showMessageStatus && message.mine) {
                 switch (message.messageId) {
                   case lastSeenChatMessage: {
                     statusToRender = 'seen';
@@ -1283,15 +1297,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             return memoizedMessageFn(
               key ?? 'id_' + index,
               message,
-              props.showMessageDate,
-              props.showMessageStatus,
-              props.onRenderAvatar,
+              props.messageThreadProps.showMessageDate ?? false,
+              props.messageThreadProps.showMessageStatus ?? false,
+              props.messageThreadProps.onRenderAvatar,
               props.isNarrow,
-              props.styles,
-              props.onRenderMessageStatus,
+              props.messageThreadProps.styles,
+              props.messageThreadProps.onRenderMessageStatus,
               props.defaultStatusRenderer,
               props.defaultChatMessageRenderer,
-              props.strings,
+              { ...props.messageThreadProps.strings } as Required<MessageThreadStrings>,
               props.theme,
               chatMessageRenderStyles,
               // Temporary solution to make sure we re-render if attach attribute is changed.
@@ -1301,41 +1315,41 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
                 ? message.attached
                 : undefined,
               statusToRender,
-              props.participantCount,
+              props.messageThreadProps.participantCount,
               props.readCountForHoveredIndicator,
-              props.onRenderMessage,
-              props.onUpdateMessage,
-              props.onCancelEditMessage,
-              props.onDeleteMessage,
-              props.onSendMessage,
-              props.disableEditing
+              props.messageThreadProps.onRenderMessage,
+              props.messageThreadProps.onUpdateMessage,
+              props.messageThreadProps.onCancelEditMessage,
+              props.messageThreadProps.onDeleteMessage,
+              props.messageThreadProps.onSendMessage,
+              props.messageThreadProps.disableEditing
             );
           });
         }),
       [
-        props.messages,
-        props.showMessageDate,
-        props.showMessageStatus,
-        props.onRenderAvatar,
+        // messages,
+        props.messageThreadProps.showMessageDate,
+        props.messageThreadProps.showMessageStatus,
+        props.messageThreadProps.onRenderAvatar,
         props.isNarrow,
-        props.styles,
-        onRenderMessageStatus,
-        defaultStatusRenderer,
-        defaultChatMessageRenderer,
-        props.strings,
+        props.messageThreadProps.styles,
+        props.messageThreadProps.onRenderMessageStatus,
+        props.defaultStatusRenderer,
+        props.defaultChatMessageRenderer,
+        props.messageThreadProps.strings,
         props.theme,
         chatMessageRenderStyles,
-        props.participantCount,
+        props.messageThreadProps.participantCount,
         props.readCountForHoveredIndicator,
-        props.onRenderMessage,
-        props.onUpdateMessage,
-        props.onCancelEditMessage,
-        props.onDeleteMessage,
-        props.onSendMessage,
-        props.disableEditing,
-        props.lastSeenChatMessage,
-        props.lastSendingChatMessage,
-        props.lastDeliveredChatMessage
+        props.messageThreadProps.onRenderMessage,
+        props.messageThreadProps.onUpdateMessage,
+        props.messageThreadProps.onCancelEditMessage,
+        props.messageThreadProps.onDeleteMessage,
+        props.messageThreadProps.onSendMessage,
+        props.messageThreadProps.disableEditing
+        // props.messageThreadProps.lastSeenChatMessage,
+        // props.messageThreadProps.lastSendingChatMessage,
+        // props.messageThreadProps.lastDeliveredChatMessage
       ]
     );
 
@@ -1372,7 +1386,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         </div>
       )}
       <FluentV9ThemeProvider v8Theme={theme}>
-        <ChatWrapper {...props} />
+        <ChatWrapper
+          messageThreadProps={props}
+          isNarrow={isNarrow}
+          defaultStatusRenderer={defaultStatusRenderer}
+          defaultChatMessageRenderer={defaultChatMessageRenderer}
+          theme={theme}
+          readCountForHoveredIndicator={readCountForHoveredIndicator}
+        />
       </FluentV9ThemeProvider>
     </div>
   );
