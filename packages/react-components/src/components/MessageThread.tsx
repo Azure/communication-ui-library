@@ -1325,7 +1325,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           });
         }),
       [
-        // messages,
         props.messageThreadProps.showMessageDate,
         props.messageThreadProps.showMessageStatus,
         props.messageThreadProps.onRenderAvatar,
@@ -1384,6 +1383,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         </div>
       )}
       <FluentV9ThemeProvider v8Theme={theme}>
+        {/* This wrapper is needed to ensure styles hooks that use MakeStyles are contained in the FluentV9ThemeProvider. 
+              Without this RTL/LTR settings would be lost.*/}
         <ChatWrapper
           messageThreadProps={props}
           isNarrow={isNarrow}
