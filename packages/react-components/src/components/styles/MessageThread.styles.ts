@@ -215,6 +215,9 @@ export const useChatMessageStyles = makeStyles({
     zIndex: CHAT_MESSAGE_ZINDEX,
     // This makes message bubble show border in high contrast mode making each message distinguishable
     ...shorthands.border('1px', 'solid', 'transparent'),
+    '& > div:first-of-type': {
+      flexWrap: 'wrap'
+    },
     '& msft-mention': {
       color: tokens.colorStatusWarningBackground3,
       fontWeight: tokens.fontWeightSemibold

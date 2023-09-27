@@ -60,7 +60,7 @@ export const iconWrapperStyle = (theme: ITheme, isSubMenuOpen: boolean): IIconSt
  */
 export const chatMessageDateStyle = mergeStyles({
   color: tokens.colorNeutralForeground2,
-  fontWeight: FontWeights.semibold,
+  fontWeight: FontWeights.regular,
   fontSize: '0.75rem'
 });
 
