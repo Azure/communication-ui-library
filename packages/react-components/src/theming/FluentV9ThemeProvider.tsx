@@ -39,12 +39,23 @@ export const useFluentV9Wrapper = makeStyles({
  */
 export const FluentV9ThemeProvider = (props: FluentV9ThemeProviderProps): JSX.Element => {
   const { v8Theme, children } = props;
-  const fluentV9Wrapper = useFluentV9Wrapper();
   const v9Theme = createV9Theme(v8Theme);
 
+  // This class wrapper is needed to ensure the useFluentV9Wrapper hook
+  // is called within the context of FluentProvider
+  interface ClassWrapperProps {
+    children: React.ReactNode;
+  }
+  const ClassWrapper = (props: ClassWrapperProps): JSX.Element => {
+    const { children } = props;
+    const fluentV9Wrapper = useFluentV9Wrapper();
+
+    return <div className={fluentV9Wrapper.body}>{children}</div>;
+  };
+
   return (
-    <FluentProvider className={fluentV9Wrapper.body} theme={v9Theme} dir={v8Theme.rtl ? 'rtl' : 'ltr'}>
-      {children}
+    <FluentProvider theme={v9Theme} dir={v8Theme.rtl ? 'rtl' : 'ltr'}>
+      <ClassWrapper>{children}</ClassWrapper>
     </FluentProvider>
   );
 };

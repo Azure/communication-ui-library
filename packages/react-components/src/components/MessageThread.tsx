@@ -844,19 +844,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     readReceiptsBySenderId,
     styles,
     disableJumpToNewMessageButton = false,
-    showMessageDate = false,
     showMessageStatus = false,
     numberOfChatMessagesToReload = 5,
     onMessageSeen,
-    onRenderMessageStatus,
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
-    onRenderMessage,
-    onUpdateMessage,
-    onCancelEditMessage,
-    onDeleteMessage,
-    onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -1240,107 +1233,125 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
-  const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  const messagesToDisplay = useMemo(
-    () =>
-      memoizeAllMessages((memoizedMessageFn) => {
-        return messages.map((message: Message, index: number): JSX.Element => {
-          let key: string | undefined = message.messageId;
-          let statusToRender: MessageStatus | undefined = undefined;
+  interface ChatWrapperProps {
+    messageThreadProps: MessageThreadProps;
+    isNarrow: boolean;
+    strings: MessageThreadStrings;
+    defaultStatusRenderer: (
+      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+      status: MessageStatus,
+      participantCount: number,
+      readCount: number
+    ) => JSX.Element;
+    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element;
+    theme: Theme;
+    readCountForHoveredIndicator: number | undefined;
+    lastSeenChatMessage: string | undefined;
+    lastDeliveredChatMessage: string | undefined;
+    lastSendingChatMessage: string | undefined;
+  }
 
-          if (
-            message.messageType === 'chat' ||
-            /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-          ) {
-            if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
-              key = message.clientMessageId;
-            }
-            if (showMessageStatus && message.mine) {
-              switch (message.messageId) {
-                case lastSeenChatMessage: {
-                  statusToRender = 'seen';
-                  break;
-                }
-                case lastSendingChatMessage: {
-                  statusToRender = 'sending';
-                  break;
-                }
-                case lastDeliveredChatMessage: {
-                  statusToRender = 'delivered';
-                  break;
+  const ChatWrapper = (props: ChatWrapperProps): JSX.Element => {
+    const classes = useChatStyles();
+    const chatMessageRenderStyles = useChatMessageRenderStyles();
+
+    const messagesToDisplay = useMemo(
+      () =>
+        memoizeAllMessages((memoizedMessageFn) => {
+          return messages.map((message: Message, index: number): JSX.Element => {
+            let key: string | undefined = message.messageId;
+            let statusToRender: MessageStatus | undefined = undefined;
+
+            if (
+              message.messageType === 'chat' ||
+              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+            ) {
+              if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
+                key = message.clientMessageId;
+              }
+              if (props.messageThreadProps.showMessageStatus && message.mine) {
+                switch (message.messageId) {
+                  case props.lastSeenChatMessage: {
+                    statusToRender = 'seen';
+                    break;
+                  }
+                  case props.lastSendingChatMessage: {
+                    statusToRender = 'sending';
+                    break;
+                  }
+                  case props.lastDeliveredChatMessage: {
+                    statusToRender = 'delivered';
+                    break;
+                  }
                 }
               }
+              if (message.mine && message.status === 'failed') {
+                statusToRender = 'failed';
+              }
             }
-            if (message.mine && message.status === 'failed') {
-              statusToRender = 'failed';
-            }
-          }
 
-          return memoizedMessageFn(
-            key ?? 'id_' + index,
-            message,
-            showMessageDate,
-            showMessageStatus,
-            onRenderAvatar,
-            isNarrow,
-            styles,
-            onRenderMessageStatus,
-            defaultStatusRenderer,
-            defaultChatMessageRenderer,
-            strings,
-            theme,
-            chatMessageRenderStyles,
-            // Temporary solution to make sure we re-render if attach attribute is changed.
-            // The proper fix should be in selector.
-            message.messageType === 'chat' ||
-              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-              ? message.attached
-              : undefined,
-            statusToRender,
-            participantCount,
-            readCountForHoveredIndicator,
-            onRenderMessage,
-            onUpdateMessage,
-            onCancelEditMessage,
-            onDeleteMessage,
-            onSendMessage,
-            props.disableEditing
-          );
-        });
-      }),
-    [
-      messages,
-      showMessageDate,
-      showMessageStatus,
-      onRenderAvatar,
-      isNarrow,
-      styles,
-      onRenderMessageStatus,
-      defaultStatusRenderer,
-      defaultChatMessageRenderer,
-      strings,
-      theme,
-      chatMessageRenderStyles,
-      participantCount,
-      readCountForHoveredIndicator,
-      onRenderMessage,
-      onUpdateMessage,
-      onCancelEditMessage,
-      onDeleteMessage,
-      onSendMessage,
-      props.disableEditing,
-      lastSeenChatMessage,
-      lastSendingChatMessage,
-      lastDeliveredChatMessage
-    ]
-  );
+            return memoizedMessageFn(
+              key ?? 'id_' + index,
+              message,
+              props.messageThreadProps.showMessageDate ?? false,
+              props.messageThreadProps.showMessageStatus ?? false,
+              props.messageThreadProps.onRenderAvatar,
+              props.isNarrow,
+              props.messageThreadProps.styles,
+              props.messageThreadProps.onRenderMessageStatus,
+              props.defaultStatusRenderer,
+              props.defaultChatMessageRenderer,
+              props.strings,
+              props.theme,
+              chatMessageRenderStyles,
+              // Temporary solution to make sure we re-render if attach attribute is changed.
+              // The proper fix should be in selector.
+              message.messageType === 'chat' ||
+                /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+                ? message.attached
+                : undefined,
+              statusToRender,
+              props.messageThreadProps.participantCount,
+              props.readCountForHoveredIndicator,
+              props.messageThreadProps.onRenderMessage,
+              props.messageThreadProps.onUpdateMessage,
+              props.messageThreadProps.onCancelEditMessage,
+              props.messageThreadProps.onDeleteMessage,
+              props.messageThreadProps.onSendMessage,
+              props.messageThreadProps.disableEditing
+            );
+          });
+        }),
+      [
+        props.messageThreadProps.showMessageDate,
+        props.messageThreadProps.showMessageStatus,
+        props.messageThreadProps.onRenderAvatar,
+        props.isNarrow,
+        props.messageThreadProps.styles,
+        props.messageThreadProps.onRenderMessageStatus,
+        props.defaultStatusRenderer,
+        props.defaultChatMessageRenderer,
+        props.strings,
+        props.theme,
+        chatMessageRenderStyles,
+        props.messageThreadProps.participantCount,
+        props.readCountForHoveredIndicator,
+        props.messageThreadProps.onRenderMessage,
+        props.messageThreadProps.onUpdateMessage,
+        props.messageThreadProps.onCancelEditMessage,
+        props.messageThreadProps.onDeleteMessage,
+        props.messageThreadProps.onSendMessage,
+        props.messageThreadProps.disableEditing,
+        props.lastSeenChatMessage,
+        props.lastSendingChatMessage,
+        props.lastDeliveredChatMessage
+      ]
+    );
 
-  const classes = useChatStyles();
-  const chatBody = useMemo(() => {
-    return (
-      <LiveAnnouncer>
-        <FluentV9ThemeProvider v8Theme={theme}>
+    const chatBody = useMemo(() => {
+      return (
+        <LiveAnnouncer>
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
@@ -1349,10 +1360,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           >
             {messagesToDisplay}
           </Chat>
-        </FluentV9ThemeProvider>
-      </LiveAnnouncer>
-    );
-  }, [classes.root, theme, styles?.chatContainer, messagesToDisplay]);
+        </LiveAnnouncer>
+      );
+    }, [classes.root, messagesToDisplay]); // styles?.chatContainer, messagesToDisplay]);
+
+    return <>{chatBody}</>;
+  };
 
   return (
     <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>
@@ -1368,7 +1381,22 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           )}
         </div>
       )}
-      {chatBody}
+      <FluentV9ThemeProvider v8Theme={theme}>
+        {/* This wrapper is needed to ensure styles hooks that use MakeStyles are contained in the FluentV9ThemeProvider. 
+              Without this RTL/LTR settings would be lost.*/}
+        <ChatWrapper
+          messageThreadProps={props}
+          isNarrow={isNarrow}
+          strings={strings}
+          defaultStatusRenderer={defaultStatusRenderer}
+          defaultChatMessageRenderer={defaultChatMessageRenderer}
+          theme={theme}
+          readCountForHoveredIndicator={readCountForHoveredIndicator}
+          lastDeliveredChatMessage={lastDeliveredChatMessage}
+          lastSeenChatMessage={lastSeenChatMessage}
+          lastSendingChatMessage={lastSendingChatMessage}
+        />
+      </FluentV9ThemeProvider>
     </div>
   );
 };
