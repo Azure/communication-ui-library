@@ -127,8 +127,15 @@ const Docs: () => JSX.Element = () => {
       scrollToRef(refWithMessageDate);
     } else if (url.includes('system-message') && refSystemMessage.current) {
       scrollToRef(refSystemMessage);
+    } else if (
+      url.includes('messages-with-customized-blocked-message-container') &&
+      refWithCustomizedBlockedMessageContainer.current
+    ) {
+      scrollToRef(refWithCustomizedBlockedMessageContainer);
     } else if (url.includes('blocked-message') && refBlockedMessage.current) {
       scrollToRef(refBlockedMessage);
+    } else if (url.includes('custom-message-status-indicator') && refCustomMessageWithStatusIndicator.current) {
+      scrollToRef(refCustomMessageWithStatusIndicator);
     } else if (url.includes('custom-message') && refCustomMessage.current) {
       scrollToRef(refCustomMessage);
     } else if (url.includes('messages-with-customized-chat-container') && refWithCustomizedChatContainer.current) {
@@ -138,15 +145,8 @@ const Docs: () => JSX.Element = () => {
       refWithCustomizedMessageContainer.current
     ) {
       scrollToRef(refWithCustomizedMessageContainer);
-    } else if (
-      url.includes('messages-with-customized-blocked-message-container') &&
-      refWithCustomizedBlockedMessageContainer.current
-    ) {
-      scrollToRef(refWithCustomizedBlockedMessageContainer);
     } else if (url.includes('default-message-status-indicator') && refDefaultMessageWithStatusIndicator.current) {
       scrollToRef(refDefaultMessageWithStatusIndicator);
-    } else if (url.includes('custom-message-status-indicator') && refCustomMessageWithStatusIndicator.current) {
-      scrollToRef(refCustomMessageWithStatusIndicator);
     } else if (url.includes('custom-avatar') && refCustomAvatar.current) {
       scrollToRef(refCustomAvatar);
     } else if (url.includes('custom-timestamp') && refCustomTimestamp.current) {
@@ -160,7 +160,24 @@ const Docs: () => JSX.Element = () => {
     } else if (url.includes('props') && refProps.current) {
       scrollToRef(refProps);
     }
-  }, [refDefaultMessageThread]);
+  }, [
+    refDefaultMessageThread,
+    refWithMessageDate,
+    refSystemMessage,
+    refWithCustomizedBlockedMessageContainer,
+    refBlockedMessage,
+    refCustomMessageWithStatusIndicator,
+    refCustomMessage,
+    refWithCustomizedChatContainer,
+    refWithCustomizedMessageContainer,
+    refDefaultMessageWithStatusIndicator,
+    refCustomAvatar,
+    refCustomTimestamp,
+    refDisplayInlineImages,
+    refDisplayFileAttachments,
+    refMentionOfUsers,
+    refProps
+  ]);
   return (
     <>
       <Title>MessageThread</Title>
