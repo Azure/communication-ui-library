@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Fluent N* removal",
+  "comment": "Flex-wrap the top div of chat messages",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
