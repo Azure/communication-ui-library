@@ -1243,6 +1243,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   interface ChatWrapperProps {
     messageThreadProps: MessageThreadProps;
     isNarrow: boolean;
+    strings: MessageThreadStrings;
     defaultStatusRenderer: (
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       status: MessageStatus,
@@ -1307,7 +1308,8 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               props.messageThreadProps.onRenderMessageStatus,
               props.defaultStatusRenderer,
               props.defaultChatMessageRenderer,
-              { ...props.messageThreadProps.strings } as Required<MessageThreadStrings>,
+              props.strings,
+              // { ...props.messageThreadProps.strings } as Required<MessageThreadStrings>,
               props.theme,
               chatMessageRenderStyles,
               // Temporary solution to make sure we re-render if attach attribute is changed.
@@ -1338,7 +1340,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         props.messageThreadProps.onRenderMessageStatus,
         props.defaultStatusRenderer,
         props.defaultChatMessageRenderer,
-        props.messageThreadProps.strings,
+        props.strings,
         props.theme,
         chatMessageRenderStyles,
         props.messageThreadProps.participantCount,
@@ -1391,6 +1393,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         <ChatWrapper
           messageThreadProps={props}
           isNarrow={isNarrow}
+          strings={strings}
           defaultStatusRenderer={defaultStatusRenderer}
           defaultChatMessageRenderer={defaultChatMessageRenderer}
           theme={theme}
