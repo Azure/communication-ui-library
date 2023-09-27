@@ -1239,7 +1239,6 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
-  // const chatMessageRenderStyles = useChatMessageRenderStyles();
 
   interface ChatWrapperProps {
     messageThreadProps: MessageThreadProps;
@@ -1253,6 +1252,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element;
     theme: Theme;
     readCountForHoveredIndicator: number | undefined;
+    lastSeenChatMessage: string | undefined;
+    lastDeliveredChatMessage: string | undefined;
+    lastSendingChatMessage: string | undefined;
   }
 
   const ChatWrapper = (props: ChatWrapperProps): JSX.Element => {
@@ -1275,15 +1277,15 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
               }
               if (props.messageThreadProps.showMessageStatus && message.mine) {
                 switch (message.messageId) {
-                  case lastSeenChatMessage: {
+                  case props.lastSeenChatMessage: {
                     statusToRender = 'seen';
                     break;
                   }
-                  case lastSendingChatMessage: {
+                  case props.lastSendingChatMessage: {
                     statusToRender = 'sending';
                     break;
                   }
-                  case lastDeliveredChatMessage: {
+                  case props.lastDeliveredChatMessage: {
                     statusToRender = 'delivered';
                     break;
                   }
@@ -1346,10 +1348,10 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
         props.messageThreadProps.onCancelEditMessage,
         props.messageThreadProps.onDeleteMessage,
         props.messageThreadProps.onSendMessage,
-        props.messageThreadProps.disableEditing
-        // props.messageThreadProps.lastSeenChatMessage,
-        // props.messageThreadProps.lastSendingChatMessage,
-        // props.messageThreadProps.lastDeliveredChatMessage
+        props.messageThreadProps.disableEditing,
+        props.lastSeenChatMessage,
+        props.lastSendingChatMessage,
+        props.lastDeliveredChatMessage
       ]
     );
 
@@ -1393,6 +1395,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           defaultChatMessageRenderer={defaultChatMessageRenderer}
           theme={theme}
           readCountForHoveredIndicator={readCountForHoveredIndicator}
+          lastDeliveredChatMessage={lastDeliveredChatMessage}
+          lastSeenChatMessage={lastSeenChatMessage}
+          lastSendingChatMessage={lastSendingChatMessage}
         />
       </FluentV9ThemeProvider>
     </div>
