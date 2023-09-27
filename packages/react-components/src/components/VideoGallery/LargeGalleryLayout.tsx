@@ -76,7 +76,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
       ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
       : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
-    /* @conditional-compile-remove(gallery-layouts) */ layout: 'largeGallery'
+    /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery'
   });
   let activeVideoStreams = 0;
 
