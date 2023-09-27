@@ -8,7 +8,7 @@ import {
   ChatMessage as FluentChatMessage,
   ChatMyMessage as FluentChatMyMessage
 } from '@fluentui-contrib/react-chat';
-import { mergeClasses } from '@fluentui/react-components';
+import { mergeClasses, useFluent } from '@fluentui/react-components';
 import {
   DownIconStyle,
   newMessageButtonContainerStyle,
@@ -1239,107 +1239,109 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
-  const chatMessageRenderStyles = useChatMessageRenderStyles();
+  // const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  const messagesToDisplay = useMemo(
-    () =>
-      memoizeAllMessages((memoizedMessageFn) => {
-        return messages.map((message: Message, index: number): JSX.Element => {
-          let key: string | undefined = message.messageId;
-          let statusToRender: MessageStatus | undefined = undefined;
+  const ChatWrapper = (props: MessageThreadProps): JSX.Element => {
+    const classes = useChatStyles();
+    const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-          if (
-            message.messageType === 'chat' ||
-            /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-          ) {
-            if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
-              key = message.clientMessageId;
-            }
-            if (showMessageStatus && message.mine) {
-              switch (message.messageId) {
-                case lastSeenChatMessage: {
-                  statusToRender = 'seen';
-                  break;
-                }
-                case lastSendingChatMessage: {
-                  statusToRender = 'sending';
-                  break;
-                }
-                case lastDeliveredChatMessage: {
-                  statusToRender = 'delivered';
-                  break;
+    const messagesToDisplay = useMemo(
+      () =>
+        memoizeAllMessages((memoizedMessageFn) => {
+          return messages.map((message: Message, index: number): JSX.Element => {
+            let key: string | undefined = message.messageId;
+            let statusToRender: MessageStatus | undefined = undefined;
+
+            if (
+              message.messageType === 'chat' ||
+              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+            ) {
+              if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
+                key = message.clientMessageId;
+              }
+              if (props.showMessageStatus && message.mine) {
+                switch (message.messageId) {
+                  case lastSeenChatMessage: {
+                    statusToRender = 'seen';
+                    break;
+                  }
+                  case lastSendingChatMessage: {
+                    statusToRender = 'sending';
+                    break;
+                  }
+                  case lastDeliveredChatMessage: {
+                    statusToRender = 'delivered';
+                    break;
+                  }
                 }
               }
+              if (message.mine && message.status === 'failed') {
+                statusToRender = 'failed';
+              }
             }
-            if (message.mine && message.status === 'failed') {
-              statusToRender = 'failed';
-            }
-          }
 
-          return memoizedMessageFn(
-            key ?? 'id_' + index,
-            message,
-            showMessageDate,
-            showMessageStatus,
-            onRenderAvatar,
-            isNarrow,
-            styles,
-            onRenderMessageStatus,
-            defaultStatusRenderer,
-            defaultChatMessageRenderer,
-            strings,
-            theme,
-            chatMessageRenderStyles,
-            // Temporary solution to make sure we re-render if attach attribute is changed.
-            // The proper fix should be in selector.
-            message.messageType === 'chat' ||
-              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-              ? message.attached
-              : undefined,
-            statusToRender,
-            participantCount,
-            readCountForHoveredIndicator,
-            onRenderMessage,
-            onUpdateMessage,
-            onCancelEditMessage,
-            onDeleteMessage,
-            onSendMessage,
-            props.disableEditing
-          );
-        });
-      }),
-    [
-      messages,
-      showMessageDate,
-      showMessageStatus,
-      onRenderAvatar,
-      isNarrow,
-      styles,
-      onRenderMessageStatus,
-      defaultStatusRenderer,
-      defaultChatMessageRenderer,
-      strings,
-      theme,
-      chatMessageRenderStyles,
-      participantCount,
-      readCountForHoveredIndicator,
-      onRenderMessage,
-      onUpdateMessage,
-      onCancelEditMessage,
-      onDeleteMessage,
-      onSendMessage,
-      props.disableEditing,
-      lastSeenChatMessage,
-      lastSendingChatMessage,
-      lastDeliveredChatMessage
-    ]
-  );
+            return memoizedMessageFn(
+              key ?? 'id_' + index,
+              message,
+              props.showMessageDate,
+              props.showMessageStatus,
+              props.onRenderAvatar,
+              props.isNarrow,
+              props.styles,
+              props.onRenderMessageStatus,
+              props.defaultStatusRenderer,
+              props.defaultChatMessageRenderer,
+              props.strings,
+              props.theme,
+              chatMessageRenderStyles,
+              // Temporary solution to make sure we re-render if attach attribute is changed.
+              // The proper fix should be in selector.
+              message.messageType === 'chat' ||
+                /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+                ? message.attached
+                : undefined,
+              statusToRender,
+              props.participantCount,
+              props.readCountForHoveredIndicator,
+              props.onRenderMessage,
+              props.onUpdateMessage,
+              props.onCancelEditMessage,
+              props.onDeleteMessage,
+              props.onSendMessage,
+              props.disableEditing
+            );
+          });
+        }),
+      [
+        props.messages,
+        props.showMessageDate,
+        props.showMessageStatus,
+        props.onRenderAvatar,
+        props.isNarrow,
+        props.styles,
+        onRenderMessageStatus,
+        defaultStatusRenderer,
+        defaultChatMessageRenderer,
+        props.strings,
+        props.theme,
+        chatMessageRenderStyles,
+        props.participantCount,
+        props.readCountForHoveredIndicator,
+        props.onRenderMessage,
+        props.onUpdateMessage,
+        props.onCancelEditMessage,
+        props.onDeleteMessage,
+        props.onSendMessage,
+        props.disableEditing,
+        props.lastSeenChatMessage,
+        props.lastSendingChatMessage,
+        props.lastDeliveredChatMessage
+      ]
+    );
 
-  const classes = useChatStyles();
-  const chatBody = useMemo(() => {
-    return (
-      <LiveAnnouncer>
-        <FluentV9ThemeProvider v8Theme={theme}>
+    const chatBody = useMemo(() => {
+      return (
+        <LiveAnnouncer>
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
@@ -1348,10 +1350,12 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           >
             {messagesToDisplay}
           </Chat>
-        </FluentV9ThemeProvider>
-      </LiveAnnouncer>
-    );
-  }, [classes.root, theme, styles?.chatContainer, messagesToDisplay]);
+        </LiveAnnouncer>
+      );
+    }, [classes.root, messagesToDisplay]); // styles?.chatContainer, messagesToDisplay]);
+
+    return <>{chatBody}</>;
+  };
 
   return (
     <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>
@@ -1367,7 +1371,9 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           )}
         </div>
       )}
-      {chatBody}
+      <FluentV9ThemeProvider v8Theme={theme}>
+        <ChatWrapper {...props} />
+      </FluentV9ThemeProvider>
     </div>
   );
 };
