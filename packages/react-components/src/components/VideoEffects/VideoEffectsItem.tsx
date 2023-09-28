@@ -3,6 +3,7 @@
 
 import {
   DefaultButton,
+  IButton,
   Icon,
   IIconProps,
   IStyle,
@@ -84,6 +85,11 @@ export interface _VideoEffectsItemProps {
    * Styles for the Video effects item.
    */
   styles?: _VideoEffectsItemStyles;
+
+  /**
+   * ref to the Video effects item.
+   */
+  componentRef?: React.RefObject<IButton>;
 }
 
 /**
@@ -138,7 +144,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         verticalAlign="center"
         horizontalAlign="center"
         data-ui-id={`video-effects-item`}
-        tabIndex={props.disabled ? -1 : 0}
+        tabIndex={0}
         aria-label={props.ariaLabel ?? props.itemKey}
         aria-disabled={props.disabled}
         role="button"
@@ -146,6 +152,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         <DefaultButton
           styles={containerStyles()}
           onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
+          componentRef={props.componentRef}
           onKeyDown={
             disabled
               ? undefined

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FocusZone, IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
+import { IButton, IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
 import { useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
@@ -52,6 +52,11 @@ export interface _VideoBackgroundEffectsPickerProps {
    * Styles for the picker.
    */
   styles?: _VideoBackgroundEffectsPickerStyles;
+
+  /**
+   * Ref to the first background effect button. Used for auto focus and other accessibility scenarios
+   */
+  firstBackgroundEffectRef?: React.RefObject<IButton>;
 }
 
 /**
@@ -124,33 +129,41 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
   const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - optionsByRow[optionsByRow.length - 1].length;
 
   return (
-    <FocusZone shouldFocusOnMount={true}>
-      <Stack tokens={{ childrenGap: '0.5rem' }}>
-        <Label className={mergeStyles(props.styles?.label)}>{props.label}</Label>
-        {optionsByRow.map((options, rowIndex) => (
-          <Stack
-            className={mergeStyles(props.styles?.rowRoot)}
-            wrap={props.itemsPerRow === 'wrap'}
-            horizontal
-            key={rowIndex}
-            tokens={{ childrenGap: '0.5rem' }}
-            data-ui-id="video-effects-picker-row"
-          >
-            {options.map((option, i) => {
-              return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;
-            })}
-            {fillCount > 0 &&
-              rowIndex === optionsByRow.length - 1 &&
-              Array.from({ length: fillCount }).map((_, index) => (
-                <Stack
-                  key={index}
-                  styles={hiddenVideoEffectsItemContainerStyles}
-                  data-ui-id="video-effects-hidden-item"
+    <Stack tokens={{ childrenGap: '0.5rem' }}>
+      <Label className={mergeStyles(props.styles?.label)}>{props.label}</Label>
+      {optionsByRow.map((options, rowIndex) => (
+        <Stack
+          className={mergeStyles(props.styles?.rowRoot)}
+          wrap={props.itemsPerRow === 'wrap'}
+          horizontal
+          key={rowIndex}
+          tokens={{ childrenGap: '0.5rem' }}
+          data-ui-id="video-effects-picker-row"
+        >
+          {options.map((option, i) => {
+            if (i === 0 && rowIndex === 0) {
+              return (
+                <_VideoEffectsItem
+                  {...option}
+                  itemKey={option.itemKey}
+                  key={option.itemKey}
+                  componentRef={props.firstBackgroundEffectRef}
                 />
-              ))}
-          </Stack>
-        ))}
-      </Stack>
-    </FocusZone>
+              );
+            }
+            return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;
+          })}
+          {fillCount > 0 &&
+            rowIndex === optionsByRow.length - 1 &&
+            Array.from({ length: fillCount }).map((_, index) => (
+              <Stack
+                key={index}
+                styles={hiddenVideoEffectsItemContainerStyles}
+                data-ui-id="video-effects-hidden-item"
+              />
+            ))}
+        </Stack>
+      ))}
+    </Stack>
   );
 };

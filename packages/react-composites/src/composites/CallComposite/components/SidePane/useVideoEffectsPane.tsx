@@ -22,7 +22,8 @@ export const useVideoEffectsPane = (
   mobileView: boolean,
   latestErrors: ActiveErrorMessage[],
   onDismissError: (error: ActiveErrorMessage) => void,
-  cameraButtonRef?: React.RefObject<IButton>
+  cameraButtonRef?: React.RefObject<IButton>,
+  videoPickerRef?: React.RefObject<IButton>
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;
@@ -68,12 +69,14 @@ export const useVideoEffectsPane = (
           /* @conditional-compile-remove(video-background-effects) */
           latestVideoEffectError && onDismissError?.(latestVideoEffectError);
         }}
+        componentRef={videoPickerRef}
       />
     );
   }, [
     /* @conditional-compile-remove(video-background-effects) */
     latestVideoEffectError,
-    onDismissError
+    onDismissError,
+    videoPickerRef
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
