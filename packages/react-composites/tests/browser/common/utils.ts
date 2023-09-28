@@ -319,7 +319,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (args: any) => {
       const timestampNodes = Array.from(document.querySelectorAll(args.messageTimestampId));
-      return timestampNodes.every((node) => node.textContent === 'timestamp');
+      return timestampNodes.every((node) => node.innerText === 'timestamp');
     },
     {
       messageTimestampId: messageTimestampId

@@ -74,7 +74,7 @@ export const stubMessageTimestamps = async (page: Page): Promise<void> => {
     (args: unknown) => {
       const { selector } = args as any;
       const timestampNodes = Array.from(document.querySelectorAll(selector));
-      return timestampNodes.every((node) => node.textContent === 'timestamp');
+      return timestampNodes.every((node) => node.innerText === 'timestamp');
     },
     { selector: '[data-ui-id=message-timestamp]' }
   );
