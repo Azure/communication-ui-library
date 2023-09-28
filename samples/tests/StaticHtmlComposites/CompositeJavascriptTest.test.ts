@@ -35,7 +35,7 @@ test.describe('JS Bundle Test', () => {
     // Wait for message to finish sending
     await page.waitForTimeout(1000);
     await page.addScriptTag({
-      content: `document.querySelector('[data-ui-id=message-timestamp]').textContent='timestamp';`
+      content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
     });
 
     expect(await page.screenshot()).toMatchSnapshot('chatCompositeHtmlCheck.png');

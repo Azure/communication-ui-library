@@ -67,7 +67,7 @@ test.describe('Component Examples Test', () => {
  */
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   await page.addScriptTag({
-    content: `document.querySelector('[data-ui-id=message-timestamp]').textContent='timestamp';`
+    content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
   });
   // Wait for timestamps to have been updated in the DOM
   await page.waitForFunction(

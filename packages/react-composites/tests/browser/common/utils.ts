@@ -310,9 +310,9 @@ export const waitForPiPiPToHaveLoaded = async (
  */
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
   const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
-  await page.addScriptTag({
-    content: `document.querySelector('[data-ui-id=message-timestamp]').textContent='timestamp';`
-  });
+  await page.evaluate((messageTimestampId) => {
+    Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
+  }, messageTimestampId);
   // Wait for timestamps to have been updated in the DOM
   await waitForFunction(
     page,
