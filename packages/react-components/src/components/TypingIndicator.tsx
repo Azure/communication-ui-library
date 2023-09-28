@@ -181,11 +181,7 @@ const getNamesString = (typingUsers: CommunicationParticipant[], delimiter: stri
 
   typingUsers.forEach((user) => {
     if (user.displayName) {
-      let displayName = user.displayName;
-      if (displayName.length > 50) {
-        displayName = displayName.substring(0, 50) + '...';
-      }
-      userNames.push(displayName);
+      userNames.push(user.displayName);
     }
   });
   return userNames.join(delimiter);
