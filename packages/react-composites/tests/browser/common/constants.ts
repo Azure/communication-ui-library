@@ -14,7 +14,6 @@ export const IDS = {
   participantList: 'participant-list',
   participantListPeopleButton: 'participant-list-people-button',
   participantListRemoveParticipantButton: 'participant-list-remove-participant-button',
-  messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',

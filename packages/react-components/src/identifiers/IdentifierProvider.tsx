@@ -29,8 +29,6 @@ export interface _Identifiers {
   participantListPeopleButton: string;
   /** `data-ui-id` value for `ParticipantList` Component's Remove Participant Button */
   participantListRemoveParticipantButton: string;
-  /** `data-ui-id` value for `MessageThread` components message content */
-  messageContent: string;
   /** `data-ui-id` value for `MessageThread` components message timestamp */
   messageTimestamp: string;
   /** `data-ui-id` value for `TypingIndicator` Component */
@@ -66,7 +64,6 @@ const defaultIdentifiers: _Identifiers = {
   participantList: 'participant-list',
   participantListPeopleButton: 'participant-list-people-button',
   participantListRemoveParticipantButton: 'participant-list-remove-participant-button',
-  messageContent: 'message-content',
   messageTimestamp: 'message-timestamp',
   typingIndicator: 'typing-indicator',
   videoGallery: 'video-gallery',
