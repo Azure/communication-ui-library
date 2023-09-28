@@ -185,6 +185,12 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(end-of-call-survey) */
+    /**
+   * Show call survey at end of call
+   * @defaultValue true
+   */
+    survey?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -217,10 +223,14 @@ type CallWithChatScreenProps = {
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  survey?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  const {survey = true} = props
   const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
@@ -393,7 +403,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(gallery-layouts) */
       galleryOptions: props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
-      localVideoTile: props.localVideoTile
+      localVideoTile: props.localVideoTile,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      survey: survey
     }),
     [
       props.callControls,
@@ -414,7 +426,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       /* @conditional-compile-remove(pinned-participants) */
-      props.remoteVideoTileMenuOptions
+      props.remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(end-of-call-survey) */
+      survey
     ]
   );
 

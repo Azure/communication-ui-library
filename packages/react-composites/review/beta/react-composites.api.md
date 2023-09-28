@@ -406,6 +406,7 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    survey?: boolean;
 };
 
 // @public
@@ -901,6 +902,7 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    survey?: boolean;
 };
 
 // @public
