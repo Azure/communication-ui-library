@@ -19,8 +19,5 @@ export const typingIndicatorStringStyle = mergeStyles({
   fontWeight: 400,
   width: '100%',
   alignSelf: 'center',
-  wordBreak: 'break-word',
-  overflow: 'hidden',
-  whiteSpace: 'nowrap',
-  textOverflow: 'ellipsis'
+  wordBreak: 'break-word'
 });

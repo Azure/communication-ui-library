@@ -147,6 +147,13 @@ const getUsersElement = (
 ): JSX.Element => {
   const userElements: JSX.Element[] = [];
   typingUsers.forEach((user, index) => {
+    if (user.displayName) {
+      let truncatedDisplayName = user.displayName;
+      if (truncatedDisplayName.length > 50) {
+        truncatedDisplayName = truncatedDisplayName.substring(0, 50) + '...';
+      }
+      user.displayName = truncatedDisplayName;
+    }
     userElements.push(
       onRenderUser ? (
         onRenderUser(user)
@@ -174,7 +181,11 @@ const getNamesString = (typingUsers: CommunicationParticipant[], delimiter: stri
 
   typingUsers.forEach((user) => {
     if (user.displayName) {
-      userNames.push(user.displayName);
+      let displayName = user.displayName;
+      if (displayName.length > 50) {
+        displayName = displayName.substring(0, 50) + '...';
+      }
+      userNames.push(displayName);
     }
   });
   return userNames.join(delimiter);
