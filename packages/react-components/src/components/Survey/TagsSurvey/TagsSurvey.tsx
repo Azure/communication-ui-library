@@ -21,7 +21,7 @@ import {
   _ScreenshareIssue,
   _VideoIssue
 } from '../SurveyTypes';
-import { CallIssuesToTags } from '../../../types';
+import { SurveyIssues } from '../../../types';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -70,7 +70,7 @@ export interface _TagsSurveyProps {
   /** Issues included in the survey */
   issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
   /** Mappings from call issues to tags displayed on the survey*/
-  callIssuesToTag: CallIssuesToTags;
+  callIssuesToTag: SurveyIssues;
 
   /** Function to send TagsSurvey results*/
   onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;

@@ -620,7 +620,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
-    callIssuesToTags: CallIssuesToTags;
+    surveyIssues: SurveyIssues;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -753,7 +753,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    TagsSurveyCancelButtonAriaLabel: string;
+    tagsSurveyCancelButtonAriaLabel: string;
     TagsSurveyCancelButtonLabel: string;
     TagsSurveyConfirmButtonLabel: string;
     TagsSurveyQuestion: string;
@@ -846,7 +846,7 @@ export interface CallingTheme {
 }
 
 // @beta
-export interface CallIssuesToTags {
+export interface SurveyIssues {
     // (undocumented)
     audioRating: {
         NoLocalAudio: string;

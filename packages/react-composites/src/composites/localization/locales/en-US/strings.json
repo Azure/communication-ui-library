@@ -237,8 +237,8 @@
     "TagsSurveyQuestion": "What could have been better?",
    "TagsSurveyConfirmButtonLabel": "Submit Survey",
     "TagsSurveyCancelButtonLabel": "Cancel",
-   "TagsSurveyCancelButtonAriaLabel": "Cancel",
-    "callIssuesToTags":{
+   "tagsSurveyCancelButtonAriaLabel": "Cancel",
+    "surveyIssues":{
       "overallRating": {
         "CallCannotJoin": "I could not join call",
         "CallCannotInvite":"I could not invite others into the call",

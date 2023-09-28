@@ -5,7 +5,7 @@
  * @beta
  * Corresponding texts to each call issue
  */
-export interface CallIssuesToTags {
+export interface SurveyIssues {
   overallRating: {
     CallCannotJoin: string;
     CallCannotInvite: string;

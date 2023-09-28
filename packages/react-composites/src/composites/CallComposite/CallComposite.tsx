@@ -230,7 +230,7 @@ export type CallCompositeOptions = {
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Show call survey at end of call
+   * Show call survey at the end of a call.
    * @defaultValue true
    */
   survey?: boolean;

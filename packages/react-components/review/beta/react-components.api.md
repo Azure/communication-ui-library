@@ -174,7 +174,7 @@ export interface CallingTheme {
 }
 
 // @beta
-export interface CallIssuesToTags {
+export interface SurveyIssues {
     // (undocumented)
     audioRating: {
         NoLocalAudio: string;
@@ -2252,7 +2252,7 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 
 // @internal
 export interface _TagsSurveyProps {
-    callIssuesToTag: CallIssuesToTags;
+    callIssuesToTag: SurveyIssues;
     issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
     onDismissTagsSurvey?: () => void;
     onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
