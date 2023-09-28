@@ -41,11 +41,11 @@ export const TagsSurvey = (props: {
     TagsSurveyQuestion: strings.TagsSurveyQuestion,
     TagsSurveyConfirmButtonLabel: strings.TagsSurveyConfirmButtonLabel,
     TagsSurveyCancelButtonLabel: strings.TagsSurveyCancelButtonLabel,
-    cancelButtonAriaLabel: strings.TagsSurveyCancelButtonAriaLabel
+    cancelButtonAriaLabel: strings.tagsSurveyCancelButtonAriaLabel
   };
 
   /* @conditional-compile-remove(end-of-call-survey) */
-  const callIssuesToTag = strings.callIssuesToTags;
+  const callIssuesToTag = strings.surveyIssues;
 
   /* @conditional-compile-remove(end-of-call-survey) */
   return (

@@ -12,7 +12,7 @@ import type { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { CallIssuesToTags } from '@internal/react-components';
+import { SurveyIssues } from '@internal/react-components';
 import { CallState } from '@internal/calling-stateful-client';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyResponse } from '@azure/communication-calling';
@@ -421,7 +421,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 export interface CallCompositeStrings {
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
-    callIssuesToTags: CallIssuesToTags;
+    surveyIssues: SurveyIssues;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -553,7 +553,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    TagsSurveyCancelButtonAriaLabel: string;
+    tagsSurveyCancelButtonAriaLabel: string;
     TagsSurveyCancelButtonLabel: string;
     TagsSurveyConfirmButtonLabel: string;
     TagsSurveyQuestion: string;

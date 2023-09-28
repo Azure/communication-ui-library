@@ -51,4 +51,4 @@ export { _spokenLanguageToCaptionLanguage } from './types';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';
 /* @conditional-compile-remove(end-of-call-survey) */
-export type { CallIssuesToTags } from './types';
+export type { SurveyIssues } from './types';
