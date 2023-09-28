@@ -32,6 +32,8 @@ export interface NoticePageProps {
   dataUiId: string;
   disableStartCallButton?: boolean;
   pageStyle?: IStyle;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  survey?:boolean
 }
 
 /**
@@ -68,9 +70,9 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       data-ui-id={props.dataUiId}
       aria-atomic
     >
-      {/* @conditional-compile-remove(end-of-call-survey) */ <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />}
+      {/* @conditional-compile-remove(end-of-call-survey) */props.survey && <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />}
 
-      {/* @conditional-compile-remove(end-of-call-survey) */ showTagsSurvey && <TagsSurvey issues={issues} />}
+      {/* @conditional-compile-remove(end-of-call-survey) */ props.survey &&showTagsSurvey && <TagsSurvey issues={issues} />}
 
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}

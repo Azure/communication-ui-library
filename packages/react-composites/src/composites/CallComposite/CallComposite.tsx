@@ -234,6 +234,12 @@ export type CallCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Show call survey at end of call
+   * @defaultValue true
+   */
+  survey?: boolean;
 };
 
 type MainScreenProps = {
@@ -420,6 +426,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
+          /* @conditional-compile-remove(end-of-call-survey) */
+          survey={props.options?.survey ?? true}
         />
       );
       break;
