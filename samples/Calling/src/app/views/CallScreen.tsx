@@ -66,7 +66,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const afterCallAdapterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
       subscribeAdapterEvents(adapter);
-      adapter.joinCall({microphoneOn: true})
       return adapter;
     },
     [subscribeAdapterEvents]
