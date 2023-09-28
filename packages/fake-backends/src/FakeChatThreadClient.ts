@@ -416,8 +416,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const me = this.checkedGetMe();
     const identifier = getIdentifierKind(me.id);
 
-    /* @conditional-compile-remove(communication-common-beta-v3) */
-    if (identifier.kind === 'microsoftBot') {
+    if (identifier.kind === 'microsoftTeamsApp') {
       throw new Error('Unsupported indentifer kind: microsoftBot');
     }
 

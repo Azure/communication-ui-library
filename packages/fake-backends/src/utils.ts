@@ -61,8 +61,7 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
 export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatParticipant => {
   const identifier = getIdentifierKind(p.id);
 
-  /* @conditional-compile-remove(communication-common-beta-v3) */
-  if (identifier.kind === 'microsoftBot') {
+  if (identifier.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported indentifier kind: microsoftBot');
   }
 
