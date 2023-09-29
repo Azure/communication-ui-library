@@ -161,7 +161,7 @@ export const useChatMyMessageStyles = makeStyles({
       fontWeight: 600
     }
   },
-  attached: {
+  bodyAttached: {
     marginTop: '0.125rem'
   },
   menu: {
@@ -169,7 +169,7 @@ export const useChatMyMessageStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     marginRight: '1px',
     position: 'absolute',
-    top: '-20px',
+    top: '-2px',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
     lineHeight: tokens.lineHeightBase100,
@@ -179,6 +179,9 @@ export const useChatMyMessageStyles = makeStyles({
       cursor: 'pointer',
       visibility: 'visible'
     }
+  },
+  menuAttached: {
+    top: '-18px',
   },
   menuHidden: {
     visibility: 'hidden'
@@ -282,7 +285,7 @@ export const useChatMessageStyles = makeStyles({
     marginTop: '0.125rem'
   },
   bodyWithAvatar: {
-    marginTop: `0.5rem`
+    marginTop: `0.375rem`
   },
   avatarNoOverlap: {
     marginLeft: `${-AVATAR_MARGIN_LEFT + AVATAR_MESSAGE_GAP_REM}rem`

@@ -329,7 +329,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                   : props.message.status === 'failed'
                   ? chatMessageCommonStyles.failed
                   : undefined,
-                attached !== 'top' ? chatMyMessageStyles.attached : undefined,
+                attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
                 mergeStyles(messageContainerStyle)
               ),
               style: { ...createStyleFromV8Style(messageContainerStyle) },
@@ -374,7 +374,9 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // Make actions menu visible when the message is focused or the flyout is shown
                 focused || chatMessageActionFlyoutTarget
                   ? chatMyMessageStyles.menuVisible
-                  : chatMyMessageStyles.menuHidden
+                  : chatMyMessageStyles.menuHidden,
+                attached !== 'top' ? chatMyMessageStyles.menuAttached : undefined,
+
               )
             }}
             onTouchStart={() => setWasInteractionByTouch(true)}
