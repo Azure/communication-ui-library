@@ -318,6 +318,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       <div key={props.message.messageId} ref={messageRef}>
         {message.mine ? (
           <ChatMyMessage
+            attached={attached}
             key={props.message.messageId}
             body={{
               // messageContainerStyle used in className and style prop as style prop can't handle CSS selectors

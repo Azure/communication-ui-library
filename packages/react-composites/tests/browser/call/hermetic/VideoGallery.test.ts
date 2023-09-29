@@ -145,7 +145,7 @@ test.describe('VideoGallery tests', async () => {
       buildUrlWithMockAdapter(serverUrl, initialState, { galleryLayout: 'speaker', newControlBarExperience: 'true' })
     );
 
-    await waitForSelector(page, dataUiId(IDS.videoGallery), { timeout: 100000 });
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-speaker-participant.png');
   });
 
@@ -160,7 +160,7 @@ test.describe('VideoGallery tests', async () => {
 
     page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
 
-    await waitForSelector(page, dataUiId(IDS.moreButton), { timeout: 100000 });
+    await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls.png');
