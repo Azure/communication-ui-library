@@ -13,6 +13,7 @@ import {
   DownIconStyle,
   newMessageButtonContainerStyle,
   messageThreadContainerStyle,
+  messageThreadWrapperContainerStyle,
   useChatStyles,
   buttonWithIconStyles,
   newMessageButtonStyle,
@@ -837,6 +838,44 @@ export type _MessagePropsInternal = MessageProps & {
  * @public
  */
 export const MessageThread = (props: MessageThreadProps): JSX.Element => {
+  const theme = useTheme();
+  const chatThreadRef = useRef<HTMLDivElement>(null);
+
+  // When the chat thread is narrow, we perform space optimizations such as overlapping
+  // the avatar on top of the chat message and moving the chat accept/reject edit buttons
+  // to a new line
+  const chatThreadWidth = _useContainerWidth(chatThreadRef);
+  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
+
+  /**
+   * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the
+   * first render (not sure but I guess Fluent is updating it in hook which is after render maybe?) so we need to
+   * trigger a re-render until ClientHeight is initialized. This force re-render should only happen once.
+   */
+  const clientHeight = chatThreadRef.current?.clientHeight;
+
+  const chatBody = useMemo(() => {
+    return (
+      <FluentV9ThemeProvider v8Theme={theme}>
+        {/* Wrapper is required to call "useClasses" hook with proper context values */}
+        <MessageThreadWrapper {...props} isNarrow={isNarrow} clientHeight={clientHeight} />
+      </FluentV9ThemeProvider>
+    );
+  }, [theme, props, isNarrow, clientHeight]);
+
+  return (
+    <div className={mergeStyles(messageThreadContainerStyle, props.styles?.root)} ref={chatThreadRef}>
+      {chatBody}
+    </div>
+  );
+};
+
+/**
+ * @private
+ */
+export const MessageThreadWrapper = (
+  props: MessageThreadProps & { isNarrow: boolean; clientHeight: number | undefined }
+): JSX.Element => {
   const {
     messages: newMessages,
     userId,
@@ -844,12 +883,19 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     readReceiptsBySenderId,
     styles,
     disableJumpToNewMessageButton = false,
+    showMessageDate = false,
     showMessageStatus = false,
     numberOfChatMessagesToReload = 5,
     onMessageSeen,
+    onRenderMessageStatus,
     onRenderAvatar,
     onLoadPreviousChatMessages,
     onRenderJumpToNewMessageButton,
+    onRenderMessage,
+    onUpdateMessage,
+    onCancelEditMessage,
+    onDeleteMessage,
+    onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -921,14 +967,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const messageIdSeenByMeRef = useRef<string>('');
 
   const chatScrollDivRef = useRef<HTMLDivElement>(null);
-  const chatThreadRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
-
-  // When the chat thread is narrow, we perform space optimizations such as overlapping
-  // the avatar on top of the chat message and moving the chat accept/reject edit buttons
-  // to a new line
-  const chatThreadWidth = _useContainerWidth(chatThreadRef);
-  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
@@ -1079,20 +1118,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
     };
   }, [fetchNewMessageWhenAtTop, handleScrollToTheBottom]);
 
-  /**
-   * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the
-   * first render (not sure but I guess Fluent is updating it in hook which is after render maybe?) so we need to
-   * trigger a re-render until ClientHeight is initialized. This force re-render should only happen once.
-   */
-  const clientHeight = chatThreadRef.current?.clientHeight;
   useEffect(() => {
-    if (clientHeight === undefined) {
+    if (props.clientHeight === undefined) {
       setForceUpdate(forceUpdate + 1);
       return;
     }
     // Only scroll to bottom if isAtBottomOfScrollRef is true
     isAtBottomOfScrollRef.current && scrollToBottom();
-  }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
+  }, [props.clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
@@ -1160,7 +1193,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-            shouldOverlapAvatarAndMessage={isNarrow}
+            shouldOverlapAvatarAndMessage={props.isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
@@ -1186,7 +1219,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
       strings,
       props.userId,
       participantCount,
-      isNarrow,
+      props.isNarrow,
       onRenderAvatar,
       showMessageStatus,
       onActionButtonClickMemo,
@@ -1233,125 +1266,107 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   );
 
   const theme = useTheme();
+  const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  interface ChatWrapperProps {
-    messageThreadProps: MessageThreadProps;
-    isNarrow: boolean;
-    strings: MessageThreadStrings;
-    defaultStatusRenderer: (
-      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
-      status: MessageStatus,
-      participantCount: number,
-      readCount: number
-    ) => JSX.Element;
-    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element;
-    theme: Theme;
-    readCountForHoveredIndicator: number | undefined;
-    lastSeenChatMessage: string | undefined;
-    lastDeliveredChatMessage: string | undefined;
-    lastSendingChatMessage: string | undefined;
-  }
+  const messagesToDisplay = useMemo(
+    () =>
+      memoizeAllMessages((memoizedMessageFn) => {
+        return messages.map((message: Message, index: number): JSX.Element => {
+          let key: string | undefined = message.messageId;
+          let statusToRender: MessageStatus | undefined = undefined;
 
-  const ChatWrapper = (props: ChatWrapperProps): JSX.Element => {
-    const classes = useChatStyles();
-    const chatMessageRenderStyles = useChatMessageRenderStyles();
-
-    const messagesToDisplay = useMemo(
-      () =>
-        memoizeAllMessages((memoizedMessageFn) => {
-          return messages.map((message: Message, index: number): JSX.Element => {
-            let key: string | undefined = message.messageId;
-            let statusToRender: MessageStatus | undefined = undefined;
-
-            if (
-              message.messageType === 'chat' ||
-              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-            ) {
-              if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
-                key = message.clientMessageId;
-              }
-              if (props.messageThreadProps.showMessageStatus && message.mine) {
-                switch (message.messageId) {
-                  case props.lastSeenChatMessage: {
-                    statusToRender = 'seen';
-                    break;
-                  }
-                  case props.lastSendingChatMessage: {
-                    statusToRender = 'sending';
-                    break;
-                  }
-                  case props.lastDeliveredChatMessage: {
-                    statusToRender = 'delivered';
-                    break;
-                  }
+          if (
+            message.messageType === 'chat' ||
+            /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+          ) {
+            if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
+              key = message.clientMessageId;
+            }
+            if (showMessageStatus && message.mine) {
+              switch (message.messageId) {
+                case lastSeenChatMessage: {
+                  statusToRender = 'seen';
+                  break;
+                }
+                case lastSendingChatMessage: {
+                  statusToRender = 'sending';
+                  break;
+                }
+                case lastDeliveredChatMessage: {
+                  statusToRender = 'delivered';
+                  break;
                 }
               }
-              if (message.mine && message.status === 'failed') {
-                statusToRender = 'failed';
-              }
             }
+            if (message.mine && message.status === 'failed') {
+              statusToRender = 'failed';
+            }
+          }
 
-            return memoizedMessageFn(
-              key ?? 'id_' + index,
-              message,
-              props.messageThreadProps.showMessageDate ?? false,
-              props.messageThreadProps.showMessageStatus ?? false,
-              props.messageThreadProps.onRenderAvatar,
-              props.isNarrow,
-              props.messageThreadProps.styles,
-              props.messageThreadProps.onRenderMessageStatus,
-              props.defaultStatusRenderer,
-              props.defaultChatMessageRenderer,
-              props.strings,
-              props.theme,
-              chatMessageRenderStyles,
-              // Temporary solution to make sure we re-render if attach attribute is changed.
-              // The proper fix should be in selector.
-              message.messageType === 'chat' ||
-                /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-                ? message.attached
-                : undefined,
-              statusToRender,
-              props.messageThreadProps.participantCount,
-              props.readCountForHoveredIndicator,
-              props.messageThreadProps.onRenderMessage,
-              props.messageThreadProps.onUpdateMessage,
-              props.messageThreadProps.onCancelEditMessage,
-              props.messageThreadProps.onDeleteMessage,
-              props.messageThreadProps.onSendMessage,
-              props.messageThreadProps.disableEditing
-            );
-          });
-        }),
-      [
-        props.messageThreadProps.showMessageDate,
-        props.messageThreadProps.showMessageStatus,
-        props.messageThreadProps.onRenderAvatar,
-        props.isNarrow,
-        props.messageThreadProps.styles,
-        props.messageThreadProps.onRenderMessageStatus,
-        props.defaultStatusRenderer,
-        props.defaultChatMessageRenderer,
-        props.strings,
-        props.theme,
-        chatMessageRenderStyles,
-        props.messageThreadProps.participantCount,
-        props.readCountForHoveredIndicator,
-        props.messageThreadProps.onRenderMessage,
-        props.messageThreadProps.onUpdateMessage,
-        props.messageThreadProps.onCancelEditMessage,
-        props.messageThreadProps.onDeleteMessage,
-        props.messageThreadProps.onSendMessage,
-        props.messageThreadProps.disableEditing,
-        props.lastSeenChatMessage,
-        props.lastSendingChatMessage,
-        props.lastDeliveredChatMessage
-      ]
-    );
+          return memoizedMessageFn(
+            key ?? 'id_' + index,
+            message,
+            showMessageDate,
+            showMessageStatus,
+            onRenderAvatar,
+            props.isNarrow,
+            styles,
+            onRenderMessageStatus,
+            defaultStatusRenderer,
+            defaultChatMessageRenderer,
+            strings,
+            theme,
+            chatMessageRenderStyles,
+            // Temporary solution to make sure we re-render if attach attribute is changed.
+            // The proper fix should be in selector.
+            message.messageType === 'chat' ||
+              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+              ? message.attached
+              : undefined,
+            statusToRender,
+            participantCount,
+            readCountForHoveredIndicator,
+            onRenderMessage,
+            onUpdateMessage,
+            onCancelEditMessage,
+            onDeleteMessage,
+            onSendMessage,
+            props.disableEditing
+          );
+        });
+      }),
+    [
+      messages,
+      showMessageDate,
+      showMessageStatus,
+      onRenderAvatar,
+      props.isNarrow,
+      styles,
+      onRenderMessageStatus,
+      defaultStatusRenderer,
+      defaultChatMessageRenderer,
+      strings,
+      theme,
+      chatMessageRenderStyles,
+      participantCount,
+      readCountForHoveredIndicator,
+      onRenderMessage,
+      onUpdateMessage,
+      onCancelEditMessage,
+      onDeleteMessage,
+      onSendMessage,
+      props.disableEditing,
+      lastSeenChatMessage,
+      lastSendingChatMessage,
+      lastDeliveredChatMessage
+    ]
+  );
 
-    const chatBody = useMemo(() => {
-      return (
-        <LiveAnnouncer>
+  const classes = useChatStyles();
+  const chatBody = useMemo(() => {
+    return (
+      <LiveAnnouncer>
+        <FluentV9ThemeProvider v8Theme={theme}>
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
@@ -1360,16 +1375,14 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           >
             {messagesToDisplay}
           </Chat>
-        </LiveAnnouncer>
-      );
-    }, [classes.root, messagesToDisplay]); // styles?.chatContainer, messagesToDisplay]);
-
-    return <>{chatBody}</>;
-  };
+        </FluentV9ThemeProvider>
+      </LiveAnnouncer>
+    );
+  }, [theme, classes.root, styles?.chatContainer, messagesToDisplay]);
 
   return (
-    <div className={mergeStyles(messageThreadContainerStyle, styles?.root)} ref={chatThreadRef}>
-      {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
+    <div className={mergeStyles(messageThreadWrapperContainerStyle)}>
+      {/* {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
             tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
             thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
       {existsNewChatMessage && !disableJumpToNewMessageButton && (
@@ -1381,22 +1394,7 @@ export const MessageThread = (props: MessageThreadProps): JSX.Element => {
           )}
         </div>
       )}
-      <FluentV9ThemeProvider v8Theme={theme}>
-        {/* This wrapper is needed to ensure styles hooks that use MakeStyles are contained in the FluentV9ThemeProvider. 
-              Without this RTL/LTR settings would be lost.*/}
-        <ChatWrapper
-          messageThreadProps={props}
-          isNarrow={isNarrow}
-          strings={strings}
-          defaultStatusRenderer={defaultStatusRenderer}
-          defaultChatMessageRenderer={defaultChatMessageRenderer}
-          theme={theme}
-          readCountForHoveredIndicator={readCountForHoveredIndicator}
-          lastDeliveredChatMessage={lastDeliveredChatMessage}
-          lastSeenChatMessage={lastSeenChatMessage}
-          lastSendingChatMessage={lastSendingChatMessage}
-        />
-      </FluentV9ThemeProvider>
+      {chatBody}
     </div>
   );
 };
