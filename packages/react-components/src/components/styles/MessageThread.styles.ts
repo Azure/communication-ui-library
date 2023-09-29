@@ -86,6 +86,11 @@ export const useChatStyles = makeStyles({
  * @private
  */
 export const useChatMessageRenderStyles = makeStyles({
+  rootCommon: {
+    '&:focus-visible': {
+      ...shorthands.outline('0')
+    }
+  },
   rootMessage: {
     ...shorthands.padding('0'),
     ...shorthands.margin('0'),
@@ -147,7 +152,10 @@ export const useChatMyMessageStyles = makeStyles({
     gridGap: '0',
     columnGap: '0',
     paddingTop: '0',
-    marginLeft: '0'
+    marginLeft: '0',
+    '&:focus-visible': {
+      ...shorthands.outline('0')
+    }
   },
   body: {
     paddingBottom: '10px',
@@ -221,7 +229,10 @@ export const chatMessageDateStyle: CSSProperties = {
  */
 export const useChatMessageStyles = makeStyles({
   root: {
-    paddingTop: '0'
+    paddingTop: '0',
+    '&:focus-visible': {
+      ...shorthands.outline('0')
+    }
   },
   body: {
     maxWidth: '100%',
