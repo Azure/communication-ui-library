@@ -839,43 +839,23 @@ export type _MessagePropsInternal = MessageProps & {
  */
 export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const theme = useTheme();
-  const chatThreadRef = useRef<HTMLDivElement>(null);
-
-  // When the chat thread is narrow, we perform space optimizations such as overlapping
-  // the avatar on top of the chat message and moving the chat accept/reject edit buttons
-  // to a new line
-  const chatThreadWidth = _useContainerWidth(chatThreadRef);
-  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
-
-  /**
-   * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the
-   * first render (not sure but I guess Fluent is updating it in hook which is after render maybe?) so we need to
-   * trigger a re-render until ClientHeight is initialized. This force re-render should only happen once.
-   */
-  const clientHeight = chatThreadRef.current?.clientHeight;
 
   const chatBody = useMemo(() => {
     return (
       <FluentV9ThemeProvider v8Theme={theme}>
         {/* Wrapper is required to call "useClasses" hook with proper context values */}
-        <MessageThreadWrapper {...props} isNarrow={isNarrow} clientHeight={clientHeight} />
+        <MessageThreadWrapper {...props} />
       </FluentV9ThemeProvider>
     );
-  }, [theme, props, isNarrow, clientHeight]);
+  }, [theme, props]);
 
-  return (
-    <div className={mergeStyles(messageThreadContainerStyle, props.styles?.root)} ref={chatThreadRef}>
-      {chatBody}
-    </div>
-  );
+  return <div className={mergeStyles(messageThreadContainerStyle, props.styles?.root)}>{chatBody}</div>;
 };
 
 /**
  * @private
  */
-export const MessageThreadWrapper = (
-  props: MessageThreadProps & { isNarrow: boolean; clientHeight: number | undefined }
-): JSX.Element => {
+export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => {
   const {
     messages: newMessages,
     userId,
@@ -986,6 +966,21 @@ export const MessageThreadWrapper = (
     chatMessagesInitializedRef.current = chatMessagesInitialized;
     setChatMessagesInitialized(chatMessagesInitialized);
   };
+
+  const chatThreadRef = useRef<HTMLDivElement>(null);
+
+  // When the chat thread is narrow, we perform space optimizations such as overlapping
+  // the avatar on top of the chat message and moving the chat accept/reject edit buttons
+  // to a new line
+  const chatThreadWidth = _useContainerWidth(chatThreadRef);
+  const isNarrow = chatThreadWidth ? isNarrowWidth(chatThreadWidth) : false;
+
+  /**
+   * ClientHeight controls the number of messages to render. However ClientHeight will not be initialized after the
+   * first render (not sure but I guess Fluent is updating it in hook which is after render maybe?) so we need to
+   * trigger a re-render until ClientHeight is initialized. This force re-render should only happen once.
+   */
+  const clientHeight = chatThreadRef.current?.clientHeight;
 
   // we try to only send those message status if user is scrolled to the bottom.
   const sendMessageStatusIfAtBottom = useCallback(async (): Promise<void> => {
@@ -1119,13 +1114,13 @@ export const MessageThreadWrapper = (
   }, [fetchNewMessageWhenAtTop, handleScrollToTheBottom]);
 
   useEffect(() => {
-    if (props.clientHeight === undefined) {
+    if (clientHeight === undefined) {
       setForceUpdate(forceUpdate + 1);
       return;
     }
     // Only scroll to bottom if isAtBottomOfScrollRef is true
     isAtBottomOfScrollRef.current && scrollToBottom();
-  }, [props.clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
+  }, [clientHeight, forceUpdate, scrollToBottom, chatMessagesInitialized]);
 
   /**
    * This needs to run to update latestPreviousChatMessage & latestCurrentChatMessage.
@@ -1193,7 +1188,7 @@ export const MessageThreadWrapper = (
             message={messageProps.message}
             userId={props.userId}
             remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-            shouldOverlapAvatarAndMessage={props.isNarrow}
+            shouldOverlapAvatarAndMessage={isNarrow}
             onRenderAvatar={onRenderAvatar}
             showMessageStatus={showMessageStatus}
             messageStatus={messageProps.message.status}
@@ -1219,7 +1214,7 @@ export const MessageThreadWrapper = (
       strings,
       props.userId,
       participantCount,
-      props.isNarrow,
+      isNarrow,
       onRenderAvatar,
       showMessageStatus,
       onActionButtonClickMemo,
@@ -1309,7 +1304,7 @@ export const MessageThreadWrapper = (
             showMessageDate,
             showMessageStatus,
             onRenderAvatar,
-            props.isNarrow,
+            isNarrow,
             styles,
             onRenderMessageStatus,
             defaultStatusRenderer,
@@ -1340,7 +1335,7 @@ export const MessageThreadWrapper = (
       showMessageDate,
       showMessageStatus,
       onRenderAvatar,
-      props.isNarrow,
+      isNarrow,
       styles,
       onRenderMessageStatus,
       defaultStatusRenderer,
@@ -1381,7 +1376,7 @@ export const MessageThreadWrapper = (
   }, [theme, classes.root, styles?.chatContainer, messagesToDisplay]);
 
   return (
-    <div className={mergeStyles(messageThreadWrapperContainerStyle)}>
+    <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
       {/* {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
             tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
             thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
