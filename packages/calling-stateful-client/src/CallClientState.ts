@@ -36,8 +36,6 @@ import {
   CommunicationIdentifierKind,
   MicrosoftTeamsAppKind
 } from '@azure/communication-common';
-/* @conditional-compile-remove(communication-common-beta-v3) */
-import { MicrosoftBotKind } from '@azure/communication-common';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -321,8 +319,7 @@ export interface RemoteParticipantState {
     | PhoneNumberKind
     | MicrosoftTeamsUserKind
     | UnknownIdentifierKind
-    | MicrosoftTeamsAppKind
-    | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
+    | MicrosoftTeamsAppKind;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */
@@ -780,6 +777,7 @@ export type CallErrorTarget =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.setConstraints';
 
 /**

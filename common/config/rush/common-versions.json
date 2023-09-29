@@ -24,8 +24,8 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
-    "@azure/communication-calling": "1.17.1-beta.5",
-    "@azure/communication-common": "3.0.0-beta.1",
+    "@azure/communication-calling": "1.18.1-beta.1",
+    "@azure/communication-common": "2.3.0",
     "@azure/communication-chat": "1.4.0-beta.1"
   },
 
@@ -54,8 +54,8 @@
    * This design avoids unnecessary churn in this file.
    */
   "allowedAlternativeVersions": {
-    "@azure/communication-calling": ["1.17.1-beta.5"],
-    "@azure/communication-common": ["3.0.0-beta.1"],
+    "@azure/communication-calling": ["1.18.1-beta.1"],
+    "@azure/communication-common": ["2.3.0"],
     "@azure/communication-chat": ["1.4.0-beta.1"],
     "typescript": [
       // All projects should use this version by default
