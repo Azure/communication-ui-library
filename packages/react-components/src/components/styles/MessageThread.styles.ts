@@ -109,7 +109,7 @@ export const useChatMessageRenderStyles = makeStyles({
   bodyMyMessage: {
     width: '100%',
     marginTop: '0'
-  },
+  },    
   bodyWithoutAvatar: {
     marginLeft: `${AVATAR_MARGIN_LEFT}rem`,
     marginTop: '0'
@@ -143,6 +143,7 @@ export const useChatMyMessageStyles = makeStyles({
   },
   body: {
     paddingBottom: '10px',
+    marginTop: '0.125rem',
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginLeft: '0rem',
@@ -163,8 +164,9 @@ export const useChatMyMessageStyles = makeStyles({
   menu: {
     boxShadow: tokens.shadow4,
     backgroundColor: tokens.colorNeutralBackground1,
-    marginBottom: '-10px',
     marginRight: '1px',
+    position: 'absolute',
+    top: '-20px',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
     lineHeight: tokens.lineHeightBase100,
@@ -182,7 +184,6 @@ export const useChatMyMessageStyles = makeStyles({
     visibility: 'visible'
   }
 });
-
 /**
  * @private
  */
