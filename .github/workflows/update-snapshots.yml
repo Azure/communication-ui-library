@@ -63,7 +63,6 @@ jobs:
     name: Update component examples snapshots
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
@@ -154,7 +153,6 @@ jobs:
     name: Update embed html bundle snapshots
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
@@ -245,7 +243,6 @@ jobs:
     name: Update packages/react-composites CallComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
@@ -336,7 +333,6 @@ jobs:
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
@@ -427,7 +423,6 @@ jobs:
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
