@@ -109,7 +109,7 @@ export const useChatMessageRenderStyles = makeStyles({
   bodyMyMessage: {
     width: '100%',
     marginTop: '0'
-  },    
+  },
   bodyWithoutAvatar: {
     marginLeft: `${AVATAR_MARGIN_LEFT}rem`,
     marginTop: '0'
@@ -184,6 +184,7 @@ export const useChatMyMessageStyles = makeStyles({
     visibility: 'visible'
   }
 });
+
 /**
  * @private
  */
