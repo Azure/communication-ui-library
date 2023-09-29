@@ -1377,9 +1377,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   return (
     <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
-      {/* {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
-            tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
-            thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
+      {/* Always ensure New Messages button is above the chat body element in the DOM tree. This is to ensure correct
+        tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
+        thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
       {existsNewChatMessage && !disableJumpToNewMessageButton && (
         <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
           {onRenderJumpToNewMessageButton ? (
