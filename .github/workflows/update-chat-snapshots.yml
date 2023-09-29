@@ -58,7 +58,6 @@ jobs:
     name: Update packages/react-composites ChatComposite browser test snapshots
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 1
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
