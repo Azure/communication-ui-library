@@ -143,6 +143,7 @@ export const useChatMyMessageStyles = makeStyles({
   },
   body: {
     paddingBottom: '10px',
+    marginTop: '1rem',
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginLeft: '0rem',
@@ -156,15 +157,19 @@ export const useChatMyMessageStyles = makeStyles({
       visibility: 'visible'
     },
     '& msft-mention': {
-      color: '#D83B01',
+      color: tokens.colorStatusWarningBackground3,
       fontWeight: 600
     }
+  },
+  bodyAttached: {
+    marginTop: '0.125rem'
   },
   menu: {
     boxShadow: tokens.shadow4,
     backgroundColor: tokens.colorNeutralBackground1,
-    marginBottom: '-10px',
     marginRight: '1px',
+    position: 'absolute',
+    top: '-2px',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
     lineHeight: tokens.lineHeightBase100,
@@ -174,6 +179,9 @@ export const useChatMyMessageStyles = makeStyles({
       cursor: 'pointer',
       visibility: 'visible'
     }
+  },
+  menuAttached: {
+    top: '-18px'
   },
   menuHidden: {
     visibility: 'hidden'
@@ -277,7 +285,7 @@ export const useChatMessageStyles = makeStyles({
     marginTop: '0.125rem'
   },
   bodyWithAvatar: {
-    marginTop: `0.5rem`
+    marginTop: `0.375rem`
   },
   avatarNoOverlap: {
     marginLeft: `${-AVATAR_MARGIN_LEFT + AVATAR_MESSAGE_GAP_REM}rem`
