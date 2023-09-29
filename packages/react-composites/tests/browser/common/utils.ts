@@ -131,7 +131,7 @@ export const waitForChatCompositeToLoad = async (page: Page): Promise<void> => {
   // in the DOM, page[1] doesn't receive the message.
   // Only when page[1] is refreshed is when it will see the message sent by p[1]
   // By waiting 10 sec before sending a message, page[1] is able to receive that message.
-  await page.waitForTimeout(10000);
+  await page.waitForTimeout(3000);
 };
 
 /**
