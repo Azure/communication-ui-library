@@ -2,9 +2,10 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { makeStyles, shorthands, FluentProvider } from '@fluentui/react-components';
+import { makeStyles, shorthands, FluentProvider, FluentProviderProps } from '@fluentui/react-components';
 import { Theme as ThemeV8 } from '@fluentui/react';
 import { createV9Theme } from './v9ThemeShim';
+import { TextDirectionProvider } from '@griffel/react';
 
 /**
  * Props for {@link FluentThemeProvider}.
@@ -32,30 +33,26 @@ export const useFluentV9Wrapper = makeStyles({
 });
 
 /**
- * Provider to apply a Fluent V9 theme to react components.
- *
- *
  * @private
  */
 export const FluentV9ThemeProvider = (props: FluentV9ThemeProviderProps): JSX.Element => {
   const { v8Theme, children } = props;
   const v9Theme = createV9Theme(v8Theme);
-
-  // This class wrapper is needed to ensure the useFluentV9Wrapper hook
-  // is called within the context of FluentProvider
-  interface ClassWrapperProps {
-    children: React.ReactNode;
-  }
-  const ClassWrapper = (props: ClassWrapperProps): JSX.Element => {
-    const { children } = props;
-    const fluentV9Wrapper = useFluentV9Wrapper();
-
-    return <div className={fluentV9Wrapper.body}>{children}</div>;
-  };
+  const dir = v8Theme.rtl ? 'rtl' : 'ltr';
 
   return (
-    <FluentProvider theme={v9Theme} dir={v8Theme.rtl ? 'rtl' : 'ltr'}>
-      <ClassWrapper>{children}</ClassWrapper>
-    </FluentProvider>
+    // TextDirectionProvider is needed to fix issue with direction value update in FluentProvider
+    <TextDirectionProvider dir={dir}>
+      {/* Wrapper is required to call "useClasses" hook with proper context values */}
+      <FluentProviderWithStylesOverrides theme={v9Theme} dir={dir}>
+        {children}
+      </FluentProviderWithStylesOverrides>
+    </TextDirectionProvider>
   );
+};
+
+const FluentProviderWithStylesOverrides: React.FC<FluentProviderProps> = (props) => {
+  const classes = useFluentV9Wrapper();
+
+  return <FluentProvider {...props} className={classes.body} />;
 };

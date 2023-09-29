@@ -30,6 +30,7 @@
     "@fluentui/react-icons": "^2.0.194",
     "@fluentui/react": "^8.110.4",
     "@fluentui/theme-samples": "8.1.5",
+    "@griffel/react": "^1.5.15",
     "@internal/fake-backends": "1.8.1-beta.0",
     "@microsoft/applicationinsights-react-js": "^3.0.5",
     "@microsoft/applicationinsights-web": "^2.6.2",

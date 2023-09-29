@@ -41,6 +41,14 @@ export const messageThreadContainerStyle = mergeStyles({
 /**
  * @private
  */
+export const messageThreadWrapperContainerStyle = mergeStyles({
+  height: '100%',
+  width: '100%'
+});
+
+/**
+ * @private
+ */
 export const noMessageStatusStyle = mergeStyles({
   // This should match the size of the message status indicator icon to ensure
   // multiple messages sent by the user are aligned correctly.
