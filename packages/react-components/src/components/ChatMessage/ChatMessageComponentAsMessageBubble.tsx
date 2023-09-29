@@ -329,6 +329,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                   : props.message.status === 'failed'
                   ? chatMessageCommonStyles.failed
                   : undefined,
+                attached !== 'top' ? chatMyMessageStyles.attached : undefined,
                 mergeStyles(messageContainerStyle)
               ),
               style: { ...createStyleFromV8Style(messageContainerStyle) },

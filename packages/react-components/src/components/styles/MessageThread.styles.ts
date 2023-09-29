@@ -143,7 +143,7 @@ export const useChatMyMessageStyles = makeStyles({
   },
   body: {
     paddingBottom: '10px',
-    marginTop: '0.125rem',
+    marginTop: '1rem',
     maxWidth: '100%',
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginLeft: '0rem',
@@ -157,9 +157,12 @@ export const useChatMyMessageStyles = makeStyles({
       visibility: 'visible'
     },
     '& msft-mention': {
-      color: '#D83B01',
+      color: tokens.colorStatusWarningBackground3,
       fontWeight: 600
     }
+  },
+    attached: {
+      marginTop: '0.125rem',
   },
   menu: {
     boxShadow: tokens.shadow4,
