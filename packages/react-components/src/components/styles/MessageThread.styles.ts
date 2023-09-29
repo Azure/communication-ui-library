@@ -181,7 +181,7 @@ export const useChatMyMessageStyles = makeStyles({
     }
   },
   menuAttached: {
-    top: '-18px',
+    top: '-18px'
   },
   menuHidden: {
     visibility: 'hidden'

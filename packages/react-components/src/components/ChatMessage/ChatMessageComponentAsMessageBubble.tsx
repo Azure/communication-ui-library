@@ -375,8 +375,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 focused || chatMessageActionFlyoutTarget
                   ? chatMyMessageStyles.menuVisible
                   : chatMyMessageStyles.menuHidden,
-                attached !== 'top' ? chatMyMessageStyles.menuAttached : undefined,
-
+                attached !== 'top' ? chatMyMessageStyles.menuAttached : undefined
               )
             }}
             onTouchStart={() => setWasInteractionByTouch(true)}
