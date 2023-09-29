@@ -161,8 +161,8 @@ export const useChatMyMessageStyles = makeStyles({
       fontWeight: 600
     }
   },
-    attached: {
-      marginTop: '0.125rem',
+  attached: {
+    marginTop: '0.125rem'
   },
   menu: {
     boxShadow: tokens.shadow4,
