@@ -170,7 +170,7 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
     await pageClick(page, dataUiId(IDS.moreButton));
     await page.locator('button:has-text("View")').click();
-    await page.locator('button:has-text("Gallery")').click();
+    await page.locator('button:has-text("Gallery view")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
     await pageClick(page, dataUiId(IDS.moreButton));
     await page.locator('button:has-text("View")').click();
