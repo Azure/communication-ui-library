@@ -101,7 +101,6 @@ const focusTrapZoneStyles: IStyle = {
 
 const drawerContentContainerStyles: BaseCustomStyles = {
   root: {
-    // Needed to fill max height from parent, drawerSurfaceStyles
-    height: '100%'
+    height: 'auto'
   }
 };
