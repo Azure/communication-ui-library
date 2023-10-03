@@ -320,7 +320,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       }
     };
 
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(overflow-top-composite) */
     const overflowGalleryOption = {
       key: 'topKey',
       text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
@@ -346,7 +346,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     };
     /* @conditional-compile-remove(large-gallery) */
     galleryOptions.subMenuProps?.items?.push(largeGalleryOption);
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    galleryOptions.subMenuProps?.items?.push(galleryOption);
+    /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
     /* @conditional-compile-remove(gallery-layouts) */
     moreButtonContextualMenuItems.push(galleryOptions);
