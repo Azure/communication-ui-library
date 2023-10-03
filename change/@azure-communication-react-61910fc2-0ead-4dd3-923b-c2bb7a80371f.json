@@ -2,7 +2,7 @@
   "type": "prerelease",
   "area": "feature",
   "workstream": "Gallery Layouts",
-  "comment": "UI Library now supports new Gallery Layouts",
+  "comment": "UI Library now supports new Gallery Layouts in the CallComposite and CallWithChatComposite on web and mobile. Users can select the new layouts from the control bar.",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
