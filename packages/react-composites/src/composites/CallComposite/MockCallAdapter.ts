@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+// Licensed under the MIT license.
 
 import {
   AudioDeviceInfo,
@@ -13,11 +13,12 @@ import {
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-import { EventEmitter } from 'stream';
+import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
 
 /**
  * Temporary copy of the packages\react-composites\tests\browser\call\app\mocks\MockCallAdapter.ts
+ * @internal
  */
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class MockCallAdapter implements CallAdapter {

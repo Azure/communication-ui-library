@@ -399,6 +399,69 @@ export const controlsToAdd = {
       displayType: 'default'
     },
     name: 'Control Bar Customizations'
+  },
+  customButtonInjectionControls: {
+    placement: {
+      control: 'select',
+      options: ['primary', 'secondary', 'overflow'],
+      defaultValue: 'primary',
+      name: 'placement'
+    },
+    label: {
+      control: 'text',
+      defaultValue: 'btn1',
+      name: 'Button label'
+    },
+    icon: {
+      control: 'text',
+      defaultValue: 'MessageEdit',
+      name: 'Button icon'
+    },
+    allowRawObjectInput: {
+      control: 'boolean',
+      defaultValue: false,
+      if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
+      name: 'Use Object Input Below'
+    },
+    options: {
+      control: 'object',
+      if: { arg: 'allowRawObjectInput' },
+      defaultValue: [
+        () => ({
+          placement: 'primary',
+          iconName: 'MessageEdit',
+          text: 'btn1',
+          key: 'btn1'
+        }),
+        () => ({
+          placement: 'secondary',
+          iconName: 'MessageEdit',
+          text: 'btn2',
+          key: 'btn2'
+        }),
+        () => ({
+          placement: 'overflow',
+          iconName: 'SendBoxSend',
+          text: 'btn3',
+          key: 'btn3'
+        })
+      ]
+    },
+    styles: {
+      control: 'object'
+    },
+    injectMaximumNumberOfButtons: {
+      control: 'boolean',
+      defaultValue: false,
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      name: 'Inject Max # of Custom Buttons'
+    },
+    showLabel: {
+      control: 'boolean',
+      defaultValue: true,
+      if: { arg: 'placement', neq: 'overflow' },
+      name: 'Show Label'
+    }
   }
 };
 
