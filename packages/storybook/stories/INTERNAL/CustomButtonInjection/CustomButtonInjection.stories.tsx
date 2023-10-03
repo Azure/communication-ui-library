@@ -181,6 +181,7 @@ const CustomButtonInjectionStory = (args): JSX.Element => {
   return (
     <CallComposite
       adapter={adapter}
+      formFactor={args.formFactor}
       options={{
         callControls: {
           onFetchCustomButtonProps: args.allowRawObjectInput
@@ -203,6 +204,7 @@ export default {
   title: `${COMPONENT_FOLDER_PREFIX}/Internal/CustomButtonInjection`,
   component: CustomButtonInjectionComponent,
   argTypes: {
+    formFactor: controlsToAdd.formFactor,
     placement: controlsToAdd.customButtonInjectionControls.placement,
     showButtonLabel: controlsToAdd.customButtonInjectionControls.showLabel,
     label: controlsToAdd.customButtonInjectionControls.label,
@@ -212,6 +214,7 @@ export default {
     options: controlsToAdd.customButtonInjectionControls.options,
 
     // Hiding auto-generated controls
+    onItemClick: hiddenControl,
     text: hiddenControl,
     showLabel: hiddenControl,
     iconName: hiddenControl,
