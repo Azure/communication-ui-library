@@ -5,7 +5,12 @@ import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useState, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsBanner, _CaptionsBannerStrings, CustomAvatarOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import {
+  _CaptionsBanner,
+  _CaptionsBannerStrings,
+  CustomAvatarOptions,
+  OnRenderAvatarCallback
+} from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
@@ -32,7 +37,11 @@ const mobileViewBannerWidth = '90%';
 const desktopViewBannerWidth = '35rem';
 
 /** @private */
-export const CaptionsBanner = (props: { isMobile: boolean; onRenderAvatar?: /* @conditional-compile-remove(close-captions) */OnRenderAvatarCallback; /* @conditional-compile-remove(close-captions) */onFetchAvatarPersonaData?: AvatarPersonaDataCallback; }): JSX.Element => {
+export const CaptionsBanner = (props: {
+  isMobile: boolean;
+  /* @conditional-compile-remove(close-captions) */ onRenderAvatar?: OnRenderAvatarCallback;
+  /* @conditional-compile-remove(close-captions) */ onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+}): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
   /* @conditional-compile-remove(close-captions) */
@@ -65,12 +74,10 @@ export const CaptionsBanner = (props: { isMobile: boolean; onRenderAvatar?: /* @
   const captionsBannerStrings: _CaptionsBannerStrings = {
     captionsBannerSpinnerText: strings.captionsBannerSpinnerText
   };
-/* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(close-captions) */
   const onRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
-      return (
-              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
-      );
+      return <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />;
     },
     [props.onFetchAvatarPersonaData]
   );

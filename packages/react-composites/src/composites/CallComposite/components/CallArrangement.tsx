@@ -16,7 +16,7 @@ import {
   useTheme
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import { OnRenderAvatarCallback} from '@internal/react-components';
+import { OnRenderAvatarCallback } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
@@ -96,7 +96,7 @@ export interface CallArrangementProps {
   dataUiId: string;
   mobileView: boolean;
   modalLayerHostId: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) *//* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   /* @conditional-compile-remove(close-captions) */
   onRenderAvatar?: OnRenderAvatarCallback;
@@ -429,9 +429,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
                       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
-                        <CaptionsBanner isMobile={props.mobileView}
-                        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-                        onRenderAvatar={props.onRenderAvatar}/>
+                        <CaptionsBanner
+                          isMobile={props.mobileView}
+                          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                          onRenderAvatar={props.onRenderAvatar}
+                        />
                       )
                   }
                 </Stack>
