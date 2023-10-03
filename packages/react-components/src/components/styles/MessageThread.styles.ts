@@ -43,7 +43,8 @@ export const messageThreadContainerStyle = mergeStyles({
  */
 export const messageThreadWrapperContainerStyle = mergeStyles({
   height: '100%',
-  width: '100%'
+  width: '100%',
+  position: 'relative'
 });
 
 /**
@@ -186,6 +187,7 @@ export const useChatMyMessageStyles = makeStyles({
     marginRight: '1px',
     position: 'absolute',
     top: '-2px',
+    right: '0',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
     lineHeight: tokens.lineHeightBase100,
