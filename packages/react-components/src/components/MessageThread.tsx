@@ -353,6 +353,7 @@ const memoizeAllMessages = memoizeFnAll(
     chatMessageRenderStyles: Record<
       | 'bodyCommon'
       | 'bodyMyMessage'
+      | 'rootCommon'
       | 'rootMyMessage'
       | 'rootMessage'
       | 'bodyWithoutAvatar'
@@ -405,6 +406,7 @@ const memoizeAllMessages = memoizeFnAll(
               // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
               className: mergeClasses(
                 chatMessageRenderStyles.rootMyMessage,
+                chatMessageRenderStyles.rootCommon,
                 mergeStyles(styles?.myChatItemMessageContainer)
               ),
               style:
@@ -447,7 +449,7 @@ const memoizeAllMessages = memoizeFnAll(
         chatMessageComponent = (
           <FluentChatMessage
             attached={attached}
-            root={{ className: chatMessageRenderStyles.rootMessage }}
+            root={{ className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) }}
             body={{
               // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
               className: mergeClasses(
