@@ -608,7 +608,7 @@ describe('Message should display Mention correctly', () => {
     expect(editBox.innerHTML).not.toContain(MSFT_MENTION);
 
     // Submit edited message
-    const submitButton = await screen.findByLabelText('Submit');
+    const submitButton = await screen.findByLabelText('Done');
     fireEvent.click(submitButton);
 
     // Verify message has new edited content includes mention HTML tag
