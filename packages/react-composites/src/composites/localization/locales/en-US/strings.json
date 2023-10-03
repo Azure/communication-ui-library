@@ -202,12 +202,12 @@
     "unableToResolveTenantMoreDetails": "Please check the participant id is entered correctly",
     "participantIdIsMalformedTitle": "Participant id is not in the correct format",
     "participantIdIsMalformedMoreDetails": "Please check that the participant id is in the correct format",
-    "moreButtonGalleryControlLabel": "Gallery options",
+    "moreButtonGalleryControlLabel": "View",
     "moreButtonGalleryPositionToggleLabel": "Move gallery to top",
-    "moreButtonGallerySpeakerLayoutLabel": "Speaker layout",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
-    "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Focused content",
+    "moreButtonGallerySpeakerLayoutLabel": "Speaker",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic",
+    "moreButtonGalleryDefaultLayoutLabel": "Gallery view",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Focus on content",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Large Gallery",
     "capabilityChangedNotification": {
       "turnVideoOn": {
