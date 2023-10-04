@@ -4,10 +4,20 @@ This log was last generated on Wed, 04 Oct 2023 17:17:11 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.9.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.9.0-beta.1)
+## [1.9.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.9.0-beta.1)
+
+
 
 Wed, 04 Oct 2023 17:17:11 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.8.0...@azure/communication-react_v1.9.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.8.0...1.9.0-beta.1)
+
+### Image Gallery - Public Preview
+The Web UI Chat and CallWithChat composite now supports the Image Gallery feature. This enables users to click on an individual inline image in a message bubble and display the selected image in full screen or download the image. 
+
+We are also introducing a new standalone ImageGallery component to display an image in large scale with the ability to download it
+
+### Gallery Layouts - Public Preview
+UI Library now supports new Gallery Layouts in the CallComposite and CallWithChatComposite on web and mobile. Users can select the new layouts from the control bar.
 
 ### Features
 - Update camera and mic buttons to have disabled icons when capability is not present. Update capability notification bar to use camera and mic button icons. ([PR #3527](https://github.com/azure/communication-ui-library/pull/3527) by 79475487+mgamis-msft@users.noreply.github.com)
