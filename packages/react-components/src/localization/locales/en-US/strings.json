@@ -147,7 +147,7 @@
     "newMessagesIndicator": "New messages",
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
-    "editBoxSubmitButton": "Submit",
+    "editBoxSubmitButton": "Done",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
     "downloadFile": "Download file",
