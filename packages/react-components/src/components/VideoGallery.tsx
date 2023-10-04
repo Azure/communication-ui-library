@@ -161,9 +161,9 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
  * @beta
  */
 export type OverflowGalleryPosition =
-  | 'HorizontalBottom'
-  | 'VerticalRight'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
+  | 'horizontalBottom'
+  | 'verticalRight'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
@@ -270,7 +270,7 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery inside the VideoGallery.
-   * @defaultValue 'HorizontalBottom'
+   * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
@@ -348,7 +348,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
-    overflowGalleryPosition = 'HorizontalBottom',
+    overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
