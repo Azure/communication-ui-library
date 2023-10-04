@@ -73,8 +73,12 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature image gallery
         'image-gallery',
         // Feature for large Gallery layout
-        'large-gallery'
-      ],      
+        'large-gallery',
+        // feature for positioning the overflowGallery at the top of the screen in the composite
+        'overflow-top-composite',
+        // feature for gallery layout in the composite 
+        'gallery-layout-composite'
+      ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
       // causing a build failure, but they are ignored by the preprocessing step.
@@ -83,9 +87,12 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Do not use in production code.
         'in-progress-beta-feature-demo',
         // Feature for custom video gallery layouts
-        'gallery-layouts',
         // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
-        'large-gallery'
+        'large-gallery',
+        // feature for positioning the overflowGallery at the top of the screen in the composite
+        'overflow-top-composite',
+        // feature for gallery layout in the composite 
+        'gallery-layout-composite'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -101,7 +108,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'pinned-participants',
         // Feature for capabilities
         'capabilities',
-         // Closed captions
+        // Closed captions
         'close-captions',
         // Optimal Video Count
         'optimal-video-count',
