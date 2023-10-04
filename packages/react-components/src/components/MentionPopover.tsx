@@ -215,7 +215,8 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
       // (location === 'above')
       finalPosition.bottom = (rect?.height ?? 0) - (targetPositionOffset?.top ?? 0) + verticalOffset;
     }
-    setPosition(finalPosition);
+    // setPosition(finalPosition);
+    setPosition({ left: targetPositionOffset?.left ?? 0, bottom: targetPositionOffset?.top ?? 0 });
   }, [location, target, targetPositionOffset]);
 
   const handleOnKeyDown = useCallback(
@@ -296,7 +297,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
     return '';
   }, [localeStrings, title]);
 
-  return (
+  return suggestions.length > 0 ? (
     <div ref={popoverRef}>
       {position && (
         <Stack
@@ -331,5 +332,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
         </Stack>
       )}
     </div>
+  ) : (
+    <> </>
   );
 };

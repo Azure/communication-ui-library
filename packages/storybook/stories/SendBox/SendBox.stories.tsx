@@ -5,6 +5,7 @@ import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React, { useEffect } from 'react';
+import { suggestions } from '../../../react-components/src/components/Editor/Plugins/mentionLoopupData';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
@@ -121,6 +122,15 @@ const SendBoxStory = (args): JSX.Element => {
           return Promise.resolve();
         }}
         systemMessage={args.hasWarning ? args.warningMessage : undefined}
+        mentionLookupOptions={{
+          trigger: '@',
+          onQueryUpdated: async (query: string) => {
+            const filtered = suggestions.filter((suggestion) => {
+              return suggestion.displayText.toLocaleLowerCase().startsWith(query.toLocaleLowerCase());
+            });
+            return Promise.resolve(filtered);
+          }
+        }}
       />
     </div>
   );

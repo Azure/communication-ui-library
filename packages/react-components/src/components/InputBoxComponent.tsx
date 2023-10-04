@@ -169,11 +169,17 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       mentionLookupOptions: props.mentionLookupOptions
     };
     /* @conditional-compile-remove(mention) */
-    if (props.mentionLookupOptions) {
-      return <TextFieldWithMention {...textFieldWithMentionProps} />;
-    }
+    // if (props.mentionLookupOptions) {
+    //   return <TextFieldWithMention {...textFieldWithMentionProps} />;
+    // }
     return (
-      <RichTextEditor content={textValue} onChange={onChange} placeholderText={placeholderText} onKeyDown={onKeyDown}>
+      <RichTextEditor
+        content={textValue}
+        onChange={onChange}
+        placeholderText={placeholderText}
+        onKeyDown={onKeyDown}
+        mentionLookupOptions={props.mentionLookupOptions}
+      >
         {onRenderChildren}
       </RichTextEditor>
       // <TextField

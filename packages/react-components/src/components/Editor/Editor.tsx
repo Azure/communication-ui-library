@@ -2,15 +2,9 @@
 // Licensed under the MIT license.
 
 import * as React from 'react';
-import { ContentEdit, Watermark, getAllFeatures } from 'roosterjs-editor-plugins';
+import { ContentEdit, Watermark } from 'roosterjs-editor-plugins';
 import { Editor } from 'roosterjs-editor-core';
-import {
-  EditorOptions,
-  EditorPlugin,
-  IEditor,
-  ClearFormatMode,
-  ContentEditFeatureSettings
-} from 'roosterjs-editor-types';
+import { EditorOptions, IEditor } from 'roosterjs-editor-types';
 import {
   Rooster,
   createRibbonPlugin,
@@ -18,13 +12,12 @@ import {
   Ribbon,
   getButtons,
   KnownRibbonButtonKey,
-  UpdateMode
+  UpdateMode,
+  ReactEditorPlugin
 } from 'roosterjs-react';
-import { Stack } from '@fluentui/react';
-import { clearFormat as clearFormatApi, toggleBold } from 'roosterjs-editor-api';
-import AtMentionPlugin from './Plugins/atMentionPlugin';
 import KeyDownPlugin from './Plugins/customizedPlugins';
-import { MentionLookupOptions } from '../MentionPopover';
+import { MentionLookupOptions, _MentionPopover } from '../MentionPopover';
+import MentionPlugin from './Plugins/MentionPlugin';
 
 export interface RichTextEditorProps extends EditorOptions, React.HTMLAttributes<HTMLDivElement> {
   content?: string;
@@ -42,6 +35,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
   const editorDiv = React.useRef<HTMLDivElement>(null);
   const editor = React.useRef<IEditor | null>(null);
   const ribbonPlugin = React.useMemo(() => createRibbonPlugin(), []);
+  const editorRef = React.useRef<HTMLInputElement>(null);
 
   React.useEffect(() => {
     if (content !== editor.current?.getContent()) {
@@ -60,7 +54,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
     ]);
 
     return (
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} ref={editorRef}>
         <Ribbon buttons={buttons} plugin={ribbonPlugin} />
         <div style={{ flex: 1 }} />
         {children()}
@@ -74,9 +68,21 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
     };
   }, [onChange]);
 
+  const mentionPlugin: ReactEditorPlugin = React.useMemo(() => {
+    return new MentionPlugin({
+      ...mentionLookupOptions!,
+      target: editorRef
+    });
+  }, [mentionLookupOptions, editorRef]);
+
   return (
     <div>
-      <Rooster plugins={[ribbonPlugin]} style={editorStyle} editorCreator={editorCreator} />
+      <Rooster
+        plugins={[ribbonPlugin, mentionPlugin]}
+        style={editorStyle}
+        editorCreator={editorCreator}
+        ref={editorRef}
+      />
       {onRenderRibbon()}
     </div>
   );
@@ -89,18 +95,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = (props) => {
       }
     );
     const keyDownPlugin = new KeyDownPlugin(onKeyDown);
-    const atMentionPluginInstance = new AtMentionPlugin(mentionLookupOptions);
     const contentEdit = new ContentEdit();
     const placeholderPlugin = new Watermark(placeholderText || '');
     const options: EditorOptions = {
-      plugins: [
-        ribbonPlugin,
-        atMentionPluginInstance.Picker,
-        placeholderPlugin,
-        contentEdit,
-        updateContentPlugin,
-        keyDownPlugin
-      ],
+      plugins: [ribbonPlugin, mentionPlugin, placeholderPlugin, contentEdit, updateContentPlugin, keyDownPlugin],
       imageSelectionBorderColor: 'blue'
     };
     editor.current = new Editor(div, options);
