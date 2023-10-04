@@ -338,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "上一页",
     "rightNavButtonAriaLabel": "下一页"
   }
