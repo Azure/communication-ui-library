@@ -295,7 +295,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
   );
   /* @conditional-compile-remove(gallery-layouts) */
-  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
     'Responsive'
   );
 
