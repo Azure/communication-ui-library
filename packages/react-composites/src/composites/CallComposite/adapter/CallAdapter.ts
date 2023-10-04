@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
@@ -793,7 +793,7 @@ export interface CallAdapterSubscribers {
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
   /**
-   * Unsubscribe function for 'capabilitiesChanged' event.
+   * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 

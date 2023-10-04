@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
@@ -283,7 +283,7 @@ test.describe('Overflow gallery tests', async () => {
     await pageClick(page, dataUiId(IDS.moreButton));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls.png');
-    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("View")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls-open.png');
     await page.locator('button:has-text("Move gallery to top")').click();
 

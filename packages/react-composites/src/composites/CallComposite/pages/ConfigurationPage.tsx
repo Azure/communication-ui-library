@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(call-readiness) */
@@ -13,7 +13,12 @@ import { useSelector } from '../hooks/useSelector';
 import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Panel, PanelType, Stack } from '@fluentui/react';
-import { fillWidth, panelFocusProps, panelStyles } from '../styles/CallConfiguration.styles';
+import {
+  fillWidth,
+  panelFocusProps,
+  panelStyles,
+  startCallButtonStyleDesktop
+} from '../styles/CallConfiguration.styles';
 import { LocalPreview } from '../components/LocalPreview';
 import {
   callDetailsStyleDesktop,
@@ -342,7 +347,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
             >
               <StartCallButton
-                className={mobileWithPreview ? startCallButtonStyleMobile : undefined}
+                className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
                 onClick={startCall}
                 disabled={disableStartCallButton}
               />

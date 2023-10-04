@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+// Licensed under the MIT License.
 
 import React from 'react';
 import { Dialpad, DialpadStrings, DtmfTone } from './Dialpad';

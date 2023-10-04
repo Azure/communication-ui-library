@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';

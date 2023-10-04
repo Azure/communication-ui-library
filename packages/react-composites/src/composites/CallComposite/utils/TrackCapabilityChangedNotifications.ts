@@ -1,15 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(capabilities) */
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(capabilities) */
-import {
-  CapabilitiesChangeInfo,
-  CapabilitiesChangedReason,
-  ParticipantCapabilityName,
-  ParticipantRole
-} from '@azure/communication-calling';
+import { CapabilitiesChangeInfo, ParticipantCapabilityName, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import {
   CapabalityChangedNotification,
@@ -30,19 +25,14 @@ export const useTrackedCapabilityChangedNotifications = (
   const [trackedCapabilityChangedNotifications, setTrackedCapabilityChangedNotifications] =
     useState<TrackedCapabilityChangedNotifications>({});
 
-  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({});
-
-  // Take note of first capabilities changed reason
-  const firstCapabilitiesChangedReason = useRef<CapabilitiesChangedReason>();
+  // Initialize a share screen capability changed notification with 'RoleChanged' reason so that the initial
+  // share screen capability changed info from the Calling SDK when joining Teams interop will be ignored because
+  // being able to share screen is assumed by default. This is inline with what Teams is doing.
+  const activeNotifications = useRef<LatestCapabilityChangedNotificationRecord>({
+    shareScreen: { capabilityName: 'shareScreen', isPresent: true, changedReason: 'RoleChanged' }
+  });
 
   useEffect(() => {
-    if (firstCapabilitiesChangedReason.current === undefined) {
-      firstCapabilitiesChangedReason.current = capabilitiesChangedAndRoleInfo.capabilitiesChangeInfo?.reason;
-      // Skip the first notifications if they are role related to be inline with Teams behavior
-      if (firstCapabilitiesChangedReason.current === 'RoleChanged') {
-        return;
-      }
-    }
     activeNotifications.current = updateLatestCapabilityChangedNotificationMap(
       capabilitiesChangedAndRoleInfo,
       activeNotifications.current
@@ -167,6 +157,15 @@ const updateLatestCapabilityChangedNotificationMap = (
   for (const [capabilityName, newCapabilityValue] of Object.entries(
     capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.newValue
   )) {
+    // If the active notification for a capability has the same `isPresent` value and the same reason as the new
+    // capability value from the SDK then we will not create a new notification to avoid redundancy
+    if (
+      activeNotifications[capabilityName] &&
+      newCapabilityValue.isPresent === activeNotifications[capabilityName].isPresent &&
+      capabilitiesChangedInfoAndRole.capabilitiesChangeInfo.reason === activeNotifications[capabilityName].changedReason
+    ) {
+      continue;
+    }
     const newCapabilityChangeNotification: CapabalityChangedNotification = {
       capabilityName: capabilityName as ParticipantCapabilityName,
       isPresent: newCapabilityValue.isPresent,

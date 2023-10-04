@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -628,6 +630,48 @@ export const DEFAULT_COMPONENT_ICONS: {
 };
 
 // @internal
+export interface _DeviceMenuProps {
+    // (undocumented)
+    cameras?: OptionsDevice[];
+    // (undocumented)
+    microphones?: OptionsDevice[];
+    // (undocumented)
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: OptionsDevice;
+    // (undocumented)
+    selectedMicrophone?: OptionsDevice;
+    // (undocumented)
+    selectedSpeaker?: OptionsDevice;
+    // (undocumented)
+    speakers?: OptionsDevice[];
+    // (undocumented)
+    styles?: Partial<_DeviceMenuStyles>;
+}
+
+// @internal
+export interface _DeviceMenuStrings {
+    audioDeviceMenuTitle?: string;
+    audioDeviceMenuTooltip?: string;
+    cameraMenuTitle?: string;
+    cameraMenuTooltip?: string;
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
+}
+
+// @internal
+export interface _DeviceMenuStyles extends IContextualMenuStyles {
+    // (undocumented)
+    menuItemStyles?: IContextualMenuItemStyles;
+}
+
+// @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
 
 // @internal
@@ -936,6 +980,11 @@ export interface FluentThemeProviderProps {
     fluentTheme?: PartialTheme | Theme;
     rtl?: boolean;
 }
+
+// @internal
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+    items: IContextualMenuItem[];
+} | undefined;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;

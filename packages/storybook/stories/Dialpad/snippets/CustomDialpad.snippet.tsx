@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { DtmfTone } from '@azure/communication-calling';
 import { Dialpad, FluentThemeProvider } from '@azure/communication-react';

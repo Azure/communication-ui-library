@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallComposite } from '@azure/communication-react';
 import { MessageBar, Stack, Text } from '@fluentui/react';
@@ -271,7 +271,55 @@ export const Docs: () => JSX.Element = () => {
         gallery](./?path=/docs/ui-components-videogallery--video-gallery) component docs for more information on our
         local video tile and some of the other options we have for the local video tile when just using the components.
       </Description>
-
+      <Heading>Customizing the default Gallery Layout</Heading>
+      <SingleLineBetaBanner />
+      <Description>
+        We allow for the customization of the starting layout of the gallery. The layout can be changed by the user
+        though the gallery options menu found in the more button of the call controls.
+      </Description>
+      <Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+        <Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-dynamic-layout.png"
+              alt="Dynamic layout for composite video gallery"
+            />
+            <Description>Call Composite with `dynamic` layout.</Description>
+          </Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-focused-content.png"
+              alt="Focused content layout for composite video gallery"
+            />
+            <Description>Call Composite with `focused content` layout.</Description>
+          </Stack>
+        </Stack>
+        <Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-gallery-layout.png"
+              alt="Gallery layout for composite video gallery"
+            />
+            <Description>Call Composite with `gallery` layout.</Description>
+          </Stack>
+          <Stack horizontalAlign="center">
+            <img
+              style={{ width: '100%', maxWidth: '25rem' }}
+              src="images/callcomposite-speaker-layout.png"
+              alt="Speaker layout for composite video gallery"
+            />
+            <Description>Call Composite with `speaker` layout.</Description>
+          </Stack>
+        </Stack>
+      </Stack>
+      <Description>You can set the gallery layout using the following: </Description>
+      <Source code="<CallComposite options={galleryOptions: {layout: 'speaker'}} />" />
+      <Source code="<CallComposite options={galleryOptions: {layout: 'default'}} />" />
+      <Source code="<CallComposite options={galleryOptions: {layout: 'floatingLocalVideo'}} />" />
+      <Source code="<CallComposite options={galleryOptions: {layout: 'focusedContent'}} />" />
       <div ref={refExistedJoinCall}>
         <Heading>Joining an existing Call</Heading>
         <Description>

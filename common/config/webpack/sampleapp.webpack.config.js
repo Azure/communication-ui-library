@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 const path = require('path');
 const webpack = require('webpack');
@@ -68,7 +68,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'json',
+        analyzerMode: 'json'
       }),
       new CopyPlugin({
         patterns: [

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   concatStyleSets,
@@ -70,11 +70,11 @@ export const localVideoTileContainerStyle = (
     minWidth: screenSharePresent ? '' : `${localVideoTileSizeRem.width}rem`,
     minHeight: screenSharePresent ? '' : `${localVideoTileSizeRem.height}rem`,
     position: 'absolute',
-    bottom: overflowGalleryPosition !== 'HorizontalTop' ? `${localVideoTileOuterPaddingRem}rem` : 'unset',
-    top: overflowGalleryPosition === 'HorizontalTop' ? `${localVideoTileOuterPaddingRem}rem` : 'unset',
+    bottom: overflowGalleryPosition !== 'HorizontalTop' ? `${dockedlocalVideoTileContainerPaddingRem}rem` : 'unset',
+    top: overflowGalleryPosition === 'HorizontalTop' ? `${dockedlocalVideoTileContainerPaddingRem}rem` : 'unset',
     borderRadius: theme.effects.roundedCorner4,
     overflow: 'hidden',
-    right: `${localVideoTileOuterPaddingRem}rem`
+    right: `${dockedlocalVideoTileContainerPaddingRem}rem`
   };
 };
 
@@ -99,7 +99,10 @@ export const floatingLocalVideoModalStyle = (
 ): IStyleFunctionOrObject<IModalStyleProps, IModalStyles> => {
   return concatStyleSets(
     {
-      main: localVideoTileContainerStyle(theme, modalSizeRem)
+      main: mergeStyles(localVideoTileContainerStyle(theme, modalSizeRem), {
+        bottom: `${floatinglocalVideoModalInitialPositionGapRem}rem`,
+        right: `${floatinglocalVideoModalInitialPositionGapRem}rem`
+      })
     },
     {
       main: {
@@ -115,11 +118,18 @@ export const floatingLocalVideoModalStyle = (
 };
 
 /**
- * Padding equal to the amount the modal should stay inside the bounds of the container.
- * i.e. if this is 0.5rem, the modal should always be at least 0.5rem inside the container at all times on all sides.
+ * Initial position gap of the floating local video modal.
+ * ie. if this is 1rem, then floating local video modal would initially be positioned 1rem from
+ * the bottom and 1rem from the right.
  * @private
  */
-export const localVideoTileOuterPaddingRem = 0.5;
+export const floatinglocalVideoModalInitialPositionGapRem = 1;
+
+/**
+ * Padding of the docked local video tile container.
+ * @private
+ */
+export const dockedlocalVideoTileContainerPaddingRem = 0.5;
 
 /**
  * @private

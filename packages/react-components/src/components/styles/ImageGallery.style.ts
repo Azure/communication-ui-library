@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IIconProps, IStyle } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */

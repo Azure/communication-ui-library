@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { FileMetadata } from '@internal/react-components';
 import { FileUploadManager, FileUploadState } from '../file-sharing';

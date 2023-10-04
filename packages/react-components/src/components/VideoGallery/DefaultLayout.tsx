@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
 import React, { useMemo, useState, useRef } from 'react';
@@ -118,6 +118,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        /* @conditional-compile-remove(gallery-layouts) */
+        layout={'default'}
       />
     );
   }, [

@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(call-readiness) */
 import React from 'react';
 /* @conditional-compile-remove(call-readiness) */

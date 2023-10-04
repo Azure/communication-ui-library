@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ComponentIcons } from '@internal/react-components';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, COMPOSITE_ONLY_ICONS } from './icons';
