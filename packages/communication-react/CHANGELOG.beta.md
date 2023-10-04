@@ -34,7 +34,7 @@ UI Library now supports new Gallery Layouts in the CallComposite and CallWithCha
 - Treeshake locales from composites ([PR #3615](https://github.com/azure/communication-ui-library/pull/3615) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Update localized strings ([PR #3542](https://github.com/azure/communication-ui-library/pull/3542) by 79475487+mgamis-msft@users.noreply.github.com)
 - Update `@azure/communication-signaling` version to 1.0.0-beta.20 ([PR #3524](https://github.com/azure/communication-ui-library/pull/3524) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Update `@azure/communication-calling` version to 1.16.3 and the beta verison to 1.17.1-beta.5 [PR #3552](https://github.com/azure/communication-ui-library/pull/3552) [PR #3508](https://github.com/azure/communication-ui-library/pull/3508)
+- Update `@azure/communication-calling` beta verison to 1.17.1-beta.5 [PR #3552](https://github.com/azure/communication-ui-library/pull/3552)
 
 ### Bug Fixes
 - Fix show more button only if enabled and has at least one context menu button to show ([PR #3583](https://github.com/azure/communication-ui-library/pull/3583) by 79475487+mgamis-msft@users.noreply.github.com)
