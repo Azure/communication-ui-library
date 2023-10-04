@@ -80,7 +80,7 @@ export const WithVerticalGalleryExample: () => JSX.Element = () => {
       <VideoGallery
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
       />
     </Stack>
   );
