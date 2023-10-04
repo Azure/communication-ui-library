@@ -55,9 +55,9 @@ export interface CallPageProps {
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  userSetOverflowGalleryPosition?: 'Responsive' | 'HorizontalTop';
+  userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   /* @conditional-compile-remove(gallery-layouts) */
-  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
 }
 
 /**

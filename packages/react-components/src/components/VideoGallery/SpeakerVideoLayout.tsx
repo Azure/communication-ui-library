@@ -64,7 +64,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     maxRemoteVideoStreams,
     parentWidth,
     /* @conditional-compile-remove(vertical-gallery) */ parentHeight,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   } = props;
@@ -136,7 +136,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'VerticalRight') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'verticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
@@ -144,7 +144,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     /*@conditional-compile-remove(click-to-call) */
-    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'HorizontalBottom') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
     return LARGE_FLOATING_MODAL_SIZE_REM;
@@ -212,12 +212,12 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack
         /* @conditional-compile-remove(vertical-gallery) */
-        horizontal={overflowGalleryPosition === 'VerticalRight'}
+        horizontal={overflowGalleryPosition === 'verticalRight'}
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
         {
-          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'HorizontalTop' ? (
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
             overflowGallery
           ) : (
             <></>
@@ -241,9 +241,9 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
 
 const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
-  galleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
+  galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
   /* @conditional-compile-remove(gallery-layouts) */
-  return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
+  return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };
