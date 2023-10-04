@@ -199,7 +199,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   const ids = useIdentifiers();
 
   /* @conditional-compile-remove(vertical-gallery) */
-  const strings = useLocale().strings.VerticalGallery;
+  const strings = useLocale().strings.verticalGallery;
 
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);

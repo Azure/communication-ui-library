@@ -48,7 +48,7 @@ export interface LayoutProps {
   /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery.
-   * @defaultValue 'HorizontalBottom'
+   * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
 }
