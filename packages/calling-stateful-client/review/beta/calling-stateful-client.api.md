@@ -175,7 +175,7 @@ export type CreateViewResult = {
 };
 
 // @beta
-export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
+export type DeclarativeCallAgent = CallAgent & /* @conditional-compile-remove(one-to-n-calling) */ IncomingCallManagement;
 
 // @beta
 export type DeclarativeIncomingCall = IncomingCall;

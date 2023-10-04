@@ -214,7 +214,7 @@ export interface CommonCallingHandlers {
 }
 
 // @public
-export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, /* @conditional-compile-remove(video-background-effects) */ options?: CallingHandlersOptions) => CallingHandlers;
 
 // @public
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
