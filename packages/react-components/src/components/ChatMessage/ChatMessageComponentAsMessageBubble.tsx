@@ -333,6 +333,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 mergeStyles(messageContainerStyle)
               ),
               style: { ...createStyleFromV8Style(messageContainerStyle) },
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
               tabIndex: -1,
               role: 'presentation'
             }}
@@ -352,6 +354,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
                 setFocused(true);
               },
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
               role: 'none',
               tabIndex: -1
             }}
