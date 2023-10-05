@@ -147,16 +147,16 @@ const getDocs: () => JSX.Element = () => {
         In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
         VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
         sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
-        assigning the `overflowGalleryPosition` to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery
+        assigning the `overflowGalleryPosition` to 'horizontalBottom'. This is the default. Conversely, this sub-gallery
         can be placed on the right displaying participants vertically by assigning the `overflowGalleryPosition` to
-        'VerticalRight'.
+        'verticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
       <Description>
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Horizontal Gallery in the
         lower section. A gif element is used to simulate a remote video stream to move the other remote participants to
         the Horizontal Gallery in the example below. This is the default behavior for the VideoGallery, but can also be
-        used by setting the `overflowGalleryPosition` property to 'HorizontalBottom'.
+        used by setting the `overflowGalleryPosition` property to 'horizontalBottom'.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
@@ -166,7 +166,7 @@ const getDocs: () => JSX.Element = () => {
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Vertical Gallery on the
         right side. A gif element is used to simulate a remote video stream to move the other remote participants to the
         Vertical Gallery in the example below. This is used by setting the `overflowGalleryPosition` property to
-        'VerticalRight'.
+        'verticalRight'.
       </Description>
       <Canvas mdxSource={WithVerticalGalleryExampleText}>
         <WithVerticalGalleryExample />

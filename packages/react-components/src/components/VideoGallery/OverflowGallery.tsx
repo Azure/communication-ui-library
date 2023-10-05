@@ -54,14 +54,14 @@ export const OverflowGallery = (props: {
     isShort = false,
     overflowGalleryElements,
     horizontalGalleryStyles,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
     onChildrenPerPageChange
   } = props;
 
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryPosition === 'VerticalRight') {
+    if (overflowGalleryPosition === 'verticalRight') {
       return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow, isShort);
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
@@ -74,7 +74,7 @@ export const OverflowGallery = (props: {
 
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryPosition === 'VerticalRight') {
+    if (overflowGalleryPosition === 'verticalRight') {
       return concatStyleSets(verticalGalleryStyle(isShort), verticalGalleryStyles);
     }
     return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
@@ -87,7 +87,7 @@ export const OverflowGallery = (props: {
   ]);
 
   /* @conditional-compile-remove(vertical-gallery) */
-  if (overflowGalleryPosition === 'VerticalRight') {
+  if (overflowGalleryPosition === 'verticalRight') {
     return (
       <ResponsiveVerticalGallery
         key="responsive-vertical-gallery"
