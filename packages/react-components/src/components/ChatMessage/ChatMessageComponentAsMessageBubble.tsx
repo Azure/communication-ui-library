@@ -192,22 +192,20 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     /* @conditional-compile-remove(data-loss-prevention) */ message.messageType !== 'blocked';
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
-  const actionMenuProps = wasInteractionByTouch
-    ? undefined
-    : chatMessageActionMenuProps({
-        ariaLabel: strings.actionMenuMoreOptions ?? '',
-        enabled: chatActionsEnabled,
-        menuButtonRef: messageActionButtonRef,
-        // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
-        forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
-        onActionButtonClick: () => {
-          if (message.messageType === 'chat') {
-            props.onActionButtonClick(message, setMessageReadBy);
-            setChatMessageActionFlyoutTarget(messageActionButtonRef);
-          }
-        },
-        theme
-      });
+  const actionMenuProps = chatMessageActionMenuProps({
+    ariaLabel: strings.actionMenuMoreOptions ?? '',
+    enabled: chatActionsEnabled,
+    menuButtonRef: messageActionButtonRef,
+    // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
+    forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
+    onActionButtonClick: () => {
+      if (message.messageType === 'chat') {
+        props.onActionButtonClick(message, setMessageReadBy);
+        setChatMessageActionFlyoutTarget(messageActionButtonRef);
+      }
+    },
+    theme
+  });
 
   const onActionFlyoutDismiss = useCallback((): void => {
     // When the flyout dismiss is called, since we control if the action flyout is visible
@@ -376,7 +374,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
               className: mergeClasses(
                 chatMyMessageStyles.menu,
                 // Make actions menu visible when the message is focused or the flyout is shown
-                focused || chatMessageActionFlyoutTarget
+                focused || chatMessageActionFlyoutTarget?.current
                   ? chatMyMessageStyles.menuVisible
                   : chatMyMessageStyles.menuHidden,
                 attached !== 'top' ? chatMyMessageStyles.menuAttached : undefined
@@ -385,7 +383,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             onTouchStart={() => setWasInteractionByTouch(true)}
             onPointerDown={() => setWasInteractionByTouch(false)}
             onKeyDown={() => setWasInteractionByTouch(false)}
-            onBlur={() => setWasInteractionByTouch(false)} // onBlur is applied to body, not root
             onClick={() => {
               if (!wasInteractionByTouch) {
                 return;
