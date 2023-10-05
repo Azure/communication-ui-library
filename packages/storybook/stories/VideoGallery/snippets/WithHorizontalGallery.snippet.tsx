@@ -51,7 +51,7 @@ export const WithHorizontalGalleryExample: () => JSX.Element = () => {
       <VideoGallery
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        overflowGalleryPosition={'HorizontalBottom'}
+        overflowGalleryPosition={'horizontalBottom'}
       />
     </Stack>
   );

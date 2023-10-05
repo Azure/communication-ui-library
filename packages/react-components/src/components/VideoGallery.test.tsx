@@ -578,7 +578,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
       />
     );
 
@@ -620,7 +620,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
         dominantSpeakers={['remoteScreenSharingParticipant', 'remoteVideoParticipant']}
       />
     );
@@ -656,7 +656,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
         dominantSpeakers={['1', '6']}
         pinnedParticipants={['7', '6']}
       />
