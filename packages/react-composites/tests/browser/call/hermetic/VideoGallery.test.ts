@@ -218,7 +218,7 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layout-composite) */
   test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
