@@ -168,8 +168,11 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls-open.png');
     await page.locator('button:has-text("Speaker")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
+    /* @conditional-compile-remove(gallery-layout-composite) */
     await pageClick(page, dataUiId(IDS.moreButton));
+    /* @conditional-compile-remove(gallery-layout-composite) */
     await page.locator('button:has-text("View")').click();
+    /* @conditional-compile-remove(gallery-layout-composite) */
     await page.locator('button:has-text("Gallery view")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
     await pageClick(page, dataUiId(IDS.moreButton));
@@ -218,7 +221,7 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layout-composite) */
   test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -255,6 +258,7 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("View")');
     await page.locator('span:has-text("View")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
   });
