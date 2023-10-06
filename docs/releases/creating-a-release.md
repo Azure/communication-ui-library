@@ -75,7 +75,7 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 
 ### Step 1.3: Update the UI Snapshot (beta-release only)
 
-After finishing creating release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
+After finishing creating a release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
 1. Create a new branch based on the release branch you just created in Step 1.2
 2. Use the [update-snapshots](https://github.com/Azure/communication-ui-library/actions/workflows/update-snapshots.yml) github action to trigger the update snapshots workflow. ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
@@ -119,20 +119,20 @@ This process has the following benefits:
 You are now ready to publish the package!
 
 **Releasing to NPM is an irreversible action**.
-Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post release actions](./release-checklist.md) to take to ensure a confident release.
+Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post-release actions](./release-checklist.md) to ensure a confident release.
 
-**Rule of two**: It is recommended to pair up with a team member for this last step to reduce the changes of human error.
+**Rule of two**: It is recommended to pair up with a team member for this last step to reduce the chances of human error.
 
 
 1. Run the [Publish npm packages" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/npm-release-publish.yml) **off the release branch**.
     - Pick the right tag: For stable release, pick `latest`, for beta release pick `next`.
     ![Trigger the NPM release action](../images/trigger-npm-publich-action.png)
 1. This deployment must then be approved by one of the repo administrators:
-    ![Screenshot highlighting reuired approval before publishing npm package](../images/npm-publish-required-approval.png)
+    ![Screenshot highlighting required approval before publishing npm package](../images/npm-publish-required-approval.png)
 1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 1. For *beta releases only*, also deploy the hosted storybook documentation using the ["Release branch - Publish Storybook" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/deploy-storybook.yml).
     ![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
-1. Once everything is deployed and published on npm, delete the release branch from github.
+1. Once everything is deployed and published on npm, delete the release branch from Git Hub.
 
 ## Step ∞
 
@@ -179,7 +179,7 @@ There is currently no GitHub action for creating a hotfix and must be done manua
 
 Alpha releases are created nightly using the [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml) GitHub action.
 
-They use beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
+They use Beachball's `canary` CLI command to temporarily set all package versions to \<version\>-alpha-yyyymmddHHMM, then package up the npm packages and upload the packages to the azure release pipeline.
 
 ## NPM publish pipeline
 
