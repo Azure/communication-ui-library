@@ -15,6 +15,8 @@ import { PrimaryCustomButtonInjectionExample } from './snippets/PrimaryCustomBut
 import { SecondaryCustomButtonInjectionExample } from './snippets/SecondaryCustomButtonInjection.snippet';
 import { OverflowCustomButtonInjectionExample } from './snippets/OverflowCustomButtonInjection.snippet';
 import { MobileCustomButtonInjectionExample } from './snippets/MobileCustomButtonInjection.snippet';
+import { CustomButtonWithStateExample } from './snippets/CustomButtonWithState.snippet';
+import { CustomButtonWithAsyncStateExample } from './snippets/CustomButtonWithAsyncState.snippet';
 
 const PrimaryCustomButtonInjectionExampleText =
   require('!!raw-loader!./snippets/PrimaryCustomButtonInjection.snippet').default;
@@ -24,6 +26,9 @@ const OverflowCustomButtonInjectionExampleText =
   require('!!raw-loader!./snippets/OverflowCustomButtonInjection.snippet').default;
 const MobileCustomButtonInjectionExampleText =
   require('!!raw-loader!./snippets/MobileCustomButtonInjection.snippet').default;
+const CustomButtonWithStateExampleText = require('!!raw-loader!./snippets/CustomButtonWithState.snippet').default;
+const CustomButtonWithAsyncStateExampleText =
+  require('!!raw-loader!./snippets/CustomButtonWithAsyncState.snippet').default;
 
 const getDocs: () => JSX.Element = () => {
   return (
@@ -67,6 +72,16 @@ const getDocs: () => JSX.Element = () => {
       <Description>Max number of buttons in primary: '1' Max number of buttons in Contextual Menu: '∞'</Description>
       <Canvas mdxSource={MobileCustomButtonInjectionExampleText}>
         <MobileCustomButtonInjectionExample />
+      </Canvas>
+
+      <Subheading>Custom Button With State</Subheading>
+      <Canvas mdxSource={CustomButtonWithStateExampleText}>
+        <CustomButtonWithStateExample />
+      </Canvas>
+
+      <Subheading>Custom Button With Async loading State</Subheading>
+      <Canvas mdxSource={CustomButtonWithAsyncStateExampleText}>
+        <CustomButtonWithAsyncStateExample />
       </Canvas>
 
       <Heading>Code Samples</Heading>

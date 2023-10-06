@@ -75,16 +75,18 @@ export const MobileCustomButtonInjectionExample = (): JSX.Element => {
   const adapter = new MockCallAdapter({});
 
   return (
-    <CallComposite
-      adapter={adapter}
-      formFactor={'mobile'}
-      options={{
-        callControls: {
-          raiseHandButton: false,
-          screenShareButton: false,
-          onFetchCustomButtonProps: maxCustomButtonsForInjection
-        }
-      }}
-    />
+    <div style={{ aspectRatio: 9 / 16, height: '32rem', margin: 'auto' }}>
+      <CallComposite
+        adapter={adapter}
+        formFactor={'mobile'}
+        options={{
+          callControls: {
+            raiseHandButton: false,
+            screenShareButton: false,
+            onFetchCustomButtonProps: maxCustomButtonsForInjection
+          }
+        }}
+      />
+    </div>
   );
 };
