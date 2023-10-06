@@ -60,7 +60,6 @@ module.exports = {
       '@internal/calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
       '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
       '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src'),
-      '@internal/northstar-wrapper': path.resolve(__dirname, '../../northstar-wrapper/src'),
       '@internal/fake-backends': path.resolve(__dirname, '../../fake-backends/src')
     };
 
@@ -77,7 +76,6 @@ module.exports = {
       '@internal/calling-stateful-client': path.resolve(__dirname, '../../calling-stateful-client/src'),
       '@internal/calling-component-bindings': path.resolve(__dirname, '../../calling-component-bindings/src'),
       '@internal/acs-ui-common': path.resolve(__dirname, '../../acs-ui-common/src'),
-      '@internal/northstar-wrapper': path.resolve(__dirname, '../../northstar-wrapper/src'),
       '@internal/fake-backends': path.resolve(__dirname, '../../fake-backends/src')
     };
 
