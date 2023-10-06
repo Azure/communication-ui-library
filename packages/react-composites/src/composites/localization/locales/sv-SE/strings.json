@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisk layout",
     "moreButtonGalleryDefaultLayoutLabel": "Gallerilayout",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokuserat innehåll",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Stort galleri",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameran har inaktiverats. Du kan inte längre dela video.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Liveundertexter",
     "moreDrawerSpokenLanguageMenuTitle": "Talat språk",
     "moreDrawerCaptionLanguageMenuTitle": "Språk för undertext",
+    "moreDrawerGalleryOptionsMenuTitle": "Gallerialternativ",
     "peopleButtonLabel": "Personer",
     "selectedPeopleButtonLabel": "Knappen Kontakter har valts",
     "peopleButtonTooltipOpen": "Visa deltagare",
