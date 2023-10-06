@@ -6,27 +6,42 @@ Along with the NPM package, we also update the documentation hosted on [storyboo
 This repository follows a green-trunk development model. All development happens on the `main` branch. Releasing a new version of the package involves three distinct steps:
 
 1. [Create a git branch to release the package](#step-1-creating-a-release-branch). This step is mostly automated via GitHub workflows.
-1. [Prepare the branch for release](#step-2-prepare-for-release). This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
-1. [Release the package to NPM for release branch](#step-3-publish-to-npm). This step is mostly automated via GitHub workflows.
+2. [Prepare the branch for release](#step-2-prepare-for-release). This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
+3. [Release the package to NPM for release branch](#step-3-publish-to-npm). This step is mostly automated via GitHub workflows.
 
 _This document applies to beta and stable releases. Alpha releases are created nightly through a separate [light-weight mechanism](#creating-alpha-releases)._
 
 _This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
 
-## Before creating a Release Branch
+## Step 0.1 Update Strings on Main
 
 - Update the strings on `main` these [steps](../references/string-translations.md).
   - **Note**: String translation can take up to 5 working days to complete. It is a good idea to avoid string changes once before the release process
+ 
+## Step 0.2 Pre-Release ChangeLog and Update Feature List
+
+Ask feature owners to create a PR to add a pre-release changelog and remove the feature from the in-progress-feature/feature list.
+
+For all the features that are going into this release, ask the feature owners to:
+- Remove the feature from the inProgressFeatures array or the feature array in the .babelrc.js
+- Create a change log summarizing the feature and set the change as 'prerelease'
+- Make sure the single-line banner in Storybook references the right beta versions for each feature
+
+[The Web UI (both teams) Feature Board](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
+
+## Step 0.3 Create a Thread in the WebUI channel to Track Release Progress
+
+Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
 
 ## Step 1: Creating a Release Branch
 
-Both beta and stable releases follow a two step workflow, aided by github actions.
+Both beta and stable releases follow a two-step workflow, aided by GitHub actions.
 
 ### Step 1.1: Create a Pre-release Branch
 
 We want to create a pre-release branch because this branch will act as a place to perform actions like bumping package versions, grooming the changelog, and performing string translations. This branch will be the place that the release branch is created from before it is merged back into main.
 
-Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-prerelease-branch.yml) github action to trigger the release preparation workflow.
+Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-prerelease-branch.yml) GitHub action to trigger the release preparation workflow.
 
 1. Options for this workflow:
     1. Branch - This is the branch that the release will be created from. Default option is from `main`.
