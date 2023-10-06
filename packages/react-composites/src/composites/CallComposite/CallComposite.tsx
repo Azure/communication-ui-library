@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
 import {
@@ -284,6 +284,15 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
 
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
+    props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
+  );
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
+    'Responsive'
+  );
+
   const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
   useEffect(() => {
     setInjectedSidePaneProps(props.overrideSidePane);
@@ -472,9 +481,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           latestErrors={latestErrors}
           onDismissError={onDismissError}
           /* @conditional-compile-remove(gallery-layouts) */
-          galleryLayout={
-            props.options?.galleryOptions?.layout ? props.options.galleryOptions.layout : 'floatingLocalVideo'
-          }
+          galleryLayout={userSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />

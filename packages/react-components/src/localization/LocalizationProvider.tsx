@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
 import {
@@ -170,7 +170,7 @@ export interface ComponentStrings {
   /**
    * Strings for the VerticalGallery.
    */
-  VerticalGallery: VerticalGalleryStrings;
+  verticalGallery: VerticalGalleryStrings;
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;

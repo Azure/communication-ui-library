@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { DefaultButton, Icon, IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -199,7 +199,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   const ids = useIdentifiers();
 
   /* @conditional-compile-remove(vertical-gallery) */
-  const strings = useLocale().strings.VerticalGallery;
+  const strings = useLocale().strings.verticalGallery;
 
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);

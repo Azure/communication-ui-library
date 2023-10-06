@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * This script is used by GitHub workflows to parse and marshal the build matrix

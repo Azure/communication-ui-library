@@ -11,10 +11,11 @@
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "test": "echo skip",
+    "test:ci-coverage": "echo skip",
     "test:stable": "echo skip",
     "test:coverage": "echo skip",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts,tsx}\"",
-    "lint:fix": "rushx lint -- --fix",
+    "lint:fix": "rushx lint --fix --",
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {

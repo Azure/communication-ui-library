@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatBaseSelectorProps, getLatestErrors } from './baseSelectors';
 import { ActiveErrorMessage, ErrorType } from '@internal/react-components';

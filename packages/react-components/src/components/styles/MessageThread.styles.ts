@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { IButtonStyles, mergeStyles, Theme } from '@fluentui/react';
+import { IButtonStyles, mergeStyles } from '@fluentui/react';
+import { makeStyles, shorthands, tokens } from '@fluentui/react-components';
 import { CSSProperties } from 'react';
 import { MESSAGE_STATUS_INDICATOR_SIZE_REM } from './MessageStatusIndicator.styles';
 import { ComponentSlotStyle } from '../../types';
@@ -14,11 +15,12 @@ const CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM = 6.25;
 // When calculating the width of a message we also must take into account
 // the width of the avatar/gutter and the gap between the message and avatar/gutter.
 const AVATAR_WIDTH_REM = 2;
-const AVATAR_MESSAGE_GAP_REM = 0.5;
+const AVATAR_MARGIN_LEFT = 2.5;
+const AVATAR_MESSAGE_GAP_REM = 0.125;
 const MESSAGE_AMOUNT_OUT_FROM_EDGE_REM = 2;
 
 // Avatars should display on top of chat messages when the chat thread is narrow
-const MESSAGE_AVATAR_OVERLAP_REM = 0.425;
+const MESSAGE_AVATAR_OVERLAP_REM = 0.925;
 const CHAT_MESSAGE_ZINDEX = 1;
 const AVATAR_ZINDEX = 2;
 // new message button should be on top of chat message
@@ -39,6 +41,15 @@ export const messageThreadContainerStyle = mergeStyles({
 /**
  * @private
  */
+export const messageThreadWrapperContainerStyle = mergeStyles({
+  height: '100%',
+  width: '100%',
+  position: 'relative'
+});
+
+/**
+ * @private
+ */
 export const noMessageStatusStyle = mergeStyles({
   // This should match the size of the message status indicator icon to ensure
   // multiple messages sent by the user are aligned correctly.
@@ -48,15 +59,155 @@ export const noMessageStatusStyle = mergeStyles({
 /**
  * @private
  */
-export const chatStyle: ComponentSlotStyle = {
-  paddingBottom: '0.5rem',
-  paddingTop: '0.8rem',
-  border: 'none',
-  overflow: 'auto',
-  // `height: 100%` ensures that the Chat component covers 100% of it's parents height
-  // to prevent intermittent scrollbars when gifs are present in the chat.
-  height: '100%'
-};
+export const useChatStyles = makeStyles({
+  root: {
+    paddingTop: '0.8rem',
+    paddingBottom: '0.5rem',
+    paddingRight: '0.6rem',
+    paddingLeft: '0.6rem',
+    ...shorthands.border('none'),
+    ...shorthands.overflow('auto'),
+    // `height: 100%` ensures that the Chat component covers 100% of it's parents height
+    // to prevent intermittent scrollbars when GIFs are present in the chat.
+    height: '100%',
+
+    '& a:link': {
+      color: tokens.colorBrandForegroundLink
+    },
+    '& a:visited': {
+      color: tokens.colorBrandForegroundLinkHover
+    },
+    '& a:hover': {
+      color: tokens.colorBrandForegroundLinkHover
+    }
+  }
+});
+
+/**
+ * @private
+ */
+export const useChatMessageRenderStyles = makeStyles({
+  rootCommon: {
+    '&:focus-visible': {
+      ...shorthands.outline('0')
+    }
+  },
+  rootMessage: {
+    ...shorthands.padding('0'),
+    ...shorthands.margin('0'),
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+  },
+  rootMyMessage: {
+    gridTemplateColumns: 'auto fit-content(0)',
+    gridTemplateAreas: `
+        "body status"
+      `,
+    columnGap: '0',
+    gridGap: '0',
+    ...shorthands.padding('0'),
+    marginTop: '0',
+    marginRight: '0',
+    marginBottom: '0',
+    marginLeft: '50px',
+    width: `calc(100% - 50px)`
+  },
+  bodyCommon: {
+    ...shorthands.padding('0'),
+    marginRight: '0',
+    marginBottom: '0',
+    backgroundColor: 'transparent',
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
+  },
+  bodyMyMessage: {
+    width: '100%',
+    marginTop: '0'
+  },
+  bodyWithoutAvatar: {
+    marginLeft: `${AVATAR_MARGIN_LEFT}rem`,
+    marginTop: '0'
+  },
+  bodyWithAvatar: {
+    marginLeft: `0`,
+    marginTop: '0.75rem'
+  },
+  avatarNoOverlap: {
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + AVATAR_MESSAGE_GAP_REM}rem)`
+  },
+  avatarOverlap: {
+    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM - MESSAGE_AVATAR_OVERLAP_REM}rem)`
+  }
+});
+
+/**
+ * @private
+ */
+export const useChatMyMessageStyles = makeStyles({
+  root: {
+    gridTemplateColumns: 'auto auto',
+    gridTemplateAreas: `
+        ". actions"
+        "body body"
+      `,
+    gridGap: '0',
+    columnGap: '0',
+    paddingTop: '0',
+    marginLeft: '0',
+    '&:focus-visible': {
+      ...shorthands.outline('0')
+    }
+  },
+  body: {
+    paddingBottom: '10px',
+    marginTop: '1rem',
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+    marginLeft: '0rem',
+    // This makes message bubble show border in high contrast mode making each message distinguishable
+    ...shorthands.border('1px', 'solid', 'transparent'),
+
+    '&:hover ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    },
+    '&:focus ~ .fui-ChatMyMessage__actions': {
+      visibility: 'visible'
+    },
+    '& msft-mention': {
+      color: tokens.colorStatusWarningBackground3,
+      fontWeight: 600
+    }
+  },
+  bodyAttached: {
+    marginTop: '0.125rem'
+  },
+  menu: {
+    boxShadow: tokens.shadow4,
+    backgroundColor: tokens.colorNeutralBackground1,
+    marginRight: '1px',
+    position: 'absolute',
+    top: '-2px',
+    right: '0',
+    ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    zIndex: 1,
+    lineHeight: tokens.lineHeightBase100,
+    visibility: 'hidden',
+
+    '&:hover, &:focus': {
+      cursor: 'pointer',
+      visibility: 'visible'
+    }
+  },
+  menuAttached: {
+    top: '-18px'
+  },
+  menuHidden: {
+    visibility: 'hidden'
+  },
+  menuVisible: {
+    visibility: 'visible'
+  }
+});
 
 /**
  * @private
@@ -71,13 +222,6 @@ export const newMessageButtonContainerStyle = mergeStyles({
 /**
  * @private
  */
-export const chatMessageStyle: CSSProperties = {
-  overflowY: 'hidden'
-};
-
-/**
- * @private
- */
 export const chatMessageDateStyle: CSSProperties = {
   fontWeight: 600
 };
@@ -85,129 +229,135 @@ export const chatMessageDateStyle: CSSProperties = {
 /**
  * @private
  */
-export const defaultChatItemMessageContainer = (overlapAvatarAndMessage: boolean): ComponentSlotStyle => {
-  const messageAvatarGap = overlapAvatarAndMessage ? -MESSAGE_AVATAR_OVERLAP_REM : AVATAR_MESSAGE_GAP_REM;
-  return {
-    marginRight: '0rem',
-    marginLeft: `${messageAvatarGap}rem`,
-    width: `calc(100% - ${AVATAR_WIDTH_REM + MESSAGE_AMOUNT_OUT_FROM_EDGE_REM + messageAvatarGap}rem)`,
-    zIndex: CHAT_MESSAGE_ZINDEX,
-    '& msft-mention': {
-      color: '#D83B01',
-      fontWeight: 600
+export const useChatMessageStyles = makeStyles({
+  root: {
+    paddingTop: '0',
+    '&:focus-visible': {
+      ...shorthands.outline('0')
     }
-  };
-};
-
-/**
- * @private
- */
-export const defaultMyChatMessageContainer: ComponentSlotStyle = {
-  maxWidth: '100%',
-  minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-  marginLeft: '0rem',
-  // This makes message bubble show border in high contrast mode making each message distinguishable
-  border: '1px solid transparent'
-};
-
-/**
- * @private
- */
-export const FailedMyChatMessageContainer: ComponentSlotStyle = {
-  ...defaultChatItemMessageContainer,
-  backgroundColor: 'rgba(168, 0, 0, 0.2)'
-};
-
-/**
- * @private
- */
-export const defaultChatMessageContainer = (theme: Theme): ComponentSlotStyle => ({
-  maxWidth: '100%',
-  minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-  marginRight: '0rem',
-  '& img': {
-    maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
-    height: 'auto !important'
   },
-  '& video': {
-    maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
-    height: 'auto !important'
-  },
-  '& p': {
-    // Deal with awkward padding seen in messages from Teams.
-    // For more info see https://github.com/Azure/communication-ui-library/pull/1507
-    marginBlock: '0.125rem'
-  },
-  '& blockquote': {
-    backgroundColor: theme.palette.white,
-    clear: 'left',
-    minHeight: '2.25rem',
-    width: 'fit-content',
-    margin: '7px 0px',
-    padding: '7px 15px',
-    border: 'solid',
-    borderRadius: '4px',
-    borderWidth: '1px',
-    borderColor: theme.palette.neutralQuaternary,
-    borderLeftWidth: '4px'
-  },
-  '& table': {
-    backgroundColor: theme.palette.white,
-    border: theme.palette.neutralQuaternary,
-    borderCollapse: 'collapse',
-    tableLayout: 'auto',
-    width: '100%',
+  body: {
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+    marginRight: '0rem',
+    paddingBottom: '10px',
+    zIndex: CHAT_MESSAGE_ZINDEX,
+    // This makes message bubble show border in high contrast mode making each message distinguishable
+    ...shorthands.border('1px', 'solid', 'transparent'),
+    '& > div:first-of-type': {
+      flexWrap: 'wrap'
+    },
+    '& msft-mention': {
+      color: tokens.colorStatusWarningBackground3,
+      fontWeight: tokens.fontWeightSemibold
+    },
+    '& img': {
+      maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
+      height: 'auto !important'
+    },
+    '& video': {
+      maxWidth: '100% !important', // Add !important to make sure it won't be overridden by style defined in element
+      height: 'auto !important'
+    },
+    '& p': {
+      // Deal with awkward padding seen in messages from Teams.
+      // For more info see https://github.com/Azure/communication-ui-library/pull/1507
+      ...shorthands.marginBlock('0.125rem')
+    },
+    '& blockquote': {
+      backgroundColor: tokens.colorBrandBackgroundInverted,
+      clear: 'left',
+      minHeight: '2.25rem',
+      width: 'fit-content',
+      marginTop: '7px',
+      marginRight: '0px',
+      marginLeft: '0px',
+      marginBottom: '7px',
+      paddingTop: '7px',
+      paddingRight: '15px',
+      paddingLeft: '15px',
+      paddingBottom: '7px',
+      ...shorthands.border('solid'),
+      ...shorthands.borderRadius('4px'),
+      ...shorthands.borderWidth('1px'),
+      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
+      borderLeftWidth: '4px'
+    },
+    '& table': {
+      backgroundColor: tokens.colorBrandBackgroundInverted,
+      ...shorthands.borderColor(tokens.colorNeutralStroke1Selected),
+      borderCollapse: 'collapse',
+      tableLayout: 'auto',
+      width: '100%',
 
-    '& tr': {
-      border: `1px solid ${theme.palette.neutralQuaternary}`,
+      '& tr': {
+        ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
 
-      '& td': {
-        border: `1px solid ${theme.palette.neutralQuaternary}`,
-        wordBreak: 'normal',
-        padding: '0px 5px'
+        '& td': {
+          ...shorthands.border('1px', 'solid', `${tokens.colorNeutralStroke1Selected}`),
+          wordBreak: 'normal',
+          paddingTop: '0px',
+          paddingRight: '5px'
+        }
       }
     }
   },
-  // This makes message bubble show border in high contrast mode making each message distinguishable
-  border: '1px solid transparent'
+  bodyWithoutAvatar: {
+    marginTop: '0.125rem'
+  },
+  bodyWithAvatar: {
+    marginTop: `0.375rem`
+  },
+  avatarNoOverlap: {
+    marginLeft: `${-AVATAR_MARGIN_LEFT + AVATAR_MESSAGE_GAP_REM}rem`
+  },
+  avatarOverlap: {
+    marginLeft: `${-AVATAR_MARGIN_LEFT - MESSAGE_AVATAR_OVERLAP_REM}rem`
+  }
 });
 
 /**
  * @private
- * @conditional-compile-remove(data-loss-prevention)
  */
-export const defaultBlockedMessageStyleContainer = (theme: Theme): ComponentSlotStyle => ({
-  maxWidth: '100%',
-  minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-  marginRight: '0rem',
-  color: theme.palette.neutralSecondary,
-
-  '& i': {
-    paddingTop: '0.25rem'
+export const useChatMessageCommonStyles = makeStyles({
+  failed: {
+    //TODO: can we reuse a theme color here?
+    backgroundColor: 'rgba(168, 0, 0, 0.2)'
   },
+  blocked: {
+    maxWidth: '100%',
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
+    marginRight: '0rem',
+    color: tokens.colorNeutralForeground2,
 
-  '& p': {
-    // Deal with awkward padding seen in messages from Teams.
-    // For more info see https://github.com/Azure/communication-ui-library/pull/1507
-    marginBlock: '0.125rem',
-    paddingRight: '0.75rem',
-    fontStyle: 'italic'
-  },
+    // This makes message bubble show border in high contrast mode making each message distinguishable
+    ...shorthands.border('1px', 'solid', 'transparent'),
+    '& i': {
+      paddingTop: '0.25rem'
+    },
 
-  '& a': {
-    marginBlock: '0.125rem',
-    fontStyle: 'normal',
-    color: theme.palette.themePrimary,
-    textDecoration: 'none'
-  },
-  // This makes message bubble show border in high contrast mode making each message distinguishable
-  border: '1px solid transparent'
+    '& p': {
+      // Deal with awkward padding seen in messages from Teams.
+      // For more info see https://github.com/Azure/communication-ui-library/pull/1507
+      ...shorthands.marginBlock('0.125rem'),
+      paddingRight: '0.75rem',
+      fontStyle: 'italic'
+    },
+
+    '& a': {
+      ...shorthands.marginBlock('0.125rem'),
+      fontStyle: 'normal',
+      color: tokens.colorBrandForegroundLink,
+      ...shorthands.textDecoration('none')
+    }
+  }
 });
 
 /**
  * @private
  */
 export const gutterWithAvatar: ComponentSlotStyle = {
+  paddingTop: '1.65rem',
   width: `${AVATAR_WIDTH_REM}rem`,
   position: 'relative',
   float: 'left',
@@ -226,14 +376,6 @@ export const gutterWithHiddenAvatar: ComponentSlotStyle = {
   // the placeholder is needed for responsive bubble width
   height: 0
 };
-
-/**
- * @private
- */
-export const messageStatusContainerStyle = (mine: boolean): string =>
-  mergeStyles({
-    marginLeft: mine ? '0.25rem' : '0rem'
-  });
 
 /**
  * @private

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 const path = require('path');
 const webpack = require('webpack');
@@ -29,7 +29,6 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         '@internal/calling-stateful-client': path.resolve(sampleAppDir, '../../packages/calling-stateful-client/src'),
         '@internal/calling-component-bindings': path.resolve(sampleAppDir, '../../packages/calling-component-bindings/src'),
         '@internal/acs-ui-common': path.resolve(sampleAppDir, '../../packages/acs-ui-common/src'),
-        '@internal/northstar-wrapper': path.resolve(sampleAppDir, '../../packages/northstar-wrapper/src')
       }
     },
     output: {
@@ -68,7 +67,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __BUILDTIME__: JSON.stringify(new Date().toLocaleString())
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'json',
+        analyzerMode: 'json'
       }),
       new CopyPlugin({
         patterns: [

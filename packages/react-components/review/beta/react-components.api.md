@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -637,7 +639,7 @@ export interface ComponentStrings {
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
-    VerticalGallery: VerticalGalleryStrings;
+    verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -1629,7 +1631,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2330,7 +2332,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

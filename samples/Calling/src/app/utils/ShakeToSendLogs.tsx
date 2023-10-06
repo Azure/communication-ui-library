@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AzureLogger } from '@azure/logger';
 import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';

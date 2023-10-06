@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export { createDefaultChatHandlers, createDefaultChatHandlersForComponent } from './handlers/createHandlers';
 export { ChatClientProvider, useChatClient } from './providers/ChatClientProvider';

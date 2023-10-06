@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ICalloutContentStyles, Icon, ITooltipHostStyles, mergeStyles, TooltipHost } from '@fluentui/react';
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';

@@ -10,6 +10,7 @@
     "start": "concurrently \"cd ../Server && rushx start:dev\" \"rushx start:app\"",
     "start:app": "rushx _by-flavor \"webpack-cli serve --mode=development --env development\"",
     "test": "",
+    "test:ci-coverage": "echo skip",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 \"**/*.{js,ts,tsx}\"",

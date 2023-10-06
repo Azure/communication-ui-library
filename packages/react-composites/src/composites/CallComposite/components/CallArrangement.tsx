@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IButton, mergeStyles, Stack } from '@fluentui/react';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
@@ -101,7 +101,7 @@ export interface CallArrangementProps {
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
@@ -366,6 +366,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                /* @conditional-compile-remove(gallery-layouts) */
+                onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                /* @conditional-compile-remove(gallery-layouts) */
+                userSetGalleryLayout={props.userSetGalleryLayout}
               />
             </Stack>
           )}

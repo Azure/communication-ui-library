@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatAdapterState } from '../adapter/ChatAdapter';
 import { FileUploadsUiState } from '../adapter/AzureCommunicationFileUploadAdapter';

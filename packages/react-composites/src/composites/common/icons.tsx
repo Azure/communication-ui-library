@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   CallEnd20Filled,
@@ -35,11 +35,12 @@ import { Attach20Regular } from '@fluentui/react-icons';
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(gallery-layouts) */
 import {
-  PersonCircle20Regular,
+  PersonSquare20Regular,
   WindowHeaderHorizontal20Regular,
   TableSimple20Regular,
-  PictureInPicture20Regular,
-  ContentView20Regular
+  BoardSplit20Regular,
+  ContentView20Regular,
+  Table20Regular
 } from '@fluentui/react-icons';
 
 const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
@@ -96,13 +97,15 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(gallery-layouts) */
   OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  SpeakerGalleryLayout: <PersonCircle20Regular />,
+  SpeakerGalleryLayout: <PersonSquare20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
   DefaultGalleryLayout: <TableSimple20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  FloatingLocalVideoGalleryLayout: <PictureInPicture20Regular />,
+  FloatingLocalVideoGalleryLayout: <BoardSplit20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  FocusedContentGalleryLayout: <ContentView20Regular />
+  FocusedContentGalleryLayout: <ContentView20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  LargeGalleryLayout: <Table20Regular />
 };
 
 /**
@@ -238,6 +241,8 @@ export type CallCompositeIcons = {
   FocusedContentGalleryLayout?: JSX.Element;
   /* @conditional-compile-remove(gallery-layouts) */
   OverflowGalleryTop?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  LargeGalleryLayout?: JSX.Element;
 };
 
 /**

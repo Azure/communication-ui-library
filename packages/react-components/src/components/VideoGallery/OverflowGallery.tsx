@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets } from '@fluentui/react';
 import React, { useMemo } from 'react';
@@ -12,6 +12,8 @@ import { HORIZONTAL_GALLERY_BUTTON_WIDTH, HORIZONTAL_GALLERY_GAP } from '../styl
 import { VerticalGalleryStyles } from '../VerticalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   horizontalGalleryContainerStyle,
@@ -41,6 +43,8 @@ export const OverflowGallery = (props: {
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  layout?: VideoGalleryLayout;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -50,14 +54,14 @@ export const OverflowGallery = (props: {
     isShort = false,
     overflowGalleryElements,
     horizontalGalleryStyles,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
     onChildrenPerPageChange
   } = props;
 
   const containerStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryPosition === 'VerticalRight') {
+    if (overflowGalleryPosition === 'verticalRight') {
       return verticalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow, isShort);
     }
     return horizontalGalleryContainerStyle(shouldFloatLocalVideo, isNarrow);
@@ -70,7 +74,7 @@ export const OverflowGallery = (props: {
 
   const galleryStyles = useMemo(() => {
     /* @conditional-compile-remove(vertical-gallery) */
-    if (overflowGalleryPosition === 'VerticalRight') {
+    if (overflowGalleryPosition === 'verticalRight') {
       return concatStyleSets(verticalGalleryStyle(isShort), verticalGalleryStyles);
     }
     return concatStyleSets(horizontalGalleryStyle(isNarrow), horizontalGalleryStyles);
@@ -83,7 +87,7 @@ export const OverflowGallery = (props: {
   ]);
 
   /* @conditional-compile-remove(vertical-gallery) */
-  if (overflowGalleryPosition === 'VerticalRight') {
+  if (overflowGalleryPosition === 'verticalRight') {
     return (
       <ResponsiveVerticalGallery
         key="responsive-vertical-gallery"
@@ -110,6 +114,8 @@ export const OverflowGallery = (props: {
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
+        /* @conditional-compile-remove(gallery-layouts) */
+        layout={props.layout}
       />
     );
   }

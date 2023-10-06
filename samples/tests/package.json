@@ -6,6 +6,7 @@
   "scripts": {
     "build": "echo skip",
     "test": "echo skip",
+    "test:ci-coverage": "echo skip",
     "test:e2e:bundle": "rushx _by-flavor \"cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/\"",
     "update:snapshot:bundle": "rushx _by-flavor \"cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/ --update-snapshots\"",
     "test:e2e:examples": "rushx _by-flavor \"cross-env SERVE_PATH=../ComponentExamples/dist/build playwright test ComponentExamples/\"",
@@ -27,7 +28,7 @@
   },
   "devDependencies": {
     "@azure/communication-identity": "^1.2.0",
-    "@playwright/test": "^1.35.1",
+    "@playwright/test": "~1.35.1",
     "@types/node": "^16.11.7",
     "@types/node-static": "^0.7.7",
     "dotenv": "^10.0.0",

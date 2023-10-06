@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { useEffect, useState } from 'react';
 import MobileDetect from 'mobile-detect';

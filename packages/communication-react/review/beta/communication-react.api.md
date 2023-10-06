@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
@@ -576,6 +578,7 @@ export type CallCompositeIcons = {
     DefaultGalleryLayout?: JSX.Element;
     FocusedContentGalleryLayout?: JSX.Element;
     OverflowGalleryTop?: JSX.Element;
+    LargeGalleryLayout?: JSX.Element;
 };
 
 // @public
@@ -685,6 +688,7 @@ export interface CallCompositeStrings {
     moreButtonGalleryFocusedContentLayoutLabel?: string;
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
+    moreButtonLargeGalleryDefaultLayoutLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -1208,6 +1212,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerButtonTooltip: string;
     moreDrawerCaptionLanguageMenuTitle: string;
     moreDrawerCaptionsMenuTitle: string;
+    moreDrawerGalleryOptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     moreDrawerSpokenLanguageMenuTitle: string;
@@ -1958,7 +1963,7 @@ export interface ComponentStrings {
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
     UnsupportedOperatingSystem: UnsupportedOperatingSystemStrings;
-    VerticalGallery: VerticalGalleryStrings;
+    verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
     videoTile: VideoTileStrings;
 }
@@ -2390,6 +2395,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     DefaultGalleryLayout?: JSX.Element | undefined;
     FocusedContentGalleryLayout?: JSX.Element | undefined;
     OverflowGalleryTop?: JSX.Element | undefined;
+    LargeGalleryLayout?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -3278,7 +3284,7 @@ export interface OptionsDevice {
 }
 
 // @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -4051,7 +4057,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

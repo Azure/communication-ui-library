@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
@@ -133,8 +133,8 @@ export const getControlledTheme = (choice: string): PartialTheme => {
   return DefaultTheme;
 };
 
-const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo', 'speaker'] as const;
-const OVERFLOW_GALLERY_LAYOUTS = ['HorizontalBottom', 'VerticalRight', 'HorizontalTop'] as const;
+const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo', 'speaker', 'focusedContent'] as const;
+const OVERFLOW_GALLERY_LAYOUTS = ['horizontalBottom', 'verticalRight', 'horizontalTop'] as const;
 
 export const orientationArg = {
   options: ['landscape', 'portrait'],
@@ -376,7 +376,7 @@ export const controlsToAdd = {
   overflowGalleryPosition: {
     control: 'select',
     options: OVERFLOW_GALLERY_LAYOUTS,
-    defaultValue: 'HorizontalBottom',
+    defaultValue: 'horizontalBottom',
     name: 'Overflow Gallery Position'
   },
   localVideoTileSize: {

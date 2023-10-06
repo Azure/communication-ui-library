@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilityName } from '@azure/communication-calling';

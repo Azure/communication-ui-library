@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { ChatMessage, ReadReceiptsBySenderId } from '../..';
 
 /* @conditional-compile-remove(data-loss-prevention) */

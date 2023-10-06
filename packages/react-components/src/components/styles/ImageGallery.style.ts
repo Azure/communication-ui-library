@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IIconProps, IStyle } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
@@ -130,17 +130,6 @@ export const bodyContainer: IStyle = {
   '@media (max-width: 25rem) or (max-height: 25rem)': {
     padding: '2rem'
   }
-};
-
-/**
- * @private
- */
-export const bodyFocusZone: IStyle = {
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
 };
 
 /**

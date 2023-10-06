@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export { CallComposite } from './CallComposite';
 export type { CallCompositeOptions, CallCompositeProps } from './CallComposite';
