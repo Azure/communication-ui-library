@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Układ dynamiczny",
     "moreButtonGalleryDefaultLayoutLabel": "Układ galerii",
     "moreButtonGalleryFocusedContentLayoutLabel": "Zawartość priorytetowa",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Duża galeria",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kamera została wyłączona. Nie możesz już udostępniać wideo.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Napisy na żywo",
     "moreDrawerSpokenLanguageMenuTitle": "Język mówiony",
     "moreDrawerCaptionLanguageMenuTitle": "Język napisów",
+    "moreDrawerGalleryOptionsMenuTitle": "Opcje galerii",
     "peopleButtonLabel": "Osoby",
     "selectedPeopleButtonLabel": "Wybrano przycisk Kontakty",
     "peopleButtonTooltipOpen": "Pokaż uczestników",

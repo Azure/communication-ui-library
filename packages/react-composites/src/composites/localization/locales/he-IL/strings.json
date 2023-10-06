@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "פריסה דינמית",
     "moreButtonGalleryDefaultLayoutLabel": "פריסת גלריה",
     "moreButtonGalleryFocusedContentLayoutLabel": "תוכן ממוקד",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "גלריה גדולה",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "המצלמה שלך הפכה ללא זמינה. כבר אינך יכול לשתף וידאו.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "כתוביות חיות",
     "moreDrawerSpokenLanguageMenuTitle": "שפה מדוברת",
     "moreDrawerCaptionLanguageMenuTitle": "שפת כתוביות",
+    "moreDrawerGalleryOptionsMenuTitle": "אפשרויות גלריה",
     "peopleButtonLabel": "אנשים",
     "selectedPeopleButtonLabel": "לחצן 'אנשים' נבחר",
     "peopleButtonTooltipOpen": "הצג משתתפים",

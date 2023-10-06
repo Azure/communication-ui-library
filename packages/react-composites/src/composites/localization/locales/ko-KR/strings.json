@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "동적 레이아웃",
     "moreButtonGalleryDefaultLayoutLabel": "갤러리 레이아웃",
     "moreButtonGalleryFocusedContentLayoutLabel": "중요 콘텐츠",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "대형 갤러리",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "카메라를 사용할 수 없습니다. 더 이상 비디오를 공유할 수 없습니다.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "라이브 캡션",
     "moreDrawerSpokenLanguageMenuTitle": "음성 언어",
     "moreDrawerCaptionLanguageMenuTitle": "캡션 언어",
+    "moreDrawerGalleryOptionsMenuTitle": "갤러리 옵션",
     "peopleButtonLabel": "사용자",
     "selectedPeopleButtonLabel": "사용자 단추 선택됨",
     "peopleButtonTooltipOpen": "참가자 표시",
