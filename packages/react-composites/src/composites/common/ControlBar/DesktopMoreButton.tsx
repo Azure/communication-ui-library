@@ -47,7 +47,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
@@ -74,7 +74,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     });
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(overflow-top-composite) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
   /* @conditional-compile-remove(gallery-layouts) */
   const [focusedContentOn, setFocusedContentOn] = useState<boolean>(false);
@@ -220,23 +220,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       subMenuProps: {
         items: [
           {
-            key: 'speakerSelectionKey',
-            text: localeStrings.strings.call.moreButtonGallerySpeakerLayoutLabel,
-            canCheck: true,
-            itemProps: {
-              styles: buttonFlyoutIncreasedSizeStyles
-            },
-            isChecked: props.userSetGalleryLayout === 'speaker',
-            onClick: () => {
-              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
-              setFocusedContentOn(false);
-            },
-            iconProps: {
-              iconName: 'SpeakerGalleryLayout',
-              styles: { root: { lineHeight: 0 } }
-            }
-          },
-          {
             key: 'dynamicSelectionKey',
             text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
             canCheck: true,
@@ -254,19 +237,19 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             }
           },
           {
-            key: 'defaultSelectionKey',
-            text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+            key: 'speakerSelectionKey',
+            text: localeStrings.strings.call.moreButtonGallerySpeakerLayoutLabel,
             canCheck: true,
             itemProps: {
               styles: buttonFlyoutIncreasedSizeStyles
             },
-            isChecked: props.userSetGalleryLayout === 'default',
+            isChecked: props.userSetGalleryLayout === 'speaker',
             onClick: () => {
-              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
               setFocusedContentOn(false);
             },
             iconProps: {
-              iconName: 'DefaultGalleryLayout',
+              iconName: 'SpeakerGalleryLayout',
               styles: { root: { lineHeight: 0 } }
             }
           },
@@ -299,6 +282,25 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         }
       }
     };
+
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    const galleryOption = {
+      key: 'defaultSelectionKey',
+      text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+      canCheck: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      isChecked: props.userSetGalleryLayout === 'default',
+      onClick: () => {
+        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+        setFocusedContentOn(false);
+      },
+      iconProps: {
+        iconName: 'DefaultGalleryLayout',
+        styles: { root: { lineHeight: 0 } }
+      }
+    };
     /* @conditional-compile-remove(large-gallery) */
     const largeGalleryOption = {
       key: 'largeGallerySelectionKey',
@@ -318,7 +320,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       }
     };
 
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(overflow-top-composite) */
     const overflowGalleryOption = {
       key: 'topKey',
       text: localeStrings.strings.call.moreButtonGalleryPositionToggleLabel,
@@ -334,7 +336,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       isChecked: galleryPositionTop,
       onClick: () => {
         if (galleryPositionTop === false) {
-          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
+          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('horizontalTop');
           setGalleryPositionTop(true);
         } else {
           props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('Responsive');
@@ -344,7 +346,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     };
     /* @conditional-compile-remove(large-gallery) */
     galleryOptions.subMenuProps?.items?.push(largeGalleryOption);
-    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    galleryOptions.subMenuProps?.items?.push(galleryOption);
+    /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
     /* @conditional-compile-remove(gallery-layouts) */
     moreButtonContextualMenuItems.push(galleryOptions);

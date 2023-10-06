@@ -66,7 +66,7 @@ export interface MediaGalleryProps {
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
   /* @conditional-compile-remove(gallery-layouts) */
-  userSetOverflowGalleryPosition?: 'Responsive' | 'HorizontalTop';
+  userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout: VideoGalleryLayout;
 }
@@ -136,12 +136,12 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(vertical-gallery) */
   const overflowGalleryPosition = useMemo(() => {
     /* @conditional-compile-remove(gallery-layouts) */
-    if (props.userSetOverflowGalleryPosition === 'HorizontalTop') {
+    if (props.userSetOverflowGalleryPosition === 'horizontalTop') {
       return props.userSetOverflowGalleryPosition;
     }
     return containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
-      ? 'VerticalRight'
-      : 'HorizontalBottom';
+      ? 'verticalRight'
+      : 'horizontalBottom';
   }, [
     /* @conditional-compile-remove(gallery-layouts) */ props.userSetOverflowGalleryPosition,
     containerWidth,

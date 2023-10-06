@@ -265,7 +265,7 @@ test.describe('Overflow gallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-joining-1-hold-participants.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layout-composite) */
   test('Overflow gallery can be moved to the top along with the local tile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
@@ -283,7 +283,7 @@ test.describe('Overflow gallery tests', async () => {
     await pageClick(page, dataUiId(IDS.moreButton));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls.png');
-    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("View")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-controls-open.png');
     await page.locator('button:has-text("Move gallery to top")').click();
 

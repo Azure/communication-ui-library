@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Layout dinamico",
     "moreButtonGalleryDefaultLayoutLabel": "Layout raccolta",
     "moreButtonGalleryFocusedContentLayoutLabel": "Contenuto mirato",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Galleria estesa",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "La fotocamera è stata disattivata. Non è più possibile condividere video.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Sottotitoli in tempo reale",
     "moreDrawerSpokenLanguageMenuTitle": "Lingua parlata",
     "moreDrawerCaptionLanguageMenuTitle": "Lingua sottotitoli",
+    "moreDrawerGalleryOptionsMenuTitle": "Opzioni della raccolta",
     "peopleButtonLabel": "Persone",
     "selectedPeopleButtonLabel": "Pulsante Persone selezionato",
     "peopleButtonTooltipOpen": "Mostra partecipanti",

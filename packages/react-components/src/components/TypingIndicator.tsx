@@ -147,12 +147,16 @@ const getUsersElement = (
 ): JSX.Element => {
   const userElements: JSX.Element[] = [];
   typingUsers.forEach((user, index) => {
+    let truncatedDisplayName = user.displayName;
+    if (truncatedDisplayName && truncatedDisplayName.length > 50) {
+      truncatedDisplayName = truncatedDisplayName.substring(0, 50) + '...';
+    }
     userElements.push(
       onRenderUser ? (
         onRenderUser(user)
       ) : (
         <Text className={mergeStyles(userDisplayNameStyles)} key={`user-${index}`}>
-          {user.displayName}
+          {truncatedDisplayName}
         </Text>
       )
     );
