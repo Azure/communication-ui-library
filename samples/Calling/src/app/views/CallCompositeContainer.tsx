@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommonCallAdapter, CallComposite, AvatarPersonaData } from '@azure/communication-react';
+import { CommonCallAdapter, CallComposite } from '@azure/communication-react';
 /* @conditional-compile-remove(call-readiness) */
 import { CallCompositeOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
@@ -51,10 +51,6 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
     callInvitationUrl = undefined;
   }
 
-  const onFetchAvatarPersonaData = async (/* userId: string */): Promise<AvatarPersonaData> => ({
-    imageUrl: 'https://www.pamperedchef.ca/iceberg/com/recipe/1517076-lg.jpg'
-  });
-
   return (
     <CallComposite
       adapter={adapter}
@@ -64,7 +60,6 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       formFactor={isMobileSession ? 'mobile' : 'desktop'}
       /* @conditional-compile-remove(call-readiness) */
       options={options}
-      onFetchAvatarPersonaData={onFetchAvatarPersonaData}
     />
   );
 };
