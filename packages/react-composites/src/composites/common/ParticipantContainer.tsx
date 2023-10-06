@@ -10,11 +10,7 @@ import {
   participantListWrapper,
   displayNameStyles
 } from './styles/ParticipantContainer.styles';
-import {
-  ParticipantList,
-  ParticipantListProps,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
+import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';

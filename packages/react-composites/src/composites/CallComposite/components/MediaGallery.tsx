@@ -4,12 +4,7 @@
 import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
-import {
-  VideoGallery,
-  VideoStreamOptions,
-  CustomAvatarOptions,
-  Announcer
-} from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, CustomAvatarOptions, Announcer } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';

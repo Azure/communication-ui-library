@@ -2,12 +2,7 @@
 // Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  ParticipantMenuItemsCallback,
-  useTheme
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -275,7 +270,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     hasMicrophones
   ]);
 
-  const { callInvitationUrl,onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 

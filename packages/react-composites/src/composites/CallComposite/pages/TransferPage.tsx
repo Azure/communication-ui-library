@@ -210,7 +210,7 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
     <div ref={tileRef} className={mergeStyles(tileContainerStyles)} data-is-focusable={true}>
       <Stack className={mergeStyles(tileContentStyles)} tokens={{ childrenGap: '1rem' }}>
         <Stack horizontalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
-          { defaultAvatar}
+          {defaultAvatar}
           <Text className={mergeStyles(displayNameStyles)}>{displayName}</Text>
         </Stack>
         <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: '0.5rem' }}>

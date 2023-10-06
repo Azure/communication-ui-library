@@ -4,11 +4,7 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';

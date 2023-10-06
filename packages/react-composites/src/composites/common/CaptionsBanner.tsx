@@ -5,11 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { useState, useEffect, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import {
-  _CaptionsBanner,
-  _CaptionsBannerStrings,
-  CustomAvatarOptions
-} from '@internal/react-components';
+import { _CaptionsBanner, _CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
