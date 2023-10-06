@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Legacy control bar",
-  "comment": "Fix legacy control bar logic to limit number of control bar buttons on mobile",
-  "packageName": "@azure/communication-react",
-  "email": "miguelgamis@microsoft.com",
-  "dependentChangeType": "patch"
-}
