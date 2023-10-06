@@ -7,7 +7,6 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import {
   ActiveErrorMessage,
   ErrorBar,
-  OnRenderAvatarCallback,
   ParticipantMenuItemsCallback
 } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
@@ -40,7 +39,6 @@ export interface CallPageProps {
   mobileView: boolean;
   modalLayerHostId: string;
   callInvitationURL?: string;
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
@@ -66,7 +64,6 @@ export interface CallPageProps {
 export const CallPage = (props: CallPageProps): JSX.Element => {
   const {
     callInvitationURL,
-    onRenderAvatar,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
@@ -112,8 +109,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       }}
       /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-      /* @conditional-compile-remove(close-captions) */
-      onRenderAvatar={onRenderAvatar}
       mobileView={mobileView}
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() =>
@@ -123,7 +118,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               isMobile={mobileView}
               {...mediaGalleryProps}
               {...mediaGalleryHandlers}
-              onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               /* @conditional-compile-remove(pinned-participants) */
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}

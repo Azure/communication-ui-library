@@ -7,7 +7,6 @@ import { useRef } from 'react';
 import {
   VideoGallery,
   VideoStreamOptions,
-  OnRenderAvatarCallback,
   CustomAvatarOptions,
   Announcer
 } from '@internal/react-components';
@@ -57,7 +56,6 @@ export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
@@ -164,7 +162,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
+        onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
@@ -182,7 +180,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [
     videoGalleryProps,
     props.isMobile,
-    props.onRenderAvatar,
     /* @conditional-compile-remove(rooms) */
     props.localVideoTileOptions,
     cameraSwitcherProps,

@@ -15,8 +15,6 @@ import {
   ErrorBarProps,
   useTheme
 } from '@internal/react-components';
-/* @conditional-compile-remove(close-captions) */
-import { OnRenderAvatarCallback } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
@@ -98,8 +96,6 @@ export interface CallArrangementProps {
   modalLayerHostId: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-  /* @conditional-compile-remove(close-captions) */
-  onRenderAvatar?: OnRenderAvatarCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
@@ -432,7 +428,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         <CaptionsBanner
                           isMobile={props.mobileView}
                           onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-                          onRenderAvatar={props.onRenderAvatar}
                         />
                       )
                   }

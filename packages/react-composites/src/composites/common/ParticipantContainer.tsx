@@ -11,7 +11,6 @@ import {
   displayNameStyles
 } from './styles/ParticipantContainer.styles';
 import {
-  OnRenderAvatarCallback,
   ParticipantList,
   ParticipantListProps,
   ParticipantMenuItemsCallback
@@ -22,7 +21,6 @@ import { useId } from '@fluentui/react-hooks';
 import { _formatString } from '@internal/acs-ui-common';
 
 type ParticipantContainerProps = {
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   participantListProps: ParticipantListProps;

@@ -8,8 +8,7 @@ import { useState, useCallback } from 'react';
 import {
   _CaptionsBanner,
   _CaptionsBannerStrings,
-  CustomAvatarOptions,
-  OnRenderAvatarCallback
+  CustomAvatarOptions
 } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
@@ -39,7 +38,6 @@ const desktopViewBannerWidth = '35rem';
 /** @private */
 export const CaptionsBanner = (props: {
   isMobile: boolean;
-  /* @conditional-compile-remove(close-captions) */ onRenderAvatar?: OnRenderAvatarCallback;
   /* @conditional-compile-remove(close-captions) */ onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
 }): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
@@ -99,7 +97,7 @@ export const CaptionsBanner = (props: {
               <_CaptionsBanner
                 {...captionsBannerProps}
                 {...handlers}
-                onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
+                onRenderAvatar={onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
               />
