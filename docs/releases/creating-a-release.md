@@ -64,7 +64,7 @@ graph LR
   pr -.-o|Create Pull Request| prerelease
 ```
 
-### Step 1.2: Create release branch
+### Step 1.2: Create Release branch
 
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
@@ -73,7 +73,7 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 
 ![Trigger release branch creation](../images/trigger-create-release-branch.png)
 
-### Step 1.3: Update the UI snapshot (beta-release only)
+### Step 1.3: Update the UI Snapshot (beta-release only)
 
 After finishing creating release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
@@ -83,13 +83,13 @@ After finishing creating release branch, follow these steps to create a UI snaps
 4. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
 6. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
 
-### Step 1.4: Notify the release thread about api.md update and UI snapshot update (beta-release only)
+### Step 1.4: Notify the Release Thread About api.md Update and UI Snapshot Update (beta-release only)
 
-After you finishing step 1.3, you can check recent lastest commits on release branch, there should be 
+After you finish step 1.3, you can check recent latest commits on the release branch, there should be 
 1. One Api snapshot update commit
 2. 0 or several UI snapshot commits, all in the snapshot PR
 
-Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in api and UI
+Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in API and UI
 
 ## Step 2: Prepare for release
 
