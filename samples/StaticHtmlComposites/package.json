@@ -54,7 +54,7 @@
     "node-static": "^0.7.11",
     "rimraf": "^2.6.2",
     "typescript": "4.3.5",
-    "webpack": "5.76.0",
+    "webpack": "5.88.2",
     "webpack-cli": "^4.10.0",
     "webpack-bundle-analyzer": "^4.5.0",
     "cpx": "^1.5.0",
