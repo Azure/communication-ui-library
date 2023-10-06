@@ -3,7 +3,7 @@
 
 import React from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 /* @conditional-compile-remove(close-captions) */
 import { _CaptionsBanner, _CaptionsBannerStrings } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
@@ -26,8 +26,6 @@ import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(close-captions) */
 const mobileViewBannerWidth = '90%';
-/* @conditional-compile-remove(close-captions) */
-const desktopViewBannerWidth = '35rem';
 
 /** @private */
 export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
@@ -63,6 +61,23 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
   const captionsBannerStrings: _CaptionsBannerStrings = {
     captionsBannerSpinnerText: strings.captionsBannerSpinnerText
   };
+  /* @conditional-compile-remove(close-captions) */
+  const { innerWidth: width } = window;
+  /* @conditional-compile-remove(close-captions) */
+  const [windowWidth, setWindowWidth] = useState(width);
+  /* @conditional-compile-remove(close-captions) */
+  useEffect(() => {
+    function handleResize(): void {
+      setWindowWidth(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  /* @conditional-compile-remove(close-captions) */
+  const desktopViewBannerWidth = windowWidth > 620 ? '35rem' : '80%';
+
   return (
     <>
       {
