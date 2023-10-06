@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический макет",
     "moreButtonGalleryDefaultLayoutLabel": "Макет коллекции",
     "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Большая галерея",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Камера отключена. Вы больше не можете делиться видео.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Автоматические субтитры",
     "moreDrawerSpokenLanguageMenuTitle": "Язык речи",
     "moreDrawerCaptionLanguageMenuTitle": "Язык субтитров",
+    "moreDrawerGalleryOptionsMenuTitle": "Параметры коллекции",
     "peopleButtonLabel": "Люди",
     "selectedPeopleButtonLabel": "Нажата кнопка \"Люди\"",
     "peopleButtonTooltipOpen": "Показать участников",

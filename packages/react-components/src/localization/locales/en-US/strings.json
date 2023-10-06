@@ -147,7 +147,7 @@
     "newMessagesIndicator": "New messages",
     "noDisplayNameSub": "No name",
     "editBoxCancelButton": "Cancel",
-    "editBoxSubmitButton": "Submit",
+    "editBoxSubmitButton": "Done",
     "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
     "actionMenuMoreOptions": "More Options",
     "downloadFile": "Download file",
@@ -338,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
   }
