@@ -13,16 +13,16 @@ _This document applies to beta and stable releases. Alpha releases are created n
 
 _This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
 
-## Before creating a release branch
+## Before creating a Release Branch
 
 - Update the strings on `main` these [steps](../references/string-translations.md).
   - **Note**: String translation can take up to 5 working days to complete. It is a good idea to avoid string changes once before the release process
 
-## Step 1: Creating a release branch
+## Step 1: Creating a Release Branch
 
-Both beta and stable release follow a two step workflow, aided by github actions.
+Both beta and stable releases follow a two step workflow, aided by github actions.
 
-### Step 1.1: Create a Pre-release branch
+### Step 1.1: Create a Pre-release Branch
 
 We want to create a pre-release branch because this branch will act as a place to perform actions like bumping package versions, grooming the changelog, and performing string translations. This branch will be the place that the release branch is created from before it is merged back into main.
 
@@ -42,7 +42,7 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 
 ![Trigger prerelease branch creation](../images/trigger-create-prerelease-branch.png)
 
-#### Workflow details
+#### Workflow Details
 
 This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
 
@@ -69,23 +69,19 @@ graph LR
 Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
 
 1. Options for GH Action:
-    1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry picking.
+    1. Pre-release branch - This is the pre-release branch that was created in the previous workflow. This action should be only done after the changelog is groomed and merged back into the pre-release branch to avoid cherry-picking.
 
 ![Trigger release branch creation](../images/trigger-create-release-branch.png)
 
 ### Step 1.3: Update the UI snapshot (beta-release only)
 
-Use the [create-release-branch](https://github.com/Azure/communication-ui-library/actions/workflows/create-release-branch.yml) github action to trigger the release branch creation workflow.
-
 After finishing creating release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
 1. Create a new branch based on the release branch you just created in Step 1.2
-2. trigger the UI snapshot update for the new branch branch: ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
+2. Use the [update-snapshots](https://github.com/Azure/communication-ui-library/actions/workflows/update-snapshots.yml) github action to trigger the update snapshots workflow. ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
 3. Wait for snapshot update
-4. Once snapshot update finished, you might or might not see changes for UI snapshot, if there is any updates, open a PR to merge that new branch back to release branch
-5. Add a changelog item for creating the release branch
-`rushx changelog -m 'Create release branch and update SDK versions' --type none"`
-6. Merge the PR if everything looks fine, or notify feature owner if something looks not 100% correct.
+4. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
+6. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
 
 ### Step 1.4: Notify the release thread about api.md update and UI snapshot update (beta-release only)
 
@@ -95,44 +91,18 @@ After you finishing step 1.3, you can check recent lastest commits on release br
 
 Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in api and UI
 
-#### Workflow details
-
-This section describes what the workflow above does. Understanding the workflow actions is useful in case the workflow fails.
-
-1. Create a Pull Request to merge the prerelease branch back into the base branch.
-    1. For stable release only: Before creating the Pull Request, @azure/communiation-react will be version bumped once again to a `-beta.0` version (this ensures that we can continue to add changes of `prerelease`) type.
-1. Create a new release branch off of the prerelease branch. This branch will be used for the eventual release, but **it will never be merged back in the base branch**.
-  1. On the release branch will check what kind of release this is, beta-release-major, beta-release-minor, beta-release-patch , beta-release-beta, stable-major, stable-minor, stable-patch or stable-remove-beta-suffix based on the selection here it will update the sdk versions.
-  2. The action will synchronize the package telemetry verions on the release branch.
-  3. After making these changes it will make a PR from the pre-release branch back into `main`.
-
-Continuing the example above, this action should be triggered once `groom_changelog_3.0.0` is merged. It will create the following new branches ~~and Pull Requests~~ (Pull requests must now be created manually per [security policy](https://aka.ms/opensource/actions-changes-230217)):
-
-```mermaid
-graph LR
-  main[branch: main]
-  prerelease[branch: prerelease/3.3.0<br/>- bump version to 3.3.1-beta.0]
-  release[branch:release/3.0.0<br/>- Update dependency versions<br/>- Potential cherry-picks<br/>- Merge string translations<br/> Abandon branch once released]
-
-  main -.-|Created in step 1| prerelease
-  prerelease -->|Create Branch| release
-  prerelease -.-o|Create Pull Request| main
-```
-
-After running the action, the beta checks on the CI should be automatically disabled if this is a stable release. Inversely, the stable checks should be automatically disabled if this is a beta relase. This is to ensure that any cherry pick PR's going into release dont run against the wrong build flavor in CI causing failures. If the wrong build flavor checks were not automatically disabled, edit the [CI workflow](../../.github/workflows/ci.yml): Modify the output `JSON` string to remove the `beta` flavor for `stable` releases / `stable` flavor for `beta` releases.
-
 ## Step 2: Prepare for release
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
-- Setup a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
-  - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in section below.
+- Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
+  - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in the section below.
 - For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-(ARB)-Review) for how to reach out to the API stewardship board.
-- [Fetch translated strings](../references/string-translations.md) again for main to make sure any other string updates that have occured since the start of the release process are included. If there are any strings updated, [cherry-pick](#cherry-picking-changes) the changes to the release branch.
+- [Fetch translated strings](../references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, [cherry-pick](#cherry-picking-changes) the changes to the release branch.
 
 ### Cherry-picking changes
 
-While the release branch is active, some changes might be merged into the branch (for bug fixes, features deemed necessary for the release). PRs into the release branch should follow this process when possible:
+While the release branch is active, some changes might be merged into the branch (for bug fixes, or features deemed necessary for the release). PRs into the release branch should follow this process when possible:
 
 - First land the change as a PR into `main`.
 - Then, cherry-pick the change as a separate PR onto the release branch.
