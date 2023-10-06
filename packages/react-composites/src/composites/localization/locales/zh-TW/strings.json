@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "動態版面配置",
     "moreButtonGalleryDefaultLayoutLabel": "資源庫配置",
     "moreButtonGalleryFocusedContentLayoutLabel": "焦點內容",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "大型圖庫",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "您的相機已停用。您無法再分享視訊。",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "即時字幕",
     "moreDrawerSpokenLanguageMenuTitle": "口語語言",
     "moreDrawerCaptionLanguageMenuTitle": "字幕語言",
+    "moreDrawerGalleryOptionsMenuTitle": "圖庫選項",
     "peopleButtonLabel": "人員",
     "selectedPeopleButtonLabel": "已選取人員按鈕",
     "peopleButtonTooltipOpen": "顯示參與者",
