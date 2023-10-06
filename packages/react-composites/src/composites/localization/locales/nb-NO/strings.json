@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisk oppsett",
     "moreButtonGalleryDefaultLayoutLabel": "Gallerioppsett",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokusert innhold",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Stort galleri",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameraet er deaktivert. Du kan ikke lenger dele video.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Undertekster",
     "moreDrawerSpokenLanguageMenuTitle": "Talespråk",
     "moreDrawerCaptionLanguageMenuTitle": "Språk for undertekst",
+    "moreDrawerGalleryOptionsMenuTitle": "Gallerialternativer",
     "peopleButtonLabel": "Personer",
     "selectedPeopleButtonLabel": "Personer-knappen er valgt",
     "peopleButtonTooltipOpen": "Vis deltakere",
