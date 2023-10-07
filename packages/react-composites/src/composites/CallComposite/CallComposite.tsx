@@ -2,13 +2,7 @@
 // Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback,
-  useTheme
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -245,7 +239,6 @@ export type CallCompositeOptions = {
 type MainScreenProps = {
   mobileView: boolean;
   modalLayerHostId: string;
-  onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -283,7 +276,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     hasMicrophones
   ]);
 
-  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
@@ -465,7 +458,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          onRenderAvatar={onRenderAvatar}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
@@ -477,7 +469,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'call':
       pageElement = (
         <CallPage
-          onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
