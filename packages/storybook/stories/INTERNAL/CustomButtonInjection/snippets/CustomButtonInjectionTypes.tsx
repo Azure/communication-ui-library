@@ -2,7 +2,6 @@ import {
   BaseCustomStyles,
   ControlBarButtonStyles,
   CustomCallControlButtonPlacement,
-  CustomCallControlButtonProps,
   CustomControlButtonProps
 } from '@azure/communication-react';
 import React from 'react';
@@ -10,6 +9,8 @@ import React from 'react';
 export const compositeCanvasContainerStyles = {
   height: '22rem'
 };
+
+export const addCSS = (css) => (document.head.appendChild(document.createElement('style')).innerHTML = css);
 
 /**
  * Copy of @CustomCallControlButtonProps as displaying props in storybook using package import

@@ -84,7 +84,7 @@ const getDocs: () => JSX.Element = () => {
         <CustomButtonWithAsyncStateExample />
       </Canvas>
 
-      <Heading>Code Samples</Heading>
+      {/* <Heading>Code Samples</Heading> */}
 
       <Heading>Props</Heading>
       <Props of={CustomButtonInjectionComponent} />

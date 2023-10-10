@@ -1,5 +1,6 @@
 import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
+import { addCSS } from './CustomButtonInjectionTypes';
 
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
@@ -74,19 +75,26 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
 export const MobileCustomButtonInjectionExample = (): JSX.Element => {
   const adapter = new MockCallAdapter({});
 
+  addCSS('#mobileCustomButtonInjectionExample button[aria-label="btn1"]{ border: 1px solid green; }');
+  addCSS(
+    '#mobileCustomButtonInjectionExample button[data-ui-id="common-call-composite-more-button"]{ border: 1px solid green; border-left: 0px; }'
+  );
+
   return (
-    <div style={{ aspectRatio: 9 / 16, height: '32rem', margin: 'auto' }}>
-      <CallComposite
-        adapter={adapter}
-        formFactor={'mobile'}
-        options={{
-          callControls: {
-            raiseHandButton: false,
-            screenShareButton: false,
-            onFetchCustomButtonProps: maxCustomButtonsForInjection
-          }
-        }}
-      />
+    <div id="mobileCustomButtonInjectionExample">
+      <div style={{ aspectRatio: 9 / 16, height: '40rem', margin: 'auto' }}>
+        <CallComposite
+          adapter={adapter}
+          formFactor={'mobile'}
+          options={{
+            callControls: {
+              // raiseHandButton: true,
+              // screenShareButton: false,
+              onFetchCustomButtonProps: maxCustomButtonsForInjection
+            }
+          }}
+        />
+      </div>
     </div>
   );
 };
