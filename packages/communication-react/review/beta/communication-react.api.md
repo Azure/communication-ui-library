@@ -3360,7 +3360,7 @@ export interface OptionsDevice {
     name: string;
 }
 
-// @beta
+// @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
@@ -4079,20 +4079,20 @@ export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove
 // @public
 export const useTheme: () => Theme;
 
-// @beta
+// @public
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
     counter?: IStyle;
     nextButton?: IStyle;
     previousButton?: IStyle;
 }
 
-// @beta
+// @public
 export interface VerticalGalleryStrings {
     leftNavButtonAriaLabel?: string;
     rightNavButtonAriaLabel?: string;
 }
 
-// @beta
+// @public
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
