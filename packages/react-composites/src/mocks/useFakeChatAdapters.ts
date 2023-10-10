@@ -10,7 +10,6 @@ import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 import { useEffect, useState } from 'react';
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import {
-  CommunicationIdentifierKind,
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
   getIdentifierKind
