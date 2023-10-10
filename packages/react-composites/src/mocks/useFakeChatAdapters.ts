@@ -9,7 +9,11 @@ import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 
 import { useEffect, useState } from 'react';
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import {
+  CommunicationIdentifierKind,
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier
+} from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { RestError } from '@azure/core-rest-pipeline';
@@ -89,8 +93,7 @@ const initializeAdapters = async (
 ): Promise<ChatAdapter[]> => {
   const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
-    /* @conditional-compile-remove(communication-common-beta-v3) */
-    if ((participant.id.kind as string) === 'microsoftTeamsApp') {
+    if (((participant.id as CommunicationIdentifierKind).kind as string) === 'microsoftTeamsApp') {
       throw new Error('Creating an adapter with a Bot participant is not supported');
     }
     if (!participant.displayName) {

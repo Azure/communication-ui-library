@@ -74,8 +74,8 @@ export class FakeChatClient implements IChatClient {
         ...baseChatThreadEvent(thread),
         createdOn: now,
         properties: {
-          topic: request.topic
-          // metadata: {}
+          topic: request.topic,
+          metadata: {}
         },
         participants: participants.map((p) => chatToSignalingParticipant(p)),
         createdBy: chatToSignalingParticipant(this.checkedGetMe(thread))

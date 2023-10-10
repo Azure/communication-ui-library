@@ -34,13 +34,13 @@ jest.useFakeTimers();
 const mockParticipants: SignalingChatParticipant[] = [
   {
     id: { kind: 'communicationUser', communicationUserId: 'user1' },
-    displayName: 'user1'
-    // metadata: {}
+    displayName: 'user1',
+    metadata: {}
   },
   {
     id: { kind: 'communicationUser', communicationUserId: 'user2' },
-    displayName: 'user1'
-    // metadata: {}
+    displayName: 'user1',
+    metadata: {}
   }
 ];
 
@@ -129,15 +129,15 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       threadId,
       version: '',
       properties: {
-        topic
-        // /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
+        topic,
+        /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
       },
       createdOn: new Date('01-01-2020'),
       createdBy: {
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
-        displayName: ''
+        displayName: '',
         // /* @conditional-compile-remove(chat-beta-sdk) */
-        // metadata: {}
+        metadata: {}
       },
       participants: mockParticipants
     };
@@ -153,14 +153,14 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     const editEvent: ChatThreadPropertiesUpdatedEvent = {
       ...event,
       properties: {
-        topic: editedTopic
-        // /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
+        topic: editedTopic,
+        /* @conditional-compile-remove(chat-beta-sdk) */ metadata: {}
       },
       updatedBy: {
         displayName: '',
-        id: { kind: 'communicationUser', communicationUserId: 'user1' }
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
         // /* @conditional-compile-remove(chat-beta-sdk) */
-        // metadata: {}
+        metadata: {}
       },
       updatedOn: new Date('01-01-2020')
     };
@@ -173,9 +173,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       ...event,
       deletedBy: {
         displayName: '',
-        id: { kind: 'communicationUser', communicationUserId: 'user1' }
+        id: { kind: 'communicationUser', communicationUserId: 'user1' },
         // /* @conditional-compile-remove(chat-beta-sdk) */
-        // metadata: {}
+        metadata: {}
       },
       deletedOn: new Date('01-01-2020')
     };
@@ -232,9 +232,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       threadId,
       addedBy: {
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
-        displayName: ''
+        displayName: '',
         // /* @conditional-compile-remove(chat-beta-sdk) */
-        // metadata: {}
+        metadata: {}
       },
       addedOn: new Date('01-01-2020'),
       participantsAdded: mockParticipants,
@@ -251,9 +251,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       version: '',
       removedBy: {
         id: { kind: 'communicationUser', communicationUserId: 'user1' },
-        displayName: ''
+        displayName: '',
         // /* @conditional-compile-remove(chat-beta-sdk) */
-        // metadata: {}
+        metadata: {}
       },
       removedOn: new Date('01-01-2020')
     };

@@ -34,7 +34,7 @@
     "@internal/acs-ui-common": "1.9.0-beta.1",
     "@internal/calling-stateful-client": "1.9.0-beta.1",
     "@internal/react-components": "1.9.0-beta.1",
-    "@azure/communication-common": "3.0.0-beta.1 || ^2.2.1",
+    "@azure/communication-common": "^2.3.0",
     "memoize-one": "^5.2.1",
     "reselect": "^4.0.0"
   },
