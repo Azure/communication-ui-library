@@ -67,10 +67,10 @@ export const FluentThemeProvider = (props: FluentThemeProviderProps): JSX.Elemen
    * multiple times and wiping out configuration like RTL
    * FluentThemeProvider
    */
-  const alreadyWrapped = useSingleUsageCheck();
-  if (alreadyWrapped) {
-    return <>{children}</>;
-  }
+  // const alreadyWrapped = useSingleUsageCheck();
+  // if (alreadyWrapped) {
+  //   return <>{children}</>;
+  // }
 
   let fluentV8Theme: Theme = mergeThemes(defaultTheme, fluentTheme);
   fluentV8Theme = mergeThemes(fluentV8Theme, { rtl });

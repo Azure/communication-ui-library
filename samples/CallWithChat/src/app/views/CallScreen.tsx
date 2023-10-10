@@ -9,16 +9,22 @@ import {
   CallAndChatLocator,
   CallWithChatAdapterState,
   CallWithChatComposite,
-  CallWithChatAdapter
+  CallWithChatAdapter,
+  COMPOSITE_LOCALE_EN_US,
+  CompositeLocale
 } from '@azure/communication-react';
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
-import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Spinner, Stack, Theme } from '@fluentui/react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
+import { BrandingOverrides, AppOverrides, SidePane } from './LocalOverrides';
+import { getBrandTokensFromPalette } from '../utils/getBrandTokensFromPalette';
+import { createDarkTheme, createLightTheme, Theme as V9Theme } from '@fluentui/react-components';
+import { createV8Theme } from '../utils/colors/themeShim/v8ThemeShim';
 
 export interface CallScreenProps {
   token: string;
@@ -153,18 +159,82 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     return () => window.removeEventListener('beforeunload', disposeAdapter);
   }, [adapter]);
 
+  const [{ themeColor, logo, background, meetingDetails }, setBrandingOverrides] = useState<BrandingOverrides>({});
+  const [{ mobile }, setAppOverrides] = useState<AppOverrides>({});
+  const isDarkMode = currentTheme.name === 'Dark';
+  console.log('[jaburnsi] CallScreen: ', { themeColor, logo, background, isDarkMode, meetingDetails, mobile });
+  const theme = useMemo(() => mapAccentColorToTheme(themeColor, isDarkMode), [themeColor, isDarkMode]);
+  console.log('[jaburnsi] theme: ', theme);
+
+  const locale: CompositeLocale = useMemo(
+    () => ({
+      ...COMPOSITE_LOCALE_EN_US,
+      strings: {
+        ...COMPOSITE_LOCALE_EN_US.strings,
+        call: {
+          ...COMPOSITE_LOCALE_EN_US.strings.call,
+          configurationPageTitle: meetingDetails?.title || COMPOSITE_LOCALE_EN_US.strings.call.configurationPageTitle,
+          configurationPageCallDetails: meetingDetails?.description
+        }
+      }
+    }),
+    [meetingDetails]
+  );
+
   if (!adapter) {
     return <Spinner label={'Creating adapter'} ariaLive="assertive" labelPosition="top" />;
   }
 
   return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={window.location.href}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
+    <Stack horizontal verticalFill styles={{ root: { width: '100%' } }}>
+      <Stack.Item grow>
+        <MobileContainer enabled={!!mobile}>
+          <CallWithChatComposite
+            adapter={adapter}
+            fluentTheme={theme ?? currentTheme.theme}
+            rtl={currentRtl}
+            joinInvitationURL={window.location.href}
+            formFactor={mobile ? 'mobile' : 'desktop'}
+            locale={locale}
+            logoUrl={
+              !logo || logo === 'none'
+                ? undefined
+                : 'https://picsum.photos/20' + logo?.substring('logo'.length, 'logo'.length + 1)
+            }
+            bgUrl={
+              !background || background === 'none'
+                ? undefined
+                : 'https://picsum.photos/128' +
+                  background?.substring('background'.length, 'background'.length + 1) +
+                  '/920'
+            }
+          />
+        </MobileContainer>
+      </Stack.Item>
+      <Stack.Item>
+        <SidePane onBrandingOverridesUpdated={setBrandingOverrides} onAppOverridesUpdated={setAppOverrides} />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
+const MobileContainer = (props: { enabled: boolean; children: React.ReactNode }): JSX.Element => {
+  const { enabled, children } = props;
+  return enabled ? (
+    <Stack horizontalAlign="center" verticalAlign="center" verticalFill styles={{ root: { width: '100% ' } }}>
+      <Stack.Item
+        styles={{
+          root: {
+            height: '530px',
+            width: '300px'
+          }
+        }}
+      >
+        {children}
+      </Stack.Item>
+    </Stack>
+  ) : (
+    <>{children}</>
   );
 };
 
@@ -179,4 +249,14 @@ const convertPageStateToString = (state: CallWithChatAdapterState): string => {
     default:
       return `${state.page}`;
   }
+};
+
+const mapAccentColorToTheme = (/* hexColor */ accentColor?: string, dark?: boolean): Theme | undefined => {
+  if (!accentColor) {
+    return undefined;
+  }
+
+  const brandTokens = getBrandTokensFromPalette(accentColor);
+  const v9theme: V9Theme = dark ? createDarkTheme(brandTokens) : createLightTheme(brandTokens);
+  return createV8Theme(brandTokens, v9theme);
 };

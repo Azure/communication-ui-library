@@ -75,6 +75,8 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
    * Flags to enable/disable or customize UI elements of the {@link CallComposite}.
    */
   options?: CallCompositeOptions;
+  logoUrl?: string;
+  bgUrl?: string;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -240,6 +242,8 @@ type MainScreenProps = {
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  logoUrl?: string;
+  bgUrl?: string;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -370,6 +374,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          logoUrl={props.logoUrl}
+          bgUrl={props.bgUrl}
         />
       );
       break;
@@ -588,6 +594,8 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             onSidePaneIdChange={props.onSidePaneIdChange}
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
+            logoUrl={props.logoUrl}
+            bgUrl={props.bgUrl}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane

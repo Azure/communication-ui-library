@@ -21,7 +21,7 @@ type NamedTheme = {
  */
 type ThemeCollection = Record<string, NamedTheme>;
 
-const defaultThemes: ThemeCollection = {
+export const defaultThemes: ThemeCollection = {
   Light: {
     name: 'Light',
     theme: lightTheme

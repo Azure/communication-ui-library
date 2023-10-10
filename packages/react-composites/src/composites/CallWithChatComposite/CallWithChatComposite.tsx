@@ -76,6 +76,8 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
    * Flags to enable/disable or customize UI elements of the {@link CallWithChatComposite}
    */
   options?: CallWithChatCompositeOptions;
+  logoUrl?: string;
+  bgUrl?: string;
 }
 
 /**
@@ -217,6 +219,8 @@ type CallWithChatScreenProps = {
   galleryOptions?: {
     layout?: VideoGalleryLayout;
   };
+  logoUrl?: string;
+  bgUrl?: string;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -500,6 +504,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               overrideSidePane={overrideSidePaneProps}
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}
+              logoUrl={props.logoUrl}
+              bgUrl={props.bgUrl}
             />
           </Stack.Item>
         </Stack>
@@ -534,6 +540,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         localVideoTile={options?.localVideoTile}
         /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
+        logoUrl={props.logoUrl}
+        bgUrl={props.bgUrl}
       />
     </BaseProvider>
   );
