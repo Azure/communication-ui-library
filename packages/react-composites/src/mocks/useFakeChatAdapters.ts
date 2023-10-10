@@ -12,7 +12,8 @@ import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communicat
 import {
   CommunicationIdentifierKind,
   CommunicationTokenCredential,
-  CommunicationUserIdentifier
+  CommunicationUserIdentifier,
+  getIdentifierKind
 } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
@@ -93,7 +94,7 @@ const initializeAdapters = async (
 ): Promise<ChatAdapter[]> => {
   const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
-    if (((participant.id as CommunicationIdentifierKind).kind as string) === 'microsoftTeamsApp') {
+    if (getIdentifierKind(participant.id).kind === 'microsoftTeamsApp') {
       throw new Error('Creating an adapter with a Bot participant is not supported');
     }
     if (!participant.displayName) {
