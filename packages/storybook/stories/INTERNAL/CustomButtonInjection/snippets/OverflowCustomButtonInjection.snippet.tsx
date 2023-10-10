@@ -1,6 +1,6 @@
 import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
-import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
+import { addCSS, compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
 const generatePlaceHolderButton = (name: string): CustomCallControlButtonCallback => {
   return () => ({
@@ -20,15 +20,16 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   generatePlaceHolderButton('btn5'),
   generatePlaceHolderButton('btn6')
 ];
-const addCSS = (css) => (document.head.appendChild(document.createElement('style')).innerHTML = css);
 
 export const OverflowCustomButtonInjectionExample = (): JSX.Element => {
   const adapter = new MockCallAdapter({});
 
-  addCSS('#test1 button[data-ui-id="common-call-composite-more-button"]{ border-color:green; }');
+  addCSS(
+    '#overflowCustomButtonInjectionExample button[data-ui-id="common-call-composite-more-button"]{ border-color:green; }'
+  );
 
   return (
-    <div style={compositeCanvasContainerStyles} id="test1">
+    <div style={compositeCanvasContainerStyles} id="overflowCustomButtonInjectionExample">
       <CallComposite
         adapter={adapter}
         options={{
