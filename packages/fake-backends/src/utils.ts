@@ -69,6 +69,7 @@ export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatPar
     id: identifier,
     displayName: p.displayName ?? '',
     shareHistoryTime: p.shareHistoryTime,
+    /* @conditional-compile-remove(signaling-beta) */
     metadata: {}
   };
 };

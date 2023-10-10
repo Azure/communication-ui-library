@@ -78,6 +78,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
         ...this.baseChatThreadEvent(),
         properties: {
           topic: topic,
+          /* @conditional-compile-remove(signaling-beta) */
           metadata: {}
         },
         updatedOn: new Date(Date.now()),
@@ -342,6 +343,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
           ...this.baseChatThreadEvent(),
           properties: {
             topic: request.topic,
+            /* @conditional-compile-remove(signaling-beta) */
             metadata: {}
           },
           updatedOn: new Date(Date.now()),

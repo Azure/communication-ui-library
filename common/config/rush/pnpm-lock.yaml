@@ -14,6 +14,9 @@ dependencies:
   '@azure/communication-common':
     specifier: 2.3.0
     version: 2.3.0
+  '@azure/communication-signaling':
+    specifier: 1.0.0-beta.21
+    version: 1.0.0-beta.21
   '@rush-temp/acs-ui-common':
     specifier: file:./projects/acs-ui-common.tgz
     version: file:projects/acs-ui-common.tgz(ts-node@9.1.1)
@@ -20158,7 +20161,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz(ts-node@9.1.1):
-    resolution: {integrity: sha512-WuYbPmUpIXNomsBoDRlqkFSUYEJNWvbOEtRkZZ8k07/s5nbkXIKOM48t8ndIFSDokcTcTwKDOmvZSsylpzSfxA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-UZFuH9VD0izpND28UxGmESO4gsSTchHUDA1w7VkMf+L1e1o7+qqceZHpIopUuQuwBVlZOhMY41dRUpT9pIbRUw==, tarball: file:projects/chat-stateful-client.tgz}
     id: file:projects/chat-stateful-client.tgz
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
@@ -20519,7 +20522,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz(ts-node@9.1.1)(webpack-cli@4.10.0):
-    resolution: {integrity: sha512-YbXFuXJci1rMvk7VItqRr2LRltcK4Z+12gqmeFM0JV+AIso+MaQD8dt4AefN4+VmZL20l1vTul0Xxm44gcWZkg==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-JtQPpHNyR1EMQhhZnTsUGGkBHZHOoMa6zNHieCMcZfPSOJvjJ7VECkKVcLNhc9DrEhJGyUNITW4rmqmrX7bnRA==, tarball: file:projects/fake-backends.tgz}
     id: file:projects/fake-backends.tgz
     name: '@rush-temp/fake-backends'
     version: 0.0.0
@@ -20674,7 +20677,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-XyOUrAoQzq2UQf7uCm6QlODmG99+P/xibNEsqvLbZMAGsf6ho74o1cnHa/ulcSMba5mCFAadF8A8IxlGqSFiaQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-+v4AphvHV9HmIO7sJF5b014C3hjoaMQehGVGVmPZKXNOddv6QmF4ro3Ke7rL6WuFU+rKJmigNJ7oAU0UUvsDAw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:

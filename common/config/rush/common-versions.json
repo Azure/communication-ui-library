@@ -26,7 +26,8 @@
     // "some-library": "1.2.3"
     "@azure/communication-calling": "1.18.1-beta.1",
     "@azure/communication-common": "2.3.0",
-    "@azure/communication-chat": "1.4.0-beta.2"
+    "@azure/communication-chat": "1.4.0-beta.2",
+    "@azure/communication-signaling": "1.0.0-beta.21",
   },
 
   /**
@@ -57,6 +58,7 @@
     "@azure/communication-calling": ["1.18.1-beta.1"],
     "@azure/communication-common": ["2.3.0"],
     "@azure/communication-chat": ["1.4.0-beta.2"],
+    "@azure/communication-signaling": ["1.0.0-beta.21"],
     "typescript": [
       // All projects should use this version by default
       "4.3.5",
