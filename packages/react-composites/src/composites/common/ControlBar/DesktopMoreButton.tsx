@@ -47,7 +47,7 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
@@ -336,7 +336,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       isChecked: galleryPositionTop,
       onClick: () => {
         if (galleryPositionTop === false) {
-          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('HorizontalTop');
+          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('horizontalTop');
           setGalleryPositionTop(true);
         } else {
           props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('Responsive');

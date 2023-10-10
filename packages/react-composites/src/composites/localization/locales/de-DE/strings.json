@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamisches Layout",
     "moreButtonGalleryDefaultLayoutLabel": "Kataloglayout",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokussierte Inhalte",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Große Galerie",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Ihre Kamera wurde deaktiviert. Sie können kein Video mehr freigeben.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Liveuntertitel",
     "moreDrawerSpokenLanguageMenuTitle": "Gesprochene Sprache",
     "moreDrawerCaptionLanguageMenuTitle": "Sprache für Untertitel",
+    "moreDrawerGalleryOptionsMenuTitle": "Katalogoptionen",
     "peopleButtonLabel": "Personen",
     "selectedPeopleButtonLabel": "Schaltfläche \"Personen\" ausgewählt",
     "peopleButtonTooltipOpen": "Teilnehmende anzeigen",

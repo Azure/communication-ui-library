@@ -113,7 +113,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Optimal Video Count
         'optimal-video-count',
         // raise hands feature
-        'raise-hand'
+        'raise-hand',
+        // Feature for gallery layouts
+        'gallery-layouts',
+        // feature  for vertical overflow gallery
+        'vertical-gallery'
       ]
     }
   ]);

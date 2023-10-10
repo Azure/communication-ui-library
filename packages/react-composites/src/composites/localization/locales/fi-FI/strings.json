@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
     "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
     "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Suuri galleria",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kamerasi on poistettu käytöstä. Et voi enää jakaa videota.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Live-tekstitykset",
     "moreDrawerSpokenLanguageMenuTitle": "Puhuttu kieli",
     "moreDrawerCaptionLanguageMenuTitle": "Tekstityksen kieli",
+    "moreDrawerGalleryOptionsMenuTitle": "Valikoiman asetukset",
     "peopleButtonLabel": "Ihmiset",
     "selectedPeopleButtonLabel": "Henkilöt-painike valittu",
     "peopleButtonTooltipOpen": "Näytä osallistujat",
