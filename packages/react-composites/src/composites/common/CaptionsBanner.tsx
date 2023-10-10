@@ -3,9 +3,9 @@
 
 import React from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
-import { _CaptionsBanner, _CaptionsBannerStrings } from '@internal/react-components';
+import { _CaptionsBanner, _CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
@@ -23,12 +23,17 @@ import { _captionsBannerSelector } from '@internal/calling-component-bindings';
 
 /* @conditional-compile-remove(close-captions) */
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(close-captions) */
+import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 
 /* @conditional-compile-remove(close-captions) */
 const mobileViewBannerWidth = '90%';
 
 /** @private */
-export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
+export const CaptionsBanner = (props: {
+  isMobile: boolean;
+  /* @conditional-compile-remove(close-captions) */ onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+}): JSX.Element => {
   /* @conditional-compile-remove(close-captions) */
   const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
   /* @conditional-compile-remove(close-captions) */
@@ -61,6 +66,13 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
   const captionsBannerStrings: _CaptionsBannerStrings = {
     captionsBannerSpinnerText: strings.captionsBannerSpinnerText
   };
+  /* @conditional-compile-remove(close-captions) */
+  const onRenderAvatar = useCallback(
+    (userId?: string, options?: CustomAvatarOptions) => {
+      return <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />;
+    },
+    [props.onFetchAvatarPersonaData]
+  );
   /* @conditional-compile-remove(close-captions) */
   const { innerWidth: width } = window;
   /* @conditional-compile-remove(close-captions) */
@@ -96,6 +108,7 @@ export const CaptionsBanner = (props: { isMobile: boolean }): JSX.Element => {
               <_CaptionsBanner
                 {...captionsBannerProps}
                 {...handlers}
+                onRenderAvatar={onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
               />
