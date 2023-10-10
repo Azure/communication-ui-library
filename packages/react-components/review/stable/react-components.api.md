@@ -474,6 +474,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
 }
 
@@ -617,6 +618,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
     ControlButtonVideoEffectsOption: JSX.Element;
     ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
@@ -1048,6 +1051,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -1304,6 +1309,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @public
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -1877,20 +1885,20 @@ export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => numbe
 // @public
 export const useTheme: () => Theme;
 
-// @beta
+// @public
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
     counter?: IStyle;
     nextButton?: IStyle;
     previousButton?: IStyle;
 }
 
-// @beta
+// @public
 export interface VerticalGalleryStrings {
     leftNavButtonAriaLabel?: string;
     rightNavButtonAriaLabel?: string;
 }
 
-// @beta
+// @public
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
@@ -1959,7 +1967,7 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -1995,6 +2003,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -2050,6 +2059,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public
