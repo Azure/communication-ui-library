@@ -3,7 +3,7 @@
 
 import { Spinner, SpinnerSize, Stack, Text, mergeStyles } from '@fluentui/react';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { ErrorBar, OnRenderAvatarCallback } from '@internal/react-components';
+import { ErrorBar } from '@internal/react-components';
 /* @conditional-compile-remove(call-transfer) */
 import { Announcer } from '@internal/react-components';
 import React, { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -39,8 +39,6 @@ type TransferPageSubject = 'transferor' | 'transferTarget';
  */
 export const TransferPage = (
   props: LobbyPageProps & {
-    /** Render component function to replace the default Persona Icon representing the transferor or transfer target. */
-    onRenderAvatar?: OnRenderAvatarCallback;
     /** Callback function that can be used to provide custom data to Persona Icon rendered */
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   }
@@ -126,7 +124,6 @@ export const TransferPage = (
                 ? strings.transferPageTransferTargetText
                 : strings.transferPageTransferorText
             }
-            onRenderAvatar={props.onRenderAvatar}
             onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
           />
         )}
@@ -145,8 +142,6 @@ interface TransferTileProps {
   children?: React.ReactNode;
   /** User id for `onFetchAvatarPersonaData` callback to provide custom data to avatars rendered */
   userId?: string;
-  /** Render component function to replace the default Persona Icon representing the transferor or transfer target. */
-  onRenderAvatar?: OnRenderAvatarCallback;
   /** Callback function that can be used to provide custom data to Persona Icon rendered */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   /**
@@ -165,7 +160,7 @@ interface TransferTileProps {
 }
 
 const TransferTile = (props: TransferTileProps): JSX.Element => {
-  const { displayName, initialsName, userId, onRenderAvatar, onFetchAvatarPersonaData, statusText } = props;
+  const { displayName, initialsName, userId, onFetchAvatarPersonaData, statusText } = props;
 
   const [personaSize, setPersonaSize] = useState<number>();
   const tileRef = useRef<HTMLDivElement>(null);
@@ -215,7 +210,7 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
     <div ref={tileRef} className={mergeStyles(tileContainerStyles)} data-is-focusable={true}>
       <Stack className={mergeStyles(tileContentStyles)} tokens={{ childrenGap: '1rem' }}>
         <Stack horizontalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
-          {onRenderAvatar ? onRenderAvatar(userId ?? '', placeholderOptions, defaultOnRenderAvatar) : defaultAvatar}
+          {defaultAvatar}
           <Text className={mergeStyles(displayNameStyles)}>{displayName}</Text>
         </Stack>
         <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
