@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "fix",
+  "workstream": "Gallery layouts",
+  "comment": "update CC for tests",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Turn on react strict mode again in sample apps",
+  "comment": "Turn on strict mode again in samples",
+  "packageName": "@azure/communication-react",
+  "email": "94866715+dmceachernmsft@users.noreply.github.com",
+  "dependentChangeType": "none"
+}

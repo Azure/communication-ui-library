@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "تخطيط ديناميكي",
     "moreButtonGalleryDefaultLayoutLabel": "تخطيط المعرض",
     "moreButtonGalleryFocusedContentLayoutLabel": "المحتوى المركز عليه",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "معرض كبير",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "تم تعطيل الكاميرا الخاصة بك. لم يعد بإمكانك مشاركة الفيديو.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "نص الكلام مباشرةً",
     "moreDrawerSpokenLanguageMenuTitle": "اللغة المنطوقة",
     "moreDrawerCaptionLanguageMenuTitle": "لغة التسمية التوضيحية",
+    "moreDrawerGalleryOptionsMenuTitle": "خيارات المعرض",
     "peopleButtonLabel": "الأشخاص",
     "selectedPeopleButtonLabel": "تم تحديد زر الأشخاص",
     "peopleButtonTooltipOpen": "إظهار المشاركين",

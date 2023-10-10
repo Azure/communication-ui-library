@@ -14,10 +14,12 @@ if (!domNode) {
 }
 
 createRoot(domNode).render(
-  <SwitchableFluentThemeProvider scopeId="SampleChatApp">
-    <div className="wrapper">
-      <App />
-      <ShakeToSendLogs />
-    </div>
-  </SwitchableFluentThemeProvider>
+  <React.StrictMode>
+    <SwitchableFluentThemeProvider scopeId="SampleChatApp">
+      <div className="wrapper">
+        <App />
+        <ShakeToSendLogs />
+      </div>
+    </SwitchableFluentThemeProvider>
+  </React.StrictMode>
 );

@@ -423,6 +423,13 @@ export type CallCompositeIcons = {
     LocalCameraSwitch?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
+    SpeakerGalleryLayout?: JSX.Element;
+    FloatingLocalVideoGalleryLayout?: JSX.Element;
+    DefaultGalleryLayout?: JSX.Element;
+    FocusedContentGalleryLayout?: JSX.Element;
+    OverflowGalleryTop?: JSX.Element;
+    LargeGalleryLayout?: JSX.Element;
 };
 
 // @public
@@ -430,6 +437,9 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -506,6 +516,13 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryDefaultLayoutLabel?: string;
+    moreButtonGalleryFloatingLocalLayoutLabel?: string;
+    moreButtonGalleryFocusedContentLayoutLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
+    moreButtonGallerySpeakerLayoutLabel?: string;
+    moreButtonLargeGalleryDefaultLayoutLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -906,6 +923,9 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -934,6 +954,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerButtonTooltip: string;
     moreDrawerCaptionLanguageMenuTitle: string;
     moreDrawerCaptionsMenuTitle: string;
+    moreDrawerGalleryOptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     moreDrawerSpokenLanguageMenuTitle: string;
@@ -1564,6 +1585,7 @@ export interface ComponentStrings {
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
 }
 
@@ -1828,6 +1850,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
     ControlButtonVideoEffectsOption: JSX.Element;
     ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
@@ -1905,6 +1929,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalCameraSwitch?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
+    SpeakerGalleryLayout?: JSX.Element | undefined;
+    FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
+    DefaultGalleryLayout?: JSX.Element | undefined;
+    FocusedContentGalleryLayout?: JSX.Element | undefined;
+    OverflowGalleryTop?: JSX.Element | undefined;
+    LargeGalleryLayout?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1929,6 +1960,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
     ControlButtonVideoEffectsOption: JSX.Element;
     ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;
@@ -2164,6 +2197,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -2516,6 +2551,9 @@ export interface OptionsDevice {
     id: string;
     name: string;
 }
+
+// @public
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -3085,6 +3123,25 @@ export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT
 export const useTheme: () => Theme;
 
 // @public
+export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
+    counter?: IStyle;
+    nextButton?: IStyle;
+    previousButton?: IStyle;
+}
+
+// @public
+export interface VerticalGalleryStrings {
+    leftNavButtonAriaLabel?: string;
+    rightNavButtonAriaLabel?: string;
+}
+
+// @public
+export interface VerticalGalleryStyles extends BaseCustomStyles {
+    children?: IStyle;
+    controlBar?: VerticalGalleryControlBarStyles;
+}
+
+// @public
 export interface VideoBackgroundBlurEffect extends BackgroundBlurConfig {
     effectName: 'blur';
 }
@@ -3120,7 +3177,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -3156,6 +3213,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -3220,6 +3278,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public

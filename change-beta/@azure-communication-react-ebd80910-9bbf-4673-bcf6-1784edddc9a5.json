@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "updating stable dependency to 1.16.3",
-  "comment": "updating calling sdk version to 1.16.3",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

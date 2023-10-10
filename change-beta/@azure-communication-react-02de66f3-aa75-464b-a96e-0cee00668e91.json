@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "feature",
-  "workstream": "Capabilities",
-  "comment": "Update camera and mic buttons to have disabled icons when capability is not present. Update capability notification bar to use camera and mic button icons.",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
