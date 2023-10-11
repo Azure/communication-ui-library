@@ -10,19 +10,13 @@ import {
   participantListWrapper,
   displayNameStyles
 } from './styles/ParticipantContainer.styles';
-import {
-  OnRenderAvatarCallback,
-  ParticipantList,
-  ParticipantListProps,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
+import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
 import { _formatString } from '@internal/acs-ui-common';
 
 type ParticipantContainerProps = {
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   participantListProps: ParticipantListProps;
