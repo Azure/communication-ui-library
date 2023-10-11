@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
@@ -27,6 +27,10 @@ import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
 import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
+/* @conditional-compile-remove(pinned-participants) */
+import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
+/* @conditional-compile-remove(click-to-call) */
+import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
 import {
@@ -42,6 +46,8 @@ import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButt
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 
 /**
  * Props required for the {@link CallWithChatComposite}
@@ -157,6 +163,28 @@ export type CallWithChatCompositeOptions = {
    * if this is not supplied, the composite will not show a unsupported browser page.
    */
   onEnvironmentInfoTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  /**
+   * Remote participant video tile menu options
+   */
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+  /* @conditional-compile-remove(click-to-call) */
+  /**
+   * Options for controlling the local video tile.
+   *
+   * @remarks if 'false' the local video tile will not be rendered.
+   */
+  localVideoTile?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Options for controlling the starting layout of the composite's video gallery
+   */
+  galleryOptions?: {
+    /**
+     * Layout for the gallery when the call starts
+     */
+    layout?: VideoGalleryLayout;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -181,6 +209,14 @@ type CallWithChatScreenProps = {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(unsupported-browser) */
   onEnvironmentInfoTroubleshootingClick?: () => void;
+  /* @conditional-compile-remove(pinned-participants) */
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+  /* @conditional-compile-remove(click-to-call) */
+  localVideoTile?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  galleryOptions?: {
+    layout?: VideoGalleryLayout;
+  };
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -351,7 +387,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(call-readiness) */
       onPermissionsTroubleshootingClick: props.onPermissionsTroubleshootingClick,
       /* @conditional-compile-remove(unsupported-browser) */
-      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick
+      onEnvironmentInfoTroubleshootingClick: props.onEnvironmentInfoTroubleshootingClick,
+      /* @conditional-compile-remove(pinned-participants) */
+      remoteVideoTileMenuOptions: props.remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(gallery-layouts) */
+      galleryOptions: props.galleryOptions,
+      /* @conditional-compile-remove(click-to-call) */
+      localVideoTile: props.localVideoTile
     }),
     [
       props.callControls,
@@ -366,7 +408,13 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(call-readiness) */
       props.onNetworkingTroubleShootingClick,
       /* @conditional-compile-remove(call-readiness) */
-      props.onPermissionsTroubleshootingClick
+      props.onPermissionsTroubleshootingClick,
+      /* @conditional-compile-remove(gallery-layouts) */
+      props.galleryOptions,
+      /* @conditional-compile-remove(click-to-call) */
+      props.localVideoTile,
+      /* @conditional-compile-remove(pinned-participants) */
+      props.remoteVideoTileMenuOptions
     ]
   );
 
@@ -437,7 +485,6 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     },
     [closeChat]
   );
-
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
       <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
@@ -479,8 +526,14 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         callControls={options?.callControls}
         joinInvitationURL={joinInvitationURL}
         fluentTheme={fluentTheme}
+        /* @conditional-compile-remove(pinned-participants) */
+        remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(file-sharing) */
         fileSharing={options?.fileSharing}
+        /* @conditional-compile-remove(click-to-call) */
+        localVideoTile={options?.localVideoTile}
+        /* @conditional-compile-remove(gallery-layouts) */
+        galleryOptions={options?.galleryOptions}
       />
     </BaseProvider>
   );

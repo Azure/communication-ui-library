@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
- * @beta
- * strings for captions setting modal
+ * @public
+ * spoken language strings for captions setting modal
  */
-export interface CaptionsAvailableLanguageStrings {
+export interface SpokenLanguageStrings {
   'ar-ae': string;
   'ar-sa': string;
   'da-dk': string;
@@ -48,3 +48,90 @@ export interface CaptionsAvailableLanguageStrings {
   'sk-sk': string;
   'zh-tw': string;
 }
+
+/**
+ * @public
+ * caption language strings for captions setting modal
+ */
+export interface CaptionLanguageStrings {
+  ar: string;
+  da: string;
+  de: string;
+  en: string;
+  es: string;
+  fi: string;
+  fr: string;
+  'fr-ca': string;
+  hi: string;
+  it: string;
+  ja: string;
+  ko: string;
+  nb: string;
+  nl: string;
+  pl: string;
+  pt: string;
+  ru: string;
+  sv: string;
+  'zh-Hans': string;
+  'zh-Hant': string;
+  cs: string;
+  'pt-pt': string;
+  tr: string;
+  vi: string;
+  th: string;
+  he: string;
+  cy: string;
+  uk: string;
+  el: string;
+  hu: string;
+  ro: string;
+  sk: string;
+}
+
+/**
+ * @internal
+ * mapping between caption language and spoken language codes
+ */
+export const _spokenLanguageToCaptionLanguage = {
+  'ar-ae': 'ar',
+  'ar-sa': 'ar',
+  'da-dk': 'da',
+  'de-de': 'de',
+  'en-au': 'en',
+  'en-ca': 'en',
+  'en-gb': 'en',
+  'en-in': 'en',
+  'en-nz': 'en',
+  'en-us': 'en',
+  'es-es': 'es',
+  'es-mx': 'es',
+  'fi-fi': 'fi',
+  'fr-ca': 'fr-ca',
+  'fr-fr': 'fr',
+  'hi-in': 'hi',
+  'it-it': 'it',
+  'ja-jp': 'ja',
+  'ko-kr': 'ko',
+  'nb-no': 'nb',
+  'nl-be': 'nl',
+  'nl-nl': 'nl',
+  'pl-pl': 'pl',
+  'pt-br': 'pt',
+  'ru-ru': 'ru',
+  'sv-se': 'sv',
+  'zh-cn': 'zh-Hans',
+  'zh-hk': 'zh-Hant',
+  'cs-cz': 'cs',
+  'pt-pt': 'pt-pt',
+  'tr-tr': 'tr',
+  'vi-vn': 'vi',
+  'th-th': 'th',
+  'he-il': 'he',
+  'cy-gb': 'cy',
+  'uk-ua': 'uk',
+  'el-gr': 'el',
+  'hu-hu': 'hu',
+  'ro-ro': 'ro',
+  'sk-sk': 'sk',
+  'zh-tw': 'zh-Hant'
+};

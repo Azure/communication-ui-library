@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * `@azure/communication-react` is an npm package that exports the functionality of the Azure Communication Services - UI Library.
@@ -90,6 +90,9 @@ export type {
 /* @conditional-compile-remove(PSTN-calls) */
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
+/* @conditional-compile-remove(raise-hand) */
+export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
+
 export {
   ChatClientProvider,
   ChatThreadClientProvider,
@@ -128,12 +131,35 @@ export {
   StreamMedia,
   TypingIndicator,
   VideoGallery,
-  VideoTile
+  VideoTile,
+  COMPONENT_LOCALE_EN_GB,
+  COMPONENT_LOCALE_AR_SA,
+  COMPONENT_LOCALE_CS_CZ,
+  COMPONENT_LOCALE_DE_DE,
+  COMPONENT_LOCALE_ES_ES,
+  COMPONENT_LOCALE_FI_FI,
+  COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_HE_IL,
+  COMPONENT_LOCALE_IT_IT,
+  COMPONENT_LOCALE_JA_JP,
+  COMPONENT_LOCALE_KO_KR,
+  COMPONENT_LOCALE_NB_NO,
+  COMPONENT_LOCALE_NL_NL,
+  COMPONENT_LOCALE_PL_PL,
+  COMPONENT_LOCALE_PT_BR,
+  COMPONENT_LOCALE_RU_RU,
+  COMPONENT_LOCALE_SV_SE,
+  COMPONENT_LOCALE_TR_TR,
+  COMPONENT_LOCALE_ZH_CN,
+  COMPONENT_LOCALE_ZH_TW
 } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */
 export { HoldButton } from '../../react-components/src';
+
+/* @conditional-compile-remove(raise-hand) */
+export { RaiseHandButton } from '../../react-components/src';
 
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 export { Dialpad } from '../../react-components/src';
@@ -271,8 +297,8 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStylesProps } from '../../react-components/src';
+/* @conditional-compile-remove(image-gallery) */
+export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -350,4 +376,4 @@ export type {
   VerticalGalleryControlBarStyles
 } from '../../react-components/src';
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsAvailableLanguageStrings } from '../../react-components/src';
+export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';

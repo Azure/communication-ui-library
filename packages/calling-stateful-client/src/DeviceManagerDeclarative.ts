@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallContext } from './CallContext';
@@ -26,7 +26,7 @@ export interface StatefulDeviceManager extends DeviceManager {
    * {@link @azure/communication-calling#Call}. This is useful for developers who want to interact with rendered
    * video streams before they have started a call. See also {@link @azure/communication-react#CallClient.createView}.
    *
-   * @beta
+   * @public
    */
   getUnparentedVideoStreams: () => LocalVideoStream[];
 }

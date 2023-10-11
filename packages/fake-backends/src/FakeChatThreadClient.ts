@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AddChatParticipantsResult,
@@ -18,6 +18,8 @@ import {
   SendTypingNotificationOptions,
   UpdateMessageOptions
 } from '@azure/communication-chat';
+/* @conditional-compile-remove(chat-beta-sdk) */
+import { UpdateChatThreadPropertiesOptions } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { BaseChatEvent, BaseChatMessageEvent, BaseChatThreadEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
@@ -76,6 +78,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
         ...this.baseChatThreadEvent(),
         properties: {
           topic: topic,
+          /* @conditional-compile-remove(signaling-beta) */
           metadata: {}
         },
         updatedOn: new Date(Date.now()),
@@ -312,6 +315,45 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  updateProperties(request: UpdateChatThreadPropertiesOptions): Promise<void> {
+    const now = new Date(Date.now());
+    this.modifyThreadForUser((thread) => {
+      if (request.topic) {
+        thread.topic = request.topic;
+        thread.messages = [
+          ...thread.messages,
+          {
+            ...this.baseChatMessage(now),
+            type: 'topicUpdated',
+            content: {
+              topic: request.topic,
+              // Verify: semantics of initiator.
+              initiator: getIdentifierKind(this.userId)
+            }
+          }
+        ];
+      }
+    });
+
+    if (request.topic) {
+      this.checkedGetThreadEventEmitter().chatThreadPropertiesUpdated(
+        getThreadEventTargets(this.checkedGetThread(), this.userId),
+        {
+          ...this.baseChatThreadEvent(),
+          properties: {
+            topic: request.topic,
+            /* @conditional-compile-remove(signaling-beta) */
+            metadata: {}
+          },
+          updatedOn: new Date(Date.now()),
+          updatedBy: chatToSignalingParticipant(this.checkedGetMe())
+        }
+      );
+    }
+    return Promise.resolve();
+  }
+
   listReadReceipts(options?: ListReadReceiptsOptions): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     if (options?.skip) {
       throw new Error(`options.skip not supported`);
@@ -376,8 +418,7 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const me = this.checkedGetMe();
     const identifier = getIdentifierKind(me.id);
 
-    /* @conditional-compile-remove(communication-common-beta-v3) */
-    if (identifier.kind === 'microsoftBot') {
+    if (identifier.kind === 'microsoftTeamsApp') {
       throw new Error('Unsupported indentifer kind: microsoftBot');
     }
 

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(one-to-n-calling) */
 /* @conditional-compile-remove(PSTN-calls) */
@@ -63,6 +63,9 @@ export interface VideoGalleryStream {
   /* @conditional-compile-remove(pinned-participants) */
   /** Scaling mode of the video stream */
   scalingMode?: ViewScalingMode;
+  /* @conditional-compile-remove(pinned-participants) */
+  /** Stream Size of the video stream */
+  streamSize?: { width: number; height: number };
 }
 
 /**

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGallery } from '@azure/communication-react';
 import React from 'react';
@@ -70,7 +70,7 @@ export const PinnedParticipantsMobileExample: () => JSX.Element = () => {
         layout="floatingLocalVideo"
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        remoteVideoTileMenuOptions={{ kind: 'drawer' }}
+        remoteVideoTileMenu={{ kind: 'drawer' }}
       />
     </div>
   );

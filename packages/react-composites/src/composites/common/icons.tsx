@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   CallEnd20Filled,
@@ -19,6 +19,10 @@ import {
   VideoOff20Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(capabilities) */
+import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(gallery-layouts) */
+import { Grid20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Dialpad20Regular, Call20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
@@ -29,6 +33,15 @@ import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 import { Attach20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
+/* @conditional-compile-remove(gallery-layouts) */
+import {
+  PersonSquare20Regular,
+  WindowHeaderHorizontal20Regular,
+  TableSimple20Regular,
+  BoardSplit20Regular,
+  ContentView20Regular,
+  Table20Regular
+} from '@fluentui/react-icons';
 
 const SpinnerIcon = (): JSX.Element => <Spinner size={SpinnerSize.large} />;
 
@@ -49,6 +62,10 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LocalCameraSwitch: <CameraSwitch24Regular />,
   ControlBarChatButtonActive: <Chat20Filled />,
   ControlBarChatButtonInactive: <Chat20Regular />,
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited: <VideoProhibited20Filled />,
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited: <MicProhibited20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,
   MoreDrawerPeople: <People20Regular />,
@@ -74,7 +91,21 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
-  RemoveVideoBackgroundEffect: <VideoPerson20Filled />
+  RemoveVideoBackgroundEffect: <VideoPerson20Filled />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  GalleryOptions: <Grid20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  SpeakerGalleryLayout: <PersonSquare20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  DefaultGalleryLayout: <TableSimple20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  FloatingLocalVideoGalleryLayout: <BoardSplit20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  FocusedContentGalleryLayout: <ContentView20Regular />,
+  /* @conditional-compile-remove(gallery-layouts) */
+  LargeGalleryLayout: <Table20Regular />
 };
 
 /**
@@ -139,6 +170,18 @@ export type CallCompositeIcons = {
   ControlButtonParticipants?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  ControlButtonRaiseHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  ControlButtonLowerHand?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  RaiseHandContextualMenuItem?: JSX.Element;
+  /* @conditional-compile-remove(raise-hand) */
+  LowerHandContextualMenuItem?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -186,6 +229,20 @@ export type CallCompositeIcons = {
   BlurVideoBackground?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   RemoveVideoBackgroundEffect?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  GalleryOptions?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  SpeakerGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  FloatingLocalVideoGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  DefaultGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  FocusedContentGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  OverflowGalleryTop?: JSX.Element;
+  /* @conditional-compile-remove(gallery-layouts) */
+  LargeGalleryLayout?: JSX.Element;
 };
 
 /**
@@ -226,6 +283,10 @@ export type CallWithChatCompositeIcons = {
   ControlButtonOptions?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(capabilities) */
+  ControlButtonMicProhibited?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;

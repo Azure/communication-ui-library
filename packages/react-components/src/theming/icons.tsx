@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
@@ -43,13 +43,19 @@ import {
   VideoProhibited16Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(raise-hand) */
-import { HandRight20Filled, HandRightOff20Filled } from '@fluentui/react-icons';
+import {
+  HandRight20Filled,
+  HandRightOff20Filled,
+  HandRight20Regular,
+  HandRightOff20Regular
+} from '@fluentui/react-icons';
 /* @conditional-compile-remove(close-captions) */
 import {
   ClosedCaption20Regular,
   ClosedCaptionOff20Regular,
   Settings20Regular,
-  PersonVoice20Regular
+  PersonVoice20Regular,
+  Translate20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled } from '@fluentui/react-icons';
@@ -241,6 +247,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonRaiseHand: <HandRight20Filled />,
   /* @conditional-compile-remove(raise-hand) */
   ControlButtonLowerHand: <HandRightOff20Filled />,
+  /* @conditional-compile-remove(raise-hand) */
+  RaiseHandContextualMenuItem: <HandRight20Regular />,
+  /* @conditional-compile-remove(raise-hand) */
+  LowerHandContextualMenuItem: <HandRightOff20Regular />,
   /* @conditional-compile-remove(file-sharing) */
   CancelFileUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing) */
@@ -336,6 +346,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   CaptionsSettingsIcon: <Settings20Regular />,
   /* @conditional-compile-remove(close-captions) */
   ChangeSpokenLanguageIcon: <PersonVoice20Regular />,
+  /* @conditional-compile-remove(close-captions) */
+  ChangeCaptionLanguageIcon: <Translate20Regular />,
   ContextMenuCameraIcon: <Video20Regular />,
   ContextMenuMicIcon: <Mic20Regular />,
   ContextMenuSpeakerIcon: <Speaker220Regular />

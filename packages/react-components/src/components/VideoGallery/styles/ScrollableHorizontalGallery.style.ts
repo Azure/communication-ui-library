@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, mergeStyles } from '@fluentui/react';
 import { SMALL_FLOATING_MODAL_SIZE_REM } from './FloatingLocalVideo.styles';
@@ -23,12 +23,14 @@ export const scrollableHorizontalGalleryStyles: IStackStyles = {
 /**
  * @private
  */
-export const scrollableHorizontalGalleryContainerStyles = mergeStyles({
-  display: 'flex',
-  width: `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`,
-  minHeight: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
-  overflow: 'scroll',
-  '-ms-overflow-style': 'none',
-  'scrollbar-width': 'none',
-  '::-webkit-scrollbar': { display: 'none' }
-});
+export const scrollableHorizontalGalleryContainerStyles = (fullWidth: boolean): string => {
+  return mergeStyles({
+    display: 'flex',
+    width: fullWidth ? '100%' : `calc(100% - ${SMALL_FLOATING_MODAL_SIZE_REM.width}rem)`,
+    minHeight: `${SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM.height}rem`,
+    overflow: 'scroll',
+    '-ms-overflow-style': 'none',
+    'scrollbar-width': 'none',
+    '::-webkit-scrollbar': { display: 'none' }
+  });
+};

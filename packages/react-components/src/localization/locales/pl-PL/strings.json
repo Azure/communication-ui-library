@@ -7,9 +7,10 @@
     "mutedIconLabel": "Wyciszono",
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
-    "participantStateHold": "Zawieszony",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "Zawieszony"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} więcej"
   },
   "typingIndicator": {
     "singleUser": "Użytkownik {user} pisze...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Pobierz",
+    "dismissButtonAriaLabel": "Zamknij"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wiadomość została wysłana",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "Prezentuj swój ekran"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Podnieś",
+    "onLabel": "Opuść",
+    "tooltipDisabledContent": "Akcja Podnieś rękę jest wyłączona",
+    "tooltipOnContent": "Opuść rękę",
+    "tooltipOffContent": "Podnieś rękę"
   },
   "messageThread": {
     "yesterday": "Wczoraj",
@@ -333,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "poprzednia strona",
     "rightNavButtonAriaLabel": "następna strona"
   }

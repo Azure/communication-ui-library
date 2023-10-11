@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React from 'react';
 import { ControlBarButtonProps } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */

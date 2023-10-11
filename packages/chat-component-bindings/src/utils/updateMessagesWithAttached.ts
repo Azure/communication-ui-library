@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { Message, MessageAttachedStatus } from '@internal/react-components';
 import { compareMessages } from './compareMessages';
 import { MINUTE_IN_MS } from './constants';

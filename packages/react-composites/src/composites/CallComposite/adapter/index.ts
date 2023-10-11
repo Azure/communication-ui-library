@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export {
   createAzureCommunicationCallAdapter,
@@ -14,8 +14,10 @@ export {
   createTeamsCallAdapterFromClient,
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
+
+export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs, TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
+export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';
@@ -54,10 +56,18 @@ export type {
 } from './CallAdapter';
 
 /* @conditional-compile-remove(close-captions) */
-export type { CaptionsReceivedListener, IsCaptionsActiveChangedListener } from './CallAdapter';
+export type {
+  CaptionsReceivedListener,
+  IsCaptionsActiveChangedListener,
+  IsCaptionLanguageChangedListener,
+  IsSpokenLanguageChangedListener
+} from './CallAdapter';
 
 /* @conditional-compile-remove(call-transfer) */
 export type { TransferRequestedListener } from './CallAdapter';
+
+/* @conditional-compile-remove(capabilities) */
+export type { CapabilitiesChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';

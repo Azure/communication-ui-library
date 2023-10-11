@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommonCallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -51,6 +51,20 @@ const createCompositeHandlers = memoizeOne(
     },
     onRemoveParticipant: async (userId) => {
       await adapter.removeParticipant(userId);
+    },
+    /* @conditional-compile-remove(raise-hand) */
+    onRaiseHand: async () => {
+      await adapter.raiseHand();
+    },
+    /* @conditional-compile-remove(raise-hand) */
+    onLowerHand: async () => {
+      await adapter.lowerHand();
+    },
+    /* @conditional-compile-remove(raise-hand) */
+    onToggleRaiseHand: async () => {
+      adapter.getState().call?.raiseHand.localParticipantRaisedHand
+        ? await adapter.lowerHand()
+        : await adapter.raiseHand();
     },
     onSelectCamera: async (deviceInfo, options) => {
       await adapter.setCamera(deviceInfo, options);

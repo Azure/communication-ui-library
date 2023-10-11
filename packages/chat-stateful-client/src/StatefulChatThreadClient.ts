@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatThreadClient, SendChatMessageResult } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
@@ -40,7 +40,7 @@ class ProxyChatThreadClient implements ProxyHandler<ChatThreadClient> {
             content: { message: content },
             clientMessageId,
             id: '',
-            type: 'text',
+            type: options?.type ?? 'text',
             sequenceId: '',
             version: '',
             createdOn: new Date(),

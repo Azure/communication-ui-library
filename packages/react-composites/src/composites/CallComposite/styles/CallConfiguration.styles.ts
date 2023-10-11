@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   IStackItemStyles,
@@ -24,13 +24,13 @@ export const configurationStackTokensDesktop: IStackTokens = {
  * @private
  */
 export const configurationStackTokensMobile: IStackTokens = {
-  childrenGap: '1rem'
+  childrenGap: '1.5rem'
 };
 
 const configurationContainerStyle: IStyle = {
   height: '100%',
   width: '100%',
-  padding: '0.5rem'
+  padding: '2rem 1rem 2rem 1rem'
 };
 
 /**
@@ -133,7 +133,15 @@ export const startCallButtonContainerStyleMobile: IStackStyles = {
  */
 export const startCallButtonStyleMobile = mergeStyles({
   width: '100%',
-  maxWidth: 'unset'
+  maxWidth: 'unset',
+  borderRadius: '0.25rem'
+});
+
+/**
+ * @private
+ */
+export const startCallButtonStyleDesktop = mergeStyles({
+  borderRadius: '0.25rem'
 });
 
 /** @private */

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { registerIcons } from '@fluentui/react';
 import React from 'react';
@@ -72,11 +72,11 @@ describe('VideoGallery default layout tests', () => {
     expect(getFloatingLocalVideoModal(container)).toBe(null);
   });
 
-  test('should render all video tiles in the grid', () => {
+  test('should render max allowed video tiles in the grid', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false }
     });
-    const remoteParticipants = Array.from({ length: 10 }, () =>
+    const remoteParticipants = Array.from({ length: 4 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
@@ -88,9 +88,9 @@ describe('VideoGallery default layout tests', () => {
 
     const allTiles = getTiles(container);
     const gridTiles = getGridTiles(container);
-    expect(allTiles.length).toBe(11);
-    expect(gridTiles.length).toBe(allTiles.length);
-    expect(gridTiles.filter(tileIsAudio).length).toBe(11);
+    expect(allTiles.length).toBe(5);
+    expect(gridTiles.length).toBe(5);
+    expect(gridTiles.filter(tileIsAudio).length).toBe(5);
     expect(gridTiles.filter(tileIsVideo).length).toBe(0);
   });
 
@@ -160,7 +160,7 @@ describe('VideoGallery floating local video layout tests', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
     });
-    const remoteParticipants = Array.from({ length: 10 }, () =>
+    const remoteParticipants = Array.from({ length: 4 }, () =>
       createRemoteParticipant({
         videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
       })
@@ -176,6 +176,36 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const floatingLocalVideoModal = getFloatingLocalVideoModal(container);
     expect(floatingLocalVideoModal).toBeTruthy();
+
+    const gridTiles = getGridTiles(container);
+    expect(
+      gridTiles.some((tile) => {
+        return tile.textContent === 'You';
+      })
+    ).toBe(false);
+  });
+
+  test('should have docked local video tile present when more than max tiles present', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 10 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    );
+
+    const { container } = render(
+      <VideoGallery
+        layout="floatingLocalVideo"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+      />
+    );
+
+    const floatingLocalVideoModal = getFloatingLocalVideoModal(container);
+    expect(floatingLocalVideoModal).toBeFalsy();
+    expect(getHorizontalGallery(container)).toBeTruthy();
 
     const gridTiles = getGridTiles(container);
     expect(
@@ -205,11 +235,11 @@ describe('VideoGallery floating local video layout tests', () => {
 
     const allTiles = getTiles(container);
     const gridTiles = getGridTiles(container);
-    expect(allTiles.length).toBe(11);
-    expect(gridTiles.length).toBe(10);
-    expect(gridTiles.filter(tileIsAudio).length).toBe(10);
+    expect(getHorizontalGallery(container)).toBeTruthy();
+    expect(allTiles.length).toBe(7);
+    expect(gridTiles.length).toBe(4);
+    expect(gridTiles.filter(tileIsAudio).length).toBe(4);
     expect(gridTiles.filter(tileIsVideo).length).toBe(0);
-    expect(getHorizontalGallery(container)).toBeFalsy;
   });
 
   test('should render max allowed video tiles with streams in the grid', () => {
@@ -280,6 +310,114 @@ describe('VideoGallery floating local video layout tests', () => {
     expect(tileIsVideo(horizontalGalleryTiles[0])).toBe(false);
     expect(getDisplayName(horizontalGalleryTiles[1])).toBe('Remote Video Participant');
     expect(tileIsVideo(horizontalGalleryTiles[1])).toBe(true);
+  });
+});
+
+/* @conditional-compile-remove(gallery-layouts) */
+describe('VideoGallery Speaker layout tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('should render only one grid tile when in speaker layout', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isSpeaking: true
+      })
+    );
+
+    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    const { container } = render(
+      <VideoGallery
+        layout="speaker"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        dominantSpeakers={[remoteParticipants[0].userId]}
+      />
+    );
+
+    const tiles = getGridTiles(container);
+    expect(tiles.length).toBe(1);
+    expect(
+      tiles.some((tile) => {
+        return getDisplayName(tile) === 'Remote Participant1';
+      })
+    ).toBe(true);
+  });
+
+  test('should render different speaker', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isSpeaking: true
+      })
+    );
+
+    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
+    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    const { container } = render(
+      <VideoGallery
+        layout="speaker"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        dominantSpeakers={[remoteParticipants[1].userId]}
+      />
+    );
+
+    const tiles = getGridTiles(container);
+    expect(tiles.length).toBe(1);
+    expect(
+      tiles.some((tile) => {
+        return getDisplayName(tile) === 'Remote Participant2';
+      })
+    ).toBe(true);
+  });
+});
+
+/* @conditional-compile-remove(gallery-layouts) */
+describe('VideoGallery Focused Content layout tests', () => {
+  beforeAll(() => {
+    mockVideoGalleryInternalHelpers();
+  });
+
+  test('Should render only the screenshare stream in the grid when in focused content layout', () => {
+    const localParticipant = createLocalParticipant({
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    });
+
+    const remoteParticipants = Array.from({ length: 2 }, () =>
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() },
+        isScreenSharingOn: true
+      })
+    );
+    remoteParticipants.push(
+      createRemoteParticipant({
+        userId: 'remoteScreenSharingParticipant',
+        displayName: 'Remote Screen Sharing Participant',
+        isScreenSharingOn: true,
+        screenShareStream: { isAvailable: true, renderElement: createRemoteScreenShareVideoDivElement() }
+      })
+    );
+
+    const { container } = render(
+      <VideoGallery
+        layout="focusedContent"
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+      />
+    );
+
+    const tiles = getTiles(container);
+    expect(tiles.length).toBe(1);
   });
 });
 
@@ -440,7 +578,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
       />
     );
 
@@ -482,7 +620,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
         dominantSpeakers={['remoteScreenSharingParticipant', 'remoteVideoParticipant']}
       />
     );
@@ -518,7 +656,7 @@ describe('VideoGallery with vertical overflow gallery tests', () => {
         layout="floatingLocalVideo"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
         dominantSpeakers={['1', '6']}
         pinnedParticipants={['7', '6']}
       />

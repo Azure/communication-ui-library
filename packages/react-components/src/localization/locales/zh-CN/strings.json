@@ -7,9 +7,10 @@
     "mutedIconLabel": "已静音",
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
-    "participantStateHold": "待机音乐",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "待机音乐"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} 个"
   },
   "typingIndicator": {
     "singleUser": "{user} 正在键入...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "下载",
+    "dismissButtonAriaLabel": "关闭"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "演示您的屏幕"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "举手",
+    "onLabel": "放下",
+    "tooltipDisabledContent": "举手操作已禁用",
+    "tooltipOnContent": "手放下",
+    "tooltipOffContent": "举手"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -333,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "上一页",
     "rightNavButtonAriaLabel": "下一页"
   }

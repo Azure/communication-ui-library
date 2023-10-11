@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "adding in lock files adding azurelogger to the composite packlet for both beta and stable",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}

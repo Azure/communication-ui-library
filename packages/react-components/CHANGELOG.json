@@ -2,6 +2,66 @@
   "name": "@internal/react-components",
   "entries": [
     {
+      "date": "Wed, 04 Oct 2023 17:17:19 GMT",
+      "tag": "@internal/react-components_v1.9.0-beta.1",
+      "version": "1.9.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.9.0-beta.1",
+            "commit": "5a2aac2cf5d21402f3ab2735381baa9f5c98b167"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Sep 2023 02:42:37 GMT",
+      "tag": "@internal/react-components_v1.8.0",
+      "version": "1.8.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.8.0",
+            "commit": "7342e639f5bab695f9ac1b7fe67e74c1fe73bcde"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 28 Aug 2023 22:18:09 GMT",
+      "tag": "@internal/react-components_v1.8.0-beta.1",
+      "version": "1.8.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.8.0-beta.1",
+            "commit": "7cbfc7206c14ac0fe95813b579399c7d6673ce4f"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 14 Aug 2023 18:28:42 GMT",
+      "tag": "@internal/react-components_v1.7.0",
+      "version": "1.7.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/react-components",
+            "comment": "Bump @internal/acs-ui-common to v1.7.0",
+            "commit": "2e2916d59cca7d82e98f016276587353d3316597"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Jun 2023 22:07:29 GMT",
       "tag": "@internal/react-components_v1.7.0-beta.1",
       "version": "1.7.0-beta.1",

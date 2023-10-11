@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback, useState, useMemo } from 'react';
 import { useLocale } from '../localization';
@@ -157,7 +157,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
   /**
    * Callback when a effects is clicked
    */
-  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
+  onClickVideoEffects?: (showVideoEffects: boolean) => void;
 }
 
 /**
@@ -214,15 +214,15 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
 
   const splitButtonMenuItems: IContextualMenuItem[] = [];
   /* @conditional-compile-remove(video-background-effects) */
-  if (props.onShowVideoEffectsPicker) {
+  if (props.onClickVideoEffects) {
     splitButtonMenuItems.push({
       key: 'effects',
       'data-ui-id': 'camera-split-button-video-effects',
       text: strings.videoEffectsMenuItemTitle,
       iconProps: { iconName: 'ControlButtonVideoEffectsOption', styles: { root: { lineHeight: 0 } } },
       onClick: () => {
-        if (props.onShowVideoEffectsPicker) {
-          props.onShowVideoEffectsPicker(true);
+        if (props.onClickVideoEffects) {
+          props.onClickVideoEffects(true);
         }
       }
     });

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { createContext, useContext } from 'react';
 import {
@@ -45,6 +45,8 @@ import { VerticalGalleryStrings } from '../components/VerticalGallery';
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
+/* @conditional-compile-remove(image-gallery) */
+import { ImageGalleryStrings } from '../components/ImageGallery';
 
 /**
  * Locale information for all components exported from this library.
@@ -94,6 +96,9 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(mention) */
   /** Strings for MentionPopover */
   mentionPopover: MentionPopoverStrings;
+  /* @conditional-compile-remove(image-gallery) */
+  /** Strings for ImageGallery */
+  imageGallery: ImageGalleryStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
   /** Strings for ErroBar */
@@ -165,7 +170,7 @@ export interface ComponentStrings {
   /**
    * Strings for the VerticalGallery.
    */
-  VerticalGallery: VerticalGalleryStrings;
+  verticalGallery: VerticalGalleryStrings;
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
 import { useId } from '@fluentui/react-hooks';
@@ -69,7 +69,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     showCameraSwitcherInLocalPreview,
     parentWidth,
     parentHeight,
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom',
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
   } = props;
@@ -92,7 +92,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     maxOverflowGalleryDominantSpeakers: screenShareComponent
       ? childrenPerPage.current - (pinnedParticipantUserIds.length % childrenPerPage.current)
       : childrenPerPage.current,
-    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds
+    /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
+    /* @conditional-compile-remove(gallery-layouts) */ layout: 'floatingLocalVideo'
   });
 
   let activeVideoStreams = 0;
@@ -140,7 +141,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return SMALL_FLOATING_MODAL_SIZE_REM;
     }
     /* @conditional-compile-remove(vertical-gallery) */
-    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'VerticalRight') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'verticalRight') {
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
@@ -148,7 +149,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     /*@conditional-compile-remove(click-to-call) */
-    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'HorizontalBottom') {
+    if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;
     }
     return LARGE_FLOATING_MODAL_SIZE_REM;
@@ -174,7 +175,16 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
           {localVideoComponent}
         </Stack>
       ) : overflowGalleryTiles.length > 0 || screenShareComponent ? (
-        <Stack className={mergeStyles(localVideoTileContainerStyle(theme, localVideoSizeRem, !!screenShareComponent))}>
+        <Stack
+          className={mergeStyles(
+            localVideoTileContainerStyle(
+              theme,
+              localVideoSizeRem,
+              !!screenShareComponent,
+              /* @conditional-compile-remove(gallery-layouts) */ overflowGalleryPosition
+            )
+          )}
+        >
           {localVideoComponent}
         </Stack>
       ) : (
@@ -227,10 +237,17 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack
         /* @conditional-compile-remove(vertical-gallery) */
-        horizontal={overflowGalleryPosition === 'VerticalRight'}
+        horizontal={overflowGalleryPosition === 'verticalRight'}
         styles={innerLayoutStyle}
         tokens={videoGalleryLayoutGap}
       >
+        {
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
+            overflowGallery
+          ) : (
+            <></>
+          )
+        }
         {screenShareComponent ? (
           screenShareComponent
         ) : (
@@ -238,8 +255,20 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
             {gridTiles}
           </GridLayout>
         )}
-        {overflowGallery}
+        {overflowGalleryTrampoline(
+          overflowGallery,
+          /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition
+        )}
       </Stack>
     </Stack>
   );
+};
+
+const overflowGalleryTrampoline = (
+  gallery: JSX.Element | null,
+  galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
+): JSX.Element | null => {
+  /* @conditional-compile-remove(gallery-layouts) */
+  return galleryPosition !== 'horizontalTop' ? gallery : <></>;
+  return gallery;
 };

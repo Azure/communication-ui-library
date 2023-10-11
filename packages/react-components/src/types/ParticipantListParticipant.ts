@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationParticipant } from './CommunicationParticipant';
 
@@ -29,7 +29,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
  * @public
  */
 export type RaisedHand = {
-  order: number;
+  raisedHandOrderPosition: number;
 };
 
 /**

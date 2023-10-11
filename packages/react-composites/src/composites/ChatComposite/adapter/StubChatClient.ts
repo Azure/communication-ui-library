@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AddChatParticipantsResult,
@@ -107,6 +107,10 @@ export class StubChatThreadClient implements PublicInterface<ChatThreadClient> {
   }
   listReadReceipts(): PagedAsyncIterableIterator<ChatMessageReadReceipt> {
     return pagedAsyncIterator([]);
+  }
+  /* @conditional-compile-remove(chat-beta-sdk) */
+  updateProperties(): Promise<void> {
+    return Promise.resolve();
   }
 }
 

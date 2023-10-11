@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { VideoGalleryRemoteParticipant } from '../types';
 
 type SmartDominantSpeakerParticipantsArgs = {
@@ -71,7 +72,11 @@ export const smartDominantSpeakerParticipants = (
   return newVisibleParticipants;
 };
 
-const participantsById = (
+/**
+ * maps the participants array to an object with userId as key
+ * @private
+ */
+export const participantsById = (
   participants: VideoGalleryRemoteParticipant[]
 ): { [key: string]: VideoGalleryRemoteParticipant } => {
   const response: { [key: string]: VideoGalleryRemoteParticipant } = {};

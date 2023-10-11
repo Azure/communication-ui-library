@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets, IButtonStyles, IContextualMenuItemStyles, IStyle } from '@fluentui/react';
 import { DevicesButtonStyles, ParticipantsButtonStyles } from '@internal/react-components';
@@ -55,7 +55,8 @@ export const buttonFlyoutIncreasedSizeStyles: IContextualMenuItemStyles = {
   root: {
     height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
     lineHeight: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
-    maxHeight: 'unset'
+    maxHeight: 'unset',
+    overflow: 'hidden'
   },
   linkContent: {
     height: `${MINIMUM_TOUCH_TARGET_HEIGHT_REM}rem`,
@@ -65,6 +66,9 @@ export const buttonFlyoutIncreasedSizeStyles: IContextualMenuItemStyles = {
   icon: {
     maxHeight: 'unset',
     textAlign: 'center'
+  },
+  checkmarkIcon: {
+    lineHeight: '2rem'
   }
 };
 

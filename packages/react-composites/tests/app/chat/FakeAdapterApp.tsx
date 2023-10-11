@@ -1,10 +1,16 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatParticipant, ChatMessage } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
-import { _IdentifierProvider, FileDownloadError, FileDownloadHandler } from '@internal/react-components';
+import {
+  _IdentifierProvider,
+  FileDownloadError,
+  FileDownloadHandler,
+  lightTheme,
+  darkTheme
+} from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -111,6 +117,7 @@ export const FakeAdapterApp = (): JSX.Element => {
             onFetchAvatarPersonaData={
               fakeChatAdapterArgs.customDataModelEnabled ? customOnFetchAvatarPersonaData : undefined
             }
+            fluentTheme={fakeChatAdapterArgs.theme === 'dark' ? darkTheme : lightTheme}
           />
         </_IdentifierProvider>
       )}
@@ -172,8 +179,7 @@ const sendRemoteInlineImageMessage = (
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
 
-  /* @conditional-compile-remove(communication-common-beta-v3) */
-  if (localParticipantId.kind === 'microsoftBot' || remoteParticipantId.kind === 'microsoftBot') {
+  if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported indentifier kind: microsoftBot');
   }
 

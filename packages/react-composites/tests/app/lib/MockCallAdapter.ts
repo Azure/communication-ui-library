@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { AudioDeviceInfo, Call, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import type { CallAdapter, CallAdapterState, VideoBackgroundEffect } from '../../../src';
 import type { MockCallAdapterState } from '../../common';
@@ -70,6 +71,12 @@ export class MockCallAdapter implements CallAdapter {
   }
   stopScreenShare(): Promise<void> {
     throw Error('stopScreenShare not implemented');
+  }
+  raiseHand(): Promise<void> {
+    throw Error('raiseHand not implemented');
+  }
+  lowerHand(): Promise<void> {
+    throw Error('lowerHand not implemented');
   }
   removeParticipant(): Promise<void> {
     throw Error('removeParticipant not implemented');

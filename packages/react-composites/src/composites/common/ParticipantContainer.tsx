@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import React, { useMemo } from 'react';
 import {
   participantListContainerStyle,
@@ -9,19 +10,13 @@ import {
   participantListWrapper,
   displayNameStyles
 } from './styles/ParticipantContainer.styles';
-import {
-  OnRenderAvatarCallback,
-  ParticipantList,
-  ParticipantListProps,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
+import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
 import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
 import { _formatString } from '@internal/acs-ui-common';
 
 type ParticipantContainerProps = {
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   participantListProps: ParticipantListProps;
@@ -106,11 +101,8 @@ export const ParticipantListWithHeading = (props: {
 };
 
 const paneTitleTrampoline = (paneTitle: string, totalParticipantCount?: number): string => {
-  /* @conditional-compile-remove(total-participant-count) */
   const participantCountString = totalParticipantCount
     ? { numberOfPeople: `(${totalParticipantCount})` }
-    : { numberOfPeople: '' };
-  /* @conditional-compile-remove(total-participant-count) */
+    : { numberOfPeople: ' ' };
   return _formatString(paneTitle, participantCountString);
-  return paneTitle;
 };

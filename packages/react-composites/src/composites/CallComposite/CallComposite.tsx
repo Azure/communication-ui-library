@@ -1,14 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback,
-  useTheme
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -47,6 +41,13 @@ import { CallState } from '@internal/calling-stateful-client';
 import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
+import { deviceCountSelector } from './selectors/deviceCountSelector';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
+/* @conditional-compile-remove(capabilities) */
+import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 
 /**
  * Props for {@link CallComposite}.
@@ -104,7 +105,7 @@ export interface DeviceCheckOptions {
 /**
  * Menu options for remote video tiles in {@link VideoGallery}.
  *
- * @beta
+ * @public
  */
 export interface RemoteVideoTileMenuOptions {
   /**
@@ -115,7 +116,7 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -129,7 +130,6 @@ export interface LocalVideoTileOptions {
    * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
    * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
    * local video tile rules and be docked in the bottom corner.
-   * 'hidden' - local video tile will not be rendered.
    * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
   position?: 'grid' | 'floating';
@@ -210,7 +210,7 @@ export type CallCompositeOptions = {
   /**
    * Remote participant video tile menu options
    */
-  remoteVideoTileMenu?: RemoteVideoTileMenuOptions;
+  remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
   /* @conditional-compile-remove(click-to-call) */
   /**
    * Options for controlling the local video tile.
@@ -218,12 +218,21 @@ export type CallCompositeOptions = {
    * @remarks if 'false' the local video tile will not be rendered.
    */
   localVideoTile?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Options for controlling the starting layout of the composite's video gallery
+   */
+  galleryOptions?: {
+    /**
+     * Layout for the gallery when the call starts
+     */
+    layout?: VideoGalleryLayout;
+  };
 };
 
 type MainScreenProps = {
   mobileView: boolean;
   modalLayerHostId: string;
-  onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -238,12 +247,44 @@ const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
 };
 
 const MainScreen = (props: MainScreenProps): JSX.Element => {
-  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const adapter = useAdapter();
+  const { camerasCount, microphonesCount } = useSelector(deviceCountSelector);
+  const hasCameras = camerasCount > 0;
+  const hasMicrophones = microphonesCount > 0;
+
+  useEffect(() => {
+    (async () => {
+      const constrain = getQueryOptions({
+        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
+      });
+      await adapter.askDevicePermission(constrain);
+      adapter.queryCameras();
+      adapter.queryMicrophones();
+      adapter.querySpeakers();
+    })();
+  }, [
+    adapter,
+    // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
+    // as we cannot request permissions when there are no devices.
+    hasCameras,
+    hasMicrophones
+  ]);
+
+  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
+    props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
+  );
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
+    'Responsive'
+  );
 
   const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
   useEffect(() => {
@@ -261,6 +302,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     onSidePaneIdChange?.(sidePaneRenderer?.id);
   }, [sidePaneRenderer?.id, onSidePaneIdChange]);
 
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedInfoAndRole = useSelector(capabilitiesChangedInfoAndRoleSelector);
+
+  /* @conditional-compile-remove(capabilities) */
+  const capabilitiesChangedNotificationBarProps =
+    useTrackedCapabilityChangedNotifications(capabilitiesChangedInfoAndRole);
+
   // Track the last dismissed errors of any error kind to prevent errors from re-appearing on subsequent page navigation
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
@@ -274,7 +322,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   }, []);
   const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
 
-  const adapter = useAdapter();
   const locale = useLocale();
   const palette = useTheme().palette;
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
@@ -321,6 +368,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onPermissionsTroubleshootingClick={props.options?.onPermissionsTroubleshootingClick}
           /* @conditional-compile-remove(call-readiness) */
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -387,6 +436,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -399,17 +450,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          onRenderAvatar={onRenderAvatar}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
     case 'call':
       pageElement = (
         <CallPage
-          onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
@@ -420,6 +471,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           mobileChatTabHeader={props.mobileChatTabHeader}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
+          /* @conditional-compile-remove(gallery-layouts) */
+          galleryLayout={userSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(capabilities) */
+          capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
       break;
@@ -436,6 +497,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               mobileChatTabHeader={props.mobileChatTabHeader}
               latestErrors={latestErrors}
               onDismissError={onDismissError}
+              /* @conditional-compile-remove(capabilities) */
+              capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }
         </>
@@ -503,18 +566,6 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     options,
     formFactor = 'desktop'
   } = props;
-
-  useEffect(() => {
-    (async () => {
-      const constrain = getQueryOptions({
-        /* @conditional-compile-remove(rooms) */ role: adapter.getState().call?.role
-      });
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
-      adapter.querySpeakers();
-    })();
-  }, [adapter]);
 
   const mobileView = formFactor === 'mobile';
 

@@ -1,17 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
-import {
-  VideoGallery,
-  VideoStreamOptions,
-  OnRenderAvatarCallback,
-  CustomAvatarOptions,
-  Announcer,
-  VideoGalleryLayout
-} from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, CustomAvatarOptions, Announcer } from '@internal/react-components';
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
 /* @conditional-compile-remove(pinned-participants) */
@@ -28,7 +22,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -57,14 +51,17 @@ export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout: VideoGalleryLayout;
 }
 
 /**
@@ -89,7 +86,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
@@ -130,27 +127,39 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [props.remoteVideoTileMenuOptions?.isHidden, props.isMobile, props.drawerMenuHostId]);
 
   /* @conditional-compile-remove(vertical-gallery) */
-  const overflowGalleryPosition = useMemo(
-    () =>
-      containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
-        ? 'VerticalRight'
-        : 'HorizontalBottom',
-    [containerWidth, containerHeight]
-  );
+  const overflowGalleryPosition = useMemo(() => {
+    /* @conditional-compile-remove(gallery-layouts) */
+    if (props.userSetOverflowGalleryPosition === 'horizontalTop') {
+      return props.userSetOverflowGalleryPosition;
+    }
+    return containerWidth && containerHeight && containerWidth / containerHeight >= 16 / 9
+      ? 'verticalRight'
+      : 'horizontalBottom';
+  }, [
+    /* @conditional-compile-remove(gallery-layouts) */ props.userSetOverflowGalleryPosition,
+    containerWidth,
+    containerHeight
+  ]);
 
   const VideoGalleryMemoized = useMemo(() => {
+    const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
+      /* @conditional-compile-remove(gallery-layouts) */
+      return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
+      return layoutBasedOnTilePosition;
+    };
+
     return (
       <VideoGallery
         {...videoGalleryProps}
         localVideoViewOptions={localVideoViewOptions}
         remoteVideoViewOptions={remoteVideoViewOptions}
         styles={VideoGalleryStyles}
-        layout={layoutBasedOnTilePosition}
+        layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
+        onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
-        remoteVideoTileMenuOptions={remoteVideoTileMenuOptions}
+        remoteVideoTileMenu={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
         overflowGalleryPosition={overflowGalleryPosition}
         /* @conditional-compile-remove(rooms) */
@@ -165,10 +174,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     );
   }, [
     videoGalleryProps,
-    layoutBasedOnTilePosition,
     props.isMobile,
-    props.onRenderAvatar,
-    /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(click-to-call) */
+    /* @conditional-compile-remove(rooms) */
     props.localVideoTileOptions,
     cameraSwitcherProps,
     onRenderAvatar,
@@ -177,10 +184,14 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     overflowGalleryPosition,
     /* @conditional-compile-remove(rooms) */
-    isRoomsCall,
-    /* @conditional-compile-remove(rooms) */
     userRole,
-    /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ containerAspectRatio
+    /* @conditional-compile-remove(rooms) */
+    isRoomsCall,
+    /* @conditional-compile-remove(vertical-gallery) */
+    containerAspectRatio,
+    /* @conditional-compile-remove(gallery-layouts) */
+    props.userSetGalleryLayout,
+    layoutBasedOnTilePosition
   ]);
 
   return (

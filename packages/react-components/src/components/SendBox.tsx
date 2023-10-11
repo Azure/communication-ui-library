@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
@@ -131,7 +131,7 @@ export interface SendBoxProps {
    */
   systemMessage?: string;
   /**
-   * Optional callback called when message is sent
+   * Optional override behavior on send button click
    */
   onSendMessage?: (content: string) => Promise<void>;
   /* @conditional-compile-remove(mention) */

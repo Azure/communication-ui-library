@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   DominantSpeakersInfo,
@@ -12,6 +12,8 @@ import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from '@internal/calling-stateful-client';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -25,6 +27,7 @@ export const _videoGalleryRemoteParticipantsMemo = (
   if (!remoteParticipants) {
     return [];
   }
+
   return memoizedAllConvertRemoteParticipant((memoizedFn) => {
     return (
       Object.values(remoteParticipants)
@@ -46,7 +49,9 @@ export const _videoGalleryRemoteParticipantsMemo = (
             checkIsSpeaking(participant),
             participant.videoStreams,
             state,
-            participant.displayName
+            participant.displayName,
+            /* @conditional-compile-remove(raise-hand) */
+            participant.raisedHand
           );
         })
     );
@@ -60,7 +65,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     isSpeaking: boolean,
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
-    displayName?: string
+    displayName?: string,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -68,7 +75,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       isSpeaking,
       videoStreams,
       state,
-      displayName
+      displayName,
+      /* @conditional-compile-remove(raise-hand) */
+      raisedHand as RaisedHandState
     );
   }
 );
@@ -80,7 +89,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   isSpeaking: boolean,
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
-  displayName?: string
+  displayName?: string,
+  /* @conditional-compile-remove(raise-hand) */
+  raisedHand?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -111,7 +122,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */
-    state
+    state,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand: raisedHand as RaisedHandState
   };
 };
 
@@ -124,7 +137,9 @@ const convertRemoteVideoStreamToVideoGalleryStream = (stream: RemoteVideoStreamS
     isMirrored: stream.view?.isMirrored,
     renderElement: stream.view?.target,
     /* @conditional-compile-remove(pinned-participants) */
-    scalingMode: stream.view?.scalingMode
+    scalingMode: stream.view?.scalingMode,
+    /* @conditional-compile-remove(pinned-participants) */
+    streamSize: stream.streamSize
   };
 };
 
@@ -136,7 +151,8 @@ export const memoizeLocalParticipant = memoizeOne(
     isMuted,
     isScreenSharingOn,
     localVideoStream,
-    /* @conditional-compile-remove(rooms) */ role
+    /* @conditional-compile-remove(rooms) */ role,
+    /* @conditional-compile-remove(raise-hand) */ raisedHand
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -148,6 +164,8 @@ export const memoizeLocalParticipant = memoizeOne(
       renderElement: localVideoStream?.view?.target
     },
     /* @conditional-compile-remove(rooms) */
-    role
+    role,
+    /* @conditional-compile-remove(raise-hand) */
+    raisedHand: raisedHand
   })
 );

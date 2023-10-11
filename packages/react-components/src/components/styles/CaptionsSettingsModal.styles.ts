@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IButtonStyles, IDropdownStyles, IModalStyles, mergeStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
@@ -13,7 +13,7 @@ export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalSt
     borderRadius: theme.effects.roundedCorner6,
     padding: _pxToRem(24),
     width: _pxToRem(440),
-    height: _pxToRem(268),
+    height: 'fit-content',
     overflow: 'hidden'
   }
 });
@@ -38,7 +38,6 @@ export const titleContainerClassName = mergeStyles({
  * @private
  */
 export const dropdownContainerClassName = mergeStyles({
-  paddingBottom: _pxToRem(16),
   paddingTop: _pxToRem(16)
 });
 
@@ -50,7 +49,8 @@ export const dropdownInfoTextStyle = (theme: Theme): string =>
     fontWeight: 400,
     fontSize: _pxToRem(12),
     lineHeight: _pxToRem(16),
-    color: theme.palette.neutralSecondary
+    color: theme.palette.neutralSecondary,
+    paddingBottom: _pxToRem(24)
   });
 
 /**

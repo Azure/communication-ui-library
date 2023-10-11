@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { PlaywrightTestConfig } from '@playwright/test';
 import common from './playwright.config.common';
 

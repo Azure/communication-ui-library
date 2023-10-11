@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { GroupLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
@@ -85,6 +85,7 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Get teams meeting link from the url's query params.
  */

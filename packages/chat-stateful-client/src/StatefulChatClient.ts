@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatClient, ChatClientOptions } from '@azure/communication-chat';
 import { _getApplicationId, TelemetryImplementationHint } from '@internal/acs-ui-common';

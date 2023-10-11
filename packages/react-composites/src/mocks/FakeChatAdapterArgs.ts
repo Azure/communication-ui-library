@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
 import type { FileMetadata } from '@internal/react-components';
@@ -85,6 +85,7 @@ export type _FakeChatAdapterArgs = {
    * Record of rest errors to throw when methods of interface ChatThreadClient are called
    */
   chatThreadClientMethodErrors?: Partial<Record<keyof ChatThreadClient, _ChatThreadRestError>>;
+  theme?: 'light' | 'dark';
 };
 
 /** @internal */
