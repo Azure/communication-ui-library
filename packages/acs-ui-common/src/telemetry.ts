@@ -19,14 +19,14 @@ export const sanitize = (version: string): string => {
 /**
  * @internal
  */
-export type TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
+export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
 
 /**
  * @private
  *
  * Takes a telemetry implementation hint and returns the numerical value.
  */
-const getTelemetryImplementationHint = (telemetryImplementationHint?: TelemetryImplementationHint): number => {
+const getTelemetryImplementationHint = (telemetryImplementationHint?: _TelemetryImplementationHint): number => {
   switch (telemetryImplementationHint) {
     case 'Call':
       return 1;
@@ -56,7 +56,7 @@ const getTelemetryImplementationHint = (telemetryImplementationHint?: TelemetryI
  *
  * @internal
  */
-export const _getApplicationId = (telemetryImplementationHint?: TelemetryImplementationHint): string => {
+export const _getApplicationId = (telemetryImplementationHint?: _TelemetryImplementationHint): string => {
   const highLevelArtifact = 0;
   const specificImplementation = getTelemetryImplementationHint(telemetryImplementationHint);
   const implementationDetails = 0;

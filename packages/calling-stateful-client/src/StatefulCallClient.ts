@@ -11,7 +11,7 @@ import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarati
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier, _getApplicationId, TelemetryImplementationHint } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _getApplicationId, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-identity-support) */
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
@@ -327,16 +327,16 @@ export const createStatefulCallClient = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
-  return createStatefulCallClientInner(args, options);
+  return _createStatefulCallClientInner(args, options);
 };
 
 /**
 * @internal
 */
-export const createStatefulCallClientInner = (
+export const _createStatefulCallClientInner = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions,
-  telemetryImplementationHint: TelemetryImplementationHint = 'StatefulComponents'
+  telemetryImplementationHint: _TelemetryImplementationHint = 'StatefulComponents'
 ): StatefulCallClient => {
   callingStatefulLogger.info(
     `Creating calling stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`
@@ -408,7 +408,7 @@ export const createStatefulCallClientWithDeps = (
 };
 
 const withTelemetryTag = (
-  telemetryImplementationHint: TelemetryImplementationHint,
+  telemetryImplementationHint: _TelemetryImplementationHint,
   options?: CallClientOptions
 ): CallClientOptions => {
   const tags = options?.diagnostics?.tags ?? [];

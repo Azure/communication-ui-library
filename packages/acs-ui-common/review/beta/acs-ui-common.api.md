@@ -43,7 +43,7 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @internal
-export const _getApplicationId: (telemetryImplementationHint?: TelemetryImplementationHint | undefined) => string;
+export const _getApplicationId: (telemetryImplementationHint?: _TelemetryImplementationHint | undefined) => string;
 
 // @internal (undocumented)
 export interface _IObjectMap<T> {
@@ -85,10 +85,8 @@ export type TelemetryEvent = {
     data?: Record<string, unknown>;
 };
 
-// Warning: (ae-internal-missing-underscore) The name "TelemetryImplementationHint" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
-export type TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
+export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
 
 // @internal
 export const _toCommunicationIdentifier: (id: string | CommunicationIdentifier) => CommunicationIdentifier;

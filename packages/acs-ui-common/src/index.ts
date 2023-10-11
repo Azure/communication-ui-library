@@ -18,7 +18,7 @@ export type { CallbackType, FunctionWithKey } from './memoizeFnAll';
 export type { AreEqual, AreParamEqual, AreTypeEqual } from './areEqual';
 export type { MessageStatus } from './MessageStatus';
 export type { _IObjectMap } from './localizationUtils';
-export type { TelemetryImplementationHint } from './telemetry';
+export type { _TelemetryImplementationHint } from './telemetry';
 
 export { _MAX_EVENT_LISTENERS } from './constants';
 

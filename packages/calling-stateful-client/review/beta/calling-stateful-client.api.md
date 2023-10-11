@@ -43,7 +43,7 @@ import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/commu
 import { ScalingMode } from '@azure/communication-calling';
 import { TeamsCall as TeamsCall_2 } from '@azure/communication-calling';
 import { TeamsCallAgent as TeamsCallAgent_2 } from '@azure/communication-calling';
-import { TelemetryImplementationHint } from '@internal/acs-ui-common';
+import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
@@ -169,10 +169,8 @@ export interface CaptionsInfo {
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
-// Warning: (ae-internal-missing-underscore) The name "createStatefulCallClientInner" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal (undocumented)
-export const createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined, telemetryImplementationHint?: TelemetryImplementationHint) => StatefulCallClient;
+export const _createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulCallClient;
 
 // @public
 export type CreateViewResult = {

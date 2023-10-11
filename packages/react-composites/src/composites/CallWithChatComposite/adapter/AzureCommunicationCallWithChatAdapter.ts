@@ -84,7 +84,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
-import { _toCommunicationIdentifier, TelemetryImplementationHint } from '@internal/acs-ui-common';
+import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
@@ -785,7 +785,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
     /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions,
-    'CallWithChat' as TelemetryImplementationHint // We only need to add this hint for call adapter, as adding to chat would double count it.
+    'CallWithChat' as _TelemetryImplementationHint // We only need to add this hint for call adapter, as adding to chat would double count it.
   );
 
   const threadId = isTeamsMeetingLinkLocator(locator)
