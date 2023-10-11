@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "ImageGallery",
+  "comment": "Update image padding for ImageGallery",
+  "packageName": "@azure/communication-react",
+  "email": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
