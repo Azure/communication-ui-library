@@ -149,6 +149,10 @@ Even though most of the steps necessary to release the package are automated via
     ![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
 1. Once everything is deployed and published on npm, delete the release branch from Git Hub.
 
+### Step 3.1: Merge Pre-Release Branch Back to Main
+
+1. Make a PR to merge the pre-release branch into main.
+
 ## Step ∞
 
 *For stable release only*, update the hero samples to use the newly released stable package. See [instructions for updating hero samples](./hero-samples.md).
