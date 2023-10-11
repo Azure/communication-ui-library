@@ -40,7 +40,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     /* @conditional-compile-remove(vertical-gallery) */
     parentHeight,
     pinnedParticipantUserIds = [],
-    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'HorizontalBottom'
+    /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom'
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -118,6 +118,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        /* @conditional-compile-remove(gallery-layouts) */
+        layout={'default'}
       />
     );
   }, [
@@ -133,12 +135,12 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
   return (
     <Stack
       /* @conditional-compile-remove(vertical-gallery) */
-      horizontal={overflowGalleryPosition === 'VerticalRight'}
+      horizontal={overflowGalleryPosition === 'verticalRight'}
       styles={rootLayoutStyle}
       tokens={videoGalleryLayoutGap}
     >
       {
-        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'HorizontalTop' ? (
+        /* @conditional-compile-remove(gallery-layouts) */ props.overflowGalleryPosition === 'horizontalTop' ? (
           overflowGallery
         ) : (
           <></>
@@ -161,9 +163,9 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
 
 const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
-  galleryPosition?: 'HorizontalBottom' | 'VerticalRight' | 'HorizontalTop'
+  galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
   /* @conditional-compile-remove(gallery-layouts) */
-  return galleryPosition !== 'HorizontalTop' ? gallery : <></>;
+  return galleryPosition !== 'horizontalTop' ? gallery : <></>;
   return gallery;
 };

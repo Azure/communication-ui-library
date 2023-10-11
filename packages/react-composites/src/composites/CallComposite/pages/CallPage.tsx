@@ -4,17 +4,10 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React from 'react';
-/* @conditional-compile-remove(gallery-layouts) */
-import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions } from '../CallComposite';
@@ -42,7 +35,6 @@ export interface CallPageProps {
   mobileView: boolean;
   modalLayerHostId: string;
   callInvitationURL?: string;
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
@@ -54,6 +46,12 @@ export interface CallPageProps {
   galleryLayout: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
+  /* @conditional-compile-remove(gallery-layouts) */
+  onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
 }
 
 /**
@@ -62,13 +60,18 @@ export interface CallPageProps {
 export const CallPage = (props: CallPageProps): JSX.Element => {
   const {
     callInvitationURL,
-    onRenderAvatar,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     options,
     mobileView,
     /* @conditional-compile-remove(gallery-layouts) */
-    galleryLayout = 'floatingLocalVideo'
+    galleryLayout = 'floatingLocalVideo',
+    /* @conditional-compile-remove(gallery-layouts) */
+    onUserSetGalleryLayoutChange,
+    /* @conditional-compile-remove(gallery-layouts) */
+    userSetOverflowGalleryPosition = 'Responsive',
+    /* @conditional-compile-remove(gallery-layouts) */
+    onSetUserSetOverflowGalleryPosition
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -88,13 +91,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   const drawerMenuHostId = useId('drawerMenuHost');
 
-  /* @conditional-compile-remove(gallery-layouts) */
-  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'HorizontalTop'>(
-    'Responsive'
-  );
-  /* @conditional-compile-remove(gallery-layouts) */
-  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(galleryLayout);
-
   return (
     <CallArrangement
       id={drawerMenuHostId}
@@ -107,7 +103,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         options: callControlOptions,
         increaseFlyoutItemSize: mobileView
       }}
-      /* @conditional-compile-remove(one-to-n-calling) */
+      /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
       onFetchAvatarPersonaData={onFetchAvatarPersonaData}
       mobileView={mobileView}
       modalLayerHostId={props.modalLayerHostId}
@@ -118,7 +114,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               isMobile={mobileView}
               {...mediaGalleryProps}
               {...mediaGalleryHandlers}
-              onRenderAvatar={onRenderAvatar}
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
               /* @conditional-compile-remove(pinned-participants) */
               remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
@@ -128,7 +123,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
               /* @conditional-compile-remove(gallery-layouts) */
               userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
               /* @conditional-compile-remove(gallery-layouts) */
-              userSetGalleryLayout={userSetGalleryLayout}
+              userSetGalleryLayout={galleryLayout}
             />
           ) : (
             <NetworkReconnectTile {...networkReconnectTileProps} />
@@ -143,11 +138,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}
       /* @conditional-compile-remove(gallery-layouts) */
-      onUserSetOverflowGalleryPositionChange={setUserSetOverflowGalleryPosition}
+      onUserSetOverflowGalleryPositionChange={onSetUserSetOverflowGalleryPosition}
       /* @conditional-compile-remove(gallery-layouts) */
-      onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+      onUserSetGalleryLayoutChange={onUserSetGalleryLayoutChange}
       /* @conditional-compile-remove(gallery-layouts) */
-      userSetGalleryLayout={userSetGalleryLayout}
+      userSetGalleryLayout={galleryLayout}
       /* @conditional-compile-remove(capabilities) */
       capabilitiesChangedNotificationBarProps={props.capabilitiesChangedNotificationBarProps}
     />

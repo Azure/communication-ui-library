@@ -22,7 +22,7 @@ import { bucketize } from './utils/overFlowGalleriesUtils';
 /**
  * Styles for the VerticalGallery component
  *
- * @beta
+ * @public
  */
 export interface VerticalGalleryStyles extends BaseCustomStyles {
   /** Styles for each video tile in the vertical gallery */
@@ -34,7 +34,7 @@ export interface VerticalGalleryStyles extends BaseCustomStyles {
 /**
  * Strings for localization of the vertical gallery.
  *
- * @beta
+ * @public
  */
 export interface VerticalGalleryStrings {
   /** Aria label for the left page navigation button */
@@ -46,7 +46,7 @@ export interface VerticalGalleryStrings {
 /**
  * Styles for the control bar inside the VerticalGallery component
  *
- * @beta
+ * @public
  */
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
   /**
@@ -65,7 +65,7 @@ export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
 /**
  * Props for the VerticalGallery component
  *
- * @beta
+ * @public
  */
 export interface VerticalGalleryProps {
   /** Video tiles for the remote participants in the vertical gallery */
@@ -91,7 +91,7 @@ interface VerticalGalleryControlBarProps {
  * VerticalGallery is a overflow gallery for participants in the {@link VideoGallery} component. Stacks
  * participants on the Y-axis of the VideoGallery for better use of horizontal space.
  *
- * @beta
+ * @public
  */
 export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const { children, styles, childrenPerPage, onFetchTilesToRender } = props;
@@ -199,7 +199,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
   const ids = useIdentifiers();
 
   /* @conditional-compile-remove(vertical-gallery) */
-  const strings = useLocale().strings.VerticalGallery;
+  const strings = useLocale().strings.verticalGallery;
 
   const pageCounterContainerStyles = useMemo(() => {
     return mergeStyles(pageNavigationControlBarContainerStyle, styles?.root);

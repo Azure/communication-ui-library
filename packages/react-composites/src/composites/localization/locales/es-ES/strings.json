@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Diseño dinámico",
     "moreButtonGalleryDefaultLayoutLabel": "Diseño de la galería",
     "moreButtonGalleryFocusedContentLayoutLabel": "Contenido centrado",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Galería de gran tamaño",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "La cámara se ha deshabilitado. Ya no puedes compartir vídeo.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Subtítulos en directo",
     "moreDrawerSpokenLanguageMenuTitle": "Idioma hablado",
     "moreDrawerCaptionLanguageMenuTitle": "Idioma de subtítulos",
+    "moreDrawerGalleryOptionsMenuTitle": "Opciones de la Galería",
     "peopleButtonLabel": "Contactos",
     "selectedPeopleButtonLabel": "Se seleccionó el botón Contactos",
     "peopleButtonTooltipOpen": "Mostrar participantes",
