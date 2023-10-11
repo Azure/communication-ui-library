@@ -265,7 +265,7 @@ test.describe('Overflow gallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-1-joining-1-hold-participants.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layout-composite) */
   test('Overflow gallery can be moved to the top along with the local tile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileDesktop(testInfo));
     const reina = defaultMockRemoteParticipant('Reina Takizawa');

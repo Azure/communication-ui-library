@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "FluentUI v9",
-  "comment": "Fixed edit box hover/select styles",
-  "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

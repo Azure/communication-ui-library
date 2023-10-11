@@ -192,22 +192,20 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     /* @conditional-compile-remove(data-loss-prevention) */ message.messageType !== 'blocked';
   const [messageReadBy, setMessageReadBy] = useState<{ id: string; displayName: string }[]>([]);
 
-  const actionMenuProps = wasInteractionByTouch
-    ? undefined
-    : chatMessageActionMenuProps({
-        ariaLabel: strings.actionMenuMoreOptions ?? '',
-        enabled: chatActionsEnabled,
-        menuButtonRef: messageActionButtonRef,
-        // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
-        forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
-        onActionButtonClick: () => {
-          if (message.messageType === 'chat') {
-            props.onActionButtonClick(message, setMessageReadBy);
-            setChatMessageActionFlyoutTarget(messageActionButtonRef);
-          }
-        },
-        theme
-      });
+  const actionMenuProps = chatMessageActionMenuProps({
+    ariaLabel: strings.actionMenuMoreOptions ?? '',
+    enabled: chatActionsEnabled,
+    menuButtonRef: messageActionButtonRef,
+    // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
+    forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
+    onActionButtonClick: () => {
+      if (message.messageType === 'chat') {
+        props.onActionButtonClick(message, setMessageReadBy);
+        setChatMessageActionFlyoutTarget(messageActionButtonRef);
+      }
+    },
+    theme
+  });
 
   const onActionFlyoutDismiss = useCallback((): void => {
     // When the flyout dismiss is called, since we control if the action flyout is visible
@@ -332,9 +330,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
                 mergeStyles(messageContainerStyle)
               ),
-              style: { ...createStyleFromV8Style(messageContainerStyle) },
-              tabIndex: -1,
-              role: 'presentation'
+              style: { ...createStyleFromV8Style(messageContainerStyle) }
             }}
             root={{
               className: chatMyMessageStyles.root,
@@ -343,7 +339,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
                 // with keyboard the focused element will be changed and there is no way to use `:focus` selector
                 const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
-
                 setFocused(shouldPreserveFocusState);
               },
               onFocus: () => {
@@ -352,6 +347,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
                 setFocused(true);
               },
+              // make body not focusable to remove repetitions from narrators.
+              // inner components are already focusable
               role: 'none',
               tabIndex: -1
             }}
@@ -368,11 +365,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             }
             details={getMessageDetails()}
             actions={{
+              tabIndex: 0,
               children: actionMenuProps?.children,
               className: mergeClasses(
                 chatMyMessageStyles.menu,
                 // Make actions menu visible when the message is focused or the flyout is shown
-                focused || chatMessageActionFlyoutTarget
+                focused || chatMessageActionFlyoutTarget?.current
                   ? chatMyMessageStyles.menuVisible
                   : chatMyMessageStyles.menuHidden,
                 attached !== 'top' ? chatMyMessageStyles.menuAttached : undefined
@@ -381,7 +379,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             onTouchStart={() => setWasInteractionByTouch(true)}
             onPointerDown={() => setWasInteractionByTouch(false)}
             onKeyDown={() => setWasInteractionByTouch(false)}
-            onBlur={() => setWasInteractionByTouch(false)} // onBlur is applied to body, not root
             onClick={() => {
               if (!wasInteractionByTouch) {
                 return;
@@ -403,15 +400,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           <FluentChatMessage
             attached={attached}
             key={props.message.messageId}
-            root={{ className: chatMessageStyles.root }}
-            author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
-            body={{
-              className: chatItemMessageContainerClassName,
-              style: { ...createStyleFromV8Style(messageContainerStyle) },
+            root={{
+              className: chatMessageStyles.root,
               // make body not focusable to remove repetitions from narrators.
               // inner components are already focusable
               tabIndex: -1,
               role: 'none'
+            }}
+            author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
+            body={{
+              className: chatItemMessageContainerClassName,
+              style: { ...createStyleFromV8Style(messageContainerStyle) }
             }}
             data-ui-id="chat-composite-message"
             timestamp={

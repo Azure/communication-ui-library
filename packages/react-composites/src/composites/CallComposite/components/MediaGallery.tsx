@@ -4,13 +4,7 @@
 import React, { CSSProperties, useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { useRef } from 'react';
-import {
-  VideoGallery,
-  VideoStreamOptions,
-  OnRenderAvatarCallback,
-  CustomAvatarOptions,
-  Announcer
-} from '@internal/react-components';
+import { VideoGallery, VideoStreamOptions, CustomAvatarOptions, Announcer } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
@@ -28,7 +22,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import { useParticipantChangedAnnouncement } from '../utils/MediaGalleryUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite';
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 import { LocalVideoTileOptions } from '../CallComposite';
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -57,13 +51,12 @@ export interface MediaGalleryProps {
   isVideoStreamOn?: boolean;
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
-  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
   /* @conditional-compile-remove(pinned-participants) */
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   localVideoTileOptions?: boolean | LocalVideoTileOptions;
   /* @conditional-compile-remove(gallery-layouts) */
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
@@ -93,7 +86,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const containerWidth = _useContainerWidth(containerRef);
   /* @conditional-compile-remove(vertical-gallery) */ /* @conditional-compile-remove(rooms) */
   const containerHeight = _useContainerHeight(containerRef);
-  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = localVideoTileLayoutTrampoline(
@@ -164,7 +157,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={props.onRenderAvatar ?? onRenderAvatar}
+        onRenderAvatar={onRenderAvatar}
         /* @conditional-compile-remove(pinned-participants) */
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
         /* @conditional-compile-remove(vertical-gallery) */
@@ -182,7 +175,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   }, [
     videoGalleryProps,
     props.isMobile,
-    props.onRenderAvatar,
     /* @conditional-compile-remove(rooms) */
     props.localVideoTileOptions,
     cameraSwitcherProps,
