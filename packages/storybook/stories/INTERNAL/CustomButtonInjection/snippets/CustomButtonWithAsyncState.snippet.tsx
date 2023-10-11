@@ -22,11 +22,6 @@ export const CustomButtonWithAsyncStateExample = (): JSX.Element => {
       iconName: !clickSuccessful ? 'MessageEdit' : 'NetworkReconnectIcon',
       text: 'asyncbtn',
       key: 'btn1',
-      styles: {
-        root: {
-          borderColor: 'green'
-        }
-      },
       onItemClick: () => {
         setDisabledCheck(true);
         try {

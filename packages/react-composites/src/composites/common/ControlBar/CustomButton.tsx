@@ -69,7 +69,7 @@ const generateCustomControlBarButtons = (
               )}
               showLabel={buttonProps.showLabel ?? internalProps.showLabel}
               text={buttonProps.text ?? internalProps.text}
-              styles={mergeStyleSets(internalProps.styles, buttonProps.styles)}
+              styles={mergeStyleSets(internalProps.styles)}
             />
           );
         })

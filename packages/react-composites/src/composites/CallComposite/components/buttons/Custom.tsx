@@ -48,7 +48,6 @@ export const generateCustomControlBarButtons = (
               onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               showLabel={buttonProps.showLabel}
               text={buttonProps.text}
-              styles={buttonProps.styles}
             />
           ))}
       </>

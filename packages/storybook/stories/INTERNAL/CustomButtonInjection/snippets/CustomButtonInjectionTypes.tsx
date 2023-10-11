@@ -1,9 +1,4 @@
-import {
-  BaseCustomStyles,
-  ControlBarButtonStyles,
-  CustomCallControlButtonPlacement,
-  CustomControlButtonProps
-} from '@azure/communication-react';
+import { CustomCallControlButtonPlacement, CustomControlButtonProps } from '@azure/communication-react';
 import React from 'react';
 
 export const compositeCanvasContainerStyles = {
@@ -40,10 +35,6 @@ export interface MockCustomCallControlButtonProps extends CustomControlButtonPro
    * @defaultvalue false
    */
   showLabel?: boolean;
-  /**
-   * Fluent styles, common to all {@link ControlBarButton}s or {@link DrawerMenuItem}s.
-   */
-  styles?: ControlBarButtonStyles | BaseCustomStyles;
   /**
    * Optional label for the button
    */

@@ -8,34 +8,19 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'primary',
     iconName: 'MessageEdit',
     text: 'btn1',
-    key: 'btn1',
-    styles: {
-      root: {
-        borderColor: 'green'
-      }
-    }
+    key: 'btn1'
   }),
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
     text: 'btn2',
-    key: 'btn2',
-    styles: {
-      root: {
-        borderColor: 'green'
-      }
-    }
+    key: 'btn2'
   }),
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
     text: 'btn3',
-    key: 'btn3',
-    styles: {
-      root: {
-        borderColor: 'green'
-      }
-    }
+    key: 'btn3'
   })
 ];
 

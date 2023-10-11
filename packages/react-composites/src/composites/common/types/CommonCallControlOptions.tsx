@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { CustomCallControlButtonPlacement } from '../ControlBar/CustomButton';
 import { CustomCallControlButtonCallback } from '../ControlBar/CustomButton';
 
@@ -141,10 +140,6 @@ export interface CustomControlButtonProps {
    * @defaultValue `false`
    */
   showLabel?: boolean;
-  /**
-   * Fluent styles, common to all {@link ControlBarButton}s or {@link DrawerMenuItem}s.
-   */
-  styles?: ControlBarButtonStyles | BaseCustomStyles;
   /**
    * Optional label for the button
    */

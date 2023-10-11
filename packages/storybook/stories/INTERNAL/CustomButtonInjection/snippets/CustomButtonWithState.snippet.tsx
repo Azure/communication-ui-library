@@ -13,11 +13,6 @@ export const CustomButtonWithStateExample = (): JSX.Element => {
       iconName: !clickSuccessful ? 'MessageEdit' : 'NetworkReconnectIcon',
       text: 'btn1',
       key: 'btn1',
-      styles: {
-        root: {
-          borderColor: 'green'
-        }
-      },
       onItemClick: () => {
         setClickSuccessful(!clickSuccessful);
       }
