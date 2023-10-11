@@ -2,7 +2,7 @@
   "type": "none",
   "area": "fix",
   "workstream": "",
-  "comment": "Removed workaround for mouseDown event in jest tests. Removed duplicated strict mode tool from Calling sample app",
+  "comment": "Removed workaround for mouseDown event in jest tests. Removed duplicated strict mode from Calling sample app",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "none"
