@@ -161,18 +161,20 @@ export const createStatefulChatClient = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions
 ): StatefulChatClient => {
-  return createStatefulChatClientInner(args, options);
+  return _createStatefulChatClientInner(args, options);
 };
 
 /**
  * @internal
  */
-export const createStatefulChatClientInner = (
+export const _createStatefulChatClientInner = (
   args: StatefulChatClientArgs,
   options?: StatefulChatClientOptions,
   telemetryImplementationHint: _TelemetryImplementationHint = 'StatefulComponents'
 ): StatefulChatClient => {
-  chatStatefulLogger.info(`Creating chat stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`);
+  chatStatefulLogger.info(
+    `Creating chat stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`
+  );
   const tweakedOptions = {
     ...options,
     chatClientOptions: {

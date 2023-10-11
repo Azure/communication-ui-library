@@ -3,7 +3,7 @@
 
 export {
   createAzureCommunicationCallAdapter,
-  createAzureCommunicationCallAdapterInner,
+  _createAzureCommunicationCallAdapterInner,
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';

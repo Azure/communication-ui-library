@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import {
-  createStatefulChatClientInner,
+  _createStatefulChatClientInner,
   ChatClientState,
   ChatError,
   StatefulChatClient
@@ -522,7 +522,7 @@ export const createAzureCommunicationChatAdapter = async ({
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
 
-  const chatClient = createStatefulChatClientInner({
+  const chatClient = _createStatefulChatClientInner({
     userId,
     displayName,
     endpoint: endpointUrl,

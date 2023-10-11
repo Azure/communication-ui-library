@@ -73,7 +73,7 @@ import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import {
   CallParticipantsLocator,
-  createAzureCommunicationCallAdapterInner
+  _createAzureCommunicationCallAdapterInner
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
 import {
@@ -778,7 +778,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
-  const createCallAdapterPromise = createAzureCommunicationCallAdapterInner(
+  const createCallAdapterPromise = _createAzureCommunicationCallAdapterInner(
     userId,
     displayName,
     credential,

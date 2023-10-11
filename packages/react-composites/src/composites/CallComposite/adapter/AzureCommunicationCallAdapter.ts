@@ -1373,13 +1373,20 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  return createAzureCommunicationCallAdapterInner(userId, displayName, credential, locator, alternateCallerId, options);
+  return _createAzureCommunicationCallAdapterInner(
+    userId,
+    displayName,
+    credential,
+    locator,
+    alternateCallerId,
+    options
+  );
 };
 
 /**
  * @internal
  */
-export const createAzureCommunicationCallAdapterInner = async (
+export const _createAzureCommunicationCallAdapterInner = async (
   userId: CommunicationUserIdentifier,
   displayName: string,
   credential: CommunicationTokenCredential,
