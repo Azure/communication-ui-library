@@ -23,9 +23,7 @@ import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantLis
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(communication-common-beta-v3) */
-import { isMicrosoftBotIdentifier } from '@azure/communication-common';
+import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[],
@@ -37,8 +35,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
       remoteParticipants
         // Filter out MicrosoftBot participants
         .filter((participant: RemoteParticipantState) => {
-          /* @conditional-compile-remove(communication-common-beta-v3) */
-          return !isMicrosoftBotIdentifier(participant.identifier);
+          return !isMicrosoftTeamsAppIdentifier(participant.identifier);
           return true;
         })
         /**

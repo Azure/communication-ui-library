@@ -158,7 +158,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 /**
  * Different modes and positions of the overflow gallery in the VideoGallery
  *
- * @beta
+ * @public
  */
 export type OverflowGalleryPosition =
   | 'horizontalBottom'
