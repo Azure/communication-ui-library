@@ -22,6 +22,7 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     // * Create a blob url as <img> src
     return [
       {
+        attachmentId: attachment.id,
         // blobUrl: URL.createObjectURL(blob);
         blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : ''
       }

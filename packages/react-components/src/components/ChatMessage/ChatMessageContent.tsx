@@ -8,7 +8,7 @@ import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
 
 import Linkify from 'react-linkify';
-import { ChatMessage } from '../../types/ChatMessage';
+import { ChatMessage, Message } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { Link } from '@fluentui/react';
@@ -33,7 +33,7 @@ type ChatMessageContentProps = {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
+  onFetchAttachment?: (attachment: FileMetadata, message: Message) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
@@ -85,7 +85,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
         fileMetadata.attachmentType === 'inlineImage' &&
         props.attachmentsMap[fileMetadata.id] === undefined
       ) {
-        props.onFetchAttachment(fileMetadata);
+        props.onFetchAttachment(fileMetadata, props.message);
       }
     });
   }, [props]);

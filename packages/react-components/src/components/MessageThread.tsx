@@ -677,7 +677,7 @@ export type MessageThreadProps = {
    * @param attachment - FileMetadata object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
+  onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -909,21 +909,32 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, string>>({});
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
-    async (attachment: FileMetadata): Promise<void> => {
-      if (!onFetchAttachments || attachment.attachmentType !== 'inlineImage' || attachment.id in inlineAttachments) {
+    async (attachment: FileMetadata, message: Message): Promise<void> => {
+      if (
+        !onFetchAttachments ||
+        attachment.attachmentType !== 'inlineImage' ||
+        attachment.id in inlineAttachments[message.messageId]
+      ) {
+        console.log('onFetchInlineAttachment invalid attachment:::::::::::::::');
         return;
       }
 
-      setInlineAttachments((prev) => ({ ...prev, [attachment.id]: '' }));
-      const attachmentDownloadResult = await onFetchAttachments(attachment);
-      if (attachmentDownloadResult[0]) {
-        setInlineAttachments((prev) => ({
-          ...prev,
-          [attachment.id]: attachmentDownloadResult[0].blobUrl
-        }));
+      const messageId = message.messageId;
+      // setInlineAttachments((prev) => ({ ...prev, [messageId]: { [attachment.id]: '' } }));
+      const attachmentDownloadResult = await onFetchAttachments([attachment]);
+      console.log('onFetchInlineAttachment attachmentDownloadResult:::::::', attachmentDownloadResult);
+      const list = inlineAttachments[messageId];
+      for (const result of attachmentDownloadResult) {
+        const blobUrl = result.blobUrl;
+        list[attachment.id] = blobUrl;
+      }
+      console.log('onFetchInlineAttachment list:::::::', list);
+
+      if (Object.keys(list).length > 0) {
+        setInlineAttachments((prev) => ({ ...prev, [messageId]: list }));
       }
     },
     [inlineAttachments, onFetchAttachments]
@@ -1177,6 +1188,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
+      if (inlineAttachments[messageProps.message.messageId] === undefined) {
+        console.log('defaultChatMessageRenderer::::::::::');
+        setInlineAttachments((prev) => ({ ...prev, [messageProps.message.messageId]: {} }));
+      }
       if (
         messageProps.message.messageType === 'chat' ||
         /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
@@ -1202,7 +1217,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            attachmentsMap={inlineAttachments}
+            attachmentsMap={inlineAttachments[messageProps.message.messageId]}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
           />

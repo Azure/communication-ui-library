@@ -99,6 +99,7 @@ export type FileMetadata =
  * @beta
  */
 export interface AttachmentDownloadResult {
+  attachmentId: string;
   blobUrl: string;
 }
 
