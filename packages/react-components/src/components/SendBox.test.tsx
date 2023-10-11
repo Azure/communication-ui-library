@@ -13,7 +13,6 @@ import userEvent from '@testing-library/user-event';
 /* @conditional-compile-remove(mention) */
 import { Mention } from './MentionPopover';
 /* @conditional-compile-remove(mention) */
-import { triggerMouseEvent } from './utils/testUtils';
 
 describe('SendBox strings should be localizable and overridable', () => {
   beforeAll(() => {
@@ -206,10 +205,6 @@ describe('Clicks/Touch should select mention', () => {
     // Select the suggestion
     await selectFirstMention();
     expect(input.value).toBe(value + suggestions[0].displayText);
-    // Fix for mousedown issue in userEvent when `document` become null unexpectedly
-    await act(async () => {
-      triggerMouseEvent(input, 'mousedown');
-    });
   };
 
   test('Mouse click on first word in mention should select mention', async () => {
@@ -292,10 +287,6 @@ describe('Clicks/Touch should select mention', () => {
       await userEvent.keyboard(' and');
     });
     const typedValue = trigger + suggestions[0].displayText + ' and';
-    // Fix for mousedown issue in userEvent when `document` become null unexpectedly
-    await act(async () => {
-      triggerMouseEvent(input, 'mousedown');
-    });
     // Triple click a letter at 14-th index
     await userEvent.pointer({
       keys: '[MouseLeft][MouseLeft][MouseLeft]',
@@ -446,10 +437,6 @@ describe('Keyboard events should be handled for mentions', () => {
     // Select the suggestion
     await selectMention(0);
     expect(input.value).toBe(value + suggestions[0].displayText);
-    // Fix for mousedown issue in userEvent when `document` become null unexpectedly
-    await act(async () => {
-      triggerMouseEvent(input, 'mousedown');
-    });
   };
 
   test('Keyboard navigation with arrows should navigate mention by words', async () => {
