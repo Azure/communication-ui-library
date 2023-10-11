@@ -12,7 +12,6 @@ import { render, waitFor, act, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 /* @conditional-compile-remove(mention) */
 import { Mention } from './MentionPopover';
-/* @conditional-compile-remove(mention) */
 
 describe('SendBox strings should be localizable and overridable', () => {
   beforeAll(() => {
