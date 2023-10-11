@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { useSelector, getChatSelector, ChatClientState, useChatThreadClient } from '@azure/communication-react';
 import { Message } from '@azure/communication-react';
 import { MessageThread } from '@azure/communication-react';

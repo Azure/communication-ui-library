@@ -7,9 +7,10 @@
     "mutedIconLabel": "מושתק",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
-    "participantStateHold": "בהמתנה",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "בהמתנה"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} נוספים"
   },
   "typingIndicator": {
     "singleUser": "{user} מקליד...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "הורד",
+    "dismissButtonAriaLabel": "סגור"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "ההודעה נשלחה",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "הצג את המסך שלך"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "הרם",
+    "onLabel": "הורד",
+    "tooltipDisabledContent": "פעולת הרמת יד אינה זמינה",
+    "tooltipOnContent": "הורד יד",
+    "tooltipOffContent": "הרם יד"
   },
   "messageThread": {
     "yesterday": "אתמול",
@@ -333,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "הדף הקודם",
     "rightNavButtonAriaLabel": "הדף הבא"
   }

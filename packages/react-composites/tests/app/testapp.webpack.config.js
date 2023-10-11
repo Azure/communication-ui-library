@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 
@@ -20,7 +20,6 @@ module.exports = (appDir, babelConfig) => {
         // Reference internal packlets' src directly for hot reloading when developing.
         // This also removes the need for CI to wait for packlets to be built before building tests.
         '@internal/acs-ui-common': path.resolve(appDir, '../../../../acs-ui-common/src'),
-        '@internal/northstar-wrapper': path.resolve(appDir, '../../../../northstar-wrapper/src'),
         '@internal/calling-component-bindings': path.resolve(appDir, '../../../../calling-component-bindings/src'),
         '@internal/calling-stateful-client': path.resolve(appDir, '../../../../calling-stateful-client/src'),
         '@internal/chat-component-bindings': path.resolve(appDir, '../../../../chat-component-bindings/src'),

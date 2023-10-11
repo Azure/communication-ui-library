@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Description, Heading, Source, Title } from '@storybook/addon-docs';
 import React from 'react';
@@ -109,7 +109,7 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 const exampleIncomingCallModal = `
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
-import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { VideoOff20Regular, Video20Regular } from '@fluentui/react-icons';
 import { DefaultPalette, mergeStyles } from '@fluentui/react';
 
 const palette = DefaultPalette;
@@ -169,7 +169,7 @@ const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
     />
   );
 
-  cosnt showLocalVideo = !!localVideoStreamElement;
+  const showLocalVideo = !!localVideoStreamElement;
 
   return (
     <>
@@ -215,7 +215,7 @@ const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
           <DefaultButton
             style={{ background: palette.neutralLighterAlt, border: 'none' }}
             onClick={() => onClickVideoToggle()}
-            onRenderIcon={() => (showLocalVideo ? <CallVideoIcon size="small" /> : <CallVideoOffIcon size="small" />)}
+            onRenderIcon={() => (showLocalVideo ? <Video20Regular /> : <VideoOff20Regular />)}
           />
 
           <DefaultButton

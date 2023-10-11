@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { concatStyleSets, DefaultButton, Stack } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -10,7 +11,7 @@ import {
   mobilePaneControlBarStyle,
   mobilePaneHiddenIconStyles
 } from './styles/Pane.styles';
-import { CompositeLocale, useLocale } from '../localization';
+import { useLocale } from '../localization';
 
 /** @private */
 export interface MobileChatSidePaneTabHeaderProps {
@@ -39,7 +40,7 @@ type PeopleAndChatHeaderProps = {
 export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Element => {
   const { onClose, onChatButtonClicked, onPeopleButtonClicked, activeTab } = props;
   const theme = useTheme();
-  const strings = localeTrampoline(useLocale());
+  const strings = useLocale().strings.call;
   const haveMultipleTabs = onChatButtonClicked && onPeopleButtonClicked;
   const mobilePaneButtonStylesThemed = useMemo(() => {
     return concatStyleSets(
@@ -114,11 +115,3 @@ export const PeopleAndChatHeader = (props: PeopleAndChatHeaderProps): JSX.Elemen
  * Type used to define which tab is active in {@link TabHeader}
  */
 export type TabHeaderTab = 'chat' | 'people';
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const localeTrampoline = (locale: CompositeLocale): any => {
-  /* @conditional-compile-remove(new-call-control-bar) */
-  return locale.strings.call;
-
-  return locale.strings.callWithChat;
-};

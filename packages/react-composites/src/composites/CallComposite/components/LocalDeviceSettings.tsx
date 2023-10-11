@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
@@ -17,7 +17,7 @@ import {
   mainStackTokens,
   optionIconStyles
 } from '../styles/LocalDeviceSettings.styles';
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { ConfigurationPageCameraDropdown } from './ConfigurationPageCameraDropdown';
 import { ConfigurationPageMicDropdown } from './ConfigurationPageMicDropdown';
@@ -92,7 +92,7 @@ export interface LocalDeviceSettingsType {
   /* @conditional-compile-remove(call-readiness) */
   onClickEnableDevicePermission?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
-  onVideoEffectsClick?: () => void;
+  onClickVideoEffects?: () => void;
 }
 
 /**
@@ -226,7 +226,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
                 <DefaultButton
                   iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
                   styles={effectsButtonStyles(theme)}
-                  onClick={props.onVideoEffectsClick}
+                  onClick={props.onClickVideoEffects}
                   data-ui-id={'call-config-video-effects-button'}
                 >
                   {locale.strings.call.configurationPageVideoEffectsButtonLabel}

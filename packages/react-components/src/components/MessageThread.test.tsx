@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 /* @conditional-compile-remove(mention) */
@@ -170,7 +170,7 @@ describe('Message blocked should display default blocked text correctly', () => 
 });
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-describe.only('Message should display image and attachment correctly', () => {
+describe('Message should display image and attachment correctly', () => {
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -315,6 +315,70 @@ describe.only('Message should display image and attachment correctly', () => {
       // Inline Image attachment
       expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedFilePreviewSrc1);
       expect(onFetchAttachmentCount).toEqual(expectedOnFetchInlineImageAttachmentCount);
+    });
+  });
+
+  /* @conditional-compile-remove(image-gallery) */
+  test('onInlineImageClicked handler should be called when an inline image is clicked', async () => {
+    const fildId1 = 'SomeFileId1';
+    const fildName1 = 'SomeFileId1.txt';
+    const fildId2 = 'SomeFileId2';
+    const fildName2 = 'SomeFileId2.pdf';
+    const expectedFileSrc1 = 'http://localhost/someFileSrcUrl1';
+    const expectedFileSrc2 = 'http://localhost/someFileSrcUrl2';
+    const expectedFilePreviewSrc1 = 'http://localhost/someFilePreviewSrcUrl1';
+
+    const imgId1 = 'SomeImageId1';
+    const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
+    const messageId = Math.random().toString();
+    const sampleMessage: ChatMessage = {
+      messageType: 'chat',
+      senderId: 'user3',
+      content: `<p><img alt="image" src="" itemscope="png" width="166.5625" height="250" id="${imgId1}" style="vertical-align:bottom"></p>`,
+      senderDisplayName: 'Miguel Garcia',
+      messageId,
+      createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
+      mine: false,
+      attached: false,
+      contentType: 'html',
+      attachedFilesMetadata: [
+        {
+          id: imgId1,
+          name: imgId1,
+          attachmentType: 'inlineImage',
+          extension: 'png',
+          url: expectedImgSrc1,
+          previewUrl: expectedFilePreviewSrc1
+        },
+        {
+          id: fildId1,
+          name: fildName1,
+          attachmentType: 'fileSharing',
+          extension: 'txt',
+          url: expectedFileSrc1,
+          payload: { teamsFileAttachment: 'true' }
+        },
+        {
+          id: fildId2,
+          name: fildName2,
+          attachmentType: 'fileSharing',
+          extension: 'pdf',
+          url: expectedFileSrc2
+        }
+      ]
+    };
+
+    const onInlineImageClickedHandler = jest.fn();
+
+    const { container } = render(
+      <MessageThread userId="user1" messages={[sampleMessage]} onInlineImageClicked={onInlineImageClickedHandler} />
+    );
+
+    await waitFor(async () => {
+      const inlineImage: HTMLElement | null = container.querySelector(`#${imgId1}`);
+      inlineImage?.click();
+      expect(onInlineImageClickedHandler).toBeCalledTimes(1);
+      expect(onInlineImageClickedHandler).toBeCalledWith(imgId1, messageId);
     });
   });
 });
@@ -544,7 +608,7 @@ describe('Message should display Mention correctly', () => {
     expect(editBox.innerHTML).not.toContain(MSFT_MENTION);
 
     // Submit edited message
-    const submitButton = await screen.findByLabelText('Submit');
+    const submitButton = await screen.findByLabelText('Done');
     fireEvent.click(submitButton);
 
     // Verify message has new edited content includes mention HTML tag

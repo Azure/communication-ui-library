@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
 import { CustomCallControlButtonPlacement } from '../ControlBar/CustomButton';
@@ -70,13 +70,18 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   screenShareButton?: boolean | { disabled: boolean };
-  /* @conditional-compile-remove(PSTN-calls) */
-  /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
   /**
    * Show, Hide or disable the more button during a call.
    * @defaultValue true
    */
   moreButton?: boolean;
+  /* @conditional-compile-remove(raise-hand) */
+  /**
+   * Show, Hide or Disable the screen share button during a call.
+   * @defaultValue true
+   */
+  raiseHandButton?: boolean | { disabled: boolean };
   /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.

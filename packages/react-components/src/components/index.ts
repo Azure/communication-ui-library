@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStrings, TypingIndicatorStylesProps } from './TypingIndicator';
@@ -14,8 +14,10 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from './ImageGallery';
+/* @conditional-compile-remove(image-gallery) */
+export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
 
@@ -29,8 +31,8 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-export type { ImageGalleryProps, ImageGalleryStylesProps, ImageGalleryImageProps } from './ImageGallery';
+/* @conditional-compile-remove(image-gallery) */
+export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
 /* @conditional-compile-remove(file-sharing) */
 export type { ActiveFileUpload } from './SendBox';
@@ -109,13 +111,16 @@ export type {
   MicrophoneButtonStrings
 } from './MicrophoneButton';
 
-export { DevicesButton } from './DevicesButton';
+export { DevicesButton, generateDefaultDeviceMenuProps as _generateDefaultDeviceMenuProps } from './DevicesButton';
 export type {
   OptionsDevice,
   DevicesButtonProps,
   DevicesButtonStrings,
   DevicesButtonStyles,
-  DevicesButtonContextualMenuStyles
+  DevicesButtonContextualMenuStyles,
+  DeviceMenuProps as _DeviceMenuProps,
+  DeviceMenuStrings as _DeviceMenuStrings,
+  DeviceMenuStyles as _DeviceMenuStyles
 } from './DevicesButton';
 
 /* @conditional-compile-remove(call-readiness) */

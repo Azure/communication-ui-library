@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { nanoid } from 'nanoid';
 import {
@@ -75,6 +75,7 @@ export class FakeChatClient implements IChatClient {
         createdOn: now,
         properties: {
           topic: request.topic,
+          /* @conditional-compile-remove(signaling-beta) */
           metadata: {}
         },
         participants: participants.map((p) => chatToSignalingParticipant(p)),

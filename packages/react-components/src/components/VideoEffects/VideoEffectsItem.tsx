@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Icon,
@@ -149,7 +149,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
               }
         }
         tabIndex={props.disabled ? -1 : 0}
-        aria-label={props.ariaLabel}
+        aria-label={props.ariaLabel ?? props.itemKey}
         aria-disabled={props.disabled}
         role="button"
       >

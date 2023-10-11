@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
@@ -38,7 +38,7 @@ import { HomeScreen } from './views/HomeScreen';
 import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
-setLogLevel('warning');
+setLogLevel('verbose');
 
 console.log(
   `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`
@@ -116,10 +116,11 @@ const App = (): JSX.Element => {
             setDisplayName(callDetails.displayName);
             /* @conditional-compile-remove(PSTN-calls) */
             setAlternateCallerId(callDetails.alternateCallerId);
-            let callLocator: CallAdapterLocator | undefined = getTeamsLinkFromUrl() || getGroupIdFromUrl();
+            let callLocator: CallAdapterLocator | undefined =
+              callDetails.callLocator || getTeamsLinkFromUrl() || getGroupIdFromUrl();
 
             /* @conditional-compile-remove(rooms) */
-            callLocator = callDetails.callLocator || getRoomIdFromUrl();
+            callLocator = callLocator || getRoomIdFromUrl();
 
             /* @conditional-compile-remove(PSTN-calls) */
             callLocator = callLocator || getOutboundParticipants(callDetails.outboundParticipants);
@@ -163,7 +164,8 @@ const App = (): JSX.Element => {
                 document.title,
                 window.location.origin +
                   getJoinParams(callLocator) +
-                  getIsCTEParam(/* @conditional-compile-remove(teams-identity-support) */ !!callDetails.teamsToken)
+                  /* @conditional-compile-remove(teams-identity-support) */
+                  getIsCTEParam(!!callDetails.teamsToken)
               );
             }
             /* @conditional-compile-remove(teams-identity-support) */
@@ -222,6 +224,7 @@ const App = (): JSX.Element => {
   }
 };
 
+/* @conditional-compile-remove(teams-identity-support) */
 const getIsCTEParam = (isCTE?: boolean): string => {
   return isCTE ? '&isCTE=true' : '';
 };

@@ -1,13 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
-
-/**
- * @private
- * z-index to ensure that chat container has lower z-index than mention popover
- */
-export const CHAT_CONTAINER_ZINDEX = 1;
 
 /**
  * @private
@@ -17,8 +11,10 @@ export const mentionPopoverContainerStyle = (theme: Theme): string =>
     boxShadow: theme.effects.elevation16,
     background: theme.semanticColors.bodyBackground,
     overflow: 'visible',
-    // zIndex to set the mentionPopover above the chat container
-    zIndex: CHAT_CONTAINER_ZINDEX + 1
+    // zIndex to set the mentionPopover
+    // Temporary set to a hardcoded high number to make sure it is on top of the other components
+    // Will be replaced by a proper z-index solution after the Fluent 9 migration
+    zIndex: 10000
   });
 /**
  * @private

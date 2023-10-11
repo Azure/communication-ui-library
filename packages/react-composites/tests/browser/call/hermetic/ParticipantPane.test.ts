@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { expect } from '@playwright/test';
 import { IDS } from '../../common/constants';
@@ -338,5 +338,38 @@ test.describe('Participant pane tests', async () => {
     await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('mobile-participant-list-large-number-of-participants.png');
+  });
+  /* @conditional-compile-remove(total-participant-count) */
+  test('Participant count should be shown correctly with solo partitipant', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileDesktop(testInfo));
+    const participants: MockRemoteParticipantState[] = [];
+
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-participants-button'));
+    await pageClick(page, dataUiId('call-composite-participants-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-solo-participant-count.png');
+  });
+
+  /* @conditional-compile-remove(total-participant-count) */
+  test('Participant count should be shown correctly with solo partitipant mobile', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    test.skip(isTestProfileDesktop(testInfo));
+    const participants: MockRemoteParticipantState[] = [];
+
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    await waitForSelector(page, dataUiId('call-composite-more-menu-people-button'));
+    await pageClick(page, dataUiId('call-composite-more-menu-people-button'));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-list-solo-participant-count-mobile.png');
   });
 });

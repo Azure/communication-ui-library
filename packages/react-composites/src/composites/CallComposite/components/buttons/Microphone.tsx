@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { ControlBarButtonStyles, MicrophoneButton } from '@internal/react-components';
+/* @conditional-compile-remove(capabilities) */
+import { _HighContrastAwareIcon } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { useLocale } from '../../../localization';
@@ -10,7 +12,7 @@ import { usePropsFor } from '../../hooks/usePropsFor';
 import { useSelector } from '../../hooks/useSelector';
 import { getCallStatus, getLocalMicrophoneEnabled } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { useAdapter } from '../../adapter/CallAdapterProvider';
 
 /**
@@ -26,10 +28,13 @@ export const Microphone = (props: {
   const callStatus = useSelector(getCallStatus);
   const isLocalMicrophoneEnabled = useSelector(getLocalMicrophoneEnabled);
   const strings = useLocale().strings.call;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   const adapter = useAdapter();
   /* @conditional-compile-remove(rooms) */
   const isRoomsCall = adapter.getState().isRoomsCall;
+
+  /* @conditional-compile-remove(capabilities) */
+  const unmuteMicCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.unmuteMic;
 
   /**
    * When call is in Lobby, microphone button should be disabled.
@@ -64,6 +69,12 @@ export const Microphone = (props: {
         microphoneButtonProps.disabled ||
         props.disabled ||
         /* @conditional-compile-remove(rooms) */ (isRoomsCall && adapter.getState().call?.role === 'Unknown')
+      }
+      /* @conditional-compile-remove(capabilities) */
+      onRenderOffIcon={
+        unmuteMicCapability && !unmuteMicCapability.isPresent
+          ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />
+          : undefined
       }
     />
   );

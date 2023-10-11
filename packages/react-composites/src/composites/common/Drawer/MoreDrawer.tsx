@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
@@ -12,11 +12,15 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuStyles
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
-import { _StartCaptionsButton } from '@internal/react-components';
+import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
 
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButton } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(control-bar-button-injection) */
 import {
@@ -24,9 +28,9 @@ import {
   generateCustomCallDrawerButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../ControlBar/CustomButton';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(raise-hand) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
 import { useLocale } from '../../localization';
 import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
@@ -37,13 +41,15 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(close-captions) */
 import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 /* @conditional-compile-remove(close-captions) */
-import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
+import { _captionSettingsSelector, _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(close-captions) */
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 /* @conditional-compile-remove(close-captions) */
-import { SpokenLanguageDrawer } from './SpokenLanguageDrawer';
+import { CaptionSettingsDrawer } from './CaptionSettingsDrawer';
 /* @conditional-compile-remove(close-captions) */
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
+/* @conditional-compile-remove(close-captions) */
+import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -86,6 +92,20 @@ export interface MoreDrawerStrings {
    * @remarks Only displayed when in Teams call, disabled until captions is on
    */
   spokenLanguageMenuTitle: string;
+
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Label for captionLanguage drawerMenuItem
+   *
+   * @remarks Only displayed when in Teams call, disabled until captions is on
+   */
+  captionLanguageMenuTitle: string;
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for gallery options drawerMenuItem
+   */
+  galleryOptionsMenuTitle: string;
 }
 
 /** @private */
@@ -114,6 +134,13 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Callback for when the gallery layout is changed
+   */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
 }
 
 /** @private */
@@ -146,10 +173,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
   const localeStrings = useLocale();
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
+
+  /* @conditional-compile-remove(raise-hand) */
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
 
   const onSpeakerItemClick = useCallback(
     (_ev, itemKey) => {
@@ -227,6 +257,66 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
+  /* @conditional-compile-remove(gallery-layouts) */
+  const galleryLayoutOptions = {
+    itemKey: 'galleryPositionKey',
+    iconProps: {
+      iconName: 'GalleryOptions',
+      styles: { root: { lineHeight: 0 } }
+    },
+    disabled: props.disableButtonsForHoldScreen,
+    text: localeStrings.strings.call.moreButtonGalleryControlLabel,
+    subMenuProps: [
+      {
+        itemKey: 'dynamicSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'FloatingLocalVideoGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'floatingLocalVideo' ? { iconName: 'Accept' } : undefined
+      },
+      {
+        itemKey: 'focusedContentSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'FocusedContentGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'focusedContent' ? { iconName: 'Accept' } : undefined
+      }
+    ]
+  };
+
+  /* @conditional-compile-remove(gallery-layout-composite) */
+  const galleryOption = {
+    itemKey: 'defaultSelectionKey',
+    text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+    onItemClick: () => {
+      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+      onLightDismiss();
+    },
+    iconProps: {
+      iconName: 'DefaultGalleryLayout',
+      styles: { root: { lineHeight: 0 } }
+    },
+    secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+  };
+
+  /* @conditional-compile-remove(gallery-layout-composite) */
+  galleryLayoutOptions.subMenuProps?.push(galleryOption);
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  drawerMenuItems.push(galleryLayoutOptions);
+
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',
@@ -252,6 +342,28 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
+  /* @conditional-compile-remove(raise-hand) */
+  if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.raiseHandButton)) {
+    const raiseHandIcon = raiseHandButtonProps.checked ? 'LowerHandContextualMenuItem' : 'RaiseHandContextualMenuItem';
+    drawerMenuItems.push({
+      itemKey: 'raiseHandButtonKey',
+      disabled: props.disableButtonsForHoldScreen || isDisabled(drawerSelectionOptions.raiseHandButton),
+      text: raiseHandButtonProps.checked
+        ? localeStrings.component.strings.raiseHandButton.onLabel
+        : localeStrings.component.strings.raiseHandButton.offLabel,
+      onItemClick: () => {
+        if (raiseHandButtonProps.onToggleRaiseHand) {
+          raiseHandButtonProps.onToggleRaiseHand();
+        }
+        onLightDismiss();
+      },
+      iconProps: {
+        iconName: raiseHandIcon,
+        styles: { root: { lineHeight: 0 } }
+      }
+    });
+  }
+
   /*@conditional-compile-remove(PSTN-calls) */
   // dtmf tone sending only works for 1:1 PSTN call
   if (drawerSelectionOptions !== false && props.onClickShowDialpad) {
@@ -268,33 +380,57 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   /* @conditional-compile-remove(close-captions) */
   //Captions drawer menu
-  const supportedLanguageStrings = useLocale().strings.call.captionsAvailableLanguageStrings;
+  const supportedSpokenLanguageStrings = useLocale().strings.call.spokenLanguageStrings;
+
   /* @conditional-compile-remove(close-captions) */
-  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
+  //Captions drawer menu
+  const supportedCaptionLanguageStrings = useLocale().strings.call.captionLanguageStrings;
+  /* @conditional-compile-remove(close-captions) */
+  const captionSettingsProp = useAdaptedSelector(_captionSettingsSelector);
   /* @conditional-compile-remove(close-captions) */
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  /* @conditional-compile-remove(close-captions) */
+  const captionSettingsHandlers = useHandlers(_CaptionsSettingsModal);
 
   /* @conditional-compile-remove(close-captions) */
   const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
 
   /* @conditional-compile-remove(close-captions) */
+  const [isCaptionLanguageDrawerOpen, setIsCaptionLanguageDrawerOpen] = useState<boolean>(false);
+
+  /* @conditional-compile-remove(close-captions) */
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<string>(
-    startCaptionsButtonProps.currentSpokenLanguage
+    captionSettingsProp.currentSpokenLanguage !== '' ? captionSettingsProp.currentSpokenLanguage : 'en-us'
   );
+
+  /* @conditional-compile-remove(close-captions) */
+  const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<string>(
+    captionSettingsProp.currentCaptionLanguage !== ''
+      ? captionSettingsProp.currentCaptionLanguage
+      : _spokenLanguageToCaptionLanguage[currentSpokenLanguage]
+  );
+
   /* @conditional-compile-remove(close-captions) */
   const onToggleChange = useCallback(async () => {
-    if (!startCaptionsButtonProps.checked) {
+    if (!captionSettingsProp.isCaptionsFeatureActive) {
       await startCaptionsButtonHandlers.onStartCaptions({
         spokenLanguage: currentSpokenLanguage
       });
     } else {
       startCaptionsButtonHandlers.onStopCaptions();
     }
-  }, [startCaptionsButtonProps.checked, startCaptionsButtonHandlers, currentSpokenLanguage]);
+  }, [captionSettingsProp.isCaptionsFeatureActive, startCaptionsButtonHandlers, currentSpokenLanguage]);
 
   /* @conditional-compile-remove(close-captions) */
   if (props.isCaptionsSupported) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
+
+    const spokenLanguageString = supportedSpokenLanguageStrings
+      ? supportedSpokenLanguageStrings[currentSpokenLanguage]
+      : currentSpokenLanguage;
+    const captionLanguageString = supportedCaptionLanguageStrings
+      ? supportedCaptionLanguageStrings[currentCaptionLanguage]
+      : currentCaptionLanguage;
 
     drawerMenuItems.push({
       itemKey: 'captions',
@@ -307,11 +443,11 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     captionsDrawerItems.push({
       itemKey: 'ToggleCaptionsKey',
-      text: startCaptionsButtonProps.checked
+      text: captionSettingsProp.isCaptionsFeatureActive
         ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
         : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
       iconProps: {
-        iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
+        iconName: captionSettingsProp.isCaptionsFeatureActive ? 'CaptionsOffIcon' : 'CaptionsIcon',
         styles: { root: { lineHeight: 0 } }
       },
       disabled: props.disableButtonsForHoldScreen,
@@ -319,8 +455,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         <Stack verticalFill verticalAlign="center">
           <Toggle
             id="common-call-composite-captions-toggle-button"
-            checked={startCaptionsButtonProps.checked}
-            styles={themedToggleButtonStyle(theme, startCaptionsButtonProps.checked)}
+            checked={captionSettingsProp.isCaptionsFeatureActive}
+            styles={themedToggleButtonStyle(theme, captionSettingsProp.isCaptionsFeatureActive)}
             onChange={onToggleChange}
           />
         </Stack>
@@ -330,15 +466,34 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     captionsDrawerItems.push({
       itemKey: 'ChangeSpokenLanguage',
       text: props.strings.spokenLanguageMenuTitle,
-      id: 'common-call-composite-captions-settings-button',
-      secondaryText: supportedLanguageStrings ? supportedLanguageStrings[currentSpokenLanguage] : currentSpokenLanguage,
+      id: 'common-call-composite-captions-spoken-settings-button',
+      secondaryText: spokenLanguageString,
       iconProps: {
         iconName: 'ChangeSpokenLanguageIcon',
         styles: { root: { lineHeight: 0 } }
       },
-      disabled: props.disableButtonsForHoldScreen || !startCaptionsButtonProps.checked,
+      disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
       onItemClick: () => {
         setIsSpokenLanguageDrawerOpen(true);
+      },
+      secondaryIconProps: {
+        iconName: 'ChevronRight',
+        styles: { root: { lineHeight: 0 } }
+      }
+    });
+
+    captionsDrawerItems.push({
+      itemKey: 'ChangeCaptionLanguage',
+      text: props.strings.captionLanguageMenuTitle,
+      id: 'common-call-composite-captions-subtitle-settings-button',
+      secondaryText: captionLanguageString,
+      iconProps: {
+        iconName: 'ChangeCaptionLanguageIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      disabled: props.disableButtonsForHoldScreen || !captionSettingsProp.isCaptionsFeatureActive,
+      onItemClick: () => {
+        setIsCaptionLanguageDrawerOpen(true);
       },
       secondaryIconProps: {
         iconName: 'ChevronRight',
@@ -373,15 +528,28 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   return (
     <>
       {isSpokenLanguageDrawerOpen && props.isCaptionsSupported && (
-        <SpokenLanguageDrawer
+        <CaptionSettingsDrawer
           onLightDismiss={props.onLightDismiss}
-          setCurrentSpokenLanguage={setCurrentSpokenLanguage}
-          currentSpokenLanguage={currentSpokenLanguage}
-          strings={props.strings}
-          supportedLanguageStrings={supportedLanguageStrings}
+          selectLanguage={setCurrentSpokenLanguage}
+          setCurrentLanguage={captionSettingsHandlers.onSetSpokenLanguage}
+          currentLanguage={currentSpokenLanguage}
+          strings={{ menuTitle: props.strings.spokenLanguageMenuTitle }}
+          supportedLanguageStrings={supportedSpokenLanguageStrings}
         />
       )}
-      {!isSpokenLanguageDrawerOpen && <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />}
+      {isCaptionLanguageDrawerOpen && props.isCaptionsSupported && (
+        <CaptionSettingsDrawer
+          onLightDismiss={props.onLightDismiss}
+          selectLanguage={setCurrentCaptionLanguage}
+          setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}
+          currentLanguage={currentCaptionLanguage}
+          strings={{ menuTitle: props.strings.captionLanguageMenuTitle }}
+          supportedLanguageStrings={supportedCaptionLanguageStrings}
+        />
+      )}
+      {!isSpokenLanguageDrawerOpen && !isCaptionLanguageDrawerOpen && (
+        <DrawerMenu items={drawerMenuItems} onLightDismiss={props.onLightDismiss} />
+      )}
     </>
   );
 

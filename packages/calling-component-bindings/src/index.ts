@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
@@ -16,16 +16,12 @@ export type { HoldButtonSelector } from './callControlSelectors';
 /* @conditional-compile-remove(close-captions) */
 export type {
   _StartCaptionsButtonSelector,
-  _ChangeSpokenLanguageSelector,
+  _CaptionSettingsSelector,
   _CaptionsBannerSelector
 } from './captionsSelector';
 
 /* @conditional-compile-remove(close-captions) */
-export {
-  _captionsBannerSelector,
-  _startCaptionsButtonSelector,
-  _changeSpokenLanguageSelector
-} from './captionsSelector';
+export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 /* @conditional-compile-remove(teams-identity-support) */

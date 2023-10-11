@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
@@ -12,8 +12,6 @@ import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMes
 import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { IPersonaProps } from '@fluentui/react';
 
 type ChatMessageComponentProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -51,10 +49,9 @@ type ChatMessageComponentProps = {
    */
   showMessageStatus?: boolean;
   /**
-   * Inline the accept and reject edit buttons when editing a message.
-   * Setting to false will mean they are on a new line inside the editable chat message.
+   * Whether to overlap avatar and message when the view is width constrained.
    */
-  inlineAcceptRejectEditButtons: boolean;
+  shouldOverlapAvatarAndMessage: boolean;
   /**
    * Optional callback to render uploaded files in the message component.
    */
@@ -92,15 +89,12 @@ type ChatMessageComponentProps = {
    * @beta
    */
   onFetchAttachments?: (attachment: FileMetadata) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
-  onInlineImageClicked?: (
-    attachment: FileMetadata,
-    onRenderTitleIcon?: (personaProps?: IPersonaProps) => JSX.Element
-  ) => Promise<void>;
+  onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /**
    * Optional map of attachment ids to blob urls.
@@ -137,7 +131,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
     return (
       <ChatMessageComponentAsEditBox
         message={message}
-        inlineEditButtons={props.inlineAcceptRejectEditButtons}
         strings={props.strings}
         onSubmit={async (text, metadata, options) => {
           props.onUpdateMessage &&
@@ -166,9 +159,9 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         strings={props.strings}
         /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        /* @conditional-compile-remove(image-gallery) */
         onInlineImageClicked={props.onInlineImageClicked}
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+        /* @conditional-compile-remove(image-gallery) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IContextualMenuItem, IContextualMenuProps } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
@@ -27,6 +27,7 @@ export const useVideoTileContextualMenuProps = (props: {
   isPinned?: boolean;
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
+  onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
   disablePinMenuItem?: boolean;
   toggleAnnouncerString?: (announcerString: string) => void;
 }): IContextualMenuProps | undefined => {
@@ -37,6 +38,7 @@ export const useVideoTileContextualMenuProps = (props: {
     isPinned,
     onPinParticipant,
     onUnpinParticipant,
+    onUpdateScalingMode,
     disablePinMenuItem,
     toggleAnnouncerString
   } = props;
@@ -109,6 +111,7 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {
+            onUpdateScalingMode?.(remoteParticipant.userId, 'Fit');
             view?.updateScalingMode('Fit');
           },
           'data-ui-id': 'video-tile-fit-to-frame',
@@ -124,6 +127,7 @@ export const useVideoTileContextualMenuProps = (props: {
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
             },
             onClick: () => {
+              onUpdateScalingMode?.(remoteParticipant.userId, 'Crop');
               view?.updateScalingMode('Crop');
             },
             'data-ui-id': 'video-tile-fill-frame',
@@ -144,6 +148,7 @@ export const useVideoTileContextualMenuProps = (props: {
     isPinned,
     onPinParticipant,
     onUnpinParticipant,
+    onUpdateScalingMode,
     remoteParticipant.userId,
     remoteParticipant.displayName,
     disablePinMenuItem,

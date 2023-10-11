@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ParticipantRole } from '@azure/communication-calling';
 import { CallCompositeOptions } from '../../../src';
@@ -32,6 +32,7 @@ export interface QueryArgs {
   displayName: string;
   mockRemoteParticipantCount: number;
   enableVideoEffects?: boolean;
+  galleryLayout?: string;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -69,6 +70,7 @@ export function parseQueryArgs(): QueryArgs {
       ? JSON.parse(params.customCallCompositeOptions)
       : undefined,
     localVideoTilePosition,
-    enableVideoEffects: Boolean(params.enableVideoEffects)
+    enableVideoEffects: Boolean(params.enableVideoEffects),
+    galleryLayout: params.galleryLayout ?? ''
   };
 }

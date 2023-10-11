@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
+import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CallState,
@@ -20,7 +23,8 @@ import { CallAdapterState, CallCompositePage } from '../adapter/CallAdapter';
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaisedHandState } from '@internal/calling-stateful-client';
 /**
  * @private
  */
@@ -51,12 +55,29 @@ export const getDeviceManager = (state: CallAdapterState): DeviceManagerState =>
  */
 export const getIsScreenShareOn = (state: CallAdapterState): boolean => state.call?.isScreenSharingOn ?? false;
 
+/* @conditional-compile-remove(raise-hand) */
+/**
+ * @private
+ */
+export const getLocalParticipantRaisedHand = (state: CallAdapterState): RaisedHandState | undefined =>
+  state.call?.raiseHand.localParticipantRaisedHand;
+
 /**
  * @private
  */
 export const getIsPreviewCameraOn = (state: CallAdapterState): boolean => _isPreviewOn(state.devices);
 
-/* @conditional-compile-remove(rooms) */
+/**
+ * @private
+ */
+export const getMicrophones = (state: CallAdapterState): AudioDeviceInfo[] => state.devices.microphones;
+
+/**
+ * @private
+ */
+export const getCameras = (state: CallAdapterState): VideoDeviceInfo[] => state.devices.cameras;
+
+/* @conditional-compile-remove(capabilities) */
 /**
  * @private
  */
@@ -177,3 +198,11 @@ export const getIsTeamsCall = (state: CallAdapterState): boolean => state.isTeam
  * @private
  */
 export const getLatestErrors = (state: CallAdapterState): AdapterErrors => state.latestErrors;
+
+/* @conditional-compile-remove(capabilities) */
+/**
+ * @private
+ */
+export const getLatestCapabilitiesChangedInfo = (state: CallAdapterState): CapabilitiesChangeInfo | undefined => {
+  return state.call?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
+};

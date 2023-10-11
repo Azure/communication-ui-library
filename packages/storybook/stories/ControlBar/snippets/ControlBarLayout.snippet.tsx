@@ -6,14 +6,15 @@ import {
   MicrophoneButton,
   DevicesButton,
   ParticipantsButton,
-  ScreenShareButton
+  ScreenShareButton,
+  RaiseHandButton
 } from '@azure/communication-react';
 import React from 'react';
 
 const componentMainDivStyle = {
   display: 'flex',
   border: 'solid 0.5px lightgray',
-  height: '24rem',
+  height: '25rem',
   alignItems: 'center',
   justifyContent: 'center'
 };
@@ -26,6 +27,7 @@ export const ControlBarLayoutExample: () => JSX.Element = () => {
           <CameraButton />
           <MicrophoneButton />
           <ScreenShareButton />
+          <RaiseHandButton />
           <ParticipantsButton participants={[]} />
           <DevicesButton />
           <EndCallButton />

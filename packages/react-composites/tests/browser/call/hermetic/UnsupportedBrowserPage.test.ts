@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import type { EnvironmentInfo } from '@azure/communication-calling';
 import { expect } from '@playwright/test';

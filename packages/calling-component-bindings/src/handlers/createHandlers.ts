@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -36,7 +36,7 @@ export interface CallingHandlers extends CommonCallingHandlers {
 /* @conditional-compile-remove(video-background-effects) */
 /**
  * Configuration options to include video effect background dependency.
- * @beta
+ * @public
  */
 export type CallingHandlersOptions = {
   onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;

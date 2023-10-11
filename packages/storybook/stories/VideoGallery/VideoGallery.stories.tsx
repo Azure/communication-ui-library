@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGallery as VideoGalleryComponent } from '@azure/communication-react';
 import { Image, Stack, Text } from '@fluentui/react';
@@ -17,6 +17,7 @@ import { CustomAvatarVideoGalleryExample } from './snippets/CustomAvatar.snippet
 import { CustomStyleVideoGalleryExample } from './snippets/CustomStyle.snippet';
 import { DefaultVideoGalleryExample } from './snippets/Default.snippet';
 import { FloatingLocalVideoExample } from './snippets/FloatingLocalVideo.snippet';
+import { FocusedContentExample } from './snippets/FocusedContent.snippet';
 import { LocalCameraSwitcherExample } from './snippets/LocalCameraSwitcher.snippet';
 import { ManagedPinnedParticipantsExample } from './snippets/ManagedPinnedParticipants.snippet';
 import { MobileWrapper } from './snippets/MobileWrapper';
@@ -25,6 +26,7 @@ import { PinnedParticipantsDisabledExample } from './snippets/PinnedParticipants
 import { PinnedParticipantsMobileExample } from './snippets/PinnedParticipantsMobile.snippet';
 import { ScreenSharingFromPresenterExample } from './snippets/ScreenSharingFromPresenter.snippet';
 import { ScreenSharingFromViewerExample } from './snippets/ScreenSharingFromViewer.snippet';
+import { SpeakerLayoutExample } from './snippets/SpeakerLayout.snippet';
 import { WithHorizontalGalleryExample } from './snippets/WithHorizontalGallery.snippet';
 import { WithVerticalGalleryExample } from './snippets/WithVerticalGallery.snippet';
 
@@ -32,6 +34,7 @@ const CustomAvatarVideoGalleryExampleText = require('!!raw-loader!./snippets/Cus
 const CustomStyleVideoGalleryExampleText = require('!!raw-loader!./snippets/CustomStyle.snippet.tsx').default;
 const DefaultVideoGalleryExampleText = require('!!raw-loader!./snippets/Default.snippet.tsx').default;
 const FloatingLocalVideoExampleText = require('!!raw-loader!./snippets/FloatingLocalVideo.snippet.tsx').default;
+const focusedContentExampleText = require('!!raw-loader!./snippets/FocusedContent.snippet.tsx').default;
 const LocalVideoCameraCycleButtonExampleText =
   require('!!raw-loader!./snippets/LocalCameraSwitcher.snippet.tsx').default;
 const ManagedPinnedParticipantsExampleText =
@@ -45,6 +48,7 @@ const ScreenSharingFromPresenterExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromPresenter.snippet.tsx').default;
 const ScreenSharingFromViewerExampleText =
   require('!!raw-loader!./snippets/ScreenSharingFromViewer.snippet.tsx').default;
+const speakerLayoutExampleText = require('!!raw-loader!./snippets/SpeakerLayout.snippet.tsx').default;
 const WithHorizontalGalleryExampleText = require('!!raw-loader!./snippets/WithHorizontalGallery.snippet.tsx').default;
 const WithVerticalGalleryExampleText = require('!!raw-loader!./snippets/WithVerticalGallery.snippet.tsx').default;
 
@@ -67,7 +71,29 @@ const getDocs: () => JSX.Element = () => {
       <Source code={importStatement} />
 
       <Heading>Layouts</Heading>
-      <Subheading>Default Layout</Subheading>
+      <Description>
+        This feature allows users to choose from a variety of video gallery layouts. On desktop web, the layouts enabled
+        include default Gallery, Gallery on Top, Focus Mode, and Speaker Mode. On mobile web, the default gallery and
+        large gallery are enabled. This feature will greatly enhance the user experience and provide more flexibility in
+        how users view and interact with video content. Enabling this feature will enable greater productivity and allow
+        for a better flow of discussions and conversations within calls. Here are some example scenarios where custom
+        layouts are useful:
+      </Description>
+      <ul className={'sbdocs sbdocs-p'}>
+        <li>
+          During a meeting with many participants such as a conference call, the large gallery layout can be selected to
+          have greater visibility of the users in a call.{' '}
+        </li>
+        <li>
+          During a patient/doctor call in which the patient wants to show something, the doctor could enable focus mode
+          to hide all other video tiles and focus on the speakers video stream.{' '}
+        </li>
+        <li>
+          In a call with multiple important people that are talking, the speaker mode can be selected which will switch
+          the focus between each speaker as they talk.{' '}
+        </li>
+      </ul>
+      <Subheading>Gallery Layout</Subheading>
       <Description>
         If there are no remote video streams on, all participants are placed in the [Grid
         Layout](./?path=/docs/ui-components-gridlayout--grid-layout) including the local user. Otherwise, only remote
@@ -93,6 +119,27 @@ const getDocs: () => JSX.Element = () => {
       <Canvas mdxSource={FloatingLocalVideoExampleText}>
         <FloatingLocalVideoExample />
       </Canvas>
+      <Subheading>Speaker layout</Subheading>
+      <SingleLineBetaBanner></SingleLineBetaBanner>
+      <Description>
+        Speaker Layout is meant to highlight the current dominant speaker in the call. For this view in the video
+        gallery the only participant that is in the grid view is the participant talking. All other participants are in
+        the overflow gallery. When screen sharing the screenshare will replace this participant and the overflow gallery
+        will behave like normal.
+      </Description>
+      <Canvas mdxSource={speakerLayoutExampleText}>
+        <SpeakerLayoutExample />
+      </Canvas>
+      <Subheading>Focused Content Layout</Subheading>
+      <SingleLineBetaBanner></SingleLineBetaBanner>
+      <Description>
+        This layout is meant to highlight the current screenshare stream. In this view when the screenshare is present
+        the other participants will be removed from the grid view and the overflow gallery will be hidden from view.
+        This allows for the focus of the local participant to be only on the screenshare stream.
+      </Description>
+      <Canvas mdxSource={focusedContentExampleText}>
+        <FocusedContentExample />
+      </Canvas>
 
       <Heading>Overflow Gallery</Heading>
       <DetailedBetaBanner></DetailedBetaBanner>
@@ -100,16 +147,16 @@ const getDocs: () => JSX.Element = () => {
         In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
         VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
         sub-gallery that can be placed on the bottom of the VideoGallery displaying participants horizontally by
-        assigning the `overflowGalleryPosition` to 'HorizontalBottom'. This is the default. Conversely, this sub-gallery
+        assigning the `overflowGalleryPosition` to 'horizontalBottom'. This is the default. Conversely, this sub-gallery
         can be placed on the right displaying participants vertically by assigning the `overflowGalleryPosition` to
-        'VerticalRight'.
+        'verticalRight'.
       </Description>
       <Subheading>Horizontal Gallery</Subheading>
       <Description>
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Horizontal Gallery in the
         lower section. A gif element is used to simulate a remote video stream to move the other remote participants to
         the Horizontal Gallery in the example below. This is the default behavior for the VideoGallery, but can also be
-        used by setting the `overflowGalleryPosition` property to 'HorizontalBottom'.
+        used by setting the `overflowGalleryPosition` property to 'horizontalBottom'.
       </Description>
       <Canvas mdxSource={WithHorizontalGalleryExampleText}>
         <WithHorizontalGalleryExample />
@@ -119,7 +166,7 @@ const getDocs: () => JSX.Element = () => {
         The remote participants not in the Grid Layout are placed in a sub-gallery called the Vertical Gallery on the
         right side. A gif element is used to simulate a remote video stream to move the other remote participants to the
         Vertical Gallery in the example below. This is used by setting the `overflowGalleryPosition` property to
-        'VerticalRight'.
+        'verticalRight'.
       </Description>
       <Canvas mdxSource={WithVerticalGalleryExampleText}>
         <WithVerticalGalleryExample />
@@ -255,7 +302,7 @@ const getDocs: () => JSX.Element = () => {
       <Subheading>Disabling remote video tile contextual menu</Subheading>
       <Description>
         Remote video tile contextual menu is be enabled by default but can be disabled by setting the
-        `remoteVideoTileMenu` prop to false like in the example below.
+        `remoteVideoTileMenuOptions` prop to false like in the example below.
       </Description>
       <Canvas mdxSource={PinnedParticipantsDisabledExampleText}>
         <PinnedParticipantsDisabledExample />
@@ -546,7 +593,10 @@ export default {
     maxRemoteVideoStreams: hiddenControl,
     pinnedParticipants: hiddenControl,
     onPinParticipant: hiddenControl,
-    onUnpinParticipant: hiddenControl
+    onUnpinParticipant: hiddenControl,
+    layout: hiddenControl,
+    onDisposeRemoteVideoStreamView: hiddenControl,
+    onDisposeRemoteScreenShareStreamView: hiddenControl
   },
   parameters: {
     docs: {

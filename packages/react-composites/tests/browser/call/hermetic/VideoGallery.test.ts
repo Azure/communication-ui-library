@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
+  addScreenshareStream,
+  addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
@@ -129,5 +131,135 @@ test.describe('VideoGallery tests', async () => {
     await waitForSelector(page, dataUiId('video-tile-pin-participant-button'));
     // take snapshot to verify pin button is disabled
     expect(await stableScreenshot(page)).toMatchSnapshot('disabled-pin-menu-button.png');
+  });
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery should show one tile when in speaker mode', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    vasily.isSpeaking = true;
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { galleryLayout: 'speaker', newControlBarExperience: 'true' })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-with-one-speaker-participant.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery can switch between modes', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    vasily.isSpeaking = true;
+    const participants = [vasily, paul];
+    const initialState = defaultMockCallAdapterState(participants);
+
+    page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls.png');
+    await page.locator('button:has-text("View")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls-open.png');
+    await page.locator('button:has-text("Speaker")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    await pageClick(page, dataUiId(IDS.moreButton));
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    await page.locator('button:has-text("View")').click();
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    await page.locator('button:has-text("Gallery view")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('button:has-text("View")').click();
+    await page.locator('button:has-text("Dynamic")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('VideoGallery only renders screenshare stream in focused content', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    addScreenshareStream(vasily, true);
+
+    const participants = [paul, vasily];
+
+    const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('button:has-text("View")').click();
+    await page.locator('button:has-text("Focus on content")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('focused-content-layout.png');
+  });
+
+  /* @conditional-compile-remove(large-gallery) */
+  test('VideoGallery should show correct number of tiles based on layout', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+
+    const initialState = defaultMockCallAdapterState([]);
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true',
+        mockRemoteParticipantCount: '65'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-ovc.png');
+    await page.locator('button:has-text("View")').click();
+    await page.locator('button:has-text("Large Gallery")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layout-composite) */
+  test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Pupkin');
+    const jerry = defaultMockRemoteParticipant('Jerry Seinfeld');
+    const bob = defaultMockRemoteParticipant('Bob Ross');
+    const tom = defaultMockRemoteParticipant('Tom Hanks');
+    const sheryl = defaultMockRemoteParticipant('Sheryl Sandberg');
+    const joseph = defaultMockRemoteParticipant('Joseph Johnson');
+    const participants = [paul, vasily, jerry, bob, tom, sheryl, joseph];
+    addVideoStream(paul, true);
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    expect(await stableScreenshot(page)).toMatchSnapshot('dynamic-layout-mobile.png');
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("View")').click();
+    await page.locator('span:has-text("Gallery")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
+  });
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  test('Gallery layouts vailable on mobile are correct', async ({ page, serverUrl }, testInfo) => {
+    test.skip(!isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+
+    const initialState = defaultMockCallAdapterState([paul]);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('span:has-text("View")');
+    await page.locator('span:has-text("View")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
   });
 });

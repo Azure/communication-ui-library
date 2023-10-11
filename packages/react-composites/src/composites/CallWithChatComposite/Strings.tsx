@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * Strings used by the {@link CallWithChatComposite} directly.
@@ -13,6 +13,10 @@ export interface CallWithChatCompositeStrings {
    * {@link CallWithChatComposite} control bar People button label
    */
   peopleButtonLabel: string;
+  /**
+   * {@link CallWithChatComposite} control bar People button label when checked
+   */
+  selectedPeopleButtonLabel: string;
   /**
    * {@link CallWithChatComposite} control bar People button ToolTipContent
    */
@@ -69,6 +73,18 @@ export interface CallWithChatCompositeStrings {
    * Only used with `mobileView` set to `true`.
    */
   moreDrawerSpokenLanguageMenuTitle: string;
+  /* @conditional-compile-remove(close-captions) */
+  /**
+   * Title for the caption language sub-menu in more button drawer.
+   *
+   * Only used with `mobileView` set to `true`.
+   */
+  moreDrawerCaptionLanguageMenuTitle: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Title for the gallery options sub-menu in the more button drawer.
+   */
+  moreDrawerGalleryOptionsMenuTitle: string;
   /**
    * {@Link CallWithChatComposite} control bar More button label
    */

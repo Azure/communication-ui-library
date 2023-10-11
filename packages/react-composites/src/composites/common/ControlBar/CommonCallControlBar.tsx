@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
@@ -19,6 +19,8 @@ import { controlBarContainerStyles } from '../../CallComposite/styles/CallContro
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
 import { Camera } from '../../CallComposite/components/buttons/Camera';
@@ -31,7 +33,7 @@ import {
   generateCustomCallControlBarButton,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
 import { DesktopMoreButton } from './DesktopMoreButton';
 import { isDisabled } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
@@ -39,7 +41,8 @@ import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
-
+/* @conditional-compile-remove(raise-hand) */
+import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 /**
  * @private
  */
@@ -55,10 +58,18 @@ export interface CommonCallControlBarProps {
   /* @conditional-compile-remove(PSTN-calls) */
   onClickShowDialpad?: () => void;
   /* @conditional-compile-remove(video-background-effects) */
-  onShowVideoEffectsPicker?: (showVideoEffectsOptions: boolean) => void;
+  onClickVideoEffects?: (showVideoEffects: boolean) => void;
   /* @conditional-compile-remove(close-captions) */
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(close-captions) */
+  isCaptionsOn?: boolean;
   displayVertical?: boolean;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
 }
@@ -153,6 +164,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const peopleButtonStrings = useMemo(
     () => ({
       label: callWithChatStrings.peopleButtonLabel,
+      selectedLabel: callWithChatStrings.selectedPeopleButtonLabel,
       tooltipOffContent: callWithChatStrings.peopleButtonTooltipOpen,
       tooltipOnContent: callWithChatStrings.peopleButtonTooltipClose
     }),
@@ -223,6 +235,17 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const cameraButtonIsEnabled = isEnabled(options?.cameraButton);
 
+  const showDesktopMoreButton =
+    /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ isEnabled(
+      options?.moreButton
+    ) &&
+    (false ||
+      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
+        options?.holdButton
+      ) ||
+      /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
+      /* @conditional-compile-remove(gallery-layouts) */ props.onUserSetGalleryLayout);
+
   return (
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
@@ -231,6 +254,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
             <CaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
+              changeCaptionLanguage={props.isCaptionsOn}
             />
           )
         }
@@ -281,10 +305,21 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         /* @conditional-compile-remove(video-background-effects) */
-                        onShowVideoEffectsPicker={props.onShowVideoEffectsPicker}
+                        onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
                       />
                     )}
+                    {
+                      /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
+                        isEnabled(options.raiseHandButton) && (
+                          <RaiseHand
+                            displayType={options.displayType}
+                            styles={commonButtonStyles}
+                            /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+                            disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                          />
+                        )
+                    }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}
@@ -318,27 +353,26 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         disabled={props.disableButtonsForLobbyPage}
                       />
                     )}
-                    {
-                      /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-                        options?.moreButton
-                      ) &&
-                        /*@conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ isEnabled(
-                          options?.holdButton
-                        ) &&
-                        !props.mobileView && (
-                          <DesktopMoreButton
-                            disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
-                            styles={commonButtonStyles}
-                            onClickShowDialpad={props.onClickShowDialpad}
-                            /* @conditional-compile-remove(control-bar-button-injection) */
-                            callControls={props.callControls}
-                            /* @conditional-compile-remove(close-captions) */
-                            isCaptionsSupported={props.isCaptionsSupported}
-                            /* @conditional-compile-remove(close-captions) */
-                            onCaptionsSettingsClick={openCaptionsSettingsModal}
-                          />
-                        )
-                    }
+                    {!props.mobileView && showDesktopMoreButton && (
+                      <DesktopMoreButton
+                        disableButtonsForHoldScreen={props.disableButtonsForHoldScreen}
+                        styles={commonButtonStyles}
+                        /*@conditional-compile-remove(PSTN-calls) */
+                        onClickShowDialpad={props.onClickShowDialpad}
+                        /* @conditional-compile-remove(control-bar-button-injection) */
+                        callControls={props.callControls}
+                        /* @conditional-compile-remove(close-captions) */
+                        isCaptionsSupported={props.isCaptionsSupported}
+                        /* @conditional-compile-remove(close-captions) */
+                        onCaptionsSettingsClick={openCaptionsSettingsModal}
+                        /* @conditional-compile-remove(gallery-layouts) */
+                        onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                        /* @conditional-compile-remove(gallery-layouts) */
+                        onUserSetGalleryLayout={props.onUserSetGalleryLayout}
+                        /* @conditional-compile-remove(gallery-layouts) */
+                        userSetGalleryLayout={props.userSetGalleryLayout}
+                      />
+                    )}
                     <EndCall displayType="compact" styles={endCallButtonStyles} />
                   </ControlBar>
                 </div>
@@ -353,7 +387,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
-                    ariaLabel={peopleButtonStrings?.label}
+                    ariaLabel={
+                      props.peopleButtonChecked ? peopleButtonStrings?.selectedLabel : peopleButtonStrings?.label
+                    }
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
@@ -489,7 +525,10 @@ const getDesktopEndCallButtonStyles = (theme: ITheme): ControlBarButtonStyles =>
     rootFocused: {
       '@media (forced-colors: active)': {
         background: 'highlight',
-        border: '1px solid'
+        color: 'highlightText',
+        borderColor: theme.palette.black,
+        borderRadius: 'unset',
+        outline: `3px solid ${theme.palette.black}`
       }
     },
     icon: {

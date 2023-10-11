@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(video-background-effects) */
 import type {
@@ -15,7 +15,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 /**
  *
  * Dependency resolution for video background effects using lazy loading.
- * @beta
+ * @public
  */
 export const onResolveVideoEffectDependencyLazy = async (): Promise<VideoBackgroundEffectsDependency> => {
   const module = await import('@azure/communication-calling-effects');

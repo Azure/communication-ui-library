@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { exec, getBuildFlavor } from './common.mjs';
 import path from 'path';
@@ -51,10 +51,10 @@ const PLAYWRIGHT_PROJECT = {
 };
 
 async function main(argv) {
-  if (isStableBuild()) {
+  if (notBetaBuild()) {
     await preprocessTests();
   }
-  const testRoot = isStableBuild() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
+  const testRoot = notBetaBuild() ? PREPROCESSED_TEST_ROOT : TEST_ROOT;
 
   const args = parseArgs(argv);
   setup();
@@ -124,7 +124,7 @@ async function runOne(testRoot, args, composite, hermeticity) {
     TEST_DIR: testRoot,
     // Snapshots are always stored with the original test sources, even when the test root
     // is different due to preprocessed test files.
-    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, isStableBuild() ? 'stable' : 'beta'),
+    SNAPSHOT_DIR: path.join(SNAPSHOT_ROOT, notBetaBuild() ? 'stable' : 'beta'),
     PLAYWRIGHT_OUTPUT_DIR: path.join(BASE_OUTPUT_DIR, Date.now().toString())
   };
 
@@ -162,8 +162,8 @@ function setup() {
 async function preprocessTests() {
   fs.rmSync(PREPROCESSED_ROOT, { recursive: true, force: true });
   await createTsconfigTrampoline();
-  await preprocessDir(SRC_ROOT, PREPROCESSED_SRC_ROOT);
-  await preprocessDir(path.join(TEST_ROOT, 'tests'), path.join(PREPROCESSED_TEST_ROOT, 'tests'));
+  await preprocessDir(SRC_ROOT, PREPROCESSED_SRC_ROOT, getBuildFlavor());
+  await preprocessDir(path.join(TEST_ROOT, 'tests'), path.join(PREPROCESSED_TEST_ROOT, 'tests'), getBuildFlavor());
 }
 
 async function createTsconfigTrampoline() {
@@ -171,7 +171,7 @@ async function createTsconfigTrampoline() {
   fs.writeFileSync(path.join(PREPROCESSED_ROOT, 'tsconfig.json'), '{ "extends": "../tsconfig.preprocess.json" }');
 }
 
-async function preprocessDir(fromDir, toDir) {
+async function preprocessDir(fromDir, toDir, flavor = 'stable') {
   console.log(`Preprocessing ${fromDir} to ${toDir}`);
   fs.mkdirsSync(toDir);
   fs.copySync(fromDir, toDir, { overwrite: true, preserveTimestamps: true });
@@ -189,7 +189,7 @@ async function preprocessDir(fromDir, toDir) {
       '--keep-file-extension'
     ]),
     {
-      COMMUNICATION_REACT_FLAVOR: 'stable'
+      COMMUNICATION_REACT_FLAVOR: flavor
     }
   );
 }
@@ -282,8 +282,8 @@ function parseArgs(argv) {
   return args;
 }
 
-function isStableBuild() {
-  return getBuildFlavor() === 'stable';
+function notBetaBuild() {
+  return getBuildFlavor() !== 'beta';
 }
 
 await main(process.argv);

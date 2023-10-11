@@ -101,6 +101,10 @@ jobs:
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
 
+      # Alpha version run latest
+      - name: Force build flavor to `beta`
+        run: node ./common/scripts/force-build-flavor.mjs beta
+
       # Build packages
       - name: Build @azure/communication-react package
         run: rush build -t @azure/communication-react

@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect, Page, TestInfo } from '@playwright/test';
 import {
   dataUiId,
+  existsOnPage,
   hidePiPiP,
   isTestProfileDesktop,
   pageClick,
@@ -18,8 +19,16 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForSelector(page, dataUiId(IDS.deviceButton));
-    await pageClick(page, dataUiId(IDS.deviceButton));
+
+    if (await existsOnPage(page, dataUiId(IDS.deviceButton))) {
+      await pageClick(page, dataUiId(IDS.deviceButton));
+    } else {
+      await waitForSelector(page, dataUiId(IDS.moreButton));
+      await pageClick(page, dataUiId(IDS.moreButton));
+      await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
+      await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
+    }
+
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
   });
 
@@ -27,8 +36,16 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    await waitForSelector(page, dataUiId(IDS.deviceButton));
-    await pageClick(page, dataUiId(IDS.deviceButton));
+
+    if (await existsOnPage(page, dataUiId(IDS.deviceButton))) {
+      await pageClick(page, dataUiId(IDS.deviceButton));
+    } else {
+      await waitForSelector(page, dataUiId(IDS.moreButton));
+      await pageClick(page, dataUiId(IDS.moreButton));
+      await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
+      await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
+    }
+
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-Attendee.png');
   });
 });

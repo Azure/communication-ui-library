@@ -1,10 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { buildUrlWithMockAdapter, defaultMockCallAdapterState, defaultMockRemoteParticipant, test } from './fixture';
 import { expect } from '@playwright/test';
 import {
   dataUiId,
+  existsOnPage,
   isTestProfileDesktop,
   isTestProfileMobile,
   pageClick,
@@ -68,7 +69,6 @@ test.describe('Call composite custom call control options tests', () => {
   });
 });
 
-/* @conditional-compile-remove(new-call-control-bar) */
 test.describe('New call control bar renders correctly', () => {
   // New call experience will be turned off by default from hermetic test app until it is in stable
   // Add callControls: {} as part of option to enable it (even without turn it on)
@@ -116,7 +116,9 @@ test.describe('New call control bar renders correctly', () => {
       })
     );
 
-    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    if (await existsOnPage(page, dataUiId('common-call-composite-more-button'))) {
+      await pageClick(page, dataUiId('common-call-composite-more-button'));
+    }
 
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-control-new-experience-custom-button.png`);
   });

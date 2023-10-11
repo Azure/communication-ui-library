@@ -7,9 +7,10 @@
     "mutedIconLabel": "Disattivato",
     "displayNamePlaceholder": "Partecipante senza nome",
     "participantStateRinging": "Chiamata in corso...",
-    "participantStateHold": "Per l'attesa",
-    "lowerParticipantHandButtonLabel": "TODO: Lower Hand",
-    "raisedHandIconLabel": "TODO:: raise hand icon label"
+    "participantStateHold": "Per l'attesa"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} altro"
   },
   "typingIndicator": {
     "singleUser": "{user} sta scrivendo ...",
@@ -29,6 +30,10 @@
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
+  },
+  "imageGallery": {
+    "downloadButtonLabel": "Scarica",
+    "dismissButtonAriaLabel": "Chiudi"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
@@ -112,11 +117,11 @@
     "tooltipOffContent": "Presenta lo schermo"
   },
   "raiseHandButton": {
-    "offLabel": "Raise Hand",
-    "onLabel": "Lower Hand",
-    "tooltipDisabledContent": "Raise Hand action is disabled",
-    "tooltipOnContent": "Lower Hand",
-    "tooltipOffContent": "Raise Hand"
+    "offLabel": "Alza",
+    "onLabel": "Abbassa",
+    "tooltipDisabledContent": "L'azione Alza la mano è disabilitata",
+    "tooltipOnContent": "Abbassa la mano",
+    "tooltipOffContent": "Alza la mano"
   },
   "messageThread": {
     "yesterday": "Ieri",
@@ -333,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "Pagina precedente",
     "rightNavButtonAriaLabel": "Pagina successiva"
   }

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
@@ -135,7 +135,7 @@ export interface VideoTileProps {
   isSpeaking?: boolean;
 
   /* @conditional-compile-remove(raise-hand) */
-  /** Whether the participant is raised hand. Show a indicator (border) and order icon */
+  /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
   /* @conditional-compile-remove(one-to-n-calling) */
@@ -448,13 +448,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           <Stack className={mergeStyles(overlayContainerStyles, styles?.overlayContainer)}>{children}</Stack>
         )}
         {
-          /* @conditional-compile-remove(raise-hand) */ raisedHand && (
+          /* @conditional-compile-remove(raise-hand) */ raisedHand && canShowLabel && (
             <Stack
               horizontal={true}
               tokens={{ childrenGap: '0.2rem' }}
               style={{
                 alignItems: 'center',
-                padding: '0.2rem',
+                padding: '0.2rem 0.3rem',
                 backgroundColor: theme.palette.white,
                 opacity: 0.9,
                 borderRadius: '1rem',
@@ -464,7 +464,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               }}
             >
               <Stack.Item>
-                <Text>{raisedHand.order}</Text>
+                <Text>{raisedHand.raisedHandOrderPosition}</Text>
               </Stack.Item>
               <Stack.Item>
                 <RaisedHandIcon />

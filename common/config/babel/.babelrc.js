@@ -12,6 +12,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Flag to add API only available in beta calling SDK to mocks and internal types.
         // This feature should be stabilized whenever calling SDK is stabilized.
         'calling-beta-sdk',
+        // Flag to add API only available in beta chat SDK to mocks and internal types.
+        // This feature should be stabilized whenever chat SDK is stabilized.
+        'chat-beta-sdk',
         // Flag to add API only available in the communication-common beta v3
         'communication-common-beta-v3',
         // Participant pane in the `ChatComposite`.
@@ -34,14 +37,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'file-sharing',
         // Mention feature
         'mention',
-        // feature for enabling new call control bar in CallComposite
-        'new-call-control-bar',
         // 1 to N Calling feature.
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
-        // raise hands feature
-        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -53,14 +52,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
-        // Pinned Participants
-        'pinned-participants',
         // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
         'total-participant-count',
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
-        // feature for blurred background and replace background effects
-        'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
         // Feature for updates needed for Click to Call (C2C) scenarios
@@ -72,8 +67,20 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Optimal Video Count
         'optimal-video-count',
         // Feature for capabilities
-        'capabilities'
-      ],      
+        'capabilities',
+        // Feature for custom video gallery layouts
+        'gallery-layouts',
+        // Feature image gallery
+        'image-gallery',
+        // Feature for large Gallery layout
+        'large-gallery',
+        // feature for positioning the overflowGallery at the top of the screen in the composite
+        'overflow-top-composite',
+        // feature for gallery layout in the composite 
+        'gallery-layout-composite',
+        // conditional-compile for new signaling beta
+        'signaling-beta'
+      ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
       // causing a build failure, but they are ignored by the preprocessing step.
@@ -81,10 +88,13 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // raise hands feature
-        'raise-hand',
-        // Feature for capabilities
-        'capabilities'
+        // Feature for custom video gallery layouts
+        // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
+        'large-gallery',
+        // feature for positioning the overflowGallery at the top of the screen in the composite
+        'overflow-top-composite',
+        // feature for gallery layout in the composite 
+        'gallery-layout-composite'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -94,6 +104,22 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // feature for blurred background and replace background effects
+        'video-background-effects',
+        // Pinned Participants
+        'pinned-participants',
+        // Feature for capabilities
+        'capabilities',
+        // Closed captions
+        'close-captions',
+        // Optimal Video Count
+        'optimal-video-count',
+        // raise hands feature
+        'raise-hand',
+        // Feature for gallery layouts
+        'gallery-layouts',
+        // feature  for vertical overflow gallery
+        'vertical-gallery'
       ]
     }
   ]);
