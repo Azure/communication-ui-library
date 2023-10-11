@@ -79,7 +79,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for positioning the overflowGallery at the top of the screen in the composite
         'overflow-top-composite',
         // feature for gallery layout in the composite 
-        'gallery-layout-composite'
+        'gallery-layout-composite',
+        // conditional-compile for new signaling beta
+        'signaling-beta'
       ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
