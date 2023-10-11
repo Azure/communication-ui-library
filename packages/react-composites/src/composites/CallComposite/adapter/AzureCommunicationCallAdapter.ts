@@ -886,7 +886,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       } else if (isMicrosoftTeamsAppIdentifier(backendId)) {
         return backendId as MicrosoftTeamsAppIdentifier;
       } else if (isMicrosoftTeamsUserIdentifier(backendId)) {
-        console.log(backendId);
         return backendId as MicrosoftTeamsUserIdentifier;
       }
       return backendId as UnknownIdentifier;
