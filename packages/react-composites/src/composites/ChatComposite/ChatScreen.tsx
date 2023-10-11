@@ -217,15 +217,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onRenderInlineAttachment = useCallback(
     async (attachment: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+      console.log('onRenderInlineAttachment attachment::::::::::::', attachment);
       const targets = attachment.filter((obj) => {
-        obj.attachmentType === 'inlineImage' && obj.previewUrl;
+        return obj.attachmentType === 'inlineImage' && obj.previewUrl;
       });
 
       console.log('onRenderInlineAttachment targets::::::::::::', targets);
 
       const entry: Record<string, string> = {};
       targets.forEach((target) => {
-        console.log('onRenderInlineAttachment for each target::::::::::::', target);
         if (target.attachmentType === 'inlineImage' && target.previewUrl) {
           entry[target.id] = target.previewUrl;
         }

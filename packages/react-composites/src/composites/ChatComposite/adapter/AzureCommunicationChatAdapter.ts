@@ -327,7 +327,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
-    console.log('downloadAttachments :::::::::::::::', options.attachmentUrls); // This is empty?
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();

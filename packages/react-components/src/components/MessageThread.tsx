@@ -918,20 +918,16 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         attachment.attachmentType !== 'inlineImage' ||
         attachment.id in inlineAttachments[message.messageId]
       ) {
-        console.log('onFetchInlineAttachment invalid attachment:::::::::::::::');
         return;
       }
 
       const messageId = message.messageId;
-      // setInlineAttachments((prev) => ({ ...prev, [messageId]: { [attachment.id]: '' } }));
       const attachmentDownloadResult = await onFetchAttachments([attachment]);
-      console.log('onFetchInlineAttachment attachmentDownloadResult:::::::', attachmentDownloadResult);
       const list = inlineAttachments[messageId];
       for (const result of attachmentDownloadResult) {
         const blobUrl = result.blobUrl;
         list[attachment.id] = blobUrl;
       }
-      console.log('onFetchInlineAttachment list:::::::', list);
 
       if (Object.keys(list).length > 0) {
         setInlineAttachments((prev) => ({ ...prev, [messageId]: list }));
@@ -1189,7 +1185,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       if (inlineAttachments[messageProps.message.messageId] === undefined) {
-        console.log('defaultChatMessageRenderer::::::::::');
         setInlineAttachments((prev) => ({ ...prev, [messageProps.message.messageId]: {} }));
       }
       if (
