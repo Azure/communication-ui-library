@@ -1,8 +1,63 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 28 Aug 2023 22:17:59 GMT and should not be manually modified.
+This log was last generated on Wed, 04 Oct 2023 17:17:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.9.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.9.0-beta.1)
+
+
+
+Wed, 04 Oct 2023 17:17:11 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.8.0...1.9.0-beta.1)
+
+### Image Gallery - Public Preview
+The Web UI Chat and CallWithChat composite now supports the Image Gallery feature. This enables users to click on an individual inline image in a message bubble and display the selected image in full screen or download the image. 
+
+We are also introducing a new standalone ImageGallery component to display an image in large scale with the ability to download it
+
+### Gallery Layouts - Public Preview
+UI Library now supports new Gallery Layouts in the CallComposite and CallWithChatComposite on web and mobile. Users can select the new layouts from the control bar.
+
+### Features
+- Add gallery layout feature 
+[PR #3637](https://github.com/azure/communication-ui-library/pull/3637)
+[PR #3603](https://github.com/azure/communication-ui-library/pull/3603) 
+[PR #3611](https://github.com/azure/communication-ui-library/pull/3611)
+[PR #3574](https://github.com/azure/communication-ui-library/pull/3574)
+- Add image gallery feature
+[PR #3507](https://github.com/Azure/communication-ui-library/pull/3507)
+
+### Improvements
+- Add capabilitiesChanged event to CallWithChatAdapter ([PR #3570](https://github.com/azure/communication-ui-library/pull/3570) by 79475487+mgamis-msft@users.noreply.github.com)
+- Remove Fluent NorthStar ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 3941071+emlynmac@users.noreply.github.com)
+- Treeshake locales from composites ([PR #3615](https://github.com/azure/communication-ui-library/pull/3615) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update localized strings ([PR #3542](https://github.com/azure/communication-ui-library/pull/3542) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update `@azure/communication-signaling` version to 1.0.0-beta.20 ([PR #3524](https://github.com/azure/communication-ui-library/pull/3524) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update `@azure/communication-calling` beta verison to 1.17.1-beta.5 [PR #3552](https://github.com/azure/communication-ui-library/pull/3552)
+
+### Bug Fixes
+- Fix show more button only if enabled and has at least one context menu button to show ([PR #3583](https://github.com/azure/communication-ui-library/pull/3583) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix redundant presenter role notification when joining Teams interop call ([PR #3584](https://github.com/azure/communication-ui-library/pull/3584) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix icon size of capability changed notification ([PR #3541](https://github.com/azure/communication-ui-library/pull/3541) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update license to License (including lint rule) ([PR #3588](https://github.com/azure/communication-ui-library/pull/3588) by 2684369+JamesBurnside@users.noreply.github.com)
+- Apply background color to overflow menu items in the contextual menu and lighten opacity for call readiness prompts ([PR #3639](https://github.com/azure/communication-ui-library/pull/3639) by edwardlee@microsoft.com)
+- Fix styles for when the end call button is focused in high contrast scenarios ([PR #3566](https://github.com/azure/communication-ui-library/pull/3566) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update styles of configuration page to match specification ([PR #3621](https://github.com/azure/communication-ui-library/pull/3621) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Increase the gap of the floating local video's initial position from the bottom right ([PR #3605](https://github.com/azure/communication-ui-library/pull/3605) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix long display name to truncate after 50 charactrers ([PR #3633](https://github.com/azure/communication-ui-library/pull/3633) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix content focusing when opening the video effects pane in call composite ([PR #3627](https://github.com/azure/communication-ui-library/pull/3627) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce missing composite options to the CallWithChat composite ([PR #3565](https://github.com/azure/communication-ui-library/pull/3565) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Increase mention popover's z-index ([PR #3526](https://github.com/azure/communication-ui-library/pull/3526) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Update all versioning to caret ([PR #3559](https://github.com/azure/communication-ui-library/pull/3559) by jiangnanhello@live.com)
+- Fix legacy control bar logic to limit number of control bar buttons on mobile ([PR #3561](https://github.com/azure/communication-ui-library/pull/3561) by miguelgamis@microsoft.com)
+- Fix default render of participant list item will yield none for presence ([PR #3619](https://github.com/azure/communication-ui-library/pull/3619) by 79329532+alkwa-msft@users.noreply.github.com)
+- Enable localized default date/timestamp ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 3941071+emlynmac@users.noreply.github.com)
+- Fix scaling mode of participants update when screen sharing is turned off by remote user ([PR #3468](https://github.com/azure/communication-ui-library/pull/3468) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Prevent the callout for the gallery layouts from dismissing from a rerender ([PR #3568](https://github.com/azure/communication-ui-library/pull/3568) by 94866715+dmceachernmsft@users.noreply.github.com)
+### Other Changes
+- Stablize Pinning layouts and rendering options ([PR #3394](https://github.com/azure/communication-ui-library/pull/3394) by 97124699+prabhjot-msft@users.noreply.github.com)
+
 
 ## [1.8.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.8.0-beta.1)
 
