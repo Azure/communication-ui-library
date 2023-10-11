@@ -23,7 +23,12 @@ import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@in
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
+import {
+  CommunicationUserIdentifier,
+  MicrosoftTeamsAppIdentifier,
+  PhoneNumberIdentifier,
+  UnknownIdentifier
+} from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
@@ -82,7 +87,12 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
   onStartCall: (
-    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
+    participants: (
+      | CommunicationUserIdentifier
+      | PhoneNumberIdentifier
+      | UnknownIdentifier
+      | MicrosoftTeamsAppIdentifier
+    )[],
     options?: StartCallOptions
   ) => void;
   /* @conditional-compile-remove(video-background-effects) */
