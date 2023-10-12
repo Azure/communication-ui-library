@@ -414,7 +414,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {
                     display: 'flex',
                     justifyContent: 'center',
-                    alignItems: 'center'
+                    alignItems: 'center',
+                    backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
                   }
                 )} >
               <div style={{
