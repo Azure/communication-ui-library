@@ -96,7 +96,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional function to fetch attachments.
    */
-  onFetchAttachments?: (attachment: FileMetadata, message: Message) => Promise<void>;
+  onFetchAttachments?: (attachment: FileMetadata[], message: Message) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.

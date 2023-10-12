@@ -912,21 +912,22 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
-    async (attachment: FileMetadata, message: Message): Promise<void> => {
+    async (attachment: FileMetadata[], message: Message): Promise<void> => {
       if (
-        !onFetchAttachments ||
-        attachment.attachmentType !== 'inlineImage' ||
-        attachment.id in inlineAttachments[message.messageId]
+        !onFetchAttachments //||
+        // attachment.attachmentType !== 'inlineImage' ||
+        // attachment.id in inlineAttachments[message.messageId]
       ) {
         return;
       }
 
       const messageId = message.messageId;
-      const attachmentDownloadResult = await onFetchAttachments([attachment]);
+      const attachmentDownloadResult = await onFetchAttachments(attachment);
       const list = inlineAttachments[messageId];
       for (const result of attachmentDownloadResult) {
+        const attachmentId = result.attachmentId;
         const blobUrl = result.blobUrl;
-        list[attachment.id] = blobUrl;
+        list[attachmentId] = blobUrl;
       }
 
       if (Object.keys(list).length > 0) {

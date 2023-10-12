@@ -33,7 +33,7 @@ type ChatMessageContentProps = {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachment?: (attachment: FileMetadata, message: Message) => Promise<void>;
+  onFetchAttachment?: (attachment: FileMetadata[], message: Message) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
@@ -78,16 +78,18 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
-    props.message.attachedFilesMetadata?.map((fileMetadata) => {
-      if (
-        props.onFetchAttachment &&
-        props.attachmentsMap &&
-        fileMetadata.attachmentType === 'inlineImage' &&
-        props.attachmentsMap[fileMetadata.id] === undefined
-      ) {
-        props.onFetchAttachment(fileMetadata, props.message);
-      }
+    const attachments = props.message.attachedFilesMetadata?.filter((fileMetadata) => {
+      return fileMetadata.attachmentType === 'inlineImage';
     });
+
+    if (props.attachmentsMap && attachments) {
+      attachments.forEach((fileMetadata) => {
+        if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
+          props.onFetchAttachment([fileMetadata], props.message);
+          return;
+        }
+      });
+    }
   }, [props]);
 
   return (
