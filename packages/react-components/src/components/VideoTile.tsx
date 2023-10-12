@@ -38,6 +38,7 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
+import './styles/ReactionAnimation.css';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -137,6 +138,8 @@ export interface VideoTileProps {
   /* @conditional-compile-remove(raise-hand) */
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
+
+  reaction?: boolean;
 
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
@@ -247,6 +250,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isSpeaking,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand,
+    reaction,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
     /* @conditional-compile-remove(pinned-participants) */
@@ -401,6 +405,27 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
+
+        {   
+            reaction && (
+              <Stack 
+                className={mergeStyles(
+                  videoContainerStyles, 
+                  {
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                  }
+                )} >
+              <div style={{
+                    animation: 'fadeInOut 3s ease-in-out',
+                    opacity: 0,
+                    fontSize: '5vh'
+                  }}>👍</div> 
+                </Stack>
+            )
+           
+        }
 
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
