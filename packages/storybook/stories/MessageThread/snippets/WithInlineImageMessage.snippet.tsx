@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachment = async (attachment: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();
@@ -22,9 +22,9 @@ export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
     // * Create a blob url as <img> src
     return [
       {
-        attachmentId: attachment.id,
+        attachmentId: attachment[0].id,
         // blobUrl: URL.createObjectURL(blob);
-        blobUrl: attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : ''
+        blobUrl: attachment[0].attachmentType === 'inlineImage' ? attachment[0].previewUrl ?? '' : ''
       }
     ];
   };
