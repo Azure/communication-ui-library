@@ -29,9 +29,6 @@ import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
-import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
-import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
-import { useIsMobile } from './utils/useIsMobile';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 
@@ -58,12 +55,6 @@ console.log(
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
   const [callWithChatArgs, setCallWithChatArgs] = useState<CallWithChatArgs | undefined>(undefined);
-  const isMobileSession = useIsMobile();
-  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
-
-  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
-    return <PageOpenInAnotherTab />;
-  }
 
   if (isOnIphoneAndNotSafari()) {
     return <UnsupportedBrowserPage />;
