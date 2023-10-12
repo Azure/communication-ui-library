@@ -31,11 +31,9 @@ import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
-import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
-import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
 setLogLevel('verbose');
@@ -84,7 +82,7 @@ const App = (): JSX.Element => {
 
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
-  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
+  // const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
 
   useEffect(() => {
     if (isMobileSession && isLandscapeSession) {
@@ -92,9 +90,9 @@ const App = (): JSX.Element => {
     }
   }, [isMobileSession, isLandscapeSession]);
 
-  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
-    return <PageOpenInAnotherTab />;
-  }
+  // if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
+  //   return <PageOpenInAnotherTab />;
+  // }
 
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
