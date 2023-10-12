@@ -90,10 +90,6 @@ const App = (): JSX.Element => {
     }
   }, [isMobileSession, isLandscapeSession]);
 
-  // if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
-  //   return <PageOpenInAnotherTab />;
-  // }
-
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
     return <UnsupportedBrowserPage />;
