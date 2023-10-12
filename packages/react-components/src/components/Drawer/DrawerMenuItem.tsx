@@ -53,7 +53,7 @@ export interface _DrawerMenuItemProps {
   /**
    * Property to set the focus since this is the first item in the menu
    */
-  shouldFocusFirst?: boolean;
+  shouldFocusOnMount?: boolean;
 }
 
 /**
@@ -74,7 +74,7 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   ) : undefined;
 
   return (
-    <FocusZone shouldFocusOnMount={props.shouldFocusFirst}>
+    <FocusZone shouldFocusOnMount={props.shouldFocusOnMount}>
       <Stack
         tabIndex={0}
         role="menuitem"

@@ -109,7 +109,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
           <DrawerMenuItem
             {...item}
             key={`${item.itemKey}` + '0'}
-            shouldFocusFirst={true}
+            shouldFocusOnMount={true}
             styles={modifiedFirstItemStyle}
             onItemClick={(ev, itemKey) => {
               onItemClick(item, ev, itemKey);
