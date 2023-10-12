@@ -77,6 +77,7 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
   options?: CallCompositeOptions;
   logoUrl?: string;
   bgUrl?: string;
+  moveMeetingDetails?: boolean;
 }
 
 /* @conditional-compile-remove(call-readiness) */
@@ -244,6 +245,7 @@ type MainScreenProps = {
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   logoUrl?: string;
   bgUrl?: string;
+  moveMeetingDetails?: boolean;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -376,6 +378,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           logoUrl={props.logoUrl}
           bgUrl={props.bgUrl}
+          moveMeetingDetails={props.moveMeetingDetails}
         />
       );
       break;
@@ -444,6 +447,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onDismissError={onDismissError}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          logoUrl={props.logoUrl}
+          bgUrl={props.bgUrl}
         />
       );
       break;
@@ -596,6 +601,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             mobileChatTabHeader={props.mobileChatTabHeader}
             logoUrl={props.logoUrl}
             bgUrl={props.bgUrl}
+            moveMeetingDetails={props.moveMeetingDetails}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane

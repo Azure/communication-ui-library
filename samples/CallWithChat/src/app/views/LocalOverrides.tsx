@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { useEffect, useState } from 'react';
-import { Checkbox, Dropdown, IconButton, SpinButton, Stack, Text, Toggle } from '@fluentui/react';
+import { Checkbox, Dropdown, IconButton, Stack, Text, Toggle } from '@fluentui/react';
 import { defaultThemes, useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 
 export interface BrandingOverrides {
@@ -17,6 +17,7 @@ export interface BrandingOverrides {
 
 export interface AppOverrides {
   mobile?: boolean;
+  moveMeetingDetails?: boolean;
 }
 
 export const SidePane = (props: {
@@ -97,6 +98,7 @@ export const LocalOverrides = (props: {
   const { currentTheme, setCurrentTheme } = useSwitchableFluentTheme();
   const isDarkMode = currentTheme.name === 'Dark';
   const isMobile = !!appOverrides.mobile;
+  const moveMeetingDetails = !!appOverrides.moveMeetingDetails;
 
   return (
     <Stack
@@ -146,8 +148,14 @@ export const LocalOverrides = (props: {
               title={isMobile ? 'Mobile' : 'Desktop'}
               checked={isMobile}
               onChange={(value) => {
-                console.log(value);
                 setAppOverrides((overrides) => ({ ...overrides, mobile: !!value }));
+              }}
+            />
+            <OverrideBooleanItem
+              title="Move meeting details (desktop)"
+              checked={moveMeetingDetails}
+              onChange={(value) => {
+                setAppOverrides((overrides) => ({ ...overrides, moveMeetingDetails: !!value }));
               }}
             />
           </OverrideSection>

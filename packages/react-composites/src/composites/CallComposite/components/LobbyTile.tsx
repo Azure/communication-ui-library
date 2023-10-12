@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { mergeStyles, Stack, Text } from '@fluentui/react';
+import { mergeStyles, Image, Stack, Text } from '@fluentui/react';
 import { VideoGalleryStream, useTheme } from '@internal/react-components';
 import { moreDetailsStyle, overlayContainerStyle, titleStyle } from '../styles/LobbyTile.styles';
 import { ExpandedLocalVideoTile } from './ExpandedLocalVideoTile';
@@ -23,6 +23,8 @@ export interface LobbyOverlayProps {
 export interface LobbyTileProps {
   localParticipantVideoStream: VideoGalleryStream;
   overlayProps: LobbyOverlayProps;
+  logoUrl?: string;
+  bgUrl?: string;
 }
 
 /**
@@ -38,6 +40,7 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
   return (
     <ExpandedLocalVideoTile
       localParticipantVideoStream={props.localParticipantVideoStream}
+      bgUrl={props.bgUrl}
       overlayContent={
         props.overlayProps ? (
           <Stack
@@ -48,7 +51,21 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
             aria-atomic
           >
             <Stack.Item className={mergeStyles(titleStyle(palette, isVideoReady))}>
-              {props.overlayProps.overlayIcon}
+              {props.logoUrl ? (
+                <>
+                  <Image
+                    src={props.logoUrl}
+                    alt="Logo"
+                    styles={{
+                      root: { overflow: 'initial' },
+                      image: { borderRadius: '100%', height: '5rem', width: '5rem' }
+                    }}
+                  />
+                  <br />
+                </>
+              ) : (
+                props.overlayProps.overlayIcon
+              )}
             </Stack.Item>
             <Text
               className={mergeStyles(titleStyle(palette, isVideoReady))}

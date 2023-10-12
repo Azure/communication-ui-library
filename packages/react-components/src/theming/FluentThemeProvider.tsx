@@ -98,4 +98,4 @@ export const useTheme = (): Theme => useContext(ThemeContext);
  *
  * @private
  */
-const useSingleUsageCheck = (): boolean => useContext(SingleUsageCheckContext);
+// const useSingleUsageCheck = (): boolean => useContext(SingleUsageCheckContext);

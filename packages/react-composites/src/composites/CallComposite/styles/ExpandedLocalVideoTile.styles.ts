@@ -12,13 +12,15 @@ const OVERLAY_CONTENT_ZINDEX = OVERLAY_BACKGROUND_ZINDEX + 1;
 /**
  * @private
  */
-export const containerStyles: IStackStyles = {
+export const containerStyles: (backgroundUrl?: string) => IStackStyles = (backgroundUrl) => ({
   root: {
     height: '100%',
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : undefined,
+    backgroundSize: 'cover'
   }
-};
+});
 
 /**
  * @private

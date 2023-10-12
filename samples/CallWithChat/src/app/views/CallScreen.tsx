@@ -20,7 +20,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
-import { useIsMobile } from '../utils/useIsMobile';
+// import { useIsMobile } from '../utils/useIsMobile';
 import { BrandingOverrides, AppOverrides, SidePane } from './LocalOverrides';
 import { getBrandTokensFromPalette } from '../utils/getBrandTokensFromPalette';
 import { createDarkTheme, createLightTheme, Theme as V9Theme } from '@fluentui/react-components';
@@ -104,7 +104,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
   const callIdRef = useRef<string>();
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
-  const isMobileSession = useIsMobile();
+  // const isMobileSession = useIsMobile();
 
   const credential = useMemo(
     () => createAutoRefreshingCredential(toFlatCommunicationIdentifier(userId), token),
@@ -160,11 +160,19 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }, [adapter]);
 
   const [{ themeColor, logo, background, meetingDetails }, setBrandingOverrides] = useState<BrandingOverrides>({});
-  const [{ mobile }, setAppOverrides] = useState<AppOverrides>({});
+  const [{ mobile, moveMeetingDetails }, setAppOverrides] = useState<AppOverrides>({});
   const isDarkMode = currentTheme.name === 'Dark';
-  console.log('[jaburnsi] CallScreen: ', { themeColor, logo, background, isDarkMode, meetingDetails, mobile });
   const theme = useMemo(() => mapAccentColorToTheme(themeColor, isDarkMode), [themeColor, isDarkMode]);
-  console.log('[jaburnsi] theme: ', theme);
+  console.log('[jaburnsi] CallScreen, overrides: ', {
+    themeColor,
+    logo,
+    background,
+    isDarkMode,
+    meetingDetails,
+    mobile,
+    moveMeetingDetails,
+    theme
+  });
 
   const locale: CompositeLocale = useMemo(
     () => ({
@@ -208,6 +216,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
                   background?.substring('background'.length, 'background'.length + 1) +
                   '/920'
             }
+            moveMeetingDetails={moveMeetingDetails}
           />
         </MobileContainer>
       </Stack.Item>

@@ -32,6 +32,7 @@ export interface ExpandedLocalVideoTileProps {
   localParticipantVideoStream: VideoGalleryStream;
   onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
   overlayContent?: JSX.Element;
+  bgUrl?: string;
 }
 
 /**
@@ -50,7 +51,7 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
     }
   }, [isVideoReady, videoStream, props, renderElement]);
   return (
-    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles} grow>
+    <Stack horizontalAlign="center" verticalAlign="center" styles={containerStyles(props.bgUrl)} grow>
       <VideoTile
         styles={videoTileStyles}
         renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} /> : undefined}

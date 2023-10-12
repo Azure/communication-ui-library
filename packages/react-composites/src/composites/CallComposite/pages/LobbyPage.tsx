@@ -35,6 +35,8 @@ export interface LobbyPageProps {
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  logoUrl?: string;
+  bgUrl?: string;
 }
 
 /**
@@ -70,7 +72,12 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       mobileView={props.mobileView}
       modalLayerHostId={props.modalLayerHostId}
       onRenderGalleryContent={() => (
-        <LobbyTile {...lobbyProps} overlayProps={overlayProps(strings, inLobby, Object.values(participants))} />
+        <LobbyTile
+          {...lobbyProps}
+          overlayProps={overlayProps(strings, inLobby, Object.values(participants))}
+          logoUrl={props.logoUrl}
+          bgUrl={props.bgUrl}
+        />
       )}
       dataUiId={'lobby-page'}
       updateSidePaneRenderer={props.updateSidePaneRenderer}

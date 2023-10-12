@@ -80,6 +80,7 @@ export interface ConfigurationPageProps {
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   logoUrl?: string;
   bgUrl?: string;
+  moveMeetingDetails?: boolean;
 }
 
 /**
@@ -326,6 +327,13 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
               <br />
             </>
           )}
+          {!mobileWithPreview && props.moveMeetingDetails && (
+            <>
+              {title}
+              {callDescription}
+              <br />
+            </>
+          )}
           <Stack
             className={fillWidth}
             horizontal={!mobileWithPreview}
@@ -347,10 +355,12 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             <Stack className={mobileView ? undefined : selectionContainerStyle}>
               {!mobileWithPreview && (
                 <>
-                  <Stack.Item styles={callDetailsContainerStylesDesktop}>
-                    {title}
-                    {callDescription}
-                  </Stack.Item>
+                  {!props.moveMeetingDetails && (
+                    <Stack.Item styles={callDetailsContainerStylesDesktop}>
+                      {title}
+                      {callDescription}
+                    </Stack.Item>
+                  )}
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}

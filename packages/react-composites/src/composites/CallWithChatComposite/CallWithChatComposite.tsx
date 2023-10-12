@@ -78,6 +78,7 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
   options?: CallWithChatCompositeOptions;
   logoUrl?: string;
   bgUrl?: string;
+  moveMeetingDetails?: boolean;
 }
 
 /**
@@ -221,6 +222,7 @@ type CallWithChatScreenProps = {
   };
   logoUrl?: string;
   bgUrl?: string;
+  moveMeetingDetails?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -506,6 +508,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               mobileChatTabHeader={chatTabHeaderProps}
               logoUrl={props.logoUrl}
               bgUrl={props.bgUrl}
+              moveMeetingDetails={props.moveMeetingDetails}
             />
           </Stack.Item>
         </Stack>
@@ -542,6 +545,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         galleryOptions={options?.galleryOptions}
         logoUrl={props.logoUrl}
         bgUrl={props.bgUrl}
+        moveMeetingDetails={props.moveMeetingDetails}
       />
     </BaseProvider>
   );
