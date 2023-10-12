@@ -974,6 +974,7 @@ export interface _DrawerMenuItemProps {
     secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
+    shouldFocusFirst?: boolean;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
