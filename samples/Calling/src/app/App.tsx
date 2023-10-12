@@ -82,7 +82,6 @@ const App = (): JSX.Element => {
 
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
-  // const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
 
   useEffect(() => {
     if (isMobileSession && isLandscapeSession) {
