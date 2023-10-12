@@ -16,7 +16,9 @@ import { useIdentifiers } from '../../identifiers/IdentifierProvider';
 import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
-import { ChatMessage, Message } from '../../types/ChatMessage';
+import { ChatMessage } from '../../types/ChatMessage';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { Message } from '../../types/ChatMessage';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */

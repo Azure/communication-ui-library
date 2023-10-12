@@ -8,7 +8,9 @@ import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
 
 import Linkify from 'react-linkify';
-import { ChatMessage, Message } from '../../types/ChatMessage';
+import { ChatMessage } from '../../types/ChatMessage';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { Message } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { Link } from '@fluentui/react';

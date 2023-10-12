@@ -913,11 +913,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachment: FileMetadata[], message: Message): Promise<void> => {
-      if (
-        !onFetchAttachments //||
-        // attachment.attachmentType !== 'inlineImage' ||
-        // attachment.id in inlineAttachments[message.messageId]
-      ) {
+      if (!onFetchAttachments) {
         return;
       }
 
@@ -1185,6 +1181,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       if (inlineAttachments[messageProps.message.messageId] === undefined) {
         setInlineAttachments((prev) => ({ ...prev, [messageProps.message.messageId]: {} }));
       }
