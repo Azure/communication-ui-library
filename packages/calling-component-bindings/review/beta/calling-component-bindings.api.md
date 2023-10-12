@@ -35,7 +35,6 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 import { ErrorBar } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
-import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
@@ -191,7 +190,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier | MicrosoftTeamsAppIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
