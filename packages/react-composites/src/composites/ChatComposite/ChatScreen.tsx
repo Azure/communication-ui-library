@@ -221,8 +221,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return obj.attachmentType === 'inlineImage' && obj.previewUrl;
       });
 
-      console.log('onRenderInlineAttachment targets::::::::::::', targets);
-
       const entry: Record<string, string> = {};
       targets.forEach((target) => {
         if (target.attachmentType === 'inlineImage' && target.previewUrl) {
