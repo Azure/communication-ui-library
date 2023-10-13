@@ -82,7 +82,27 @@ export const chatMessageEditedTagStyle = (theme: Theme): string =>
  * @private
  */
 export const chatMessageFailedTagStyle = (theme: Theme): string =>
-  mergeStyles({ fontWeight: FontWeights.regular, color: theme.semanticColors.errorText });
+  mergeStyles({
+    fontWeight: FontWeights.regular,
+    color: theme.semanticColors.errorText,
+    fontSize: theme.fonts.smallPlus.fontSize,
+    lineHeight: '1rem'
+  });
+
+/**
+ * @private
+ */
+export const chatMessageFailedTagStackItemStyle = mergeStyles({
+  alignSelf: 'end',
+  paddingBottom: '0.25rem'
+});
+
+/**
+ * @private
+ */
+export const editChatMessageButtonsStackStyle = mergeStyles({
+  padding: '0 0.5rem 0.5rem 0.5rem'
+});
 
 /**
  * @private
@@ -104,17 +124,19 @@ export const useChatMessageEditContainerStyles = makeStyles({
   body: {
     ...shorthands.padding(0),
     backgroundColor: 'transparent',
-    width: '100%',
     boxSizing: 'border-box',
     ...shorthands.border(`${defaultSendBoxInactiveBorderThicknessREM}rem`, 'solid'),
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     // The border thickness changes on hover, to prevent the border thickness change causing the
     // input box to shift we apply a margin to compensate. This margin is then removed on hover when the border is thicker.
     ...shorthands.margin(`${defaultSendBoxActiveBorderThicknessREM - defaultSendBoxInactiveBorderThicknessREM}rem`),
+    // Width should be updated on hover to include the border width change
+    width: `calc(100% - ${defaultSendBoxActiveBorderThicknessREM}rem)`,
 
     '&:hover, &:active, &:focus, &:focus-within': {
       ...shorthands.margin('0rem'),
-      ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`)
+      ...shorthands.borderWidth(`${defaultSendBoxActiveBorderThicknessREM}rem`),
+      width: '100%'
     }
   },
   bodyError: {
