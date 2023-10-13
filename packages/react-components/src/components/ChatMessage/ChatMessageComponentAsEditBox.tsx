@@ -150,6 +150,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         ></InputBoxComponent>
         <Stack
           horizontal
+          horizontalAlign="end"
           verticalAlign="start"
           className={editChatMessageButtonsStackStyle}
           tokens={{ childrenGap: '0.25rem' }}
