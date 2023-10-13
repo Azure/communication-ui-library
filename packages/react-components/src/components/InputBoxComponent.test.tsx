@@ -14,7 +14,6 @@ describe('InputBoxComponent should call onChange', () => {
     let changedValue = '';
     render(
       <InputBoxComponent
-        inlineChildren={true}
         textValue={changedValue}
         placeholderText="Enter a message"
         onChange={(_, newValue) => {
@@ -53,7 +52,6 @@ describe('InputBoxComponent should show mention popover', () => {
   const renderInputBoxComponent = (): void => {
     render(
       <InputBoxComponent
-        inlineChildren={true}
         textValue=""
         placeholderText="Enter a message"
         onChange={() => {
@@ -133,7 +131,6 @@ describe('InputBoxComponent should show mention popover for a custom trigger', (
   const renderInputBoxComponent = (): void => {
     render(
       <InputBoxComponent
-        inlineChildren={true}
         textValue=""
         placeholderText="Enter a message"
         onChange={() => {
@@ -196,7 +193,6 @@ describe('InputBoxComponent should not show mention popover', () => {
     const trigger = '@';
     render(
       <InputBoxComponent
-        inlineChildren={true}
         textValue=""
         placeholderText="Enter a message"
         onChange={() => {
@@ -248,7 +244,6 @@ describe('InputBoxComponent should hide mention popover', () => {
   const renderInputBoxComponent = (): void => {
     render(
       <InputBoxComponent
-        inlineChildren={true}
         textValue=""
         placeholderText="Enter a message"
         onChange={() => {
