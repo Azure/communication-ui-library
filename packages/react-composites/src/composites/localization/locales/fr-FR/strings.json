@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Disposition dynamique",
     "moreButtonGalleryDefaultLayoutLabel": "Disposition de la galerie",
     "moreButtonGalleryFocusedContentLayoutLabel": "Un contenu ciblé",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Grande galerie",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Votre caméra a été désactivée. Vous ne pouvez plus partager de vidéo.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Sous-titres en direct",
     "moreDrawerSpokenLanguageMenuTitle": "Langue parlée",
     "moreDrawerCaptionLanguageMenuTitle": "Langue des sous-titres",
+    "moreDrawerGalleryOptionsMenuTitle": "Options de galerie",
     "peopleButtonLabel": "Personnes",
     "selectedPeopleButtonLabel": "Bouton Contacts sélectionné",
     "peopleButtonTooltipOpen": "Afficher les participants",

@@ -109,7 +109,7 @@ const IncomingCallToast = (props: IncomingCallToastProps): JSX.Element => {
 const exampleIncomingCallModal = `
 import { StreamMedia, VideoTile } from '@azure/communication-react';
 import { DefaultButton, Persona, PersonaSize, Stack, Dialog, DialogType, DialogFooter } from '@fluentui/react';
-import { CallEndIcon, CallIcon, CallVideoIcon, CallVideoOffIcon } from '@fluentui/react-northstar';
+import { VideoOff20Regular, Video20Regular } from '@fluentui/react-icons';
 import { DefaultPalette, mergeStyles } from '@fluentui/react';
 
 const palette = DefaultPalette;
@@ -215,7 +215,7 @@ const IncomingCallModal = (props: IncomingCallModalProps): JSX.Element => {
           <DefaultButton
             style={{ background: palette.neutralLighterAlt, border: 'none' }}
             onClick={() => onClickVideoToggle()}
-            onRenderIcon={() => (showLocalVideo ? <CallVideoIcon size="small" /> : <CallVideoOffIcon size="small" />)}
+            onRenderIcon={() => (showLocalVideo ? <Video20Regular /> : <VideoOff20Regular />)}
           />
 
           <DefaultButton
