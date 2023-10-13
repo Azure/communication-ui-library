@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButton, IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
+import { IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
 import { useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
@@ -52,11 +52,6 @@ export interface _VideoBackgroundEffectsPickerProps {
    * Styles for the picker.
    */
   styles?: _VideoBackgroundEffectsPickerStyles;
-
-  /**
-   * Ref to the first background effect button. Used for auto focus and other accessibility scenarios
-   */
-  firstBackgroundEffectRef?: React.RefObject<IButton>;
 }
 
 /**
