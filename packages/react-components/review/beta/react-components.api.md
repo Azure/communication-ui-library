@@ -6,7 +6,6 @@
 
 /// <reference types="react" />
 
-import { IButton } from '@fluentui/react';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -2280,7 +2279,6 @@ export const _VideoBackgroundEffectsPicker: (props: _VideoBackgroundEffectsPicke
 // @internal
 export interface _VideoBackgroundEffectsPickerProps {
     defaultSelectedEffectKey?: string;
-    firstBackgroundEffectRef?: React_2.RefObject<IButton>;
     itemsPerRow?: 'wrap' | number;
     label?: string;
     onChange?: (effectKey: string) => void;
