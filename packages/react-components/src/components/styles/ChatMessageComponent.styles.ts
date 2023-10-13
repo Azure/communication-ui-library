@@ -86,22 +86,22 @@ export const chatMessageFailedTagStyle = (theme: Theme): string =>
     fontWeight: FontWeights.regular,
     color: theme.semanticColors.errorText,
     fontSize: theme.fonts.smallPlus.fontSize,
-    lineHeight: '1rem'
+    lineHeight: '1rem',
+    marginBottom: '0.5rem'
   });
 
 /**
  * @private
  */
 export const chatMessageFailedTagStackItemStyle = mergeStyles({
-  alignSelf: 'end',
-  paddingBottom: '0.25rem'
+  alignSelf: 'end'
 });
 
 /**
  * @private
  */
 export const editChatMessageButtonsStackStyle = mergeStyles({
-  padding: '0 0.5rem 0.5rem 0.5rem',
+  padding: '0 0.5rem',
   marginTop: '-0.25rem'
 });
 
