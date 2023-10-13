@@ -5,7 +5,7 @@ import React from 'react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useCallback, useMemo } from 'react';
 /* @conditional-compile-remove(video-background-effects) */
-import { IButton, MessageBar, MessageBarType, Stack, mergeStyles } from '@fluentui/react';
+import { MessageBar, MessageBarType, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(video-background-effects) */
 import { useLocale } from '../localization';
 import { ActiveErrorMessage, _VideoEffectsItemProps } from '@internal/react-components';
@@ -37,7 +37,6 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectError?: ActiveErrorMessage;
   onDismissError: (error: ActiveErrorMessage) => void;
   activeVideoEffectChange: (effect: ActiveVideoEffect) => void;
-  componentRef?: React.RefObject<IButton>;
 }): JSX.Element => {
   const {
     onDismissError,
@@ -149,8 +148,7 @@ export const VideoEffectsPaneContent = (props: {
     /* @conditional-compile-remove(video-background-effects) */
     selectableVideoEffects,
     /* @conditional-compile-remove(video-background-effects) */
-    onEffectChange,
-    props.componentRef
+    onEffectChange
   );
 };
 
@@ -158,8 +156,7 @@ const VideoEffectsPaneTrampoline = (
   onDismissError: (error: ActiveErrorMessage) => void,
   activeVideoEffectError?: ActiveErrorMessage,
   selectableVideoEffects?: _VideoEffectsItemProps[],
-  onEffectChange?: (effectKey: string) => Promise<void>,
-  componentRef?: React.RefObject<IButton>
+  onEffectChange?: (effectKey: string) => Promise<void>
 ): JSX.Element => {
   /* @conditional-compile-remove(video-background-effects) */
   const selectedEffect = useSelector(activeVideoBackgroundEffectSelector);
@@ -189,7 +186,6 @@ const VideoEffectsPaneTrampoline = (
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
         selectedEffectKey={selectedEffect}
-        firstBackgroundEffectRef={componentRef}
       />
     </Stack>
   );

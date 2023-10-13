@@ -143,12 +143,7 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           {options.map((option, i) => {
             if (i === 0 && rowIndex === 0) {
               return (
-                <_VideoEffectsItem
-                  {...option}
-                  itemKey={option.itemKey}
-                  key={option.itemKey}
-                  componentRef={props.firstBackgroundEffectRef}
-                />
+                <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} focusOnMount={true} />
               );
             }
             return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;

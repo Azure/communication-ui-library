@@ -4,7 +4,7 @@
 import { CameraButton, ControlBarButtonStyles } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { _HighContrastAwareIcon } from '@internal/react-components';
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
@@ -23,8 +23,6 @@ export const Camera = (props: {
   /* @conditional-compile-remove(video-background-effects) */
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
   componentRef?: React.RefObject<IButton>;
-  /* @conditional-compile-remove(video-background-effects) */
-  videoBackgroundPickerRef?: React.RefObject<HTMLDivElement>;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
@@ -35,14 +33,6 @@ export const Camera = (props: {
 
   /* @conditional-compile-remove(capabilities) */
   const turnVideoOnCapability = adapter.getState().call?.capabilitiesFeature?.capabilities.turnVideoOn;
-  const modOnClickVideoEffects = useCallback(
-    (showVideoEffects: boolean) => {
-      props.onClickVideoEffects && props.onClickVideoEffects(showVideoEffects);
-      console.log(props.videoBackgroundPickerRef?.current);
-      props.videoBackgroundPickerRef?.current?.focus();
-    },
-    [props]
-  );
 
   return (
     <CameraButton
@@ -63,7 +53,7 @@ export const Camera = (props: {
           : undefined
       }
       /* @conditional-compile-remove(video-background-effects) */
-      onClickVideoEffects={modOnClickVideoEffects}
+      onClickVideoEffects={props.onClickVideoEffects}
       componentRef={props.componentRef}
     />
   );

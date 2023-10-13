@@ -309,8 +309,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(video-background-effects) */
                         onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
-                        /* @conditional-compile-remove(video-background-effects) */
-                        videoBackgroundPickerRef={props.videoBackgroundPickerRef}
                       />
                     )}
                     {
