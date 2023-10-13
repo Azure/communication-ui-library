@@ -101,7 +101,8 @@ export const chatMessageFailedTagStackItemStyle = mergeStyles({
  * @private
  */
 export const editChatMessageButtonsStackStyle = mergeStyles({
-  padding: '0 0.5rem 0.5rem 0.5rem'
+  padding: '0 0.5rem 0.5rem 0.5rem',
+  marginTop: '-0.5rem'
 });
 
 /**
