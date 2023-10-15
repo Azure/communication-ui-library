@@ -165,6 +165,8 @@ export const createStatefulChatClient = (
 };
 
 /**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ * 
  * @internal
  */
 export const _createStatefulChatClientInner = (

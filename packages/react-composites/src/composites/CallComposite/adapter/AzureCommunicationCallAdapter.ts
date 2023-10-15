@@ -1384,6 +1384,8 @@ export const createAzureCommunicationCallAdapter = async ({
 };
 
 /**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ * 
  * @internal
  */
 export const _createAzureCommunicationCallAdapterInner = async (

@@ -331,8 +331,10 @@ export const createStatefulCallClient = (
 };
 
 /**
-* @internal
-*/
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ * 
+ * @internal
+ */
 export const _createStatefulCallClientInner = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions,
