@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets, Icon, ITextField, mergeStyles } from '@fluentui/react';
+import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
@@ -15,7 +15,12 @@ import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, useChatMessageEditContainerStyles } from '../styles/ChatMessageComponent.styles';
+import {
+  chatMessageFailedTagStyle,
+  chatMessageFailedTagStackItemStyle,
+  editChatMessageButtonsStackStyle,
+  useChatMessageEditContainerStyles
+} from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -119,7 +124,6 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return (
       <>
         <InputBoxComponent
-          inlineChildren={false}
           id={'editbox'}
           textFieldRef={editTextFieldRef}
           inputClassName={editBoxStyle}
@@ -143,7 +147,19 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           styles={editBoxStyles}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
+        ></InputBoxComponent>
+        <Stack
+          horizontal
+          horizontalAlign="end"
+          verticalAlign="start"
+          className={editChatMessageButtonsStackStyle}
+          tokens={{ childrenGap: '0.25rem' }}
         >
+          {message.failureReason && (
+            <Stack.Item grow className={chatMessageFailedTagStackItemStyle}>
+              <div className={chatMessageFailedTagStyle(theme)}>{message.failureReason}</div>
+            </Stack.Item>
+          )}
           <InputBoxButton
             className={editingButtonStyle}
             ariaLabel={strings.editBoxCancelButton}
@@ -168,12 +184,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             }}
             id={'submitIconWrapper'}
           />
-        </InputBoxComponent>
-        {message.failureReason && (
-          <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>
-            {message.failureReason}
-          </div>
-        )}
+        </Stack>
         {onRenderFileUploads()}
       </>
     );

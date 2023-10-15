@@ -24,9 +24,6 @@ import {
   inputButtonStyle,
   textFieldStyle,
   textContainerStyle,
-  newLineButtonsContainerStyle,
-  sameLineButtonsContainerStyle,
-  inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle,
   iconWrapperStyle
 } from './styles/InputBoxComponent.style';
@@ -53,11 +50,7 @@ export interface InputBoxStylesProps extends BaseCustomStyles {
 }
 
 type InputBoxComponentProps = {
-  children: ReactNode;
-  /**
-   * Inline child elements passed in. Setting to false will mean they are on a new line.
-   */
-  inlineChildren: boolean;
+  children?: ReactNode;
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
@@ -98,11 +91,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     children
   } = props;
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
-  const mergedInputFieldStyle = mergeStyles(
-    inputBoxStyle,
-    inputClassName,
-    props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
-  );
+  const mergedInputFieldStyle = mergeStyles(inputBoxStyle, inputClassName);
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
@@ -113,10 +102,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       padding: '0 0'
     }
   });
-
-  const mergedChildrenStyle = mergeStyles(
-    props.inlineChildren ? sameLineButtonsContainerStyle : newLineButtonsContainerStyle
-  );
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -133,11 +118,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const onRenderChildren = (): JSX.Element => {
-    return (
-      <Stack horizontal className={mergedChildrenStyle}>
-        {children}
-      </Stack>
-    );
+    return <>{children}</>;
   };
 
   const renderTextField = (): JSX.Element => {
@@ -155,7 +136,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       styles: mergedTextFieldStyle,
       disabled,
       errorMessage,
-      onRenderSuffix: onRenderChildren
+      onRenderSuffix: props.children ? onRenderChildren : undefined
     };
 
     /* @conditional-compile-remove(mention) */

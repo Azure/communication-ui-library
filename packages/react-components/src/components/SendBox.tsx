@@ -365,7 +365,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         <InputBoxComponent
           autoFocus={autoFocus}
           data-ui-id={ids.sendboxTextField}
-          inlineChildren={true}
           disabled={disabled}
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
           textFieldRef={sendTextFieldRef}
