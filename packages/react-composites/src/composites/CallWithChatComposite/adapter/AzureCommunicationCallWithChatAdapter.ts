@@ -54,7 +54,7 @@ import {
   mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/CallWithChatAdapterState';
 import {
-  createAzureCommunicationChatAdapter,
+  _createAzureCommunicationChatAdapterInner,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -785,19 +785,20 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
     /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions,
-    'CallWithChat' as _TelemetryImplementationHint // We only need to add this hint for call adapter, as adding to chat would double count it.
+    'CallWithChat' as _TelemetryImplementationHint
   );
 
   const threadId = isTeamsMeetingLinkLocator(locator)
     ? getChatThreadFromTeamsLink(locator.meetingLink)
     : locator.chatThreadId;
-  const createChatAdapterPromise = createAzureCommunicationChatAdapter({
+  const createChatAdapterPromise = _createAzureCommunicationChatAdapterInner(
     endpoint,
     userId,
     displayName,
     credential,
-    threadId
-  });
+    threadId,
+    'CallWithChat' as _TelemetryImplementationHint
+  );
 
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);

@@ -85,7 +85,7 @@ export type TelemetryEvent = {
     data?: Record<string, unknown>;
 };
 
-// @internal (undocumented)
+// @internal
 export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
 
 // @internal

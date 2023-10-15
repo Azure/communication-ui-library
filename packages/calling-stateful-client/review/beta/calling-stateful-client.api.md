@@ -169,7 +169,7 @@ export interface CaptionsInfo {
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
 
-// @internal (undocumented)
+// @internal
 export const _createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulCallClient;
 
 // @public

@@ -17,7 +17,7 @@ import type {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent
 } from '@azure/communication-chat';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
   ChatAdapter,
@@ -518,6 +518,28 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
+  return _createAzureCommunicationChatAdapterInner(
+    endpointUrl,
+    userId,
+    displayName,
+    credential,
+    threadId
+  );
+};
+
+/**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ * 
+ * @internal
+ */
+export const _createAzureCommunicationChatAdapterInner = async (
+  endpoint: string,
+  userId: CommunicationUserIdentifier,
+  displayName: string,
+  credential: CommunicationTokenCredential,
+  threadId: string,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'Chat'
+): Promise<ChatAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
@@ -525,8 +547,9 @@ export const createAzureCommunicationChatAdapter = async ({
   const chatClient = _createStatefulChatClientInner({
     userId,
     displayName,
-    endpoint: endpointUrl,
-    credential: credential
+    endpoint: endpoint,
+    credential: credential,
+    telemetryImplementationHint: telemetryImplementationHint
   });
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();

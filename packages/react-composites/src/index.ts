@@ -10,3 +10,4 @@ export { _createAzureCommunicationCallWithChatAdapterFromAdapters } from './comp
 export type { _ChatThreadRestError, _FakeChatAdapters, _FakeChatAdapterArgs, _MockFileUpload } from './mocks';
 export { _useFakeChatAdapters } from './mocks';
 export { _createAzureCommunicationCallAdapterInner } from './composites/CallComposite/adapter/AzureCommunicationCallAdapter';
+export { _createAzureCommunicationChatAdapterInner } from './composites/ChatComposite/adapter/AzureCommunicationChatAdapter';

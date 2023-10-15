@@ -72,10 +72,8 @@ export type ChatThreadProperties = {
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
 
-// Warning: (ae-internal-missing-underscore) The name "createStatefulChatClientInner" should be prefixed with an underscore because the declaration is marked as @internal
-//
-// @internal (undocumented)
-export const createStatefulChatClientInner: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulChatClient;
+// @internal
+export const _createStatefulChatClientInner: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulChatClient;
 
 // @internal
 export const _createStatefulChatClientWithDeps: (chatClient: ChatClient, args: StatefulChatClientArgs, options?: StatefulChatClientOptions | undefined) => StatefulChatClient;
