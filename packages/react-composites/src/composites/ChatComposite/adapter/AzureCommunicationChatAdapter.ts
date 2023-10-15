@@ -518,18 +518,12 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
-  return _createAzureCommunicationChatAdapterInner(
-    endpointUrl,
-    userId,
-    displayName,
-    credential,
-    threadId
-  );
+  return _createAzureCommunicationChatAdapterInner(endpointUrl, userId, displayName, credential, threadId);
 };
 
 /**
  * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
- * 
+ *
  * @internal
  */
 export const _createAzureCommunicationChatAdapterInner = async (
