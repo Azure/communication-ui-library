@@ -17,14 +17,16 @@ export const sanitize = (version: string): string => {
 };
 
 /**
+ * Indicates the type of implementation for the UILibrary.
+ * 
  * @internal
  */
 export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
 
 /**
- * @private
- *
  * Takes a telemetry implementation hint and returns the numerical value.
+ * 
+ * @private
  */
 const getTelemetryImplementationHint = (telemetryImplementationHint?: _TelemetryImplementationHint): number => {
   switch (telemetryImplementationHint) {
