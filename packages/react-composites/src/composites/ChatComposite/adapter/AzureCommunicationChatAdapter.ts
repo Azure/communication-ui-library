@@ -544,13 +544,16 @@ export const _createAzureCommunicationChatAdapterInner = async (
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
 
-  const chatClient = _createStatefulChatClientInner({
-    userId,
-    displayName,
-    endpoint: endpoint,
-    credential: credential,
-    telemetryImplementationHint: telemetryImplementationHint
-  });
+  const chatClient = _createStatefulChatClientInner(
+    {
+      userId,
+      displayName,
+      endpoint: endpoint,
+      credential: credential
+    },
+    undefined,
+    telemetryImplementationHint
+  );
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
 
