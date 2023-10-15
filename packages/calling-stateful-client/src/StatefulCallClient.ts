@@ -11,7 +11,11 @@ import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarati
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier, _getApplicationId, _TelemetryImplementationHint } from '@internal/acs-ui-common';
+import {
+  toFlatCommunicationIdentifier,
+  _getApplicationId,
+  _TelemetryImplementationHint
+} from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-identity-support) */
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
@@ -204,19 +208,19 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
       }
       case 'createTeamsCallAgent': {
         /* @conditional-compile-remove(teams-identity-support) */ return this._context.withAsyncErrorTeedToState(
-        async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
-          // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
-          // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
-          // callAgent if the createCallAgent succeeds.
-          const callAgent = await target.createTeamsCallAgent(...args);
-          this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
-          this._context.setCallAgent({
-            displayName: undefined
-          });
-          return this._callAgent;
-        },
-        'CallClient.createTeamsCallAgent'
-      );
+          async (...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent> => {
+            // createCallAgent will throw an exception if the previous callAgent was not disposed. If the previous
+            // callAgent was disposed then it would have unsubscribed to events so we can just create a new declarative
+            // callAgent if the createCallAgent succeeds.
+            const callAgent = await target.createTeamsCallAgent(...args);
+            this._callAgent = teamsCallAgentDeclaratify(callAgent, this._context, this._internalContext);
+            this._context.setCallAgent({
+              displayName: undefined
+            });
+            return this._callAgent;
+          },
+          'CallClient.createTeamsCallAgent'
+        );
         return Reflect.get(target, prop);
       }
       case 'getDeviceManager': {
@@ -231,7 +235,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
             } else {
               throw new Error(
                 'Multiple DeviceManager not supported. This means a incompatible version of communication-calling is ' +
-                'used OR calling declarative was not properly updated to communication-calling version.'
+                  'used OR calling declarative was not properly updated to communication-calling version.'
               );
             }
           } else {
@@ -278,8 +282,8 @@ export type StatefulCallClientArgs = {
    * state. It is not used by StatefulCallClient.
    */
   userId:
-  | CommunicationUserIdentifier
-  | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
+    | CommunicationUserIdentifier
+    | /* @conditional-compile-remove(teams-identity-support) */ MicrosoftTeamsUserIdentifier;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
    * A phone number in E.164 format that will be used to represent the callers identity. This number is required
@@ -332,7 +336,7 @@ export const createStatefulCallClient = (
 
 /**
  * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
- * 
+ *
  * @internal
  */
 export const _createStatefulCallClientInner = (
