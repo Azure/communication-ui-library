@@ -15,10 +15,10 @@ export const editBoxStyle = mergeStyles({
  * @private
  */
 export const editingButtonStyle = mergeStyles({
-  margin: 'auto 0',
+  margin: '0',
   width: '2.125rem',
   height: '2.125rem',
-  padding: '0.25rem 0 0 0'
+  padding: '0.375rem 0 0 0'
 });
 
 /**

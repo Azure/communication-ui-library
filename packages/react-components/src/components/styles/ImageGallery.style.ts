@@ -126,9 +126,9 @@ export const bodyContainer: IStyle = {
   width: '100%',
   height: '100%',
   overflow: 'hidden',
-  padding: '5.75rem',
+  padding: '1rem 2rem 3rem 2rem',
   '@media (max-width: 25rem) or (max-height: 25rem)': {
-    padding: '2rem'
+    padding: '0rem 1rem 2rem 1rem'
   }
 };
 
