@@ -2457,6 +2457,7 @@ export interface _VideoEffectsItemProps {
         url: string;
     };
     disabled?: boolean;
+    focusOnMount?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
     itemKey: string;
