@@ -6,8 +6,9 @@ const generatePlaceHolderButton = (name: string): CustomCallControlButtonCallbac
   return () => ({
     placement: 'overflow',
     iconName: 'MessageEdit',
-    text: name,
-    key: name
+    strings: {
+      label: name
+    }
   });
 };
 

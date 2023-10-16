@@ -11,8 +11,9 @@ export const CustomButtonWithStateExample = (): JSX.Element => {
     () => ({
       placement: 'primary',
       iconName: !clickSuccessful ? 'MessageEdit' : 'NetworkReconnectIcon',
-      text: 'btn1',
-      key: 'btn1',
+      strings: {
+        label: 'btn1'
+      },
       onItemClick: () => {
         setClickSuccessful(!clickSuccessful);
       }

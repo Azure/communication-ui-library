@@ -97,12 +97,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'btn1',
-    key: 'btn1',
-    styles: {
-      root: {
-        borderColor: 'green'
-      }
+    strings: {
+      label: 'btn1'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -110,12 +106,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'btn2',
-    key: 'btn2',
-    styles: {
-      root: {
-        borderColor: 'green'
-      }
+    strings: {
+      label: 'btn2'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -123,12 +115,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    text: 'btn3',
-    key: 'btn3',
-    styles: {
-      root: {
-        borderColor: 'green'
-      }
+    strings: {
+      label: 'btn3'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -136,12 +124,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'secondary',
     iconName: 'MessageEdit',
-    text: 'btn4',
-    key: 'btn4',
-    styles: {
-      root: {
-        borderColor: 'blue'
-      }
+    strings: {
+      label: 'btn4'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -149,12 +133,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'secondary',
     iconName: 'MessageEdit',
-    text: 'btn5',
-    key: 'btn5',
-    styles: {
-      root: {
-        borderColor: 'blue'
-      }
+    strings: {
+      label: 'btn5'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -162,12 +142,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'overflow',
     iconName: 'MessageEdit',
-    text: 'btn6',
-    key: 'btn6',
-    styles: {
-      root: {
-        borderColor: 'pink'
-      }
+    strings: {
+      label: 'btn6'
     },
     disabled: tempDisabled
   })
@@ -183,8 +159,9 @@ const CustomButtonInjectionStory = (args): JSX.Element => {
     () => ({
       placement: args.placement,
       iconName: args.icon,
-      text: args.label,
-      key: args.label,
+      strings: {
+        label: args.label
+      },
       showLabel: args.showButtonLabel,
       disabled: args.disabled
     })

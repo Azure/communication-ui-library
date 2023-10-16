@@ -5,11 +5,7 @@
 import { Icon, IContextualMenuItem, mergeStyleSets } from '@fluentui/react';
 import { ControlBarButton, _DrawerMenuItemProps } from '@internal/react-components';
 import React from 'react';
-import {
-  _CommonCallControlOptions,
-  CustomCallControlButtonCallbackArgs,
-  CustomControlButtonProps
-} from '../types/CommonCallControlOptions';
+import { _CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { CallControlDisplayType } from '../types/CommonCallControlOptions';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 
@@ -29,6 +25,82 @@ export const CUSTOM_BUTTON_OPTIONS = {
 export type CustomButtons = {
   [key in CustomCallControlButtonPlacement]: typeof ControlBarButton[] | undefined;
 };
+
+/**
+ * Arguments for {@link CustomCallControlButtonCallback}.
+ *
+ * @beta
+ */
+export interface CustomCallControlButtonCallbackArgs {
+  /**
+   * Buttons should reduce the size to fit a smaller viewport when `displayType` is `'compact'`.
+   *
+   * @defaultValue `'default'`
+   */
+  displayType?: CallControlDisplayType;
+}
+
+/**
+ * Response from {@link CustomCallControlButtonCallback}.
+ * Includes the base props necessary to render a {@link ControlBarButton} or {@link DrawerMenuItem}.
+ *
+ * @beta
+ */
+export interface CustomCallControlButtonProps {
+  /**
+   * Where to place the custom button relative to other buttons.
+   */
+  placement: CustomCallControlButtonPlacement;
+  /**
+   * Icon to render. Icon is a non-default icon name that needs to be registered as a
+   * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
+   */
+  iconName?: string;
+  /**
+   * Calback for when button is clicked
+   */
+  onItemClick?: () => void;
+  /**
+   * Whether the buttons is disabled
+   */
+  disabled?: boolean;
+  /**
+   * Whether the label is displayed or not.
+   *
+   * @defaultValue `false`
+   */
+  showLabel?: boolean;
+  /**
+   * A unique id set for the standard HTML id attibute
+   */
+  id?: string;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: CustomCallControlButtonStrings;
+}
+
+/**
+ * @beta
+ */
+export interface CustomCallControlButtonStrings {
+  /**
+   * Optional label for the button
+   */
+  label?: string;
+  /**
+   * Text that is shown in Tooltip content
+   */
+  tooltipContent?: string;
+  /**
+   * The aria label of the button for the benefit of screen readers.
+   */
+  ariaLabel?: string;
+  /**
+   * Detailed description of the button for the benefit of screen readers.
+   */
+  ariaDescription?: string;
+}
 
 /** @private */
 export const generateCustomCallControlBarButton = (
@@ -58,17 +130,19 @@ const generateCustomControlBarButtons = (
           }
           return (
             <ControlBarButton
-              ariaDescription={buttonProps.ariaDescription ?? internalProps.ariaDescription}
-              ariaLabel={buttonProps.ariaLabel ?? internalProps.ariaLabel}
+              ariaDescription={buttonProps.strings?.ariaDescription ?? internalProps.ariaDescription}
+              ariaLabel={
+                buttonProps.strings?.ariaLabel ?? buttonProps.strings?.tooltipContent ?? internalProps.ariaLabel
+              }
               disabled={buttonProps.disabled ?? internalProps.disabled}
               id={buttonProps.id ?? internalProps.id}
-              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+              key={`${buttonProps.placement}_${i}`}
               onClick={buttonProps.onItemClick ?? internalProps.onClick}
               onRenderIcon={() => (
                 <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
               )}
               showLabel={buttonProps.showLabel ?? internalProps.showLabel}
-              text={buttonProps.text ?? internalProps.text}
+              text={buttonProps.strings?.label ?? internalProps.label}
               styles={mergeStyleSets(internalProps.styles)}
             />
           );
@@ -89,9 +163,9 @@ const generateCustomDrawerButtons = (
             disabled: buttonProps.disabled,
             iconProps: { iconName: buttonProps.iconName },
             id: buttonProps.id,
-            itemKey: buttonProps.key ? '' + buttonProps.key : `${buttonProps.placement}_${i}`,
+            itemKey: `${buttonProps.placement}_${i}`,
             onItemClick: buttonProps.onItemClick,
-            text: buttonProps.text
+            text: buttonProps.strings?.label
           })
         )
     : [];
@@ -176,26 +250,6 @@ export type CustomCallControlButtonCallback = (
  * @beta
  */
 export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-
-/**
- * Response from {@link CustomCallControlButtonCallback}.
- *
- * Includes the icon and placement prop necessary to indicate where to place the
- * {@link ControlBarButton} and a {@link DrawerMenuItem}
- *
- * @beta
- */
-export interface CustomCallControlButtonProps extends CustomControlButtonProps {
-  /**
-   * Where to place the custom button relative to other buttons.
-   */
-  placement: CustomCallControlButtonPlacement;
-  /**
-   * Icon to render. Icon is a non-default icon name that needs to be registered as a
-   * custom icon using registerIcons through fluentui. Examples include icons from the fluentui library
-   */
-  iconName?: string;
-}
 
 /** @private */
 export const onFetchCustomButtonPropsTrampoline = (

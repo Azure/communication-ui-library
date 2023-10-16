@@ -17,7 +17,7 @@ import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
 
 /**
- * Temporary copy of the packages\react-composites\tests\browser\call\app\mocks\MockCallAdapter.ts
+ * Temporary copy of the packages/react-composites/tests/browser/call/app/mocks/MockCallAdapter.ts
  * @internal
  */
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported

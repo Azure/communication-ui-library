@@ -6,8 +6,9 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
     iconName: 'MessageEdit',
-    key: 'btn1',
-    text: 'btn1',
+    strings: {
+      label: 'btn1'
+    },
     disabled: false,
     showLabel: true,
     onItemClick: () => {}
@@ -15,8 +16,9 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'secondary',
     iconName: 'MessageEdit',
-    key: 'btn2',
-    text: 'btn2',
+    strings: {
+      label: 'btn2'
+    },
     disabled: false,
     showLabel: true,
     onItemClick: () => {}
@@ -24,8 +26,9 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'overflow',
     iconName: 'MessageEdit',
-    key: 'btn3',
-    text: 'btn3',
+    strings: {
+      label: 'btn3'
+    },
     disabled: false,
     showLabel: true,
     onItemClick: () => {}

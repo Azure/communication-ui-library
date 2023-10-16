@@ -1,4 +1,4 @@
-import { CustomCallControlButtonPlacement, CustomControlButtonProps } from '@azure/communication-react';
+import { CustomCallControlButtonPlacement, CustomCallControlButtonStrings } from '@azure/communication-react';
 import React from 'react';
 
 export const compositeCanvasContainerStyles = {
@@ -11,7 +11,7 @@ export const addCSS = (css) => (document.head.appendChild(document.createElement
  * Copy of @CustomCallControlButtonProps as displaying props in storybook using package import
  * is not working correctly.
  */
-export interface MockCustomCallControlButtonProps extends CustomControlButtonProps {
+export interface MockCustomCallControlButtonProps {
   /**
    * Where to place the custom button relative to other buttons.
    */
@@ -32,29 +32,17 @@ export interface MockCustomCallControlButtonProps extends CustomControlButtonPro
   /**
    * Whether the label is displayed or not.
    *
-   * @defaultvalue false
+   * @defaultValue `false`
    */
   showLabel?: boolean;
-  /**
-   * Optional label for the button
-   */
-  text?: string;
-  /**
-   * A unique key for the button
-   */
-  key?: string | number;
-  /**
-   * The aria label of the button for the benefit of screen readers.
-   */
-  ariaLabel?: string;
-  /**
-   * Detailed description of the button for the benefit of screen readers.
-   */
-  ariaDescription?: string;
   /**
    * A unique id set for the standard HTML id attibute
    */
   id?: string;
+  /**
+   * Optional strings to override in component
+   */
+  strings?: CustomCallControlButtonStrings;
 }
 
 export const CustomButtonInjection = (props: MockCustomCallControlButtonProps): JSX.Element => {

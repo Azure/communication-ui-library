@@ -20,8 +20,9 @@ export const CustomButtonWithAsyncStateExample = (): JSX.Element => {
     () => ({
       placement: 'primary',
       iconName: !clickSuccessful ? 'MessageEdit' : 'NetworkReconnectIcon',
-      text: 'asyncbtn',
-      key: 'btn1',
+      strings: {
+        label: 'asyncbtn'
+      },
       onItemClick: () => {
         setDisabledCheck(true);
         try {

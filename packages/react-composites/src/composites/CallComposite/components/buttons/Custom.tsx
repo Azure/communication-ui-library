@@ -39,15 +39,15 @@ export const generateCustomControlBarButtons = (
           .filter((buttonProps) => buttonProps.placement === key)
           .map((buttonProps, i) => (
             <ControlBarButton
-              ariaDescription={buttonProps.ariaDescription}
-              ariaLabel={buttonProps.ariaLabel}
+              ariaDescription={buttonProps.strings?.ariaDescription}
+              ariaLabel={buttonProps.strings?.ariaLabel}
               disabled={buttonProps.disabled}
               id={buttonProps.id}
-              key={buttonProps.key ?? `${buttonProps.placement}_${i}`}
+              key={`${buttonProps.placement}_${i}`}
               onClick={buttonProps.onItemClick}
               onRenderIcon={() => <Icon iconName={buttonProps.iconName ?? 'ControlButtonOptions'} />}
               showLabel={buttonProps.showLabel}
-              text={buttonProps.text}
+              text={buttonProps.strings?.label}
             />
           ))}
       </>
