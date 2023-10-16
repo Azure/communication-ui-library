@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FocusZone, IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
+import { IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
 import { useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
@@ -135,11 +135,14 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
           tokens={{ childrenGap: '0.5rem' }}
           data-ui-id="video-effects-picker-row"
         >
-          {options.map((option) => (
-            <FocusZone key={option.itemKey} shouldFocusOnMount={option.itemKey.includes('none')}>
-              <_VideoEffectsItem {...option} itemKey={option.itemKey} />
-            </FocusZone>
-          ))}
+          {options.map((option, i) => {
+            if (i === 0 && rowIndex === 0) {
+              return (
+                <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} focusOnMount={true} />
+              );
+            }
+            return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;
+          })}
           {fillCount > 0 &&
             rowIndex === optionsByRow.length - 1 &&
             Array.from({ length: fillCount }).map((_, index) => (
