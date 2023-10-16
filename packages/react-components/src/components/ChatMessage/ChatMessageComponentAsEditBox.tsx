@@ -17,6 +17,7 @@ import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
+  editChatMessageFailedTagStyle,
   chatMessageFailedTagStackItemStyle,
   editChatMessageButtonsStackStyle,
   useChatMessageEditContainerStyles
@@ -156,7 +157,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         >
           {message.failureReason && (
             <Stack.Item grow align="stretch" className={chatMessageFailedTagStackItemStyle}>
-              <div className={chatMessageFailedTagStyle(theme)}>{message.failureReason}</div>
+              <div className={mergeStyles(chatMessageFailedTagStyle(theme), editChatMessageFailedTagStyle)}>
+                {message.failureReason}
+              </div>
             </Stack.Item>
           )}
           <Stack.Item align="end">

@@ -86,9 +86,15 @@ export const chatMessageFailedTagStyle = (theme: Theme): string =>
     fontWeight: FontWeights.regular,
     color: theme.semanticColors.errorText,
     fontSize: theme.fonts.smallPlus.fontSize,
-    lineHeight: '1rem',
-    marginBottom: '0.5rem'
+    lineHeight: '1rem'
   });
+
+/**
+ * @private
+ */
+export const editChatMessageFailedTagStyle = mergeStyles({
+  marginBottom: '0.5rem'
+});
 
 /**
  * @private
