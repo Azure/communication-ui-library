@@ -1,4 +1,4 @@
-import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
 import { addCSS } from './CustomButtonInjectionTypes';
 
@@ -6,52 +6,51 @@ import { addCSS } from './CustomButtonInjectionTypes';
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn1'
+      label: 'Custom'
     }
   }),
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn2'
+      label: 'Custom'
     }
   }),
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn3'
+      label: 'Custom'
     }
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn4'
+      label: 'Custom'
     }
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn5'
+      label: 'Custom'
     }
   }),
   () => ({
     placement: 'overflow',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn6'
+      label: 'Custom'
     }
   })
 ];
 
 export const MobileCustomButtonInjectionExample = (): JSX.Element => {
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
 
-  addCSS('#mobileCustomButtonInjectionExample button[aria-label="btn1"]{ border: 1px solid green; }');
   addCSS(
     '#mobileCustomButtonInjectionExample button[data-ui-id="common-call-composite-more-button"]{ border: 1px solid green; border-left: 0px; }'
   );

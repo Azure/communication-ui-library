@@ -21,7 +21,7 @@ import type { CallAdapter, CallAdapterState } from './adapter';
  * @internal
  */
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
-export class MockCallAdapter implements CallAdapter {
+export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
     localParticipantRole?: ParticipantRole;
@@ -197,7 +197,7 @@ export class MockCallAdapter implements CallAdapter {
 }
 
 /**
- * Default call adapter state that the {@link MockCallAdapter} class is initialized with an optional role.
+ * Default call adapter state that the {@link _MockCallAdapter} class is initialized with an optional role.
  */
 const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState => {
   return {

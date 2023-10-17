@@ -579,6 +579,7 @@ export type CallCompositeIcons = {
     FocusedContentGalleryLayout?: JSX.Element;
     OverflowGalleryTop?: JSX.Element;
     LargeGalleryLayout?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
 };
 
 // @public
@@ -1148,6 +1149,7 @@ export type CallWithChatCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -2172,44 +2174,38 @@ export type CustomAvatarOptions = {
     showUnknownPersonaCoin?: boolean;
 };
 
-// @beta
+// @public
 type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
 export { CustomCallControlButtonCallback }
 export { CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback }
 
-// @beta
+// @public
 export interface CustomCallControlButtonCallbackArgs {
     displayType?: CallControlDisplayType;
 }
 
-// @beta
+// @public
 type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 export { CustomCallControlButtonPlacement }
 export { CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement }
 
-// @beta
-export interface CustomCallControlButtonProps extends CustomControlButtonProps {
-    iconName?: string;
-    placement: CustomCallControlButtonPlacement;
-}
-
-// @beta
-export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
-    iconName?: string;
-    placement: CustomCallControlButtonPlacement;
-}
-
-// @beta
-export interface CustomControlButtonProps {
+// @public
+export interface CustomCallControlButtonStrings {
     ariaDescription?: string;
     ariaLabel?: string;
+    label?: string;
+    tooltipContent?: string;
+}
+
+// @public
+export interface CustomCallWithChatControlButtonProps {
     disabled?: boolean;
+    iconName?: string;
     id?: string;
-    key?: string | number;
     onItemClick?: () => void;
+    placement: CustomCallControlButtonPlacement;
     showLabel?: boolean;
-    styles?: ControlBarButtonStyles | BaseCustomStyles;
-    text?: string;
+    strings?: CustomCallControlButtonStrings;
 }
 
 // @public
@@ -2396,6 +2392,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     FocusedContentGalleryLayout?: JSX.Element | undefined;
     OverflowGalleryTop?: JSX.Element | undefined;
     LargeGalleryLayout?: JSX.Element | undefined;
+    DefaultCustomButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -3247,10 +3244,8 @@ export interface MicrophoneSitePermissionsProps extends CommonSitePermissionsPro
 // @beta
 export type MicrophoneSitePermissionsStrings = SitePermissionsStrings;
 
-// Warning: (ae-internal-missing-underscore) The name "MockCallAdapter" should be prefixed with an underscore because the declaration is marked as @internal
-//
 // @internal
-export class MockCallAdapter implements CallAdapter {
+export class _MockCallAdapter implements CallAdapter {
     constructor(testState: {
         askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
         localParticipantRole?: ParticipantRole;

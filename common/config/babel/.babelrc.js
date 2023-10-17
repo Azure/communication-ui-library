@@ -119,7 +119,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for gallery layouts
         'gallery-layouts',
         // feature  for vertical overflow gallery
-        'vertical-gallery'
+        'vertical-gallery',
+        // API for injecting custom buttons in he control bar for
+        // `CallComposite` and `CallWithChatComposite`.
+        'control-bar-button-injection'
       ]
     }
   ]);

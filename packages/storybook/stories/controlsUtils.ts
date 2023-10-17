@@ -409,12 +409,12 @@ export const controlsToAdd = {
     },
     label: {
       control: 'text',
-      defaultValue: 'btn1',
+      defaultValue: 'Custom',
       name: 'Button label'
     },
     icon: {
       control: 'text',
-      defaultValue: 'MessageEdit',
+      defaultValue: 'DefaultCustomButton',
       name: 'Button icon'
     },
     allowRawObjectInput: {
@@ -429,21 +429,21 @@ export const controlsToAdd = {
       defaultValue: [
         () => ({
           placement: 'primary',
-          iconName: 'MessageEdit',
-          text: 'btn1',
-          key: 'btn1'
+          strings: {
+            label: 'Custom'
+          }
         }),
         () => ({
           placement: 'secondary',
-          iconName: 'MessageEdit',
-          text: 'btn2',
-          key: 'btn2'
+          strings: {
+            label: 'Custom'
+          }
         }),
         () => ({
           placement: 'overflow',
-          iconName: 'SendBoxSend',
-          text: 'btn3',
-          key: 'btn3'
+          strings: {
+            label: 'Custom'
+          }
         })
       ]
     },

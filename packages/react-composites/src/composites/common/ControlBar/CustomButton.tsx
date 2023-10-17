@@ -21,7 +21,12 @@ export const CUSTOM_BUTTON_OPTIONS = {
   MAX_SECONDARY_DESKTOP_CUSTOM_BUTTONS: 2
 };
 
-/** @private */
+/**
+ * Custom Buttons array as ControlBarButtons.
+ * Return type for {@link generateCustomCallControlBarButton}
+ *
+ * @public
+ */
 export type CustomButtons = {
   [key in CustomCallControlButtonPlacement]: typeof ControlBarButton[] | undefined;
 };
@@ -29,7 +34,7 @@ export type CustomButtons = {
 /**
  * Arguments for {@link CustomCallControlButtonCallback}.
  *
- * @beta
+ * @public
  */
 export interface CustomCallControlButtonCallbackArgs {
   /**
@@ -44,7 +49,7 @@ export interface CustomCallControlButtonCallbackArgs {
  * Response from {@link CustomCallControlButtonCallback}.
  * Includes the base props necessary to render a {@link ControlBarButton} or {@link DrawerMenuItem}.
  *
- * @beta
+ * @public
  */
 export interface CustomCallControlButtonProps {
   /**
@@ -81,7 +86,9 @@ export interface CustomCallControlButtonProps {
 }
 
 /**
- * @beta
+ * Strings for CustomCallControlButtons
+ *
+ * @public
  */
 export interface CustomCallControlButtonStrings {
   /**
@@ -139,7 +146,7 @@ const generateCustomControlBarButtons = (
               key={`${buttonProps.placement}_${i}`}
               onClick={buttonProps.onItemClick ?? internalProps.onClick}
               onRenderIcon={() => (
-                <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'ControlButtonOptions'} />
+                <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'DefaultCustomButton'} />
               )}
               showLabel={buttonProps.showLabel ?? internalProps.showLabel}
               text={buttonProps.strings?.label ?? internalProps.label}
@@ -161,7 +168,7 @@ const generateCustomDrawerButtons = (
           (buttonProps, i): _DrawerMenuItemProps => ({
             ...buttonProps,
             disabled: buttonProps.disabled,
-            iconProps: { iconName: buttonProps.iconName },
+            iconProps: { iconName: buttonProps.iconName ?? 'DefaultCustomButton', styles: { root: { lineHeight: 0 } } },
             id: buttonProps.id,
             itemKey: `${buttonProps.placement}_${i}`,
             onItemClick: buttonProps.onItemClick,
@@ -228,7 +235,7 @@ export const drawerMenuItemToContextualMenuItem = (item: _DrawerMenuItemProps): 
  * The response indicates where the custom button should be placed.
  *
  * Performance tip: This callback is only called when either the callback or its arguments change.
- * @beta
+ * @public
  */
 export type CustomCallControlButtonCallback = (
   args: CustomCallControlButtonCallbackArgs
@@ -247,7 +254,7 @@ export type CustomCallControlButtonCallback = (
  *
  * Only 'primary' placement works when legacy call control is enabled in call composite
  *
- * @beta
+ * @public
  */
 export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 

@@ -8,15 +8,16 @@ import React from 'react';
 
 import { COMPONENT_FOLDER_PREFIX } from '../../constants';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
-import { MockCallAdapter } from '@azure/communication-react';
+import { _MockCallAdapter } from '@azure/communication-react';
 import { CustomCallControlButtonCallback } from '@azure/communication-react';
-import { CustomButtonInjection as CustomButtonInjectionComponent } from './snippets/CustomButtonInjectionTypes';
+import { CustomButtonInjection as CustomButtonInjectionComponent, addCSS } from './snippets/CustomButtonInjectionTypes';
 import { PrimaryCustomButtonInjectionExample } from './snippets/PrimaryCustomButtonInjection.snippet';
 import { SecondaryCustomButtonInjectionExample } from './snippets/SecondaryCustomButtonInjection.snippet';
 import { OverflowCustomButtonInjectionExample } from './snippets/OverflowCustomButtonInjection.snippet';
 import { MobileCustomButtonInjectionExample } from './snippets/MobileCustomButtonInjection.snippet';
 import { CustomButtonWithStateExample } from './snippets/CustomButtonWithState.snippet';
 import { CustomButtonWithAsyncStateExample } from './snippets/CustomButtonWithAsyncState.snippet';
+import { LegacyControlBarCustomButtonInjectionExample } from './snippets/LegacyControlBarCustomButtonInjection.snippet';
 
 const PrimaryCustomButtonInjectionExampleText =
   require('!!raw-loader!./snippets/PrimaryCustomButtonInjection.snippet').default;
@@ -29,10 +30,14 @@ const MobileCustomButtonInjectionExampleText =
 const CustomButtonWithStateExampleText = require('!!raw-loader!./snippets/CustomButtonWithState.snippet').default;
 const CustomButtonWithAsyncStateExampleText =
   require('!!raw-loader!./snippets/CustomButtonWithAsyncState.snippet').default;
+const LegacyControlBarCustomButtonInjectionExampleText =
+  require('!!raw-loader!./snippets/LegacyControlBarCustomButtonInjection.snippet').default;
 
 const getDocs: () => JSX.Element = () => {
+  addCSS('#custom-button-injection-story button[aria-label="Custom"]{ border: 1px solid green; }');
+
   return (
-    <>
+    <div id="custom-button-injection-story">
       <Title>Custom Button Injection</Title>
       <Description>
         Custom Button Injection in our Composite experiences allows users to add their own functional buttons. Providing
@@ -85,10 +90,13 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       {/* <Heading>Code Samples</Heading> */}
-
+      <Subheading>Legacy Control Bar Custom Button Injection</Subheading>
+      <Canvas mdxSource={LegacyControlBarCustomButtonInjectionExampleText}>
+        <LegacyControlBarCustomButtonInjectionExample />
+      </Canvas>
       <Heading>Props</Heading>
       <Props of={CustomButtonInjectionComponent} />
-    </>
+    </div>
   );
 };
 
@@ -96,54 +104,54 @@ const getDocs: () => JSX.Element = () => {
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn1'
+      label: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
   }),
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn2'
+      label: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
   }),
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn3'
+      label: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn4'
+      label: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn5'
+      label: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
   }),
   () => ({
     placement: 'overflow',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn6'
+      label: 'Custom'
     },
     disabled: tempDisabled
   })
@@ -153,12 +161,12 @@ let tempShowLabel = true;
 let tempDisabled = false;
 
 const CustomButtonInjectionStory = (args): JSX.Element => {
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
   // boiler plate inject custom button here:
   const customButtonArray = [
     () => ({
       placement: args.placement,
-      iconName: args.icon,
+      iconName: args.icon ?? 'DefaultCustomButton',
       strings: {
         label: args.label
       },
@@ -176,6 +184,9 @@ const CustomButtonInjectionStory = (args): JSX.Element => {
       formFactor={args.formFactor}
       options={{
         callControls: {
+          raiseHandButton: false,
+          screenShareButton: false,
+          peopleButton: false,
           onFetchCustomButtonProps: args.allowRawObjectInput
             ? args.options
             : args.injectMaximumNumberOfButtons
@@ -206,6 +217,7 @@ export default {
     options: controlsToAdd.customButtonInjectionControls.options,
 
     // Hiding auto-generated controls
+    strings: hiddenControl,
     onItemClick: hiddenControl,
     text: hiddenControl,
     showLabel: hiddenControl,

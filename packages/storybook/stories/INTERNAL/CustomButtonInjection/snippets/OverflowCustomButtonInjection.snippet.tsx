@@ -1,11 +1,11 @@
-import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
 import { addCSS, compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
 const generatePlaceHolderButton = (name: string): CustomCallControlButtonCallback => {
   return () => ({
     placement: 'overflow',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
       label: name
     }
@@ -14,16 +14,16 @@ const generatePlaceHolderButton = (name: string): CustomCallControlButtonCallbac
 
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
-  generatePlaceHolderButton('btn1'),
-  generatePlaceHolderButton('btn2'),
-  generatePlaceHolderButton('btn3'),
-  generatePlaceHolderButton('btn4'),
-  generatePlaceHolderButton('btn5'),
-  generatePlaceHolderButton('btn6')
+  generatePlaceHolderButton('Custom'),
+  generatePlaceHolderButton('Custom'),
+  generatePlaceHolderButton('Custom'),
+  generatePlaceHolderButton('Custom'),
+  generatePlaceHolderButton('Custom'),
+  generatePlaceHolderButton('Custom')
 ];
 
 export const OverflowCustomButtonInjectionExample = (): JSX.Element => {
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
 
   addCSS(
     '#overflowCustomButtonInjectionExample button[data-ui-id="common-call-composite-more-button"]{ border-color:green; }'

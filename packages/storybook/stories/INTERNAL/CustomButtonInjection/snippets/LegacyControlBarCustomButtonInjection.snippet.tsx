@@ -1,6 +1,6 @@
 import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
-import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
+import { addCSS, compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
@@ -24,21 +24,40 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     strings: {
       label: 'Custom'
     }
+  }),
+  () => ({
+    placement: 'secondary',
+    iconName: 'DefaultCustomButton',
+    strings: {
+      label: 'Custom'
+    }
+  }),
+  () => ({
+    placement: 'overflow',
+    iconName: 'DefaultCustomButton',
+    strings: {
+      label: 'Custom'
+    }
   })
 ];
 
-export const PrimaryCustomButtonInjectionExample = (): JSX.Element => {
+export const LegacyControlBarCustomButtonInjectionExample = (): JSX.Element => {
   const adapter = new _MockCallAdapter({});
 
+  addCSS(
+    '#legacyControlBarCustomButtonInjectionExample button[data-ui-id="common-call-composite-more-button"]{ border: 1px solid green; }'
+  );
+
   return (
-    <div style={compositeCanvasContainerStyles}>
+    <div style={compositeCanvasContainerStyles} id="legacyControlBarCustomButtonInjectionExample">
       <CallComposite
         adapter={adapter}
         options={{
           callControls: {
             raiseHandButton: false,
             screenShareButton: false,
-            onFetchCustomButtonProps: maxCustomButtonsForInjection
+            onFetchCustomButtonProps: maxCustomButtonsForInjection,
+            legacyControlBarExperience: true
           }
         }}
       />

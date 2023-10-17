@@ -1,4 +1,4 @@
-import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
 import React, { useState } from 'react';
 import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
@@ -11,7 +11,7 @@ const simpleAsyncCall = async (stallTime = 2000) => {
 };
 
 export const CustomButtonWithAsyncStateExample = (): JSX.Element => {
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
   const [clickSuccessful, setClickSuccessful] = useState(false);
   const [disabledCheck, setDisabledCheck] = useState(false);
 
@@ -19,9 +19,10 @@ export const CustomButtonWithAsyncStateExample = (): JSX.Element => {
   const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     () => ({
       placement: 'primary',
-      iconName: !clickSuccessful ? 'MessageEdit' : 'NetworkReconnectIcon',
+      iconName: !clickSuccessful ? 'DefaultCustomButton' : 'NetworkReconnectIcon',
       strings: {
-        label: 'asyncbtn'
+        label: 'Async Custom',
+        ariaLabel: 'Custom'
       },
       onItemClick: () => {
         setDisabledCheck(true);

@@ -1,4 +1,4 @@
-import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
 import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
@@ -6,22 +6,22 @@ import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn1'
+      label: 'Custom'
     }
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn2'
+      label: 'Custom'
     }
   })
 ];
 
 export const SecondaryCustomButtonInjectionExample = (): JSX.Element => {
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
 
   return (
     <div style={compositeCanvasContainerStyles}>

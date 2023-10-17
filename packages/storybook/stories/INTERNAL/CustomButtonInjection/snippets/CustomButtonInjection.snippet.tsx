@@ -1,13 +1,13 @@
-import { CallComposite, CustomCallControlButtonCallback, MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
 import React from 'react';
 
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn1'
+      label: 'Custom'
     },
     disabled: false,
     showLabel: true,
@@ -15,9 +15,9 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   }),
   () => ({
     placement: 'secondary',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn2'
+      label: 'Custom'
     },
     disabled: false,
     showLabel: true,
@@ -25,9 +25,9 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   }),
   () => ({
     placement: 'overflow',
-    iconName: 'MessageEdit',
+    iconName: 'DefaultCustomButton',
     strings: {
-      label: 'btn3'
+      label: 'Custom'
     },
     disabled: false,
     showLabel: true,
@@ -38,7 +38,7 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
 export const CustomButtonInjectionExample = (): JSX.Element => {
   // Replace mock adapter with an Azure Communication Call Adapter
   // Refer to CallComposite Basic Example
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
   return (
     <CallComposite
       adapter={adapter}
