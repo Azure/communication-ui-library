@@ -164,17 +164,20 @@ test.describe('VideoGallery tests', async () => {
     await pageClick(page, dataUiId(IDS.moreButton));
 
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls.png');
-    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("View")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-controls-open.png');
-    await page.locator('button:has-text("Speaker layout")').click();
+    await page.locator('button:has-text("Speaker")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('speaker-layout.png');
+    /* @conditional-compile-remove(gallery-layout-composite) */
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('button:has-text("Gallery options")').click();
-    await page.locator('button:has-text("Gallery layout")').click();
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    await page.locator('button:has-text("View")').click();
+    /* @conditional-compile-remove(gallery-layout-composite) */
+    await page.locator('button:has-text("Gallery view")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout.png');
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('button:has-text("Gallery options")').click();
-    await page.locator('button:has-text("Dynamic layout")').click();
+    await page.locator('button:has-text("View")').click();
+    await page.locator('button:has-text("Dynamic")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('floating-local-layout.png');
   });
 
@@ -193,8 +196,8 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('button:has-text("Gallery options")').click();
-    await page.locator('button:has-text("Focused content")').click();
+    await page.locator('button:has-text("View")').click();
+    await page.locator('button:has-text("Focus on content")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('focused-content-layout.png');
   });
 
@@ -213,12 +216,12 @@ test.describe('VideoGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-ovc.png');
-    await page.locator('button:has-text("Gallery options")').click();
+    await page.locator('button:has-text("View")').click();
     await page.locator('button:has-text("Large Gallery")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
 
-  /* @conditional-compile-remove(gallery-layouts) */
+  /* @conditional-compile-remove(gallery-layout-composite) */
   test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -240,8 +243,8 @@ test.describe('VideoGallery tests', async () => {
     await waitForSelector(page, dataUiId(IDS.moreButton));
     expect(await stableScreenshot(page)).toMatchSnapshot('dynamic-layout-mobile.png');
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('span:has-text("Gallery options")').click();
-    await page.locator('span:has-text("Gallery layout")').click();
+    await page.locator('span:has-text("View")').click();
+    await page.locator('span:has-text("Gallery")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('default-layout-mobile.png');
   });
 
@@ -255,7 +258,8 @@ test.describe('VideoGallery tests', async () => {
 
     await waitForSelector(page, dataUiId(IDS.moreButton));
     await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('span:has-text("Gallery options")').click();
+    await page.locator('span:has-text("View")');
+    await page.locator('span:has-text("View")').click();
     expect(await stableScreenshot(page)).toMatchSnapshot('gallery-options-mobile.png');
   });
 });

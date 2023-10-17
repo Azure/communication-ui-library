@@ -69,6 +69,8 @@ test.describe('Chat Composite E2E Tests', () => {
       await waitForSelector(page, '[id="chat-composite-message-contextual-menu-read-name-list"]');
     });
 
-    expect(await stableScreenshot(page)).toMatchSnapshot('read-message-contextualMenu.png');
+    expect(await stableScreenshot(page, { stubMessageTimestamps: true })).toMatchSnapshot(
+      'read-message-contextualMenu.png'
+    );
   });
 });

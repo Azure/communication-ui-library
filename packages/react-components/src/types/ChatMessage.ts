@@ -8,8 +8,8 @@ import { FileMetadata } from '../components/FileDownloadCards';
 
 /**
  * Indicate whether a chat message should be displayed merged with the message before / after it.
- *
- * Useful to merge many messages from the same sender into a single message bubble.
+ * If `true`, the message will be appear grouped with the message before it.
+ * 'top' and 'bottom' are used to indicate that the message is the start or end of a group.
  *
  * @public
  */

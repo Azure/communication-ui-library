@@ -24,7 +24,8 @@ export const containerItemGap: IStackTokens = {
  */
 export const rejoinCallButtonContainerStyles: IStackStyles = {
   root: {
-    paddingTop: '1.125rem'
+    paddingTop: '1.125rem',
+    borderRadius: '0.25rem'
   }
 };
 

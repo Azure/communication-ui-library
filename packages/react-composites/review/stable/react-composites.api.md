@@ -50,6 +50,7 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
@@ -323,6 +324,13 @@ export type CallCompositeIcons = {
     LocalCameraSwitch?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
+    SpeakerGalleryLayout?: JSX.Element;
+    FloatingLocalVideoGalleryLayout?: JSX.Element;
+    DefaultGalleryLayout?: JSX.Element;
+    FocusedContentGalleryLayout?: JSX.Element;
+    OverflowGalleryTop?: JSX.Element;
+    LargeGalleryLayout?: JSX.Element;
 };
 
 // @public
@@ -330,6 +338,9 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -406,6 +417,13 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryDefaultLayoutLabel?: string;
+    moreButtonGalleryFloatingLocalLayoutLabel?: string;
+    moreButtonGalleryFocusedContentLayoutLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
+    moreButtonGallerySpeakerLayoutLabel?: string;
+    moreButtonLargeGalleryDefaultLayoutLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -704,6 +722,9 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -732,6 +753,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerButtonTooltip: string;
     moreDrawerCaptionLanguageMenuTitle: string;
     moreDrawerCaptionsMenuTitle: string;
+    moreDrawerGalleryOptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     moreDrawerSpokenLanguageMenuTitle: string;
@@ -1079,6 +1101,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     LocalCameraSwitch?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
+    SpeakerGalleryLayout?: JSX.Element | undefined;
+    FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
+    DefaultGalleryLayout?: JSX.Element | undefined;
+    FocusedContentGalleryLayout?: JSX.Element | undefined;
+    OverflowGalleryTop?: JSX.Element | undefined;
+    LargeGalleryLayout?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1103,6 +1132,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOff: JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: JSX.Element;
     SplitButtonPrimaryActionMicMuted: JSX.Element;
+    VerticalGalleryLeftButton: JSX.Element;
+    VerticalGalleryRightButton: JSX.Element;
     ControlButtonVideoEffectsOption: JSX.Element;
     ConfigurationScreenVideoEffectsButton: JSX.Element;
     CaptionsIcon: JSX.Element;

@@ -59,8 +59,14 @@ export const fileCardBoxStyle = mergeStyles({
   padding: '0.50rem'
 });
 
-const defaultSendBoxInactiveBorderThicknessREM = 0.0625;
-const defaultSendBoxActiveBorderThicknessREM = 0.125;
+/**
+ * @private
+ */
+export const defaultSendBoxInactiveBorderThicknessREM = 0.0625;
+/**
+ * @private
+ */
+export const defaultSendBoxActiveBorderThicknessREM = 0.125;
 
 /**
  * @private
