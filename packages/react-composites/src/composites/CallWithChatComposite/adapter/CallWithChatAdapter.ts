@@ -60,6 +60,9 @@ import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAda
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
+/* @conditional-compile-remove(end-of-call-survey) */
+import {CallSurvey, CallSurveyResponse, SubmitSurveyOptions}from '@azure/communication-calling';
+
 /**
  * Functionality for managing the current call with chat.
  * @public
@@ -460,6 +463,14 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
+/* @conditional-compile-remove(end-of-call-survey) */
+     /**
+     * Send the end of call survey result
+     * 
+     * @beta
+     */
+     submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>
+
 }
 
 /**
