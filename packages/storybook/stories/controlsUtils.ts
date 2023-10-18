@@ -457,9 +457,10 @@ export const controlsToAdd = {
       name: 'Inject Max # of Custom Buttons'
     },
     showLabel: {
-      control: 'boolean',
-      defaultValue: true,
+      control: { type: 'radio' },
+      defaultValue: 'undefined',
       if: { arg: 'placement', neq: 'overflow' },
+      options: ['undefined', false, true],
       name: 'Show Label'
     }
   }

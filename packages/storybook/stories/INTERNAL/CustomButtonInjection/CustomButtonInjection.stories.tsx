@@ -106,7 +106,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'primary',
     iconName: 'DefaultCustomButton',
     strings: {
-      label: 'Custom'
+      label: 'Custom',
+      tooltipContent: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -115,7 +116,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'primary',
     iconName: 'DefaultCustomButton',
     strings: {
-      label: 'Custom'
+      label: 'Custom',
+      tooltipContent: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -124,7 +126,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'primary',
     iconName: 'DefaultCustomButton',
     strings: {
-      label: 'Custom'
+      label: 'Custom',
+      tooltipContent: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -133,7 +136,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'secondary',
     iconName: 'DefaultCustomButton',
     strings: {
-      label: 'Custom'
+      label: 'Custom',
+      tooltipContent: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -142,7 +146,8 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'secondary',
     iconName: 'DefaultCustomButton',
     strings: {
-      label: 'Custom'
+      label: 'Custom',
+      tooltipContent: 'Custom'
     },
     showLabel: tempShowLabel,
     disabled: tempDisabled
@@ -151,17 +156,21 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
     placement: 'overflow',
     iconName: 'DefaultCustomButton',
     strings: {
-      label: 'Custom'
+      label: 'Custom',
+      tooltipContent: 'Custom'
     },
     disabled: tempDisabled
   })
 ];
 
-let tempShowLabel = true;
+let tempShowLabel = undefined;
 let tempDisabled = false;
 
 const CustomButtonInjectionStory = (args): JSX.Element => {
   const adapter = new _MockCallAdapter({});
+  tempShowLabel = args.showButtonLabel !== 'undefined' ? args.showButtonLabel : undefined;
+  tempDisabled = args.disabled;
+
   // boiler plate inject custom button here:
   const customButtonArray = [
     () => ({
@@ -170,13 +179,10 @@ const CustomButtonInjectionStory = (args): JSX.Element => {
       strings: {
         label: args.label
       },
-      showLabel: args.showButtonLabel,
+      showLabel: tempShowLabel,
       disabled: args.disabled
     })
   ];
-
-  tempShowLabel = args.showButtonLabel;
-  tempDisabled = args.disabled;
 
   return (
     <CallComposite

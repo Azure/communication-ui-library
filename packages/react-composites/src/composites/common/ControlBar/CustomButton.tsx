@@ -67,12 +67,13 @@ export interface CustomCallControlButtonProps {
   onItemClick?: () => void;
   /**
    * Whether the buttons is disabled
+   *
+   * @default true
    */
   disabled?: boolean;
   /**
    * Whether the label is displayed or not.
-   *
-   * @defaultValue `false`
+   * If no value is set, showLabel will follow composite rules
    */
   showLabel?: boolean;
   /**
@@ -149,8 +150,8 @@ const generateCustomControlBarButtons = (
                 <Icon iconName={buttonProps.iconName ?? internalProps.iconProps?.iconName ?? 'DefaultCustomButton'} />
               )}
               showLabel={buttonProps.showLabel ?? internalProps.showLabel}
-              text={buttonProps.strings?.label ?? internalProps.label}
               styles={mergeStyleSets(internalProps.styles)}
+              strings={buttonProps.strings}
             />
           );
         })
