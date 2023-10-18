@@ -59,7 +59,7 @@
     "@babel/preset-env": "7.13.10",
     "@types/jest": "^29.5.2",
     "@types/node": "^16.11.7",
-    "@types/react-dom": "18.2.13",
+    "@types/react-dom": "18.2.14",
     "@types/react": "18.2.29",
     "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
