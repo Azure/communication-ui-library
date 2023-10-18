@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.0",
-    "@babel/preset-env": "7.13.10",
+    "@babel/preset-env": "7.23.2",
     "@mdx-js/react": "^1.6.22",
     "@microsoft/api-documenter": "~7.23.9",
     "@microsoft/api-extractor": "~7.38.0",
@@ -104,13 +104,13 @@
     "regenerator-runtime": "^0.13.7",
     "require-from-string": "^2.0.2",
     "scheduler": "^0.20.0",
-    "shell-quote": "1.7.3",
+    "shell-quote": "1.8.1",
     "source-map-explorer": "^2.5.0",
     "storybook-docs-toc": "^1.7.0",
     "styled-components": "^5.2.1",
     "ts-jest": "^29.1.0",
     "ts-node": "^9.1.1",
     "typescript": "4.3.5",
-    "webpack": "5.88.2"
+    "webpack": "5.89.0"
   }
 }
