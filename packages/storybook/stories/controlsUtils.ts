@@ -403,27 +403,43 @@ export const controlsToAdd = {
   customButtonInjectionControls: {
     placement: {
       control: 'select',
+      if: { arg: 'allowRawObjectInput', truthy: false },
       options: ['primary', 'secondary', 'overflow'],
       defaultValue: 'primary',
-      name: 'placement'
+      name: 'Placement'
+    },
+    disabled: {
+      control: 'boolean',
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      defaultValue: 'false',
+      name: 'Disabled'
     },
     label: {
       control: 'text',
+      if: { arg: 'allowRawObjectInput', truthy: false },
       defaultValue: 'Custom',
       name: 'Button label'
     },
     icon: {
       control: 'text',
+      if: { arg: 'allowRawObjectInput', truthy: false },
       defaultValue: 'DefaultCustomButton',
       name: 'Button icon'
+    },
+    showLabel: {
+      control: { type: 'radio' },
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      defaultValue: 'undefined',
+      options: ['undefined', false, true],
+      name: 'Show Label'
     },
     allowRawObjectInput: {
       control: 'boolean',
       defaultValue: false,
       if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
-      name: 'Use Object Input Below'
+      name: 'Inject your own buttons'
     },
-    options: {
+    objectOptions: {
       control: 'object',
       if: { arg: 'allowRawObjectInput' },
       defaultValue: [
@@ -447,21 +463,11 @@ export const controlsToAdd = {
         })
       ]
     },
-    styles: {
-      control: 'object'
-    },
     injectMaximumNumberOfButtons: {
       control: 'boolean',
       defaultValue: false,
       if: { arg: 'allowRawObjectInput', truthy: false },
       name: 'Inject Max # of Custom Buttons'
-    },
-    showLabel: {
-      control: { type: 'radio' },
-      defaultValue: 'undefined',
-      if: { arg: 'placement', neq: 'overflow' },
-      options: ['undefined', false, true],
-      name: 'Show Label'
     }
   }
 };

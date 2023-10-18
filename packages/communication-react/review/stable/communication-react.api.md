@@ -1783,9 +1783,7 @@ export type CustomAvatarOptions = {
 };
 
 // @public
-type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
-export { CustomCallControlButtonCallback }
-export { CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback }
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
 
 // @public
 export interface CustomCallControlButtonCallbackArgs {
@@ -1793,20 +1791,10 @@ export interface CustomCallControlButtonCallbackArgs {
 }
 
 // @public
-type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-export { CustomCallControlButtonPlacement }
-export { CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement }
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
 // @public
-export interface CustomCallControlButtonStrings {
-    ariaDescription?: string;
-    ariaLabel?: string;
-    label?: string;
-    tooltipContent?: string;
-}
-
-// @public
-export interface CustomCallWithChatControlButtonProps {
+export interface CustomCallControlButtonProps {
     disabled?: boolean;
     iconName?: string;
     id?: string;
@@ -1814,6 +1802,14 @@ export interface CustomCallWithChatControlButtonProps {
     placement: CustomCallControlButtonPlacement;
     showLabel?: boolean;
     strings?: CustomCallControlButtonStrings;
+}
+
+// @public
+export interface CustomCallControlButtonStrings {
+    ariaDescription?: string;
+    ariaLabel?: string;
+    label?: string;
+    tooltipContent?: string;
 }
 
 // @public

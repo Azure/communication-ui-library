@@ -8,7 +8,7 @@ import {
   CallWithChatAdapter,
   CallWithChatComposite,
   CallWithChatControlOptions,
-  CustomCallWithChatControlButtonCallback
+  CustomCallControlButtonCallback
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
@@ -48,7 +48,7 @@ export function BaseApp(props: { queryArgs: CommonQueryArgs; adapter?: CallWithC
   );
 }
 
-const customButtonsForInjection: CustomCallWithChatControlButtonCallback[] = [
+const customButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
     placement: 'primary',
     strings: {

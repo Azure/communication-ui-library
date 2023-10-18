@@ -68,7 +68,7 @@ export interface CustomCallControlButtonProps {
   /**
    * Whether the buttons is disabled
    *
-   * @default true
+   * @defaultValue true
    */
   disabled?: boolean;
   /**

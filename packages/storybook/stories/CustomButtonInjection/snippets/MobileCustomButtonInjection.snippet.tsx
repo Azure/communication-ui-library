@@ -63,8 +63,6 @@ export const MobileCustomButtonInjectionExample = (): JSX.Element => {
           formFactor={'mobile'}
           options={{
             callControls: {
-              // raiseHandButton: true,
-              // screenShareButton: false,
               onFetchCustomButtonProps: maxCustomButtonsForInjection
             }
           }}

@@ -5,9 +5,8 @@ import { CallComposite } from '@azure/communication-react';
 import { Description, Heading, Props, Title, Subheading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-
-import { COMPONENT_FOLDER_PREFIX } from '../../constants';
-import { controlsToAdd, hiddenControl } from '../../controlsUtils';
+import { CONCEPTS_FOLDER_PREFIX } from '../constants';
+import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { _MockCallAdapter } from '@azure/communication-react';
 import { CustomCallControlButtonCallback } from '@azure/communication-react';
 import { CustomButtonInjection as CustomButtonInjectionComponent, addCSS } from './snippets/CustomButtonInjectionTypes';
@@ -209,8 +208,8 @@ const CustomButtonInjectionStory = (args): JSX.Element => {
 export const CustomButtonInjection = CustomButtonInjectionStory.bind({});
 
 export default {
-  id: `${COMPONENT_FOLDER_PREFIX}-custom-button-injection`,
-  title: `${COMPONENT_FOLDER_PREFIX}/Internal/CustomButtonInjection`,
+  id: `${CONCEPTS_FOLDER_PREFIX}-custom-button-injection`,
+  title: `${CONCEPTS_FOLDER_PREFIX}/CustomButtonInjection`,
   component: CustomButtonInjectionComponent,
   argTypes: {
     formFactor: controlsToAdd.formFactor,
@@ -220,7 +219,8 @@ export default {
     icon: controlsToAdd.customButtonInjectionControls.icon,
     injectMaximumNumberOfButtons: controlsToAdd.customButtonInjectionControls.injectMaximumNumberOfButtons,
     allowRawObjectInput: controlsToAdd.customButtonInjectionControls.allowRawObjectInput,
-    options: controlsToAdd.customButtonInjectionControls.options,
+    options: controlsToAdd.customButtonInjectionControls.objectOptions,
+    disabled: controlsToAdd.customButtonInjectionControls.disabled,
 
     // Hiding auto-generated controls
     strings: hiddenControl,
