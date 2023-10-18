@@ -330,11 +330,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
                 mergeStyles(messageContainerStyle)
               ),
-              style: { ...createStyleFromV8Style(messageContainerStyle) },
-              // make body not focusable to remove repetitions from narrators.
-              // inner components are already focusable
-              tabIndex: -1,
-              role: 'presentation'
+              style: { ...createStyleFromV8Style(messageContainerStyle) }
             }}
             root={{
               className: chatMyMessageStyles.root,
@@ -343,7 +339,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
                 // with keyboard the focused element will be changed and there is no way to use `:focus` selector
                 const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
-
                 setFocused(shouldPreserveFocusState);
               },
               onFocus: () => {
@@ -370,6 +365,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             }
             details={getMessageDetails()}
             actions={{
+              tabIndex: 0,
               children: actionMenuProps?.children,
               className: mergeClasses(
                 chatMyMessageStyles.menu,
@@ -404,15 +400,17 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           <FluentChatMessage
             attached={attached}
             key={props.message.messageId}
-            root={{ className: chatMessageStyles.root }}
-            author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
-            body={{
-              className: chatItemMessageContainerClassName,
-              style: { ...createStyleFromV8Style(messageContainerStyle) },
+            root={{
+              className: chatMessageStyles.root,
               // make body not focusable to remove repetitions from narrators.
               // inner components are already focusable
               tabIndex: -1,
               role: 'none'
+            }}
+            author={<Text className={chatMessageAuthorStyle}>{message.senderDisplayName}</Text>}
+            body={{
+              className: chatItemMessageContainerClassName,
+              style: { ...createStyleFromV8Style(messageContainerStyle) }
             }}
             data-ui-id="chat-composite-message"
             timestamp={
