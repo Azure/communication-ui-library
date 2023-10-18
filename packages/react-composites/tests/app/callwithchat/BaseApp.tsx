@@ -68,8 +68,7 @@ const customButtonsForInjection: CustomCallControlButtonCallback[] = [
     iconName: 'MessageEdit',
     strings: {
       label: 'Primary Btn 3'
-    },
-    showLabel: false
+    }
   }),
   () => ({
     placement: 'primary',
@@ -77,8 +76,7 @@ const customButtonsForInjection: CustomCallControlButtonCallback[] = [
     strings: {
       label: 'Primary Btn 4'
     },
-    disabled: false,
-    showLabel: false
+    disabled: false
   }),
   () => ({
     placement: 'primary',
@@ -86,8 +84,7 @@ const customButtonsForInjection: CustomCallControlButtonCallback[] = [
     strings: {
       label: 'Primary Btn 5'
     },
-    disabled: true,
-    showLabel: false
+    disabled: true
   }),
   () => ({
     placement: 'secondary',
@@ -112,16 +109,14 @@ const customButtonsForInjection: CustomCallControlButtonCallback[] = [
     strings: {
       label: 'Secondary Btn 3'
     },
-    disabled: false,
-    showLabel: false
+    disabled: false
   }),
   () => ({
     placement: 'overflow',
     strings: {
       label: 'Overflow Btn 1'
     },
-    disabled: false,
-    showLabel: false
+    disabled: false
   }),
   () => ({
     placement: 'overflow',
@@ -129,7 +124,6 @@ const customButtonsForInjection: CustomCallControlButtonCallback[] = [
     strings: {
       label: 'Overflow Btn 2'
     },
-    disabled: false,
-    showLabel: false
+    disabled: false
   })
 ];
