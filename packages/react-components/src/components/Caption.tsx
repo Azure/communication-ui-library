@@ -39,6 +39,7 @@ export const _Caption = (props: _CaptionProps): JSX.Element => {
     size: PersonaSize.size32,
     text: displayName,
     showOverflowTooltip: false,
+    imageShouldStartVisible: true,
     initialsTextColor: 'white',
     styles: {
       root: {
