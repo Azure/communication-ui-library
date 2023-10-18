@@ -912,22 +912,19 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
-    async (attachment: FileMetadata[], message: Message): Promise<void> => {
+    async (attachments: FileMetadata[], messageId: string): Promise<void> => {
       if (!onFetchAttachments) {
         return;
       }
-
-      const messageId = message.messageId;
-      const attachmentDownloadResult = await onFetchAttachments(attachment);
-      const list = inlineAttachments[messageId];
+      const attachmentDownloadResult = await onFetchAttachments(attachments);
+      const listOfAttachments = inlineAttachments[messageId];
       for (const result of attachmentDownloadResult) {
-        const attachmentId = result.attachmentId;
-        const blobUrl = result.blobUrl;
-        list[attachmentId] = blobUrl;
+        const { attachmentId, blobUrl } = result;
+        listOfAttachments[attachmentId] = blobUrl;
       }
 
-      if (Object.keys(list).length > 0) {
-        setInlineAttachments((prev) => ({ ...prev, [messageId]: list }));
+      if (Object.keys(listOfAttachments).length > 0) {
+        setInlineAttachments((prev) => ({ ...prev, [messageId]: listOfAttachments }));
       }
     },
     [inlineAttachments, onFetchAttachments]
@@ -1210,7 +1207,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
             /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            attachmentsMap={inlineAttachments[messageProps.message.messageId]}
+            attachmentsMap={inlineAttachments[messageProps.message.messageId] ?? {}}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
           />

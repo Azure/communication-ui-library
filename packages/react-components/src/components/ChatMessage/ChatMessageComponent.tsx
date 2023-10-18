@@ -5,8 +5,6 @@ import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useState } from 'react';
 import { ChatMessageComponentAsEditBox } from './ChatMessageComponentAsEditBox';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { Message } from '../../types';
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
@@ -90,7 +88,7 @@ type ChatMessageComponentProps = {
    * Optional function to fetch attachments.
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata[], message: Message) => Promise<void>;
+  onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.

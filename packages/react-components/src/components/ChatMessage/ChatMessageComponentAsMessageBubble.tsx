@@ -18,8 +18,6 @@ import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { Message } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
@@ -98,7 +96,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional function to fetch attachments.
    */
-  onFetchAttachments?: (attachment: FileMetadata[], message: Message) => Promise<void>;
+  onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.

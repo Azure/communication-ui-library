@@ -147,7 +147,7 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @beta (undocumented)
+// @beta
 export interface AttachmentDownloadResult {
     // (undocumented)
     attachmentId: string;

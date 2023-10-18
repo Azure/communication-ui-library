@@ -287,12 +287,12 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachment[0].attachmentType === 'inlineImage' ? attachment[0].previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
       return [
         {
-          attachmentId: attachment[0].id,
+          attachmentId: attachments[0].id,
           blobUrl: url
         }
       ];

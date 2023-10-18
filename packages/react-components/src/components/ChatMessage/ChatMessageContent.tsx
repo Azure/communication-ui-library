@@ -9,8 +9,6 @@ import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstr
 
 import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { Message } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
 import { Link } from '@fluentui/react';
@@ -35,7 +33,7 @@ type ChatMessageContentProps = {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachment?: (attachment: FileMetadata[], message: Message) => Promise<void>;
+  onFetchAttachment?: (attachments: FileMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
@@ -87,7 +85,7 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
     if (props.attachmentsMap && attachments) {
       attachments.forEach((fileMetadata) => {
         if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
-          props.onFetchAttachment([fileMetadata], props.message);
+          props.onFetchAttachment([fileMetadata], props.message.messageId);
           return;
         }
       });
