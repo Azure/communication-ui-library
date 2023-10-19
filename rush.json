@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.109.1",
+  "rushVersion": "5.108.0",
   "pnpmVersion": "8.6.9",
-  "nodeSupportedVersionRange": ">=14.15.0 <15.0.0 || >=16.19.0 <21.0.0",
+  "nodeSupportedVersionRange": ">=16.19.0 <21.0.0",
   "ensureConsistentVersions": true,
   "gitPolicy": {
     "versionBumpCommitMessage": "Applying package updates. [skip-ci]",

@@ -12,9 +12,9 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:import/errors',
     'plugin:import/warnings',
-    'plugin:prettier/recommended',
     'plugin:react/recommended',
-    'plugin:react-hooks/recommended'
+    'plugin:react-hooks/recommended',
+    'plugin:prettier/recommended'
   ],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'header'],
@@ -104,7 +104,8 @@ module.exports = {
       parser: 'eslint-mdx',
       extends: 'plugin:mdx/recommended',
       rules: {
-        'header/header': 'off'
+        'header/header': 'off',
+        'prettier/prettier': 'off'
       }
     },
     {

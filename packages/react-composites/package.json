@@ -141,7 +141,6 @@
     "nan": "^2.14.1",
     "node-forge": ">=1.0.0",
     "prettier": "3.0.3",
-    "pretty-quick": "^3.1.0",
     "react-dom": "18.2.0",
     "react-is": "^18.2.0",
     "react": "18.2.0",

@@ -347,7 +347,7 @@ export const createMockLocalVideoStream = (): LocalVideoStream =>
     switchSource: Promise.resolve,
     /* @conditional-compile-remove(video-background-effects) */
     feature: () => createMockVideoEffectsAPI()
-  } as unknown as LocalVideoStream);
+  }) as unknown as LocalVideoStream;
 
 /**
  * @private

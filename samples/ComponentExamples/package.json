@@ -60,7 +60,6 @@
     "husky": "^8.0.3",
     "if-env": "^1.0.4",
     "prettier": "3.0.3",
-    "pretty-quick": "^3.1.0",
     "rimraf": "^2.6.2",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.5.0",

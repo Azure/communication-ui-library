@@ -590,7 +590,7 @@ export const COMPONENT_LOCALE_ZH_CN: ComponentLocale;
 export const COMPONENT_LOCALE_ZH_TW: ComponentLocale;
 
 // @public
-export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, React_2.JSX.Element>;
 
 // @public
 export interface ComponentLocale {
