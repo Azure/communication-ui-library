@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dinamik düzen",
     "moreButtonGalleryDefaultLayoutLabel": "Galeri düzeni",
     "moreButtonGalleryFocusedContentLayoutLabel": "Odaklanmış içerik",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Büyük Galeri",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameranız devre dışı bırakıldı. Artık video paylaşasınız.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Açıklamalı canlı alt yazılar",
     "moreDrawerSpokenLanguageMenuTitle": "Konuşulan dil",
     "moreDrawerCaptionLanguageMenuTitle": "Açıklamalı alt yazı dili",
+    "moreDrawerGalleryOptionsMenuTitle": "Galeri seçenekleri",
     "peopleButtonLabel": "Kişiler",
     "selectedPeopleButtonLabel": "Kişiler Düğmesi Seçildi",
     "peopleButtonTooltipOpen": "Katılımcıları göster",

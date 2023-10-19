@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatClientState, ChatErrors, ChatMessageWithStatus } from '@internal/chat-stateful-client';
 import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-chat';

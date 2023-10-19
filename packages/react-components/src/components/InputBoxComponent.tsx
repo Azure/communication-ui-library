@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, ReactNode, FormEvent, useCallback } from 'react';
 
@@ -24,8 +24,6 @@ import {
   inputButtonStyle,
   textFieldStyle,
   textContainerStyle,
-  newLineButtonsContainerStyle,
-  inputBoxNewLineSpaceAffordance,
   inputButtonTooltipStyle,
   iconWrapperStyle
 } from './styles/InputBoxComponent.style';
@@ -52,11 +50,7 @@ export interface InputBoxStylesProps extends BaseCustomStyles {
 }
 
 type InputBoxComponentProps = {
-  children: ReactNode;
-  /**
-   * Inline child elements passed in. Setting to false will mean they are on a new line.
-   */
-  inlineChildren: boolean;
+  children?: ReactNode;
   'data-ui-id'?: string;
   id?: string;
   textValue: string; // This could be plain text or HTML.
@@ -97,11 +91,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
     children
   } = props;
   const mergedRootStyle = mergeStyles(inputBoxWrapperStyle, styles?.root);
-  const mergedInputFieldStyle = mergeStyles(
-    inputBoxStyle,
-    inputClassName,
-    props.inlineChildren ? {} : inputBoxNewLineSpaceAffordance
-  );
+  const mergedInputFieldStyle = mergeStyles(inputBoxStyle, inputClassName);
 
   const mergedTextContainerStyle = mergeStyles(textContainerStyle, styles?.textFieldContainer);
   const mergedTextFieldStyle = concatStyleSets(textFieldStyle, {
@@ -112,8 +102,6 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       padding: '0 0'
     }
   });
-
-  const mergedChildrenStyle = mergeStyles(props.inlineChildren ? {} : newLineButtonsContainerStyle);
 
   const onTextFieldKeyDown = useCallback(
     (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -130,11 +118,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
   );
 
   const onRenderChildren = (): JSX.Element => {
-    return (
-      <Stack horizontal className={mergedChildrenStyle}>
-        {children}
-      </Stack>
-    );
+    return <>{children}</>;
   };
 
   const renderTextField = (): JSX.Element => {
@@ -152,7 +136,7 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       styles: mergedTextFieldStyle,
       disabled,
       errorMessage,
-      onRenderSuffix: onRenderChildren
+      onRenderSuffix: props.children ? onRenderChildren : undefined
     };
 
     /* @conditional-compile-remove(mention) */
@@ -172,19 +156,21 @@ export const InputBoxComponent = (props: InputBoxComponentProps): JSX.Element =>
       return <TextFieldWithMention {...textFieldWithMentionProps} />;
     }
     return (
-      <TextField
-        {...textFieldProps}
-        data-ui-id={dataUiId}
-        value={textValue}
-        onChange={onChange}
-        onKeyDown={onTextFieldKeyDown}
-        onFocus={(e) => {
-          // Fix for setting the cursor to the correct position when multiline is true
-          // This approach should be reviewed during migration to FluentUI v9
-          e.currentTarget.value = '';
-          e.currentTarget.value = textValue;
-        }}
-      />
+      <div style={textFieldProps.errorMessage ? { padding: '0 0 5px 5px' } : undefined}>
+        <TextField
+          {...textFieldProps}
+          data-ui-id={dataUiId}
+          value={textValue}
+          onChange={onChange}
+          onKeyDown={onTextFieldKeyDown}
+          onFocus={(e) => {
+            // Fix for setting the cursor to the correct position when multiline is true
+            // This approach should be reviewed during migration to FluentUI v9
+            e.currentTarget.value = '';
+            e.currentTarget.value = textValue;
+          }}
+        />
+      </div>
     );
   };
 

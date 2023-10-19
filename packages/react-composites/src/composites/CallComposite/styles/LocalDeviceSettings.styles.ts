@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IDropdownStyles, IStackTokens, Theme, mergeStyles } from '@fluentui/react';
 
@@ -28,7 +28,7 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   dropdownItem: {
     fontSize: '0.875rem',
     height: '2.5rem',
-    background: theme.palette.neutralQuaternaryAlt
+    background: theme.palette.white
   },
   dropdown: {
     height: '2.5rem',
@@ -40,7 +40,9 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   title: {
     fontSize: '0.875rem',
     height: '2.5rem',
-    lineHeight: '2.3125rem'
+    lineHeight: '2.3125rem',
+    borderRadius: '0.25rem',
+    border: `1px solid ${theme.palette.neutralQuaternaryAlt}`
   },
   label: {
     fontWeight: 600,

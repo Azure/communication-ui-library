@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
@@ -65,13 +65,15 @@ export interface CommonCallControlBarProps {
   isCaptionsOn?: boolean;
   displayVertical?: boolean;
   /* @conditional-compile-remove(gallery-layouts) */
-  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
+  /* @conditional-compile-remove(video-background-effects) */
+  videoBackgroundPickerRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (

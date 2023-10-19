@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets, Icon, ITextField, mergeStyles, Stack } from '@fluentui/react';
-import { Chat } from '@internal/northstar-wrapper';
+import { ChatMyMessage } from '@fluentui-contrib/react-chat';
+import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
@@ -10,11 +11,17 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { editBoxStyle, inputBoxIcon, editingButtonStyle, editBoxStyleSet } from '../styles/EditBox.styles';
 import { InputBoxButton, InputBoxComponent } from '../InputBoxComponent';
 import { MessageThreadStrings } from '../MessageThread';
-import { borderAndBoxShadowStyle } from '../styles/SendBox.styles';
+import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
-import { chatMessageFailedTagStyle, chatMessageEditContainerStyle } from '../styles/ChatMessageComponent.styles';
+import {
+  chatMessageFailedTagStyle,
+  editChatMessageFailedTagStyle,
+  chatMessageFailedTagStackItemStyle,
+  editChatMessageButtonsStackStyle,
+  useChatMessageEditContainerStyles
+} from '../styles/ChatMessageComponent.styles';
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../MentionPopover';
 
@@ -42,11 +49,6 @@ export type ChatMessageComponentAsEditBoxProps = {
   ) => void;
   message: ChatMessage;
   strings: MessageThreadStrings;
-  /**
-   * Inline the accept and reject edit buttons when editing a message.
-   * Setting to false will mean they are on a new line inside the editable chat message.
-   */
-  inlineEditButtons: boolean;
   /* @conditional-compile-remove(mention) */
   mentionLookupOptions?: MentionLookupOptions;
 };
@@ -69,6 +71,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const messageState = getMessageState(textValue, attachedFilesMetadata ?? []);
   const submitEnabled = messageState === 'OK';
 
+  const editContainerStyles = useChatMessageEditContainerStyles();
+  const chatMyMessageStyles = useChatMyMessageStyles();
+
   useEffect(() => {
     editTextFieldRef.current?.focus();
   }, []);
@@ -83,13 +88,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
       : undefined;
 
   const onRenderThemedCancelIcon = useCallback(
-    () => onRenderCancelIcon(theme.palette.neutralSecondary),
-    [theme.palette.neutralSecondary]
+    (isHover: boolean) => onRenderCancelIcon(isHover ? theme.palette.accent : theme.palette.neutralSecondary),
+    [theme.palette.neutralSecondary, theme.palette.accent]
   );
 
   const onRenderThemedSubmitIcon = useCallback(
-    () => onRenderSubmitIcon(theme.palette.neutralSecondary),
-    [theme.palette.neutralSecondary]
+    (isHover: boolean) => onRenderSubmitIcon(isHover ? theme.palette.accent : theme.palette.neutralSecondary),
+    [theme.palette.neutralSecondary, theme.palette.accent]
   );
 
   const editBoxStyles = useMemo(() => {
@@ -118,20 +123,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const getContent = (): JSX.Element => {
     return (
-      <Stack
-        className={mergeStyles(
-          borderAndBoxShadowStyle({
-            theme,
-            hasErrorMessage: message.failureReason !== undefined,
-            disabled: false
-          })
-        )}
-      >
+      <>
         <InputBoxComponent
-          inlineChildren={props.inlineEditButtons}
           id={'editbox'}
           textFieldRef={editTextFieldRef}
-          inputClassName={editBoxStyle(props.inlineEditButtons)}
+          inputClassName={editBoxStyle}
           placeholderText={strings.editBoxPlaceholderText}
           textValue={textValue}
           onChange={setText}
@@ -152,43 +148,70 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           styles={editBoxStyles}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}
+        ></InputBoxComponent>
+        <Stack
+          horizontal
+          horizontalAlign="end"
+          className={editChatMessageButtonsStackStyle}
+          tokens={{ childrenGap: '0.25rem' }}
         >
-          <InputBoxButton
-            className={editingButtonStyle}
-            ariaLabel={strings.editBoxCancelButton}
-            tooltipContent={strings.editBoxCancelButton}
-            onRenderIcon={onRenderThemedCancelIcon}
-            onClick={() => {
-              onCancel && onCancel(message.messageId);
-            }}
-            id={'dismissIconWrapper'}
-          />
-          <InputBoxButton
-            className={editingButtonStyle}
-            ariaLabel={strings.editBoxSubmitButton}
-            tooltipContent={strings.editBoxSubmitButton}
-            onRenderIcon={onRenderThemedSubmitIcon}
-            onClick={(e) => {
-              submitEnabled &&
-                onSubmit(textValue, message.metadata, {
-                  attachedFilesMetadata
-                });
-              e.stopPropagation();
-            }}
-            id={'submitIconWrapper'}
-          />
-        </InputBoxComponent>
-        {message.failureReason && (
-          <div className={mergeStyles(chatMessageFailedTagStyle(theme), { padding: '0.5rem' })}>
-            {message.failureReason}
-          </div>
-        )}
+          {message.failureReason && (
+            <Stack.Item grow align="stretch" className={chatMessageFailedTagStackItemStyle}>
+              <div className={mergeStyles(chatMessageFailedTagStyle(theme), editChatMessageFailedTagStyle)}>
+                {message.failureReason}
+              </div>
+            </Stack.Item>
+          )}
+          <Stack.Item align="end">
+            <InputBoxButton
+              className={editingButtonStyle}
+              ariaLabel={strings.editBoxCancelButton}
+              tooltipContent={strings.editBoxCancelButton}
+              onRenderIcon={onRenderThemedCancelIcon}
+              onClick={() => {
+                onCancel && onCancel(message.messageId);
+              }}
+              id={'dismissIconWrapper'}
+            />
+          </Stack.Item>
+          <Stack.Item align="end">
+            <InputBoxButton
+              className={editingButtonStyle}
+              ariaLabel={strings.editBoxSubmitButton}
+              tooltipContent={strings.editBoxSubmitButton}
+              onRenderIcon={onRenderThemedSubmitIcon}
+              onClick={(e) => {
+                submitEnabled &&
+                  onSubmit(textValue, message.metadata, {
+                    attachedFilesMetadata
+                  });
+                e.stopPropagation();
+              }}
+              id={'submitIconWrapper'}
+            />
+          </Stack.Item>
+        </Stack>
         {onRenderFileUploads()}
-      </Stack>
+      </>
     );
   };
 
-  return <Chat.Message styles={chatMessageEditContainerStyle} content={getContent()} />;
+  const bodyClassName = mergeClasses(
+    editContainerStyles.body,
+    message.failureReason !== undefined ? editContainerStyles.bodyError : editContainerStyles.bodyDefault
+  );
+  return (
+    <ChatMyMessage
+      root={{
+        className: mergeClasses(chatMyMessageStyles.root, editContainerStyles.root)
+      }}
+      body={{
+        className: bodyClassName
+      }}
+    >
+      {getContent()}
+    </ChatMyMessage>
+  );
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;

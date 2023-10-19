@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGalleryParticipant, VideoGalleryRemoteParticipant } from '../../types';
 import { VideoGalleryStyles } from '../VideoGallery';
@@ -48,7 +48,7 @@ export interface LayoutProps {
   /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery.
-   * @defaultValue 'HorizontalBottom'
+   * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
 }

@@ -116,7 +116,19 @@ jobs:
         run: rush ensure-consistent-versions
       # Tests
       - name: Test Packages
-        run: rush test -t @azure/communication-react
+        run: rush test:ci-coverage -t @azure/communication-react
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+      - name: Merge all jest test coverage reports from the current branch
+        run: npx nyc merge temp/jest/coverage/detailed-report/ temp/jest/current/merge/detailed-full/coverage-report.json
+      - name: Create a summary report from the detailed report
+        run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
+      # Upload coverage reports which will be consumed later
+      - name: Upload detailed and summary jest coverage reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
         uses: actions/upload-artifact@v3
@@ -673,6 +685,105 @@ jobs:
               repo: context.repo.repo,
               body: 'Failed to pass the component examples UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
+
+  compare_jest_tests_coverage:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
+    needs: build_packages
+    strategy:
+      matrix:
+        include:
+          - flavor: stable
+            gist_id: d1528e50153e6f7ea569040d7b437abb
+          - flavor: beta
+            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      # Ensure node version is great enough
+      - name: Use Node.js v18.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+      # Try get node_modules from cache
+      - name: Restore node_modules from cache
+        uses: actions/cache@v3
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      # Install dependencies in order to use script
+      - name: Install rush
+        run: npm install -g @microsoft/rush@5.100.1
+      - name: Install dependencies
+        run: rush install --max-install-attempts 3
+      - name: Get jest tests coverage of main from gist
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+      - name: Download coverage report from the build_packages job
+        uses: actions/download-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
+      - name: Calculate coverage change
+        id: coverage
+        run: |
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json lines
+
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json statements
+
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json functions
+
+          node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
+      - name: Find Comment
+        uses: peter-evans/find-comment@v2
+        id: fc
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
+      - name: Create or update comment
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
+
+            |   | Lines | Statements | Functions | Branches |
+            | --- | :-------: | :-------: | :-------: | :-------: |
+            | Base |${{ steps.coverage.outputs.base_lines }}|${{ steps.coverage.outputs.base_statements }}|${{ steps.coverage.outputs.base_functions }}|${{ steps.coverage.outputs.base_branches }}|
+            | Current |${{ steps.coverage.outputs.current_lines }}|${{ steps.coverage.outputs.current_statements }}|${{ steps.coverage.outputs.current_functions }}|${{ steps.coverage.outputs.current_branches }}|
+            | Diff |${{ steps.coverage.outputs.lines_diff }}|${{ steps.coverage.outputs.statements_diff }}|${{ steps.coverage.outputs.functions_diff }}|${{ steps.coverage.outputs.branches_diff }}|
+          edit-mode: replace
+
+  update_jest_coverage_report:
+    runs-on: ubuntu-latest
+    name: Upload jest coverage report to gist (${{ matrix.flavor }})
+    needs: build_packages
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        include:
+          - flavor: stable
+            gist_id: d1528e50153e6f7ea569040d7b437abb
+          - flavor: beta
+            gist_id: 67224b1799c92f0e1cd2da24798e4dd5
+    steps:
+      - name: Download coverage report from the build_packages job
+        uses: actions/download-artifact@v3
+        with:
+          name: jest-coverage-report-${{ matrix.flavor }}
+          path: temp/jest/current/merge/
+      - name: Upload bundle report to gist
+        uses: exuanbo/actions-deploy-gist@v1
+        with:
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          gist_id: ${{ matrix.gist_id }}
+          gist_description: 'Jest report for tracking tests coverage for ${{ matrix.flavor }}'
+          gist_file_name: communication-react-jest-report-${{ matrix.flavor }}.json
+          file_path: temp/jest/current/merge/summary/coverage-summary.json
 
   compare_base_bundle_stats:
     runs-on: ubuntu-latest

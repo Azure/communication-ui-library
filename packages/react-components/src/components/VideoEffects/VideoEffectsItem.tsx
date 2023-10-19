@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
+  DefaultButton,
+  IButton,
   Icon,
   IIconProps,
   IStyle,
@@ -12,7 +14,7 @@ import {
   TooltipHost,
   useTheme
 } from '@fluentui/react';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { videoEffectsItemContainerStyles } from './VideoEffectsItem.styles';
 
 /**
@@ -83,6 +85,11 @@ export interface _VideoEffectsItemProps {
    * Styles for the Video effects item.
    */
   styles?: _VideoEffectsItemStyles;
+
+  /**
+   * Should focus on mounting of the picker item
+   */
+  focusOnMount?: boolean;
 }
 
 /**
@@ -129,6 +136,14 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
     [backgroundImage, disabled, isSelected, theme]
   );
 
+  const componentRef = React.createRef<IButton>();
+
+  useEffect(() => {
+    if (props.focusOnMount && componentRef.current) {
+      componentRef.current.focus();
+    }
+  }, [componentRef, props.focusOnMount]);
+
   return (
     <TooltipHost {...props.tooltipProps}>
       <Stack
@@ -136,33 +151,38 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
         className={mergeStyles(props.styles?.root)}
         verticalAlign="center"
         horizontalAlign="center"
-        styles={containerStyles}
         data-ui-id={`video-effects-item`}
-        onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
-        onKeyDown={
-          disabled
-            ? undefined
-            : (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  props.onSelect?.(props.itemKey);
-                }
-              }
-        }
-        tabIndex={props.disabled ? -1 : 0}
         aria-label={props.ariaLabel ?? props.itemKey}
         aria-disabled={props.disabled}
-        role="button"
       >
-        {props.iconProps && (
-          <Stack.Item styles={{ root: props.styles?.iconContainer }}>
-            <Icon {...props.iconProps} />
-          </Stack.Item>
-        )}
-        {props.title && (
-          <Stack.Item styles={{ root: props.styles?.textContainer }}>
-            <Text variant="small">{props.title}</Text>
-          </Stack.Item>
-        )}
+        <DefaultButton
+          styles={containerStyles()}
+          onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
+          componentRef={componentRef}
+          autoFocus={props.focusOnMount}
+          onKeyDown={
+            disabled
+              ? undefined
+              : (e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    props.onSelect?.(props.itemKey);
+                  }
+                }
+          }
+        >
+          <Stack horizontalAlign={'center'} tokens={{ childrenGap: '0.15rem' }}>
+            {props.iconProps && (
+              <Stack.Item styles={{ root: props.styles?.iconContainer }}>
+                <Icon {...props.iconProps} />
+              </Stack.Item>
+            )}
+            {props.title && (
+              <Stack.Item styles={{ root: props.styles?.textContainer }}>
+                <Text variant="small">{props.title}</Text>
+              </Stack.Item>
+            )}
+          </Stack>
+        </DefaultButton>
       </Stack>
     </TooltipHost>
   );

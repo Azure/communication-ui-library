@@ -1,6 +1,4 @@
-import { Meta, Source } from '@storybook/addon-docs';
-
-import indexText from '!!raw-loader!./snippets/ReactIndex.snippet.tsx';
+import { Meta } from '@storybook/addon-docs';
 
 <Meta
   id="setup-communication-react"
@@ -42,61 +40,6 @@ cd your-ui-lib-application
 
 ```
 
-## Modifying an existing app to work with the UI library
-
-If you already have a react application that you would like to integrate the UI library into you will need to
-follow the following steps to make sure it is compatible with the UI library.
-
-### Revert `index.tsx` to older version
-
-The latest `creat-react-app` template is incompatible with React 16/17 libraries.
-Replace the content of the generated `index.tsx` file with the following snippet
-so that it works with the target React versions:
-
-<Source code={indexText} />
-
-**Note:** Various tutorials in this documentation modify the contents of the generated `App.tsx` file.
-The `index.tsx` file should look identical for all the tutorials, as shown here.
-
-### Setting up your React app packages
-
-Since React 18 also updates all of its dependencies we will need to make sure that we downgrade the react packages present in
-react versions between `16.8.0` and `< 18`.
-
-We recommend the following configuration of React-related dependencies:
-
-```json
-"dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^12.1.4",
-    "@testing-library/react-hooks": "^3.4.2",
-    "@testing-library/user-event": "^14.4.3",
-    "@types/jest": "^29.5.2",
-    "@types/node": "^16.11.7",
-    "@types/react": "^16.9.49",
-    "@types/react-dom": "^16.9.8",
-    "react": "~16.14.0",
-    "react-dom": "16.13.1",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^5.0.1",
-    "react-test-renderer": "^16.14.0",
-    "reactstrap": "^8.4.1",
-    "typescript": "^4.7.4",
-    "web-vitals": "^2.1.4"
-}
-```
-
-Should you want to update anything make sure that it is compatible with react versions `< 18`
-
-### Installing the Package
-
-#### Package prequiresites
-
-The Azure Communication UI Library supports the following minimum versions:
-
-- `typescript` >= 3.8.3
-- `webpack` >= 5.3.8
-
 #### npm install
 
 Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
@@ -109,8 +52,8 @@ npm install @azure/communication-react
 can most consistently user the API from the core libraries in your application. You need to install those libraries as well:
 
 ```bash
-npm install @azure/communication-calling@1.4.4
-npm install @azure/communication-chat@1.3.2
+npm install @azure/communication-calling
+npm install @azure/communication-chat
 ```
 
 To try out our [composite adapters](./?path=/docs/quickstarts-composites--page) snippets you will need to install `uuid`
@@ -127,11 +70,6 @@ If you are looking to experiment with our latest beta features, ensure to instal
 ```bash
 npm install @azure/communication-react@next
 ```
-
-### Testing your app
-
-You need to downgrade or consider removing the provided `App.test.tsx` file. This is because it is
-using the new testing library `@testing-library/react` which is not compatible with versions of react `< 18`. If this file is not modified, the app will fail to build correctly in the next step.
 
 ### Run Create React App
 

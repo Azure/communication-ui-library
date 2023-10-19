@@ -1,11 +1,31 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export * from './components';
 export { _IdentifierProvider } from './identifiers';
 export type { _Identifiers, _IdentifierProviderProps } from './identifiers';
 export * from './localization/locales';
 export { LocalizationProvider } from './localization';
+export { COMPONENT_LOCALE_EN_GB } from './localization/locales/en-GB/ComponentLocale';
+export { COMPONENT_LOCALE_AR_SA } from './localization/locales/ar-SA/ComponentLocale';
+export { COMPONENT_LOCALE_CS_CZ } from './localization/locales/cs-CZ/ComponentLocale';
+export { COMPONENT_LOCALE_DE_DE } from './localization/locales/de-DE/ComponentLocale';
+export { COMPONENT_LOCALE_ES_ES } from './localization/locales/es-ES/ComponentLocale';
+export { COMPONENT_LOCALE_FI_FI } from './localization/locales/fi-FI/ComponentLocale';
+export { COMPONENT_LOCALE_FR_FR } from './localization/locales/fr-FR/ComponentLocale';
+export { COMPONENT_LOCALE_HE_IL } from './localization/locales/he-IL/ComponentLocale';
+export { COMPONENT_LOCALE_IT_IT } from './localization/locales/it-IT/ComponentLocale';
+export { COMPONENT_LOCALE_JA_JP } from './localization/locales/ja-JP/ComponentLocale';
+export { COMPONENT_LOCALE_KO_KR } from './localization/locales/ko-KR/ComponentLocale';
+export { COMPONENT_LOCALE_NB_NO } from './localization/locales/nb-NO/ComponentLocale';
+export { COMPONENT_LOCALE_NL_NL } from './localization/locales/nl-NL/ComponentLocale';
+export { COMPONENT_LOCALE_PL_PL } from './localization/locales/pl-PL/ComponentLocale';
+export { COMPONENT_LOCALE_PT_BR } from './localization/locales/pt-BR/ComponentLocale';
+export { COMPONENT_LOCALE_RU_RU } from './localization/locales/ru-RU/ComponentLocale';
+export { COMPONENT_LOCALE_SV_SE } from './localization/locales/sv-SE/ComponentLocale';
+export { COMPONENT_LOCALE_TR_TR } from './localization/locales/tr-TR/ComponentLocale';
+export { COMPONENT_LOCALE_ZH_CN } from './localization/locales/zh-CN/ComponentLocale';
+export { COMPONENT_LOCALE_ZH_TW } from './localization/locales/zh-TW/ComponentLocale';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
 

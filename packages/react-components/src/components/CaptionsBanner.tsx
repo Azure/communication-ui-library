@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { Stack, FocusZone, Spinner } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _FileUploadCardsStrings } from './FileUploadCards';
-import { Ref } from '@internal/northstar-wrapper';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
-  captionsBannerStyles,
+  captionsBannerClassName,
   captionsContainerClassName,
   loadingBannerStyles
 } from './styles/Captions.style';
@@ -60,7 +59,7 @@ export interface _CaptionsBannerProps {
  */
 export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   const { captions, isCaptionsOn, startCaptionsInProgress, onRenderAvatar, strings, formFactor = 'default' } = props;
-  const captionsScrollDivRef = useRef<HTMLElement>(null);
+  const captionsScrollDivRef = useRef<HTMLDivElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
 
   const scrollToBottom = (): void => {
@@ -101,17 +100,15 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
       {startCaptionsInProgress && (
         <FocusZone as="ul" className={captionsContainerClassName}>
           {isCaptionsOn && (
-            <Ref innerRef={captionsScrollDivRef}>
-              <Stack verticalAlign="start" styles={captionsBannerStyles(formFactor)}>
-                {captions.map((caption) => {
-                  return (
-                    <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
-                      <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
-                    </div>
-                  );
-                })}
-              </Stack>
-            </Ref>
+            <div ref={captionsScrollDivRef} className={captionsBannerClassName(formFactor)}>
+              {captions.map((caption) => {
+                return (
+                  <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
+                    <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
+                  </div>
+                );
+              })}
+            </div>
           )}
           {!isCaptionsOn && (
             <Stack verticalAlign="center" styles={loadingBannerStyles(formFactor)} data-is-focusable={true}>

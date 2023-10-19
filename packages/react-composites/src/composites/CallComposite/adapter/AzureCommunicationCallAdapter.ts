@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { compositeLogger } from '../../../Logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
@@ -101,7 +101,10 @@ import {
   UnknownIdentifier,
   PhoneNumberIdentifier,
   CommunicationIdentifier,
-  MicrosoftTeamsUserIdentifier
+  MicrosoftTeamsUserIdentifier,
+  isMicrosoftTeamsAppIdentifier,
+  MicrosoftTeamsAppIdentifier,
+  isMicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -876,8 +879,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     const idsToAdd = participants.map((participant) => {
-      // FIXME: `onStartCall` does not allow a Teams user.
-      // Need some way to return an error if a Teams user is provided.
       const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
       if (isPhoneNumberIdentifier(backendId)) {
         if (options?.alternateCallerId === undefined) {
@@ -886,6 +887,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         return backendId as PhoneNumberIdentifier;
       } else if (isCommunicationUserIdentifier(backendId)) {
         return backendId as CommunicationUserIdentifier;
+      } else if (isMicrosoftTeamsAppIdentifier(backendId)) {
+        return backendId as MicrosoftTeamsAppIdentifier;
+      } else if (isMicrosoftTeamsUserIdentifier(backendId)) {
+        return backendId as MicrosoftTeamsUserIdentifier;
       }
       return backendId as UnknownIdentifier;
     });

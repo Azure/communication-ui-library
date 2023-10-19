@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamische indeling",
     "moreButtonGalleryDefaultLayoutLabel": "Galerie-indeling",
     "moreButtonGalleryFocusedContentLayoutLabel": "Inhoud met prioriteit",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Grote galerie",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Uw camera is uitgeschakeld. U kunt geen video meer delen.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Liveondertitels",
     "moreDrawerSpokenLanguageMenuTitle": "Gesproken taal",
     "moreDrawerCaptionLanguageMenuTitle": "Taal van ondertiteling",
+    "moreDrawerGalleryOptionsMenuTitle": "Galerieopties",
     "peopleButtonLabel": "Personen",
     "selectedPeopleButtonLabel": "Knop Personen geselecteerd",
     "peopleButtonTooltipOpen": "Deelnemers weergeven",

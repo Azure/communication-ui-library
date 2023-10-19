@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { IStackStyles, ITheme } from '@fluentui/react';
+import { IButtonStyles, IStackStyles, ITheme } from '@fluentui/react';
 
 const VideoEffectsItemContainerHeight = '3.375rem';
 const VideoEffectsItemContainerWidth = '4.83rem';
@@ -23,7 +23,7 @@ export const videoEffectsItemContainerStyles = (args: {
   isSelected: boolean;
   disabled: boolean;
   backgroundImage?: string;
-}): IStackStyles => {
+}): IButtonStyles => {
   const borderDefaultThickness = '1px';
   const borderActiveThickness = '2px';
   return {
@@ -36,19 +36,17 @@ export const videoEffectsItemContainerStyles = (args: {
       color: args.theme.palette.neutralPrimary,
       cursor: args.disabled ? 'default' : 'pointer',
       height: VideoEffectsItemContainerHeight,
-      position: 'relative', // Used for absolute positioning of :after
       width: VideoEffectsItemContainerWidth,
+      border: args.isSelected
+        ? `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
+        : `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`,
       // Use :after to display a border element. This is used to prevent the background image
       // resizing when the border thichkness is changed. We also want the border to be inside
       // the frame of the container, i.e. we want it to expand inwards and not outwards when
       // border thickness changes from hover/selection.
       ':after': {
         content: '""',
-        position: 'absolute',
         boxSizing: 'border-box',
-        border: args.isSelected
-          ? `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
-          : `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`,
         height: '100%',
         width: '100%',
         borderRadius: '0.25rem'
@@ -60,6 +58,11 @@ export const videoEffectsItemContainerStyles = (args: {
               ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
               : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
         }
+      }
+    },
+    rootFocused: {
+      ':after': {
+        outline: `2px solid ${args.theme.palette.neutralQuaternaryAlt}`
       }
     }
   };

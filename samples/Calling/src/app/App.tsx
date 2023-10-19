@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(rooms) */
@@ -31,11 +31,9 @@ import { getOutboundParticipants } from './utils/AppUtils';
 /* @conditional-compile-remove(rooms) */
 import { createRoom, getRoomIdFromUrl, addUserToRoom } from './utils/AppUtils';
 import { useIsMobile } from './utils/useIsMobile';
-import { useSecondaryInstanceCheck } from './utils/useSecondaryInstanceCheck';
 import { CallError } from './views/CallError';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
-import { PageOpenInAnotherTab } from './views/PageOpenInAnotherTab';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
 setLogLevel('verbose');
@@ -84,17 +82,12 @@ const App = (): JSX.Element => {
 
   const isMobileSession = useIsMobile();
   const isLandscapeSession = isLandscape();
-  const isAppAlreadyRunningInAnotherTab = useSecondaryInstanceCheck();
 
   useEffect(() => {
     if (isMobileSession && isLandscapeSession) {
       console.log('ACS Calling sample: Mobile landscape view is experimental behavior');
     }
   }, [isMobileSession, isLandscapeSession]);
-
-  if (isMobileSession && isAppAlreadyRunningInAnotherTab) {
-    return <PageOpenInAnotherTab />;
-  }
 
   const supportedBrowser = !isOnIphoneAndNotSafari();
   if (!supportedBrowser) {
@@ -204,18 +197,16 @@ const App = (): JSX.Element => {
         return <Spinner label={'Getting user credentials from server'} ariaLive="assertive" labelPosition="top" />;
       }
       return (
-        <React.StrictMode>
-          <CallScreen
-            token={token}
-            userId={userId}
-            displayName={displayName}
-            callLocator={callLocator}
-            /* @conditional-compile-remove(PSTN-calls) */
-            alternateCallerId={alternateCallerId}
-            /* @conditional-compile-remove(teams-identity-support) */
-            isTeamsIdentityCall={isTeamsCall}
-          />
-        </React.StrictMode>
+        <CallScreen
+          token={token}
+          userId={userId}
+          displayName={displayName}
+          callLocator={callLocator}
+          /* @conditional-compile-remove(PSTN-calls) */
+          alternateCallerId={alternateCallerId}
+          /* @conditional-compile-remove(teams-identity-support) */
+          isTeamsIdentityCall={isTeamsCall}
+        />
       );
     }
     default:

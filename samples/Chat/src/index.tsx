@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import { createRoot } from 'react-dom/client';
@@ -14,10 +14,12 @@ if (!domNode) {
 }
 
 createRoot(domNode).render(
-  <SwitchableFluentThemeProvider scopeId="SampleChatApp">
-    <div className="wrapper">
-      <App />
-      <ShakeToSendLogs />
-    </div>
-  </SwitchableFluentThemeProvider>
+  <React.StrictMode>
+    <SwitchableFluentThemeProvider scopeId="SampleChatApp">
+      <div className="wrapper">
+        <App />
+        <ShakeToSendLogs />
+      </div>
+    </SwitchableFluentThemeProvider>
+  </React.StrictMode>
 );

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommonProperties } from '@internal/acs-ui-common';
 import { ChatHandlers } from '@internal/chat-component-bindings';

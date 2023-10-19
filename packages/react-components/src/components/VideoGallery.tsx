@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
 import React, { useCallback, useMemo, useRef } from 'react';
@@ -42,6 +42,8 @@ import { VerticalGalleryStyles } from './VerticalGallery';
 import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 /* @conditional-compile-remove(gallery-layouts) */
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
+/* @conditional-compile-remove(large-gallery) */
+import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 
 /**
  * @private
@@ -133,6 +135,7 @@ export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
   | /* @conditional-compile-remove(gallery-layouts) */ 'speaker'
+  | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
   | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 /**
@@ -155,12 +158,12 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
 /**
  * Different modes and positions of the overflow gallery in the VideoGallery
  *
- * @beta
+ * @public
  */
 export type OverflowGalleryPosition =
-  | 'HorizontalBottom'
-  | 'VerticalRight'
-  | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
+  | 'horizontalBottom'
+  | 'verticalRight'
+  | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
 /**
@@ -267,7 +270,7 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(vertical-gallery) */
   /**
    * Determines the layout of the overflowGallery inside the VideoGallery.
-   * @defaultValue 'HorizontalBottom'
+   * @defaultValue 'horizontalBottom'
    */
   overflowGalleryPosition?: OverflowGalleryPosition;
   /* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
@@ -345,7 +348,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(pinned-participants) */
     remoteVideoTileMenu = DEFAULT_REMOTE_VIDEO_TILE_MENU_OPTIONS,
     /* @conditional-compile-remove(vertical-gallery) */
-    overflowGalleryPosition = 'HorizontalBottom',
+    overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(rooms) */
     localVideoTileSize = 'followDeviceOrientation'
   } = props;
@@ -428,6 +431,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
+    const showDisplayNameTrampoline = (): string => {
+      /* @conditional-compile-remove(gallery-layouts) */
+      return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
+      return isNarrow ? '' : strings.localVideoLabel;
+    };
+
     return (
       <Stack
         styles={localVideoTileContainerStyles}
@@ -443,7 +452,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           isAvailable={localParticipant?.videoStream?.isAvailable}
           isMuted={localParticipant.isMuted}
           renderElement={localParticipant?.videoStream?.renderElement}
-          displayName={isNarrow ? '' : strings.localVideoLabel}
+          displayName={showDisplayNameTrampoline()}
           initialsName={initialsName}
           localVideoViewOptions={localVideoViewOptions}
           onRenderAvatar={onRenderAvatar}
@@ -452,7 +461,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
               (localTileNotInGrid && isNarrow) ||
               /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
                 '9:16'
-            )
+            ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default'
           }
           showMuteIndicator={showMuteIndicator}
           showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
@@ -484,7 +493,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     styles?.localVideo,
     theme.effects.roundedCorner4,
     /*@conditional-compile-remove(click-to-call) */
-    localVideoTileSize
+    localVideoTileSize,
+    /* @conditional-compile-remove(gallery-layouts) */
+    layout
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
@@ -682,6 +693,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     if (layout === 'speaker') {
       return <SpeakerVideoLayout {...layoutProps} />;
+    }
+    /* @conditional-compile-remove(large-gallery) */
+    if (layout === 'largeGallery') {
+      return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);

@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "動的なレイアウト",
     "moreButtonGalleryDefaultLayoutLabel": "ギャラリーのレイアウト",
     "moreButtonGalleryFocusedContentLayoutLabel": "優先コンテンツ",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "ラージ ギャラリー",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "カメラが無効になっています。ビデオを共有できなくなりました。",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "ライブ キャプション",
     "moreDrawerSpokenLanguageMenuTitle": "音声言語",
     "moreDrawerCaptionLanguageMenuTitle": "字幕言語",
+    "moreDrawerGalleryOptionsMenuTitle": "ギャラリーのオプション",
     "peopleButtonLabel": "ユーザー",
     "selectedPeopleButtonLabel": "[ユーザー] ボタンが選択されました",
     "peopleButtonTooltipOpen": "参加者を表示",

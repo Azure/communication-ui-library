@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * Wrap JSON.stringify in a try-catch as JSON.stringify throws an exception if it fails.

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { VideoGallery } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
@@ -80,7 +80,7 @@ export const WithVerticalGalleryExample: () => JSX.Element = () => {
       <VideoGallery
         localParticipant={MockLocalParticipant}
         remoteParticipants={MockRemoteParticipants}
-        overflowGalleryPosition={'VerticalRight'}
+        overflowGalleryPosition={'verticalRight'}
       />
     </Stack>
   );

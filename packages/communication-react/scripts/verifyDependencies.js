@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * Verify package contains all the dependencies of downstream packlets.
@@ -16,12 +16,6 @@ let allDependencies = new Set();
 let allPeerDependencies = new Set();
 
 for (const packlet of Object.keys(downstreamPacklets)) {
-  // Special case for @internal/northstar-wrapper, we use a bundled output for this packlet
-  // and so it does not have a package.json nor dependencies (relevant dependencies are bundled)
-  if (packlet === '@internal/northstar-wrapper') {
-    continue;
-  }
-
   const packageJsonRelativePath = '../';
 
   const packletPackageData = require(path.resolve(
