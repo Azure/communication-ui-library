@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 /* @conditional-compile-remove(end-of-call-survey) */
@@ -29,7 +29,7 @@ export const StarSurvey = (
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   const onConfirmStarSurvey = (rating: number): void => {
-      onSubmitStarSurvey(rating);
+    onSubmitStarSurvey(rating);
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
@@ -53,7 +53,12 @@ export const StarSurvey = (
   return (
     <>
       {showSurvey && (
-        <_StarSurvey onDismissStarSurvey={onDismiss} strings={StarSurveyStrings} onConfirmStarSurvey={onConfirmStarSurvey} {...starSurveyHandler}/>
+        <_StarSurvey
+          onDismissStarSurvey={onDismiss}
+          strings={StarSurveyStrings}
+          onConfirmStarSurvey={onConfirmStarSurvey}
+          {...starSurveyHandler}
+        />
       )}
     </>
   );

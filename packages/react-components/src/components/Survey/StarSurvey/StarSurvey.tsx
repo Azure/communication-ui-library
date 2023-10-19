@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, useCallback } from 'react';
 import { Text, useTheme, Stack, Modal, IconButton, PrimaryButton } from '@fluentui/react';
@@ -85,7 +85,7 @@ export interface _StarSurveyProps {
   /** Function to send StarSurvey results*/
   onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
   /** function called on confirm button click*/
-  onConfirmStarSurvey?:(ratings:number) => void
+  onConfirmStarSurvey?: (ratings: number) => void;
   /** Function to close star survey modal*/
   onDismissStarSurvey?: () => void;
   /** Star survey strings */
@@ -156,10 +156,10 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
         .catch((e) => console.log(e));
     }
     if (onConfirmStarSurvey) {
-      onConfirmStarSurvey(rating)
+      onConfirmStarSurvey(rating);
     }
     onDismiss();
-  }, [onSubmitSurvey, rating, onDismiss]);
+  }, [onSubmitSurvey, rating, onDismiss, onConfirmStarSurvey]);
 
   return (
     <Modal onDismissed={onDismiss} styles={modalStyles(theme)} isOpen>
