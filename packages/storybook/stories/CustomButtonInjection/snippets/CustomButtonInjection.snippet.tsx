@@ -10,8 +10,7 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
       label: 'Custom'
     },
     disabled: false,
-    showLabel: true,
-    onItemClick: () => {}
+    showLabel: true
   }),
   () => ({
     placement: 'secondary',
@@ -20,8 +19,7 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
       label: 'Custom'
     },
     disabled: false,
-    showLabel: true,
-    onItemClick: () => {}
+    showLabel: true
   }),
   () => ({
     placement: 'overflow',
@@ -30,8 +28,7 @@ const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
       label: 'Custom'
     },
     disabled: false,
-    showLabel: true,
-    onItemClick: () => {}
+    showLabel: true
   })
 ];
 
