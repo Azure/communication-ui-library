@@ -26,7 +26,7 @@ import { useId } from '@fluentui/react-hooks';
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { CallComposite, CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
+import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(click-to-call) */
@@ -538,9 +538,26 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [closeChat]
   );
 
-  const options:CallCompositeOptions = {surveyOptions: {hideSurvey: true}}
   return (
-    <CallComposite options={options}/>
+    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
+    <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
+      <Stack horizontal grow>
+        <Stack.Item grow styles={callCompositeContainerStyles(mobileView)}>
+          <CallCompositeInner
+            {...props}
+            formFactor={formFactor}
+            options={callCompositeOptions}
+            adapter={callAdapter}
+            fluentTheme={fluentTheme}
+            callInvitationUrl={props.joinInvitationURL}
+            overrideSidePane={overrideSidePaneProps}
+            onSidePaneIdChange={onSidePaneIdChange}
+            mobileChatTabHeader={chatTabHeaderProps}
+          />
+        </Stack.Item>
+      </Stack>
+    </Stack>
+  </div>
   );
 };
 
