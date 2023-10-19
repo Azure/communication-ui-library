@@ -45,7 +45,7 @@ export const StarSurvey = (
     starSurveyFourStarText: strings.starSurveyFourStarText,
     starSurveyFiveStarText: strings.starSurveyFiveStarText,
     // starSurveyConfirmButtonLabel: strings.starSurveyConfirmButtonLabel,
-    starRatingAriaLabel: strings.starRatingAriaLabel,
+    starRatingAriaLabel: strings.starRatingAriaLabel
     // cancelButtonAriaLabel: strings.starRatingCancelButtonAriaLabel
   };
 

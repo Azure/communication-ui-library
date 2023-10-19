@@ -700,23 +700,23 @@ export interface CallCompositeStrings {
   /**
    * Category label for tag survey
    */
-  audioCategory: string
-   /* @conditional-compile-remove(end-of-call-survey) */
+  audioCategory: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Category label for tag survey
    */
-  videoCategory: string
-   /* @conditional-compile-remove(end-of-call-survey) */
+  videoCategory: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Category label for tag survey
    */
-  screenshareCategory: string
+  screenshareCategory: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Confirm button label for survey
    */
   surveyConfirmButtonLabel: string;
-   /* @conditional-compile-remove(end-of-call-survey) */
+  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Aria Label for cancel button
    */

@@ -463,13 +463,13 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-/* @conditional-compile-remove(end-of-call-survey) */
-     /**
-     * Send the end of call survey result
-     * 
-     * @public
-     */
-     submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Send the end of call survey result
+   *
+   * @public
+   */
+  submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
 }
 
 /**

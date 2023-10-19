@@ -621,12 +621,12 @@ export interface CallAdapterCallOperations {
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
   /* @conditional-compile-remove(end-of-call-survey) */
-   /**
-     * Send the end of call survey result
-     * 
-     * @public
-     */
-   submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
+  /**
+   * Send the end of call survey result
+   *
+   * @public
+   */
+  submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
 }
 
 /**
