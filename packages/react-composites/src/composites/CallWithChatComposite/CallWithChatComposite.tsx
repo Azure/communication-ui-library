@@ -186,11 +186,11 @@ export type CallWithChatCompositeOptions = {
     layout?: VideoGalleryLayout;
   };
   /* @conditional-compile-remove(end-of-call-survey) */
-    /**
+  /**
    * Show call survey at the end of a call.
    * @defaultValue true
    */
-    survey?: boolean;
+  survey?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -230,7 +230,7 @@ type CallWithChatScreenProps = {
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
-  const {survey = true} = props
+  const { survey = true } = props;
   const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {

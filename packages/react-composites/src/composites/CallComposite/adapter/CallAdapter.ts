@@ -42,7 +42,7 @@ import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../.
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
-import {CallSurvey, CallSurveyResponse, SubmitSurveyOptions}from '@azure/communication-calling';
+import { CallSurvey, CallSurveyResponse, SubmitSurveyOptions } from '@azure/communication-calling';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -621,12 +621,12 @@ export interface CallAdapterCallOperations {
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
   /* @conditional-compile-remove(end-of-call-survey) */
-   /**
-     * Send the end of call survey result
-     * 
-     * @beta
-     */
-   submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>
+  /**
+   * Send the end of call survey result
+   *
+   * @beta
+   */
+  submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
 }
 
 /**

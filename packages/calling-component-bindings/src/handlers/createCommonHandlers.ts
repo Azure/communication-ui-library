@@ -13,10 +13,7 @@ import {
   BackgroundReplacementConfig
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { CallSurvey,
-  SubmitSurveyOptions,
-  CallSurveyResponse
-} from '@azure/communication-calling'
+import { CallSurvey, SubmitSurveyOptions, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { DtmfTone, AddPhoneNumberOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support) */
@@ -105,7 +102,7 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(close-captions) */
   onSetCaptionLanguage: (language: string) => Promise<void>;
   /* @conditional-compile-remove(end-of-call-survey) */
-  onSubmitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse|undefined>;
+  onSubmitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
 }
 
 /**
@@ -566,8 +563,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
-/* @conditional-compile-remove(end-of-call-survey) */
-    const onSubmitSurvey = async (survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined> => await call?.feature(Features.CallSurvey).submitSurvey(survey,options)
+    /* @conditional-compile-remove(end-of-call-survey) */
+    const onSubmitSurvey = async (
+      survey: CallSurvey,
+      options?: SubmitSurveyOptions
+    ): Promise<CallSurveyResponse | undefined> =>
+      await call?.feature(Features.CallSurvey).submitSurvey(survey, options);
 
     return {
       onHangUp,
@@ -616,7 +617,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(close-captions) */
       onSetSpokenLanguage,
       /* @conditional-compile-remove(end-of-call-survey) */
-     onSubmitSurvey
+      onSubmitSurvey
     };
   }
 );
