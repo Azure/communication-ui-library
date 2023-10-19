@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "Custom Button Injection",
+  "comment": "Update and stabilize custom button injection",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

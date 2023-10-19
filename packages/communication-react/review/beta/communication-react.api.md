@@ -579,6 +579,7 @@ export type CallCompositeIcons = {
     FocusedContentGalleryLayout?: JSX.Element;
     OverflowGalleryTop?: JSX.Element;
     LargeGalleryLayout?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
 };
 
 // @public
@@ -1148,6 +1149,7 @@ export type CallWithChatCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -2172,44 +2174,34 @@ export type CustomAvatarOptions = {
     showUnknownPersonaCoin?: boolean;
 };
 
-// @beta
-type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallWithChatControlButtonProps;
-export { CustomCallControlButtonCallback }
-export { CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback }
+// @public
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
 
-// @beta
+// @public
 export interface CustomCallControlButtonCallbackArgs {
     displayType?: CallControlDisplayType;
 }
 
-// @beta
-type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
-export { CustomCallControlButtonPlacement }
-export { CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement }
+// @public
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
 
-// @beta
-export interface CustomCallControlButtonProps extends CustomControlButtonProps {
+// @public
+export interface CustomCallControlButtonProps {
+    disabled?: boolean;
     iconName?: string;
+    id?: string;
+    onItemClick?: () => void;
     placement: CustomCallControlButtonPlacement;
+    showLabel?: boolean;
+    strings?: CustomCallControlButtonStrings;
 }
 
-// @beta
-export interface CustomCallWithChatControlButtonProps extends CustomControlButtonProps {
-    iconName?: string;
-    placement: CustomCallControlButtonPlacement;
-}
-
-// @beta
-export interface CustomControlButtonProps {
+// @public
+export interface CustomCallControlButtonStrings {
     ariaDescription?: string;
     ariaLabel?: string;
-    disabled?: boolean;
-    id?: string;
-    key?: string | number;
-    onItemClick?: () => void;
-    showLabel?: boolean;
-    styles?: ControlBarButtonStyles | BaseCustomStyles;
-    text?: string;
+    label?: string;
+    tooltipContent?: string;
 }
 
 // @public
@@ -2396,6 +2388,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     FocusedContentGalleryLayout?: JSX.Element | undefined;
     OverflowGalleryTop?: JSX.Element | undefined;
     LargeGalleryLayout?: JSX.Element | undefined;
+    DefaultCustomButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -3246,6 +3239,106 @@ export interface MicrophoneSitePermissionsProps extends CommonSitePermissionsPro
 
 // @beta
 export type MicrophoneSitePermissionsStrings = SitePermissionsStrings;
+
+// @internal
+export class _MockCallAdapter implements CallAdapter {
+    constructor(testState: {
+        askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+        localParticipantRole?: ParticipantRole;
+    });
+    // (undocumented)
+    addParticipant(): Promise<void>;
+    // (undocumented)
+    allowUnsupportedBrowserVersion(): void;
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    createStreamView(): Promise<void>;
+    // (undocumented)
+    dispose(): void;
+    // (undocumented)
+    disposeLocalVideoStreamView(): Promise<void>;
+    // (undocumented)
+    disposeRemoteVideoStreamView(): Promise<void>;
+    // (undocumented)
+    disposeScreenShareStreamView(): Promise<void>;
+    // (undocumented)
+    disposeStreamView(): Promise<void>;
+    // (undocumented)
+    getEnvironmentInfo(): Promise<EnvironmentInfo>;
+    // (undocumented)
+    getState(): CallAdapterState;
+    // (undocumented)
+    holdCall(): Promise<void>;
+    // (undocumented)
+    joinCall(): Call | undefined;
+    // (undocumented)
+    leaveCall(): Promise<void>;
+    // (undocumented)
+    lowerHand(): Promise<void>;
+    // (undocumented)
+    mute(): Promise<void>;
+    // (undocumented)
+    off(): void;
+    // (undocumented)
+    offStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    on(): void;
+    // (undocumented)
+    onStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    // (undocumented)
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    raiseHand(): Promise<void>;
+    // (undocumented)
+    removeParticipant(): Promise<void>;
+    // (undocumented)
+    resumeCall(): Promise<void>;
+    // (undocumented)
+    sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
+    // (undocumented)
+    setCamera(): Promise<void>;
+    // (undocumented)
+    setCaptionLanguage(): Promise<void>;
+    // (undocumented)
+    setMicrophone(): Promise<void>;
+    // (undocumented)
+    setSpeaker(): Promise<void>;
+    // (undocumented)
+    setSpokenLanguage(): Promise<void>;
+    // (undocumented)
+    setState(state: CallAdapterState): void;
+    // (undocumented)
+    startCall(): Call | undefined;
+    // (undocumented)
+    startCamera(): Promise<void>;
+    // (undocumented)
+    startCaptions(): Promise<void>;
+    // (undocumented)
+    startScreenShare(): Promise<void>;
+    // (undocumented)
+    startVideoBackgroundEffect(): Promise<void>;
+    // (undocumented)
+    state: CallAdapterState;
+    // (undocumented)
+    stopCamera(): Promise<void>;
+    // (undocumented)
+    stopCaptions(): Promise<void>;
+    // (undocumented)
+    stopScreenShare(): Promise<void>;
+    // (undocumented)
+    stopVideoBackgroundEffects(): Promise<void>;
+    // (undocumented)
+    unmute(): Promise<void>;
+    // (undocumented)
+    updateBackgroundPickerImages(): void;
+    // (undocumented)
+    updateSelectedVideoBackgroundEffect(): void;
+}
 
 // @public
 export type NetworkDiagnosticChangedEvent = NetworkDiagnosticChangedEventArgs & {

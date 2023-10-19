@@ -44,15 +44,10 @@ export type { BaseCompositeProps } from './common/BaseComposite';
 
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
-  CustomCallControlButtonCallbackArgs,
-  CustomControlButtonProps,
-  CustomCallControlButtonProps
-} from './common/types/CommonCallControlOptions';
-
-/* @conditional-compile-remove(control-bar-button-injection) */
-export type {
   CustomCallControlButtonCallback,
-  CustomCallControlButtonPlacement
+  CustomCallControlButtonPlacement,
+  CustomCallControlButtonCallbackArgs,
+  CustomCallControlButtonStrings
 } from './common/ControlBar/CustomButton';
 
 /* @conditional-compile-remove(video-background-effects) */
