@@ -173,6 +173,52 @@ export interface CallingTheme {
     };
 }
 
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        NoLocalAudio: string;
+        NoRemoteAudio: string;
+        Echo: string;
+        AudioNoise: string;
+        LowVolume: string;
+        AudioStoppedUnexpectedly: string;
+        DistortedSpeech: string;
+        AudioInterruption: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        CallCannotJoin: string;
+        CallCannotInvite: string;
+        HadToRejoin: string;
+        CallEndedUnexpectedly: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        NoContentLocal: string;
+        NoContentRemote: string;
+        CannotPresent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        LargeDelay: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        NoVideoReceived: string;
+        NoVideoSent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        DarkVideoReceived: string;
+        AudioVideoOutOfSync: string;
+        OtherIssues: string;
+    };
+}
+
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
@@ -1389,7 +1435,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
-}) => JSX.Element>;
+}) => React_2.JSX.Element>;
 
 // @beta
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
@@ -1904,7 +1950,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isPinned?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
-}) => JSX.Element>;
+}) => React_2.JSX.Element>;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -2182,6 +2228,13 @@ export interface StreamMediaProps {
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
+
+// @internal (undocumented)
+export type _SurveyTag = {
+    message: string;
+    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    issueCategory: _IssueCategory;
+};
 
 // @public
 export interface SurveyIssues {

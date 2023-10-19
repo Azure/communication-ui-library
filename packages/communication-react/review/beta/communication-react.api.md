@@ -628,10 +628,12 @@ export interface CallCompositeStrings {
     audioCategory: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    surveyIssues: SurveyIssues;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
+    cancelButtonAriaLabel: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
@@ -851,6 +853,52 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
+    };
+}
+
+// @beta
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        NoLocalAudio: string;
+        NoRemoteAudio: string;
+        Echo: string;
+        AudioNoise: string;
+        LowVolume: string;
+        AudioStoppedUnexpectedly: string;
+        DistortedSpeech: string;
+        AudioInterruption: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        CallCannotJoin: string;
+        CallCannotInvite: string;
+        HadToRejoin: string;
+        CallEndedUnexpectedly: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        NoContentLocal: string;
+        NoContentRemote: string;
+        CannotPresent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        LargeDelay: string;
+        OtherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        NoVideoReceived: string;
+        NoVideoSent: string;
+        LowQuality: string;
+        Freezes: string;
+        StoppedUnexpectedly: string;
+        DarkVideoReceived: string;
+        AudioVideoOutOfSync: string;
+        OtherIssues: string;
     };
 }
 
@@ -2364,49 +2412,49 @@ export const DEFAULT_COMPONENT_ICONS: {
 
 // @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
+    EditBoxCancel: JSX.Element | React_2.JSX.Element;
+    EditBoxSubmit: JSX.Element | React_2.JSX.Element;
+    MessageDelivered: JSX.Element | React_2.JSX.Element;
+    MessageEdit: JSX.Element | React_2.JSX.Element;
+    MessageFailed: JSX.Element | React_2.JSX.Element;
+    MessageRemove: JSX.Element | React_2.JSX.Element;
+    MessageSeen: JSX.Element | React_2.JSX.Element;
+    MessageSending: JSX.Element | React_2.JSX.Element;
+    ParticipantItemOptions: JSX.Element | React_2.JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element | React_2.JSX.Element;
+    SendBoxSend: JSX.Element | React_2.JSX.Element;
+    SendBoxSendHovered: JSX.Element | React_2.JSX.Element;
     SendBoxAttachFile?: JSX.Element | undefined;
     ControlBarPeopleButton?: JSX.Element | undefined;
-    ControlButtonCameraOff: JSX.Element;
-    ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element;
-    ControlButtonMicOff: JSX.Element;
-    ControlButtonMicOn: JSX.Element;
-    ControlButtonOptions: JSX.Element;
-    ControlButtonParticipants: JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonCameraOff: JSX.Element | React_2.JSX.Element;
+    ControlButtonCameraOn: JSX.Element | React_2.JSX.Element;
+    ControlButtonEndCall: JSX.Element | React_2.JSX.Element;
+    ControlButtonMicOff: JSX.Element | React_2.JSX.Element;
+    ControlButtonMicOn: JSX.Element | React_2.JSX.Element;
+    ControlButtonOptions: JSX.Element | React_2.JSX.Element;
+    ControlButtonParticipants: JSX.Element | React_2.JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element | React_2.JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element | React_2.JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
     ControlButtonMicProhibited?: JSX.Element | undefined;
-    ControlButtonRaiseHand: JSX.Element;
-    ControlButtonLowerHand: JSX.Element;
-    RaiseHandContextualMenuItem: JSX.Element;
-    LowerHandContextualMenuItem: JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element;
-    ErrorBarClear: JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element | React_2.JSX.Element;
+    ControlButtonLowerHand: JSX.Element | React_2.JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallCameraAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallLocalVideoFreeze: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNetworkQualityLow: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNoMicrophoneFound: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNoSpeakerFound: JSX.Element | React_2.JSX.Element;
+    ErrorBarClear: JSX.Element | React_2.JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element | React_2.JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element | React_2.JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element | undefined;
     LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
     LocalDeviceSettingsCamera?: JSX.Element | undefined;
@@ -2419,12 +2467,12 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
-    OptionsCamera: JSX.Element;
-    OptionsMic: JSX.Element;
-    OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element;
-    VideoTileMicOff: JSX.Element;
+    OptionsCamera: JSX.Element | React_2.JSX.Element;
+    OptionsMic: JSX.Element | React_2.JSX.Element;
+    OptionsSpeaker: JSX.Element | React_2.JSX.Element;
+    ParticipantItemMicOff: JSX.Element | React_2.JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element | React_2.JSX.Element;
+    VideoTileMicOff: JSX.Element | React_2.JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;

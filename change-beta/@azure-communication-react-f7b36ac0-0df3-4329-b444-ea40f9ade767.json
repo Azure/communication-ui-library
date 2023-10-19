@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "fix",
-  "workstream": "Chat message default timestamp localization",
-  "comment": "Enable localized default date/timestamp",
+  "area": "improvement",
+  "workstream": "Dependency Updates",
+  "comment": "Update backward-compatible packages",
   "packageName": "@azure/communication-react",
   "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "patch"

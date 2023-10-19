@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "fix",
-  "workstream": "Fluent N* removal",
-  "comment": "Flex-wrap the top div of chat messages",
+  "area": "improvement",
+  "workstream": "Dependency Updates",
+  "comment": "Update rush to v 5.109.1",
   "packageName": "@azure/communication-react",
   "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "none"

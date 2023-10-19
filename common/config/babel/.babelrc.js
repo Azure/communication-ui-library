@@ -72,6 +72,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'gallery-layouts',
         // Feature image gallery
         'image-gallery',
+        // Feature for end of call survey
+        'end-of-call-survey',
         // Feature for large Gallery layout
         'large-gallery',
         // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -90,7 +92,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for custom video gallery layouts
+        // Feature for end of call survey
+        'end-of-call-survey',
         // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
         'large-gallery',
         // feature for positioning the overflowGallery at the top of the screen in the composite

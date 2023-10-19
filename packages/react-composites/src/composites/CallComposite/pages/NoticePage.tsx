@@ -95,7 +95,6 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       {/* @conditional-compile-remove(end-of-call-survey) */!props.surveyOptions?.hideSurvey && <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />}
 
       {/* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey &&showTagsSurvey && <TagsSurvey issues={issues} />}
-
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)} aria-live="assertive">
