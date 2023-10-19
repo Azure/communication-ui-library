@@ -1,8 +1,62 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Thu, 07 Sep 2023 02:42:30 GMT and should not be manually modified.
+This log was last generated on Fri, 06 Oct 2023 19:59:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.9.0](https://github.com/azure/communication-ui-library/tree/1.9.0)
+
+Fri, 06 Oct 2023 19:59:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.9.0-beta.1...1.9.0)
+
+### Gallery Layouts - General Availability
+ACS Web UI Library now supports new Gallery Layouts in the CallComposite and CallWithChatComposite on web and mobile. This feature allows users to choose a video gallery layout from an existing set of layouts. The existing layouts to choose from are: Gallery, Gallery on Top, Focus Mode, and Speaker Mode. This support also allows call owners to set the default layout for the call.
+
+### Features
+- Add support for new Gallery Layouts in the CallComposite and CallWithChatComposite on web and mobile ([PR #3645](https://github.com/azure/communication-ui-library/pull/3645) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce gallery controls to mobile for default and dynamic views ([PR #3603](https://github.com/azure/communication-ui-library/pull/3603) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce storybook docs for gallery layouts ([PR #3616](https://github.com/azure/communication-ui-library/pull/3616) by 94866715+dmceachernmsft@users.noreply.github.com)
+### Improvements
+- Add Capabilitieschanged event to CallWithChatAdapter ([PR #3570](https://github.com/azure/communication-ui-library/pull/3570) by 79475487+mgamis-msft@users.noreply.github.com)
+- Treeshake locales from composites and reduce bundle size ([PR #3615](https://github.com/azure/communication-ui-library/pull/3615) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Improve ComplianceBanner preview in storybook ([PR #3635](https://github.com/azure/communication-ui-library/pull/3635) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update documentation to remove FluentUI NorthStar wrapper package ([PR #3650](https://github.com/azure/communication-ui-library/pull/3650) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update documentation for file sharing ([PR #3581](https://github.com/azure/communication-ui-library/pull/3581) by 109105353+jpeng-ms@users.noreply.github.com)
+- Update storybook anchors to use ref ([PR #3625](https://github.com/azure/communication-ui-library/pull/3625) by joshlai@microsoft.com)
+- Remove NorthStar fluent dependency and replace with fluent 9 controls ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update the styling on system messages to a smaller font and reduced vertical padding([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add localized timestamp by default to chat messages([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add storybook documentation for capabilities ([PR #3585](https://github.com/azure/communication-ui-library/pull/3585) by 79475487+mgamis-msft@users.noreply.github.com)
+- Storybook changes for ImageGallery ([PR #3590](https://github.com/azure/communication-ui-library/pull/3590) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+### Bug Fixes
+- Fix content focusing when opening the video effects pane in call composite ([PR #3627](https://github.com/azure/communication-ui-library/pull/3627) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Introduce missing composite options to the CallWithChat composite ([PR #3565](https://github.com/azure/communication-ui-library/pull/3565) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix legacy control bar logic to limit number of control bar buttons on mobile ([PR #3561](https://github.com/azure/communication-ui-library/pull/3561) by miguelgamis@microsoft.com)
+- Default render of participant list item will yield none for presence ([PR #3619](https://github.com/azure/communication-ui-library/pull/3619) by 79329532+alkwa-msft@users.noreply.github.com)
+- When screen is too small, decrease captions banner size so scroll bar and more button doesnot overlap ([PR #3653](https://github.com/azure/communication-ui-library/pull/3653) by carolinecao@microsoft.com)
+- Enable localized default date/timestamp ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 3941071+emlynmac@users.noreply.github.com)
+- Apply background color to overflow menu items in contextual menu and lighten opacity for call readiness prompts ([PR #3639](https://github.com/azure/communication-ui-library/pull/3639) by edwardlee@microsoft.com)
+- Fix styles for when the end call button is focused in high contrast scenarios ([PR #3566](https://github.com/azure/communication-ui-library/pull/3566) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update styles of configuration page to match specification ([PR #3621](https://github.com/azure/communication-ui-library/pull/3621) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Increase the gap of the floating local video's initial posiition from the bottom right ([PR #3605](https://github.com/azure/communication-ui-library/pull/3605) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix for long display name to truncate after 50 charactrers ([PR #3633](https://github.com/azure/communication-ui-library/pull/3633) by 9044372+JoshuaLai@users.noreply.github.com)
+- Fix rtl margins for messages without avatar ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix some repetitions for narrator ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix edit box hover/select styles ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Remove FocusTrapZone from ImageGallery ([PR #3569](https://github.com/azure/communication-ui-library/pull/3569) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Flex-wrap the top div of chat messages ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 3941071+emlynmac@users.noreply.github.com)
+- Rich text css styles update ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix up menu size and appearance on mobile ([PR #3654](https://github.com/azure/communication-ui-library/pull/3654) by 3941071+emlynmac@users.noreply.github.com)
+- Paddings and margins update for messages ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update verticalGallery key in localization strings ([PR #3652](https://github.com/azure/communication-ui-library/pull/3652) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix up padding for case of action menu not visible ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 3941071+emlynmac@users.noreply.github.com)
+- Update editBoxSubmitButton string ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Show more button only if enabled and has at least one context menu button to show ([PR #3583](https://github.com/azure/communication-ui-library/pull/3583) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix redundant presenter role notification when joining Teams interop call ([PR #3584](https://github.com/azure/communication-ui-library/pull/3584) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix issue with black border ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update Message Thread rendering logic ([PR #3578](https://github.com/azure/communication-ui-library/pull/3578) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Prevent the callout for the gallery layouts from dismissing from a rerender ([PR #3568](https://github.com/azure/communication-ui-library/pull/3568) by 94866715+dmceachernmsft@users.noreply.github.com)
+
 
 ## [1.8.0](https://github.com/azure/communication-ui-library/tree/1.8.0)
 

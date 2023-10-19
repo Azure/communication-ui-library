@@ -1,9 +1,9 @@
 {
-  "type": "patch",
+  "type": "none",
   "area": "improvement",
-  "workstream": "Calling",
-  "comment": "Treeshake locales from composites",
+  "workstream": "Release",
+  "comment": "Groom changelog for 1.9.0 stable release",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
+  "dependentChangeType": "none"
 }
