@@ -147,7 +147,7 @@ function onFetchParticipantMenuItems(): IContextualMenuItem[] {
     }
   ];
 }
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
