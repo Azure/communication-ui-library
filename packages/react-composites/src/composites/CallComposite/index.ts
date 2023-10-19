@@ -10,12 +10,6 @@ export type { RemoteVideoTileMenuOptions } from './CallComposite';
 /* @conditional-compile-remove(click-to-call) */
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
-/* @conditional-compile-remove(control-bar-button-injection) */
-export type {
-  CustomCallControlButtonCallbackArgs,
-  CustomCallControlButtonProps,
-  CustomControlButtonProps
-} from './types/CallControlOptions';
 
 export * from './Strings';
 
@@ -97,3 +91,5 @@ export type { TransferRequestedListener } from './adapter';
 export type { CapabilitiesChangedListener } from './adapter';
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+
+export * from './MockCallAdapter';
