@@ -8,15 +8,14 @@ import { CommonCallControlOptions, _CommonCallControlOptions } from '../../commo
  *
  * @public
  */
-export type CallControlOptions =
-  | CommonCallControlOptions & {
-      /**
-       * Show, Hide or Disable participants button during a call. This is the option only work for legacyControl bar.
-       * @defaultValue true
-       */
-      participantsButton?: boolean | { disabled: boolean };
-      legacyControlBarExperience?: boolean;
-    };
+export type CallControlOptions = CommonCallControlOptions & {
+  /**
+   * Show, Hide or Disable participants button during a call. This is the option only work for legacyControl bar.
+   * @defaultValue true
+   */
+  participantsButton?: boolean | { disabled: boolean };
+  legacyControlBarExperience?: boolean;
+};
 
 /**
  * While the API for the legacyControlBarExperience is in beta. Use this type to access the internal
