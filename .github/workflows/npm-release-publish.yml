@@ -107,6 +107,11 @@ jobs:
           echo version: $ver
           echo "version=$ver" >> $GITHUB_OUTPUT
 
+      # Clean package.json
+      - name: Remove scripts, devDependencies, and beachball from package.json
+        run: node ./common/scripts/preparePackageJSON.js
+        working-directory: ./packages/communication-react
+
       # Publish package
       - name: Package packages for release
         run: npm pack
