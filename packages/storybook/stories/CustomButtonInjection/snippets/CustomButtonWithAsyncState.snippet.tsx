@@ -6,7 +6,7 @@ import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
  * A simple async function for testing async and await callbacks with custom buttons
  * @param stallTime number in milliseconds, default is 2000ms.
  */
-const simpleAsyncCall = async (stallTime = 2000) => {
+const simpleAsyncCall = async (stallTime = 2000): Promise<void> => {
   await new Promise((resolve) => setTimeout(resolve, stallTime));
 };
 

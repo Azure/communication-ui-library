@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ErrorType } from '@azure/communication-react';
+import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -443,19 +443,19 @@ export const controlsToAdd = {
       control: 'object',
       if: { arg: 'allowRawObjectInput' },
       defaultValue: [
-        () => ({
+        (): CustomCallControlButtonProps => ({
           placement: 'primary',
           strings: {
             label: 'Custom'
           }
         }),
-        () => ({
+        (): CustomCallControlButtonProps => ({
           placement: 'secondary',
           strings: {
             label: 'Custom'
           }
         }),
-        () => ({
+        (): CustomCallControlButtonProps => ({
           placement: 'overflow',
           strings: {
             label: 'Custom'

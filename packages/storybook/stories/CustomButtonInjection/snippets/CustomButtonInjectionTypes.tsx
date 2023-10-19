@@ -5,7 +5,8 @@ export const compositeCanvasContainerStyles = {
   height: '22rem'
 };
 
-export const addCSS = (css) => (document.head.appendChild(document.createElement('style')).innerHTML = css);
+export const addCSS = (css: string): string =>
+  (document.head.appendChild(document.createElement('style')).innerHTML = css);
 
 /**
  * Copy of @CustomCallControlButtonProps as displaying props in storybook using package import
@@ -45,6 +46,7 @@ export interface MockCustomCallControlButtonProps {
   strings?: CustomCallControlButtonStrings;
 }
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export const CustomButtonInjection = (props: MockCustomCallControlButtonProps): JSX.Element => {
   return <></>;
 };
