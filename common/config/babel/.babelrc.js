@@ -92,8 +92,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for custom video gallery layouts
-        'gallery-layouts',
         // Feature for end of call survey
         'end-of-call-survey',
         // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS

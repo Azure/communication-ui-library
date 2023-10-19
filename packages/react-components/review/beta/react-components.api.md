@@ -1710,7 +1710,7 @@ export interface OptionsDevice {
 // @internal
 export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
 
-// @beta
+// @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
