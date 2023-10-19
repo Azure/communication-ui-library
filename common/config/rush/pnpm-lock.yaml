@@ -2027,13 +2027,13 @@ packages:
     resolution: {integrity: sha512-OWORNpfjMsSSUBVrRBVGECkhWcULOAJz9ZW8uK9qgxD+87M7jHRcvh/A96XXNhXTLmKcoYSQtBEX7lHMO7YRwg==}
     dev: false
 
-  /@es-joy/jsdoccomment@0.10.8:
-    resolution: {integrity: sha512-3P1JiGL4xaR9PoTKUHa2N/LKwa2/eUdRqGwijMWWgBqbFEqJUVpmaOi2TcjcemrsRMgFLBzQCK4ToPhrSVDiFQ==}
-    engines: {node: ^12 || ^14 || ^16}
+  /@es-joy/jsdoccomment@0.40.1:
+    resolution: {integrity: sha512-YORCdZSusAlBrFpZ77pJjc5r1bQs5caPWtAu+WWmiSo+8XaUzseapVrfAtiRFbQWnrBxxLLEwF6f6ZG/UgCQCg==}
+    engines: {node: '>=16'}
     dependencies:
-      comment-parser: 1.2.4
+      comment-parser: 1.4.0
       esquery: 1.5.0
-      jsdoc-type-pratt-parser: 1.1.1
+      jsdoc-type-pratt-parser: 4.0.0
     dev: false
 
   /@eslint-community/eslint-utils@4.4.0(eslint@8.51.0):
@@ -7784,6 +7784,11 @@ packages:
     resolution: {integrity: sha512-lYe4Gx7QT+MKGbDsA+Z+he/Wtef0BiwDOlK/XkBrdfsh9J/jPPXbX0tE9x9cl27Tmu5gg3QUbUrQYa/y+KOHPQ==}
     dev: false
 
+  /are-docs-informative@0.0.2:
+    resolution: {integrity: sha512-ixiS0nLNNG5jNQzgZJNoUpBKdo9yTYZMGJ+QgT2jmjR7G7+QHRCc4v6LQ3NgE7EBJq+o0ams3waJwkrlBom8Ig==}
+    engines: {node: '>=14'}
+    dev: false
+
   /are-we-there-yet@2.0.0:
     resolution: {integrity: sha512-Ci/qENmwHnsYo9xKIcUJN5LeDKdJ6R1Z1j9V/J5wyq8nh/mYPEpIKJbBZXtZjG04HiK7zV/p6Vs9952MrMeUIw==}
     engines: {node: '>=10'}
@@ -8674,6 +8679,11 @@ packages:
       isarray: 1.0.0
     dev: false
 
+  /builtin-modules@3.3.0:
+    resolution: {integrity: sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==}
+    engines: {node: '>=6'}
+    dev: false
+
   /builtin-status-codes@3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
     dev: false
@@ -9203,8 +9213,8 @@ packages:
     dev: false
     optional: true
 
-  /comment-parser@1.2.4:
-    resolution: {integrity: sha512-pm0b+qv+CkWNriSTMsfnjChF9kH0kxz55y44Wo5le9qLxMj5xDQAaEd9ZN1ovSuk9CsrncWaFwgpOMg7ClJwkw==}
+  /comment-parser@1.4.0:
+    resolution: {integrity: sha512-QLyTNiZ2KDOibvFPlZ6ZngVsZ/0gYnE6uTXi5aoDg8ed3AkJAz4sEje3Y8a29hQ1s6A99MZXe47fLAXQ1rTqaw==}
     engines: {node: '>= 12.0.0'}
     dev: false
 
@@ -10651,20 +10661,20 @@ packages:
       - typescript
     dev: false
 
-  /eslint-plugin-jsdoc@36.1.1(eslint@8.51.0):
-    resolution: {integrity: sha512-nuLDvH1EJaKx0PCa9oeQIxH6pACIhZd1gkalTUxZbaxxwokjs7TplqY0Q8Ew3CoZaf5aowm0g/Z3JGHCatt+gQ==}
-    engines: {node: ^12 || ^14 || ^16}
+  /eslint-plugin-jsdoc@46.8.2(eslint@8.51.0):
+    resolution: {integrity: sha512-5TSnD018f3tUJNne4s4gDWQflbsgOycIKEUBoCLn6XtBMgNHxQFmV8vVxUtiPxAQq8lrX85OaSG/2gnctxw9uQ==}
+    engines: {node: '>=16'}
     peerDependencies:
-      eslint: ^6.0.0 || ^7.0.0
+      eslint: ^7.0.0 || ^8.0.0
     dependencies:
-      '@es-joy/jsdoccomment': 0.10.8
-      comment-parser: 1.2.4
+      '@es-joy/jsdoccomment': 0.40.1
+      are-docs-informative: 0.0.2
+      comment-parser: 1.4.0
       debug: 4.3.4(supports-color@5.5.0)
+      escape-string-regexp: 4.0.0
       eslint: 8.51.0
       esquery: 1.5.0
-      jsdoc-type-pratt-parser: 1.2.0
-      lodash: 4.17.21
-      regextras: 0.8.0
+      is-builtin-module: 3.2.1
       semver: 7.5.4
       spdx-expression-parse: 3.0.1
     transitivePeerDependencies:
@@ -12681,6 +12691,13 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /is-builtin-module@3.2.1:
+    resolution: {integrity: sha512-BSLE3HnV2syZ0FK0iMA/yUGplUeMmNz4AW5fnTunbCIqZi4vG3WjJT9FHMy5D69xmAYBHXQhJdALdpwVxV501A==}
+    engines: {node: '>=6'}
+    dependencies:
+      builtin-modules: 3.3.0
+    dev: false
+
   /is-callable@1.2.7:
     resolution: {integrity: sha512-1BC0BVFhS/p0qtw6enp8e+8OD0UrK0oFLztSjNzhcKA3WDuJxxAPXzPuPtKkjEY9UUoEWlX/8fgKeu2S8i9JTA==}
     engines: {node: '>= 0.4'}
@@ -13896,13 +13913,8 @@ packages:
       argparse: 2.0.1
     dev: false
 
-  /jsdoc-type-pratt-parser@1.1.1:
-    resolution: {integrity: sha512-uelRmpghNwPBuZScwgBG/OzodaFk5RbO5xaivBdsAY70icWfShwZ7PCMO0x1zSkOa8T1FzHThmrdoyg/0AwV5g==}
-    engines: {node: '>=12.0.0'}
-    dev: false
-
-  /jsdoc-type-pratt-parser@1.2.0:
-    resolution: {integrity: sha512-4STjeF14jp4bqha44nKMY1OUI6d2/g6uclHWUCZ7B4DoLzaB5bmpTkQrpqU+vSVzMD0LsKAOskcnI3I3VfIpmg==}
+  /jsdoc-type-pratt-parser@4.0.0:
+    resolution: {integrity: sha512-YtOli5Cmzy3q4dP26GraSOeAhqecewG04hoO8DY56CH4KJ9Fvv5qKWUCCo3HZob7esJQHCv6/+bnTy72xZZaVQ==}
     engines: {node: '>=12.0.0'}
     dev: false
 
@@ -16584,11 +16596,6 @@ packages:
       regjsparser: 0.9.1
       unicode-match-property-ecmascript: 2.0.0
       unicode-match-property-value-ecmascript: 2.1.0
-    dev: false
-
-  /regextras@0.8.0:
-    resolution: {integrity: sha512-k519uI04Z3SaY0fLX843MRXnDeG2+vHOFsyhiPZvNLe7r8rD2YNRjq4BQLZZ0oAr2NrtvZlICsXysGNFPGa3CQ==}
-    engines: {node: '>=0.1.14'}
     dev: false
 
   /regjsparser@0.9.1:
@@ -19888,7 +19895,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-t7Kxvv7gExPypOG9ILInpGSDxcSF0H+Kncueqc2vXmk12fe3b3nmU1sgUIVjJHd/IX+/5o7o9p1axOmOXJzmFw==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-DLPk9Tu6gV6RBSsNxhPOwnJvSKRfgdMvFZU5FxEbAuYQQCly3tFf2+d0W+1Q6GGU3smmDCgxE1rvJ0bWYjaQXQ==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -19911,7 +19918,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@16.18.59)(ts-node@10.9.1)
@@ -19934,7 +19941,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-0H7KjlJ1f/3HvZglvEDy7BqIzjUQcprt1oxKdKgFIV5pGbWLP3Bs9wddLKDmvY/Yn7ToxtNb7auEtNmcrrLOpw==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-A9X/cn9zKTUHjHrNFGzj3QjcvEiaLiUntWzX5EHQaoXyGSMJz6Ij7n1Tm3uab7OFawxwGKfaNfE/6SWsS6Q7CA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -19958,7 +19965,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@16.18.59)(ts-node@10.9.1)
@@ -19983,7 +19990,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-LCuVN9NiLVmvwwvIX8XizxfalqyiqiQ1Dnq73eeatsn4lowsa2U5Zh9gTPAAMXv5JfSdxNuEK+ZmRZN0BJYXZA==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-QxBU1ohYLP9Knqxom2Tf9vzRD90ZYh3xYAi4j1U0lI5z8QLSbCo+40OVuoZerAtS3UFX2Hghx6gWcRPeBgIffQ==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20008,7 +20015,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       events: 3.3.0
       if-env: 1.0.4
@@ -20210,7 +20217,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-GZRs/R/sroKpPOWaxPJe/TzPqBxdY9J/BGL5KcypfxY7AHelzZhuaZik8yZisJnGi0AUI//m+jlxXgBAxbUS/A==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-DIXV5pbhT/SuC9oArlUrv1w+7ig4rwZ6KgfGUtf2kw3jvSgymODImEJZWqdsA2er355ERzJENHl2L0ObcwE+Zw==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -20232,7 +20239,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@16.18.59)(ts-node@10.9.1)
@@ -20254,7 +20261,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-g+XUN4dGvp3PS31xKoE0WujUP+QYDBHq30nfb3GeDRZASyi3z+rf2vbSHtU3pE9ud7nE4DiCgwMaobDr/LTe5A==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-LEsofw1SicQHtFxFOQLGS2Y6L2c2ER2fniTWNT6tyQDWGP//yxEdyiQsasUiwfuX02PG5JV4oc4e2a/fjtPffQ==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -20280,7 +20287,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       events: 3.3.0
       if-env: 1.0.4
@@ -20620,7 +20627,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-SElw/fw1f517DXUIah68iaNIIWexqvfFWUumMdoe/ZUMgcA8mvTW9q1rEZS8cY1tw4qiBX7/FFPAQP2ixFCc0g==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-RdD9jnxkOPzqYStWIWhO8MHCnRyP+a72CZATxpHIjkrUpH4DN5KDv+PmF7LzujbB6tNBF8wfcgODZ6hB56BhHA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -20645,7 +20652,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       events: 3.3.0
       if-env: 1.0.4
@@ -20674,7 +20681,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-zl47xpEI71oD4xV+kKOsWxQuzPL12f+OgYrMYpWzNnb4C1j4nwOS/0ELmeq5Vk4xNFyGAc7XamhKtM58amroSQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-npYwF9NXe+UVZ88krOvWVgbFGlBJR4yVljiJur3gbeb+CtYjtTOI7tHMG9jktelXOyKTO8+3z9Tpylntlejb5w==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -20722,7 +20729,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-jsx-a11y: 6.7.1(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       eslint-plugin-react: 7.33.2(eslint@8.51.0)
@@ -20776,7 +20783,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-vVpAMEpfBDPVMnWn0Uyd9TVbtwddX7cTLmmTKkOBE7Ws48BvpdzkOB3Xb5fCXA+cSUWmvDFMkkdDVMUz9j4tMw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-/hDn21o1Df7qEJVE8dHXXawU4zuc/CdM1Ig0duMuW6FILgSH5ivVBK9Q6lVlxD3btRfZ0rUQIxJCLPlsw/XIJA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20831,7 +20838,7 @@ packages:
       eslint-config-prettier: 9.0.0(eslint@8.51.0)
       eslint-plugin-header: 3.1.1(eslint@8.51.0)
       eslint-plugin-import: 2.28.1(eslint@8.51.0)
-      eslint-plugin-jsdoc: 36.1.1(eslint@8.51.0)
+      eslint-plugin-jsdoc: 46.8.2(eslint@8.51.0)
       eslint-plugin-jsx-a11y: 6.7.1(eslint@8.51.0)
       eslint-plugin-prettier: 5.0.1(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
       eslint-plugin-react: 7.33.2(eslint@8.51.0)
