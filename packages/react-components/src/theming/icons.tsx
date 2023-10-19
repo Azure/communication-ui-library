@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import React from 'react';
+
 import { mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { Stack } from '@fluentui/react';
@@ -88,7 +90,6 @@ import { Prohibited16Regular } from '@fluentui/react-icons';
 import { Warning20Filled } from '@fluentui/react-icons';
 import { _pxToRem } from '@internal/acs-ui-common';
 
-import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
@@ -100,9 +101,9 @@ import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.sty
  *
  * @public
  */
-export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.Element>;
+export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, React.JSX.Element>;
 
-const WifiWarning16Filled = (): JSX.Element => (
+const WifiWarning16Filled = (): React.JSX.Element => (
   // All ErrorBar icons are 16px x 16px (when 1rem = 16 px).
   // There is no 16px version of this icon in the fluent icon package, so scale the larger
   // one down to required size.
@@ -111,7 +112,7 @@ const WifiWarning16Filled = (): JSX.Element => (
   </div>
 );
 
-const MoreHorizontal18Regular = (): JSX.Element => (
+const MoreHorizontal18Regular = (): React.JSX.Element => (
   // MoreHorizontal icons are 16px x 16px or 20px x 20px so scaling to get desired size
   <div className={mergeStyles({ transform: 'scale(0.9)' })}>
     <MoreHorizontal20Regular />
@@ -119,7 +120,7 @@ const MoreHorizontal18Regular = (): JSX.Element => (
 );
 
 /* @conditional-compile-remove(call-readiness) */
-const SitePermissionMic20Filled = (): JSX.Element => {
+const SitePermissionMic20Filled = (): React.JSX.Element => {
   const theme = useTheme();
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
@@ -131,7 +132,7 @@ const SitePermissionMic20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const SitePermissionCamera20Filled = (): JSX.Element => {
+const SitePermissionCamera20Filled = (): React.JSX.Element => {
   const theme = useTheme();
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
@@ -143,7 +144,7 @@ const SitePermissionCamera20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const SitePermissionsMicDenied20Filled = (): JSX.Element => {
+const SitePermissionsMicDenied20Filled = (): React.JSX.Element => {
   const theme = useTheme();
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
@@ -155,7 +156,7 @@ const SitePermissionsMicDenied20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const SitePermissionsCameraDenied20Filled = (): JSX.Element => {
+const SitePermissionsCameraDenied20Filled = (): React.JSX.Element => {
   const theme = useTheme();
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
@@ -167,14 +168,14 @@ const SitePermissionsCameraDenied20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const SitePermissionSparkle20Filled = (): JSX.Element => (
+const SitePermissionSparkle20Filled = (): React.JSX.Element => (
   <div className={mergeStyles({ transform: 'scale(2)' })}>
     <Sparkle20Filled />
   </div>
 );
 
 /* @conditional-compile-remove(unsupported-browser) */
-const UnsupportedEnvironmentWarning = (): JSX.Element => {
+const UnsupportedEnvironmentWarning = (): React.JSX.Element => {
   const theme = useTheme();
   return (
     <Stack
@@ -197,7 +198,7 @@ const UnsupportedEnvironmentWarning = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(call-readiness) */
-const BrowserPermissionDenied20Filled = (): JSX.Element => {
+const BrowserPermissionDenied20Filled = (): React.JSX.Element => {
   const theme = useTheme();
   return (
     <Stack horizontalAlign={'center'} styles={sitePermissionIconBackgroundStyle(theme)}>
@@ -209,16 +210,16 @@ const BrowserPermissionDenied20Filled = (): JSX.Element => {
 };
 
 /* @conditional-compile-remove(data-loss-prevention) */
-const DataLossPreventionProhibited16Regular = (): JSX.Element => {
+const DataLossPreventionProhibited16Regular = (): React.JSX.Element => {
   return <Prohibited16Regular />;
 };
 
-const GalleryLeftButton = (): JSX.Element => {
+const GalleryLeftButton = (): React.JSX.Element => {
   const rtl = useTheme().rtl;
   return rtl ? <ChevronRight20Regular /> : <ChevronLeft20Regular />;
 };
 
-const GalleryRightButton = (): JSX.Element => {
+const GalleryRightButton = (): React.JSX.Element => {
   const rtl = useTheme().rtl;
   return rtl ? <ChevronLeft20Regular /> : <ChevronRight20Regular />;
 };
