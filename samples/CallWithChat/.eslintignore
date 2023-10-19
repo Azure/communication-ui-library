@@ -2,3 +2,4 @@ docs/
 public/
 dist/
 node_modules/
+preprocessed/
