@@ -17,6 +17,7 @@ import { _FileUploadCards } from '../FileUploadCards';
 import { FileMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
+  editChatMessageFailedTagStyle,
   chatMessageFailedTagStackItemStyle,
   editChatMessageButtonsStackStyle,
   useChatMessageEditContainerStyles
@@ -151,39 +152,44 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
         <Stack
           horizontal
           horizontalAlign="end"
-          verticalAlign="start"
           className={editChatMessageButtonsStackStyle}
           tokens={{ childrenGap: '0.25rem' }}
         >
           {message.failureReason && (
-            <Stack.Item grow className={chatMessageFailedTagStackItemStyle}>
-              <div className={chatMessageFailedTagStyle(theme)}>{message.failureReason}</div>
+            <Stack.Item grow align="stretch" className={chatMessageFailedTagStackItemStyle}>
+              <div className={mergeStyles(chatMessageFailedTagStyle(theme), editChatMessageFailedTagStyle)}>
+                {message.failureReason}
+              </div>
             </Stack.Item>
           )}
-          <InputBoxButton
-            className={editingButtonStyle}
-            ariaLabel={strings.editBoxCancelButton}
-            tooltipContent={strings.editBoxCancelButton}
-            onRenderIcon={onRenderThemedCancelIcon}
-            onClick={() => {
-              onCancel && onCancel(message.messageId);
-            }}
-            id={'dismissIconWrapper'}
-          />
-          <InputBoxButton
-            className={editingButtonStyle}
-            ariaLabel={strings.editBoxSubmitButton}
-            tooltipContent={strings.editBoxSubmitButton}
-            onRenderIcon={onRenderThemedSubmitIcon}
-            onClick={(e) => {
-              submitEnabled &&
-                onSubmit(textValue, message.metadata, {
-                  attachedFilesMetadata
-                });
-              e.stopPropagation();
-            }}
-            id={'submitIconWrapper'}
-          />
+          <Stack.Item align="end">
+            <InputBoxButton
+              className={editingButtonStyle}
+              ariaLabel={strings.editBoxCancelButton}
+              tooltipContent={strings.editBoxCancelButton}
+              onRenderIcon={onRenderThemedCancelIcon}
+              onClick={() => {
+                onCancel && onCancel(message.messageId);
+              }}
+              id={'dismissIconWrapper'}
+            />
+          </Stack.Item>
+          <Stack.Item align="end">
+            <InputBoxButton
+              className={editingButtonStyle}
+              ariaLabel={strings.editBoxSubmitButton}
+              tooltipContent={strings.editBoxSubmitButton}
+              onRenderIcon={onRenderThemedSubmitIcon}
+              onClick={(e) => {
+                submitEnabled &&
+                  onSubmit(textValue, message.metadata, {
+                    attachedFilesMetadata
+                  });
+                e.stopPropagation();
+              }}
+              id={'submitIconWrapper'}
+            />
+          </Stack.Item>
         </Stack>
         {onRenderFileUploads()}
       </>

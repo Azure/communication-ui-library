@@ -92,16 +92,22 @@ export const chatMessageFailedTagStyle = (theme: Theme): string =>
 /**
  * @private
  */
+export const editChatMessageFailedTagStyle = mergeStyles({
+  marginBottom: '0.5rem'
+});
+
+/**
+ * @private
+ */
 export const chatMessageFailedTagStackItemStyle = mergeStyles({
-  alignSelf: 'end',
-  paddingBottom: '0.25rem'
+  alignSelf: 'end'
 });
 
 /**
  * @private
  */
 export const editChatMessageButtonsStackStyle = mergeStyles({
-  padding: '0 0.5rem 0.5rem 0.5rem',
+  padding: '0 0.5rem',
   marginTop: '-0.25rem'
 });
 
