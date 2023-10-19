@@ -63,7 +63,7 @@
     "@azure/communication-signaling": ["1.0.0-beta.20"],
     "typescript": [
       // All projects should use this version by default
-      "4.3.5",
+      "4.7.4",
 
       // Typescript check project's dependency -- this is our minimum supported typescript version of our npm package.
       "3.8.3"

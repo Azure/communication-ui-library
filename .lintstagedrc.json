@@ -1,0 +1,4 @@
+{
+  "*.ts": "prettier --fix",
+  "*.tsx": "prettier --fix"
+}
