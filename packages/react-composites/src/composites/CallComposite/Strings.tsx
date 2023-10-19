@@ -683,39 +683,49 @@ export interface CallCompositeStrings {
   starSurveyFiveStarText?: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Confirm Button Label
-   */
-  starSurveyConfirmButtonLabel?: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
    * Aria Label for each individual star rating
    */
   starRatingAriaLabel: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Aria Label for cancel button
-   */
-  starRatingCancelButtonAriaLabel: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
    * Tags Survey Question
    */
-  TagsSurveyQuestion: string;
+  tagsSurveyQuestion: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Confirm button label for tags survey
+   * Tags Survey helper text
    */
-  TagsSurveyConfirmButtonLabel: string;
+  tagsSurveyHelperText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Cancel button label for tags survey
+   * Category label for tag survey
    */
-  TagsSurveyCancelButtonLabel: string;
+  audioCategory: string
+   /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Category label for tag survey
+   */
+  videoCategory: string
+   /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Category label for tag survey
+   */
+  screenshareCategory: string
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Aria Label for tags survey cancel button
+   * Confirm button label for survey
    */
-  tagsSurveyCancelButtonAriaLabel: string;
+  surveyConfirmButtonLabel: string;
+   /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Aria Label for cancel button
+   */
+  surveyCancelButtonAriaLabel: string;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Default text for free form text box
+   */
+  surveyTextboxDefaultText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Corresponding texts to each call issue

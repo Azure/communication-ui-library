@@ -14,7 +14,6 @@ import type { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BaseCustomStyles } from '@internal/react-components';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
-import { SurveyIssues } from '@internal/react-components';
 import { CallState } from '@internal/calling-stateful-client';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallSurveyResponse } from '@azure/communication-calling';
@@ -61,6 +60,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { SubmitSurveyOptions } from '@azure/communication-calling';
+import { SurveyIssues } from '@internal/react-components';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -223,7 +223,6 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -406,7 +405,15 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    survey?: boolean;
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSubmitSurvey?: (callId: string,
+        surveyResults: CallSurvey,
+        improvementSuggestions: {
+            category: 'audio' | 'video' | 'screenshare';
+            suggestion: string;
+        }[]) => Promise<void>;
+    };
 };
 
 // @public
@@ -422,9 +429,9 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
+    audioCategory: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
-    surveyIssues: SurveyIssues;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -538,12 +545,11 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
+    screenshareCategory: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
     starRatingAriaLabel: string;
-    starRatingCancelButtonAriaLabel: string;
-    starSurveyConfirmButtonLabel?: string;
     starSurveyFiveStarText?: string;
     starSurveyFourStarText?: string;
     starSurveyHelperText?: string;
@@ -557,10 +563,12 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    tagsSurveyCancelButtonAriaLabel: string;
-    TagsSurveyCancelButtonLabel: string;
-    TagsSurveyConfirmButtonLabel: string;
-    TagsSurveyQuestion: string;
+    surveyCancelButtonAriaLabel: string;
+    surveyConfirmButtonLabel: string;
+    surveyIssues: SurveyIssues;
+    surveyTextboxDefaultText: string;
+    tagsSurveyHelperText: string;
+    tagsSurveyQuestion: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -574,6 +582,7 @@ export interface CallCompositeStrings {
     unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    videoCategory: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -672,7 +681,6 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -902,7 +910,13 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    survey?: boolean;
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSubmitSurvey?: (callId: string, surveyResults: CallSurvey, improvementSuggestions: {
+            category: 'audio' | 'video' | 'screenshare';
+            suggestion: string;
+        }[]) => Promise<void>;
+    };
 };
 
 // @public

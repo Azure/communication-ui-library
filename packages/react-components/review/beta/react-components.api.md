@@ -173,52 +173,6 @@ export interface CallingTheme {
     };
 }
 
-// @beta
-export interface SurveyIssues {
-    // (undocumented)
-    audioRating: {
-        NoLocalAudio: string;
-        NoRemoteAudio: string;
-        Echo: string;
-        AudioNoise: string;
-        LowVolume: string;
-        AudioStoppedUnexpectedly: string;
-        DistortedSpeech: string;
-        AudioInterruption: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    overallRating: {
-        CallCannotJoin: string;
-        CallCannotInvite: string;
-        HadToRejoin: string;
-        CallEndedUnexpectedly: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    screenshareRating: {
-        NoContentLocal: string;
-        NoContentRemote: string;
-        CannotPresent: string;
-        LowQuality: string;
-        Freezes: string;
-        StoppedUnexpectedly: string;
-        LargeDelay: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    videoRating: {
-        NoVideoReceived: string;
-        NoVideoSent: string;
-        LowQuality: string;
-        Freezes: string;
-        StoppedUnexpectedly: string;
-        DarkVideoReceived: string;
-        AudioVideoOutOfSync: string;
-        OtherIssues: string;
-    };
-}
-
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
@@ -1710,8 +1664,8 @@ export interface OptionsDevice {
 // @internal
 export type _OverallIssue = 'CallCannotJoin' | 'CallCannotInvite' | 'HadToRejoin' | 'CallEndedUnexpectedly' | 'OtherIssues';
 
-// @beta
-export type OverflowGalleryPosition = 'HorizontalBottom' | 'VerticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'HorizontalTop';
+// @public
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
 
 // @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
@@ -2227,6 +2181,52 @@ export interface StreamMediaProps {
     loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
+}
+
+// @public
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
 }
 
 // @internal (undocumented)

@@ -624,7 +624,7 @@ export interface CallAdapterCallOperations {
    /**
      * Send the end of call survey result
      * 
-     * @beta
+     * @public
      */
    submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>
 }

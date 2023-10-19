@@ -4,7 +4,7 @@
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
-import { CallState } from '@azure/communication-calling';
+import { CallState, CallSurvey } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -26,7 +26,7 @@ import { useId } from '@fluentui/react-hooks';
 import { FileSharingOptions } from '../ChatComposite';
 import { containerDivStyles } from '../common/ContainerRectProps';
 import { useCallWithChatCompositeStrings } from './hooks/useCallWithChatCompositeStrings';
-import { CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
+import { CallComposite, CallCompositeInner, CallCompositeOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(pinned-participants) */
 import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(click-to-call) */
@@ -185,12 +185,29 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
-    /**
-   * Show call survey at the end of a call.
-   * @defaultValue true
+   /* @conditional-compile-remove(end-of-call-survey) */
+ /**
+   * Options for end of call survey
    */
-    survey?: boolean;
+ surveyOptions?: {
+  /**
+* Hide call survey at the end of a call.
+* @defaultValue true
+*/
+ hideSurvey?: boolean,
+  /**
+* Optional callback to handle survey data including free form text response
+* Note that free form text response survey option is only going to be enabled when this callback is provided
+* User will need to handle all free form text response on their own 
+*/
+ onSubmitSurvey? :(
+   callId: string, 
+   surveyResults: CallSurvey, 
+   improvementSuggestions: {
+     category: 'audio'|'video'|'screenshare',
+     suggestion: string
+   }[]) => Promise<void>
+}
 };
 
 type CallWithChatScreenProps = {
@@ -224,13 +241,34 @@ type CallWithChatScreenProps = {
     layout?: VideoGalleryLayout;
   };
   /* @conditional-compile-remove(end-of-call-survey) */
-  survey?: boolean;
+ /**
+   * Options for end of call survey
+   */
+ surveyOptions?: {
+  /**
+* Hide call survey at the end of a call.
+* @defaultValue true
+*/
+ hideSurvey?: boolean,
+  /**
+* Optional callback to handle survey data including free form text response
+* Note that free form text response survey option is only going to be enabled when this callback is provided
+* User will need to handle all free form text response on their own 
+*/
+ onSubmitSurvey? :(
+   callId: string, 
+   surveyResults: CallSurvey, 
+   improvementSuggestions: {
+     category: 'audio'|'video'|'screenshare',
+     suggestion: string
+   }[]) => Promise<void>
+}
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
-  const {survey = true} = props
+  const {surveyOptions} = props
   const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
@@ -405,7 +443,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
-      survey: survey
+      surveyOptions: surveyOptions
     }),
     [
       props.callControls,
@@ -428,7 +466,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
-      survey
+      surveyOptions
     ]
   );
 
@@ -499,26 +537,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     },
     [closeChat]
   );
+
+  const options:CallCompositeOptions = {surveyOptions: {hideSurvey: true}}
   return (
-    <div ref={containerRef} className={mergeStyles(containerDivStyles)}>
-      <Stack verticalFill grow styles={compositeOuterContainerStyles} id={compositeParentDivId}>
-        <Stack horizontal grow>
-          <Stack.Item grow styles={callCompositeContainerStyles(mobileView)}>
-            <CallCompositeInner
-              {...props}
-              formFactor={formFactor}
-              options={callCompositeOptions}
-              adapter={callAdapter}
-              fluentTheme={fluentTheme}
-              callInvitationUrl={props.joinInvitationURL}
-              overrideSidePane={overrideSidePaneProps}
-              onSidePaneIdChange={onSidePaneIdChange}
-              mobileChatTabHeader={chatTabHeaderProps}
-            />
-          </Stack.Item>
-        </Stack>
-      </Stack>
-    </div>
+    <CallComposite options={options}/>
   );
 };
 

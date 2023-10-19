@@ -91,7 +91,9 @@ export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
   const [selectedTags, setSelectedTags] = useState({});
 
   const tags: _SurveyTag[] = [];
-
+// for survey issues, will need to change the first letter of the key to captitalized
+//for example freeze to Freeze
+// to do important! 
   issues.map((issue) => {
     const issueCategory: _IssueCategory = Object.keys(callIssuesToTag).find(
       (key) => callIssuesToTag[key][issue] !== undefined

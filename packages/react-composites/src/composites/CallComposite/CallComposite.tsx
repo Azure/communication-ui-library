@@ -32,7 +32,7 @@ import { useId } from '@fluentui/react-hooks';
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
-import { PermissionConstraints } from '@azure/communication-calling';
+import { CallSurvey, PermissionConstraints } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
@@ -230,10 +230,39 @@ export type CallCompositeOptions = {
   };
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Show call survey at the end of a call.
-   * @defaultValue true
+   * Options for end of call survey
    */
-  survey?: boolean;
+  surveyOptions?: {
+    /**
+     * Hide call survey at the end of a call.
+     * @defaultValue true
+     */
+    hideSurvey?: boolean;
+    /**
+     * Optional callback to handle survey data including free form text response
+     * Note that free form text response survey option is only going to be enabled when this callback is provided
+     * User will need to handle all free form text response on their own
+     */
+    onSubmitSurvey?: (
+      callId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be send to calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      surveyResults: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSubmitSurvey is not populated
+       */
+      improvementSuggestions: {
+        category: 'audio' | 'video' | 'screenshare';
+        suggestion: string;
+      }[]
+    ) => Promise<void>;
+  };
 };
 
 type MainScreenProps = {
@@ -429,7 +458,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           dataUiId={'left-call-page'}
           disableStartCallButton={disableStartCallButton}
           /* @conditional-compile-remove(end-of-call-survey) */
-          survey={props.options?.survey ?? true}
+          surveyOptions={props.options?.surveyOptions}
         />
       );
       break;

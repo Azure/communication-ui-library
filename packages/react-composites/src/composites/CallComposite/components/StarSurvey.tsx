@@ -44,9 +44,9 @@ export const StarSurvey = (
     starSurveyThreeStarText: strings.starSurveyThreeStarText,
     starSurveyFourStarText: strings.starSurveyFourStarText,
     starSurveyFiveStarText: strings.starSurveyFiveStarText,
-    starSurveyConfirmButtonLabel: strings.starSurveyConfirmButtonLabel,
+    // starSurveyConfirmButtonLabel: strings.starSurveyConfirmButtonLabel,
     starRatingAriaLabel: strings.starRatingAriaLabel,
-    cancelButtonAriaLabel: strings.starRatingCancelButtonAriaLabel
+    // cancelButtonAriaLabel: strings.starRatingCancelButtonAriaLabel
   };
 
   /* @conditional-compile-remove(end-of-call-survey) */

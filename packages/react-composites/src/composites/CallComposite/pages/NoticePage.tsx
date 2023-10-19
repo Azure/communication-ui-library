@@ -21,6 +21,7 @@ import { StarSurvey } from '../components/StarSurvey';
 import { TagsSurvey } from '../components/TagsSurvey';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { _AudioIssue, _OverallIssue, _ScreenshareIssue, _VideoIssue } from '@internal/react-components';
+import { CallSurvey } from '@azure/communication-calling';
 
 /**
  * @private
@@ -33,7 +34,28 @@ export interface NoticePageProps {
   disableStartCallButton?: boolean;
   pageStyle?: IStyle;
   /* @conditional-compile-remove(end-of-call-survey) */
-  survey?:boolean
+ /**
+   * Options for end of call survey
+   */
+ surveyOptions?: {
+  /**
+* Hide call survey at the end of a call.
+* @defaultValue true
+*/
+ hideSurvey?: boolean,
+  /**
+* Optional callback to handle survey data including free form text response
+* Note that free form text response survey option is only going to be enabled when this callback is provided
+* User will need to handle all free form text response on their own 
+*/
+ onSubmitSurvey? :(
+   callId: string, 
+   surveyResults: CallSurvey, 
+   improvementSuggestions: {
+     category: 'audio'|'video'|'screenshare',
+     suggestion: string
+   }[]) => Promise<void>
+}
 }
 
 /**
@@ -70,9 +92,9 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       data-ui-id={props.dataUiId}
       aria-atomic
     >
-      {/* @conditional-compile-remove(end-of-call-survey) */props.survey && <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />}
+      {/* @conditional-compile-remove(end-of-call-survey) */!props.surveyOptions?.hideSurvey && <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />}
 
-      {/* @conditional-compile-remove(end-of-call-survey) */ props.survey &&showTagsSurvey && <TagsSurvey issues={issues} />}
+      {/* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey &&showTagsSurvey && <TagsSurvey issues={issues} />}
 
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}

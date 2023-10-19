@@ -370,7 +370,6 @@ export interface CallAdapterCallOperations {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -602,7 +601,15 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    survey?: boolean;
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSubmitSurvey?: (callId: string,
+        surveyResults: CallSurvey,
+        improvementSuggestions: {
+            category: 'audio' | 'video' | 'screenshare';
+            suggestion: string;
+        }[]) => Promise<void>;
+    };
 };
 
 // @public
@@ -618,9 +625,9 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
+    audioCategory: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
-    surveyIssues: SurveyIssues;
     cameraLabel: string;
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
@@ -734,12 +741,11 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
+    screenshareCategory: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
     starRatingAriaLabel: string;
-    starRatingCancelButtonAriaLabel: string;
-    starSurveyConfirmButtonLabel?: string;
     starSurveyFiveStarText?: string;
     starSurveyFourStarText?: string;
     starSurveyHelperText?: string;
@@ -753,10 +759,12 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
-    tagsSurveyCancelButtonAriaLabel: string;
-    TagsSurveyCancelButtonLabel: string;
-    TagsSurveyConfirmButtonLabel: string;
-    TagsSurveyQuestion: string;
+    surveyCancelButtonAriaLabel: string;
+    surveyConfirmButtonLabel: string;
+    surveyIssues: SurveyIssues;
+    surveyTextboxDefaultText: string;
+    tagsSurveyHelperText: string;
+    tagsSurveyQuestion: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
     transferPageNoticeString: string;
@@ -770,6 +778,7 @@ export interface CallCompositeStrings {
     unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
+    videoCategory: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -842,52 +851,6 @@ export interface CallingTheme {
         callRedDarker: string;
         iconWhite: string;
         raiseHandGold: string;
-    };
-}
-
-// @beta
-export interface SurveyIssues {
-    // (undocumented)
-    audioRating: {
-        NoLocalAudio: string;
-        NoRemoteAudio: string;
-        Echo: string;
-        AudioNoise: string;
-        LowVolume: string;
-        AudioStoppedUnexpectedly: string;
-        DistortedSpeech: string;
-        AudioInterruption: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    overallRating: {
-        CallCannotJoin: string;
-        CallCannotInvite: string;
-        HadToRejoin: string;
-        CallEndedUnexpectedly: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    screenshareRating: {
-        NoContentLocal: string;
-        NoContentRemote: string;
-        CannotPresent: string;
-        LowQuality: string;
-        Freezes: string;
-        StoppedUnexpectedly: string;
-        LargeDelay: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    videoRating: {
-        NoVideoReceived: string;
-        NoVideoSent: string;
-        LowQuality: string;
-        Freezes: string;
-        StoppedUnexpectedly: string;
-        DarkVideoReceived: string;
-        AudioVideoOutOfSync: string;
-        OtherIssues: string;
     };
 }
 
@@ -1019,7 +982,6 @@ export interface CallWithChatAdapterManagement {
     stopCaptions(): Promise<void>;
     stopScreenShare(): Promise<void>;
     stopVideoBackgroundEffects(): Promise<void>;
-    // @beta
     submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
@@ -1249,7 +1211,13 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    survey?: boolean;
+    surveyOptions?: {
+        hideSurvey?: boolean;
+        onSubmitSurvey?: (callId: string, surveyResults: CallSurvey, improvementSuggestions: {
+            category: 'audio' | 'video' | 'screenshare';
+            suggestion: string;
+        }[]) => Promise<void>;
+    };
 };
 
 // @public
@@ -3877,6 +3845,52 @@ export interface StreamMediaProps {
     loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
+}
+
+// @public
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
 }
 
 // @public
