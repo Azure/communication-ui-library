@@ -72,6 +72,7 @@ export function parseQueryArgs(): QueryArgs {
       : undefined,
     localVideoTilePosition,
     enableVideoEffects: Boolean(params.enableVideoEffects),
-    galleryLayout: params.galleryLayout ?? ''
+    galleryLayout: params.galleryLayout ?? '',
+    logo: params.logo as 'circle' | 'square' | undefined
   };
 }
