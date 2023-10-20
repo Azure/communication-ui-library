@@ -1,6 +1,7 @@
-import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
 import React, { useState } from 'react';
 import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
+import { _MockCallAdapter } from '@internal/react-composites';
 
 export const CustomButtonWithStateExample = (): JSX.Element => {
   const adapter = new _MockCallAdapter({});

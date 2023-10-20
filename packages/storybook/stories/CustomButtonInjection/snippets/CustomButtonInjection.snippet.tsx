@@ -1,4 +1,5 @@
-import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
+import { _MockCallAdapter } from '@internal/react-composites';
 import React from 'react';
 
 //boiler plate for testing
