@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import React, { useState, useMemo, createContext, useContext } from 'react';
-import { FluentThemeProvider, lightTheme, darkTheme } from '@azure/communication-react';
-import { Theme, PartialTheme } from '@fluentui/react';
+import { lightTheme, darkTheme } from '@azure/communication-react';
+import { ThemeProvider, Theme, PartialTheme } from '@fluentui/react';
 import { getThemeFromLocalStorage, saveThemeToLocalStorage } from '../utils/localStorage';
 
 /**
@@ -135,9 +135,9 @@ export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProvid
 
   return (
     <SwitchableFluentThemeContext.Provider value={state}>
-      <FluentThemeProvider fluentTheme={currentTheme.theme} rtl={currentRtl}>
+      <ThemeProvider theme={currentTheme.theme} style={{ height: '100%' }}>
         {children}
-      </FluentThemeProvider>
+      </ThemeProvider>
     </SwitchableFluentThemeContext.Provider>
   );
 };

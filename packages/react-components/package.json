@@ -35,6 +35,7 @@
     "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
+    "@fluentui/fluent2-theme": "^8.107.45",
     "@fluentui/react": "^8.110.4",
     "@fluentui/react-components": "^9.30.0",
     "@fluentui/react-file-type-icons": "8.10.2",

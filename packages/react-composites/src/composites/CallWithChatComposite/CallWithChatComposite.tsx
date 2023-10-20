@@ -17,6 +17,7 @@ import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import {
   ParticipantMenuItemsCallback,
+  _createThemeFromAccentColor,
   _useContainerHeight,
   _useContainerWidth,
   useTheme
@@ -218,8 +219,10 @@ type CallWithChatScreenProps = {
   };
 };
 
+const myTheme = _createThemeFromAccentColor('#ff6600', false);
+
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
-  const { callWithChatAdapter, fluentTheme, formFactor = 'desktop' } = props;
+  const { callWithChatAdapter, formFactor = 'desktop' } = props;
   const mobileView = formFactor === 'mobile';
 
   if (!callWithChatAdapter) {
@@ -494,7 +497,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               formFactor={formFactor}
               options={callCompositeOptions}
               adapter={callAdapter}
-              fluentTheme={fluentTheme}
+              fluentTheme={theme}
               callInvitationUrl={props.joinInvitationURL}
               overrideSidePane={overrideSidePaneProps}
               onSidePaneIdChange={onSidePaneIdChange}
@@ -513,7 +516,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
  * @public
  */
 export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.Element => {
-  const { adapter, fluentTheme, rtl, formFactor, joinInvitationURL, options } = props;
+  const { adapter, rtl, formFactor, joinInvitationURL, options } = props;
+  const fluentTheme = myTheme;
+
   return (
     <BaseProvider fluentTheme={fluentTheme} rtl={rtl} locale={props.locale} icons={props.icons}>
       <CallWithChatScreen

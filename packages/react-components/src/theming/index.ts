@@ -4,3 +4,4 @@
 export * from './themes';
 export * from './FluentThemeProvider';
 export * from './icons';
+export * from './accent-color-mapping';

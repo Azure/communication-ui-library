@@ -693,6 +693,9 @@ export interface ControlBarProps {
     styles?: BaseCustomStyles;
 }
 
+// @internal (undocumented)
+export const _createThemeFromAccentColor: (accentColor: string, dark?: boolean) => Theme;
+
 // @public
 export interface CreateVideoStreamViewResult {
     view: {
