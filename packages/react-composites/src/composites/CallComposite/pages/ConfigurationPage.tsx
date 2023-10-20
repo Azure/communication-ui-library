@@ -263,7 +263,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
         /* @conditional-compile-remove(custom-branding) */
         props.backgroundImage?.url
       ),
-    [mobileView, props.backgroundImage?.url]
+    [mobileView, /* @conditional-compile-remove(custom-branding) */ props.backgroundImage?.url]
   );
 
   return (
