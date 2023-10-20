@@ -184,6 +184,29 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Logo displayed on the configuration page.
+   */
+  logo?: {
+    /**
+     * URL for the logo image.
+     *
+     * @remarks
+     * Recommended size is 80x80 pixels.
+     */
+    url: string;
+    /**
+     * Alt text for the logo image.
+     */
+    alt?: string;
+    /**
+     * The logo can be displayed as a circle or a square.
+     *
+     * @defaultValue 'circle'
+     */
+    shape?: 'circle' | 'square';
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -215,6 +238,12 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(gallery-layouts) */
   galleryOptions?: {
     layout?: VideoGalleryLayout;
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  logo?: {
+    url: string;
+    alt?: string;
+    shape?: 'circle' | 'square';
   };
 };
 
@@ -392,7 +421,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(gallery-layouts) */
       galleryOptions: props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
-      localVideoTile: props.localVideoTile
+      localVideoTile: props.localVideoTile,
+      /* @conditional-compile-remove(custom-branding) */
+      logo: props.logo
     }),
     [
       props.callControls,
@@ -413,7 +444,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       /* @conditional-compile-remove(pinned-participants) */
-      props.remoteVideoTileMenuOptions
+      props.remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(custom-branding) */
+      props.logo
     ]
   );
 
@@ -533,6 +566,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         localVideoTile={options?.localVideoTile}
         /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
+        /* @conditional-compile-remove(custom-branding) */
+        logo={options?.logo}
       />
     </BaseProvider>
   );

@@ -12,10 +12,11 @@ import { devicePermissionSelector } from '../selectors/devicePermissionSelector'
 import { useSelector } from '../hooks/useSelector';
 import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Panel, PanelType, Stack } from '@fluentui/react';
+import { Image, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
   fillWidth,
+  logoStyles,
   panelFocusProps,
   panelStyles,
   startCallButtonStyleDesktop
@@ -78,6 +79,12 @@ export interface ConfigurationPageProps {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  /* @conditional-compile-remove(custom-branding) */
+  logo?: {
+    url: string;
+    alt?: string;
+    shape?: 'circle' | 'square';
+  };
 }
 
 /**
@@ -309,6 +316,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
           <Stack.Item styles={callDetailsContainerStyles}>
+            <Logo
+              /* @conditional-compile-remove(custom-branding) */
+              logo={props.logo}
+            />
             {title}
             {callDescription}
           </Stack.Item>
@@ -403,4 +414,11 @@ const micPermissionGrantedTrampoline = (
   return audioState && audioState !== 'unsupported' ? audioState === 'granted' : microphonePermissionGranted;
 
   return microphonePermissionGranted;
+};
+
+const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'circle' | 'square' } }): JSX.Element => {
+  if (!props.logo) {
+    return <></>;
+  }
+  return <Image styles={logoStyles(props.logo.shape ?? 'circle')} src={props.logo.url} alt={props.logo.alt} />;
 };

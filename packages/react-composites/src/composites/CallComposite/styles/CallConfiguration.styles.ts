@@ -10,7 +10,8 @@ import {
   IButtonStyles,
   Theme,
   IPanelStyles,
-  IFocusTrapZoneProps
+  IFocusTrapZoneProps,
+  IImageStyles
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
@@ -215,3 +216,16 @@ export const panelStyles: Partial<IPanelStyles> = {
 export const panelFocusProps: IFocusTrapZoneProps = {
   forceFocusInsideTrap: false
 };
+
+/**
+ * @private
+ */
+export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
+  root: {
+    overflow: 'initial', // prevent the image being clipped
+    display: 'flex',
+    justifyContent: 'center',
+    marginBottom: '1rem'
+  },
+  image: { borderRadius: shape === 'circle' ? '100%' : undefined, height: '5rem', width: '5rem' }
+});
