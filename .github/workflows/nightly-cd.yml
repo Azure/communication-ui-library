@@ -130,7 +130,6 @@ jobs:
       # Clean package.json
       - name: Remove scripts, devDependencies, and beachball from package.json
         run: node ./common/scripts/prepare-package-json.mjs
-        working-directory: ./packages/communication-react
 
       # Publish package
       - name: Package alpha packages for release
