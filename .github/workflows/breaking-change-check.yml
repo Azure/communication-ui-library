@@ -63,7 +63,7 @@ jobs:
       # Install rush
       - name: Install rush
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.108.0
       # Checkout the branch to be merged into in PR
       - name: Checkout base branch
         if: ${{ github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'breaking-change') }}
