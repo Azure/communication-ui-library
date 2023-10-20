@@ -14,5 +14,5 @@
       ]
     }
   },
-  "postCreateCommand": "bash -i -c 'nvm install 18 && nvm use 18' && npm install @microsoft/rush -g && rush update"
+  "postCreateCommand": "bash -i -c 'nvm install 20 && nvm use 20' && npm install @microsoft/rush -g && rush update"
 }

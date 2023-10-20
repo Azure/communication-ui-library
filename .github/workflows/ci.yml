@@ -18,7 +18,7 @@ jobs:
   # get matrix for ci-jobs
   get_matrix:
     name: Set CI flavors
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -27,17 +27,17 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
   build_packages:
     needs: get_matrix
     name: Build Packages
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -46,10 +46,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
       # Install dependencies
       - name: Install rush
-        run: npm install -g @microsoft/rush@5.100.1
+        run: npm install -g @microsoft/rush@5.108.0
       - name: Install dependencies
         run: rush install --max-install-attempts 3
       # Switch flavor if necessary
@@ -139,17 +139,17 @@ jobs:
 
   in-progress-feature-validation:
     name: Check if in progress feature can be removed separately
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -192,17 +192,17 @@ jobs:
   call_composite_automation_test:
     needs: get_matrix
     name: Call Composite automation test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -265,17 +265,17 @@ jobs:
   chat_composite_automation_test:
     needs: get_matrix
     name: Chat Composite automation test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -338,17 +338,17 @@ jobs:
   call_with_chat_composite_automation_test:
     needs: get_matrix
     name: Call With Chat Composite automation test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -410,15 +410,15 @@ jobs:
 
   build_storybook:
     name: Build Storybook
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -437,17 +437,17 @@ jobs:
   build_calling_sample:
     needs: get_matrix
     name: Build Calling Sample
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -483,17 +483,17 @@ jobs:
   build_chat_sample:
     needs: get_matrix
     name: Build Chat Sample
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -529,17 +529,17 @@ jobs:
   build_call_with_chat_sample:
     needs: get_matrix
     name: Build CallWithChat Sample
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -575,17 +575,17 @@ jobs:
   build_static_html_composites_sample:
     needs: get_matrix
     name: Build And Test Static HTML Composites Sample
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -632,17 +632,17 @@ jobs:
   build_component_examples:
     needs: get_matrix
     name: Build And Test Component+Binding Examples
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -687,7 +687,7 @@ jobs:
             })
 
   compare_jest_tests_coverage:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'pull_request' }}
     name: Compare unit tests coverage from pr head ref to base ref (${{ matrix.flavor }})
     needs: build_packages
@@ -704,10 +704,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v3
@@ -759,7 +759,7 @@ jobs:
           edit-mode: replace
 
   update_jest_coverage_report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Upload jest coverage report to gist (${{ matrix.flavor }})
     needs: build_packages
     if: github.ref == 'refs/heads/main'
@@ -786,7 +786,7 @@ jobs:
           file_path: temp/jest/current/merge/summary/coverage-summary.json
 
   compare_base_bundle_stats:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     if: ${{ github.event_name == 'pull_request' }}
     name: Compare bundle size from pr head ref to base ref - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
@@ -808,10 +808,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Calculate size change
         id: bundles
         run: |
@@ -842,7 +842,7 @@ jobs:
           edit-mode: replace
 
   update_base_bundle_report:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     if: github.ref == 'refs/heads/main'
@@ -870,7 +870,7 @@ jobs:
           file_path: report.json
 
   check_failure:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs:
       [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
     if: failure() && github.ref == 'refs/heads/main'
