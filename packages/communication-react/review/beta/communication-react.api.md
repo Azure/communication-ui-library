@@ -603,6 +603,9 @@ export type CallCompositeOptions = {
         alt?: string;
         shape?: 'circle' | 'square';
     };
+    backgroundImage?: {
+        url: string;
+    };
 };
 
 // @public
@@ -1190,6 +1193,9 @@ export type CallWithChatCompositeOptions = {
         url: string;
         alt?: string;
         shape?: 'circle' | 'square';
+    };
+    backgroundImage?: {
+        url: string;
     };
 };
 
