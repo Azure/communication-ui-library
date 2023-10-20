@@ -542,8 +542,8 @@ export const _createAzureCommunicationChatAdapterInner = async (
     {
       userId,
       displayName,
-      endpoint: endpoint,
-      credential: credential
+      endpoint,
+      credential
     },
     undefined,
     telemetryImplementationHint
