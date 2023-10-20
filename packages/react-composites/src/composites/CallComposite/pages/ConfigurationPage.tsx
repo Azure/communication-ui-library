@@ -27,8 +27,7 @@ import {
   callDetailsStyleMobile,
   configurationStackTokensDesktop,
   configurationStackTokensMobile,
-  configurationContainerStyleDesktop,
-  configurationContainerStyleMobile,
+  configurationContainerStyle,
   selectionContainerStyle,
   startCallButtonContainerStyleDesktop,
   startCallButtonContainerStyleMobile,
@@ -84,6 +83,10 @@ export interface ConfigurationPageProps {
     url: string;
     alt?: string;
     shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  backgroundImage?: {
+    url: string;
   };
 }
 
@@ -253,8 +256,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     [errorBarProps, filteredLatestErrors]
   );
 
+  const containerStyles = useMemo(
+    () =>
+      configurationContainerStyle(
+        !mobileView,
+        /* @conditional-compile-remove(custom-branding) */
+        props.backgroundImage?.url
+      ),
+    [mobileView, props.backgroundImage?.url]
+  );
+
   return (
-    <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
+    <Stack styles={containerStyles}>
       <Stack styles={bannerNotificationStyles}>
         <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */

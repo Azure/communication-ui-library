@@ -120,6 +120,14 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
       }
     };
   }
+  if (queryArgs.backgroundImage) {
+    options = {
+      ...options,
+      backgroundImage: {
+        url: '/images/composite-background.jpg.jpg'
+      }
+    };
+  }
 
   return (
     <>

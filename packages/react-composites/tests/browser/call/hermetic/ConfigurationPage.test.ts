@@ -57,6 +57,15 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-circle-logo.png');
   });
 
+  /* @conditional-compile-remove(custom-branding) */
+  test('Configuration screen has background image', async ({ page, serverUrl }) => {
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { backgroundImage: 'true' })
+    );
+    await waitForCallCompositeToLoad(page);
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-circle-logo.png');
+  });
+
   test('Configuration screen desktop should show no devices available', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const state = defaultMockConfigurationPageState();

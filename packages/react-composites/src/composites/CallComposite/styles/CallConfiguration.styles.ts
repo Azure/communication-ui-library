@@ -11,7 +11,8 @@ import {
   Theme,
   IPanelStyles,
   IFocusTrapZoneProps,
-  IImageStyles
+  IImageStyles,
+  AnimationStyles
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 
@@ -29,28 +30,34 @@ export const configurationStackTokensMobile: IStackTokens = {
   childrenGap: '1.5rem'
 };
 
-const configurationContainerStyle: IStyle = {
-  height: '100%',
-  width: '100%',
-  padding: '2rem 1rem 2rem 1rem'
-};
-
-/**
- * @private
- */
-export const configurationContainerStyleDesktop = mergeStyles({
-  ...configurationContainerStyle,
-  minWidth: '25rem', // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
-  minHeight: '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
-});
-
-/**
- * @private
- */
-export const configurationContainerStyleMobile = mergeStyles({
-  ...configurationContainerStyle,
-  minWidth: '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
-  minHeight: '13rem'
+/** @private */
+export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStackStyles => ({
+  root: {
+    height: '100%',
+    width: '100%',
+    padding: '2rem 1rem 2rem 1rem',
+    minWidth: desktop
+      ? '25rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
+      : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
+    minHeight: desktop
+      ? '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
+      : '13rem',
+    '::before': !backgroundImageUrl
+      ? undefined
+      : {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          zIndex: 0,
+          width: '100%',
+          height: '100%',
+          backgroundImage: `url(${backgroundImageUrl})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          ...AnimationStyles.fadeIn500
+        }
+  }
 });
 
 /**
@@ -191,7 +198,8 @@ export const effectsButtonStyles = (theme: Theme): IButtonStyles => {
 
 /** @private */
 export const fillWidth = mergeStyles({
-  width: '100%'
+  width: '100%',
+  position: 'relative'
 });
 
 /** @private */
