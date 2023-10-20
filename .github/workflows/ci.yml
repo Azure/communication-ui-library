@@ -27,10 +27,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -46,16 +46,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
@@ -146,16 +140,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       # Install dependencies
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
@@ -199,15 +187,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -272,15 +255,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -345,15 +323,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -415,15 +388,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -444,15 +412,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -490,15 +453,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -536,15 +494,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -582,10 +535,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -639,10 +592,10 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
       - name: Install dependencies
@@ -704,16 +657,10 @@ jobs:
         with:
           fetch-depth: 0
       # Ensure node version is great enough
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
-      # Try get node_modules from cache
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+          node-version: '18.x'
       # Install dependencies in order to use script
       - name: Install rush
         run: npm install -g @microsoft/rush@5.100.1
@@ -808,10 +755,10 @@ jobs:
         with:
           path: current
           name: ${{ matrix.app }}-report
-      - name: Use Node.js v20.x
+      - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '20.x'
+          node-version: '18.x'
       - name: Calculate size change
         id: bundles
         run: |
