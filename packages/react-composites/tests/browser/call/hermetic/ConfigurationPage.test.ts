@@ -63,7 +63,7 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
       buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState(), { backgroundImage: 'true' })
     );
     await waitForCallCompositeToLoad(page);
-    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-circle-logo.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('call-configuration-page-with-background-image.png');
   });
 
   test('Configuration screen desktop should show no devices available', async ({ page, serverUrl }, testInfo) => {

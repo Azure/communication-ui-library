@@ -124,7 +124,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     options = {
       ...options,
       backgroundImage: {
-        url: '/images/composite-background.jpg.jpg'
+        url: '/images/composite-background.jpg'
       }
     };
   }
