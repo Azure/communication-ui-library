@@ -1,5 +1,5 @@
-const path = require('path');
-const fs =  require('fs');
+import path from 'path';
+import fs from 'fs';
 
 const main = () => {
     // making an assumption the working directory is packages/communication-react
