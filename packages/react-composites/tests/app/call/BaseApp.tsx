@@ -114,7 +114,7 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     options = {
       ...options,
       logo: {
-        url: '/images/elephant.svg',
+        url: '/images/elephant.jpg',
         alt: 'Contoso logo'
         // shape: 'circle' - not needed, should default to circle
       }
