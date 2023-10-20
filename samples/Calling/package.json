@@ -60,7 +60,7 @@
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "7.23.2",
     "@types/jest": "^29.5.2",
-    "@types/node": "^16.11.7",
+    "@types/node": "^20.8.7",
     "@types/react-dom": "18.2.14",
     "@types/react": "18.2.30",
     "@types/uuid": "^9.0.6",

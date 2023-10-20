@@ -65,7 +65,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@types/jest": "^29.5.2",
     "@types/json-stringify-safe": "^5.0.0",
-    "@types/node": "^16.11.7",
+    "@types/node": "^20.8.7",
     "@types/react-dom": "18.2.14",
     "@types/react-linkify": "^1.0.0",
     "@types/react": "18.2.30",

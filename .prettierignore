@@ -5,7 +5,6 @@ dist/
 docs/
 node_modules/
 .storybook/
-preprocessed/
 
 # Rush files
 common/changes/
