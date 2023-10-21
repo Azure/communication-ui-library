@@ -16,7 +16,6 @@ import {
 } from '@azure/communication-calling';
 import { CallAdapter, CallAdapterState } from '@azure/communication-react';
 
-
 /**
  * Temporary copy of the packages/react-composites/tests/browser/call/app/mocks/MockCallAdapter.ts
  * @internal

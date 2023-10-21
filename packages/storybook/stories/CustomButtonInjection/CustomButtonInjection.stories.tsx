@@ -5,9 +5,9 @@ import { CallComposite, CustomCallControlButtonCallback } from '@azure/communica
 import { Description, Heading, Props, Title, Subheading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
+import { _MockCallAdapter } from '../_MockCallAdapter';
 import { CONCEPTS_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
-import { _MockCallAdapter } from '../_MockCallAdapter';
 import { CustomButtonInjection as CustomButtonInjectionComponent, addCSS } from './snippets/CustomButtonInjectionTypes';
 import { CustomButtonWithAsyncStateExample } from './snippets/CustomButtonWithAsyncState.snippet';
 import { CustomButtonWithStateExample } from './snippets/CustomButtonWithState.snippet';

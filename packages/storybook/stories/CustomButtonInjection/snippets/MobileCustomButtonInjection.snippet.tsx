@@ -3,7 +3,6 @@ import React from 'react';
 import { _MockCallAdapter } from '../../_MockCallAdapter';
 import { addCSS } from './CustomButtonInjectionTypes';
 
-
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [
   () => ({
