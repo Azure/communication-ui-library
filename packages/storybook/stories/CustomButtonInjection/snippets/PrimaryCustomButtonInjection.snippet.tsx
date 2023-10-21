@@ -1,7 +1,7 @@
 import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
 import React from 'react';
+import { _MockCallAdapter } from '../../_MockCallAdapter';
 import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
-import { _MockCallAdapter } from '@internal/react-composites';
 
 //boiler plate for testing
 const maxCustomButtonsForInjection: CustomCallControlButtonCallback[] = [

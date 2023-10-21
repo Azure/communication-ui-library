@@ -1,7 +1,7 @@
 import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
 import React, { useState } from 'react';
+import { _MockCallAdapter } from '../../_MockCallAdapter';
 import { compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
-import { _MockCallAdapter } from '@internal/react-composites';
 
 /**
  * A simple async function for testing async and await callbacks with custom buttons
