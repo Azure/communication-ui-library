@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Fix exit -1 problem when use rushx",
+  "packageName": "@azure/communication-react",
+  "email": "jiangnanhello@live.com",
+  "dependentChangeType": "none"
+}
