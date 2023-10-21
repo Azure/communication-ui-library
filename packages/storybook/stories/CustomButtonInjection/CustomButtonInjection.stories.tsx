@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallComposite, _MockCallAdapter, CustomCallControlButtonCallback } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
+import { _MockCallAdapter } from '@internal/react-composites';
 import { Description, Heading, Props, Title, Subheading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
