@@ -28,7 +28,7 @@ Mon, 23 Oct 2023 18:27:26 GMT
 - When screen is too small, decrease captions banner size so scroll bar and more button does not overlap ([PR #3653](https://github.com/azure/communication-ui-library/pull/3653) by carolinecao@microsoft.com)
 - Update start call in adapter to handle new id types from the ACS Common package ([PR #3674](https://github.com/azure/communication-ui-library/pull/3674) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons ([PR #3643](https://github.com/azure/communication-ui-library/pull/3643) by carolinecao@microsoft.com)
-- Fix issue where submenu's in the mobile bottom sheet drawer were not focusing on the first item ([PR #3678](https://github.com/azure/communication-ui-library/pull/3678) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix issue where submenus in the mobile bottom sheet drawer were not focusing on the first item ([PR #3678](https://github.com/azure/communication-ui-library/pull/3678) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix Call with Chat adapter creation hook to handle multiple invocations ([PR #3676](https://github.com/azure/communication-ui-library/pull/3676) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 
