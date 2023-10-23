@@ -2,8 +2,6 @@
 
 This log was last generated on Mon, 23 Oct 2023 18:27:26 GMT and should not be manually modified.
 
-<!-- Start content -->
-
 ## [1.10.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.10.0-beta.1)
 
 Mon, 23 Oct 2023 18:27:26 GMT 
@@ -20,21 +18,19 @@ Mon, 23 Oct 2023 18:27:26 GMT
 - Update image padding for ImageGallery ([PR #3651](https://github.com/azure/communication-ui-library/pull/3651) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
 - Error message position and font update for edit message component ([PR #3680](https://github.com/azure/communication-ui-library/pull/3680) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Remove FocusTrapZone from ImageGallery ([PR #3569](https://github.com/azure/communication-ui-library/pull/3569) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
-- Fix up menu size and appearance on mobile ([PR #3654](https://github.com/azure/communication-ui-library/pull/3654) by 3941071+emlynmac@users.noreply.github.com)
+- Fixes up menu size and appearance on mobile ([PR #3654](https://github.com/azure/communication-ui-library/pull/3654) by 3941071+emlynmac@users.noreply.github.com)
 - Removed bottom paddings for the edit message buttons ([PR #3683](https://github.com/azure/communication-ui-library/pull/3683) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fix intermittant issue where the menu button was not accessible ([PR #3672](https://github.com/azure/communication-ui-library/pull/3672) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fixes intermittant issue where the menu button was not accessible ([PR #3672](https://github.com/azure/communication-ui-library/pull/3672) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Add in fluent prop to not fade in the persona ([PR #3688](https://github.com/azure/communication-ui-library/pull/3688) by alkwa@microsoft.com)
 - Call focus to background effects picker on mount ([PR #3681](https://github.com/azure/communication-ui-library/pull/3681) by 94866715+dmceachernmsft@users.noreply.github.com)
 - When screen is too small, decrease captions banner size so scroll bar and more button does not overlap ([PR #3653](https://github.com/azure/communication-ui-library/pull/3653) by carolinecao@microsoft.com)
 - Update start call in adapter to handle new id types from the ACS Common package ([PR #3674](https://github.com/azure/communication-ui-library/pull/3674) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons ([PR #3643](https://github.com/azure/communication-ui-library/pull/3643) by carolinecao@microsoft.com)
-- Fix issue where submenus in the mobile bottom sheet drawer were not focusing on the first item ([PR #3678](https://github.com/azure/communication-ui-library/pull/3678) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fixes issue where submenus in the mobile bottom sheet drawer were not focusing on the first item ([PR #3678](https://github.com/azure/communication-ui-library/pull/3678) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix Call with Chat adapter creation hook to handle multiple invocations ([PR #3676](https://github.com/azure/communication-ui-library/pull/3676) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 
 ## [1.9.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.9.0-beta.1)
-
-
 
 Wed, 04 Oct 2023 17:17:11 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.8.0...1.9.0-beta.1)
