@@ -2,7 +2,7 @@
   "type": "prerelease",
   "area": "fix",
   "workstream": "Fixed the usage of the cleanup script to remove unnecessary properties in the communication-react package.json",
-  "comment": "fixed script name, removed working directory",
+  "comment": "fixed script location",
   "packageName": "@azure/communication-react",
   "email": "alkwa@microsoft.com",
   "dependentChangeType": "patch"

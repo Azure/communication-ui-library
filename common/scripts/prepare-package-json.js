@@ -4,7 +4,6 @@ const fs =  require('fs');
 const main = () => {
     // making an assumption the working directory is packages/communication-react
     const packagePath = path.resolve(process.cwd(), 'package.json');
-    console.log('location of package.json to clean up : ' +packagePath);
     
     // open up the package.json as JSON
     const packageJson = JSON.parse(fs.readFileSync(packagePath));
