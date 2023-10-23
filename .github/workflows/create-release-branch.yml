@@ -115,7 +115,6 @@ jobs:
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
         run: |
           rush build -t @azure/communication-react
-          node ./common/scripts/preparePackageJSON.mjs
         id: buildapifiles
 
       - name: Commit beta release snapshots
