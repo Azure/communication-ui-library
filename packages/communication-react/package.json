@@ -67,7 +67,7 @@
     "copy-preprocess": "cpx \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:cjs": "rollup -c --silent",
-    "build:esm": "rushx _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && ttsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && ttsc)",
+    "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && ttsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && ttsc)",
     "build:watch": "",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
     "test": "",
