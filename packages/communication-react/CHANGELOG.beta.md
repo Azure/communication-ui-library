@@ -1,8 +1,55 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Wed, 04 Oct 2023 17:17:11 GMT and should not be manually modified.
+This log was last generated on Mon, 23 Oct 2023 18:27:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.10.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.10.0-beta.1)
+
+Mon, 23 Oct 2023 18:27:26 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.9.0...@azure/communication-react_v1.10.0-beta.1)
+
+### Features
+- make adjustments for ARB ([PR #3649](https://github.com/azure/communication-ui-library/pull/3649) by 94866715+dmceachernmsft@users.noreply.github.com)
+- update cc for snapshot tests ([PR #3655](https://github.com/azure/communication-ui-library/pull/3655) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update and stabilize custom button injection ([PR #3642](https://github.com/azure/communication-ui-library/pull/3642) by edwardlee@microsoft.com)
+- Introduces Gallery layouts feature to stable API ([PR #3665](https://github.com/azure/communication-ui-library/pull/3665) by 94866715+dmceachernmsft@users.noreply.github.com)
+### Improvements
+- removing extra properties from package.json when doing a release ([PR #3686](https://github.com/azure/communication-ui-library/pull/3686) by alkwa@microsoft.com)
+- Error message position and font update for edit message component ([PR #3680](https://github.com/azure/communication-ui-library/pull/3680) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Groom changelog for 1.9.0 stable release ([PR #3666](https://github.com/azure/communication-ui-library/pull/3666) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update docs to no longer show downgrade to react 16 and other install scripts ([PR #3658](https://github.com/azure/communication-ui-library/pull/3658) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Updated documentations for file sharing and inline image stories ([PR #3599](https://github.com/azure/communication-ui-library/pull/3599) by 109105353+jpeng-ms@users.noreply.github.com)
+- Update communication calling beta and stable dependency ([PR #3682](https://github.com/azure/communication-ui-library/pull/3682) by carolinecao@microsoft.com)
+- update entry point to latest calling beta ([PR #3685](https://github.com/azure/communication-ui-library/pull/3685) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update the ACS common package to new stable version ([PR #3634](https://github.com/azure/communication-ui-library/pull/3634) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Updated documentation and removed FluentUI NorthStar wrapper package ([PR #3650](https://github.com/azure/communication-ui-library/pull/3650) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- update webpack ([PR #3667](https://github.com/azure/communication-ui-library/pull/3667) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Turn on strict mode again in samples ([PR #3659](https://github.com/azure/communication-ui-library/pull/3659) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update rush to v 5.109.1 ([PR #3687](https://github.com/azure/communication-ui-library/pull/3687) by 3941071+emlynmac@users.noreply.github.com)
+- Fetch strings for 1.9.0-beta.1 release ([PR #3660](https://github.com/azure/communication-ui-library/pull/3660) by 73612854+palatter@users.noreply.github.com)
+- Update image padding for ImageGallery ([PR #3651](https://github.com/azure/communication-ui-library/pull/3651) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Update backward-compatible packages ([PR #3690](https://github.com/azure/communication-ui-library/pull/3690) by 3941071+emlynmac@users.noreply.github.com)
+### Bug Fixes
+- update CC for tests ([PR #3656](https://github.com/azure/communication-ui-library/pull/3656) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Remove unused dependencies; migrate to @babel/eslint-parser ([PR #3692](https://github.com/azure/communication-ui-library/pull/3692) by 3941071+emlynmac@users.noreply.github.com)
+- Use beta snapshots for playwright tests when flavor is 'beta-release' ([PR #3684](https://github.com/azure/communication-ui-library/pull/3684) by 79475487+mgamis-msft@users.noreply.github.com)
+- Merge branch 'main' into prerelease-beta-release-minor/1.9.0-beta.1 ([PR #3669](https://github.com/azure/communication-ui-library/pull/3669) by 73612854+palatter@users.noreply.github.com)
+- Remove FocusTrapZone from ImageGallery ([PR #3569](https://github.com/azure/communication-ui-library/pull/3569) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Fix up menu size and appearance on mobile ([PR #3654](https://github.com/azure/communication-ui-library/pull/3654) by 3941071+emlynmac@users.noreply.github.com)
+- Update verticalGallery key in localization strings ([PR #3652](https://github.com/azure/communication-ui-library/pull/3652) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Removed workaround for mouseDown event in jest tests. Removed duplicated strict mode from Calling sample app ([PR #3673](https://github.com/azure/communication-ui-library/pull/3673) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix exit -1 problem when use rushx ([PR #3704](https://github.com/azure/communication-ui-library/pull/3704) by jiangnanhello@live.com)
+- Removed bottom paddings for the edit message buttons ([PR #3683](https://github.com/azure/communication-ui-library/pull/3683) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix an issue when the menu button was not accessible sometimes ([PR #3672](https://github.com/azure/communication-ui-library/pull/3672) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- adding in fluent prop to not fade in the persona ([PR #3688](https://github.com/azure/communication-ui-library/pull/3688) by alkwa@microsoft.com)
+- Call focus to background effects picker on mount ([PR #3681](https://github.com/azure/communication-ui-library/pull/3681) by 94866715+dmceachernmsft@users.noreply.github.com)
+- When screen is too small, decrease captions banner size so scroll bar and more button doesnot overlap ([PR #3653](https://github.com/azure/communication-ui-library/pull/3653) by carolinecao@microsoft.com)
+- Update start call in adapter to handle new id's from the ACS Common package ([PR #3674](https://github.com/azure/communication-ui-library/pull/3674) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons ([PR #3643](https://github.com/azure/communication-ui-library/pull/3643) by carolinecao@microsoft.com)
+- Fix issue where submenu's in the mobile bottom sheet drawer were not focusing on the first item. ([PR #3678](https://github.com/azure/communication-ui-library/pull/3678) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix Call with Chat adapter creation hook to handle multiple invokations. ([PR #3676](https://github.com/azure/communication-ui-library/pull/3676) by 94866715+dmceachernmsft@users.noreply.github.com)
+
 
 ## [1.9.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.9.0-beta.1)
 
