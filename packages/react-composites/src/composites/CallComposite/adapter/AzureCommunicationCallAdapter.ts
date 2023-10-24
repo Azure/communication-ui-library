@@ -96,15 +96,14 @@ import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIden
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
+  CommunicationIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
-  UnknownIdentifier,
-  PhoneNumberIdentifier,
-  CommunicationIdentifier,
-  MicrosoftTeamsUserIdentifier,
-  isMicrosoftTeamsAppIdentifier,
-  MicrosoftTeamsAppIdentifier,
-  isMicrosoftTeamsUserIdentifier
+  PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -875,20 +874,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     const idsToAdd = participants.map((participant) => {
-      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
-      if (isPhoneNumberIdentifier(backendId)) {
+      let backendId = participant;
+      if (typeof participant === 'string') {
+        backendId = _toCommunicationIdentifier(participant);
+      }
+
+      if (backendId.phoneNumber) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
-        return backendId as PhoneNumberIdentifier;
-      } else if (isCommunicationUserIdentifier(backendId)) {
-        return backendId as CommunicationUserIdentifier;
-      } else if (isMicrosoftTeamsAppIdentifier(backendId)) {
-        return backendId as MicrosoftTeamsAppIdentifier;
-      } else if (isMicrosoftTeamsUserIdentifier(backendId)) {
-        return backendId as MicrosoftTeamsUserIdentifier;
+        return backendId as CommunicationIdentifier;
       }
-      return backendId as UnknownIdentifier;
+      return backendId as CommunicationIdentifier;
     });
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
