@@ -71,7 +71,6 @@ export const PeoplePaneContent = (props: {
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
   const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline(adapter);
-  console.log('removeButtonAllowed', removeButtonAllowed);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
