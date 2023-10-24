@@ -35,6 +35,16 @@ export const participantStateMaxWidth = '5rem';
 /**
  * @private
  */
+export const participantOnHoldStyle: IStyle = {
+  maxWidth: participantStateMaxWidth,
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  whiteSpace: 'nowrap',
+  lineHeight: 'normal',
+  marginLeft: 'auto',
+  marginRight: 0
+};
+
 export const participantStateStringStyles: IStyle = {
   maxWidth: participantStateMaxWidth,
   overflow: 'hidden',

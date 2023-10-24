@@ -25,6 +25,7 @@ import {
   meContainerStyle,
   menuButtonContainerStyle,
   participantItemContainerStyle,
+  participantOnHoldStyle,
   participantStateMaxWidth,
   participantStateStringStyles
 } from './styles/ParticipantItem.styles';
@@ -236,6 +237,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   };
 
   const participantStateString = participantStateStringTrampoline(props, strings);
+  const connectingParticipant = participantStateString === strings?.participantStateRinging;
+  const connectedParticipant = !connectingParticipant;
+  const isOnHold = participantStateString === strings?.participantStateHold;
+
   return (
     <div
       ref={containerRef}
@@ -254,7 +259,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       onFocus={() => setItemFocused(true)}
       onBlur={() => setItemFocused(false)}
       onClick={() => {
-        if (!participantStateString) {
+        {
+          /* We can show a menu to remove the user if they are connected to a call */
+        }
+        if (connectedParticipant) {
           setItemHovered(true);
           setMenuHidden(false);
           onClick?.(props);
@@ -275,36 +283,41 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
-        <Stack horizontal className={mergeStyles(infoContainerStyle)}>
-          {onRenderIcon && onRenderIcon(props)}
-        </Stack>
+        {!isOnHold && (
+          <Stack horizontal className={mergeStyles(infoContainerStyle)}>
+            {onRenderIcon && onRenderIcon(props)}
+          </Stack>
+        )}
       </Stack>
-      {/* When the participantStateString has a value, we don't show the menu  */}
-      {!me && participantStateString ? (
-        <Text data-ui-id="participant-item-state-string" className={mergeStyles(participantStateStringStyles)}>
+      {/* When the participant is not connected, we don't need to allocate space for a menu */}
+      {!me && participantStateString && (
+        <Text
+          data-ui-id="participant-item-state-string"
+          className={mergeStyles(connectedParticipant ? participantOnHoldStyle : participantStateStringStyles)}
+        >
           {participantStateString}
         </Text>
-      ) : (
-        <div>
-          {menuItems && menuItems.length > 0 && (
-            <>
-              {menuButton}
-              <ContextualMenu
-                items={menuItems}
-                hidden={menuHidden}
-                target={containerRef}
-                onItemClick={onDismissMenu}
-                onDismiss={onDismissMenu}
-                directionalHint={DirectionalHint.bottomRightEdge}
-                className={contextualMenuStyle}
-                calloutProps={{
-                  preventDismissOnEvent
-                }}
-              />
-            </>
-          )}
-        </div>
       )}
+      <div>
+        {/* Menu is only available for connected participants*/}
+        {connectedParticipant && menuItems && menuItems.length > 0 && (
+          <>
+            {menuButton}
+            <ContextualMenu
+              items={menuItems}
+              hidden={menuHidden}
+              target={containerRef}
+              onItemClick={onDismissMenu}
+              onDismiss={onDismissMenu}
+              directionalHint={DirectionalHint.bottomRightEdge}
+              className={contextualMenuStyle}
+              calloutProps={{
+                preventDismissOnEvent
+              }}
+            />
+          </>
+        )}
+      </div>
     </div>
   );
 };
