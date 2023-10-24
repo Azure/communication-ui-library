@@ -2,8 +2,8 @@
   "type": "prerelease",
   "area": "fix",
   "workstream": "Cleaning up release package.json",
-  "comment": "fixed script location",
+  "comment": "fix pathing for nightlycd",
   "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
