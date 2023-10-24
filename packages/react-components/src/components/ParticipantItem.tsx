@@ -291,7 +291,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         )}
       </Stack>
       {/* When the participant is not connected, we don't need to allocate space for a menu */}
-      {!me && participantStateString && (
+      {participantStateString && (
         <Text
           data-ui-id="participant-item-state-string"
           className={mergeStyles(connectedParticipant ? participantOnHoldStyle : participantStateStringStyles)}
