@@ -71,6 +71,7 @@ export const PeoplePaneContent = (props: {
 
   const participantListDefaultProps = usePropsFor(ParticipantList);
   const removeButtonAllowed = hasRemoveParticipantsPermissionTrampoline(adapter);
+  console.log('removeButtonAllowed', removeButtonAllowed);
   const setDrawerMenuItemsForParticipant: (participant?: ParticipantListParticipant) => void = useMemo(() => {
     return (participant?: ParticipantListParticipant) => {
       if (participant) {
@@ -203,7 +204,11 @@ const createDefaultContextualMenuItems = (
  */
 const hasRemoveParticipantsPermissionTrampoline = (adapter: CommonCallAdapter): boolean => {
   /* @conditional-compile-remove(rooms) */
-  return adapter.getState().call?.role === 'Presenter';
+  const role = adapter.getState().call?.role;
+  /* @conditional-compile-remove(rooms) */
+  const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
+  /* @conditional-compile-remove(rooms) */
+  return canRemove;
   // Return true if stable.
   return true;
 };
