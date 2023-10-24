@@ -38,6 +38,7 @@ import { DirectionalHint, IContextualMenuProps } from '@fluentui/react';
 import useLongPress from './utils/useLongPress';
 /* @conditional-compile-remove(pinned-participants) */
 import { moreButtonStyles } from './styles/VideoTile.styles';
+import { bracketedParticipantString } from './utils/common';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -496,8 +497,4 @@ const tileInfoContainerTokens = {
   // A horizontal Stack sets the left margin to 0 for all it's children.
   // We need to allow the children to set their own margins
   childrenGap: 'none'
-};
-
-const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
-  return withBrackets ? `(${participantString})` : participantString;
 };

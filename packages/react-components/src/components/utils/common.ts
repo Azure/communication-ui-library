@@ -26,3 +26,11 @@ export const useLocaleFileCardStringsTrampoline = (): _FileUploadCardsStrings =>
 export const _isParticipantStateCallingOrHold = (participantState?: ParticipantState): boolean => {
   return !!participantState && ['Idle', 'Connecting', 'EarlyMedia', 'Ringing', 'Hold'].includes(participantState);
 };
+
+/**
+ * Adds parenthesis around a string when used in a label
+ * @returns modified participant string based on if we wanted brackets around it or not
+ */
+export const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
+  return withBrackets ? `(${participantString})` : participantString;
+};

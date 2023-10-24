@@ -34,6 +34,7 @@ import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-u
 /* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
 import { useId } from '@fluentui/react-hooks';
+import { bracketedParticipantString } from './utils/common';
 
 /**
  * Fluent styles for {@link ParticipantItem}.
@@ -295,7 +296,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           data-ui-id="participant-item-state-string"
           className={mergeStyles(connectedParticipant ? participantOnHoldStyle : participantStateStringStyles)}
         >
-          {participantStateString}
+          {bracketedParticipantString(participantStateString, connectedParticipant)}
         </Text>
       )}
       <div>
