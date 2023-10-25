@@ -23,8 +23,8 @@ import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@in
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
-import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(PSTN-calls) */
+import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
 import { Features } from '@azure/communication-calling';
@@ -81,10 +81,7 @@ export interface CommonCallingHandlers {
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
-  onStartCall: (
-    participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[],
-    options?: StartCallOptions
-  ) => void;
+  onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
   /* @conditional-compile-remove(video-background-effects) */
   onRemoveVideoBackgroundEffects: () => Promise<void>;
   /* @conditional-compile-remove(video-background-effects) */
