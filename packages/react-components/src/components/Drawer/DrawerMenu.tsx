@@ -108,7 +108,8 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
         {menuItemsToRender?.slice(0, 1).map((item) => (
           <DrawerMenuItem
             {...item}
-            key={'0'}
+            key={`${item.itemKey}` + '0'}
+            shouldFocusOnMount={true}
             styles={modifiedFirstItemStyle}
             onItemClick={(ev, itemKey) => {
               onItemClick(item, ev, itemKey);
@@ -118,7 +119,7 @@ export const _DrawerMenu = (props: _DrawerMenuProps): JSX.Element => {
         {menuItemsToRender?.slice(1).map((item, i) => (
           <DrawerMenuItem
             {...item}
-            key={`${i + 1}`}
+            key={`${item.itemKey}` + `${i + 1}`}
             onItemClick={(ev, itemKey) => {
               onItemClick(item, ev, itemKey);
             }}

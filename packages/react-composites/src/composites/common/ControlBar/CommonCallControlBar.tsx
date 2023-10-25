@@ -72,6 +72,8 @@ export interface CommonCallControlBarProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
+  /* @conditional-compile-remove(video-background-effects) */
+  videoBackgroundPickerRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (

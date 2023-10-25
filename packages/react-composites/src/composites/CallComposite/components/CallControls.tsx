@@ -13,7 +13,6 @@ import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -42,6 +41,12 @@ import { RaiseHand } from './buttons/RaiseHand';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { _generateDefaultDeviceMenuProps } from '@internal/react-components';
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallControlBarButton,
+  generateCustomCallDesktopOverflowButtons,
+  onFetchCustomButtonPropsTrampoline
+} from '../../common/ControlBar/CustomButton';
 /**
  * @private
  */
@@ -197,9 +202,17 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         }
       });
     }
-
     return items;
   };
+
+  const customDrawerButtons = useMemo(
+    () =>
+      generateCustomCallDesktopOverflowButtons(
+        onFetchCustomButtonPropsTrampoline(typeof options === 'object' ? options : undefined),
+        typeof options === 'object' ? options.displayType : undefined
+      ),
+    [options]
+  );
 
   const moreButtonMenuItems = moreButtonContextualMenuItems();
   let showMoreButton = isEnabled(options?.moreButton) && moreButtonMenuItems.length > 0;
@@ -208,7 +221,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   const customButtons = useMemo(
-    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    () => generateCustomCallControlBarButton(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
 
@@ -272,6 +285,44 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       },
       disabled: isDisabled(options?.raiseHandButton),
       ['data-ui-id']: 'call-composite-more-menu-raise-hand-button'
+    });
+  }
+
+  // Custom Buttons in More Button Menu should always be the last items pushed into the moreButtonMenuItems array
+  if (customDrawerButtons['primary']) {
+    customDrawerButtons['primary']
+      .slice(
+        props.isMobile
+          ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+          : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+      )
+      .forEach((element) => {
+        moreButtonMenuItems.push({
+          itemProps: {
+            styles: buttonFlyoutIncreasedSizeStyles
+          },
+          ...element
+        });
+      });
+  }
+  if (customDrawerButtons['secondary']) {
+    customDrawerButtons['secondary'].forEach((element) => {
+      moreButtonMenuItems.push({
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        ...element
+      });
+    });
+  }
+  if (customDrawerButtons['overflow']) {
+    customDrawerButtons['overflow'].forEach((element) => {
+      moreButtonMenuItems.push({
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        ...element
+      });
     });
   }
 
@@ -360,6 +411,22 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               disabled={isDisabled(options?.devicesButton)}
             />
           )}
+          {customButtons['primary']
+            ?.slice(
+              0,
+              props.isMobile
+                ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+            )
+            .map((CustomButton, i) => {
+              return (
+                <CustomButton
+                  key={`primary-custom-button-${i}`}
+                  // styles={commonButtonStyles}
+                  showLabel={options?.displayType !== 'compact'}
+                />
+              );
+            })}
           {
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
             showMoreButton && (
@@ -372,7 +439,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               />
             )
           }
-          {customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

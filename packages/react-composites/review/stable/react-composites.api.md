@@ -27,6 +27,7 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { ComponentLocale } from '@internal/react-components';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
+import { DtmfTone } from '@azure/communication-calling';
 import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -36,9 +37,11 @@ import { Model } from '@internal/fake-backends';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantMenuItemsCallback } from '@internal/react-components';
+import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PropertyChangedEvent } from '@azure/communication-calling';
+import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { SpokenLanguageStrings } from '@internal/react-components';
@@ -50,6 +53,7 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 import { VideoDeviceInfo } from '@azure/communication-calling';
+import { VideoGalleryLayout } from '@internal/react-components';
 import { VideoStreamOptions } from '@internal/react-components';
 
 // @public
@@ -323,6 +327,14 @@ export type CallCompositeIcons = {
     LocalCameraSwitch?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
+    GalleryOptions?: JSX.Element;
+    SpeakerGalleryLayout?: JSX.Element;
+    FloatingLocalVideoGalleryLayout?: JSX.Element;
+    DefaultGalleryLayout?: JSX.Element;
+    FocusedContentGalleryLayout?: JSX.Element;
+    OverflowGalleryTop?: JSX.Element;
+    LargeGalleryLayout?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
 };
 
 // @public
@@ -330,6 +342,9 @@ export type CallCompositeOptions = {
     errorBar?: boolean;
     callControls?: boolean | CallControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -406,6 +421,13 @@ export interface CallCompositeStrings {
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
     moreButtonCallingLabel: string;
+    moreButtonGalleryControlLabel?: string;
+    moreButtonGalleryDefaultLayoutLabel?: string;
+    moreButtonGalleryFloatingLocalLayoutLabel?: string;
+    moreButtonGalleryFocusedContentLayoutLabel?: string;
+    moreButtonGalleryPositionToggleLabel?: string;
+    moreButtonGallerySpeakerLayoutLabel?: string;
+    moreButtonLargeGalleryDefaultLayoutLabel?: string;
     mutedMessage: string;
     networkReconnectMoreDetails: string;
     networkReconnectTitle: string;
@@ -685,6 +707,7 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -704,6 +727,9 @@ export type CallWithChatCompositeIcons = {
 export type CallWithChatCompositeOptions = {
     callControls?: boolean | CallWithChatControlOptions;
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
+    galleryOptions?: {
+        layout?: VideoGalleryLayout;
+    };
 };
 
 // @public
@@ -732,6 +758,7 @@ export interface CallWithChatCompositeStrings {
     moreDrawerButtonTooltip: string;
     moreDrawerCaptionLanguageMenuTitle: string;
     moreDrawerCaptionsMenuTitle: string;
+    moreDrawerGalleryOptionsMenuTitle: string;
     moreDrawerMicrophoneMenuTitle: string;
     moreDrawerSpeakerMenuTitle: string;
     moreDrawerSpokenLanguageMenuTitle: string;
@@ -908,6 +935,7 @@ export type CommonCallControlOptions = {
     raiseHandButton?: boolean | {
         disabled: boolean;
     };
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     peopleButton?: boolean;
 };
 
@@ -1015,49 +1043,79 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+
+// @public
+export interface CustomCallControlButtonCallbackArgs {
+    displayType?: CallControlDisplayType;
+}
+
+// @public
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @public
+export interface CustomCallControlButtonProps {
+    disabled?: boolean;
+    iconName?: string;
+    id?: string;
+    onItemClick?: () => void;
+    placement: CustomCallControlButtonPlacement;
+    showLabel?: boolean;
+    strings?: CustomCallControlButtonStrings;
+}
+
+// @public
+export interface CustomCallControlButtonStrings {
+    ariaDescription?: string;
+    ariaLabel?: string;
+    label?: string;
+    tooltipContent?: string;
+}
+
+// @public
 export const DEFAULT_COMPOSITE_ICONS: {
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
+    EditBoxCancel: JSX.Element | React_2.JSX.Element;
+    EditBoxSubmit: JSX.Element | React_2.JSX.Element;
+    MessageDelivered: JSX.Element | React_2.JSX.Element;
+    MessageEdit: JSX.Element | React_2.JSX.Element;
+    MessageFailed: JSX.Element | React_2.JSX.Element;
+    MessageRemove: JSX.Element | React_2.JSX.Element;
+    MessageSeen: JSX.Element | React_2.JSX.Element;
+    MessageSending: JSX.Element | React_2.JSX.Element;
+    ParticipantItemOptions: JSX.Element | React_2.JSX.Element;
+    ParticipantItemOptionsHovered: JSX.Element | React_2.JSX.Element;
+    SendBoxSend: JSX.Element | React_2.JSX.Element;
+    SendBoxSendHovered: JSX.Element | React_2.JSX.Element;
     ControlBarPeopleButton?: JSX.Element | undefined;
-    ControlButtonCameraOff: JSX.Element;
-    ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element;
-    ControlButtonMicOff: JSX.Element;
-    ControlButtonMicOn: JSX.Element;
-    ControlButtonOptions: JSX.Element;
-    ControlButtonParticipants: JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element;
+    ControlButtonCameraOff: JSX.Element | React_2.JSX.Element;
+    ControlButtonCameraOn: JSX.Element | React_2.JSX.Element;
+    ControlButtonEndCall: JSX.Element | React_2.JSX.Element;
+    ControlButtonMicOff: JSX.Element | React_2.JSX.Element;
+    ControlButtonMicOn: JSX.Element | React_2.JSX.Element;
+    ControlButtonOptions: JSX.Element | React_2.JSX.Element;
+    ControlButtonParticipants: JSX.Element | React_2.JSX.Element;
+    ControlButtonScreenShareStart: JSX.Element | React_2.JSX.Element;
+    ControlButtonScreenShareStop: JSX.Element | React_2.JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
     ControlButtonMicProhibited?: JSX.Element | undefined;
-    ControlButtonRaiseHand: JSX.Element;
-    ControlButtonLowerHand: JSX.Element;
-    RaiseHandContextualMenuItem: JSX.Element;
-    LowerHandContextualMenuItem: JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element;
-    ErrorBarClear: JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element | React_2.JSX.Element;
+    ControlButtonLowerHand: JSX.Element | React_2.JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
+    LowerHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallCameraAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallLocalVideoFreeze: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNetworkQualityLow: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNoMicrophoneFound: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNoSpeakerFound: JSX.Element | React_2.JSX.Element;
+    ErrorBarClear: JSX.Element | React_2.JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element | React_2.JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element | React_2.JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element | undefined;
     LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
     LocalDeviceSettingsCamera?: JSX.Element | undefined;
@@ -1070,15 +1128,23 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
-    OptionsCamera: JSX.Element;
-    OptionsMic: JSX.Element;
-    OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element;
-    VideoTileMicOff: JSX.Element;
+    OptionsCamera: JSX.Element | React_2.JSX.Element;
+    OptionsMic: JSX.Element | React_2.JSX.Element;
+    OptionsSpeaker: JSX.Element | React_2.JSX.Element;
+    ParticipantItemMicOff: JSX.Element | React_2.JSX.Element;
+    ParticipantItemScreenShareStart: JSX.Element | React_2.JSX.Element;
+    VideoTileMicOff: JSX.Element | React_2.JSX.Element;
     LocalCameraSwitch?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
+    GalleryOptions?: JSX.Element | undefined;
+    SpeakerGalleryLayout?: JSX.Element | undefined;
+    FloatingLocalVideoGalleryLayout?: JSX.Element | undefined;
+    DefaultGalleryLayout?: JSX.Element | undefined;
+    FocusedContentGalleryLayout?: JSX.Element | undefined;
+    OverflowGalleryTop?: JSX.Element | undefined;
+    LargeGalleryLayout?: JSX.Element | undefined;
+    DefaultCustomButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -1089,30 +1155,32 @@ export const DEFAULT_COMPOSITE_ICONS: {
     MoreDrawerSelectedSpeaker?: JSX.Element | undefined;
     MoreDrawerSpeakers?: JSX.Element | undefined;
     SendBoxAttachFile?: JSX.Element | undefined;
-    ChatMessageOptions: JSX.Element;
-    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
-    ErrorBarCallVideoStoppedBySystem: JSX.Element;
-    MessageResend: JSX.Element;
-    VideoTilePinned: JSX.Element;
-    VideoTileMoreOptions: JSX.Element;
-    VideoTileScaleFit: JSX.Element;
-    VideoTileScaleFill: JSX.Element;
-    PinParticipant: JSX.Element;
-    UnpinParticipant: JSX.Element;
-    SplitButtonPrimaryActionCameraOn: JSX.Element;
-    SplitButtonPrimaryActionCameraOff: JSX.Element;
-    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
-    SplitButtonPrimaryActionMicMuted: JSX.Element;
-    ControlButtonVideoEffectsOption: JSX.Element;
-    ConfigurationScreenVideoEffectsButton: JSX.Element;
-    CaptionsIcon: JSX.Element;
-    CaptionsOffIcon: JSX.Element;
-    CaptionsSettingsIcon: JSX.Element;
-    ChangeSpokenLanguageIcon: JSX.Element;
-    ChangeCaptionLanguageIcon: JSX.Element;
-    ContextMenuCameraIcon: JSX.Element;
-    ContextMenuMicIcon: JSX.Element;
-    ContextMenuSpeakerIcon: JSX.Element;
+    ChatMessageOptions: React_2.JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
+    MessageResend: React_2.JSX.Element;
+    VideoTilePinned: React_2.JSX.Element;
+    VideoTileMoreOptions: React_2.JSX.Element;
+    VideoTileScaleFit: React_2.JSX.Element;
+    VideoTileScaleFill: React_2.JSX.Element;
+    PinParticipant: React_2.JSX.Element;
+    UnpinParticipant: React_2.JSX.Element;
+    SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
+    SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
+    VerticalGalleryLeftButton: React_2.JSX.Element;
+    VerticalGalleryRightButton: React_2.JSX.Element;
+    ControlButtonVideoEffectsOption: React_2.JSX.Element;
+    ConfigurationScreenVideoEffectsButton: React_2.JSX.Element;
+    CaptionsIcon: React_2.JSX.Element;
+    CaptionsOffIcon: React_2.JSX.Element;
+    CaptionsSettingsIcon: React_2.JSX.Element;
+    ChangeSpokenLanguageIcon: React_2.JSX.Element;
+    ChangeCaptionLanguageIcon: React_2.JSX.Element;
+    ContextMenuCameraIcon: React_2.JSX.Element;
+    ContextMenuMicIcon: React_2.JSX.Element;
+    ContextMenuSpeakerIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -1218,6 +1286,104 @@ export type MessageReceivedListener = (event: {
 
 // @public
 export type MessageSentListener = MessageReceivedListener;
+
+// @internal
+export class _MockCallAdapter implements CallAdapter {
+    constructor(testState: {
+        askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+        localParticipantRole?: ParticipantRole;
+    });
+    // (undocumented)
+    addParticipant(): Promise<void>;
+    // (undocumented)
+    allowUnsupportedBrowserVersion(): void;
+    // (undocumented)
+    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+    // (undocumented)
+    createStreamView(): Promise<void>;
+    // (undocumented)
+    dispose(): void;
+    // (undocumented)
+    disposeLocalVideoStreamView(): Promise<void>;
+    // (undocumented)
+    disposeRemoteVideoStreamView(): Promise<void>;
+    // (undocumented)
+    disposeScreenShareStreamView(): Promise<void>;
+    // (undocumented)
+    disposeStreamView(): Promise<void>;
+    // (undocumented)
+    getState(): CallAdapterState;
+    // (undocumented)
+    holdCall(): Promise<void>;
+    // (undocumented)
+    joinCall(): Call | undefined;
+    // (undocumented)
+    leaveCall(): Promise<void>;
+    // (undocumented)
+    lowerHand(): Promise<void>;
+    // (undocumented)
+    mute(): Promise<void>;
+    // (undocumented)
+    off(): void;
+    // (undocumented)
+    offStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    on(): void;
+    // (undocumented)
+    onStateChange(handler: (state: CallAdapterState) => void): void;
+    // (undocumented)
+    queryCameras(): Promise<VideoDeviceInfo[]>;
+    // (undocumented)
+    queryMicrophones(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    querySpeakers(): Promise<AudioDeviceInfo[]>;
+    // (undocumented)
+    raiseHand(): Promise<void>;
+    // (undocumented)
+    removeParticipant(): Promise<void>;
+    // (undocumented)
+    resumeCall(): Promise<void>;
+    // (undocumented)
+    sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
+    // (undocumented)
+    setCamera(): Promise<void>;
+    // (undocumented)
+    setCaptionLanguage(): Promise<void>;
+    // (undocumented)
+    setMicrophone(): Promise<void>;
+    // (undocumented)
+    setSpeaker(): Promise<void>;
+    // (undocumented)
+    setSpokenLanguage(): Promise<void>;
+    // (undocumented)
+    setState(state: CallAdapterState): void;
+    // (undocumented)
+    startCall(): Call | undefined;
+    // (undocumented)
+    startCamera(): Promise<void>;
+    // (undocumented)
+    startCaptions(): Promise<void>;
+    // (undocumented)
+    startScreenShare(): Promise<void>;
+    // (undocumented)
+    startVideoBackgroundEffect(): Promise<void>;
+    // (undocumented)
+    state: CallAdapterState;
+    // (undocumented)
+    stopCamera(): Promise<void>;
+    // (undocumented)
+    stopCaptions(): Promise<void>;
+    // (undocumented)
+    stopScreenShare(): Promise<void>;
+    // (undocumented)
+    stopVideoBackgroundEffects(): Promise<void>;
+    // (undocumented)
+    unmute(): Promise<void>;
+    // (undocumented)
+    updateBackgroundPickerImages(): void;
+    // (undocumented)
+    updateSelectedVideoBackgroundEffect(): void;
+}
 
 // @internal
 export type _MockFileUpload = FileMetadata & {
