@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
 import { CallClientState } from '@internal/calling-stateful-client';
@@ -14,7 +14,7 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(capabilities) */
 import { getCapabilites, getRole } from './baseSelectors';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 import { getCallState } from './baseSelectors';
 import { _isPreviewOn } from './utils/callUtils';
 /* @conditional-compile-remove(raise-hand) */

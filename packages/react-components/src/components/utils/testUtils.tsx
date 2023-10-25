@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 import { LocalizationProvider, ComponentLocale, ComponentStrings } from '../../localization/LocalizationProvider';
@@ -55,15 +55,4 @@ export const createTestLocale = (testStrings: PartialDeep<ComponentStrings>): Co
     strings[key] = { ...strings[key], ...testStrings[key] };
   });
   return { strings };
-};
-
-/** @private */
-// Trigger a mouse event manually to fix mouseDown event in userEvent
-// when `document` become null unexpectedly
-// https://github.com/jestjs/jest/issues/12670
-export const triggerMouseEvent = (node: HTMLElement, eventType: string): void => {
-  const clickEvent = new MouseEvent(eventType, {
-    view: window
-  });
-  node.dispatchEvent(clickEvent);
 };

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(capabilities) */
 import React from 'react';
@@ -163,7 +163,7 @@ const messageBarStyles = {
 /* @conditional-compile-remove(capabilities) */
 /**
  * Strings for capability changed notification
- * @beta
+ * @public
  */
 export interface CapabilityChangedNotificationStrings {
   /**

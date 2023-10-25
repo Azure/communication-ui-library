@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AudioDeviceInfo,
@@ -26,17 +26,16 @@ import { VideoEffectName } from '@azure/communication-calling';
 import { CallKind } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
   CommunicationUserKind,
   MicrosoftTeamsUserKind,
   PhoneNumberKind,
   UnknownIdentifierKind,
-  CommunicationIdentifierKind
+  CommunicationIdentifierKind,
+  MicrosoftTeamsAppKind
 } from '@azure/communication-common';
-/* @conditional-compile-remove(communication-common-beta-v3) */
-import { MicrosoftBotKind } from '@azure/communication-common';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -55,7 +54,7 @@ export interface CallAgentState {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @beta
+ * @public
  */
 export interface CaptionsInfo {
   /**
@@ -90,7 +89,7 @@ export interface CaptionsInfo {
 
 /* @conditional-compile-remove(close-captions) */
 /**
- * @beta
+ * @public
  */
 export interface CaptionsCallFeatureState {
   /**
@@ -141,7 +140,7 @@ export interface TranscriptionCallFeatureState {
 /**
  * State only version of {@link @azure/communication-calling#CapabilitiesFeature}
  *
- * @beta
+ * @public
  */
 export interface CapabilitiesFeatureState {
   /**
@@ -217,7 +216,7 @@ export interface LocalVideoStreamState {
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Stores the state of the video effects.
-   * @beta
+   * @public
    */
   videoEffects?: LocalVideoStreamVideoEffectsState;
 }
@@ -226,7 +225,7 @@ export interface LocalVideoStreamState {
 /**
  * State only version of a LocalVideoStream's {@link @azure/communication-calling#VideoEffectsFeature}.
  *
- * @beta
+ * @public
  */
 export interface LocalVideoStreamVideoEffectsState {
   /**
@@ -320,7 +319,7 @@ export interface RemoteParticipantState {
     | PhoneNumberKind
     | MicrosoftTeamsUserKind
     | UnknownIdentifierKind
-    | /* @conditional-compile-remove(communication-common-beta-v3) */ MicrosoftBotKind;
+    | MicrosoftTeamsAppKind;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */
@@ -469,7 +468,7 @@ export interface CallState {
    * Stores the latest call diagnostics.
    */
   diagnostics: DiagnosticsCallFeatureState;
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.role}.
    */
@@ -773,11 +772,13 @@ export type CallErrorTarget =
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
   | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
-  | /* @conditional-compile-remove(video-background-effects) */ 'VideoEffectsFeature.startEffects'
+  | 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.setConstraints';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 import { CallAgentCommon, CallCommon, TeamsCallAgent } from './BetaToStableTypes';
 /* @conditional-compile-remove(one-to-n-calling) */
 import { IncomingCallManagement } from './CallAgentDeclarative';

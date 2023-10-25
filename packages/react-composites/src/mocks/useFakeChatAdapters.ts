@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _ChatThreadRestError, _FakeChatAdapterArgs } from './FakeChatAdapterArgs';
 import { createAzureCommunicationChatAdapterFromClient } from '../composites/ChatComposite/adapter/AzureCommunicationChatAdapter';
@@ -9,10 +9,12 @@ import { FakeChatClient, IChatClient, Model } from '@internal/fake-backends';
 
 import { useEffect, useState } from 'react';
 import { ChatClient, ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(communication-common-beta-v3) */
-import { isMicrosoftBotIdentifier } from '@azure/communication-common';
-import { CommunicationIdentifier } from '@azure/communication-signaling';
+import {
+  CommunicationTokenCredential,
+  CommunicationUserIdentifier,
+  getIdentifierKind
+} from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
 import { _createStatefulChatClientWithDeps } from '@internal/chat-stateful-client';
 import { RestError } from '@azure/core-rest-pipeline';
 
@@ -41,11 +43,6 @@ export function _useFakeChatAdapters(args: _FakeChatAdapterArgs): _FakeChatAdapt
         throw new Error(
           `Local participant must have display name defined, got ${JSON.stringify(args.localParticipant)}`
         );
-      }
-
-      /* @conditional-compile-remove(communication-common-beta-v3) */
-      if (isMicrosoftBotIdentifier(args.localParticipant.id)) {
-        throw new Error('Local participant cannot be a bot');
       }
 
       const chatClientModel = new Model({ asyncDelivery: false });
@@ -96,8 +93,7 @@ const initializeAdapters = async (
 ): Promise<ChatAdapter[]> => {
   const remoteAdapters: ChatAdapter[] = [];
   for (const participant of participants) {
-    /* @conditional-compile-remove(communication-common-beta-v3) */
-    if (isMicrosoftBotIdentifier(participant.id)) {
+    if (getIdentifierKind(participant.id).kind === 'microsoftTeamsApp') {
       throw new Error('Creating an adapter with a Bot participant is not supported');
     }
     if (!participant.displayName) {

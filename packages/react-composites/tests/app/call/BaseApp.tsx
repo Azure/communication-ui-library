@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React from 'react';
 
@@ -147,32 +147,35 @@ function onFetchParticipantMenuItems(): IContextualMenuItem[] {
     }
   ];
 }
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const onFetchCustomButtonProps: CustomCallControlButtonCallback[] = [
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
-      showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
       iconName: 'ParticipantItemOptionsHovered',
-      text: 'custom #1',
+      strings: {
+        label: 'custom #1'
+      },
       placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
-      showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
       iconName: 'NetworkReconnectIcon',
-      text: 'custom #2',
+      strings: {
+        label: 'custom #2'
+      },
       placement: 'primary'
     };
   },
   (args: CustomCallControlButtonCallbackArgs): CustomCallControlButtonProps => {
     return {
-      showLabel: args.displayType !== 'compact',
       // Some non-default icon that is already registered by the composites.
       iconName: 'HorizontalGalleryRightButton',
-      text: 'custom #3',
+      strings: {
+        label: 'custom #3'
+      },
       placement: 'primary'
     };
   }

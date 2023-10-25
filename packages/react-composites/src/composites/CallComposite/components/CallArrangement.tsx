@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IButton, mergeStyles, Stack } from '@fluentui/react';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
@@ -21,7 +21,7 @@ import React, { useMemo, useRef, useState } from 'react';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useEffect } from 'react';
 import { useCallback } from 'react';
-/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsBanner } from '../../common/CaptionsBanner';
@@ -52,9 +52,9 @@ import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
 /* @conditional-compile-remove(PSTN-calls) */
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-import { getCaptionsStatus, getPage } from '../selectors/baseSelectors';
+import { getPage } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(close-captions) */
-import { getCallStatus, getIsTeamsCall } from '../selectors/baseSelectors';
+import { getCallStatus, getIsTeamsCall, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
 import { SidePane } from './SidePane/SidePane';
 import { usePeoplePane } from './SidePane/usePeoplePane';
@@ -94,14 +94,14 @@ export interface CallArrangementProps {
   dataUiId: string;
   mobileView: boolean;
   modalLayerHostId: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[];
   onDismissError: (error: ActiveErrorMessage) => void;
   /* @conditional-compile-remove(gallery-layouts) */
-  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'HorizontalTop') => void;
+  onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   /* @conditional-compile-remove(gallery-layouts) */
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   /* @conditional-compile-remove(gallery-layouts) */
@@ -338,7 +338,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   /* @conditional-compile-remove(close-captions) */
                   isCaptionsOn={isCaptionsOn}
                   /* @conditional-compile-remove(video-background-effects) */
-                  onShowVideoEffectsPicker={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
+                  onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
                   /* @conditional-compile-remove(PSTN-calls) */
                   onClickShowDialpad={alternateCallerId ? onClickShowDialpad : undefined}
                   displayVertical={verticalControlBar}
@@ -366,6 +366,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 /* @conditional-compile-remove(close-captions) */
                 isCaptionsSupported={isTeamsCall && hasJoinedCall}
+                /* @conditional-compile-remove(gallery-layouts) */
+                onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                /* @conditional-compile-remove(gallery-layouts) */
+                userSetGalleryLayout={props.userSetGalleryLayout}
               />
             </Stack>
           )}
@@ -421,7 +425,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
                       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ !isInLocalHold && (
-                        <CaptionsBanner isMobile={props.mobileView} />
+                        <CaptionsBanner
+                          isMobile={props.mobileView}
+                          onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                        />
                       )
                   }
                 </Stack>

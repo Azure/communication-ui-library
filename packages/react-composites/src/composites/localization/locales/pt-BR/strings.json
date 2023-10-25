@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Layout dinâmico",
     "moreButtonGalleryDefaultLayoutLabel": "Layout da galeria",
     "moreButtonGalleryFocusedContentLayoutLabel": "Conteúdo focado",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Galeria Grande",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Sua câmera foi desabilitada. Você não pode mais compartilhar vídeo.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Legendas ao Vivo",
     "moreDrawerSpokenLanguageMenuTitle": "Idioma falado",
     "moreDrawerCaptionLanguageMenuTitle": "Idioma da legenda",
+    "moreDrawerGalleryOptionsMenuTitle": "Opções da galeria",
     "peopleButtonLabel": "Pessoas",
     "selectedPeopleButtonLabel": "Botão Pessoas Selecionado",
     "peopleButtonTooltipOpen": "Mostrar Participantes",

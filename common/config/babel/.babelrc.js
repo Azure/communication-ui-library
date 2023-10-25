@@ -41,8 +41,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'one-to-n-calling',
         // PSTN calls 
         'PSTN-calls',
-        // raise hands feature
-        'raise-hand',
         // rooms
         'rooms',
         // Adhoc calls to a Teams user.
@@ -58,8 +56,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'total-participant-count',
         // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
         'calling-environment-info',
-        // feature for blurred background and replace background effects
-        'video-background-effects',
         // feature for vertical gallery layouts in VideoGallery
         'vertical-gallery',
         // Feature for updates needed for Click to Call (C2C) scenarios
@@ -75,8 +71,16 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Feature for custom video gallery layouts
         'gallery-layouts',
         // Feature image gallery
-        'image-gallery'
-      ],      
+        'image-gallery',
+        // Feature for large Gallery layout
+        'large-gallery',
+        // feature for positioning the overflowGallery at the top of the screen in the composite
+        'overflow-top-composite',
+        // feature for gallery layout in the composite 
+        'gallery-layout-composite',
+        // conditional-compile for new signaling beta
+        'signaling-beta'
+      ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
       // causing a build failure, but they are ignored by the preprocessing step.
@@ -84,12 +88,13 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'in-progress-beta-feature-demo',
-        // Feature for capabilities
-        'capabilities',
         // Feature for custom video gallery layouts
-        'gallery-layouts',
-        // Feature image gallery
-        'image-gallery'
+        // Feature for large gallery layout DO NOT REMOVE UNTIL SDK SUPPORTS 49 VIDEO STREAMS
+        'large-gallery',
+        // feature for positioning the overflowGallery at the top of the screen in the composite
+        'overflow-top-composite',
+        // feature for gallery layout in the composite 
+        'gallery-layout-composite'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
@@ -99,10 +104,25 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // Demo feature. Used in live-documentation of conditional compilation.
         // Do not use in production code.
         'stabilizedDemo',
+        // feature for blurred background and replace background effects
+        'video-background-effects',
         // Pinned Participants
         'pinned-participants',
+        // Feature for capabilities
+        'capabilities',
+        // Closed captions
+        'close-captions',
         // Optimal Video Count
-        'optimal-video-count'
+        'optimal-video-count',
+        // raise hands feature
+        'raise-hand',
+        // Feature for gallery layouts
+        'gallery-layouts',
+        // feature  for vertical overflow gallery
+        'vertical-gallery',
+        // API for injecting custom buttons in he control bar for
+        // `CallComposite` and `CallWithChatComposite`.
+        'control-bar-button-injection'
       ]
     }
   ]);

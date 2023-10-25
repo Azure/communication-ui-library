@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IStyle, IStackTokens, IStackStyles } from '@fluentui/react';
 
@@ -24,7 +24,8 @@ export const containerItemGap: IStackTokens = {
  */
 export const rejoinCallButtonContainerStyles: IStackStyles = {
   root: {
-    paddingTop: '1.125rem'
+    paddingTop: '1.125rem',
+    borderRadius: '0.25rem'
   }
 };
 

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier, _formatString } from '@internal/acs-ui-common';
 import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
@@ -7,14 +7,14 @@ import React, { useState } from 'react';
 import { COMPOSITE_LOCALE_EN_US } from '../../localization/locales';
 import { LocalizationProvider } from '../../localization/LocalizationProvider';
 import { CallAdapterProvider } from '../adapter/CallAdapterProvider';
-import { MockCallAdapter } from '../MockCallAdapter';
+import { _MockCallAdapter } from '../MockCallAdapter';
 import { useParticipantChangedAnnouncement } from './MediaGalleryUtils';
 import { act } from 'react-dom/test-utils';
 import { initializeIcons } from '@fluentui/react';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { render } from '@testing-library/react';
 
-function RootWrapper(props: { adapter: MockCallAdapter }): JSX.Element {
+function RootWrapper(props: { adapter: _MockCallAdapter }): JSX.Element {
   const { adapter } = props;
   return (
     <>
@@ -40,9 +40,9 @@ function HookWrapper(): JSX.Element {
 
 function renderWithParticipants(participants?: RemoteParticipantState[]): {
   container: HTMLElement;
-  adapter: MockCallAdapter;
+  adapter: _MockCallAdapter;
 } {
-  const adapter = new MockCallAdapter({});
+  const adapter = new _MockCallAdapter({});
   const { container } = render(<RootWrapper adapter={adapter} />);
   if (participants) {
     setParticipants(adapter, participants);
@@ -50,7 +50,7 @@ function renderWithParticipants(participants?: RemoteParticipantState[]): {
   return { container, adapter };
 }
 
-function setParticipants(adapter: MockCallAdapter, participants: RemoteParticipantState[]): void {
+function setParticipants(adapter: _MockCallAdapter, participants: RemoteParticipantState[]): void {
   const call: CallState | undefined = adapter.state.call
     ? {
         ...adapter.state.call,

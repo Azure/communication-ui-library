@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export {
   createAzureCommunicationCallAdapter,
@@ -13,8 +13,10 @@ export {
   createTeamsCallAdapterFromClient,
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
+
+export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs, TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
+export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type { AzureCommunicationCallAdapterArgs, CallAdapterLocator } from './AzureCommunicationCallAdapter';

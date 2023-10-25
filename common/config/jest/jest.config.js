@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /*
  * For a detailed explanation regarding each configuration property and type check, visit:
@@ -46,5 +46,15 @@ module.exports = {
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
-  transformIgnorePatterns: ['/node_modules/']
+  transformIgnorePatterns: ['/node_modules/'],
+
+  // Indicates which provider should be used to instrument code for coverage
+  coverageProvider: 'v8',
+
+  // The directory where Jest should output its coverage files
+  coverageDirectory: '../../../temp/jest/coverage/', // communication-ui-library/temp/jest/coverage
+
+  // Specifies the memory limit for workers before they are recycled and
+  // is primarily a work- around for https://github.com/jestjs/jest/issues/11956
+  workerIdleMemoryLimit: 0.85
 };

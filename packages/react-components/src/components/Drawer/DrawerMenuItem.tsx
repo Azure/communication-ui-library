@@ -1,7 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
+  FocusZone,
   FontIcon,
   IFontIconProps,
   IIconProps,
@@ -49,6 +50,10 @@ export interface _DrawerMenuItemProps {
    * A unique id set for the standard HTML id attibute
    */
   id?: string;
+  /**
+   * Property to set the focus since this is the first item in the menu
+   */
+  shouldFocusOnMount?: boolean;
 }
 
 /**
@@ -69,47 +74,49 @@ export const DrawerMenuItem = (props: _DrawerMenuItemProps): JSX.Element => {
   ) : undefined;
 
   return (
-    <Stack
-      tabIndex={0}
-      role="menuitem"
-      horizontal
-      className={mergeStyles(
-        drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
-        props.disabled ? disabledDrawerMenuItemRootStyles(theme.palette.neutralQuaternaryAlt) : undefined,
-        props.styles?.root
-      )}
-      onKeyPress={props.disabled ? undefined : onKeyPress}
-      onClick={props.disabled ? undefined : onClick}
-      tokens={menuItemChildrenGap}
-      id={props.id}
-    >
-      {props.iconProps && (
-        <Stack.Item
-          role="presentation"
-          styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}
-        >
-          <MenuItemIcon {...props.iconProps} />
-        </Stack.Item>
-      )}
-      <Stack.Item styles={drawerMenuItemTextStyles} grow>
-        <Text styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}>
-          {props.text}
-        </Text>
-      </Stack.Item>
-      {props.secondaryText && (
-        <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryTextStyles)}>
-          <Text
-            styles={{
-              root: { color: props.disabled ? theme.palette.neutralTertiaryAlt : theme.palette.neutralSecondary }
-            }}
+    <FocusZone shouldFocusOnMount={props.shouldFocusOnMount}>
+      <Stack
+        tabIndex={0}
+        role="menuitem"
+        horizontal
+        className={mergeStyles(
+          drawerMenuItemRootStyles(theme.palette.neutralLight, theme.fonts.small),
+          props.disabled ? disabledDrawerMenuItemRootStyles(theme.palette.neutralQuaternaryAlt) : undefined,
+          props.styles?.root
+        )}
+        onKeyPress={props.disabled ? undefined : onKeyPress}
+        onClick={props.disabled ? undefined : onClick}
+        tokens={menuItemChildrenGap}
+        id={props.id}
+      >
+        {props.iconProps && (
+          <Stack.Item
+            role="presentation"
+            styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}
           >
-            {props.secondaryText}
+            <MenuItemIcon {...props.iconProps} />
+          </Stack.Item>
+        )}
+        <Stack.Item styles={drawerMenuItemTextStyles} grow>
+          <Text styles={props.disabled ? { root: { color: theme.palette.neutralTertiaryAlt } } : undefined}>
+            {props.text}
           </Text>
         </Stack.Item>
-      )}
-      {props.secondaryComponent && <Stack.Item>{props.secondaryComponent}</Stack.Item>}
-      {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
-    </Stack>
+        {props.secondaryText && (
+          <Stack.Item styles={drawerMenuItemTextStyles} className={mergeStyles(secondaryTextStyles)}>
+            <Text
+              styles={{
+                root: { color: props.disabled ? theme.palette.neutralTertiaryAlt : theme.palette.neutralSecondary }
+              }}
+            >
+              {props.secondaryText}
+            </Text>
+          </Stack.Item>
+        )}
+        {props.secondaryComponent && <Stack.Item>{props.secondaryComponent}</Stack.Item>}
+        {secondaryIcon && <Stack.Item>{secondaryIcon}</Stack.Item>}
+      </Stack>
+    </FocusZone>
   );
 };
 

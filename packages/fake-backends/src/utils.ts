@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ChatMessage, ChatParticipant } from '@azure/communication-chat';
 import { getIdentifierKind } from '@azure/communication-common';
@@ -61,16 +61,16 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
 export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatParticipant => {
   const identifier = getIdentifierKind(p.id);
 
-  /* @conditional-compile-remove(communication-common-beta-v3) */
-  if (identifier.kind === 'microsoftBot') {
+  if (identifier.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported indentifier kind: microsoftBot');
   }
 
   return {
     id: identifier,
     displayName: p.displayName ?? '',
-    shareHistoryTime: p.shareHistoryTime
-    // metadata: {}
+    shareHistoryTime: p.shareHistoryTime,
+    /* @conditional-compile-remove(signaling-beta) */
+    metadata: {}
   };
 };
 

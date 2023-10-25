@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
 import { _CaptionsSettingsModal, _CaptionsSettingsModalStrings } from '@internal/react-components';
@@ -68,6 +68,9 @@ const CaptionsSettingsModalStory = (args): JSX.Element => {
         onStartCaptions={onStartCaptions}
         onDismissCaptionsSettings={onDismissCaptionsSettings}
         strings={strings}
+        supportedCaptionLanguages={[]}
+        onSetCaptionLanguage={Promise.resolve}
+        currentCaptionLanguage={''}
       />{' '}
     </Stack>
   );

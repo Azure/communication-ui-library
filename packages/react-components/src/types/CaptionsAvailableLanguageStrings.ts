@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
- * @beta
+ * @public
  * spoken language strings for captions setting modal
  */
 export interface SpokenLanguageStrings {
@@ -50,7 +50,7 @@ export interface SpokenLanguageStrings {
 }
 
 /**
- * @beta
+ * @public
  * caption language strings for captions setting modal
  */
 export interface CaptionLanguageStrings {

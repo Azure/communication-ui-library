@@ -1,14 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { _isInCall } from '@internal/calling-component-bindings';
-import {
-  ActiveErrorMessage,
-  ErrorBar,
-  OnRenderAvatarCallback,
-  ParticipantMenuItemsCallback,
-  useTheme
-} from '@internal/react-components';
+import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback, useTheme } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
@@ -122,7 +116,7 @@ export interface RemoteVideoTileMenuOptions {
   isHidden?: boolean;
 }
 
-/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(vertical-gallery) */
 /**
  * Options for the local video tile in the Call composite.
  *
@@ -136,7 +130,6 @@ export interface LocalVideoTileOptions {
    * @remarks 'grid' - local video tile will be rendered in the grid view of the videoGallery.
    * 'floating' - local video tile will be rendered in the floating position and will observe overflow gallery
    * local video tile rules and be docked in the bottom corner.
-   * 'hidden' - local video tile will not be rendered.
    * This does not affect the Configuration screen or the side pane Picture in Picture in Picture view.
    */
   position?: 'grid' | 'floating';
@@ -240,7 +233,6 @@ export type CallCompositeOptions = {
 type MainScreenProps = {
   mobileView: boolean;
   modalLayerHostId: string;
-  onRenderAvatar?: OnRenderAvatarCallback;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -278,12 +270,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     hasMicrophones
   ]);
 
-  const { callInvitationUrl, onRenderAvatar, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
   const [injectedSidePaneProps, setInjectedSidePaneProps] = React.useState<InjectedSidePaneProps>();
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetGalleryLayout, setUserSetGalleryLayout] = useState<VideoGalleryLayout>(
+    props.options?.galleryOptions?.layout ?? 'floatingLocalVideo'
+  );
+  /* @conditional-compile-remove(gallery-layouts) */
+  const [userSetOverflowGalleryPosition, setUserSetOverflowGalleryPosition] = useState<'Responsive' | 'horizontalTop'>(
+    'Responsive'
+  );
 
   const overridePropsRef = useRef<InjectedSidePaneProps | undefined>(props.overrideSidePane);
   useEffect(() => {
@@ -449,7 +450,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          onRenderAvatar={onRenderAvatar}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
@@ -461,7 +461,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'call':
       pageElement = (
         <CallPage
-          onRenderAvatar={onRenderAvatar}
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
@@ -473,9 +472,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           latestErrors={latestErrors}
           onDismissError={onDismissError}
           /* @conditional-compile-remove(gallery-layouts) */
-          galleryLayout={
-            props.options?.galleryOptions?.layout ? props.options.galleryOptions.layout : 'floatingLocalVideo'
-          }
+          galleryLayout={userSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+          /* @conditional-compile-remove(gallery-layouts) */
+          onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+          /* @conditional-compile-remove(gallery-layouts) */
+          userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />

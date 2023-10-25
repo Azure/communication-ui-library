@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
 import { ParticipantCapabilities } from '@azure/communication-calling';
@@ -149,7 +149,7 @@ export const getDiagnostics = (
   props: CallingBaseSelectorProps
 ): DiagnosticsCallFeatureState | undefined => state.calls[props.callId]?.diagnostics;
 
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(raise-hand) */
 /**
  * @private
  */

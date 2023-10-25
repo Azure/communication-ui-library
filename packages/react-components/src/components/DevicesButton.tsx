@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   ContextualMenuItemType,
@@ -152,7 +152,7 @@ export interface DevicesButtonProps extends ControlBarButtonProps {
 /**
  * Subset props for various buttons that show device selection menus.
  *
- * @private
+ * @internal
  */
 export interface DeviceMenuProps {
   microphones?: OptionsDevice[];
@@ -170,7 +170,7 @@ export interface DeviceMenuProps {
 /**
  * Subset of strings for various buttons that show device selection menus.
  *
- * @private
+ * @internal
  */
 export interface DeviceMenuStrings {
   /**
@@ -218,7 +218,7 @@ export interface DeviceMenuStrings {
 /**
  * Styles for flyouts used by various buttons for device selection flyouts.
  *
- * @private
+ * @internal
  */
 export interface DeviceMenuStyles extends IContextualMenuStyles {
   menuItemStyles?: IContextualMenuItemStyles;
@@ -228,7 +228,7 @@ export interface DeviceMenuStyles extends IContextualMenuStyles {
  * Generates default {@link IContextualMenuProps} for buttons that
  * show a drop-down to select devices to use.
  *
- * @private
+ * @internal
  */
 export const generateDefaultDeviceMenuProps = (
   props: DeviceMenuProps,

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { compositeLogger } from '../../../Logger';
 import { _isInCall, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
@@ -49,7 +49,7 @@ import type { CapabilitiesChangeHandler, CapabilitiesChangeInfo } from '@azure/c
 import { TeamsCallAgent } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */
 import { RoomCallLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(unsupported-browser) */ /* @conditional-compile-remove(video-background-effects) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(capabilities) */
 import { Features } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
@@ -96,12 +96,14 @@ import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIden
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
-  isCommunicationUserIdentifier,
-  isPhoneNumberIdentifier,
-  UnknownIdentifier,
-  PhoneNumberIdentifier,
   CommunicationIdentifier,
   MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
+  isCommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
+  PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -872,18 +874,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     const idsToAdd = participants.map((participant) => {
-      // FIXME: `onStartCall` does not allow a Teams user.
-      // Need some way to return an error if a Teams user is provided.
-      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
-      if (isPhoneNumberIdentifier(backendId)) {
+      let backendId = participant;
+      if (typeof participant === 'string') {
+        backendId = _toCommunicationIdentifier(participant);
+      }
+
+      if (backendId.phoneNumber) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
-        return backendId as PhoneNumberIdentifier;
-      } else if (isCommunicationUserIdentifier(backendId)) {
-        return backendId as CommunicationUserIdentifier;
+        return backendId as CommunicationIdentifier;
       }
-      return backendId as UnknownIdentifier;
+      return backendId as CommunicationIdentifier;
     });
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
@@ -1279,7 +1281,7 @@ export type CallAdapterLocator =
 /**
  * Common optional parameters to create {@link AzureCommunicationCallAdapter} or {@link TeamsCallAdapter}
  *
- * @beta
+ * @public
  */
 export type CommonCallAdapterOptions = {
   /* @conditional-compile-remove(video-background-effects) */
@@ -1290,6 +1292,7 @@ export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   };
+  /* @conditional-compile-remove(teams-identity-support) */
   /**
    * Use this to fetch profile information which will override data in {@link CallAdapterState} like display name
    * The onFetchProfile is fetch-and-forget one time action for each user, once a user profile is updated, the value will be cached
@@ -1301,7 +1304,7 @@ export type CommonCallAdapterOptions = {
 /**
  * Optional parameters to create {@link AzureCommunicationCallAdapter}
  *
- * @beta
+ * @public
  */
 export type AzureCommunicationCallAdapterOptions = CommonCallAdapterOptions;
 
@@ -1333,7 +1336,7 @@ export type AzureCommunicationCallAdapterArgs = {
 /**
  * Optional parameters to create {@link TeamsCallAdapter}
  *
- * @beta
+ * @public
  */
 export type TeamsAdapterOptions = CommonCallAdapterOptions;
 

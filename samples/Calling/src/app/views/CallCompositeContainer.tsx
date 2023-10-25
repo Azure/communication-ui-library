@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommonCallAdapter, CallComposite } from '@azure/communication-react';
 /* @conditional-compile-remove(call-readiness) */

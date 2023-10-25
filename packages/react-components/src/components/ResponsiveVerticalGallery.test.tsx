@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { registerIcons } from '@fluentui/react';
 import * as acs_ui_common from '@internal/acs-ui-common';

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Icon,
@@ -11,7 +11,7 @@ import {
   Stack,
   Theme
 } from '@fluentui/react';
-/* @conditional-compile-remove(total-participant-count) */
+/* @conditional-compile-remove(total-participant-count) */ /* @conditional-compile-remove(raise-hand) */
 import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
 import { useTheme } from '../theming';
@@ -130,11 +130,7 @@ const onRenderParticipantDefault = (
 
   let presence: PersonaPresence | undefined = undefined;
   if (callingParticipant) {
-    if (callingParticipant.state === 'Connected') {
-      presence = PersonaPresence.online;
-    } else if (callingParticipant.state === 'Idle') {
-      presence = PersonaPresence.away;
-    }
+    presence = PersonaPresence.none;
   }
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);

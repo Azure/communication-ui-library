@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
@@ -17,7 +17,7 @@ import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communic
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rooms) */
+/* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import EventEmitter from 'events';
@@ -310,7 +310,7 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(rooms) */
+  /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
   public setRole(callId: string, role: ParticipantRole): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];

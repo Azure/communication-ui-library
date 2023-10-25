@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { FocusTrapZone, IStyle, mergeStyles, mergeStyleSets, Stack } from '@fluentui/react';
 import React from 'react';
@@ -101,7 +101,6 @@ const focusTrapZoneStyles: IStyle = {
 
 const drawerContentContainerStyles: BaseCustomStyles = {
   root: {
-    // Needed to fill max height from parent, drawerSurfaceStyles
-    height: '100%'
+    height: 'auto'
   }
 };

@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="react" />
+
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -72,6 +74,7 @@ export interface CallingTheme {
         callRedDark: string;
         callRedDarker: string;
         iconWhite: string;
+        raiseHandGold: string;
     };
 }
 
@@ -81,6 +84,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isScreenSharing?: boolean;
     isMuted?: boolean;
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
 };
 
 // @public
@@ -96,6 +100,7 @@ export interface CameraButtonProps extends ControlBarButtonProps {
     cameras?: OptionsDevice[];
     enableDeviceSelectionMenu?: boolean;
     localVideoViewOptions?: VideoStreamOptions;
+    onClickVideoEffects?: (showVideoEffects: boolean) => void;
     onSelectCamera?: (device: OptionsDevice) => Promise<void>;
     onToggleCamera?: (options?: VideoStreamOptions) => Promise<void>;
     selectedCamera?: OptionsDevice;
@@ -121,6 +126,7 @@ export interface CameraButtonStrings {
     tooltipOffContent?: string;
     tooltipOnContent?: string;
     tooltipVideoLoadingContent?: string;
+    videoEffectsMenuItemTitle?: string;
 }
 
 // @public
@@ -130,6 +136,175 @@ export interface CameraButtonStyles extends ControlBarButtonStyles {
 
 // @public
 export type CancelEditCallback = (messageId: string) => void;
+
+// @internal
+export const _Caption: (props: _CaptionProps) => JSX.Element;
+
+// @public
+export interface CaptionLanguageStrings {
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'zh-Hans': string;
+    // (undocumented)
+    'zh-Hant': string;
+    // (undocumented)
+    ar: string;
+    // (undocumented)
+    cs: string;
+    // (undocumented)
+    cy: string;
+    // (undocumented)
+    da: string;
+    // (undocumented)
+    de: string;
+    // (undocumented)
+    el: string;
+    // (undocumented)
+    en: string;
+    // (undocumented)
+    es: string;
+    // (undocumented)
+    fi: string;
+    // (undocumented)
+    fr: string;
+    // (undocumented)
+    he: string;
+    // (undocumented)
+    hi: string;
+    // (undocumented)
+    hu: string;
+    // (undocumented)
+    it: string;
+    // (undocumented)
+    ja: string;
+    // (undocumented)
+    ko: string;
+    // (undocumented)
+    nb: string;
+    // (undocumented)
+    nl: string;
+    // (undocumented)
+    pl: string;
+    // (undocumented)
+    pt: string;
+    // (undocumented)
+    ro: string;
+    // (undocumented)
+    ru: string;
+    // (undocumented)
+    sk: string;
+    // (undocumented)
+    sv: string;
+    // (undocumented)
+    th: string;
+    // (undocumented)
+    tr: string;
+    // (undocumented)
+    uk: string;
+    // (undocumented)
+    vi: string;
+}
+
+// @internal
+export interface _CaptionProps extends _CaptionsInfo {
+    onRenderAvatar?: OnRenderAvatarCallback;
+}
+
+// @internal
+export const _CaptionsBanner: (props: _CaptionsBannerProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsBannerProps {
+    // (undocumented)
+    captions: _CaptionsInfo[];
+    formFactor?: 'default' | 'compact';
+    // (undocumented)
+    isCaptionsOn?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    // (undocumented)
+    startCaptionsInProgress?: boolean;
+    // (undocumented)
+    strings?: _CaptionsBannerStrings;
+}
+
+// @internal
+export interface _CaptionsBannerStrings {
+    // (undocumented)
+    captionsBannerSpinnerText?: string;
+}
+
+// @internal
+export type _CaptionsInfo = {
+    id: string;
+    displayName: string;
+    captionText: string;
+    userId?: string;
+};
+
+// @internal
+export type _captionsOptions = {
+    spokenLanguage: string;
+};
+
+// @internal
+export const _CaptionsSettingsModal: (props: _CaptionsSettingsModalProps) => JSX.Element;
+
+// @internal
+export interface _CaptionsSettingsModalProps {
+    // (undocumented)
+    captionLanguageStrings?: CaptionLanguageStrings;
+    // (undocumented)
+    changeCaptionLanguage?: boolean;
+    // (undocumented)
+    currentCaptionLanguage: string;
+    // (undocumented)
+    currentSpokenLanguage: string;
+    // (undocumented)
+    isCaptionsFeatureActive?: boolean;
+    // (undocumented)
+    onDismissCaptionsSettings?: () => void;
+    // (undocumented)
+    onSetCaptionLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    // (undocumented)
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    // (undocumented)
+    showModal?: boolean;
+    // (undocumented)
+    spokenLanguageStrings?: SpokenLanguageStrings;
+    // (undocumented)
+    strings?: _CaptionsSettingsModalStrings;
+    // (undocumented)
+    supportedCaptionLanguages: string[];
+    // (undocumented)
+    supportedSpokenLanguages: string[];
+}
+
+// @internal
+export interface _CaptionsSettingsModalStrings {
+    // (undocumented)
+    captionsSettingsCancelButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsCaptionLanguageDropdownInfoText?: string;
+    // (undocumented)
+    captionsSettingsCaptionLanguageDropdownLabel?: string;
+    // (undocumented)
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsConfirmButtonLabel?: string;
+    // (undocumented)
+    captionsSettingsModalAriaLabel?: string;
+    // (undocumented)
+    captionsSettingsModalTitle?: string;
+    // (undocumented)
+    captionsSettingsSpokenLanguageDropdownInfoText?: string;
+    // (undocumented)
+    captionsSettingsSpokenLanguageDropdownLabel?: string;
+}
 
 // @public
 export interface ChatMessage extends MessageCommon {
@@ -295,9 +470,11 @@ export interface ComponentStrings {
     microphoneButton: MicrophoneButtonStrings;
     participantItem: ParticipantItemStrings;
     participantsButton: ParticipantsButtonStrings;
+    raiseHandButton: RaiseHandButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
+    verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
 }
 
@@ -382,65 +559,120 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
-    ChatMessageOptions: JSX.Element;
-    ControlButtonCameraOff: JSX.Element;
-    ControlButtonCameraOn: JSX.Element;
-    ControlButtonEndCall: JSX.Element;
-    ControlButtonMicOff: JSX.Element;
-    ControlButtonMicOn: JSX.Element;
-    ControlButtonOptions: JSX.Element;
-    ControlButtonParticipants: JSX.Element;
-    ControlButtonScreenShareStart: JSX.Element;
-    ControlButtonScreenShareStop: JSX.Element;
-    EditBoxCancel: JSX.Element;
-    EditBoxSubmit: JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element;
-    ErrorBarClear: JSX.Element;
-    ErrorBarCallVideoRecoveredBySystem: JSX.Element;
-    ErrorBarCallVideoStoppedBySystem: JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element;
-    MessageDelivered: JSX.Element;
-    MessageEdit: JSX.Element;
-    MessageFailed: JSX.Element;
-    MessageRemove: JSX.Element;
-    MessageResend: JSX.Element;
-    MessageSeen: JSX.Element;
-    MessageSending: JSX.Element;
-    OptionsCamera: JSX.Element;
-    OptionsMic: JSX.Element;
-    OptionsSpeaker: JSX.Element;
-    ParticipantItemMicOff: JSX.Element;
-    ParticipantItemOptions: JSX.Element;
-    ParticipantItemOptionsHovered: JSX.Element;
-    ParticipantItemScreenShareStart: JSX.Element;
-    SendBoxSend: JSX.Element;
-    SendBoxSendHovered: JSX.Element;
-    VideoTileMicOff: JSX.Element;
-    VideoTilePinned: JSX.Element;
-    VideoTileMoreOptions: JSX.Element;
-    VideoTileScaleFit: JSX.Element;
-    VideoTileScaleFill: JSX.Element;
-    PinParticipant: JSX.Element;
-    UnpinParticipant: JSX.Element;
-    SplitButtonPrimaryActionCameraOn: JSX.Element;
-    SplitButtonPrimaryActionCameraOff: JSX.Element;
-    SplitButtonPrimaryActionMicUnmuted: JSX.Element;
-    SplitButtonPrimaryActionMicMuted: JSX.Element;
-    ContextMenuCameraIcon: JSX.Element;
-    ContextMenuMicIcon: JSX.Element;
-    ContextMenuSpeakerIcon: JSX.Element;
+    ChatMessageOptions: React_2.JSX.Element;
+    ControlButtonCameraOff: React_2.JSX.Element;
+    ControlButtonCameraOn: React_2.JSX.Element;
+    ControlButtonEndCall: React_2.JSX.Element;
+    ControlButtonMicOff: React_2.JSX.Element;
+    ControlButtonMicOn: React_2.JSX.Element;
+    ControlButtonOptions: React_2.JSX.Element;
+    ControlButtonParticipants: React_2.JSX.Element;
+    ControlButtonScreenShareStart: React_2.JSX.Element;
+    ControlButtonScreenShareStop: React_2.JSX.Element;
+    ControlButtonRaiseHand: React_2.JSX.Element;
+    ControlButtonLowerHand: React_2.JSX.Element;
+    RaiseHandContextualMenuItem: React_2.JSX.Element;
+    LowerHandContextualMenuItem: React_2.JSX.Element;
+    EditBoxCancel: React_2.JSX.Element;
+    EditBoxSubmit: React_2.JSX.Element;
+    ErrorBarCallCameraAccessDenied: React_2.JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: React_2.JSX.Element;
+    ErrorBarCallLocalVideoFreeze: React_2.JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: React_2.JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: React_2.JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: React_2.JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: React_2.JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: React_2.JSX.Element;
+    ErrorBarCallNetworkQualityLow: React_2.JSX.Element;
+    ErrorBarCallNoMicrophoneFound: React_2.JSX.Element;
+    ErrorBarCallNoSpeakerFound: React_2.JSX.Element;
+    ErrorBarClear: React_2.JSX.Element;
+    ErrorBarCallVideoRecoveredBySystem: React_2.JSX.Element;
+    ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
+    HorizontalGalleryLeftButton: React_2.JSX.Element;
+    HorizontalGalleryRightButton: React_2.JSX.Element;
+    MessageDelivered: React_2.JSX.Element;
+    MessageEdit: React_2.JSX.Element;
+    MessageFailed: React_2.JSX.Element;
+    MessageRemove: React_2.JSX.Element;
+    MessageResend: React_2.JSX.Element;
+    MessageSeen: React_2.JSX.Element;
+    MessageSending: React_2.JSX.Element;
+    OptionsCamera: React_2.JSX.Element;
+    OptionsMic: React_2.JSX.Element;
+    OptionsSpeaker: React_2.JSX.Element;
+    ParticipantItemMicOff: React_2.JSX.Element;
+    ParticipantItemOptions: React_2.JSX.Element;
+    ParticipantItemOptionsHovered: React_2.JSX.Element;
+    ParticipantItemScreenShareStart: React_2.JSX.Element;
+    SendBoxSend: React_2.JSX.Element;
+    SendBoxSendHovered: React_2.JSX.Element;
+    VideoTileMicOff: React_2.JSX.Element;
+    VideoTilePinned: React_2.JSX.Element;
+    VideoTileMoreOptions: React_2.JSX.Element;
+    VideoTileScaleFit: React_2.JSX.Element;
+    VideoTileScaleFill: React_2.JSX.Element;
+    PinParticipant: React_2.JSX.Element;
+    UnpinParticipant: React_2.JSX.Element;
+    SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
+    SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
+    VerticalGalleryLeftButton: React_2.JSX.Element;
+    VerticalGalleryRightButton: React_2.JSX.Element;
+    ControlButtonVideoEffectsOption: React_2.JSX.Element;
+    ConfigurationScreenVideoEffectsButton: React_2.JSX.Element;
+    CaptionsIcon: React_2.JSX.Element;
+    CaptionsOffIcon: React_2.JSX.Element;
+    CaptionsSettingsIcon: React_2.JSX.Element;
+    ChangeSpokenLanguageIcon: React_2.JSX.Element;
+    ChangeCaptionLanguageIcon: React_2.JSX.Element;
+    ContextMenuCameraIcon: React_2.JSX.Element;
+    ContextMenuMicIcon: React_2.JSX.Element;
+    ContextMenuSpeakerIcon: React_2.JSX.Element;
 };
+
+// @internal
+export interface _DeviceMenuProps {
+    // (undocumented)
+    cameras?: OptionsDevice[];
+    // (undocumented)
+    microphones?: OptionsDevice[];
+    // (undocumented)
+    onSelectCamera?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectMicrophone?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    onSelectSpeaker?: (device: OptionsDevice) => Promise<void>;
+    // (undocumented)
+    selectedCamera?: OptionsDevice;
+    // (undocumented)
+    selectedMicrophone?: OptionsDevice;
+    // (undocumented)
+    selectedSpeaker?: OptionsDevice;
+    // (undocumented)
+    speakers?: OptionsDevice[];
+    // (undocumented)
+    styles?: Partial<_DeviceMenuStyles>;
+}
+
+// @internal
+export interface _DeviceMenuStrings {
+    audioDeviceMenuTitle?: string;
+    audioDeviceMenuTooltip?: string;
+    cameraMenuTitle?: string;
+    cameraMenuTooltip?: string;
+    microphoneMenuTitle?: string;
+    microphoneMenuTooltip?: string;
+    speakerMenuTitle?: string;
+    speakerMenuTooltip?: string;
+}
+
+// @internal
+export interface _DeviceMenuStyles extends IContextualMenuStyles {
+    // (undocumented)
+    menuItemStyles?: IContextualMenuItemStyles;
+}
 
 // @internal
 export const _DevicePermissionDropdown: (props: _DevicePermissionDropdownProps) => JSX.Element;
@@ -559,6 +791,7 @@ export interface _DrawerMenuItemProps {
     secondaryComponent?: JSX.Element;
     secondaryIconProps?: IIconProps;
     secondaryText?: string;
+    shouldFocusOnMount?: boolean;
     // (undocumented)
     styles?: BaseCustomStyles;
     // (undocumented)
@@ -661,6 +894,7 @@ export interface ErrorBarStrings {
     stopScreenShareGeneric: string;
     stopVideoGeneric: string;
     unableToReachChatService: string;
+    unableToStartVideoEffect?: string;
     unmuteGeneric: string;
     userNotInChatThread: string;
 }
@@ -751,6 +985,11 @@ export interface FluentThemeProviderProps {
     rtl?: boolean;
 }
 
+// @internal
+export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
+    items: IContextualMenuItem[];
+} | undefined;
+
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
@@ -813,6 +1052,8 @@ export interface _Identifiers {
     participantListRemoveParticipantButton: string;
     sendboxTextField: string;
     typingIndicator: string;
+    verticalGalleryPageCounter: string;
+    verticalGalleryVideoTile: string;
     videoGallery: string;
     videoTile: string;
 }
@@ -872,7 +1113,8 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     localVideoSelectedDescription?: string | undefined;
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
-}) => JSX.Element>;
+    raisedHand?: RaisedHand | undefined;
+}) => React_2.JSX.Element>;
 
 // @public
 export type Message = ChatMessage | SystemMessage | CustomMessage;
@@ -1070,6 +1312,9 @@ export interface OptionsDevice {
 }
 
 // @public
+export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | /* @conditional-compile-remove(gallery-layouts) */ 'horizontalTop';
+
+// @public
 export interface ParticipantAddedSystemMessage extends SystemMessageCommon {
     // (undocumented)
     participants: CommunicationParticipant[];
@@ -1234,6 +1479,29 @@ export type _PictureInPictureInPictureTileProps = PropsWithChildren<{
 }>;
 
 // @public
+export type RaisedHand = {
+    raisedHandOrderPosition: number;
+};
+
+// @public
+export const RaiseHandButton: (props: RaiseHandButtonProps) => JSX.Element;
+
+// @public
+export interface RaiseHandButtonProps extends ControlBarButtonProps {
+    onToggleRaiseHand?: () => Promise<void>;
+    strings?: Partial<RaiseHandButtonStrings>;
+}
+
+// @public
+export interface RaiseHandButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipDisabledContent?: string;
+    tooltipOffContent?: string;
+    tooltipOnContent?: string;
+}
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -1266,7 +1534,7 @@ export const _RemoteVideoTile: React_2.MemoExoticComponent<(props: {
     isPinned?: boolean | undefined;
     disablePinMenuItem?: boolean | undefined;
     toggleAnnouncerString?: ((announcerString: string) => void) | undefined;
-}) => JSX.Element>;
+}) => React_2.JSX.Element>;
 
 // @public
 export const ScreenShareButton: (props: ScreenShareButtonProps) => JSX.Element;
@@ -1317,6 +1585,157 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     systemMessage?: IStyle;
     textField?: IStyle;
     textFieldContainer?: IStyle;
+}
+
+// @public
+export interface SpokenLanguageStrings {
+    // (undocumented)
+    'ar-ae': string;
+    // (undocumented)
+    'ar-sa': string;
+    // (undocumented)
+    'cs-cz': string;
+    // (undocumented)
+    'cy-gb': string;
+    // (undocumented)
+    'da-dk': string;
+    // (undocumented)
+    'de-de': string;
+    // (undocumented)
+    'el-gr': string;
+    // (undocumented)
+    'en-au': string;
+    // (undocumented)
+    'en-ca': string;
+    // (undocumented)
+    'en-gb': string;
+    // (undocumented)
+    'en-in': string;
+    // (undocumented)
+    'en-nz': string;
+    // (undocumented)
+    'en-us': string;
+    // (undocumented)
+    'es-es': string;
+    // (undocumented)
+    'es-mx': string;
+    // (undocumented)
+    'fi-fi': string;
+    // (undocumented)
+    'fr-ca': string;
+    // (undocumented)
+    'fr-fr': string;
+    // (undocumented)
+    'he-il': string;
+    // (undocumented)
+    'hi-in': string;
+    // (undocumented)
+    'hu-hu': string;
+    // (undocumented)
+    'it-it': string;
+    // (undocumented)
+    'ja-jp': string;
+    // (undocumented)
+    'ko-kr': string;
+    // (undocumented)
+    'nb-no': string;
+    // (undocumented)
+    'nl-be': string;
+    // (undocumented)
+    'nl-nl': string;
+    // (undocumented)
+    'pl-pl': string;
+    // (undocumented)
+    'pt-br': string;
+    // (undocumented)
+    'pt-pt': string;
+    // (undocumented)
+    'ro-ro': string;
+    // (undocumented)
+    'ru-ru': string;
+    // (undocumented)
+    'sk-sk': string;
+    // (undocumented)
+    'sv-se': string;
+    // (undocumented)
+    'th-th': string;
+    // (undocumented)
+    'tr-tr': string;
+    // (undocumented)
+    'uk-ua': string;
+    // (undocumented)
+    'vi-vn': string;
+    // (undocumented)
+    'zh-cn': string;
+    // (undocumented)
+    'zh-hk': string;
+    // (undocumented)
+    'zh-tw': string;
+}
+
+// @internal
+export const _spokenLanguageToCaptionLanguage: {
+    'ar-ae': string;
+    'ar-sa': string;
+    'da-dk': string;
+    'de-de': string;
+    'en-au': string;
+    'en-ca': string;
+    'en-gb': string;
+    'en-in': string;
+    'en-nz': string;
+    'en-us': string;
+    'es-es': string;
+    'es-mx': string;
+    'fi-fi': string;
+    'fr-ca': string;
+    'fr-fr': string;
+    'hi-in': string;
+    'it-it': string;
+    'ja-jp': string;
+    'ko-kr': string;
+    'nb-no': string;
+    'nl-be': string;
+    'nl-nl': string;
+    'pl-pl': string;
+    'pt-br': string;
+    'ru-ru': string;
+    'sv-se': string;
+    'zh-cn': string;
+    'zh-hk': string;
+    'cs-cz': string;
+    'pt-pt': string;
+    'tr-tr': string;
+    'vi-vn': string;
+    'th-th': string;
+    'he-il': string;
+    'cy-gb': string;
+    'uk-ua': string;
+    'el-gr': string;
+    'hu-hu': string;
+    'ro-ro': string;
+    'sk-sk': string;
+    'zh-tw': string;
+};
+
+// @internal
+export const _StartCaptionsButton: (props: _StartCaptionsButtonProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: _StartCaptionsButtonStrings;
+}
+
+// @internal
+export interface _StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
 }
 
 // @public
@@ -1467,20 +1886,20 @@ export const _useContainerWidth: (containerRef: RefObject<HTMLElement>) => numbe
 // @public
 export const useTheme: () => Theme;
 
-// @beta
+// @public
 export interface VerticalGalleryControlBarStyles extends BaseCustomStyles {
     counter?: IStyle;
     nextButton?: IStyle;
     previousButton?: IStyle;
 }
 
-// @beta
+// @public
 export interface VerticalGalleryStrings {
     leftNavButtonAriaLabel?: string;
     rightNavButtonAriaLabel?: string;
 }
 
-// @beta
+// @public
 export interface VerticalGalleryStyles extends BaseCustomStyles {
     children?: IStyle;
     controlBar?: VerticalGalleryControlBarStyles;
@@ -1529,6 +1948,7 @@ export interface _VideoEffectsItemProps {
         url: string;
     };
     disabled?: boolean;
+    focusOnMount?: boolean;
     iconProps?: IIconProps;
     isSelected?: boolean;
     itemKey: string;
@@ -1549,10 +1969,11 @@ export interface _VideoEffectsItemStyles {
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditional-compile-remove(gallery-layouts) */ 'speaker' | /* @conditional-compile-remove(gallery-layouts) */ 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
+    raisedHand?: RaisedHand;
 }
 
 // @public
@@ -1584,6 +2005,7 @@ export interface VideoGalleryProps {
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
     onUnpinParticipant?: (userId: string) => void;
+    overflowGalleryPosition?: OverflowGalleryPosition;
     pinnedParticipants?: string[];
     remoteParticipants?: VideoGalleryRemoteParticipant[];
     remoteVideoTileMenu?: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps;
@@ -1597,6 +2019,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
 }
 
@@ -1638,6 +2061,7 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     gridLayout?: GridLayoutStyles;
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
+    verticalGallery?: VerticalGalleryStyles;
 }
 
 // @public
@@ -1675,6 +2099,7 @@ export interface VideoTileProps {
     onRenderPlaceholder?: OnRenderAvatarCallback;
     personaMaxSize?: number;
     personaMinSize?: number;
+    raisedHand?: RaisedHand;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

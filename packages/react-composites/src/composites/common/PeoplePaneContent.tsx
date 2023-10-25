@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IContextualMenuItem, Stack } from '@fluentui/react';
 import {
@@ -203,7 +203,11 @@ const createDefaultContextualMenuItems = (
  */
 const hasRemoveParticipantsPermissionTrampoline = (adapter: CommonCallAdapter): boolean => {
   /* @conditional-compile-remove(rooms) */
-  return adapter.getState().call?.role === 'Presenter';
+  const role = adapter.getState().call?.role;
+  /* @conditional-compile-remove(rooms) */
+  const canRemove = role === 'Presenter' || role === 'Unknown' || role === undefined;
+  /* @conditional-compile-remove(rooms) */
+  return canRemove;
   // Return true if stable.
   return true;
 };

@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamické rozložení",
     "moreButtonGalleryDefaultLayoutLabel": "Rozložení galerie",
     "moreButtonGalleryFocusedContentLayoutLabel": "Prioritní obsah",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Velká galerie",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Vaše kamera byla zakázána. Už nemůžete sdílet video.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Živé titulky",
     "moreDrawerSpokenLanguageMenuTitle": "Mluvený jazyk",
     "moreDrawerCaptionLanguageMenuTitle": "Jazyk titulků",
+    "moreDrawerGalleryOptionsMenuTitle": "Možnosti galerie",
     "peopleButtonLabel": "Lidé",
     "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",

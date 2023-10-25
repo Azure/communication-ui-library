@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export { TypingIndicator } from './TypingIndicator';
 export type { TypingIndicatorProps, TypingIndicatorStrings, TypingIndicatorStylesProps } from './TypingIndicator';
@@ -111,13 +111,16 @@ export type {
   MicrophoneButtonStrings
 } from './MicrophoneButton';
 
-export { DevicesButton } from './DevicesButton';
+export { DevicesButton, generateDefaultDeviceMenuProps as _generateDefaultDeviceMenuProps } from './DevicesButton';
 export type {
   OptionsDevice,
   DevicesButtonProps,
   DevicesButtonStrings,
   DevicesButtonStyles,
-  DevicesButtonContextualMenuStyles
+  DevicesButtonContextualMenuStyles,
+  DeviceMenuProps as _DeviceMenuProps,
+  DeviceMenuStrings as _DeviceMenuStrings,
+  DeviceMenuStyles as _DeviceMenuStyles
 } from './DevicesButton';
 
 /* @conditional-compile-remove(call-readiness) */

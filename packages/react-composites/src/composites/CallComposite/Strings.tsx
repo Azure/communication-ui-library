@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
@@ -619,6 +619,11 @@ export interface CallCompositeStrings {
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonGalleryDefaultLayoutLabel?: string;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for the selection of the default (Gallery) layout
+   */
+  moreButtonLargeGalleryDefaultLayoutLabel?: string;
   /* @conditional-compile-remove(gallery-layouts) */
   /**
    * Label for the selection of the floatingLocalVideo (Dynamic) layout

@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(image-gallery) */
-import { DefaultButton, FocusTrapZone, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
+import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
 /* @conditional-compile-remove(image-gallery) */
 import React, { SyntheticEvent, useState } from 'react';
 /* @conditional-compile-remove(image-gallery) */
 import {
   bodyContainer,
-  bodyFocusZone,
   brokenImageStyle,
   cancelIcon,
   closeButtonStyles,
@@ -157,35 +157,23 @@ export const ImageGallery = (props: ImageGalleryProps): JSX.Element => {
   const renderBodyWithLightDismiss = (): JSX.Element => {
     return (
       <Stack className={mergeStyles(bodyContainer)} onClick={() => props.onDismiss()}>
-        <FocusTrapZone
-          onKeyDown={(e) => {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-              onDismiss();
-            }
-          }}
-          // Ensure when the focus trap has focus, the light dismiss area can still be clicked with mouse to dismiss.
-          // Note: this still correctly captures keyboard focus, this just allows mouse click outside of the focus trap.
-          isClickableOutsideFocusTrap={true}
-          className={mergeStyles(bodyFocusZone)}
-        >
-          {images.length > startIndex && (
-            <img
-              src={image?.imageUrl}
-              className={mergeStyles(imageStyle)}
-              alt={image?.altText || 'image'}
-              aria-label={'image-gallery-main-image'}
-              aria-live={'polite'}
-              onError={(event) => {
-                setIsImageLoaded(false);
-                onError && onError(event);
-              }}
-              onClick={(event) => event.stopPropagation()}
-              onDoubleClick={(event) => {
-                event.persist();
-              }}
-            />
-          )}
-        </FocusTrapZone>
+        {images.length > startIndex && (
+          <img
+            src={image?.imageUrl}
+            className={mergeStyles(imageStyle)}
+            alt={image?.altText || 'image'}
+            aria-label={'image-gallery-main-image'}
+            aria-live={'polite'}
+            onError={(event) => {
+              setIsImageLoaded(false);
+              onError && onError(event);
+            }}
+            onClick={(event) => event.stopPropagation()}
+            onDoubleClick={(event) => {
+              event.persist();
+            }}
+          />
+        )}
       </Stack>
     );
   };

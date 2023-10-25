@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useState, useMemo, useCallback } from 'react';
 import { IStyle, ITextField, mergeStyles, concatStyleSets, Icon, Stack } from '@fluentui/react';
@@ -365,7 +365,6 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
         <InputBoxComponent
           autoFocus={autoFocus}
           data-ui-id={ids.sendboxTextField}
-          inlineChildren={true}
           disabled={disabled}
           errorMessage={onRenderSystemMessage ? onRenderSystemMessage(errorMessage) : errorMessage}
           textFieldRef={sendTextFieldRef}

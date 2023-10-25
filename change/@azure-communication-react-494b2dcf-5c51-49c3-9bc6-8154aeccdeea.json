@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "improvement",
+  "workstream": "Update calling dependency",
+  "comment": "Update communication calling beta and stable dependency",
+  "packageName": "@azure/communication-react",
+  "email": "carolinecao@microsoft.com",
+  "dependentChangeType": "none"
+}

@@ -48,7 +48,6 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryLocalParticipant } from '@internal/react-components';
@@ -88,7 +87,7 @@ export interface CallingHandlers extends CommonCallingHandlers {
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => Call | undefined;
 }
 
-// @beta
+// @public
 export type CallingHandlersOptions = {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
 };
@@ -136,7 +135,7 @@ export type _CaptionSettingsSelector = (state: CallClientState, props: CallingBa
 // @internal
 export const _captionSettingsSelector: _CaptionSettingsSelector;
 
-// @beta
+// @public
 export type CaptionsOptions = {
     spokenLanguage: string;
 };
@@ -190,7 +189,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
@@ -364,7 +363,7 @@ export const useTeamsCall: () => undefined | /* @conditional-compile-remove(team
 // @beta
 export const useTeamsCallAgent: () => undefined | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgent;
 
-// @beta
+// @public
 export type VideoBackgroundEffectsDependency = {
     createBackgroundBlurEffect: (config?: BackgroundBlurConfig) => BackgroundBlurEffect;
     createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;

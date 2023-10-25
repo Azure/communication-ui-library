@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import React, { useCallback } from 'react';
 /* @conditional-compile-remove(close-captions) */
@@ -12,6 +12,8 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuStyles
 } from '@internal/react-components';
+/* @conditional-compile-remove(gallery-layouts) */
+import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(close-captions) */
 import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
 
@@ -26,9 +28,9 @@ import {
   generateCustomCallDrawerButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../ControlBar/CustomButton';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(raise-hand) */
 import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
 import { useLocale } from '../../localization';
 import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
@@ -98,6 +100,12 @@ export interface MoreDrawerStrings {
    * @remarks Only displayed when in Teams call, disabled until captions is on
    */
   captionLanguageMenuTitle: string;
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Label for gallery options drawerMenuItem
+   */
+  galleryOptionsMenuTitle: string;
 }
 
 /** @private */
@@ -126,6 +134,13 @@ export interface MoreDrawerDevicesMenuProps {
    * Callback when a microphone is selected
    */
   onSelectMicrophone: (device: AudioDeviceInfo) => Promise<void>;
+  /* @conditional-compile-remove(gallery-layouts) */
+  userSetGalleryLayout?: VideoGalleryLayout;
+  /* @conditional-compile-remove(gallery-layouts) */
+  /**
+   * Callback for when the gallery layout is changed
+   */
+  onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
 }
 
 /** @private */
@@ -158,7 +173,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const { speakers, onSelectSpeaker, onLightDismiss } = props;
 
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
   const localeStrings = useLocale();
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
@@ -242,6 +257,66 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       secondaryText: props.selectedMicrophone?.name
     });
   }
+  /* @conditional-compile-remove(gallery-layouts) */
+  const galleryLayoutOptions = {
+    itemKey: 'galleryPositionKey',
+    iconProps: {
+      iconName: 'GalleryOptions',
+      styles: { root: { lineHeight: 0 } }
+    },
+    disabled: props.disableButtonsForHoldScreen,
+    text: localeStrings.strings.call.moreButtonGalleryControlLabel,
+    subMenuProps: [
+      {
+        itemKey: 'dynamicSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'FloatingLocalVideoGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'floatingLocalVideo' ? { iconName: 'Accept' } : undefined
+      },
+      {
+        itemKey: 'focusedContentSelectionKey',
+        text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
+        onItemClick: () => {
+          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+          onLightDismiss();
+        },
+        iconProps: {
+          iconName: 'FocusedContentGalleryLayout',
+          styles: { root: { lineHeight: 0 } }
+        },
+        secondaryIconProps: props.userSetGalleryLayout === 'focusedContent' ? { iconName: 'Accept' } : undefined
+      }
+    ]
+  };
+
+  /* @conditional-compile-remove(gallery-layout-composite) */
+  const galleryOption = {
+    itemKey: 'defaultSelectionKey',
+    text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
+    onItemClick: () => {
+      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+      onLightDismiss();
+    },
+    iconProps: {
+      iconName: 'DefaultGalleryLayout',
+      styles: { root: { lineHeight: 0 } }
+    },
+    secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+  };
+
+  /* @conditional-compile-remove(gallery-layout-composite) */
+  galleryLayoutOptions.subMenuProps?.push(galleryOption);
+
+  /* @conditional-compile-remove(gallery-layouts) */
+  drawerMenuItems.push(galleryLayoutOptions);
+
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.peopleButton)) {
     drawerMenuItems.push({
       itemKey: 'people',

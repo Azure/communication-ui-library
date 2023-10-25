@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* eslint-disable @typescript-eslint/no-unused-vars */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */ // REMOVE ONCE THIS FILE IS IMPLEMENTED
@@ -93,6 +93,8 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
+/* @conditional-compile-remove(capabilities) */
+import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
@@ -546,6 +548,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(capabilities) */
+  on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   on(event: CallWithChatEvent, listener: any): void {
@@ -648,6 +652,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   /* @conditional-compile-remove(close-captions) */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(capabilities) */
+  off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
@@ -843,6 +849,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
   const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
+  const creatingAdapterRef = useRef<boolean>(false);
 
   const afterCreateRef = useRef<((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined>(
     undefined
@@ -873,7 +880,13 @@ export const useAzureCommunicationCallWithChatAdapter = (
           adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
-
+        if (creatingAdapterRef.current) {
+          console.warn(
+            'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
+          );
+          return;
+        }
+        creatingAdapterRef.current = true;
         let newAdapter = await createAzureCommunicationCallWithChatAdapter({
           credential,
           displayName,

@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-/* @conditional-compile-remove(video-background-effects) */
+// Licensed under the MIT License.
+
 import {
   BackgroundBlurConfig,
   BackgroundBlurEffect,
@@ -14,7 +14,7 @@ import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bi
 /**
  * Dependency resolution for video background effects.
  *
- * @beta
+ * @public
  */
 export const onResolveVideoEffectDependency = async (): Promise<VideoBackgroundEffectsDependency> => {
   const createBackgroundBlurEffect = (config?: BackgroundBlurConfig): BackgroundBlurEffect => {
