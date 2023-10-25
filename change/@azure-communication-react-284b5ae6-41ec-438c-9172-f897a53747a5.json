@@ -1,0 +1,9 @@
+{
+  "type": "none",
+  "area": "fix",
+  "workstream": "Storybook documentation",
+  "comment": "Fix minor typo in storybook doc",
+  "packageName": "@azure/communication-react",
+  "email": "mbakalov@microsoft.com",
+  "dependentChangeType": "none"
+}
