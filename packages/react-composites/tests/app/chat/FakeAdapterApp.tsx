@@ -179,8 +179,7 @@ const sendRemoteInlineImageMessage = (
   const localParticipantId = getIdentifierKind(localParticipant.id);
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
 
-  /* @conditional-compile-remove(communication-common-beta-v3) */
-  if (localParticipantId.kind === 'microsoftBot' || remoteParticipantId.kind === 'microsoftBot') {
+  if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported indentifier kind: microsoftBot');
   }
 

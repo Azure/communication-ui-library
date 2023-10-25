@@ -17,7 +17,8 @@ import {
   Speaker220Regular,
   Video20Filled,
   VideoOff20Filled,
-  WifiWarning20Filled
+  WifiWarning20Filled,
+  Circle20Regular
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(capabilities) */
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
@@ -35,10 +36,10 @@ import { Attach20Regular } from '@fluentui/react-icons';
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(gallery-layouts) */
 import {
-  PersonCircle20Regular,
+  PersonSquare20Regular,
   WindowHeaderHorizontal20Regular,
   TableSimple20Regular,
-  PictureInPicture20Regular,
+  BoardSplit20Regular,
   ContentView20Regular,
   Table20Regular
 } from '@fluentui/react-icons';
@@ -97,15 +98,17 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(gallery-layouts) */
   OverflowGalleryTop: <WindowHeaderHorizontal20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  SpeakerGalleryLayout: <PersonCircle20Regular />,
+  SpeakerGalleryLayout: <PersonSquare20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
   DefaultGalleryLayout: <TableSimple20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  FloatingLocalVideoGalleryLayout: <PictureInPicture20Regular />,
+  FloatingLocalVideoGalleryLayout: <BoardSplit20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
   FocusedContentGalleryLayout: <ContentView20Regular />,
   /* @conditional-compile-remove(gallery-layouts) */
-  LargeGalleryLayout: <Table20Regular />
+  LargeGalleryLayout: <Table20Regular />,
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  DefaultCustomButton: <Circle20Regular />
 };
 
 /**
@@ -243,6 +246,8 @@ export type CallCompositeIcons = {
   OverflowGalleryTop?: JSX.Element;
   /* @conditional-compile-remove(gallery-layouts) */
   LargeGalleryLayout?: JSX.Element;
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  DefaultCustomButton?: JSX.Element;
 };
 
 /**
@@ -326,6 +331,8 @@ export type CallWithChatCompositeIcons = {
   PeoplePaneOpenDialpad?: JSX.Element;
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
+  /* @conditional-compile-remove(control-bar-button-injection) */
+  DefaultCustomButton?: JSX.Element;
 
   // Chat icons
   EditBoxCancel?: JSX.Element;

@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "动态布局",
     "moreButtonGalleryDefaultLayoutLabel": "库布局",
     "moreButtonGalleryFocusedContentLayoutLabel": "重点内容",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "大型画廊模式",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "你的照相机已禁用。你无法再共享视频。",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "实时辅助字幕",
     "moreDrawerSpokenLanguageMenuTitle": "口述语言",
     "moreDrawerCaptionLanguageMenuTitle": "字幕语言",
+    "moreDrawerGalleryOptionsMenuTitle": "库选项",
     "peopleButtonLabel": "人员",
     "selectedPeopleButtonLabel": "已选择“人员”按钮",
     "peopleButtonTooltipOpen": "显示参与者",

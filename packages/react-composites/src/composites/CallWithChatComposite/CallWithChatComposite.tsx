@@ -33,16 +33,15 @@ import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
-import {
-  CommonCallControlOptions,
-  CustomCallControlButtonCallbackArgs,
-  _CommonCallControlOptions
-} from '../common/types/CommonCallControlOptions';
+import { CommonCallControlOptions, _CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButton/ChatButtonWithUnreadMessagesBadge';
 import { getDesktopCommonButtonStyles } from '../common/ControlBar/CommonCallControlBar';
 import { InjectedSidePaneProps } from '../CallComposite/components/SidePane/SidePaneProvider';
 import { isDisabled } from '../CallComposite/utils';
-import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButton';
+import {
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonCallbackArgs
+} from '../common/ControlBar/CustomButton';
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';

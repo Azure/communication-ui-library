@@ -306,11 +306,11 @@ describe('Message should display image and attachment correctly', () => {
 
       // Frist attachment: previewUrl !== undefine, will not show DownloadFile Icon
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
-      expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
+      expect(fileDownloadCards?.children[0].children[0].textContent).toEqual(fildName1);
 
       // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
-      expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
+      expect(fileDownloadCards?.children[1].children[0].textContent).toEqual(fildName2);
 
       // Inline Image attachment
       expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedFilePreviewSrc1);
@@ -608,7 +608,7 @@ describe('Message should display Mention correctly', () => {
     expect(editBox.innerHTML).not.toContain(MSFT_MENTION);
 
     // Submit edited message
-    const submitButton = await screen.findByLabelText('Submit');
+    const submitButton = await screen.findByLabelText('Done');
     fireEvent.click(submitButton);
 
     // Verify message has new edited content includes mention HTML tag

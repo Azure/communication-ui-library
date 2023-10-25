@@ -283,7 +283,8 @@ function parseArgs(argv) {
 }
 
 function notBetaBuild() {
-  return getBuildFlavor() !== 'beta';
+  const flavor = getBuildFlavor();
+  return flavor !== 'beta' && flavor !== 'beta-release';
 }
 
 await main(process.argv);

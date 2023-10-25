@@ -335,7 +335,15 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  turnVideoOn: { isPresent: false, reason: 'RoleRestricted' }
+  turnVideoOn: { isPresent: false, reason: 'RoleRestricted' },
+  muteOthers: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  reaction: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
 /* @conditional-compile-remove(capabilities) */
@@ -355,7 +363,15 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  turnVideoOn: { isPresent: true, reason: 'Capable' }
+  turnVideoOn: { isPresent: true, reason: 'Capable' },
+  muteOthers: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  reaction: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
 /* @conditional-compile-remove(capabilities) */
@@ -375,5 +391,13 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   startLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   stopLiveCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  turnVideoOn: { isPresent: true, reason: 'Capable' }
+  turnVideoOn: { isPresent: true, reason: 'Capable' },
+  muteOthers: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  reaction: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };

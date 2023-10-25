@@ -338,7 +338,7 @@
     "step3DigitText": "3",
     "step4DigitText": "4"
   },
-  "VerticalGallery": {
+  "verticalGallery": {
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
   }
