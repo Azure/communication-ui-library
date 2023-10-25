@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "feature",
+  "workstream": "Custom Button Injection",
+  "comment": "Remove unused types for custom button injection internal use",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}
