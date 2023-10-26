@@ -458,6 +458,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 styles={pipStyles}
                 minDragPosition={minMaxDragPosition.minDragPosition}
                 maxDragPosition={minMaxDragPosition.maxDragPosition}
+                onDismissSidePane={() => {
+                  closePeoplePane();
+                }}
               />
             )}
             {drawerMenuItems.length > 0 && (
