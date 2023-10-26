@@ -297,6 +297,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         splitButtonsForDeviceSelection={!props.mobileView}
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                        disableTooltip={props.mobileView}
                       />
                     )}
                     {cameraButtonIsEnabled && (
@@ -309,6 +310,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(video-background-effects) */
                         onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
+                        disableTooltip={props.mobileView}
                       />
                     )}
                     {
@@ -344,6 +346,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             key={`primary-custom-button-${i}`}
                             styles={commonButtonStyles}
                             showLabel={options.displayType !== 'compact'}
+                            disableTooltip={props.mobileView}
                           />
                         );
                       })}
@@ -353,6 +356,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         strings={moreButtonStrings}
                         onClick={props.onMoreButtonClicked}
                         disabled={props.disableButtonsForLobbyPage}
+                        disableTooltip={props.mobileView}
                       />
                     )}
                     {!props.mobileView && showDesktopMoreButton && (
