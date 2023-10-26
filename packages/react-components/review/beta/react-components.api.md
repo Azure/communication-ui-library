@@ -660,6 +660,7 @@ export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
+    disableTooltip?: boolean;
     labelKey?: string;
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
