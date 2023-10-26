@@ -94,7 +94,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for positioning the overflowGallery at the top of the screen in the composite
         'overflow-top-composite',
         // feature for gallery layout in the composite 
-        'gallery-layout-composite'
+        'gallery-layout-composite',
+        // feature for hiding attendee name in the teams meeting
+        'hide-attendee-name'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

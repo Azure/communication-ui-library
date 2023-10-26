@@ -241,6 +241,7 @@ export type CallAdapterClientState = {
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
+    hideAttendeeNames?: boolean;
 };
 
 // @public
@@ -776,6 +777,8 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    // (undocumented)
+    hideAttendeeNames?: boolean;
     isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;

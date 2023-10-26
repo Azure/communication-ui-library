@@ -489,6 +489,8 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
   capabilitiesFeature?: CapabilitiesFeatureState;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  hideAttendeeNames?: boolean;
 }
 
 /* @conditional-compile-remove(call-transfer) */
