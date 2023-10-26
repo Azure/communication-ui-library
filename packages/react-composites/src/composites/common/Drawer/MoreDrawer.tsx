@@ -373,6 +373,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       text: localeStrings.strings.callWithChat.openDtmfDialpadLabel,
       onItemClick: () => {
         props.onClickShowDialpad && props.onClickShowDialpad();
+        onLightDismiss();
       },
       iconProps: { iconName: 'Dialpad', styles: { root: { lineHeight: 0 } } }
     });
