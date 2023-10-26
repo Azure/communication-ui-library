@@ -19,8 +19,6 @@ import {
 /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../CallComposite/adapter/CallAdapterProvider';
 
-import useLongPress from './utils';
-
 /**
  * Drag options for Modal in {@link ModalLocalAndRemotePIP} component
  */
