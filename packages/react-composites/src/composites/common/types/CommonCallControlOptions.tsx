@@ -83,8 +83,6 @@ export type CommonCallControlOptions = {
   /* @conditional-compile-remove(control-bar-button-injection) */
   /**
    * Inject custom buttons in the call controls.
-   *
-   * @beta
    */
   onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
@@ -94,13 +92,4 @@ export type CommonCallControlOptions = {
    * @defaultValue true
    */
   peopleButton?: boolean | /* @conditional-compile-remove(PSTN-calls) */ { disabled: boolean };
-};
-
-/**
- * While the public API for the custom buttons is in beta. Use this type to access the internal
- * API.
- * @internal
- */
-export type _CommonCallControlOptions = CommonCallControlOptions & {
-  onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
 };
