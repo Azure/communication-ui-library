@@ -45,7 +45,7 @@ import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
-import { _CallControlOptions, CallControlOptions } from '../types/CallControlOptions';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
@@ -473,7 +473,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 };
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
-  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
+  return !!options && options !== true && options?.legacyControlBarExperience === true;
 };
 
 const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {

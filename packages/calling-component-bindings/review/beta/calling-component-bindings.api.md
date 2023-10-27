@@ -48,7 +48,6 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryLocalParticipant } from '@internal/react-components';
@@ -190,7 +189,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
