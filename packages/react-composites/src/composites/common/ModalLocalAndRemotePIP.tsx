@@ -30,6 +30,16 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
+ * @private
+ */
+export interface ModalLocalAndRemotePIPStrings {
+  /**
+   * Aria label for dismiss control when using keyboard
+   */
+  dismissModalAriaLabel: string;
+}
+
+/**
  * A wrapping component with a draggable {@link LocalAndRemotePIP} component that is bound to a LayerHost component with id
  * specified by `modalLayerHostId` prop
  * @private
@@ -41,6 +51,7 @@ export const ModalLocalAndRemotePIP = (props: {
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
   onDismissSidePane?: () => void;
+  strings: ModalLocalAndRemotePIPStrings;
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
@@ -79,39 +90,47 @@ export const ModalLocalAndRemotePIP = (props: {
   const modalStylesThemed = concatStyleSets(modalStyle, props.styles?.modal);
 
   return (
-    <Stack
-      styles={rootStyles}
-      onTouchStart={(event) => {
-        setTouchStartTouches(event.touches);
-      }}
-      onTouchEnd={(event) => {
-        if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
-          const touchStartTouch = touchStartTouches[0];
-          const touchEndTouch = event.changedTouches[0];
-          if (
-            Math.abs(touchStartTouch.clientX - touchEndTouch.clientX) < 10 &&
-            Math.abs(touchStartTouch.clientY - touchEndTouch.clientY) < 10
-          ) {
-            onTouchEnd();
+    <Stack styles={rootStyles}>
+      <Stack
+        tabIndex={0}
+        aria-label={props.strings.dismissModalAriaLabel}
+        onTouchStart={(event) => {
+          setTouchStartTouches(event.touches);
+        }}
+        onTouchEnd={(event) => {
+          if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
+            const touchStartTouch = touchStartTouches[0];
+            const touchEndTouch = event.changedTouches[0];
+            if (
+              Math.abs(touchStartTouch.clientX - touchEndTouch.clientX) < 10 &&
+              Math.abs(touchStartTouch.clientY - touchEndTouch.clientY) < 10
+            ) {
+              onTouchEnd();
+            }
           }
-        }
-      }}
-    >
-      <_ModalClone
-        isOpen={true}
-        isModeless={true}
-        dragOptions={DRAG_OPTIONS}
-        styles={modalStylesThemed}
-        layerProps={{ hostId: props.modalLayerHostId }}
-        minDragPosition={props.minDragPosition}
-        maxDragPosition={props.maxDragPosition}
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            props.onDismissSidePane?.();
+          }
+        }}
       >
-        {
-          // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
-          // possession of the dominant remote participant video stream
-          !props.hidden && localAndRemotePIP
-        }
-      </_ModalClone>
+        <_ModalClone
+          isOpen={true}
+          isModeless={true}
+          dragOptions={DRAG_OPTIONS}
+          styles={modalStylesThemed}
+          layerProps={{ hostId: props.modalLayerHostId }}
+          minDragPosition={props.minDragPosition}
+          maxDragPosition={props.maxDragPosition}
+        >
+          {
+            // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+            // possession of the dominant remote participant video stream
+            !props.hidden && localAndRemotePIP
+          }
+        </_ModalClone>
+      </Stack>
     </Stack>
   );
 };

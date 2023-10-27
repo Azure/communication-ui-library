@@ -52,7 +52,7 @@ export interface CallPageProps {
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   /* @conditional-compile-remove(gallery-layouts) */
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
-  onCloseChatPane: () => void;
+  onCloseChatPane?: () => void;
 }
 
 /**
