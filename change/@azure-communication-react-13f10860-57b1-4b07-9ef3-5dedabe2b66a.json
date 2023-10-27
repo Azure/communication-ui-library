@@ -1,7 +1,7 @@
 {
   "type": "minor",
   "area": "feature",
-  "workstream": "Calling Ui",
+  "workstream": "Hide Attendee Names",
   "comment": "Change display name for remote participants as Attendee if hide attendee name is on",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
