@@ -149,7 +149,7 @@ You are now ready to publish the package!
 
 **Releasing to NPM is an irreversible action**.
 
-Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post-release actions](./release-checklist.md) to ensure a confident release.
+Run through the [checklist of pre-release actions](./release-checklist.md)
 
 ### Step 3.2: Publish to NPM (Pair up with a teammate)
 
@@ -172,9 +172,13 @@ Deploy the hosted storybook documentation using the ["Release branch - Publish S
 
 Once everything is deployed and published on npm, delete the release branch from Git Hub.
 
-### Step 3.4: Merge Pre-Release Branch Back to Main
+### Step 3.5: Merge Pre-Release Branch Back to Main
 
-1. Make a PR to merge the pre-release branch into main.
+Make a PR to merge the pre-release branch into main.
+
+### Step 3.6: Post-release Checklist
+
+Run through the [checklist of post-release actions](./release-checklist.md)
 
 ## Step ∞ (Stable Only): Update Hero Samples
 
