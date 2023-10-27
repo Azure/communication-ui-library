@@ -168,15 +168,12 @@ Deploy the hosted storybook documentation using the ["Release branch - Publish S
 
 ![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
 
-### Step 3.4: Clean Up
+### Step 3.4: Clean up and Merge Pre-Release Branch Back to Main
 
-Once everything is deployed and published on npm, delete the release branch from Git Hub.
+1. Once everything is deployed and published on npm, delete the release branch from Git Hub.
+2. Make a PR to merge the pre-release branch into main.
 
-### Step 3.5: Merge Pre-Release Branch Back to Main
-
-Make a PR to merge the pre-release branch into main.
-
-### Step 3.6: Post-release Checklist
+### Step 3.5: Post-release Checklist
 
 Run through the [checklist of post-release actions](./release-checklist.md)
 
