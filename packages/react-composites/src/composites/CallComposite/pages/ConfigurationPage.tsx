@@ -14,6 +14,7 @@ import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-com
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Panel, PanelType, Stack } from '@fluentui/react';
 import {
+  callDetailsContainerStyles,
   fillWidth,
   panelFocusProps,
   panelStyles,
@@ -32,8 +33,7 @@ import {
   startCallButtonContainerStyleMobile,
   startCallButtonStyleMobile,
   titleContainerStyleDesktop,
-  titleContainerStyleMobile,
-  callDetailsContainerStylesDesktop
+  titleContainerStyleMobile
 } from '../styles/CallConfiguration.styles';
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
@@ -304,53 +304,56 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       <Stack verticalFill grow horizontal className={fillWidth}>
         <Stack
           className={fillWidth}
-          horizontal={!mobileWithPreview}
-          horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
           verticalAlign="center"
+          verticalFill={mobileWithPreview}
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
-          {mobileWithPreview && (
-            <Stack.Item>
-              {title}
-              {callDescription}
-            </Stack.Item>
-          )}
-          {localPreviewTrampoline(mobileWithPreview, /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer'))}
-          <Stack className={mobileView ? undefined : selectionContainerStyle}>
-            {!mobileWithPreview && (
-              <>
-                <Stack.Item styles={callDetailsContainerStylesDesktop}>
-                  {title}
-                  {callDescription}
-                </Stack.Item>
-                <LocalDeviceSettings
-                  {...options}
-                  {...localDeviceSettingsHandlers}
-                  cameraPermissionGranted={cameraPermissionGrantedTrampoline(
-                    cameraPermissionGranted,
-                    /* @conditional-compile-remove(call-readiness) */ videoState
-                  )}
-                  microphonePermissionGranted={micPermissionGrantedTrampoline(
-                    microphonePermissionGranted,
-                    /* @conditional-compile-remove(call-readiness) */ audioState
-                  )}
-                  /* @conditional-compile-remove(call-readiness) */
-                  onClickEnableDevicePermission={() => {
-                    setIsPermissionsModalDismissed(true);
-                  }}
-                  /* @conditional-compile-remove(video-background-effects) */
-                  onClickVideoEffects={toggleVideoEffectsPane}
-                />
-              </>
+          <Stack.Item styles={callDetailsContainerStyles}>
+            {title}
+            {callDescription}
+          </Stack.Item>
+          <Stack
+            horizontal={!mobileWithPreview}
+            horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+            verticalFill={mobileWithPreview}
+            tokens={mobileWithPreview ? configurationStackTokensMobile : undefined}
+          >
+            {localPreviewTrampoline(
+              mobileWithPreview,
+              /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer')
             )}
-            <Stack
-              styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
-            >
-              <StartCallButton
-                className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
-                onClick={startCall}
-                disabled={disableStartCallButton}
-              />
+            <Stack className={mobileView ? undefined : selectionContainerStyle}>
+              {!mobileWithPreview && (
+                <>
+                  <LocalDeviceSettings
+                    {...options}
+                    {...localDeviceSettingsHandlers}
+                    cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                      cameraPermissionGranted,
+                      /* @conditional-compile-remove(call-readiness) */ videoState
+                    )}
+                    microphonePermissionGranted={micPermissionGrantedTrampoline(
+                      microphonePermissionGranted,
+                      /* @conditional-compile-remove(call-readiness) */ audioState
+                    )}
+                    /* @conditional-compile-remove(call-readiness) */
+                    onClickEnableDevicePermission={() => {
+                      setIsPermissionsModalDismissed(true);
+                    }}
+                    /* @conditional-compile-remove(video-background-effects) */
+                    onClickVideoEffects={toggleVideoEffectsPane}
+                  />
+                </>
+              )}
+              <Stack
+                styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+              >
+                <StartCallButton
+                  className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
+                  onClick={startCall}
+                  disabled={disableStartCallButton}
+                />
+              </Stack>
             </Stack>
           </Stack>
         </Stack>
