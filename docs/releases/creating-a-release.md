@@ -164,7 +164,7 @@ Even though most of the steps necessary to release the package are automated via
 
 ### Step 3.3 (Beta Only): Deploy Storybook
 
-For *beta releases only*, also deploy the hosted storybook documentation using the ["Release branch - Publish Storybook" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/deploy-storybook.yml).
+Deploy the hosted storybook documentation using the ["Release branch - Publish Storybook" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/deploy-storybook.yml).
 
 ![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
 
@@ -176,9 +176,9 @@ Once everything is deployed and published on npm, delete the release branch from
 
 1. Make a PR to merge the pre-release branch into main.
 
-## Step ∞
+## Step ∞ (Stable Only): Update Hero Samples
 
-*For stable release only*, update the hero samples to use the newly released stable package. See [instructions for updating hero samples](./hero-samples.md).
+Update the hero samples to use the newly released stable package. See [instructions for updating hero samples](./hero-samples.md).
 
 Samples should be updated within a week of the package release.
 
