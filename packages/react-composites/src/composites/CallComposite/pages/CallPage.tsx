@@ -52,6 +52,7 @@ export interface CallPageProps {
   userSetOverflowGalleryPosition?: 'Responsive' | 'horizontalTop';
   /* @conditional-compile-remove(gallery-layouts) */
   onSetUserSetOverflowGalleryPosition?: (position: 'Responsive' | 'horizontalTop') => void;
+  onCloseChatPane: () => void;
 }
 
 /**
@@ -71,7 +72,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     /* @conditional-compile-remove(gallery-layouts) */
     userSetOverflowGalleryPosition = 'Responsive',
     /* @conditional-compile-remove(gallery-layouts) */
-    onSetUserSetOverflowGalleryPosition
+    onSetUserSetOverflowGalleryPosition,
+    onCloseChatPane
   } = props;
 
   // To use useProps to get these states, we need to create another file wrapping Call,
@@ -134,6 +136,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
       }
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
+      onCloseChatPane={onCloseChatPane}
       dataUiId={'call-page'}
       latestErrors={props.latestErrors}
       onDismissError={props.onDismissError}

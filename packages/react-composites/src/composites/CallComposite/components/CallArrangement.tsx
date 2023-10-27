@@ -108,6 +108,7 @@ export interface CallArrangementProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  onCloseChatPane: () => void;
 }
 
 /**
@@ -460,6 +461,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 maxDragPosition={minMaxDragPosition.maxDragPosition}
                 onDismissSidePane={() => {
                   closePeoplePane();
+                  props.onCloseChatPane();
                 }}
               />
             )}
