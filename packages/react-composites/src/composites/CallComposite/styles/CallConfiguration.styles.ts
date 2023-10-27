@@ -12,12 +12,13 @@ import {
   IPanelStyles,
   IFocusTrapZoneProps
 } from '@fluentui/react';
+import { _pxToRem } from '@internal/acs-ui-common';
 
 /**
  * @private
  */
 export const configurationStackTokensDesktop: IStackTokens = {
-  childrenGap: '2rem'
+  childrenGap: '1rem'
 };
 
 /**
@@ -55,7 +56,7 @@ export const configurationContainerStyleMobile = mergeStyles({
  * @private
  */
 export const selectionContainerStyle = mergeStyles({
-  width: '50%',
+  width: '100%',
   minWidth: '11rem',
   maxWidth: '18.75rem',
   padding: '0.5rem'
@@ -83,9 +84,11 @@ export const titleContainerStyleMobile = mergeStyles({
 /**
  * @private
  */
-export const callDetailsContainerStylesDesktop: IStackItemStyles = {
+export const callDetailsContainerStyles: IStackStyles = {
   root: {
-    marginBottom: '1.563rem'
+    textAlign: 'center',
+    maxWidth: _pxToRem(700),
+    alignSelf: 'center'
   }
 };
 
