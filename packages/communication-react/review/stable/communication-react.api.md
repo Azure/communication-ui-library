@@ -36,7 +36,6 @@ import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
-import { DtmfTone } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -66,7 +65,6 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
-import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
@@ -79,7 +77,6 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
@@ -1465,7 +1462,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
@@ -1691,6 +1688,7 @@ export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
+    disableTooltip?: boolean;
     labelKey?: string;
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
@@ -2552,104 +2550,6 @@ export interface MicrophoneButtonStrings {
 // @public
 export interface MicrophoneButtonStyles extends ControlBarButtonStyles {
     menuStyles?: Partial<MicrophoneButtonContextualMenuStyles>;
-}
-
-// @internal
-export class _MockCallAdapter implements CallAdapter {
-    constructor(testState: {
-        askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
-        localParticipantRole?: ParticipantRole;
-    });
-    // (undocumented)
-    addParticipant(): Promise<void>;
-    // (undocumented)
-    allowUnsupportedBrowserVersion(): void;
-    // (undocumented)
-    askDevicePermission(constrain: PermissionConstraints): Promise<void>;
-    // (undocumented)
-    createStreamView(): Promise<void>;
-    // (undocumented)
-    dispose(): void;
-    // (undocumented)
-    disposeLocalVideoStreamView(): Promise<void>;
-    // (undocumented)
-    disposeRemoteVideoStreamView(): Promise<void>;
-    // (undocumented)
-    disposeScreenShareStreamView(): Promise<void>;
-    // (undocumented)
-    disposeStreamView(): Promise<void>;
-    // (undocumented)
-    getState(): CallAdapterState;
-    // (undocumented)
-    holdCall(): Promise<void>;
-    // (undocumented)
-    joinCall(): Call | undefined;
-    // (undocumented)
-    leaveCall(): Promise<void>;
-    // (undocumented)
-    lowerHand(): Promise<void>;
-    // (undocumented)
-    mute(): Promise<void>;
-    // (undocumented)
-    off(): void;
-    // (undocumented)
-    offStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    on(): void;
-    // (undocumented)
-    onStateChange(handler: (state: CallAdapterState) => void): void;
-    // (undocumented)
-    queryCameras(): Promise<VideoDeviceInfo[]>;
-    // (undocumented)
-    queryMicrophones(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    querySpeakers(): Promise<AudioDeviceInfo[]>;
-    // (undocumented)
-    raiseHand(): Promise<void>;
-    // (undocumented)
-    removeParticipant(): Promise<void>;
-    // (undocumented)
-    resumeCall(): Promise<void>;
-    // (undocumented)
-    sendDtmfTone(dtmfTone: DtmfTone): Promise<void>;
-    // (undocumented)
-    setCamera(): Promise<void>;
-    // (undocumented)
-    setCaptionLanguage(): Promise<void>;
-    // (undocumented)
-    setMicrophone(): Promise<void>;
-    // (undocumented)
-    setSpeaker(): Promise<void>;
-    // (undocumented)
-    setSpokenLanguage(): Promise<void>;
-    // (undocumented)
-    setState(state: CallAdapterState): void;
-    // (undocumented)
-    startCall(): Call | undefined;
-    // (undocumented)
-    startCamera(): Promise<void>;
-    // (undocumented)
-    startCaptions(): Promise<void>;
-    // (undocumented)
-    startScreenShare(): Promise<void>;
-    // (undocumented)
-    startVideoBackgroundEffect(): Promise<void>;
-    // (undocumented)
-    state: CallAdapterState;
-    // (undocumented)
-    stopCamera(): Promise<void>;
-    // (undocumented)
-    stopCaptions(): Promise<void>;
-    // (undocumented)
-    stopScreenShare(): Promise<void>;
-    // (undocumented)
-    stopVideoBackgroundEffects(): Promise<void>;
-    // (undocumented)
-    unmute(): Promise<void>;
-    // (undocumented)
-    updateBackgroundPickerImages(): void;
-    // (undocumented)
-    updateSelectedVideoBackgroundEffect(): void;
 }
 
 // @public

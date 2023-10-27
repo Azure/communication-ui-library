@@ -26,7 +26,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_stable-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/stable.env --use-shell",
     "_if-preprocess": "if-env COMMUNICATION_REACT_FLAVOR=stable || if-env COMMUNICATION_REACT_FLAVOR=beta-release",
-    "_typecheck": "rushx _by-flavor \"rushx _if-preprocess && rushx preprocess && tsc -p tsconfig.preprocess.json  || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
+    "_typecheck": "rushx _by-flavor \"npm run _if-preprocess && rushx preprocess && tsc -p tsconfig.preprocess.json  || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
     "@azure/abort-controller": "^1.1.0",

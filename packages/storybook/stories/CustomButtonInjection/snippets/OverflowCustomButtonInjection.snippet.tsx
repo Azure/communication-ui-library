@@ -1,5 +1,6 @@
-import { CallComposite, CustomCallControlButtonCallback, _MockCallAdapter } from '@azure/communication-react';
+import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
 import React from 'react';
+import { _MockCallAdapter } from '../../_MockCallAdapter';
 import { addCSS, compositeCanvasContainerStyles } from './CustomButtonInjectionTypes';
 
 const generatePlaceHolderButton = (name: string): CustomCallControlButtonCallback => {
