@@ -17,7 +17,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### Step 0.1 Update Strings on Main
 
-- String translation can take up to 5 working days to complete. **This needs to be the week before release.**
+- String translation can take up to 5 working days to complete. **This needs to be done the week before release.**
 - Update the strings on `main` these [steps](../references/string-translations.md)
  
 ### Step 0.2 Pre-Release ChangeLog and Update Feature List
