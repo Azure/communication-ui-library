@@ -22,7 +22,11 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 
 /** @internal */
 export const _videoGalleryRemoteParticipantsMemo = (
-  remoteParticipants: RemoteParticipantState[] | undefined
+  remoteParticipants: RemoteParticipantState[] | undefined,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  isHideAttendeeNamesEnabled: boolean,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  localUserRole?: string
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -43,13 +47,18 @@ export const _videoGalleryRemoteParticipantsMemo = (
         })
         .map((participant: RemoteParticipantState) => {
           const state = _isRingingPSTNParticipant(participant);
+          let displayName = participant.displayName;
+          /* @conditional-compile-remove(hide-attendee-name) */
+          if (isHideAttendeeNamesEnabled && localUserRole === 'Attendee' && participant.role === 'Attendee') {
+            displayName = 'Attendee';
+          }
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
             checkIsSpeaking(participant),
             participant.videoStreams,
             state,
-            participant.displayName,
+            displayName,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand
           );

@@ -159,9 +159,7 @@ class CallContext {
       /* @conditional-compile-remove(video-background-effects) */
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
-      cameraStatus: undefined,
-      /* @conditional-compile-remove(hide-attendee-name) */
-      hideAttendeeNames: false
+      cameraStatus: undefined
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();

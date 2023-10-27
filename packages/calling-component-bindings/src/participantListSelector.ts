@@ -12,6 +12,8 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
 import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
@@ -27,7 +29,11 @@ import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/c
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[],
-  localUserCanRemoveOthers: boolean
+  localUserCanRemoveOthers: boolean,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  isHideAttendeeNamesEnabled: boolean,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  localUserRole?: string
 ): CallParticipantListParticipant[] => {
   /* eslint-disable @typescript-eslint/explicit-function-return-type */
   const conversionCallback = (memoizeFn) => {
@@ -57,9 +63,14 @@ const convertRemoteParticipantsToParticipantListParticipants = (
            * and mapping their state to be 'Ringing'
            */
           const state = _isRingingPSTNParticipant(participant);
+          let displayName = participant.displayName;
+          /* @conditional-compile-remove(hide-attendee-name) */
+          if (isHideAttendeeNamesEnabled && localUserRole === 'Attendee' && participant.role === 'Attendee') {
+            displayName = 'Attendee';
+          }
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
-            participant.displayName,
+            displayName,
             state,
             participant.isMuted,
             isScreenSharing,
@@ -118,7 +129,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getIsMuted,
     /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
     getRole,
-    getParticipantCount
+    getParticipantCount,
+    isHideAttendeeNamesEnabled
   ],
   (
     userId,
@@ -129,7 +141,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     role,
-    partitipantCount
+    partitipantCount,
+    isHideAttendeeNamesEnabled
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -139,7 +152,11 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
           updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
-          localUserCanRemoveOthers
+          localUserCanRemoveOthers,
+          /* @conditional-compile-remove(hide-attendee-name) */
+          isHideAttendeeNamesEnabled,
+          /* @conditional-compile-remove(hide-attendee-name) */
+          role
         )
       : [];
     participants.push({
