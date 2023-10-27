@@ -336,6 +336,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           unreadChatMessagesCount={unreadChatMessagesCount}
           // As chat is disabled when on hold, we don't want to show the unread badge when on hold
           hideUnreadChatMessagesBadge={isOnHold}
+          disableTooltip={mobileView}
         />
       )
     }),

@@ -23,6 +23,7 @@ export const Camera = (props: {
   /* @conditional-compile-remove(video-background-effects) */
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
   componentRef?: React.RefObject<IButton>;
+  disableTooltip?: boolean;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
@@ -41,6 +42,7 @@ export const Camera = (props: {
       showLabel={props.displayType !== 'compact'}
       styles={styles}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
+      disableTooltip={props.disableTooltip}
       disabled={
         cameraButtonProps.disabled ||
         props.disabled ||
