@@ -227,5 +227,5 @@ export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
     justifyContent: 'center',
     marginBottom: '1rem'
   },
-  image: { borderRadius: shape === 'circle' ? '100%' : undefined, height: '5rem', width: '5rem' }
+  image: { borderRadius: shape === 'circle' ? '100%' : undefined, height: '3rem', width: '3rem' }
 });
