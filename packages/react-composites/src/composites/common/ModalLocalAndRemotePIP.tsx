@@ -36,7 +36,7 @@ export interface ModalLocalAndRemotePIPStrings {
   /**
    * Aria label for dismiss control when using keyboard
    */
-  dismissModalAriaLabel: string;
+  dismissModalAriaLabel?: string;
 }
 
 /**
@@ -51,7 +51,7 @@ export const ModalLocalAndRemotePIP = (props: {
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
   onDismissSidePane?: () => void;
-  strings: ModalLocalAndRemotePIPStrings;
+  strings?: ModalLocalAndRemotePIPStrings;
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
@@ -93,7 +93,7 @@ export const ModalLocalAndRemotePIP = (props: {
     <Stack styles={rootStyles}>
       <Stack
         tabIndex={0}
-        aria-label={props.strings.dismissModalAriaLabel}
+        aria-label={props.strings?.dismissModalAriaLabel ?? ''}
         onTouchStart={(event) => {
           setTouchStartTouches(event.touches);
         }}
