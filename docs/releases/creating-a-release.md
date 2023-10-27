@@ -145,23 +145,34 @@ This process has the following benefits:
 
 You are now ready to publish the package!
 
+### Step 3.1: Pre-release Checklist
+
 **Releasing to NPM is an irreversible action**.
+
 Even though most of the steps necessary to release the package are automated via a GitHub workflow, you should run through the [checklist of pre and post-release actions](./release-checklist.md) to ensure a confident release.
 
-**Rule of two**: It is recommended to pair up with a team member for this last step to reduce the chances of human error.
+### Step 3.2: Publish to NPM (Pair up with a teammate)
 
+**Rule of two**: It is recommended to pair up with a team member for this last step to reduce the chances of human error.
 
 1. Run the [Publish npm packages" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/npm-release-publish.yml) **off the release branch**.
     - Pick the right tag: For stable release, pick `latest`, for beta release pick `next`.
     ![Trigger the NPM release action](../images/trigger-npm-publich-action.png)
-1. This deployment must then be approved by one of the repo administrators:
+2. This deployment must then be approved by one of the repo administrators:
     ![Screenshot highlighting required approval before publishing npm package](../images/npm-publish-required-approval.png)
-1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
-1. For *beta releases only*, also deploy the hosted storybook documentation using the ["Release branch - Publish Storybook" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/deploy-storybook.yml).
-    ![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
-1. Once everything is deployed and published on npm, delete the release branch from Git Hub.
+3. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 
-### Step 3.1: Merge Pre-Release Branch Back to Main
+### Step 3.3 (Beta Only): Deploy Storybook
+
+For *beta releases only*, also deploy the hosted storybook documentation using the ["Release branch - Publish Storybook" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/deploy-storybook.yml).
+
+![Trigger the deploy storybook action](../images/trigger-storybook-publish.png)
+
+### Step 3.4: Clean Up
+
+Once everything is deployed and published on npm, delete the release branch from Git Hub.
+
+### Step 3.4: Merge Pre-Release Branch Back to Main
 
 1. Make a PR to merge the pre-release branch into main.
 
