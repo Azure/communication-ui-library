@@ -100,7 +100,7 @@ After finishing creating a release branch, follow these steps to create a UI sna
 4. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
 6. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
 
-### Step 1.4: Notify the Release Thread About api.md Update and UI Snapshot Update (beta-release only)
+### Step 1.4 (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update
 
 After you finish step 1.3, you can check recent latest commits on the release branch, there should be 
 1. One Api snapshot update commit
@@ -110,7 +110,11 @@ Copy links to those snapshot commits and UI snapshot PR link, and post them in t
 
 ## Step 2: Prepare for release
 
-### Step 2.1: Bug Bash
+### Step 2.1 (Stable / Large Beta Only): API approval from Azure REST API stewardship board]
+
+For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
+
+### Step 2.2: Bug Bash
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
@@ -119,7 +123,7 @@ Once the release branch has been created, we must make sure that the package we 
 - For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-(ARB)-Review) for how to reach out to the API stewardship board.
 - [Fetch translated strings](../references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, [cherry-pick](#cherry-picking-changes) the changes to the release branch.
 
-### Cherry-picking changes
+#### Cherry-picking changes
 
 While the release branch is active, some changes might be merged into the branch (for bug fixes, or features deemed necessary for the release). PRs into the release branch should follow this process when possible:
 
@@ -132,6 +136,10 @@ This process has the following benefits:
 
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 -  All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
+
+### Step 2.3: Fetch translated strings
+
+[Fetch translated strings](https://github.com/Azure/communication-ui-library/blob/main/docs/references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, cherry-pick the changes to the release branch.
 
 ## Step 3: Publish to NPM
 
