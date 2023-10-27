@@ -75,6 +75,13 @@ export interface ControlBarButtonProps extends IButtonProps {
   labelKey?: string;
 
   /**
+   * Disable tooltip.
+   *
+   * @defaultValue 'false'
+   */
+  disableTooltip?: boolean;
+
+  /**
    * Id to use for the tooltip host.
    *
    * @defaultValue This uses the labelKey and appends -tooltip by default
@@ -136,7 +143,7 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
   const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
 
   return (
-    <ControlButtonTooltip content={tooltipContent} id={tooltipId}>
+    <ControlButtonTooltip hidden={props.disableTooltip} content={tooltipContent} id={tooltipId}>
       <DefaultButton
         {...props}
         styles={componentStyles}

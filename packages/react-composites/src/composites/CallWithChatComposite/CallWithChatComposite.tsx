@@ -33,18 +33,17 @@ import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
-import {
-  CommonCallControlOptions,
-  CustomCallControlButtonCallbackArgs,
-  _CommonCallControlOptions
-} from '../common/types/CommonCallControlOptions';
+import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButton/ChatButtonWithUnreadMessagesBadge';
 import { getDesktopCommonButtonStyles } from '../common/ControlBar/CommonCallControlBar';
 import { InjectedSidePaneProps } from '../CallComposite/components/SidePane/SidePaneProvider';
 import { isDisabled } from '../CallComposite/utils';
-import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButton';
+import {
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonCallbackArgs
+} from '../common/ControlBar/CustomButton';
 import { SidePaneHeader } from '../common/SidePaneHeader';
-import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
+import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -337,6 +336,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           unreadChatMessagesCount={unreadChatMessagesCount}
           // As chat is disabled when on hold, we don't want to show the unread badge when on hold
           hideUnreadChatMessagesBadge={isOnHold}
+          disableTooltip={mobileView}
         />
       )
     }),
@@ -379,7 +379,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
-            } as _CallControlOptions),
+            } as CallControlOptions),
       /* @conditional-compile-remove(call-readiness) */
       deviceChecks: props.deviceChecks,
       /* @conditional-compile-remove(call-readiness) */

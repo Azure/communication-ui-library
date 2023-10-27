@@ -113,7 +113,8 @@ jobs:
 
       - name: Build NPM Package
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
-        run: rush build -t @azure/communication-react
+        run: |
+          rush build -t @azure/communication-react
         id: buildapifiles
 
       - name: Commit beta release snapshots
