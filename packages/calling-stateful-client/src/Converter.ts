@@ -109,18 +109,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     declarativeRemoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] =
       convertSdkParticipantToDeclarativeParticipant(participant);
   });
-  /* @conditional-compile-remove(hide-attendee-name) */
-  // TODO: Replace this once the SDK supports hide attendee name
-  const hideAttendeeNames = false;
-  /* @conditional-compile-remove(hide-attendee-name) */
-  if (hideAttendeeNames) {
-    call.remoteParticipants.forEach((participant: SdkRemoteParticipant) => {
-      const declarativeParticipant = call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)];
-      if (declarativeParticipant.role === 'Attendee') {
-        declarativeParticipant.displayName = participant.role;
-      }
-    });
-  }
   return {
     id: call.id,
     /* @conditional-compile-remove(teams-identity-support) */
