@@ -642,5 +642,5 @@ export interface CallCompositeStrings {
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */
-  dismissModalAriaLabel: string;
+  dismissModalAriaLabel?: string;
 }
