@@ -400,6 +400,7 @@ export interface CallCompositeStrings {
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
     defaultPlaceHolder: string;
+    dismissModalAriaLabel: string;
     dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
