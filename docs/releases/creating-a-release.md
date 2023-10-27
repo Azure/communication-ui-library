@@ -13,12 +13,14 @@ _This document applies to beta and stable releases. Alpha releases are created n
 
 _This document applies to normal releases, off of `main`. For hotfixing a prior release on NPM, see [documentation on creating hotfixes](./hotfix-release.md)._
 
-## Step 0.1 Update Strings on Main
+## Step 0: Preparation
+
+### Step 0.1 Update Strings on Main
 
 - Update the strings on `main` these [steps](../references/string-translations.md).
   - **Note**: String translation can take up to 5 working days to complete. It is a good idea to avoid string changes once before the release process
  
-## Step 0.2 Pre-Release ChangeLog and Update Feature List
+### Step 0.2 Pre-Release ChangeLog and Update Feature List
 
 Ask feature owners to create a PR to add a pre-release changelog and remove the feature from the in-progress-feature/feature list.
 
@@ -29,7 +31,7 @@ For all the features that are going into this release, ask the feature owners to
 
 [The Web UI (both teams) Feature Board](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
-## Step 0.3 Create a Thread in the WebUI channel to Track Release Progress
+### Step 0.3 Create a Thread in the WebUI channel to Track Release Progress
 
 Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
 
