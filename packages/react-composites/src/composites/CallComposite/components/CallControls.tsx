@@ -240,6 +240,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   /* @conditional-compile-remove(raise-hand) */
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
+  /* @conditional-compile-remove(rooms) */
+  const role = adapter.getState().call?.role;
+  /* @conditional-compile-remove(rooms) */
+  const hideRaiseHandButtonInRoomsCall =
+    adapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   /* @conditional-compile-remove(raise-hand) */
   if (showRaiseHandButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
     numberOfButtons++;
@@ -268,7 +273,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   /* @conditional-compile-remove(raise-hand) */
-  if (!showRaiseHandButtonInControlBar) {
+  if (!showRaiseHandButtonInControlBar && /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall) {
     moreButtonMenuItems.push({
       key: 'raiseHandButtonKey',
       text: raiseHandButtonProps.checked
