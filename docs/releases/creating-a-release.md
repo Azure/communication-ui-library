@@ -15,12 +15,12 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ## Step 0: Preparation
 
-### Step 0.1 Update Strings on Main
+### Step 0.1: Update Strings on Main
 
 - String translation can take up to 5 working days to complete. **This needs to be done the week before release.**
 - [Update the strings on `main`](../references/string-translations.md)
  
-### Step 0.2 Pre-Release ChangeLog and Update Feature List
+### Step 0.2: Pre-Release ChangeLog and Update Feature List
 
 Ask feature owners to create a PR to add a pre-release changelog and remove the feature from the in-progress-feature/feature list.
 
@@ -31,7 +31,7 @@ For all the features that are going into this release, ask the feature owners to
 
 [The Web UI (both teams) Feature Board](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
-### Step 0.3 Create a Thread in the WebUI channel to Track Release Progress
+### Step 0.3: Create a Thread in the WebUI channel to Track Release Progress
 
 Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
 
@@ -90,7 +90,7 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 
 ![Trigger release branch creation](../images/trigger-create-release-branch.png)
 
-### Step 1.3: Update the UI Snapshot (beta-release only)
+### Step 1.3 (Beta Only): Update the UI Snapshot
 
 After finishing creating a release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
@@ -109,6 +109,8 @@ After you finish step 1.3, you can check recent latest commits on the release br
 Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in API and UI
 
 ## Step 2: Prepare for release
+
+### Step 2.1: Bug Bash
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
