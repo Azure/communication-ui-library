@@ -64,23 +64,67 @@ export const ModalLocalAndRemotePIP = (props: {
 
   const [touchStartTouches, setTouchStartTouches] = useState<React.TouchList | null>(null);
 
-  const onTouchEnd = useCallback(() => {
-    props.onDismissSidePane?.();
-  }, [props]);
+  const onTouchEnd = useCallback(
+    (event) => {
+      if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
+        const touchStartTouch = touchStartTouches[0];
+        const touchEndTouch = event.changedTouches[0];
+        if (
+          Math.abs(touchStartTouch.clientX - touchEndTouch.clientX) < 10 &&
+          Math.abs(touchStartTouch.clientY - touchEndTouch.clientY) < 10
+        ) {
+          props.onDismissSidePane?.();
+        }
+      }
+    },
+    [props, touchStartTouches]
+  );
+
+  const onTouchStart = useCallback(() => {
+    (event) => {
+      setTouchStartTouches(event.touches);
+    };
+  }, []);
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
     if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return (
-        <_RemoteVideoTile
-          {...pictureInPictureProps.dominantRemoteParticipant}
-          remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
-        />
+        <Stack
+          tabIndex={0}
+          aria-label={props.strings?.dismissModalAriaLabel ?? ''}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              props.onDismissSidePane?.();
+            }
+          }}
+        >
+          <_RemoteVideoTile
+            {...pictureInPictureProps.dominantRemoteParticipant}
+            remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
+          />
+        </Stack>
       );
     }
-    return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
-  }, [pictureInPictureProps, pictureInPictureHandlers, /* @conditional-compile-remove(rooms) */ role]);
+    return (
+      <Stack
+        tabIndex={0}
+        aria-label={props.strings?.dismissModalAriaLabel ?? ''}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            props.onDismissSidePane?.();
+          }
+        }}
+      >
+        <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
+      </Stack>
+    );
+  }, [role, pictureInPictureProps, props, onTouchStart, onTouchEnd, pictureInPictureHandlers]);
 
   /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
@@ -91,30 +135,7 @@ export const ModalLocalAndRemotePIP = (props: {
 
   return (
     <Stack styles={rootStyles}>
-      <Stack
-        tabIndex={0}
-        aria-label={props.strings?.dismissModalAriaLabel ?? ''}
-        onTouchStart={(event) => {
-          setTouchStartTouches(event.touches);
-        }}
-        onTouchEnd={(event) => {
-          if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
-            const touchStartTouch = touchStartTouches[0];
-            const touchEndTouch = event.changedTouches[0];
-            if (
-              Math.abs(touchStartTouch.clientX - touchEndTouch.clientX) < 10 &&
-              Math.abs(touchStartTouch.clientY - touchEndTouch.clientY) < 10
-            ) {
-              onTouchEnd();
-            }
-          }
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            props.onDismissSidePane?.();
-          }
-        }}
-      >
+      <Stack>
         <_ModalClone
           isOpen={true}
           isModeless={true}
