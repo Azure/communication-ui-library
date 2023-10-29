@@ -377,7 +377,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
           )}
           {
             /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&
-              /* @conditional-compile-remove(raise-hand) */ !hideRaiseHandButtonInRoomsCall && (
+              /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
                 <RaiseHand displayType={options?.displayType} />
               )
           }
