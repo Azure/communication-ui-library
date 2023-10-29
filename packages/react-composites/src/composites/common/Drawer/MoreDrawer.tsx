@@ -50,6 +50,7 @@ import { CaptionSettingsDrawer } from './CaptionSettingsDrawer';
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 /* @conditional-compile-remove(close-captions) */
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
+/* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../../CallComposite/adapter/CallAdapterProvider';
 
 /** @private */
