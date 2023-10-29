@@ -376,9 +376,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
           {
-            /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar && (
-              <RaiseHand displayType={options?.displayType} />
-            )
+            /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&
+              /* @conditional-compile-remove(raise-hand) */ !hideRaiseHandButtonInRoomsCall && (
+                <RaiseHand displayType={options?.displayType} />
+              )
           }
           {screenShareButtonIsEnabled && (
             <ScreenShare
