@@ -96,9 +96,11 @@ export type FileMetadata =
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
+ * Meta Data of the attachment object returned by the ACS SDK.
  * @beta
  */
 export interface AttachmentDownloadResult {
+  attachmentId: string;
   blobUrl: string;
 }
 
