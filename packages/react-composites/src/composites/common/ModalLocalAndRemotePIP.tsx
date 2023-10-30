@@ -80,10 +80,8 @@ export const ModalLocalAndRemotePIP = (props: {
     [props, touchStartTouches]
   );
 
-  const onTouchStart = useCallback(() => {
-    (event) => {
-      setTouchStartTouches(event.touches);
-    };
+  const onTouchStart = useCallback((event) => {
+    setTouchStartTouches(event.touches);
   }, []);
 
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
@@ -94,8 +92,6 @@ export const ModalLocalAndRemotePIP = (props: {
         <Stack
           tabIndex={0}
           aria-label={props.strings?.dismissModalAriaLabel ?? ''}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
           onKeyDown={(event) => {
             if (event.key === 'Enter' || event.key === ' ') {
               props.onDismissSidePane?.();
@@ -113,8 +109,6 @@ export const ModalLocalAndRemotePIP = (props: {
       <Stack
         tabIndex={0}
         aria-label={props.strings?.dismissModalAriaLabel ?? ''}
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             props.onDismissSidePane?.();
@@ -124,7 +118,7 @@ export const ModalLocalAndRemotePIP = (props: {
         <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
       </Stack>
     );
-  }, [role, pictureInPictureProps, props, onTouchStart, onTouchEnd, pictureInPictureHandlers]);
+  }, [role, pictureInPictureProps, props, pictureInPictureHandlers]);
 
   /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
@@ -135,7 +129,7 @@ export const ModalLocalAndRemotePIP = (props: {
 
   return (
     <Stack styles={rootStyles}>
-      <Stack>
+      <Stack onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
         <_ModalClone
           isOpen={true}
           isModeless={true}
