@@ -118,7 +118,7 @@ export const ModalLocalAndRemotePIP = (props: {
         <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
       </Stack>
     );
-  }, [role, pictureInPictureProps, props, pictureInPictureHandlers]);
+  }, [/* @conditional-compile-remove(rooms) */ role, pictureInPictureProps, props, pictureInPictureHandlers]);
 
   /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
