@@ -6,8 +6,8 @@ Along with the NPM package, we also update the documentation hosted on [storyboo
 This repository follows a green-trunk development model. All development happens on the `main` branch. Releasing a new version of the package involves three distinct steps:
 
 1. [Create a git branch to release the package](#step-1-creating-a-release-branch). This step is mostly automated via GitHub workflows.
-2. [Prepare the branch for release](#step-2-prepare-for-release). This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
-3. [Release the package to NPM for release branch](#step-3-publish-to-npm). This step is mostly automated via GitHub workflows.
+1. [Prepare the branch for release](#step-2-prepare-for-release). This step involves API approvals, string translations, bug bashes etc and tends to last 1-2 weeks.
+1. [Release the package to NPM for release branch](#step-3-publish-to-npm). This step is mostly automated via GitHub workflows.
 
 _This document applies to beta and stable releases. Alpha releases are created nightly through a separate [light-weight mechanism](#creating-alpha-releases)._
 
@@ -47,7 +47,7 @@ Use the [create-prerelease-branch](https://github.com/Azure/communication-ui-lib
 
 1. Options for this workflow:
     1. Branch - This is the branch that the release will be created from. Default option is from `main`.
-    2. Bump Type - This is the type of release that will be created, the options for this are:
+    1. Bump Type - This is the type of release that will be created, the options for this are:
         - `beta-release-major` - Choose this option when you want to release from `1.2.0 -> 2.0.0-beta.1`
         - `beta-release-minor` - Choose this option when you want to release from `1.2.0 -> 1.3.0-beta.1` or `1.2.0-beta.3 -> 1.3.0-beta.1`
         - `beta-release-patch` - Choose this option when you want to release from `1.2.0 -> 1.2.1-beta.1` or `1.2.0-beta.3 -> 1.2.1-beta.1`
@@ -95,16 +95,16 @@ Use the [create-release-branch](https://github.com/Azure/communication-ui-librar
 After finishing creating a release branch, follow these steps to create a UI snapshot PR (generate beta-release only snapshot diff from main branch):
 
 1. Create a new branch based on the release branch you just created in Step 1.2
-2. Use the [update-snapshots](https://github.com/Azure/communication-ui-library/actions/workflows/update-snapshots.yml) github action to trigger the update snapshots workflow. ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
-3. Wait for snapshot update
-4. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
-6. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
+1. Use the [update-snapshots](https://github.com/Azure/communication-ui-library/actions/workflows/update-snapshots.yml) github action to trigger the update snapshots workflow. ![image](https://github.com/Azure/communication-ui-library/assets/11863655/271d6973-5501-40f7-b506-d4f3c836a118)
+1. Wait for snapshot update
+1. Once the snapshot update is finished, you might or might not see changes for the UI snapshot, if there are any updates, open a PR to merge that new branch back to the release branch
+1. Merge the PR if everything looks fine, or notify the feature owner if something looks not 100% correct.
 
 ### Step 1.4 (Beta Only): Notify the Release Thread About api.md Update and UI Snapshot Update
 
 After you finish step 1.3, you can check recent latest commits on the release branch, there should be 
 1. One Api snapshot update commit
-2. 0 or several UI snapshot commits, all in the snapshot PR
+1. 0 or several UI snapshot commits, all in the snapshot PR
 
 Copy links to those snapshot commits and UI snapshot PR link, and post them in the release thread, ask feature owners to check if their features are correctly removed both in API and UI
 
@@ -158,9 +158,9 @@ Run through the [checklist of pre-release actions](./release-checklist.md)
 1. Run the [Publish npm packages" GitHub action](https://github.com/Azure/communication-ui-library/actions/workflows/npm-release-publish.yml) **off the release branch**.
     - Pick the right tag: For stable release, pick `latest`, for beta release pick `next`.
     ![Trigger the NPM release action](../images/trigger-npm-publich-action.png)
-2. This deployment must then be approved by one of the repo administrators:
+1. This deployment must then be approved by one of the repo administrators:
     ![Screenshot highlighting required approval before publishing npm package](../images/npm-publish-required-approval.png)
-3. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
+1. Wait for the action to complete successfully then verify on <https://www.npmjs.com/> that the package(s) published successfully.
 
 ### Step 3.3 (Beta Only): Deploy Storybook
 
@@ -171,7 +171,7 @@ Deploy the hosted storybook documentation using the ["Release branch - Publish S
 ### Step 3.4: Clean up and Merge Pre-Release Branch Back to Main
 
 1. Once everything is deployed and published on npm, delete the release branch from Git Hub.
-2. Make a PR to merge the pre-release branch into main.
+1. Make a PR to merge the pre-release branch into main.
 
 ### Step 3.5: Post-release Checklist
 
@@ -230,4 +230,4 @@ To ensure our packages are part of the `@azure` organization our packages are pu
 
 This requires us to first upload the tarball of the package we wish to publish to their blob storage, then trigger their release pipeline. This can be done manually or by GitHub actions.
 
-Currently alpha package releases are entirely done through GitHub actions (see [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml)). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).
+Currently, alpha package releases are entirely done through GitHub actions (see [.github/workflows/nightly-ci.yml](https://github.com/Azure/communication-ui-library/blob/main/.github/workflows/nightly-ci.yml)). This requires the use of internal keys and tokens. For more information on these, or how to update them, see: [Updating npm publishing credentials](../references/updating-npm-publishing-credentials.md).
