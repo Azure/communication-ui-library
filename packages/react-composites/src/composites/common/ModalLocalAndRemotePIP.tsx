@@ -84,20 +84,21 @@ export const ModalLocalAndRemotePIP = (props: {
     setTouchStartTouches(event.touches);
   }, []);
 
+  const onKeyDown = useCallback(
+    (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        props.onDismissSidePane?.();
+      }
+    },
+    [props]
+  );
+
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
     if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return (
-        <Stack
-          tabIndex={0}
-          aria-label={props.strings?.dismissModalAriaLabel ?? ''}
-          onKeyDown={(event) => {
-            if (event.key === 'Enter' || event.key === ' ') {
-              props.onDismissSidePane?.();
-            }
-          }}
-        >
+        <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
           <_RemoteVideoTile
             {...pictureInPictureProps.dominantRemoteParticipant}
             remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
@@ -106,19 +107,17 @@ export const ModalLocalAndRemotePIP = (props: {
       );
     }
     return (
-      <Stack
-        tabIndex={0}
-        aria-label={props.strings?.dismissModalAriaLabel ?? ''}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' || event.key === ' ') {
-            props.onDismissSidePane?.();
-          }
-        }}
-      >
+      <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
         <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
       </Stack>
     );
-  }, [/* @conditional-compile-remove(rooms) */ role, pictureInPictureProps, props, pictureInPictureHandlers]);
+  }, [
+    /* @conditional-compile-remove(rooms) */ role,
+    onKeyDown,
+    pictureInPictureProps,
+    props,
+    pictureInPictureHandlers
+  ]);
 
   /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
