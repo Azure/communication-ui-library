@@ -639,4 +639,8 @@ export interface CallCompositeStrings {
    * All strings for capability changed notification
    */
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
+  /**
+   * String for the dismiss control on the local and remote PIP on mobile
+   */
+  dismissModalAriaLabel?: string;
 }
