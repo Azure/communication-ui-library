@@ -3,7 +3,8 @@
 
 import { PrimaryButton, mergeStyles, IButtonProps } from '@fluentui/react';
 import React from 'react';
-import { buttonStyle, buttonWithIconStyles } from '../styles/StartCallButton.styles';
+import { buttonStyle, buttonWithIconStyles, videoCameraIconStyle } from '../styles/StartCallButton.styles';
+import { Video20Filled } from '@fluentui/react-icons';
 import { useLocale } from '../../localization';
 
 /**
@@ -13,6 +14,7 @@ export interface StartCallButtonProps extends IButtonProps {
   className?: string;
   /** If set, the button is intended to rejoin an existing call. */
   rejoinCall?: boolean;
+  hideIcon?: boolean;
 }
 
 /**
@@ -29,6 +31,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
       className={mergeStyles(buttonStyle, props.className)}
       styles={buttonWithIconStyles}
       text={rejoinCall ? locale.strings.call.rejoinCallButtonLabel : locale.strings.call.startCallButtonLabel}
+      onRenderIcon={props.hideIcon ? undefined : () => <Video20Filled className={videoCameraIconStyle} />}
     />
   );
 };

@@ -380,6 +380,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                   className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
                   onClick={startCall}
                   disabled={disableStartCallButton}
+                  hideIcon={!mobileWithPreview}
                 />
               </Stack>
             </Stack>
