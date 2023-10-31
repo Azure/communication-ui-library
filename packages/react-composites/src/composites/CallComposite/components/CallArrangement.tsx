@@ -80,6 +80,7 @@ import {
   CapabilitiesChangedNotificationBar,
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
+import { useLocale } from '../../localization';
 
 /**
  * @private
@@ -108,6 +109,7 @@ export interface CallArrangementProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  onCloseChatPane?: () => void;
 }
 
 /**
@@ -178,6 +180,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
   const isSidePaneOpen = useIsSidePaneOpen();
+
+  const locale = useLocale();
+  const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
@@ -456,8 +461,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 modalLayerHostId={props.modalLayerHostId}
                 hidden={!isSidePaneOpen}
                 styles={pipStyles}
+                strings={modalStrings}
                 minDragPosition={minMaxDragPosition.minDragPosition}
                 maxDragPosition={minMaxDragPosition.maxDragPosition}
+                onDismissSidePane={() => {
+                  closePeoplePane();
+                  if (props.onCloseChatPane) {
+                    props.onCloseChatPane();
+                  }
+                }}
               />
             )}
             {drawerMenuItems.length > 0 && (
