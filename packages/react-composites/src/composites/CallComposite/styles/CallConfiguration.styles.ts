@@ -83,9 +83,7 @@ export const configurationSectionStyle: IStackStyles = {
 export const selectionContainerStyle = (theme: ITheme): string =>
   mergeStyles({
     width: '100%',
-    height: '13.625rem',
     padding: '1rem',
-    position: 'relative',
     borderRadius: theme.effects.roundedCorner6,
     border: `0.0625rem solid ${theme.palette.neutralLight}`,
     boxShadow: theme.effects.elevation4,
@@ -93,6 +91,7 @@ export const selectionContainerStyle = (theme: ITheme): string =>
     // Using `before:` pseudo-element to avoid having to wrap the content in an extra div.
     // Ideally rgba would be used but we cannot garauntee the format of theme.palette.white
     // to parse it correctly.
+    position: 'relative',
     ':before': {
       content: '""',
       position: 'absolute',
@@ -103,7 +102,7 @@ export const selectionContainerStyle = (theme: ITheme): string =>
       zIndex: 0,
       background: theme.palette.white,
       opacity: 0.9,
-      borderRadius: theme.effects.roundedCorner6
+      borderRadius: theme.effects.roundedCorner4
     }
   });
 
