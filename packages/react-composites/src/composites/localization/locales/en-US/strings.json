@@ -64,6 +64,8 @@
     "returnToCallButtonAriaLabel": "Back",
     "roomNotFoundDetails": "Room ID provided is not valid.",
     "roomNotFoundTitle": "Room not found",
+    "removedFromRoomDetails": "You were removed from room",
+    "removedFromRoomTitle": "Removed from room",
     "soundLabel": "Sound",
     "noMicrophonesLabel": "No microphones found",
     "noSpeakersLabel": "No speakers found",

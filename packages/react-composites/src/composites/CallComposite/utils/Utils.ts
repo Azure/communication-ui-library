@@ -21,7 +21,9 @@ const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
 /* @conditional-compile-remove(rooms) */
-const ROOM_NOT_FOUND_SUB_CODE = 5751;
+const REMOVED_PERMISSION_TO_JOIN_ROOM_SUB_CODE = 5317;
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5732;
 /* @conditional-compile-remove(rooms) */
 const DENIED_PERMISSION_TO_ROOM_SUB_CODE = 5828;
 
@@ -74,10 +76,12 @@ enum CallEndReasons {
   ACCESS_DENIED,
   REMOVED_FROM_CALL,
   ROOM_NOT_FOUND,
-  DENIED_PERMISSION_TO_ROOM
+  DENIED_PERMISSION_TO_ROOM,
+  REMOVED_PERMISSION_TO_JOIN_ROOM
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
+  console.log('MIGUEL call.callEndReason?.subCode: ', call.callEndReason?.subCode);
   const remoteParticipantsEndedArray = Array.from(Object.values(call.remoteParticipantsEnded));
   /**
    * Handle the special case in a PSTN call where removing the last user kicks the caller out of the call.
@@ -110,6 +114,11 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
   /* @conditional-compile-remove(rooms) */
   if (call.callEndReason?.subCode && call.callEndReason.subCode === DENIED_PERMISSION_TO_ROOM_SUB_CODE) {
     return CallEndReasons.DENIED_PERMISSION_TO_ROOM;
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === REMOVED_PERMISSION_TO_JOIN_ROOM_SUB_CODE) {
+    return CallEndReasons.REMOVED_PERMISSION_TO_JOIN_ROOM;
   }
 
   if (call.callEndReason) {
@@ -205,6 +214,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
         return 'roomNotFound';
       case CallEndReasons.DENIED_PERMISSION_TO_ROOM:
         return 'deniedPermissionToRoom';
+      case CallEndReasons.REMOVED_PERMISSION_TO_JOIN_ROOM:
+        return 'removedFromRoom';
     }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
@@ -245,6 +256,7 @@ export const IsCallEndedPage = (
     | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
     | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
     | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+    | /* @conditional-compile-remove(rooms) */ 'removedFromRoom'
     | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
     | /* @conditional-compile-remove(call-transfer) */ 'transferring'
 ): boolean => END_CALL_PAGES.includes(page);

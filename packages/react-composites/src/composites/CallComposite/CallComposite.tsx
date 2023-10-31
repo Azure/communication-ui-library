@@ -369,10 +369,11 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'roomNotFound':
       pageElement = (
         <NoticePage
-          iconName="NoticePageAccessDeniedRoomsCall"
+          iconName="NoticePageRoomNotFound"
           title={locale.strings.call.roomNotFoundTitle}
           moreDetails={locale.strings.call.roomNotFoundDetails}
           dataUiId={'room-not-found-page'}
+          disableStartCallButton={true}
         />
       );
       break;
@@ -383,6 +384,18 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           title={locale.strings.call.deniedPermissionToRoomTitle}
           moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
           dataUiId={'not-invited-to-room-page'}
+          disableStartCallButton={true}
+        />
+      );
+      break;
+    case 'removedFromRoom':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageRemovedFromRoomsCall"
+          title={locale.strings.call.removedFromRoomTitle}
+          moreDetails={locale.strings.call.removedFromRoomDetails}
+          dataUiId={'not-invited-to-room-page'}
+          disableStartCallButton={true}
         />
       );
       break;

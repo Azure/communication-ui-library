@@ -79,6 +79,10 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageJoinCallFailedDueToNoNetwork: <WifiWarning20Filled />,
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
+  /* @conditional-compile-remove(rooms) */
+  NoticePageRemovedFromRoomsCall: <Info20Filled />,
+  /* @conditional-compile-remove(rooms) */
+  NoticePageRoomNotFound: <Info20Filled />,
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -211,6 +215,10 @@ export type CallCompositeIcons = {
   NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
   NoticePageLeftCall?: JSX.Element;
   NoticePageRemovedFromCall?: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  NoticePageRemovedFromRoomsCall?: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  NoticePageRoomNotFound?: JSX.Element;
   OptionsCamera?: JSX.Element;
   OptionsMic?: JSX.Element;
   OptionsSpeaker?: JSX.Element;
