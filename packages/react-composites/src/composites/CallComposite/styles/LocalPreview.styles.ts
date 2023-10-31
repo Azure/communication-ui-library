@@ -3,8 +3,9 @@
 
 import { IStyle, mergeStyles } from '@fluentui/react';
 import {
-  CONFIGURATION_PAGE_MAX_SECTION_WIDTH_REM,
-  CONFIGURATION_PAGE_MIN_SECTION_WIDTH_REM
+  CONFIGURATION_PAGE_SECTION_HEIGHT_REM,
+  CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM,
+  CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM
 } from './CallConfiguration.styles';
 
 const localPreviewContainerStyle: IStyle = {
@@ -17,9 +18,9 @@ const localPreviewContainerStyle: IStyle = {
 export const localPreviewContainerStyleDesktop = mergeStyles({
   ...localPreviewContainerStyle,
   width: '100%',
-  height: '13.625rem',
-  minWidth: `${CONFIGURATION_PAGE_MIN_SECTION_WIDTH_REM}rem`,
-  maxWidth: `${CONFIGURATION_PAGE_MAX_SECTION_WIDTH_REM}rem`
+  height: `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
+  minWidth: `${CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM}rem`,
+  maxWidth: `${CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM}rem`
 });
 
 /**

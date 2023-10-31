@@ -18,9 +18,11 @@ import {
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /** @private */
-export const CONFIGURATION_PAGE_MIN_SECTION_WIDTH_REM = 11;
+export const CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM = 11;
 /** @private */
-export const CONFIGURATION_PAGE_MAX_SECTION_WIDTH_REM = 20.625;
+export const CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM = 20.625;
+/** @private */
+export const CONFIGURATION_PAGE_SECTION_HEIGHT_REM = 13.625;
 
 /**
  * @private
@@ -72,8 +74,8 @@ export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl
 export const configurationSectionStyle: IStackStyles = {
   root: {
     width: '100%',
-    minWidth: `${CONFIGURATION_PAGE_MIN_SECTION_WIDTH_REM}rem`,
-    maxWidth: `${CONFIGURATION_PAGE_MAX_SECTION_WIDTH_REM}rem`
+    minWidth: `${CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM}rem`,
+    maxWidth: `${CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM}rem`
   }
 };
 
@@ -83,6 +85,7 @@ export const configurationSectionStyle: IStackStyles = {
 export const selectionContainerStyle = (theme: ITheme): string =>
   mergeStyles({
     width: '100%',
+    height: `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
     padding: '1rem',
     borderRadius: theme.effects.roundedCorner6,
     border: `0.0625rem solid ${theme.palette.neutralLight}`,
