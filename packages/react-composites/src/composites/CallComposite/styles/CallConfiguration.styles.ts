@@ -12,9 +12,15 @@ import {
   IPanelStyles,
   IFocusTrapZoneProps,
   IImageStyles,
-  AnimationStyles
+  AnimationStyles,
+  ITheme
 } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+
+/** @private */
+export const CONFIGURATION_PAGE_MIN_SECTION_WIDTH_REM = 11;
+/** @private */
+export const CONFIGURATION_PAGE_MAX_SECTION_WIDTH_REM = 20.625;
 
 /**
  * @private
@@ -63,12 +69,43 @@ export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl
 /**
  * @private
  */
-export const selectionContainerStyle = mergeStyles({
-  width: '100%',
-  minWidth: '11rem',
-  maxWidth: '18.75rem',
-  padding: '0.5rem'
-});
+export const configurationSectionStyle: IStackStyles = {
+  root: {
+    width: '100%',
+    minWidth: `${CONFIGURATION_PAGE_MIN_SECTION_WIDTH_REM}rem`,
+    maxWidth: `${CONFIGURATION_PAGE_MAX_SECTION_WIDTH_REM}rem`
+  }
+};
+
+/**
+ * @private
+ */
+export const selectionContainerStyle = (theme: ITheme): string =>
+  mergeStyles({
+    width: '100%',
+    height: '13.625rem',
+    padding: '1rem',
+    position: 'relative',
+    borderRadius: theme.effects.roundedCorner6,
+    border: `0.0625rem solid ${theme.palette.neutralLight}`,
+    boxShadow: theme.effects.elevation4,
+    // Style the background of the container to have partial transparency.
+    // Using `before:` pseudo-element to avoid having to wrap the content in an extra div.
+    // Ideally rgba would be used but we cannot garauntee the format of theme.palette.white
+    // to parse it correctly.
+    ':before': {
+      content: '""',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      left: 0,
+      right: 0,
+      zIndex: 0,
+      background: theme.palette.white,
+      opacity: 0.9,
+      borderRadius: theme.effects.roundedCorner6
+    }
+  });
 
 /**
  * @private
@@ -152,7 +189,9 @@ export const startCallButtonStyleMobile = mergeStyles({
  * @private
  */
 export const startCallButtonStyleDesktop = mergeStyles({
-  borderRadius: '0.25rem'
+  borderRadius: '0.25rem',
+  width: 'auto',
+  height: '2.25rem'
 });
 
 /** @private */

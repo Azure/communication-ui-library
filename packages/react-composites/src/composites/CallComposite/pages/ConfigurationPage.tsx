@@ -10,11 +10,12 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-components';
+import { ActiveErrorMessage, DevicesButton, ErrorBar, useTheme } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Image, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
+  configurationSectionStyle,
   fillWidth,
   logoStyles,
   panelFocusProps,
@@ -102,6 +103,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
   } = props;
+
+  const theme = useTheme();
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -340,15 +343,15 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             horizontal={!mobileWithPreview}
             horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
             verticalFill={mobileWithPreview}
-            tokens={mobileWithPreview ? configurationStackTokensMobile : undefined}
+            tokens={configurationStackTokensMobile}
           >
             {localPreviewTrampoline(
               mobileWithPreview,
               /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer')
             )}
-            <Stack className={mobileView ? undefined : selectionContainerStyle}>
+            <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <>
+                <Stack className={mobileView ? undefined : selectionContainerStyle(theme)}>
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
@@ -367,10 +370,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     /* @conditional-compile-remove(video-background-effects) */
                     onClickVideoEffects={toggleVideoEffectsPane}
                   />
-                </>
+                </Stack>
               )}
               <Stack
                 styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+                horizontalAlign={mobileWithPreview ? 'stretch' : 'end'}
               >
                 <StartCallButton
                   className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
