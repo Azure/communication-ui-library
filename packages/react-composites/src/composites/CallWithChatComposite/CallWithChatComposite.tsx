@@ -207,6 +207,19 @@ export type CallWithChatCompositeOptions = {
      */
     shape?: 'circle' | 'square';
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Background image displayed on the configuration page.
+   */
+  backgroundImage?: {
+    /**
+     * URL for the background image.
+     *
+     * @remarks
+     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     */
+    url: string;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -244,6 +257,10 @@ type CallWithChatScreenProps = {
     url: string;
     alt?: string;
     shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  backgroundImage?: {
+    url: string;
   };
 };
 
@@ -424,7 +441,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(custom-branding) */
-      logo: props.logo
+      logo: props.logo,
+      /* @conditional-compile-remove(custom-branding) */
+      backgroundImage: props.backgroundImage
     }),
     [
       props.callControls,
@@ -447,7 +466,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(custom-branding) */
-      props.logo
+      props.logo,
+      /* @conditional-compile-remove(custom-branding) */
+      props.backgroundImage
     ]
   );
 
@@ -570,6 +591,8 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
         logo={options?.logo}
+        /* @conditional-compile-remove(custom-branding) */
+        backgroundImage={options?.backgroundImage}
       />
     </BaseProvider>
   );
