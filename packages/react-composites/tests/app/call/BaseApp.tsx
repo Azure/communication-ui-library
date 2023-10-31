@@ -100,6 +100,27 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.logo === 'square') {
+    options = {
+      ...options,
+      logo: {
+        url: '/images/acslogo.svg',
+        alt: 'Contoso logo',
+        shape: 'square'
+      }
+    };
+  }
+  if (queryArgs.logo === 'circle') {
+    options = {
+      ...options,
+      logo: {
+        url: '/images/elephant.jpg',
+        alt: 'Contoso logo'
+        // shape: 'circle' - not needed, should default to circle
+      }
+    };
+  }
+
   return (
     <>
       {!callAdapter && 'Initializing call adapter...'}

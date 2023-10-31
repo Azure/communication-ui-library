@@ -23,6 +23,7 @@ export interface QueryArgs {
   rtl?: boolean;
   localVideoTilePosition?: false | ('grid' | 'floating');
   enableVideoEffect?: boolean;
+  logo?: 'circle' | 'square';
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -71,6 +72,7 @@ export function parseQueryArgs(): QueryArgs {
       : undefined,
     localVideoTilePosition,
     enableVideoEffects: Boolean(params.enableVideoEffects),
-    galleryLayout: params.galleryLayout ?? ''
+    galleryLayout: params.galleryLayout ?? '',
+    logo: params.logo as 'circle' | 'square' | undefined
   };
 }
