@@ -145,6 +145,9 @@ export type CallAdapterClientState = {
    */
   acceptedTransferCallState?: CallState;
   /* @conditional-compile-remove(hide-attendee-name) */
+  /**
+   * Hide attendee names in teams meeting
+   */
   hideAttendeeNames?: boolean;
 };
 

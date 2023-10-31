@@ -114,7 +114,6 @@ export interface CallState {
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
-    // (undocumented)
     hideAttendeeNames?: boolean;
     id: string;
     isMuted: boolean;

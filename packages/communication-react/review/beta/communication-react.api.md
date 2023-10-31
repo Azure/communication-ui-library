@@ -861,7 +861,6 @@ export interface CallState {
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
-    // (undocumented)
     hideAttendeeNames?: boolean;
     id: string;
     isMuted: boolean;
@@ -1082,7 +1081,6 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
-    // (undocumented)
     hideAttendeeNames?: boolean;
     isRoomsCall: boolean;
     isTeamsCall: boolean;
@@ -1936,6 +1934,7 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
+    AttendeeRole: string;
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;

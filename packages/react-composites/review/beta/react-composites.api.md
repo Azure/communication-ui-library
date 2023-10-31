@@ -777,7 +777,6 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
-    // (undocumented)
     hideAttendeeNames?: boolean;
     isRoomsCall: boolean;
     isTeamsCall: boolean;

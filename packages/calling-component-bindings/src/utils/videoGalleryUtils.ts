@@ -3,6 +3,7 @@
 
 import {
   DominantSpeakersInfo,
+  ParticipantRole,
   RemoteParticipantState as RemoteParticipantConnectionState
 } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -24,9 +25,9 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 export const _videoGalleryRemoteParticipantsMemo = (
   remoteParticipants: RemoteParticipantState[] | undefined,
   /* @conditional-compile-remove(hide-attendee-name) */
-  isHideAttendeeNamesEnabled: boolean,
+  isHideAttendeeNamesEnabled?: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */
-  localUserRole?: string
+  localUserRole?: ParticipantRole
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -49,8 +50,13 @@ export const _videoGalleryRemoteParticipantsMemo = (
           const state = _isRingingPSTNParticipant(participant);
           let displayName = participant.displayName;
           /* @conditional-compile-remove(hide-attendee-name) */
-          if (isHideAttendeeNamesEnabled && localUserRole === 'Attendee' && participant.role === 'Attendee') {
-            displayName = 'Attendee';
+          if (isHideAttendeeNamesEnabled && participant.role === 'Attendee') {
+            if (localUserRole === 'Attendee') {
+              displayName = '{AttendeeRole}';
+            }
+            if (localUserRole === 'Presenter' || localUserRole === 'Co-organizer' || localUserRole === 'Organizer') {
+              displayName = `{AttendeeRole}(${displayName})`;
+            }
           }
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),

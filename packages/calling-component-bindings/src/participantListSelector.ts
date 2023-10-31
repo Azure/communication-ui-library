@@ -26,6 +26,7 @@ import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
+import { ParticipantRole } from '@azure/communication-calling';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[],
@@ -33,7 +34,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */
-  localUserRole?: string
+  localUserRole?: ParticipantRole
 ): CallParticipantListParticipant[] => {
   /* eslint-disable @typescript-eslint/explicit-function-return-type */
   const conversionCallback = (memoizeFn) => {
@@ -65,8 +66,13 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           const state = _isRingingPSTNParticipant(participant);
           let displayName = participant.displayName;
           /* @conditional-compile-remove(hide-attendee-name) */
-          if (isHideAttendeeNamesEnabled && localUserRole === 'Attendee' && participant.role === 'Attendee') {
-            displayName = 'Attendee';
+          if (isHideAttendeeNamesEnabled && participant.role === 'Attendee') {
+            if (localUserRole === 'Attendee') {
+              displayName = '{AttendeeRole}';
+            }
+            if (localUserRole === 'Presenter' || localUserRole === 'Co-organizer' || localUserRole === 'Organizer') {
+              displayName = `{AttendeeRole}(${displayName})`;
+            }
           }
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),

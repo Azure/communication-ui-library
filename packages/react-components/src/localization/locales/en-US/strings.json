@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "previous page",
     "rightNavButtonAriaLabel": "next page"
-  }
+  },
+  "AttendeeRole": "Attendee"
 }
