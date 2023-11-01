@@ -26,7 +26,10 @@ import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(hide-attendee-name) */
 import { ParticipantRole } from '@azure/communication-calling';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { maskDisplayNameWithRole } from './utils/callUtils';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[],
@@ -66,14 +69,12 @@ const convertRemoteParticipantsToParticipantListParticipants = (
           const state = _isRingingPSTNParticipant(participant);
           let displayName = participant.displayName;
           /* @conditional-compile-remove(hide-attendee-name) */
-          if (isHideAttendeeNamesEnabled && participant.role === 'Attendee') {
-            if (localUserRole === 'Attendee') {
-              displayName = '{AttendeeRole}';
-            }
-            if (localUserRole === 'Presenter' || localUserRole === 'Co-organizer' || localUserRole === 'Organizer') {
-              displayName = `{AttendeeRole}(${displayName})`;
-            }
-          }
+          displayName = maskDisplayNameWithRole(
+            displayName,
+            localUserRole,
+            participant.role,
+            isHideAttendeeNamesEnabled
+          );
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,

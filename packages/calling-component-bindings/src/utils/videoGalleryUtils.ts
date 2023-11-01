@@ -11,6 +11,8 @@ import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/callin
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(raise-hand) */
@@ -50,14 +52,12 @@ export const _videoGalleryRemoteParticipantsMemo = (
           const state = _isRingingPSTNParticipant(participant);
           let displayName = participant.displayName;
           /* @conditional-compile-remove(hide-attendee-name) */
-          if (isHideAttendeeNamesEnabled && participant.role === 'Attendee') {
-            if (localUserRole === 'Attendee') {
-              displayName = '{AttendeeRole}';
-            }
-            if (localUserRole === 'Presenter' || localUserRole === 'Co-organizer' || localUserRole === 'Organizer') {
-              displayName = `{AttendeeRole}(${displayName})`;
-            }
-          }
+          displayName = maskDisplayNameWithRole(
+            displayName,
+            localUserRole,
+            participant.role,
+            isHideAttendeeNamesEnabled
+          );
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
