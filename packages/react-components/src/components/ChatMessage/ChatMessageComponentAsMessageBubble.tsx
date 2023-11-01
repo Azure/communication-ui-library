@@ -198,6 +198,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     menuButtonRef: messageActionButtonRef,
     // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
     forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
+    menuExpanded: chatMessageActionFlyoutTarget === messageActionButtonRef,
     onActionButtonClick: () => {
       if (message.messageType === 'chat') {
         props.onActionButtonClick(message, setMessageReadBy);
@@ -313,7 +314,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   const attached = message.attached === true ? 'center' : message.attached === 'bottom' ? 'bottom' : 'top';
   const chatMessage = (
     <>
-      <div key={props.message.messageId} ref={messageRef}>
+      <div key={props.message.messageId}>
         {message.mine ? (
           <ChatMyMessage
             attached={attached}
@@ -330,7 +331,8 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
                 mergeStyles(messageContainerStyle)
               ),
-              style: { ...createStyleFromV8Style(messageContainerStyle) }
+              style: { ...createStyleFromV8Style(messageContainerStyle) },
+              ref: messageRef
             }}
             root={{
               className: chatMyMessageStyles.root,
@@ -338,6 +340,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 // copy behavior from North*
                 // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
                 // with keyboard the focused element will be changed and there is no way to use `:focus` selector
+                if (chatMessageActionFlyoutTarget?.current) {
+                  // doesn't dismiss action button if flyout is open, otherwise, narrator's focus will stay on the closed action menu
+                  return;
+                }
                 const shouldPreserveFocusState = e.currentTarget.contains(e.relatedTarget);
                 setFocused(shouldPreserveFocusState);
               },
@@ -365,7 +371,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             }
             details={getMessageDetails()}
             actions={{
-              tabIndex: 0,
               children: actionMenuProps?.children,
               className: mergeClasses(
                 chatMyMessageStyles.menu,

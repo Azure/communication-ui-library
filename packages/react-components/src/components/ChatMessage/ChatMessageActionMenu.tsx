@@ -24,11 +24,13 @@ export const chatMessageActionMenuProps = (menuProps: {
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
   forceShow: boolean;
+  /** Where the menu is shown */
+  menuExpanded: boolean;
   menuButtonRef: React.MutableRefObject<HTMLDivElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
 }): ChatMessageActionMenuProps | undefined => {
-  const { ariaLabel, enabled, forceShow, theme } = menuProps;
+  const { ariaLabel, enabled, forceShow, theme, menuExpanded } = menuProps;
   const showActionMenu = enabled || forceShow;
 
   const actionMenuProps: ChatMessageActionMenuProps = {
@@ -42,6 +44,9 @@ export const chatMessageActionMenuProps = (menuProps: {
         style={{ margin: showActionMenu ? '1px' : 0, minHeight: showActionMenu ? undefined : '30px' }}
         role="button"
         aria-label={showActionMenu ? ariaLabel : undefined}
+        aria-haspopup={showActionMenu}
+        // set expanded to true, only when the action menu is open
+        aria-expanded={menuExpanded}
       >
         {showActionMenu ? (
           <Icon iconName="ChatMessageOptions" aria-label={ariaLabel} styles={iconWrapperStyle(theme, forceShow)} />
