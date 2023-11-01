@@ -208,6 +208,7 @@
     "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamic layout",
     "moreButtonGalleryDefaultLayoutLabel": "Gallery layout",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focused content",
+    "moreButtonLargeGalleryDefaultLayoutLabel": "Large Gallery",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Your camera has been disabled. You can no longer share video.",
@@ -245,6 +246,7 @@
     "moreDrawerCaptionsMenuTitle": "Live captions",
     "moreDrawerSpokenLanguageMenuTitle": "Spoken language",
     "moreDrawerCaptionLanguageMenuTitle": "Caption language",
+    "moreDrawerGalleryOptionsMenuTitle": "Gallery options",
     "peopleButtonLabel": "People",
     "selectedPeopleButtonLabel": "People Button Selected",
     "peopleButtonTooltipOpen": "Show participants",

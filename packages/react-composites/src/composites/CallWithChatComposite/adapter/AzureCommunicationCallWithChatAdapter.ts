@@ -446,7 +446,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+  async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
     return await this.chatAdapter.downloadAttachments(options);
   }
   /* @conditional-compile-remove(PSTN-calls) */
@@ -849,6 +849,7 @@ export const useAzureCommunicationCallWithChatAdapter = (
   const [adapter, setAdapter] = useState<CallWithChatAdapter | undefined>(undefined);
   // Ref needed for cleanup to access the old adapter created asynchronously.
   const adapterRef = useRef<CallWithChatAdapter | undefined>(undefined);
+  const creatingAdapterRef = useRef<boolean>(false);
 
   const afterCreateRef = useRef<((adapter: CallWithChatAdapter) => Promise<CallWithChatAdapter>) | undefined>(
     undefined
@@ -879,7 +880,13 @@ export const useAzureCommunicationCallWithChatAdapter = (
           adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
-
+        if (creatingAdapterRef.current) {
+          console.warn(
+            'Adapter is already being created, please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/story/troubleshooting--page'
+          );
+          return;
+        }
+        creatingAdapterRef.current = true;
         let newAdapter = await createAzureCommunicationCallWithChatAdapter({
           credential,
           displayName,

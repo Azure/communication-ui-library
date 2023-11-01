@@ -93,6 +93,7 @@ jobs:
       - name: Synchronize package version reported to telemetry
         run: node common/scripts/sync-telemetry-package-version
 
+      # Disabling because Beachball doesn't support disabling custom prompts
       - name: Disabled - DO THIS MANUALLY! Add changelog
         run: |
           echo "This step should be enabled when parameters can be added to the changelog command
@@ -112,7 +113,8 @@ jobs:
 
       - name: Build NPM Package
         if: ${{ startsWith(github.event.inputs.branch, 'prerelease-beta' )}}
-        run: rush build -t @azure/communication-react
+        run: |
+          rush build -t @azure/communication-react
         id: buildapifiles
 
       - name: Commit beta release snapshots

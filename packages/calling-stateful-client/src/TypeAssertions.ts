@@ -42,6 +42,7 @@ type InferredCallErrorTargets =
   | 'CallClient.feature'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.muteAllRemoteParticipants'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll';
 
 type CallObjectMethodNames<TName extends string, T> = {

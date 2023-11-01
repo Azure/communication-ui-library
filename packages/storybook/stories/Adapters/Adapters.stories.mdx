@@ -23,8 +23,8 @@ These adapters make use of the stateful clients for calling and chat in conjunct
 
 To setup the adapters, you will need to provide the adapter with key metadata required.
 This includes most importantly an access token for your Azure Communication Services resource and context information for the call or chat thread you want to join.
-To create the adapters we will use the `createAzureCommunicationCallAdapter` and `createAzureCommunicationChatAdapter` helper methods.
-These methods are asynchronous so we will use `useEffect` to create them.
+To create the adapters we will use the `useAzureCommunicationCallAdapter` and `useAzureCommunicationChatAdapter` hooks we provide from the UI library.
+These hooks use their own internal logic using react hooks to create an adapter for use with our composites.
 
 ### Call Adapter
 

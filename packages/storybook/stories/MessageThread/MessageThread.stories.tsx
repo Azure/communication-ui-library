@@ -22,10 +22,10 @@ import {
   Dropdown,
   IDropdownOption
 } from '@fluentui/react';
-import { Divider } from '@fluentui/react-northstar';
+import { Divider } from '@fluentui/react-components';
 import { Canvas, Description, Heading, Props, Source, Title } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 
@@ -97,7 +97,87 @@ const mentionTag = `
   Displayable Text
 </msft-mention>
 `;
-const getDocs: () => JSX.Element = () => {
+const Docs: () => JSX.Element = () => {
+  const refDefaultMessageThread = useRef(null);
+  const refWithMessageDate = useRef(null);
+  const refSystemMessage = useRef(null);
+  const refBlockedMessage = useRef(null);
+  const refCustomMessage = useRef(null);
+  const refWithCustomizedChatContainer = useRef(null);
+  const refWithCustomizedMessageContainer = useRef(null);
+  const refWithCustomizedBlockedMessageContainer = useRef(null);
+  const refDefaultMessageWithStatusIndicator = useRef(null);
+  const refCustomMessageWithStatusIndicator = useRef(null);
+  const refCustomAvatar = useRef(null);
+  const refCustomTimestamp = useRef(null);
+  const refDisplayInlineImages = useRef(null);
+  const refDisplayFileAttachments = useRef(null);
+  const refMentionOfUsers = useRef(null);
+  const refProps = useRef(null);
+
+  const scrollToRef = (ref): void => {
+    ref.current.scrollIntoView({ behavior: 'auto' });
+  };
+
+  useEffect(() => {
+    const url = window.top ? window.top.location.href : window.location.href;
+    if (url.includes('default-messagethread') && refDefaultMessageThread.current) {
+      scrollToRef(refDefaultMessageThread);
+    } else if (url.includes('messagethread-with-message-date') && refWithMessageDate.current) {
+      scrollToRef(refWithMessageDate);
+    } else if (url.includes('system-message') && refSystemMessage.current) {
+      scrollToRef(refSystemMessage);
+    } else if (
+      url.includes('messages-with-customized-blocked-message-container') &&
+      refWithCustomizedBlockedMessageContainer.current
+    ) {
+      scrollToRef(refWithCustomizedBlockedMessageContainer);
+    } else if (url.includes('blocked-message') && refBlockedMessage.current) {
+      scrollToRef(refBlockedMessage);
+    } else if (url.includes('custom-message-status-indicator') && refCustomMessageWithStatusIndicator.current) {
+      scrollToRef(refCustomMessageWithStatusIndicator);
+    } else if (url.includes('custom-message') && refCustomMessage.current) {
+      scrollToRef(refCustomMessage);
+    } else if (url.includes('messages-with-customized-chat-container') && refWithCustomizedChatContainer.current) {
+      scrollToRef(refWithCustomizedChatContainer);
+    } else if (
+      url.includes('messages-with-customized-message-container') &&
+      refWithCustomizedMessageContainer.current
+    ) {
+      scrollToRef(refWithCustomizedMessageContainer);
+    } else if (url.includes('default-message-status-indicator') && refDefaultMessageWithStatusIndicator.current) {
+      scrollToRef(refDefaultMessageWithStatusIndicator);
+    } else if (url.includes('custom-avatar') && refCustomAvatar.current) {
+      scrollToRef(refCustomAvatar);
+    } else if (url.includes('custom-timestamp') && refCustomTimestamp.current) {
+      scrollToRef(refCustomTimestamp);
+    } else if (url.includes('display-inline-image-with-messages') && refDisplayInlineImages.current) {
+      scrollToRef(refDisplayInlineImages);
+    } else if (url.includes('display-file-attachments-with-messages') && refDisplayFileAttachments.current) {
+      scrollToRef(refDisplayFileAttachments);
+    } else if (url.includes('mention-of-users-with-a-custom-renderer-within-messages') && refMentionOfUsers.current) {
+      scrollToRef(refMentionOfUsers);
+    } else if (url.includes('props') && refProps.current) {
+      scrollToRef(refProps);
+    }
+  }, [
+    refDefaultMessageThread,
+    refWithMessageDate,
+    refSystemMessage,
+    refWithCustomizedBlockedMessageContainer,
+    refBlockedMessage,
+    refCustomMessageWithStatusIndicator,
+    refCustomMessage,
+    refWithCustomizedChatContainer,
+    refWithCustomizedMessageContainer,
+    refDefaultMessageWithStatusIndicator,
+    refCustomAvatar,
+    refCustomTimestamp,
+    refDisplayInlineImages,
+    refDisplayFileAttachments,
+    refMentionOfUsers,
+    refProps
+  ]);
   return (
     <>
       <Title>MessageThread</Title>
@@ -106,9 +186,9 @@ const getDocs: () => JSX.Element = () => {
         of new/old messages and customizing icons &amp; controls inside the chat thread.
       </Description>
       <Description>
-        MessageThread internally uses the `Chat` &amp; `Chat.Message` component from `@fluentui/react-northstar`. You
-        can checkout the details about these [two
-        components](https://fluentsite.z22.web.core.windows.net/0.53.0/components/chat/props).
+        MessageThread internally uses the `Chat` &amp; `ChatMessage` components from `@fluentui-contrib/chat`. You can
+        checkout the details about these components
+        [here](https://microsoft.github.io/fluentui-contrib/react-chat/?path=/story/chat--default).
       </Description>
 
       <Heading>Importing</Heading>
@@ -121,141 +201,174 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Source code={ExampleConstantsText} />
 
-      <Heading>Default MessageThread</Heading>
-      <Description>
-        By default, MessageThread displays Chat messages with display name of only for other users and creation time of
-        message when available.
-      </Description>
-      <Canvas mdxSource={DefaultMessageThreadExampleText}>
-        <DefaultMessageThreadExample />
-      </Canvas>
+      <div ref={refDefaultMessageThread}>
+        <Heading>Default MessageThread</Heading>
+        <Description>
+          By default, MessageThread displays Chat messages with display name of only for other users and creation time
+          of message when available.
+        </Description>
+        <Canvas mdxSource={DefaultMessageThreadExampleText}>
+          <DefaultMessageThreadExample />
+        </Canvas>
+      </div>
 
-      <Heading>MessageThread With Message Date</Heading>
-      <Canvas mdxSource={MessageThreadWithMessageDateExampleText}>
-        <MessageThreadWithMessageDateExample />
-      </Canvas>
+      <div ref={refWithMessageDate}>
+        <Heading>MessageThread With Message Date</Heading>
+        <Canvas mdxSource={MessageThreadWithMessageDateExampleText}>
+          <MessageThreadWithMessageDateExample />
+        </Canvas>
+      </div>
 
-      <Heading>System Message</Heading>
-      <Description>The example below shows a message thread with a system message.</Description>
-      <Canvas mdxSource={MessageThreadWithSystemMessagesExampleText}>
-        <MessageThreadWithSystemMessagesExample />
-      </Canvas>
+      <div ref={refSystemMessage}>
+        <Heading>System Message</Heading>
+        <Description>The example below shows a message thread with a system message.</Description>
+        <Canvas mdxSource={MessageThreadWithSystemMessagesExampleText}>
+          <MessageThreadWithSystemMessagesExample />
+        </Canvas>
+      </div>
 
-      <Heading>Blocked Message</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
-        hyperlink.
-      </Description>
-      <Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
-        <MessageThreadWithBlockedMessagesExample />
-      </Canvas>
+      <div ref={refBlockedMessage}>
+        <Heading>Blocked Message</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the
+          hyperlink.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithBlockedMessagesExampleText}>
+          <MessageThreadWithBlockedMessagesExample />
+        </Canvas>
+      </div>
 
-      <Heading>Custom Message</Heading>
-      <Description>
-        The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomMessagesExampleText}>
-        <MessageThreadWithCustomMessagesExample />
-      </Canvas>
+      <div ref={refCustomMessage}>
+        <Heading>Custom Message</Heading>
+        <Description>
+          The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomMessagesExampleText}>
+          <MessageThreadWithCustomMessagesExample />
+        </Canvas>
+      </div>
 
-      <Heading>Messages with Customized Chat Container</Heading>
-      <Description>
-        The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomChatContainerExampleText}>
-        <MessageThreadWithCustomChatContainerExample />
-      </Canvas>
+      <div ref={refWithCustomizedChatContainer}>
+        <Heading>Messages with Customized Chat Container</Heading>
+        <Description>
+          The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomChatContainerExampleText}>
+          <MessageThreadWithCustomChatContainerExample />
+        </Canvas>
+      </div>
 
-      <Heading>Messages with Customized Message Container</Heading>
-      <Description>
-        The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
-        `styles.systemMessageContainer` in `MessageThread`
-      </Description>
-      <Description>
-        Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI malformed
-        issue when loading the storybook snippets
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomMessageContainerExampleText}>
-        <MessageThreadWithCustomMessageContainerExample />
-      </Canvas>
+      <div ref={refWithCustomizedMessageContainer}>
+        <Heading>Messages with Customized Message Container</Heading>
+        <Description>
+          The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
+          `styles.systemMessageContainer` in `MessageThread`
+        </Description>
+        <Description>
+          Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI
+          malformed issue when loading the storybook snippets
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomMessageContainerExampleText}>
+          <MessageThreadWithCustomMessageContainerExample />
+        </Canvas>
+      </div>
 
-      <Heading>Messages with Customized Blocked message Container</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        The example below shows how to render a `blocked` message with custom `warningText`, with
-        `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage` in
-        `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
-        <MessageThreadWithCustoBlockedmMessageContainerExample />
-      </Canvas>
+      <div ref={refWithCustomizedBlockedMessageContainer}>
+        <Heading>Messages with Customized Blocked message Container</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          The example below shows how to render a `blocked` message with custom `warningText`, with
+          `styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage`
+          in `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustoBlockedmMessageContainerExampleText}>
+          <MessageThreadWithCustoBlockedmMessageContainerExample />
+        </Canvas>
+      </div>
 
-      <Heading>Default Message Status Indicator</Heading>
-      <Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
-        <MessageThreadWithMessageStatusIndicatorExample />
-      </Canvas>
+      <div ref={refDefaultMessageWithStatusIndicator}>
+        <Heading>Default Message Status Indicator</Heading>
+        <Canvas mdxSource={MessageThreadWithMessageStatusIndicatorExampleText}>
+          <MessageThreadWithMessageStatusIndicatorExample />
+        </Canvas>
+      </div>
 
-      <Heading>Custom Message Status Indicator</Heading>
-      <Description>
-        The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
-        `MessageThread`
-      </Description>
-      <Canvas mdxSource={MessageThreadWithCustomMessageStatusIndicatorExampleText}>
-        <MessageThreadWithCustomMessageStatusIndicatorExample />
-      </Canvas>
+      <div ref={refCustomMessageWithStatusIndicator}>
+        <Heading>Custom Message Status Indicator</Heading>
+        <Description>
+          The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
+          `MessageThread`
+        </Description>
+        <Canvas mdxSource={MessageThreadWithCustomMessageStatusIndicatorExampleText}>
+          <MessageThreadWithCustomMessageStatusIndicatorExample />
+        </Canvas>
+      </div>
 
-      <Heading>Custom Avatar</Heading>
-      <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
-        <MessageThreadWithCustomAvatarExample />
-      </Canvas>
-      <Description>
-        Note: You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona)
-        component
-      </Description>
+      <div ref={refCustomAvatar}>
+        <Heading>Custom Avatar</Heading>
+        <Canvas mdxSource={MessageThreadWithCustomAvatarExampleText}>
+          <MessageThreadWithCustomAvatarExample />
+        </Canvas>
+        <Description>
+          Note: You can view the details of the
+          [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component
+        </Description>
+      </div>
 
-      <Heading>Custom Timestamp</Heading>
-      <SingleLineBetaBanner />
-      <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
-        <MessageThreadWithCustomTimestampExample />
-      </Canvas>
-      <Heading>Display Inline Image with Messages</Heading>
-      <SingleLineBetaBanner />
-      <Description>
-        MessageThread component provides UI for displaying inline image attachments in a message. If an image is
-        protected by header-based authentication, developers can write there own HTTP call to get the image so you can
-        provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
-      </Description>
-      <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
-        <MessageThreadWithInlineImageExample />
-      </Canvas>
+      <div ref={refCustomTimestamp}>
+        <Heading>Custom Timestamp</Heading>
+        <SingleLineBetaBanner />
+        <Canvas mdxSource={MessageThreadWithCustomTimestampExampleText}>
+          <MessageThreadWithCustomTimestampExample />
+        </Canvas>
+      </div>
 
-      <Heading>Display File Attachments with Messages</Heading>
-      <DetailedBetaBanner />
-      <Description>
-        MessageThread component provides UI for displaying file attachments in a message. This allows developers to
-        implement a file sharing feature using the pure UI component with minimal effort. Developers can write their own
-        file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it in a
-        new browser tab. Developers can override this behavior as well using MessageThread props.
-      </Description>
-      <Canvas mdxSource={MessageWithFileText}>
-        <MessageWithFile />
-      </Canvas>
+      <div ref={refDisplayInlineImages}>
+        <Heading>Display Inline Image with Messages</Heading>
+        <SingleLineBetaBanner />
+        <Description>
+          MessageThread component provides UI for displaying inline image attachments in a message. If an image is
+          protected by header-based authentication, developers can write there own HTTP call to get the image so you can
+          provide the applicable headers. By default the `previewUrl` is displayed in the message bubble.
+        </Description>
+        <Canvas mdxSource={MessageThreadWithInlineImageExampleText}>
+          <MessageThreadWithInlineImageExample />
+        </Canvas>
+      </div>
 
-      <Heading>Mention of Users with a custom renderer within Messages</Heading>
-      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
-      <Description>
-        When a user is mentioned in a message, a custom HTML tag is used to represent the element in the MessageThread.
-        This element can be styled using the standard methods and the renderer can be overridden for further
-        customization. The HTML Tag is defined:
-      </Description>
-      <Source code={mentionTag} />
-      <Canvas mdxSource={MessageWithCustomMentionRendererText}>
-        <MessageWithCustomMentionRenderer />
-      </Canvas>
+      <div ref={refDisplayFileAttachments}>
+        <Heading>Display File Attachments with Messages</Heading>
+        <DetailedBetaBanner />
+        <Description>
+          MessageThread component provides UI for displaying file attachments in a message. This allows developers to
+          implement a file sharing feature using the pure UI component with minimal effort. Developers can write their
+          own file download logic and utilize the UI provided by MessageThread. Clicking on the file attachment opens it
+          in a new browser tab. Developers can override this behavior as well using MessageThread props.
+        </Description>
+        <Canvas mdxSource={MessageWithFileText}>
+          <MessageWithFile />
+        </Canvas>
+      </div>
 
-      <Heading>Props</Heading>
-      <Props of={MessageThreadComponent} />
+      <div ref={refMentionOfUsers}>
+        <Heading>Mention of Users with a custom renderer within Messages</Heading>
+        <SingleLineBetaBanner version={'1.7.0-beta.1'} />
+        <Description>
+          When a user is mentioned in a message, a custom HTML tag is used to represent the element in the
+          MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+          further customization. The HTML Tag is defined:
+        </Description>
+        <Source code={mentionTag} />
+        <Canvas mdxSource={MessageWithCustomMentionRendererText}>
+          <MessageWithCustomMentionRenderer />
+        </Canvas>
+      </div>
+
+      <div ref={refProps}>
+        <Heading>Props</Heading>
+        <Props of={MessageThreadComponent} />
+      </div>
     </>
   );
 };
@@ -318,7 +431,7 @@ const MessageThreadStory = (args): JSX.Element => {
 
   const onRenderMessage = (messageProps: MessageProps, defaultOnRender?: MessageRenderer): JSX.Element => {
     if (messageProps.message.messageType === 'custom') {
-      return <Divider content={messageProps.message.content} color="brand" important />;
+      return <Divider appearance="brand">{messageProps.message.content}</Divider>;
     }
 
     return defaultOnRender ? defaultOnRender(messageProps) : <></>;
@@ -343,6 +456,7 @@ const MessageThreadStory = (args): JSX.Element => {
     return await delay().then(() => {
       return [
         {
+          attachmentId: attachment.id,
           blobUrl: attachment.previewUrl ?? ''
         }
       ];
@@ -491,7 +605,8 @@ export default {
   },
   parameters: {
     docs: {
-      page: () => getDocs()
+      container: null,
+      page: () => Docs()
     },
     storyshots: { disable: true }
   }

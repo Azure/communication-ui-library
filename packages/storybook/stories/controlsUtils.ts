@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ErrorType } from '@azure/communication-react';
+import { CustomCallControlButtonProps, ErrorType } from '@azure/communication-react';
 import { PartialTheme } from '@fluentui/react';
 import { DefaultTheme, DarkTheme, TeamsTheme, WordTheme } from '@fluentui/theme-samples';
 import {
@@ -133,8 +133,8 @@ export const getControlledTheme = (choice: string): PartialTheme => {
   return DefaultTheme;
 };
 
-const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo', 'speaker'] as const;
-const OVERFLOW_GALLERY_LAYOUTS = ['HorizontalBottom', 'VerticalRight', 'HorizontalTop'] as const;
+const VIDEO_GALLERY_LAYOUTS = ['default', 'floatingLocalVideo', 'speaker', 'focusedContent'] as const;
+const OVERFLOW_GALLERY_LAYOUTS = ['horizontalBottom', 'verticalRight', 'horizontalTop'] as const;
 
 export const orientationArg = {
   options: ['landscape', 'portrait'],
@@ -376,7 +376,7 @@ export const controlsToAdd = {
   overflowGalleryPosition: {
     control: 'select',
     options: OVERFLOW_GALLERY_LAYOUTS,
-    defaultValue: 'HorizontalBottom',
+    defaultValue: 'horizontalBottom',
     name: 'Overflow Gallery Position'
   },
   localVideoTileSize: {
@@ -399,6 +399,76 @@ export const controlsToAdd = {
       displayType: 'default'
     },
     name: 'Control Bar Customizations'
+  },
+  customButtonInjectionControls: {
+    placement: {
+      control: 'select',
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      options: ['primary', 'secondary', 'overflow'],
+      defaultValue: 'primary',
+      name: 'Placement'
+    },
+    disabled: {
+      control: 'boolean',
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      defaultValue: 'false',
+      name: 'Disabled'
+    },
+    label: {
+      control: 'text',
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      defaultValue: 'Custom',
+      name: 'Button label'
+    },
+    icon: {
+      control: 'text',
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      defaultValue: 'DefaultCustomButton',
+      name: 'Button icon'
+    },
+    showLabel: {
+      control: { type: 'radio' },
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      defaultValue: 'undefined',
+      options: ['undefined', false, true],
+      name: 'Show Label'
+    },
+    allowRawObjectInput: {
+      control: 'boolean',
+      defaultValue: false,
+      if: { arg: 'injectMaximumNumberOfButtons', truthy: false },
+      name: 'Inject your own buttons'
+    },
+    objectOptions: {
+      control: 'object',
+      if: { arg: 'allowRawObjectInput' },
+      defaultValue: [
+        (): CustomCallControlButtonProps => ({
+          placement: 'primary',
+          strings: {
+            label: 'Custom'
+          }
+        }),
+        (): CustomCallControlButtonProps => ({
+          placement: 'secondary',
+          strings: {
+            label: 'Custom'
+          }
+        }),
+        (): CustomCallControlButtonProps => ({
+          placement: 'overflow',
+          strings: {
+            label: 'Custom'
+          }
+        })
+      ]
+    },
+    injectMaximumNumberOfButtons: {
+      control: 'boolean',
+      defaultValue: false,
+      if: { arg: 'allowRawObjectInput', truthy: false },
+      name: 'Inject Max # of Custom Buttons'
+    }
   }
 };
 
