@@ -37,7 +37,7 @@ test.describe('ErrorBar is shown correctly', async () => {
     // test resend button in contextual menu
     await pageClick(page, dataUiId('chat-composite-message'));
     await pageClick(page, dataUiId('chat-composite-message-action-icon'));
-    await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu'));
+    await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
 
     expect(await stableScreenshot(page)).toMatchSnapshot(
       'error-bar-send-message-with-wrong-thread-id-show-resend-button.png'

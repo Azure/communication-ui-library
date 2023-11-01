@@ -226,7 +226,6 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   // gap space uses pixels
   return (
     <ContextualMenu
-      data-ui-id={'chat-composite-message-contextual-menu'}
       alignTargetEdge={true}
       gapSpace={2 /*px*/}
       isBeakVisible={false}
