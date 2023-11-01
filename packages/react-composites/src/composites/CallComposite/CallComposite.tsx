@@ -251,6 +251,19 @@ export type CallCompositeOptions = {
      */
     shape?: 'circle' | 'square';
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Background image displayed on the configuration page.
+   */
+  backgroundImage?: {
+    /**
+     * URL for the background image.
+     *
+     * @remarks
+     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     */
+    url: string;
+  };
 };
 
 type MainScreenProps = {
@@ -396,6 +409,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
           /* @conditional-compile-remove(custom-branding) */
           logo={props.options?.logo}
+          /* @conditional-compile-remove(custom-branding) */
+          backgroundImage={props.options?.backgroundImage}
         />
       );
       break;
