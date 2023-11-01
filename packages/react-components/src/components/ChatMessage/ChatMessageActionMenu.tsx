@@ -24,7 +24,7 @@ export const chatMessageActionMenuProps = (menuProps: {
   enabled: boolean;
   /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
   forceShow: boolean;
-  /** Where the menu is shown */
+  /** Whether the menu is shown */
   menuExpanded: boolean;
   menuButtonRef: React.MutableRefObject<HTMLDivElement | null>;
   onActionButtonClick: () => void;
