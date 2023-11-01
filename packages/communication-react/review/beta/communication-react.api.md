@@ -599,6 +599,14 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    logo?: {
+        url: string;
+        alt?: string;
+        shape?: 'circle' | 'square';
+    };
+    backgroundImage?: {
+        url: string;
+    };
 };
 
 // @public
@@ -661,6 +669,7 @@ export interface CallCompositeStrings {
     dialpadModalAriaLabel: string;
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
+    dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
@@ -1181,6 +1190,14 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+    };
+    logo?: {
+        url: string;
+        alt?: string;
+        shape?: 'circle' | 'square';
+    };
+    backgroundImage?: {
+        url: string;
     };
 };
 

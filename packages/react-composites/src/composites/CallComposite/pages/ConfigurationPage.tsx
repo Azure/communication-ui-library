@@ -10,12 +10,14 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { ActiveErrorMessage, DevicesButton, ErrorBar } from '@internal/react-components';
+import { ActiveErrorMessage, DevicesButton, ErrorBar, useTheme } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Panel, PanelType, Stack } from '@fluentui/react';
+import { Image, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
+  configurationSectionStyle,
   fillWidth,
+  logoStyles,
   panelFocusProps,
   panelStyles,
   startCallButtonStyleDesktop
@@ -26,8 +28,7 @@ import {
   callDetailsStyleMobile,
   configurationStackTokensDesktop,
   configurationStackTokensMobile,
-  configurationContainerStyleDesktop,
-  configurationContainerStyleMobile,
+  configurationContainerStyle,
   selectionContainerStyle,
   startCallButtonContainerStyleDesktop,
   startCallButtonContainerStyleMobile,
@@ -78,6 +79,16 @@ export interface ConfigurationPageProps {
   onNetworkingTroubleShootingClick?: () => void;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  /* @conditional-compile-remove(custom-branding) */
+  logo?: {
+    url: string;
+    alt?: string;
+    shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  backgroundImage?: {
+    url: string;
+  };
 }
 
 /**
@@ -92,6 +103,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
   } = props;
+
+  const theme = useTheme();
 
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
@@ -246,8 +259,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     [errorBarProps, filteredLatestErrors]
   );
 
+  const containerStyles = useMemo(
+    () =>
+      configurationContainerStyle(
+        !mobileView,
+        /* @conditional-compile-remove(custom-branding) */
+        props.backgroundImage?.url
+      ),
+    [mobileView, /* @conditional-compile-remove(custom-branding) */ props.backgroundImage?.url]
+  );
+
   return (
-    <Stack className={mobileView ? configurationContainerStyleMobile : configurationContainerStyleDesktop}>
+    <Stack styles={containerStyles}>
       <Stack styles={bannerNotificationStyles}>
         <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */
@@ -309,6 +332,10 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
           <Stack.Item styles={callDetailsContainerStyles}>
+            <Logo
+              /* @conditional-compile-remove(custom-branding) */
+              logo={props.logo}
+            />
             {title}
             {callDescription}
           </Stack.Item>
@@ -316,15 +343,15 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             horizontal={!mobileWithPreview}
             horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
             verticalFill={mobileWithPreview}
-            tokens={mobileWithPreview ? configurationStackTokensMobile : undefined}
+            tokens={configurationStackTokensMobile}
           >
             {localPreviewTrampoline(
               mobileWithPreview,
               /* @conditional-compile-remove(rooms) */ !!(role === 'Consumer')
             )}
-            <Stack className={mobileView ? undefined : selectionContainerStyle}>
+            <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <>
+                <Stack className={mobileView ? undefined : selectionContainerStyle(theme)}>
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
@@ -343,15 +370,17 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
                     /* @conditional-compile-remove(video-background-effects) */
                     onClickVideoEffects={toggleVideoEffectsPane}
                   />
-                </>
+                </Stack>
               )}
               <Stack
                 styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
+                horizontalAlign={mobileWithPreview ? 'stretch' : 'end'}
               >
                 <StartCallButton
                   className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
                   onClick={startCall}
                   disabled={disableStartCallButton}
+                  hideIcon={true}
                 />
               </Stack>
             </Stack>
@@ -403,4 +432,11 @@ const micPermissionGrantedTrampoline = (
   return audioState && audioState !== 'unsupported' ? audioState === 'granted' : microphonePermissionGranted;
 
   return microphonePermissionGranted;
+};
+
+const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'circle' | 'square' } }): JSX.Element => {
+  if (!props.logo) {
+    return <></>;
+  }
+  return <Image styles={logoStyles(props.logo.shape ?? 'circle')} src={props.logo.url} alt={props.logo.alt} />;
 };
