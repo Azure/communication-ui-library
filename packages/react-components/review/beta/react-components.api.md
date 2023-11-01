@@ -65,8 +65,10 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @beta (undocumented)
+// @beta
 export interface AttachmentDownloadResult {
+    // (undocumented)
+    attachmentId: string;
     // (undocumented)
     blobUrl: string;
 }
@@ -660,6 +662,7 @@ export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
+    disableTooltip?: boolean;
     labelKey?: string;
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
@@ -1495,7 +1498,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

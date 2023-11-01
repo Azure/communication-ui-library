@@ -402,6 +402,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 data-ui-id="call-composite-people-button"
                 strings={peopleButtonStrings}
                 disabled={isDisabled(options?.participantsButton)}
+                disableTooltip={props.isMobile}
               />
             )}
           {showDevicesButtonInControlBar && (
@@ -424,6 +425,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                   key={`primary-custom-button-${i}`}
                   // styles={commonButtonStyles}
                   showLabel={options?.displayType !== 'compact'}
+                  disableTooltip={props.isMobile}
                 />
               );
             })}
@@ -431,6 +433,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
             showMoreButton && (
               <MoreButton
+                disableTooltip={props.isMobile}
                 data-ui-id="common-call-composite-more-button"
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
