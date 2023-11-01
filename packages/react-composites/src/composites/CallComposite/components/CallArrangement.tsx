@@ -45,7 +45,7 @@ import { MutedNotification, MutedNotificationProps } from './MutedNotification';
 import { CallAdapter } from '../adapter';
 import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
-import { _CallControlOptions, CallControlOptions } from '../types/CallControlOptions';
+import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
@@ -80,6 +80,7 @@ import {
   CapabilitiesChangedNotificationBar,
   CapabilitiesChangeNotificationBarProps
 } from './CapabilitiesChangedNotificationBar';
+import { useLocale } from '../../localization';
 
 /**
  * @private
@@ -108,6 +109,7 @@ export interface CallArrangementProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   /* @conditional-compile-remove(capabilities) */
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  onCloseChatPane?: () => void;
 }
 
 /**
@@ -178,6 +180,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
   const isSidePaneOpen = useIsSidePaneOpen();
+
+  const locale = useLocale();
+  const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
   const isMobileWithActivePane = props.mobileView && isSidePaneOpen;
 
@@ -456,8 +461,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 modalLayerHostId={props.modalLayerHostId}
                 hidden={!isSidePaneOpen}
                 styles={pipStyles}
+                strings={modalStrings}
                 minDragPosition={minMaxDragPosition.minDragPosition}
                 maxDragPosition={minMaxDragPosition.maxDragPosition}
+                onDismissSidePane={() => {
+                  closePeoplePane();
+                  if (props.onCloseChatPane) {
+                    props.onCloseChatPane();
+                  }
+                }}
               />
             )}
             {drawerMenuItems.length > 0 && (
@@ -473,7 +485,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 };
 
 const isLegacyCallControlEnabled = (options?: boolean | CallControlOptions): boolean => {
-  return !!options && options !== true && (options as _CallControlOptions)?.legacyControlBarExperience === true;
+  return !!options && options !== true && options?.legacyControlBarExperience === true;
 };
 
 const shouldShowPeopleTabHeaderButton = (callControls?: boolean | CommonCallControlOptions): boolean => {

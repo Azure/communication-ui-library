@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommonCallControlOptions, _CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
+import { CommonCallControlOptions } from '../../common/types/CommonCallControlOptions';
 
 /**
  * Customization options for the control bar in calling experience.
@@ -17,12 +17,3 @@ export type CallControlOptions =
       participantsButton?: boolean | { disabled: boolean };
       legacyControlBarExperience?: boolean;
     };
-
-/**
- * While the API for the legacyControlBarExperience is in beta. Use this type to access the internal
- * API.
- * @internal
- */
-export type _CallControlOptions = _CommonCallControlOptions & {
-  legacyControlBarExperience?: boolean;
-};
