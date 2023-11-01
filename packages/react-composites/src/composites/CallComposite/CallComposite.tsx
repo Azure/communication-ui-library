@@ -228,6 +228,42 @@ export type CallCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Logo displayed on the configuration page.
+   */
+  logo?: {
+    /**
+     * URL for the logo image.
+     *
+     * @remarks
+     * Recommended size is 80x80 pixels.
+     */
+    url: string;
+    /**
+     * Alt text for the logo image.
+     */
+    alt?: string;
+    /**
+     * The logo can be displayed as a circle or a square.
+     *
+     * @defaultValue 'circle'
+     */
+    shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Background image displayed on the configuration page.
+   */
+  backgroundImage?: {
+    /**
+     * URL for the background image.
+     *
+     * @remarks
+     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     */
+    url: string;
+  };
 };
 
 type MainScreenProps = {
@@ -371,6 +407,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          /* @conditional-compile-remove(custom-branding) */
+          logo={props.options?.logo}
+          /* @conditional-compile-remove(custom-branding) */
+          backgroundImage={props.options?.backgroundImage}
         />
       );
       break;
