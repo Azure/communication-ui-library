@@ -27,8 +27,7 @@ Ask feature owners to create a PR to add a pre-release changelog and remove the 
 For all the features that are going into this release, ask the feature owners to:
 - Remove the feature from the inProgressFeatures array or the feature array in the .babelrc.js
 - Create a change log summarizing the feature and set the change as 'prerelease'
-- Make sure the single-line banner in Storybook references the right beta versions for each feature
-
+  
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)
 
 ### Step 0.3: Create a Thread in the WebUI channel to Track Release Progress
