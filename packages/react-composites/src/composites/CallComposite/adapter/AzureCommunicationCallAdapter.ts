@@ -601,18 +601,16 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       let shouldMicrophoneBeOnInCall = this.getState().isLocalPreviewMicrophoneEnabled;
 
       // Apply override arguments
-      if (typeof options !== 'object') {
-        // Deprecated joinCall API (boolen | undefined)
-        if (options === true) {
-          shouldMicrophoneBeOnInCall = true;
-        }
-      } else {
+      if (typeof options === 'boolean') {
+        // Deprecated joinCall API (boolen)
+        shouldMicrophoneBeOnInCall = options;
+      } else if (typeof options === 'object') {
         // Options bag API
-        if (options.microphoneOn === true) {
-          shouldMicrophoneBeOnInCall = true;
+        if (options.microphoneOn && options.microphoneOn !== 'keep') {
+          shouldMicrophoneBeOnInCall = options.microphoneOn;
         }
-        if (options.cameraOn === true) {
-          shouldCameraBeOnInCall = true;
+        if (options.cameraOn && options.cameraOn !== 'keep') {
+          shouldCameraBeOnInCall = options.cameraOn;
         }
       }
 
