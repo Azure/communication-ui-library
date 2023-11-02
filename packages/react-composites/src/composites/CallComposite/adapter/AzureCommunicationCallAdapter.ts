@@ -327,7 +327,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private callClient: StatefulCallClient;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
-  private localStream: SDKLocalVideoStream | undefined;
   private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: CallCommon;
@@ -597,36 +596,32 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     return this.teeErrorToEventEmitter(() => {
-      let audioOptions: AudioOptions;
-      let videoOptions: VideoOptions;
-      // if using the deprecated joinCall API
+      // Default to keeping camera/mic on if no override argument specified
+      let shouldCameraBeOnInCall = this.getState().cameraStatus === 'On';
+      let shouldMicrophoneBeOnInCall = this.getState().isLocalPreviewMicrophoneEnabled;
+
+      // Apply override arguments
       if (typeof options !== 'object') {
-        const microphoneOn = options;
-        audioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-        // TODO: find a way to expose stream to here
-        videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
+        // Deprecated joinCall API (boolen | undefined)
+        if (options === true) {
+          shouldMicrophoneBeOnInCall = true;
+        }
       } else {
-        // if using the options bag
-        // undefined = keep = use precall state
-        // true = turn on
-        // false = turn off
-        const microphoneState = options.microphoneOn ?? 'keep';
-        const cameraState = options.cameraOn ?? 'keep';
-
-        audioOptions = {
-          muted: !(microphoneState === 'keep' ? this.getState().isLocalPreviewMicrophoneEnabled : microphoneState)
-        };
-        const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-        const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
-        const precallVideoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-
-        videoOptions =
-          cameraState === 'keep'
-            ? precallVideoOptions
-            : localStream && options?.cameraOn
-            ? { localVideoStreams: [localStream] }
-            : {};
+        // Options bag API
+        if (options.microphoneOn === true) {
+          shouldMicrophoneBeOnInCall = true;
+        }
+        if (options.cameraOn === true) {
+          shouldCameraBeOnInCall = true;
+        }
       }
+
+      const audioOptions: AudioOptions = { muted: !shouldMicrophoneBeOnInCall };
+      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+      const videoOptions: VideoOptions =
+        selectedCamera && shouldCameraBeOnInCall
+          ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
+          : {};
 
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
