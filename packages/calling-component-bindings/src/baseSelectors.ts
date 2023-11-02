@@ -43,6 +43,15 @@ export const getRole = (state: CallClientState, props: CallingBaseSelectorProps)
   return 'Unknown';
 };
 
+/**
+ * @private
+ */
+export const isHideAttendeeNamesEnabled = (state: CallClientState, props: CallingBaseSelectorProps): boolean => {
+  /* @conditional-compile-remove(hide-attendee-name) */
+  return state.calls[props.callId]?.hideAttendeeNames ?? false;
+  return false;
+};
+
 /* @conditional-compile-remove(capabilities) */
 /**
  * @private

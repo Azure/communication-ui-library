@@ -489,6 +489,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#CapabilitiesFeature}.
    */
   capabilitiesFeature?: CapabilitiesFeatureState;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /**
+   * Hide attendee names in teams meeting
+   */
+  hideAttendeeNames?: boolean;
 }
 
 /* @conditional-compile-remove(call-transfer) */
