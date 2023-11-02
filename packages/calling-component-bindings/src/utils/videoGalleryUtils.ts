@@ -5,11 +5,15 @@ import {
   DominantSpeakersInfo,
   RemoteParticipantState as RemoteParticipantConnectionState
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _isRingingPSTNParticipant } from './callUtils';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(raise-hand) */
@@ -21,8 +25,16 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo = (
-  remoteParticipants: RemoteParticipantState[] | undefined
+export const _videoGalleryRemoteParticipantsMemo: (
+  remoteParticipants: RemoteParticipantState[] | undefined,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  isHideAttendeeNamesEnabled?: boolean,
+  /* @conditional-compile-remove(hide-attendee-name) */
+  localUserRole?: ParticipantRole
+) => VideoGalleryRemoteParticipant[] = (
+  remoteParticipants: RemoteParticipantState[] | undefined,
+  isHideAttendeeNamesEnabled?: boolean,
+  localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];
@@ -43,13 +55,21 @@ export const _videoGalleryRemoteParticipantsMemo = (
         })
         .map((participant: RemoteParticipantState) => {
           const state = _isRingingPSTNParticipant(participant);
+          let displayName = participant.displayName;
+          /* @conditional-compile-remove(hide-attendee-name) */
+          displayName = maskDisplayNameWithRole(
+            displayName,
+            localUserRole,
+            participant.role,
+            isHideAttendeeNamesEnabled
+          );
           return memoizedFn(
             toFlatCommunicationIdentifier(participant.identifier),
             participant.isMuted,
             checkIsSpeaking(participant),
             participant.videoStreams,
             state,
-            participant.displayName,
+            displayName,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand
           );
