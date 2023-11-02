@@ -24,6 +24,8 @@ import {
   verticalGalleryContainerStyle,
   verticalGalleryStyle
 } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
+import { SMALL_FLOATING_MODAL_SIZE_REM } from './styles/FloatingLocalVideo.styles';
+import { _convertRemToPx } from '@internal/acs-ui-common';
 
 /**
  * A ResponsiveHorizontalGallery styled for the {@link VideoGallery}
@@ -45,6 +47,7 @@ export const OverflowGallery = (props: {
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
+  parentWidth?: number;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -56,7 +59,8 @@ export const OverflowGallery = (props: {
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
-    onChildrenPerPageChange
+    onChildrenPerPageChange,
+    parentWidth
   } = props;
 
   const containerStyles = useMemo(() => {
@@ -114,8 +118,13 @@ export const OverflowGallery = (props: {
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
-        /* @conditional-compile-remove(gallery-layouts) */
-        layout={props.layout}
+        containerStyles={{
+          width: parentWidth
+            ? props.layout === 'default'
+              ? `${parentWidth}px`
+              : `${parentWidth - _convertRemToPx(SMALL_FLOATING_MODAL_SIZE_REM.width)}px`
+            : '100%'
+        }}
       />
     );
   }
