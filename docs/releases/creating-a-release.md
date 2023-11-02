@@ -110,15 +110,17 @@ Copy links to those snapshot commits and UI snapshot PR link, and post them in t
 
 ## Step 2: Prepare for release
 
-### Step 2.1: Bug Bash
+### Step 2.1 (Stable): API approval from Azure REST API stewardship board]
+
+For stable release, we must get any API changes approved by the Azure REST API Stewardship board. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
+
+### Step 2.2: Bug Bash
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
 - Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
   - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in the section below.
-- For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-(ARB)-Review) for how to reach out to the API stewardship board.
-- [Fetch translated strings](../references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, [cherry-pick](#cherry-picking-changes) the changes to the release branch.
-
+  - 
 #### Cherry-picking changes
 
 While the release branch is active, some changes might be merged into the branch (for bug fixes, or features deemed necessary for the release). PRs into the release branch should follow this process when possible:
