@@ -110,11 +110,7 @@ Copy links to those snapshot commits and UI snapshot PR link, and post them in t
 
 ## Step 2: Prepare for release
 
-### Step 2.1 (Stable / Large Beta Only): API approval from Azure REST API stewardship board]
-
-For stable releases, or for "large" beta releases, we must get any API changes approved by the Azure REST API Stewardship board. See the [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/27654/Scheduling-an-Azure-Review-Board-%28ARB%29-Review) for how to reach out to the API stewardship board.
-
-### Step 2.2: Bug Bash
+### Step 2.1: Bug Bash
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
