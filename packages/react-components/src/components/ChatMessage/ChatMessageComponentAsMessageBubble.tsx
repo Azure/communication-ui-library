@@ -335,7 +335,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
             root={{
               className: chatMyMessageStyles.root,
               onBlur: (e) => {
-                // copy behavior from North*
                 // `focused` controls is focused the whole `ChatMessage` or any of its children. When we're navigating
                 // with keyboard the focused element will be changed and there is no way to use `:focus` selector
                 if (chatMessageActionFlyoutTarget?.current) {
@@ -346,7 +345,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
                 setFocused(shouldPreserveFocusState);
               },
               onFocus: () => {
-                // copy behavior from North*
                 // react onFocus is called even when nested component receives focus (i.e. it bubbles)
                 // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
                 setFocused(true);
