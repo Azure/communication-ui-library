@@ -73,7 +73,7 @@
     "nanoid": "3.3.6"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.19.1-beta.2 || ^1.17.1",
+    "@azure/communication-calling": "1.19.1-beta.2",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/communication-chat": "1.4.0-beta.2",
     "@types/react": ">=16.8.0 <19.0.0",
@@ -82,7 +82,7 @@
     "react-dom": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.19.1-beta.2 || ^1.17.1",
+    "@azure/communication-calling": "1.19.1-beta.2",
     "@azure/communication-calling-effects": "1.0.1",
     "@azure/communication-chat": "1.4.0-beta.2",
     "@azure/communication-identity": "^1.2.0",
