@@ -371,7 +371,7 @@ export type VideoBackgroundEffectsDependency = {
 };
 
 // @internal (undocumented)
-export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean | undefined, localUserRole?: ParticipantRole | undefined) => VideoGalleryRemoteParticipant[];
+export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemoteParticipantState[] | undefined, isHideAttendeeNamesEnabled?: boolean, localUserRole?: ParticipantRole) => VideoGalleryRemoteParticipant[];
 
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
