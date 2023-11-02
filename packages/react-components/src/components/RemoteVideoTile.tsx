@@ -23,6 +23,10 @@ import {
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { _formatString } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { useLocale } from '../localization';
 
 /**
  * A memoized version of VideoTile for rendering remote participants. React.memo is used for a performance
@@ -110,7 +114,6 @@ export const _RemoteVideoTile = React.memo(
 
     // Handle creating, destroying and updating the video stream as necessary
     const createVideoStreamResult = useRemoteVideoStreamLifecycleMaintainer(remoteVideoStreamProps);
-
     const contextualMenuProps = useVideoTileContextualMenuProps({
       remoteParticipant,
       view: createVideoStreamResult?.view,
@@ -160,6 +163,20 @@ export const _RemoteVideoTile = React.memo(
       [setDrawerMenuItemProps, contextualMenuProps]
     );
 
+    let displayName = remoteParticipant.displayName || strings?.displayNamePlaceholder;
+    /* @conditional-compile-remove(hide-attendee-name) */
+    const attendeeRoleString = useLocale().strings.AttendeeRole;
+
+    /* @conditional-compile-remove(hide-attendee-name) */
+    const formatDisplayName = (): string | undefined => {
+      if (displayName && attendeeRoleString) {
+        return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+      }
+      return displayName;
+    };
+
+    /* @conditional-compile-remove(hide-attendee-name) */
+    displayName = formatDisplayName();
     return (
       <Stack
         /* @conditional-compile-remove(pinned-participants) */
@@ -173,7 +190,7 @@ export const _RemoteVideoTile = React.memo(
           userId={userId}
           initialsName={remoteParticipant.displayName ?? ''}
           renderElement={renderVideoStreamElement}
-          displayName={remoteParticipant.displayName || strings?.displayNamePlaceholder}
+          displayName={displayName}
           onRenderPlaceholder={onRenderAvatar}
           isMuted={remoteParticipant.isMuted}
           /* @conditional-compile-remove(raise-hand) */
