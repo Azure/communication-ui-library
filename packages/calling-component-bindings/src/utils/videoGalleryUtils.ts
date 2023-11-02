@@ -3,9 +3,10 @@
 
 import {
   DominantSpeakersInfo,
-  ParticipantRole,
   RemoteParticipantState as RemoteParticipantConnectionState
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(hide-attendee-name) */
+import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
@@ -24,12 +25,16 @@ export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersI
 };
 
 /** @internal */
-export const _videoGalleryRemoteParticipantsMemo = (
+export const _videoGalleryRemoteParticipantsMemo: (
   remoteParticipants: RemoteParticipantState[] | undefined,
   /* @conditional-compile-remove(hide-attendee-name) */
   isHideAttendeeNamesEnabled?: boolean,
   /* @conditional-compile-remove(hide-attendee-name) */
   localUserRole?: ParticipantRole
+) => VideoGalleryRemoteParticipant[] = (
+  remoteParticipants: RemoteParticipantState[] | undefined,
+  isHideAttendeeNamesEnabled?: boolean,
+  localUserRole?
 ): VideoGalleryRemoteParticipant[] => {
   if (!remoteParticipants) {
     return [];

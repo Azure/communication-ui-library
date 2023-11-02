@@ -25,6 +25,7 @@ import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileCont
 import { VideoTile } from './VideoTile';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(hide-attendee-name) */
 import { useLocale } from '../localization';
 
 /**

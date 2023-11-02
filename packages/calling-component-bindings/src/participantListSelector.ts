@@ -26,7 +26,6 @@ import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './utils/callUtils';
@@ -34,9 +33,7 @@ import { maskDisplayNameWithRole } from './utils/callUtils';
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[],
   localUserCanRemoveOthers: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */
-  isHideAttendeeNamesEnabled: boolean,
-  /* @conditional-compile-remove(hide-attendee-name) */
+  isHideAttendeeNamesEnabled?: boolean,
   localUserRole?: ParticipantRole
 ): CallParticipantListParticipant[] => {
   /* eslint-disable @typescript-eslint/explicit-function-return-type */
@@ -137,6 +134,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount,
+    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled
   ],
   (
@@ -149,6 +147,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     raisedHand,
     role,
     partitipantCount,
+    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled
   ): {
     participants: CallParticipantListParticipant[];

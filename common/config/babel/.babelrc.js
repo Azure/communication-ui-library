@@ -80,8 +80,10 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'gallery-layout-composite',
         // conditional-compile for new signaling beta
         'signaling-beta',
+        // feature for hiding attendee name in the teams meeting
+        'hide-attendee-name',
         // custom branding for the composites
-        'custom-branding',
+        'custom-branding'
       ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
