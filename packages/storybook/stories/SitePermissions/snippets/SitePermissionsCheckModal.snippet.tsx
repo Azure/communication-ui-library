@@ -65,7 +65,7 @@ export const SitePermissionsCheckModal: () => JSX.Element = () => {
           onTroubleshootingClick={() => {
             alert('clicked trouble shooting');
           }}
-          onContinueAnywayClick={() => {
+          onPrimaryButtonClick={() => {
             setCameraModalOpen(false);
           }}
           kind={'check'}

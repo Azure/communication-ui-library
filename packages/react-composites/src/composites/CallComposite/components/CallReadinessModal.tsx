@@ -18,6 +18,8 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { _isSafari } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
+import { callReadinessModalOverlayStyles, callReadinessModalStyles } from '../styles/CallReadinessModal.styles';
+/* @conditional-compile-remove(call-readiness) */
 const DRAWER_HIGH_Z_BAND = 99; // setting z index to  99 so that it sit above all components
 
 /* @conditional-compile-remove(call-readiness) */
@@ -63,126 +65,48 @@ export const CallReadinessModal = (props: {
   /* @conditional-compile-remove(unsupported-browser) */
   const isSafari = _isSafari(environmentInfo);
 
-  const modal: undefined | (() => JSX.Element) = !showModal
-    ? undefined
-    : () => {
-        // if both video and audio permission are not set
-        if (videoState === 'prompt' && audioState === 'prompt') {
-          return (
-            <CameraAndMicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="request"
-            />
-          );
-        }
-        // if audio permission is set up but video is not
-        else if (videoState === 'prompt') {
-          return (
-            <CameraSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              onContinueAnywayClick={() => {
-                setIsPermissionsModalDismissed(false);
-              }}
-              kind="request"
-            />
-          );
-        }
-        // if video permission is set up but audio is not
-        else if (audioState === 'prompt') {
-          return (
-            <MicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="request"
-            />
-          );
-        }
-        // if both video and audio are denied
-        else if (videoState === 'denied' && audioState === 'denied') {
-          return (
-            <CameraAndMicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="denied"
-            />
-          );
-        }
-        // if only video is denied
-        else if (videoState === 'denied') {
-          return (
-            <CameraSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              onContinueAnywayClick={() => {
-                setIsPermissionsModalDismissed(false);
-              }}
-              kind="denied"
-            />
-          );
-        }
-        // if only audio is denied
-        else {
-          return (
-            <MicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="denied"
-            />
-          );
-        }
-      };
+  if (!showModal) {
+    return <></>;
+  }
 
-  if (mobileView && modal !== undefined) {
+  const permissionPromptProps = {
+    appName: 'app',
+    /* @conditional-compile-remove(unsupported-browser) */
+    browserHint: (isSafari ? 'safari' : 'unset') as 'safari' | 'unset',
+    onTroubleshootingClick: onPermissionsTroubleshootingClick
+      ? () => onPermissionsTroubleshootingClick(permissionsState)
+      : undefined,
+    onPrimaryButtonClick: () => setIsPermissionsModalDismissed(false)
+  };
+
+  const PermissionPrompt: undefined | (() => JSX.Element) = () => {
+    // if both video and audio permission are not set
+    if (videoState === 'prompt' && audioState === 'prompt') {
+      return <CameraAndMicrophoneSitePermissions {...permissionPromptProps} kind="request" />;
+    }
+    // if audio permission is set up but video is not
+    else if (videoState === 'prompt') {
+      return <CameraSitePermissions {...permissionPromptProps} kind="request" />;
+    }
+    // if video permission is set up but audio is not
+    else if (audioState === 'prompt') {
+      return <MicrophoneSitePermissions {...permissionPromptProps} kind="request" />;
+    }
+    // if both video and audio are denied
+    else if (videoState === 'denied' && audioState === 'denied') {
+      return <CameraAndMicrophoneSitePermissions {...permissionPromptProps} kind="denied" />;
+    }
+    // if only video is denied
+    else if (videoState === 'denied') {
+      return <CameraSitePermissions {...permissionPromptProps} kind="denied" />;
+    }
+    // if only audio is denied
+    else {
+      return <MicrophoneSitePermissions {...permissionPromptProps} kind="denied" />;
+    }
+  };
+
+  if (mobileView) {
     return (
       <>
         {isPermissionsModalDismissed && (
@@ -191,31 +115,26 @@ export const CallReadinessModal = (props: {
             onLightDismiss={onLightDismissTriggered}
             styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}
           >
-            {modal()}
+            <PermissionPrompt />
           </_DrawerSurface>
         )}
       </>
     );
-  } else if (!mobileView && modal !== undefined) {
+  } else {
     return (
       <_ModalClone
-        styles={{
-          root: { position: 'unset' },
-          main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
-        }}
+        styles={callReadinessModalStyles}
         layerProps={{ hostId: props.modalLayerHostId }}
         isOpen={isPermissionsModalDismissed}
         isBlocking={false}
         onDismiss={() => {
           setIsPermissionsModalDismissed(false);
         }}
-        overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
+        overlay={{ styles: callReadinessModalOverlayStyles }}
       >
-        {modal()}
+        <PermissionPrompt />
       </_ModalClone>
     );
-  } else {
-    return <></>;
   }
 };
 
@@ -266,60 +185,25 @@ export const CallReadinessModalFallBack = (props: {
   /* @conditional-compile-remove(unsupported-browser) */
   const isSafari = _isSafari(environmentInfo);
 
-  const modal: undefined | (() => JSX.Element) = !showModal
+  const permissionPromptProps = {
+    appName: 'app',
+    /* @conditional-compile-remove(unsupported-browser) */
+    browserHint: (isSafari ? 'safari' : 'unset') as 'safari' | 'unset',
+    onTroubleshootingClick: onPermissionsTroubleshootingClick
+      ? () => onPermissionsTroubleshootingClick(permissionsState)
+      : undefined,
+    onPrimaryButtonClick: () => setIsPermissionsModalDismissed(false)
+  };
+
+  const PermissionPrompt: undefined | (() => JSX.Element) = !showModal
     ? undefined
     : () => {
         if (videoState === 'denied' && audioState === 'denied') {
-          return (
-            <CameraAndMicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="denied"
-            />
-          );
+          return <CameraAndMicrophoneSitePermissions {...permissionPromptProps} kind="denied" />;
         } else if (videoState === 'denied' && audioState === 'granted') {
-          return (
-            <CameraSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              onContinueAnywayClick={() => {
-                setIsPermissionsModalDismissed(false);
-              }}
-              kind="denied"
-            />
-          );
+          return <CameraSitePermissions {...permissionPromptProps} kind="denied" />;
         } else {
-          return (
-            <MicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="denied"
-            />
-          );
+          return <MicrophoneSitePermissions {...permissionPromptProps} kind="denied" />;
         }
       };
 
@@ -332,80 +216,40 @@ export const CallReadinessModalFallBack = (props: {
             onLightDismiss={onLightDismissTriggered}
             styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}
           >
-            <CameraAndMicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="check"
-            />
+            <CameraAndMicrophoneSitePermissions {...permissionPromptProps} kind="check" />
           </_DrawerSurface>
         )}
-        {isPermissionsModalDismissed && !checkPermissionModalShowing && modal !== undefined && (
+        {isPermissionsModalDismissed && !checkPermissionModalShowing && PermissionPrompt !== undefined && (
           <_DrawerSurface
             disableMaxHeight={true}
             onLightDismiss={onLightDismissTriggered}
             styles={drawerContainerStyles(DRAWER_HIGH_Z_BAND)}
           >
-            {modal()}
+            <PermissionPrompt />
           </_DrawerSurface>
         )}
       </>
     );
   } else {
+    const modalProps = {
+      styles: callReadinessModalStyles,
+      layerProps: { hostId: props.modalLayerHostId },
+      isOpen: isPermissionsModalDismissed,
+      isBlocking: false,
+      onDismiss: () => setIsPermissionsModalDismissed(false),
+      overlay: { styles: callReadinessModalOverlayStyles }
+    };
     return (
       <>
         {(checkPermissionModalShowing || audioState === 'prompt' || videoState === 'prompt') && (
-          <_ModalClone
-            styles={{
-              root: { position: 'unset' },
-              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
-            }}
-            layerProps={{ hostId: props.modalLayerHostId }}
-            isOpen={isPermissionsModalDismissed}
-            isBlocking={false}
-            onDismiss={() => {
-              setIsPermissionsModalDismissed(false);
-            }}
-            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
-          >
-            <CameraAndMicrophoneSitePermissions
-              appName={'app'}
-              /* @conditional-compile-remove(unsupported-browser) */
-              browserHint={isSafari ? 'safari' : 'unset'}
-              onTroubleshootingClick={
-                onPermissionsTroubleshootingClick
-                  ? () => {
-                      onPermissionsTroubleshootingClick(permissionsState);
-                    }
-                  : undefined
-              }
-              kind="check"
-            />
+          <_ModalClone {...modalProps}>
+            <CameraAndMicrophoneSitePermissions {...permissionPromptProps} kind="check" />
           </_ModalClone>
         )}
 
-        {!checkPermissionModalShowing && modal !== undefined && (
-          <_ModalClone
-            styles={{
-              root: { position: 'unset' },
-              main: { position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }
-            }}
-            layerProps={{ hostId: props.modalLayerHostId }}
-            isOpen={isPermissionsModalDismissed}
-            isBlocking={false}
-            onDismiss={() => {
-              setIsPermissionsModalDismissed(false);
-            }}
-            overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
-          >
-            {modal()}
+        {!checkPermissionModalShowing && PermissionPrompt !== undefined && (
+          <_ModalClone {...modalProps}>
+            <PermissionPrompt />
           </_ModalClone>
         )}
       </>

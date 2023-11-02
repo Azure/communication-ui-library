@@ -24,6 +24,9 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
+            onPrimaryButtonClick={() => {
+              alert('allow clicked');
+            }}
             kind={'request'}
           />
         </Stack>
@@ -32,6 +35,9 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             appName={'Storybook'}
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
+            }}
+            onPrimaryButtonClick={() => {
+              alert('allow clicked');
             }}
             kind={'request'}
           />
@@ -42,8 +48,8 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            onContinueAnywayClick={() => {
-              alert('clicked continue anyway');
+            onPrimaryButtonClick={() => {
+              alert('allow clicked');
             }}
             kind={'request'}
           />
@@ -74,7 +80,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            onContinueAnywayClick={() => {
+            onPrimaryButtonClick={() => {
               alert('clicked continue anyway');
             }}
             kind={'denied'}
@@ -106,7 +112,7 @@ export const SitePermissionsExample: () => JSX.Element = () => {
             onTroubleshootingClick={() => {
               alert('clicked trouble shooting');
             }}
-            onContinueAnywayClick={() => {
+            onPrimaryButtonClick={() => {
               alert('clicked continue anyway');
             }}
             kind={'check'}

@@ -175,6 +175,12 @@ export const controlsToAdd = {
     name: 'User identifier for bot',
     type: { name: 'string', required: true }
   },
+  browserHint: {
+    control: 'select',
+    options: ['unset', 'safari'],
+    defaultValue: 'unset',
+    name: 'Browser Hind'
+  },
   calleeUserId: {
     control: 'text',
     defaultValue: '8:echo123',

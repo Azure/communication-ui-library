@@ -30,7 +30,7 @@ export const BrowserPemissionDeniedAndroidDrawer: () => JSX.Element = () => {
             <CameraAndMicrophoneSitePermissions
               appName={'Contoso app'}
               onTroubleshootingClick={() => alert('clicked troubleshooting link')}
-              onContinueAnywayClick={() => alert('clicked Allow Access button')}
+              onPrimaryButtonClick={() => alert('clicked Allow Access button')}
               strings={locale}
               kind={'request'}
             />

@@ -33,10 +33,10 @@ export interface CommonSitePermissionsProps {
    */
   onTroubleshootingClick?: () => void;
   /**
-   * Action that is taken when the user clicks the continue anyway button.
+   * Action that is taken when the user clicks the primary button.
    * If this is not provided the button will not be shown.
    */
-  onContinueAnywayClick?: () => void;
+  onPrimaryButtonClick?: () => void;
   /**
    * Styles for SitePermissions component.
    */
@@ -88,12 +88,12 @@ export const CameraAndMicrophoneSitePermissions = (props: CameraAndMicrophoneSit
 
   /* @conditional-compile-remove(call-readiness) */
   const cameraIconName =
-    props.microphoneIconName ?? props.kind === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
+    props.cameraIconName ?? props.kind === 'denied' ? 'SitePermissionCameraDenied' : 'SitePermissionCamera';
   /* @conditional-compile-remove(call-readiness) */
   const microphoneIconName =
     props.microphoneIconName ?? props.kind === 'denied' ? 'SitePermissionMicDenied' : 'SitePermissionMic';
   /* @conditional-compile-remove(call-readiness) */
-  const connectorIconName = props.microphoneIconName ?? 'SitePermissionsSparkle';
+  const connectorIconName = props.connectorIconName ?? 'SitePermissionsSparkle';
 
   /* @conditional-compile-remove(call-readiness) */
   return (
@@ -103,7 +103,7 @@ export const CameraAndMicrophoneSitePermissions = (props: CameraAndMicrophoneSit
       cameraIconName={cameraIconName}
       connectorIconName={connectorIconName}
       microphoneIconName={microphoneIconName}
-      onPrimaryButtonClick={props.onContinueAnywayClick}
+      onPrimaryButtonClick={props.onPrimaryButtonClick}
     />
   );
   return <></>;
@@ -158,7 +158,7 @@ export const MicrophoneSitePermissions = (props: MicrophoneSitePermissionsProps)
       {...props}
       strings={strings}
       cameraIconName={iconName}
-      onPrimaryButtonClick={props.onContinueAnywayClick}
+      onPrimaryButtonClick={props.onPrimaryButtonClick}
     />
   );
   return <></>;
@@ -213,7 +213,7 @@ export const CameraSitePermissions = (props: CameraSitePermissionsProps): JSX.El
       {...props}
       strings={strings}
       microphoneIconName={iconName}
-      onPrimaryButtonClick={props.onContinueAnywayClick}
+      onPrimaryButtonClick={props.onPrimaryButtonClick}
     />
   );
   return <></>;

@@ -30,7 +30,8 @@ const SitePermissionsRequestModalExample =
 const storyControls = {
   siteRequest: controlsToAdd.siteDeviceRequest,
   appName: controlsToAdd.appName,
-  kind: controlsToAdd.siteDeviceRequestStatus
+  kind: controlsToAdd.siteDeviceRequestStatus,
+  permissionBrowserHint: controlsToAdd.browserHint
 };
 
 const importStatement = `
@@ -50,22 +51,27 @@ const SitePermissionsStory = (args: ArgsFrom<typeof storyControls>): JSX.Element
         <CameraAndMicrophoneSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
+          onPrimaryButtonClick={() => alert('allow clicked')}
           kind={(args.kind as string).toLowerCase() as 'request' | 'denied' | 'check'}
+          browserHint={args.permissionBrowserHint}
         />
       )}
       {args.siteRequest === controlsToAdd.siteDeviceRequest.options[1] && (
         <CameraSitePermissionsComponent
           appName={args.appName}
           onTroubleshootingClick={() => alert('you clicked the help text')}
-          onContinueAnywayClick={() => alert('you clicked the continue anyway button')}
+          onPrimaryButtonClick={() => alert('allow clicked')}
           kind={(args.kind as string).toLowerCase() as 'request' | 'denied' | 'check'}
+          browserHint={args.permissionBrowserHint}
         />
       )}
       {args.siteRequest === controlsToAdd.siteDeviceRequest.options[2] && (
         <MicrophoneSitePermissionsComponent
           appName={args.appName}
+          onPrimaryButtonClick={() => alert('allow clicked')}
           onTroubleshootingClick={() => alert('you clicked the help text')}
           kind={(args.kind as string).toLowerCase() as 'request' | 'denied' | 'check'}
+          browserHint={args.permissionBrowserHint}
         />
       )}
     </Stack>
@@ -126,6 +132,7 @@ export default {
     ...storyControls,
 
     // hidden controls
+    browserHint: hiddenControl,
     onTroubleshootingClick: hiddenControl,
     onContinueAnywayClick: hiddenControl,
     cameraIconName: hiddenControl,
