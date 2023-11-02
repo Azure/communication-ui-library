@@ -196,8 +196,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     ariaLabel: strings.actionMenuMoreOptions ?? '',
     enabled: chatActionsEnabled,
     menuButtonRef: messageActionButtonRef,
-    // Force show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
-    forceShow: chatMessageActionFlyoutTarget === messageActionButtonRef,
     menuExpanded: chatMessageActionFlyoutTarget === messageActionButtonRef,
     onActionButtonClick: () => {
       if (message.messageType === 'chat') {
