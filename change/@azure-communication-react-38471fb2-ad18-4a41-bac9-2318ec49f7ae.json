@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "improvement",
-  "workstream": "Storybook",
-  "comment": "Update docs to no longer show downgrade to react 16 and other install scripts",
+  "area": "fix",
+  "workstream": "reelase",
+  "comment": "update changelog for release",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"
