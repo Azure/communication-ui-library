@@ -184,6 +184,42 @@ export type CallWithChatCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Logo displayed on the configuration page.
+   */
+  logo?: {
+    /**
+     * URL for the logo image.
+     *
+     * @remarks
+     * Recommended size is 80x80 pixels.
+     */
+    url: string;
+    /**
+     * Alt text for the logo image.
+     */
+    alt?: string;
+    /**
+     * The logo can be displayed as a circle or a square.
+     *
+     * @defaultValue 'circle'
+     */
+    shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Background image displayed on the configuration page.
+   */
+  backgroundImage?: {
+    /**
+     * URL for the background image.
+     *
+     * @remarks
+     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     */
+    url: string;
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -215,6 +251,16 @@ type CallWithChatScreenProps = {
   /* @conditional-compile-remove(gallery-layouts) */
   galleryOptions?: {
     layout?: VideoGalleryLayout;
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  logo?: {
+    url: string;
+    alt?: string;
+    shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  backgroundImage?: {
+    url: string;
   };
 };
 
@@ -393,7 +439,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(gallery-layouts) */
       galleryOptions: props.galleryOptions,
       /* @conditional-compile-remove(click-to-call) */
-      localVideoTile: props.localVideoTile
+      localVideoTile: props.localVideoTile,
+      /* @conditional-compile-remove(custom-branding) */
+      logo: props.logo,
+      /* @conditional-compile-remove(custom-branding) */
+      backgroundImage: props.backgroundImage
     }),
     [
       props.callControls,
@@ -414,7 +464,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(click-to-call) */
       props.localVideoTile,
       /* @conditional-compile-remove(pinned-participants) */
-      props.remoteVideoTileMenuOptions
+      props.remoteVideoTileMenuOptions,
+      /* @conditional-compile-remove(custom-branding) */
+      props.logo,
+      /* @conditional-compile-remove(custom-branding) */
+      props.backgroundImage
     ]
   );
 
@@ -500,6 +554,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               overrideSidePane={overrideSidePaneProps}
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}
+              onCloseChatPane={closeChat}
             />
           </Stack.Item>
         </Stack>
@@ -534,6 +589,10 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         localVideoTile={options?.localVideoTile}
         /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
+        /* @conditional-compile-remove(custom-branding) */
+        logo={options?.logo}
+        /* @conditional-compile-remove(custom-branding) */
+        backgroundImage={options?.backgroundImage}
       />
     </BaseProvider>
   );
