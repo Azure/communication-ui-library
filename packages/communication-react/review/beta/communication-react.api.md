@@ -91,7 +91,6 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
@@ -147,8 +146,10 @@ export type AreParamEqual<A extends (props: any) => JSX.Element | undefined, B e
 // @public
 export type AreTypeEqual<A, B> = A extends B ? (B extends A ? true : false) : false;
 
-// @beta (undocumented)
+// @beta
 export interface AttachmentDownloadResult {
+    // (undocumented)
+    attachmentId: string;
     // (undocumented)
     blobUrl: string;
 }
@@ -389,6 +390,7 @@ export type CallAdapterClientState = {
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
+    hideAttendeeNames?: boolean;
 };
 
 // @public
@@ -598,6 +600,14 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
+    logo?: {
+        url: string;
+        alt?: string;
+        shape?: 'circle' | 'square';
+    };
+    backgroundImage?: {
+        url: string;
+    };
 };
 
 // @public
@@ -660,6 +670,7 @@ export interface CallCompositeStrings {
     dialpadModalAriaLabel: string;
     dialpadModalTitle: string;
     dialpadStartCallButtonLabel: string;
+    dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialpadPlaceholderText: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
@@ -859,6 +870,7 @@ export interface CallState {
     direction: CallDirection;
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
+    hideAttendeeNames?: boolean;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
@@ -906,7 +918,7 @@ export interface CallWithChatAdapterManagement {
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: string[];
+        attachmentUrls: Record<string, string>;
     }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     // @beta
@@ -1078,6 +1090,7 @@ export interface CallWithChatClientState {
     devices: DeviceManagerState;
     displayName: string | undefined;
     environmentInfo?: EnvironmentInfo;
+    hideAttendeeNames?: boolean;
     isRoomsCall: boolean;
     isTeamsCall: boolean;
     latestCallErrors: AdapterErrors;
@@ -1180,6 +1193,14 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+    };
+    logo?: {
+        url: string;
+        alt?: string;
+        shape?: 'circle' | 'square';
+    };
+    backgroundImage?: {
+        url: string;
     };
 };
 
@@ -1481,7 +1502,7 @@ export interface ChatAdapterThreadManagement {
     deleteMessage(messageId: string): Promise<void>;
     // (undocumented)
     downloadAttachments: (options: {
-        attachmentUrls: string[];
+        attachmentUrls: Record<string, string>;
     }) => Promise<AttachmentDownloadResult[]>;
     fetchInitialData(): Promise<void>;
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
@@ -1805,7 +1826,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
@@ -1930,6 +1951,7 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 
 // @public
 export interface ComponentStrings {
+    AttendeeRole: string;
     BrowserPermissionDenied: BrowserPermissionDeniedStrings;
     BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
     CameraAndMicrophoneSitePermissionsCheck: SitePermissionsStrings;
@@ -2068,6 +2090,7 @@ export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
+    disableTooltip?: boolean;
     labelKey?: string;
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
@@ -3101,7 +3124,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachment: FileMetadata) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

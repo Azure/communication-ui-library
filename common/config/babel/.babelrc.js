@@ -79,7 +79,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for gallery layout in the composite 
         'gallery-layout-composite',
         // conditional-compile for new signaling beta
-        'signaling-beta'
+        'signaling-beta',
+        // feature for hiding attendee name in the teams meeting
+        'hide-attendee-name',
+        // custom branding for the composites
+        'custom-branding'
       ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -94,7 +98,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for positioning the overflowGallery at the top of the screen in the composite
         'overflow-top-composite',
         // feature for gallery layout in the composite 
-        'gallery-layout-composite'
+        'gallery-layout-composite',
+        // feature for hiding attendee name in the teams meeting
+        'hide-attendee-name',
+        // custom branding for the composites
+        'custom-branding'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

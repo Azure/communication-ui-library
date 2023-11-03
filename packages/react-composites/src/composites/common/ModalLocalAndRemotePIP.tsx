@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { concatStyleSets, ContextualMenu, IDragOptions, Stack } from '@fluentui/react';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { LocalAndRemotePIP } from '../CallComposite/components/LocalAndRemotePIP';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useSelector } from '../CallComposite/hooks/useSelector';
@@ -30,6 +30,16 @@ const DRAG_OPTIONS: IDragOptions = {
 };
 
 /**
+ * @private
+ */
+export interface ModalLocalAndRemotePIPStrings {
+  /**
+   * Aria label for dismiss control when using keyboard
+   */
+  dismissModalAriaLabel?: string;
+}
+
+/**
  * A wrapping component with a draggable {@link LocalAndRemotePIP} component that is bound to a LayerHost component with id
  * specified by `modalLayerHostId` prop
  * @private
@@ -40,6 +50,8 @@ export const ModalLocalAndRemotePIP = (props: {
   styles?: ModalLocalAndRemotePIPStyles;
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
+  onDismissSidePane?: () => void;
+  strings?: ModalLocalAndRemotePIPStrings;
 }): JSX.Element | null => {
   const rootStyles = props.hidden ? hiddenStyle : PIPContainerStyle;
 
@@ -50,19 +62,62 @@ export const ModalLocalAndRemotePIP = (props: {
 
   const pictureInPictureProps = useSelector(localAndRemotePIPSelector);
 
+  const [touchStartTouches, setTouchStartTouches] = useState<React.TouchList | null>(null);
+
+  const onTouchEnd = useCallback(
+    (event) => {
+      if (touchStartTouches && touchStartTouches.length === 1 && event.changedTouches.length === 1) {
+        const touchStartTouch = touchStartTouches[0];
+        const touchEndTouch = event.changedTouches[0];
+        if (
+          Math.abs(touchStartTouch.clientX - touchEndTouch.clientX) < 10 &&
+          Math.abs(touchStartTouch.clientY - touchEndTouch.clientY) < 10
+        ) {
+          props.onDismissSidePane?.();
+        }
+      }
+    },
+    [props, touchStartTouches]
+  );
+
+  const onTouchStart = useCallback((event) => {
+    setTouchStartTouches(event.touches);
+  }, []);
+
+  const onKeyDown = useCallback(
+    (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        props.onDismissSidePane?.();
+      }
+    },
+    [props]
+  );
+
   const pictureInPictureHandlers = useHandlers(LocalAndRemotePIP);
   const localAndRemotePIP = useMemo(() => {
     /* @conditional-compile-remove(rooms) */
     if (role === 'Consumer' && pictureInPictureProps.dominantRemoteParticipant?.userId) {
       return (
-        <_RemoteVideoTile
-          {...pictureInPictureProps.dominantRemoteParticipant}
-          remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
-        />
+        <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
+          <_RemoteVideoTile
+            {...pictureInPictureProps.dominantRemoteParticipant}
+            remoteParticipant={pictureInPictureProps.dominantRemoteParticipant}
+          />
+        </Stack>
       );
     }
-    return <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />;
-  }, [pictureInPictureProps, pictureInPictureHandlers, /* @conditional-compile-remove(rooms) */ role]);
+    return (
+      <Stack tabIndex={0} aria-label={props.strings?.dismissModalAriaLabel ?? ''} onKeyDown={onKeyDown}>
+        <LocalAndRemotePIP {...pictureInPictureProps} {...pictureInPictureHandlers} />
+      </Stack>
+    );
+  }, [
+    /* @conditional-compile-remove(rooms) */ role,
+    onKeyDown,
+    pictureInPictureProps,
+    props,
+    pictureInPictureHandlers
+  ]);
 
   /* @conditional-compile-remove(rooms) */
   if (role === 'Consumer' && !pictureInPictureProps.dominantRemoteParticipant) {
@@ -73,21 +128,23 @@ export const ModalLocalAndRemotePIP = (props: {
 
   return (
     <Stack styles={rootStyles}>
-      <_ModalClone
-        isOpen={true}
-        isModeless={true}
-        dragOptions={DRAG_OPTIONS}
-        styles={modalStylesThemed}
-        layerProps={{ hostId: props.modalLayerHostId }}
-        minDragPosition={props.minDragPosition}
-        maxDragPosition={props.maxDragPosition}
-      >
-        {
-          // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
-          // possession of the dominant remote participant video stream
-          !props.hidden && localAndRemotePIP
-        }
-      </_ModalClone>
+      <Stack onTouchStart={onTouchStart} onTouchEnd={onTouchEnd}>
+        <_ModalClone
+          isOpen={true}
+          isModeless={true}
+          dragOptions={DRAG_OPTIONS}
+          styles={modalStylesThemed}
+          layerProps={{ hostId: props.modalLayerHostId }}
+          minDragPosition={props.minDragPosition}
+          maxDragPosition={props.maxDragPosition}
+        >
+          {
+            // Only render LocalAndRemotePIP when this component is NOT hidden because VideoGallery needs to have
+            // possession of the dominant remote participant video stream
+            !props.hidden && localAndRemotePIP
+          }
+        </_ModalClone>
+      </Stack>
     </Stack>
   );
 };

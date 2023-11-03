@@ -65,7 +65,6 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
-import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
@@ -78,7 +77,6 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
@@ -496,6 +494,7 @@ export interface CallCompositeStrings {
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
     defaultPlaceHolder: string;
+    dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -1464,7 +1463,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
@@ -1690,6 +1689,7 @@ export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
+    disableTooltip?: boolean;
     labelKey?: string;
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;

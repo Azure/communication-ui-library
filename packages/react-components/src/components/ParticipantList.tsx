@@ -124,7 +124,8 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  theme?: Theme
+  theme?: Theme,
+  attendeeRoleString?: string
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -134,6 +135,18 @@ const onRenderParticipantDefault = (
   }
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
+
+  let displayName = participant.displayName;
+
+  /* @conditional-compile-remove(hide-attendee-name) */
+  const formatDisplayName = (): string | undefined => {
+    if (displayName && attendeeRoleString) {
+      return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+    }
+    return displayName;
+  };
+  /* @conditional-compile-remove(hide-attendee-name) */
+  displayName = formatDisplayName();
 
   const onRenderIcon =
     callingParticipant?.isScreenSharing ||
@@ -183,7 +196,7 @@ const onRenderParticipantDefault = (
       styles={styles}
       key={participant.userId}
       userId={participant.userId}
-      displayName={participant.displayName}
+      displayName={displayName}
       me={myUserId ? participant.userId === myUserId : false}
       menuItems={menuItems}
       presence={presence}
@@ -278,6 +291,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   const participantItemStrings = useLocale().strings.participantItem;
   /* @conditional-compile-remove(total-participant-count) */
   const participantListStrings = useLocale().strings.ParticipantList;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  const attendeeRoleString = useLocale().strings.AttendeeRole;
 
   const displayedParticipants: ParticipantListParticipant[] = useMemo(() => {
     return onRenderParticipant ? participants : getParticipantsForDefaultRender(participants, excludeMe, myUserId);
@@ -348,7 +363,9 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               showParticipantOverflowTooltip,
               participantAriaLabelledBy,
               /* @conditional-compile-remove(raise-hand) */
-              theme
+              theme,
+              /* @conditional-compile-remove(hide-attendee-name) */
+              attendeeRoleString
             )
       )}
       {

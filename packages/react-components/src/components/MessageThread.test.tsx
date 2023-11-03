@@ -216,11 +216,12 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
       return [
         {
+          attachmentId: attachments[0].id,
           blobUrl: url
         }
       ];
@@ -286,11 +287,12 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
       return [
         {
+          attachmentId: attachments[0].id,
           blobUrl: url
         }
       ];
@@ -306,11 +308,11 @@ describe('Message should display image and attachment correctly', () => {
 
       // Frist attachment: previewUrl !== undefine, will not show DownloadFile Icon
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
-      expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
+      expect(fileDownloadCards?.children[0].children[0].textContent).toEqual(fildName1);
 
       // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
-      expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
+      expect(fileDownloadCards?.children[1].children[0].textContent).toEqual(fildName2);
 
       // Inline Image attachment
       expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedFilePreviewSrc1);

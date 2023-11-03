@@ -94,6 +94,9 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(video-background-effects) */
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** Hide attendee names in teams meeting */
+  hideAttendeeNames?: boolean;
 }
 
 /**
@@ -138,7 +141,10 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(hide-attendee-name) */
+    /** Hide attendee names in teams meeting */
+    hideAttendeeNames: callAdapterState.hideAttendeeNames
   };
 }
 

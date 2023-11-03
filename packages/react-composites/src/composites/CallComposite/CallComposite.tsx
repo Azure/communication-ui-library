@@ -228,6 +228,42 @@ export type CallCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Logo displayed on the configuration page.
+   */
+  logo?: {
+    /**
+     * URL for the logo image.
+     *
+     * @remarks
+     * Recommended size is 80x80 pixels.
+     */
+    url: string;
+    /**
+     * Alt text for the logo image.
+     */
+    alt?: string;
+    /**
+     * The logo can be displayed as a circle or a square.
+     *
+     * @defaultValue 'circle'
+     */
+    shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Background image displayed on the configuration page.
+   */
+  backgroundImage?: {
+    /**
+     * URL for the background image.
+     *
+     * @remarks
+     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+     */
+    url: string;
+  };
 };
 
 type MainScreenProps = {
@@ -240,6 +276,7 @@ type MainScreenProps = {
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  onCloseChatPane?: () => void;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -356,7 +393,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall();
+            adapter.joinCall({
+              microphoneOn: 'keep',
+              cameraOn: 'keep'
+            });
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
           latestErrors={latestErrors}
@@ -370,6 +410,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          /* @conditional-compile-remove(custom-branding) */
+          logo={props.options?.logo}
+          /* @conditional-compile-remove(custom-branding) */
+          backgroundImage={props.options?.backgroundImage}
         />
       );
       break;
@@ -469,6 +513,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          onCloseChatPane={props.onCloseChatPane}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
           /* @conditional-compile-remove(gallery-layouts) */
@@ -551,7 +596,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => <CallCo
 export interface InternalCallCompositeProps {
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
-
+  onCloseChatPane?: () => void;
   // legacy property to avoid breaking change
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
@@ -588,6 +633,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             onSidePaneIdChange={props.onSidePaneIdChange}
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
+            onCloseChatPane={props.onCloseChatPane}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane

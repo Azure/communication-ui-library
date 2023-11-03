@@ -96,15 +96,14 @@ import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIden
 import {
   CommunicationTokenCredential,
   CommunicationUserIdentifier,
+  CommunicationIdentifier,
+  MicrosoftTeamsUserIdentifier
+} from '@azure/communication-common';
+/* @conditional-compile-remove(PSTN-calls) */
+import {
   isCommunicationUserIdentifier,
   isPhoneNumberIdentifier,
-  UnknownIdentifier,
-  PhoneNumberIdentifier,
-  CommunicationIdentifier,
-  MicrosoftTeamsUserIdentifier,
-  isMicrosoftTeamsAppIdentifier,
-  MicrosoftTeamsAppIdentifier,
-  isMicrosoftTeamsUserIdentifier
+  PhoneNumberIdentifier
 } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
 import { AdapterError } from '../../common/adapters';
@@ -328,7 +327,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private callClient: StatefulCallClient;
   private callAgent: AgentType;
   private deviceManager: StatefulDeviceManager;
-  private localStream: SDKLocalVideoStream | undefined;
   private locator: CallAdapterLocator;
   // Never use directly, even internally. Use `call` property instead.
   private _call?: CallCommon;
@@ -598,36 +596,30 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     return this.teeErrorToEventEmitter(() => {
-      let audioOptions: AudioOptions;
-      let videoOptions: VideoOptions;
-      // if using the deprecated joinCall API
-      if (typeof options !== 'object') {
-        const microphoneOn = options;
-        audioOptions = { muted: !(microphoneOn ?? this.getState().isLocalPreviewMicrophoneEnabled) };
-        // TODO: find a way to expose stream to here
-        videoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-      } else {
-        // if using the options bag
-        // undefined = keep = use precall state
-        // true = turn on
-        // false = turn off
-        const microphoneState = options.microphoneOn ?? 'keep';
-        const cameraState = options.cameraOn ?? 'keep';
+      // Default to keeping camera/mic on if no override argument specified
+      let shouldCameraBeOnInCall = this.getState().cameraStatus === 'On';
+      let shouldMicrophoneBeOnInCall = this.getState().isLocalPreviewMicrophoneEnabled;
 
-        audioOptions = {
-          muted: !(microphoneState === 'keep' ? this.getState().isLocalPreviewMicrophoneEnabled : microphoneState)
-        };
-        const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-        const localStream = selectedCamera ? new SDKLocalVideoStream(selectedCamera) : undefined;
-        const precallVideoOptions = { localVideoStreams: this.localStream ? [this.localStream] : undefined };
-
-        videoOptions =
-          cameraState === 'keep'
-            ? precallVideoOptions
-            : localStream && options?.cameraOn
-            ? { localVideoStreams: [localStream] }
-            : {};
+      // Apply override arguments
+      if (typeof options === 'boolean') {
+        // Deprecated joinCall API (boolen)
+        shouldMicrophoneBeOnInCall = options;
+      } else if (typeof options === 'object') {
+        // Options bag API
+        if (options.microphoneOn && options.microphoneOn !== 'keep') {
+          shouldMicrophoneBeOnInCall = options.microphoneOn;
+        }
+        if (options.cameraOn && options.cameraOn !== 'keep') {
+          shouldCameraBeOnInCall = options.cameraOn;
+        }
       }
+
+      const audioOptions: AudioOptions = { muted: !shouldMicrophoneBeOnInCall };
+      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+      const videoOptions: VideoOptions =
+        selectedCamera && shouldCameraBeOnInCall
+          ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
+          : {};
 
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
@@ -875,20 +867,18 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
 
     const idsToAdd = participants.map((participant) => {
-      const backendId: CommunicationIdentifier = _toCommunicationIdentifier(participant);
-      if (isPhoneNumberIdentifier(backendId)) {
+      let backendId = participant;
+      if (typeof participant === 'string') {
+        backendId = _toCommunicationIdentifier(participant);
+      }
+
+      if (backendId.phoneNumber) {
         if (options?.alternateCallerId === undefined) {
           throw new Error('Unable to start call, PSTN user present with no alternateCallerId.');
         }
-        return backendId as PhoneNumberIdentifier;
-      } else if (isCommunicationUserIdentifier(backendId)) {
-        return backendId as CommunicationUserIdentifier;
-      } else if (isMicrosoftTeamsAppIdentifier(backendId)) {
-        return backendId as MicrosoftTeamsAppIdentifier;
-      } else if (isMicrosoftTeamsUserIdentifier(backendId)) {
-        return backendId as MicrosoftTeamsUserIdentifier;
+        return backendId as CommunicationIdentifier;
       }
-      return backendId as UnknownIdentifier;
+      return backendId as CommunicationIdentifier;
     });
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;

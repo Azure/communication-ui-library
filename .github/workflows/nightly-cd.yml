@@ -129,7 +129,7 @@ jobs:
 
       # Clean package.json
       - name: Remove devDependencies and beachball from package.json
-        run: node ../..common/scripts/prepare-package-json.js
+        run: node ../../common/scripts/prepare-package-json.js
         working-directory: ./packages/communication-react
 
       # Publish package
