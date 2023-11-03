@@ -120,6 +120,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         }}
         /* @conditional-compile-remove(gallery-layouts) */
         layout={'default'}
+        parentWidth={parentWidth}
       />
     );
   }, [

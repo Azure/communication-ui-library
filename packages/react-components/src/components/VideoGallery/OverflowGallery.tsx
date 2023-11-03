@@ -96,7 +96,7 @@ export const OverflowGallery = (props: {
       return {
         width:
           props.layout === 'default'
-            ? `${_convertPxToRem(parentWidth)}rem`
+            ? `${_convertPxToRem(parentWidth) - 1}rem`
             : `${_convertPxToRem(parentWidth) - SMALL_FLOATING_MODAL_SIZE_REM.width - 1}rem`
       };
     }

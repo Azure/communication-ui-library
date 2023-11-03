@@ -193,6 +193,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        parentWidth={parentWidth}
       />
     );
   }, [

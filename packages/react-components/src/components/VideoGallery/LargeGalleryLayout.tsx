@@ -131,6 +131,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        parentWidth={parentWidth}
       />
     );
   }, [
