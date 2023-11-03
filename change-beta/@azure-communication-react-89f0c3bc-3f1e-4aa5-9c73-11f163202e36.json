@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "",
-  "comment": "Fetch strings for 1.9.0-beta.1 release",
-  "packageName": "@azure/communication-react",
-  "email": "73612854+palatter@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

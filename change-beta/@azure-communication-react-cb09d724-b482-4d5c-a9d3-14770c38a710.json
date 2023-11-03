@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "Vertical Gallery",
-  "comment": "Update verticalGallery key in localization strings",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
