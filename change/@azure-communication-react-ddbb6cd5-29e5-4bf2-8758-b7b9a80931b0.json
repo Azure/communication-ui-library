@@ -1,8 +1,8 @@
 {
   "type": "none",
-  "area": "improvement",
-  "workstream": "Turn on react strict mode again in sample apps",
-  "comment": "Turn on strict mode again in samples",
+  "area": "feature",
+  "workstream": "release",
+  "comment": "Pre-release PR for 1.10.0-beta.1",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"

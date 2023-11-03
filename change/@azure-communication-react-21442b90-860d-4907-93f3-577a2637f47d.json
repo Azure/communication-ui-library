@@ -1,8 +1,8 @@
 {
-  "type": "minor",
-  "area": "improvement",
+  "type": "patch",
+  "area": "fix",
   "workstream": "FluentUI",
-  "comment": "Error message position and font update for edit message component",
+  "comment": "Fix for an issue with narrator focus for message menu button",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
