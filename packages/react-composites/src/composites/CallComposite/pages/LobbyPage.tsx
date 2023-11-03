@@ -13,7 +13,6 @@ import { getCallStatus, getRemoteParticipants } from '../selectors/baseSelectors
 import { disableCallControls, reduceCallControlsForMobile } from '../utils';
 import { CallCompositeStrings } from '../Strings';
 import { useLocale } from '../../localization';
-import { useLocalVideoStartTrigger } from '../components/MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
@@ -49,8 +48,6 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
   const inLobby = callState === 'InLobby';
 
   const participants = useSelector(getRemoteParticipants) ?? {};
-
-  useLocalVideoStartTrigger(lobbyProps.localParticipantVideoStream.isAvailable, inLobby);
 
   // Reduce the controls shown when mobile view is enabled.
   let callControlOptions = props.mobileView
