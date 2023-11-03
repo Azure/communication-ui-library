@@ -289,6 +289,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
+  const renderGallery =
+    (!!props.onRenderGalleryContent && !props.mobileView) ||
+    (!!props.onRenderGalleryContent && !isSidePaneOpen && props.mobileView);
   /* @conditional-compile-remove(capabilities) */
   // Filter out shareScreen capability notifications if on mobile
   const filteredCapabilitesChangedNotifications = props.mobileView
@@ -425,7 +428,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                   </Stack.Item>
-                  {props.onRenderGalleryContent && !isSidePaneOpen && props.onRenderGalleryContent()}
+                  {renderGallery && props.onRenderGalleryContent()}
                   {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
