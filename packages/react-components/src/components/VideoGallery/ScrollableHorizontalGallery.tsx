@@ -16,7 +16,7 @@ import {
 export const ScrollableHorizontalGallery = (props: {
   horizontalGalleryElements?: JSX.Element[];
   onFetchTilesToRender?: (indexes: number[]) => void;
-  containerStyles: IStyle;
+  containerStyles?: IStyle;
 }): JSX.Element => {
   const { horizontalGalleryElements, onFetchTilesToRender, containerStyles } = props;
 

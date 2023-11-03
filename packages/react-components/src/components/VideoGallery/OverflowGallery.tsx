@@ -16,16 +16,17 @@ import { OverflowGalleryPosition } from '../VideoGallery';
 import { VideoGalleryLayout } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
+import { _convertPxToRem } from '@internal/acs-ui-common';
+import { SMALL_FLOATING_MODAL_SIZE_REM } from './styles/FloatingLocalVideo.styles';
 import {
   verticalGalleryContainerStyle,
   verticalGalleryStyle
 } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
-import { SMALL_FLOATING_MODAL_SIZE_REM } from './styles/FloatingLocalVideo.styles';
-import { _convertRemToPx } from '@internal/acs-ui-common';
 
 /**
  * A ResponsiveHorizontalGallery styled for the {@link VideoGallery}
@@ -108,23 +109,32 @@ export const OverflowGallery = (props: {
     );
   }
 
+  const scrollableHorizontalGalleryContainerStyles = useMemo(() => {
+    if (isNarrow && parentWidth) {
+      return {
+        width:
+          props.layout === 'default'
+            ? `${_convertPxToRem(parentWidth)}rem`
+            : `${_convertPxToRem(parentWidth) - SMALL_FLOATING_MODAL_SIZE_REM.width - 1}rem`,
+      };
+    }
+    return undefined;
+  }, [parentWidth]);
+
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM;
+
   /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
     // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
     // participant tiles are visible
     onChildrenPerPageChange?.(3);
+
     return (
       <ScrollableHorizontalGallery
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
-        containerStyles={{
-          width: parentWidth
-            ? props.layout === 'default'
-              ? `${parentWidth}px`
-              : `${parentWidth - _convertRemToPx(SMALL_FLOATING_MODAL_SIZE_REM.width)}px`
-            : '100%'
-        }}
+        containerStyles={scrollableHorizontalGalleryContainerStyles}
       />
     );
   }
