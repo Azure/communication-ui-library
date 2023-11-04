@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "FluentUI",
-  "comment": "Fix an issue when the menu button was not accessible sometimes",
+  "comment": "Fix for an issue with narrator focus for message menu button",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
