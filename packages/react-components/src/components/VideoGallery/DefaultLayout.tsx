@@ -120,6 +120,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         }}
         /* @conditional-compile-remove(gallery-layouts) */
         layout={'default'}
+        parentWidth={parentWidth}
       />
     );
   }, [
@@ -129,7 +130,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    parentWidth
   ]);
 
   return (
