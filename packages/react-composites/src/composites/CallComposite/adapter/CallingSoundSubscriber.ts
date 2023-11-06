@@ -3,6 +3,7 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import EventEmitter from 'events';
+import { callEndedSoundString } from '../../common/sounds/CallEndedSound';
 
 type CallingSounds = {
   callEndedSound: HTMLAudioElement;
@@ -34,7 +35,7 @@ export class CallingSoundSubscriber {
   }
 
   private loadSounds(): CallingSounds {
-    const callEndedSound = new Audio('');
+    const callEndedSound = new Audio(`data:audio/mp3;base64;${callEndedSoundString}`);
     return {
       callEndedSound
     };
