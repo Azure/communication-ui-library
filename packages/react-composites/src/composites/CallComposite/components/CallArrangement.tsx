@@ -435,7 +435,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                   </Stack.Item>
-                  {renderGallery && props.onRenderGalleryContent() && props.onRenderGalleryContent()}
+                  {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
