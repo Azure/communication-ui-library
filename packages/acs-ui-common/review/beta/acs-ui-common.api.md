@@ -31,6 +31,9 @@ export type CommonProperties<A, B> = {
 }[keyof A & keyof B];
 
 // @internal
+export const _convertPxToRem: (px: number) => number;
+
+// @internal
 export const _convertRemToPx: (rem: number) => number;
 
 // @internal
