@@ -102,7 +102,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for hiding attendee name in the teams meeting
         'hide-attendee-name',
         // custom branding for the composites
-        'custom-branding'
+        'custom-branding',
+        // feature for pptlive
+        'ppt-live'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

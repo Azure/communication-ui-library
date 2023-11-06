@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "feature",
+  "workstream": "3314131",
+  "comment": "PPT Live stateful client ",
+  "packageName": "@azure/communication-react",
+  "email": "93549644+ShaunaSong@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

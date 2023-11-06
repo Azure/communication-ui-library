@@ -163,6 +163,8 @@ export class CallContext {
         /* @conditional-compile-remove(optimal-video-count) */
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
+        /* @conditional-compile-remove(ppt-live) */
+        existingCall.pptLive.isPPTLiveActive = call.pptLive.isPPTLiveActive;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(raise-hand) */
@@ -344,6 +346,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.recording.isRecordingActive = isRecordingActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallPPTLiveActive(callId: string, isPPTLiveActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.pptLive.isPPTLiveActive = isPPTLiveActive;
       }
     });
   }
