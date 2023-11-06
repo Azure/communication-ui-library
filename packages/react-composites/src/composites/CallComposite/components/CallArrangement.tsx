@@ -18,7 +18,6 @@ import {
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo, useRef, useState } from 'react';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(close-captions) */
@@ -180,6 +179,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   }, [closePeoplePane, isPeoplePaneOpen, openPeoplePane]);
 
   const isSidePaneOpen = useIsSidePaneOpen();
+
+  const [renderGallery, setRenderGallery] = useState<boolean>(!isSidePaneOpen && props.mobileView);
+
+  useEffect(() => {
+    if (isSidePaneOpen && props.mobileView) {
+      setRenderGallery(false);
+    } else {
+      setRenderGallery(true);
+    }
+  }, [props.mobileView, isSidePaneOpen]);
 
   const locale = useLocale();
   const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
@@ -425,7 +434,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                   </Stack.Item>
-                  {props.onRenderGalleryContent && props.onRenderGalleryContent()}
+                  {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
