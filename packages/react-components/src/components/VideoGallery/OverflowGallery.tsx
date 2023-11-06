@@ -16,10 +16,13 @@ import { OverflowGalleryPosition } from '../VideoGallery';
 import { VideoGalleryLayout } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
   horizontalGalleryContainerStyle,
   horizontalGalleryStyle
 } from './styles/VideoGalleryResponsiveHorizontalGallery.styles';
 /* @conditional-compile-remove(vertical-gallery) */
+import { _convertPxToRem } from '@internal/acs-ui-common';
+import { SMALL_FLOATING_MODAL_SIZE_REM } from './styles/FloatingLocalVideo.styles';
 import {
   verticalGalleryContainerStyle,
   verticalGalleryStyle
@@ -45,6 +48,7 @@ export const OverflowGallery = (props: {
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
+  parentWidth?: number;
 }): JSX.Element => {
   const {
     shouldFloatLocalVideo = false,
@@ -56,7 +60,8 @@ export const OverflowGallery = (props: {
     horizontalGalleryStyles,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition = 'horizontalBottom',
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles,
-    onChildrenPerPageChange
+    onChildrenPerPageChange,
+    parentWidth
   } = props;
 
   const containerStyles = useMemo(() => {
@@ -86,6 +91,18 @@ export const OverflowGallery = (props: {
     /* @conditional-compile-remove(vertical-gallery) */ verticalGalleryStyles
   ]);
 
+  const scrollableHorizontalGalleryContainerStyles = useMemo(() => {
+    if (isNarrow && parentWidth) {
+      return {
+        width:
+          props.layout === 'default'
+            ? `${_convertPxToRem(parentWidth) - 1}rem`
+            : `${_convertPxToRem(parentWidth) - SMALL_FLOATING_MODAL_SIZE_REM.width - 1}rem`
+      };
+    }
+    return undefined;
+  }, [isNarrow, parentWidth, props.layout]);
+
   /* @conditional-compile-remove(vertical-gallery) */
   if (overflowGalleryPosition === 'verticalRight') {
     return (
@@ -104,18 +121,20 @@ export const OverflowGallery = (props: {
     );
   }
 
+  SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM;
+
   /* @conditional-compile-remove(pinned-participants) */
   if (isNarrow) {
     // There are no pages for ScrollableHorizontalGallery so we will approximate the first 3 remote
     // participant tiles are visible
     onChildrenPerPageChange?.(3);
+
     return (
       <ScrollableHorizontalGallery
         horizontalGalleryElements={overflowGalleryElements ? overflowGalleryElements : [<></>]}
         onFetchTilesToRender={onFetchTilesToRender}
         key="scrollable-horizontal-gallery"
-        /* @conditional-compile-remove(gallery-layouts) */
-        layout={props.layout}
+        containerStyles={scrollableHorizontalGalleryContainerStyles}
       />
     );
   }

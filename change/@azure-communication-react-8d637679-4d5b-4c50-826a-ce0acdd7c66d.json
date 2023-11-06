@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "VideoGallery",
+  "comment": "Prevent possible endless loop of switching between scrollable and paginated horizontal gallery in VideoGallery",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
