@@ -2,6 +2,21 @@
   "name": "@internal/storybook",
   "entries": [
     {
+      "date": "Mon, 06 Nov 2023 16:44:18 GMT",
+      "tag": "@internal/storybook_v1.10.0",
+      "version": "1.10.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/storybook",
+            "comment": "Bump @internal/fake-backends to v1.10.0",
+            "commit": "30dd18b4bf71161804364cdbc818e150b0111bfd"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 23 Oct 2023 18:27:30 GMT",
       "tag": "@internal/storybook_v1.10.0-beta.1",
       "version": "1.10.0-beta.1",
