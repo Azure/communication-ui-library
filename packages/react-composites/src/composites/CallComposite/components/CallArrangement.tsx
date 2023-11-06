@@ -181,6 +181,16 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const isSidePaneOpen = useIsSidePaneOpen();
 
+  const [renderGallery, setRenderGallery] = useState<boolean>(!isSidePaneOpen && props.mobileView);
+
+  useEffect(() => {
+    if (isSidePaneOpen && props.mobileView) {
+      setRenderGallery(false);
+    } else {
+      setRenderGallery(true);
+    }
+  }, [props.mobileView, isSidePaneOpen]);
+
   const locale = useLocale();
   const modalStrings = { dismissModalAriaLabel: locale.strings.call.dismissModalAriaLabel };
 
@@ -289,9 +299,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const verticalControlBar =
     props.mobileView && containerWidth && containerHeight && containerWidth / containerHeight > 1 ? true : false;
 
-  const renderGallery =
-    (!!props.onRenderGalleryContent && !props.mobileView) ||
-    (!!props.onRenderGalleryContent && !isSidePaneOpen && props.mobileView);
   /* @conditional-compile-remove(capabilities) */
   // Filter out shareScreen capability notifications if on mobile
   const filteredCapabilitesChangedNotifications = props.mobileView
@@ -428,7 +435,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       <MutedNotification {...props.mutedNotificationProps} />
                     )}
                   </Stack.Item>
-                  {renderGallery && props.onRenderGalleryContent()}
+                  {renderGallery && props.onRenderGalleryContent() && props.onRenderGalleryContent()}
                   {
                     /* @conditional-compile-remove(close-captions) */
                     true &&
