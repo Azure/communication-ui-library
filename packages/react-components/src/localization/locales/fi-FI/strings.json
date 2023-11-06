@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Uudet viestit",
     "noDisplayNameSub": "Ei nimeä",
     "editBoxCancelButton": "Peruuta",
-    "editBoxSubmitButton": "Lähetä",
+    "editBoxSubmitButton": "Valmis",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} osallistujaa on lukenut viestin",
     "actionMenuMoreOptions": "Lisää vaihtoehtoja",
     "downloadFile": "Lataa tiedosto",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "edellinen sivu",
     "rightNavButtonAriaLabel": "seuraava sivu"
-  }
+  },
+  "AttendeeRole": "Osallistuja"
 }
