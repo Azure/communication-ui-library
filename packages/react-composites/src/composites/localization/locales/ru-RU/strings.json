@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "Закрыть параметры субтитров",
     "captionsBannerMoreButtonCallingLabel": "Дополнительно",
     "captionsBannerMoreButtonTooltip": "Дополнительные параметры",
+    "dismissModalAriaLabel": "Локальное и удаленное изображение. Нажмите клавишу ВВОД, чтобы вернуться к звонку.",
     "spokenLanguageStrings": {
       "ar-ae": "Арабский (ОАЭ)",
       "ar-sa": "Арабский (Саудовская Аравия)",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "Проверьте, что идентификатор участника введен правильно",
     "participantIdIsMalformedTitle": "Неправильный формат идентификатора участника",
     "participantIdIsMalformedMoreDetails": "Проверьте, что идентификатор участника указан в правильном формате",
-    "moreButtonGalleryControlLabel": "Параметры коллекции",
+    "moreButtonGalleryControlLabel": "Просмотр",
     "moreButtonGalleryPositionToggleLabel": "Переместить коллекцию вверх",
-    "moreButtonGallerySpeakerLayoutLabel": "Макет динамика",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический макет",
-    "moreButtonGalleryDefaultLayoutLabel": "Макет коллекции",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Отсортированные материалы",
+    "moreButtonGallerySpeakerLayoutLabel": "Докладчик",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Динамический",
+    "moreButtonGalleryDefaultLayoutLabel": "Представление галереи",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Фокусировка на содержимом",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Большая галерея",
     "capabilityChangedNotification": {
       "turnVideoOn": {
