@@ -15,15 +15,18 @@ type CallingSounds = {
 export class CallingSoundSubscriber {
   private emitter: EventEmitter;
   private call: CallCommon;
-  sounds: CallingSounds;
+  private sounds: CallingSounds;
 
   constructor(call: CallCommon, emitter: EventEmitter) {
+    console.log('creating calling sounds subscriber');
     this.call = call;
     this.emitter = emitter;
     this.sounds = this.loadSounds();
+    this.subscribeCallSoundEvents();
   }
 
-  private subscribeCallSoundEvents(): void {
+  private onCallStateChanged = (): void => {
+    console.log(this.call);
     this.call.on('stateChanged', () => {
       this.emitter.emit('callStateChanged', {
         callState: this.call.state
@@ -32,10 +35,19 @@ export class CallingSoundSubscriber {
         this.sounds.callEndedSound.play();
       }
     });
+  };
+
+  private subscribeCallSoundEvents(): void {
+    console.log('subscribeCallSoundEvents');
+    this.onCallStateChanged();
+  }
+
+  public unsubscribeAll(): void {
+    this.call.off('stateChanged', this.onCallStateChanged);
   }
 
   private loadSounds(): CallingSounds {
-    const callEndedSound = new Audio(`data:audio/mp3;base64;${callEndedSoundString}`);
+    const callEndedSound = new Audio(`data:audio/mp3;base64,${callEndedSoundString}`);
     return {
       callEndedSound
     };
