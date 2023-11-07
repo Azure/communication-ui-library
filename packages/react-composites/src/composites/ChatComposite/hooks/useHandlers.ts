@@ -28,7 +28,11 @@ const createCompositeHandlers = memoizeOne(
     onTyping: adapter.sendTypingIndicator,
     onRemoveParticipant: adapter.removeParticipant,
     updateThreadTopicName: adapter.setTopic,
-    onUpdateMessage: adapter.updateMessage,
+    onUpdateMessage: (messageId, content, options?) => {
+      const metadata = options?.metadata;
+      const updatedOptions = options?.attachedFilesMetadata ? { ...options.attachedFilesMetadata } : {};
+      return adapter.updateMessage(messageId, content, metadata, updatedOptions);
+    },
     onDeleteMessage: adapter.deleteMessage
   })
 );
