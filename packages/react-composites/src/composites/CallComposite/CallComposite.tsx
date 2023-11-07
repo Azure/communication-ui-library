@@ -394,7 +394,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           iconName="NoticePageRemovedFromRoomsCall"
           title={locale.strings.call.removedFromRoomTitle}
           moreDetails={locale.strings.call.removedFromRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
+          dataUiId={'removed-from-room-page'}
           disableStartCallButton={true}
         />
       );
