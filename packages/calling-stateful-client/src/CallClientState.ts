@@ -314,12 +314,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.identifier}.
    */
-  identifier:
-    | CommunicationUserKind
-    | PhoneNumberKind
-    | MicrosoftTeamsUserKind
-    | UnknownIdentifierKind
-    | MicrosoftTeamsAppKind;
+  identifier: CommunicationIdentifierKind;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */
