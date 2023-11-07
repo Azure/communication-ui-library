@@ -1052,7 +1052,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private subscribeCallEvents(): void {
     /* @conditional-compile-remove(calling-sounds) */
-    this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.emitter);
+    if (this.call) {
+      this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.emitter);
+    }
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
