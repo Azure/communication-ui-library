@@ -64,7 +64,7 @@ test.describe('Page state tests', async () => {
   });
 
   /* @conditional-compile-remove(rooms) */
-  test('Page when local participant tries to join a room that they are not invited to', async ({ page, serverUrl }) => {
+  test('Page when local participant is removed from a room', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     initialState.page = 'removedFromRoom';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
