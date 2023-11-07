@@ -279,7 +279,10 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove(file-sharing) */
-      return await this.handlers.onUpdateMessage(messageId, content, metadata, options);
+      const updatedOptions = options
+        ? { attachedFilesMetadata: options.attachedFilesMetadata, metadata: metadata }
+        : {};
+      return await this.handlers.onUpdateMessage(messageId, content, updatedOptions);
       return await this.handlers.onUpdateMessage(messageId, content);
     });
   }
