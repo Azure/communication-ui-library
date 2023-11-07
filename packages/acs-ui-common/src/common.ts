@@ -13,6 +13,16 @@ export const _convertRemToPx = (rem: number): number => {
 
 /**
  * @internal
+ * Converts units of pixels to units of rem
+ * @param px - units of px
+ * @returns units of rem
+ */
+export const _convertPxToRem = (px: number): number => {
+  return px / parseFloat(getComputedStyle(document.documentElement).fontSize);
+};
+
+/**
+ * @internal
  * Disable dismiss on resize to work around a couple Fluent UI bugs
  * - The Callout is dismissed whenever *any child of window (inclusive)* is resized. In practice, this
  * happens when we change the VideoGallery layout, or even when the video stream element is internally resized

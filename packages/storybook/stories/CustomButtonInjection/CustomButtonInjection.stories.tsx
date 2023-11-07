@@ -2,10 +2,11 @@
 // Licensed under the MIT License.
 
 import { CallComposite, CustomCallControlButtonCallback } from '@azure/communication-react';
+// eslint-disable-next-line no-restricted-imports
+import { _MockCallAdapter } from '@internal/react-composites';
 import { Description, Heading, Props, Title, Subheading, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
-import { _MockCallAdapter } from '../_MockCallAdapter';
 import { CONCEPTS_FOLDER_PREFIX } from '../constants';
 import { controlsToAdd, hiddenControl } from '../controlsUtils';
 import { CustomButtonInjection as CustomButtonInjectionComponent, addCSS } from './snippets/CustomButtonInjectionTypes';
@@ -18,18 +19,18 @@ import { PrimaryCustomButtonInjectionExample } from './snippets/PrimaryCustomBut
 import { SecondaryCustomButtonInjectionExample } from './snippets/SecondaryCustomButtonInjection.snippet';
 
 const CustomButtonWithAsyncStateExampleText =
-  require('!!raw-loader!./snippets/CustomButtonWithAsyncState.snippet').default;
-const CustomButtonWithStateExampleText = require('!!raw-loader!./snippets/CustomButtonWithState.snippet').default;
+  require('!!raw-loader!./snippets/CustomButtonWithAsyncStateText.snippet').default;
+const CustomButtonWithStateExampleText = require('!!raw-loader!./snippets/CustomButtonWithStateText.snippet').default;
 const LegacyControlBarCustomButtonInjectionExampleText =
-  require('!!raw-loader!./snippets/LegacyControlBarCustomButtonInjection.snippet').default;
+  require('!!raw-loader!./snippets/LegacyControlBarCustomButtonInjectionText.snippet').default;
 const MobileCustomButtonInjectionExampleText =
-  require('!!raw-loader!./snippets/MobileCustomButtonInjection.snippet').default;
+  require('!!raw-loader!./snippets/MobileCustomButtonInjectionText.snippet').default;
 const OverflowCustomButtonInjectionExampleText =
-  require('!!raw-loader!./snippets/OverflowCustomButtonInjection.snippet').default;
+  require('!!raw-loader!./snippets/OverflowCustomButtonInjectionText.snippet').default;
 const PrimaryCustomButtonInjectionExampleText =
-  require('!!raw-loader!./snippets/PrimaryCustomButtonInjection.snippet').default;
+  require('!!raw-loader!./snippets/PrimaryCustomButtonInjectionText.snippet').default;
 const SecondaryCustomButtonInjectionExampleText =
-  require('!!raw-loader!./snippets/SecondaryCustomButtonInjection.snippet').default;
+  require('!!raw-loader!./snippets/SecondaryCustomButtonInjectionText.snippet').default;
 
 const getDocs: () => JSX.Element = () => {
   addCSS('#custom-button-injection-story button[aria-label="Custom"]{ border: 1px solid green; }');

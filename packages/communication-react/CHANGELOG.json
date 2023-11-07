@@ -2,6 +2,317 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 23 Oct 2023 18:27:26 GMT",
+      "tag": "@azure/communication-react_v1.10.0-beta.1",
+      "version": "1.10.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8fc2e9b574f4681ec11c4bf3abe0dfa95dd5ba3a",
+            "area": "improvement",
+            "workstream": "Cleaning up release package.json",
+            "comment": "removing extra properties from package.json when doing a release"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d19e608cd0c087a5432200e217c7b6c4e562ff3f",
+            "area": "feature",
+            "workstream": "Gallery Layouts",
+            "comment": "make adjustments for ARB"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7c672a48a14645178b6ee27c8fa56f9a7f7701b6",
+            "area": "fix",
+            "workstream": "Gallery layouts",
+            "comment": "update CC for tests"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "71fdb265abfbf7a1ac08f845ce7e24efd7c3c253",
+            "area": "feature",
+            "workstream": "Gallery Layouts",
+            "comment": "update cc for snapshot tests"
+          }
+        ],
+        "minor": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6523b81c8139257a982b73ff5e76ca3f20cf3431",
+            "area": "feature",
+            "workstream": "Custom Button Injection",
+            "comment": "Update and stabilize custom button injection"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1fd71531e436e5e0fb758aaa35e3ae723e756b93",
+            "area": "feature",
+            "workstream": "Gallery Layouts",
+            "comment": "Introduces Gallery layouts feature to stable API"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "800a32cb1db746bb9693116a04967a3a8539be6a",
+            "area": "improvement",
+            "workstream": "FluentUI",
+            "comment": "Error message position and font update for edit message component"
+          }
+        ],
+        "none": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "baa08434076e79dedd8d618f4f02beb490c7b646",
+            "area": "improvement",
+            "workstream": "Release",
+            "comment": "Groom changelog for 1.9.0 stable release"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e239de79637ae04dc43fa9ec1ce86e3d6f11ddfb",
+            "area": "fix",
+            "workstream": "Update Dependencies",
+            "comment": "Remove unused dependencies; migrate to @babel/eslint-parser"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9f785a60f67de20e97e7ccaccab3f488b3e161c8",
+            "area": "improvement",
+            "workstream": "Storybook",
+            "comment": "Update docs to no longer show downgrade to react 16 and other install scripts"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c42fc233b97b7d9461084256f75206cd672877c4",
+            "area": "improvement",
+            "workstream": "Documentation Update",
+            "comment": "Updated documentations for file sharing and inline image stories"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "30206449684bbd6610cab3268bc114b8ec7fbe05",
+            "area": "fix",
+            "workstream": "Playwright test script",
+            "comment": "Use beta snapshots for playwright tests when flavor is 'beta-release'"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a6e9f9e7477870610ec5c3b4f3737ba5a74ba329",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Merge branch 'main' into prerelease-beta-release-minor/1.9.0-beta.1"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "89c50cf53c0a5961786db471f841cc1894050385",
+            "area": "improvement",
+            "workstream": "Update calling dependency",
+            "comment": "Update communication calling beta and stable dependency"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e4449f526ed99f068ffe0ad0353356d0dc4f52c6",
+            "area": "improvement",
+            "workstream": "Update peer dep for communication-react package.json",
+            "comment": "update entry point to latest calling beta"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "905465599b4fe8e9baf5d7c0b3bc3802a5afd3fe",
+            "area": "improvement",
+            "workstream": "Package update",
+            "comment": "Update the ACS common package to new stable version"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c672a0acb291727f315ad05b501e93bdaf397e58",
+            "area": "improvement",
+            "workstream": "FluentUI v9",
+            "comment": "Updated documentation and removed FluentUI NorthStar wrapper package"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3b193ea8d60978958795e5733e14d8410c6a03d7",
+            "area": "fix",
+            "workstream": "ImageGallery",
+            "comment": "Remove FocusTrapZone from ImageGallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "de89a5dfab587674f1b39a3182fb0ce5b7a1422e",
+            "area": "improvement",
+            "workstream": "dependency",
+            "comment": "update webpack"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cc5f41e5be70ef7362fc0bf1ee4d7f8d153c20db",
+            "area": "fix",
+            "workstream": "Mobile Options Menu fix",
+            "comment": "Fix up menu size and appearance on mobile"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ad11397089f398eccf39d322f1ad7e79c65ff510",
+            "area": "improvement",
+            "workstream": "Turn on react strict mode again in sample apps",
+            "comment": "Turn on strict mode again in samples"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ac0b88f710316084051508c05c5d1d357ef2743",
+            "area": "fix",
+            "workstream": "Vertical Gallery",
+            "comment": "Update verticalGallery key in localization strings"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "be7d3995f6971a4812c9e8bd550665fa6b47db9a",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Removed workaround for mouseDown event in jest tests. Removed duplicated strict mode from Calling sample app"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "681629293855c556c3b75a68fa6e8c40e2c4ad8f",
+            "area": "improvement",
+            "workstream": "Dependency Updates",
+            "comment": "Update rush to v 5.109.1"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "ebe6b9be649b46305b71abe7e86202eff38d78b5",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix exit -1 problem when use rushx"
+          }
+        ],
+        "patch": [
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "304fecbcc3c3daed7c9a8e4b705e5f7809e69045",
+            "area": "fix",
+            "workstream": "FluentUI",
+            "comment": "Removed bottom paddings for the edit message buttons"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9111b49ad3bdbcef41479b676125bc265b6b102c",
+            "area": "fix",
+            "workstream": "FluentUI",
+            "comment": "Fix an issue when the menu button was not accessible sometimes"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a8a8dda968df18b39c6adfe70806c5940ca92092",
+            "area": "fix",
+            "workstream": "Fixing Captions Display Image fade in to just not fade in anymore",
+            "comment": "adding in fluent prop to not fade in the persona"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3b717fae15de90c6621c39fb8be80a8b63aa9cb9",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Fetch strings for 1.9.0-beta.1 release"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2d4f751799ecaf047486b4374a4fd72922fad454",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Call focus to background effects picker on mount"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "11fc5fe1511293e2df767f2e9222084183d1d213",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "When screen is too small, decrease captions banner size so scroll bar and more button doesnot overlap"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5c0d9d6871bf1862b97e0471c4df38d2f595ee7",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "Update start call in adapter to handle new id's from the ACS Common package"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8840c8af9457295db0711bbfb6ee9f9472053dd7",
+            "area": "fix",
+            "workstream": "Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons",
+            "comment": "Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e3fb0d133f469d73e3b6867e722640edc974a998",
+            "area": "improvement",
+            "workstream": "ImageGallery",
+            "comment": "Update image padding for ImageGallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cb46acf8e40e20e3e7482f5e9349b4632f30a28d",
+            "area": "fix",
+            "workstream": "Bug Fix",
+            "comment": "Fix issue where submenu's in the mobile bottom sheet drawer were not focusing on the first item."
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7c40be17942d83412dad52641f7ef4e16ac1b4cb",
+            "area": "improvement",
+            "workstream": "Dependency Updates",
+            "comment": "Update backward-compatible packages"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bb625af5321767d09d9a22fc776b39a1f80cfbde",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "Fix Call with Chat adapter creation hook to handle multiple invokations."
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Oct 2023 19:59:45 GMT",
       "tag": "@azure/communication-react_v1.9.0",
       "version": "1.9.0",
