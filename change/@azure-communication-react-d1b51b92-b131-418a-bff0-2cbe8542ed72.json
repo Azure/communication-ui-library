@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Add additional telemetry to userAgent that indicates either Chat Composite, Call Composite, Call with Chat composite or Stateful components. ",
+  "packageName": "@azure/communication-react",
+  "email": "73612854+palatter@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
