@@ -46,6 +46,12 @@ export const chatMessageActionMenuProps = (menuProps: {
         aria-haspopup={showActionMenu}
         // set expanded to true, only when the action menu is open
         aria-expanded={menuExpanded}
+        onKeyDown={(e) => {
+          // simulate <button> tag behavior
+          if (showActionMenu && (e.key === 'Enter' || e.key === ' ')) {
+            menuProps.onActionButtonClick();
+          }
+        }}
       >
         {showActionMenu ? (
           <Icon iconName="ChatMessageOptions" aria-label={ariaLabel} styles={iconWrapperStyle(theme, menuExpanded)} />
