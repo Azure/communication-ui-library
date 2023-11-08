@@ -13,7 +13,6 @@ import { HoldButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { Camera } from './buttons/Camera';
-import { generateCustomControlBarButtons, onFetchCustomButtonPropsTrampoline } from './buttons/Custom';
 import { Devices } from './buttons/Devices';
 import { EndCall } from './buttons/EndCall';
 import { Microphone } from './buttons/Microphone';
@@ -42,6 +41,12 @@ import { RaiseHand } from './buttons/RaiseHand';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { _generateDefaultDeviceMenuProps } from '@internal/react-components';
+import {
+  CUSTOM_BUTTON_OPTIONS,
+  generateCustomCallControlBarButton,
+  generateCustomCallDesktopOverflowButtons,
+  onFetchCustomButtonPropsTrampoline
+} from '../../common/ControlBar/CustomButton';
 /**
  * @private
  */
@@ -197,9 +202,17 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
         }
       });
     }
-
     return items;
   };
+
+  const customDrawerButtons = useMemo(
+    () =>
+      generateCustomCallDesktopOverflowButtons(
+        onFetchCustomButtonPropsTrampoline(typeof options === 'object' ? options : undefined),
+        typeof options === 'object' ? options.displayType : undefined
+      ),
+    [options]
+  );
 
   const moreButtonMenuItems = moreButtonContextualMenuItems();
   let showMoreButton = isEnabled(options?.moreButton) && moreButtonMenuItems.length > 0;
@@ -208,7 +221,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   const customButtons = useMemo(
-    () => generateCustomControlBarButtons(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
+    () => generateCustomCallControlBarButton(onFetchCustomButtonPropsTrampoline(options), options?.displayType),
     [options]
   );
 
@@ -227,6 +240,11 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   const raiseHandButtonIsEnabled = isEnabled(options?.raiseHandButton);
   /* @conditional-compile-remove(raise-hand) */
   let showRaiseHandButtonInControlBar = raiseHandButtonIsEnabled;
+  /* @conditional-compile-remove(rooms) */
+  const role = adapter.getState().call?.role;
+  /* @conditional-compile-remove(rooms) */
+  const hideRaiseHandButtonInRoomsCall =
+    adapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
   /* @conditional-compile-remove(raise-hand) */
   if (showRaiseHandButtonInControlBar && (props.isMobile ? numberOfButtons < 5 : true)) {
     numberOfButtons++;
@@ -255,7 +273,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
   }
 
   /* @conditional-compile-remove(raise-hand) */
-  if (!showRaiseHandButtonInControlBar) {
+  if (!showRaiseHandButtonInControlBar && /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall) {
     moreButtonMenuItems.push({
       key: 'raiseHandButtonKey',
       text: raiseHandButtonProps.checked
@@ -272,6 +290,44 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
       },
       disabled: isDisabled(options?.raiseHandButton),
       ['data-ui-id']: 'call-composite-more-menu-raise-hand-button'
+    });
+  }
+
+  // Custom Buttons in More Button Menu should always be the last items pushed into the moreButtonMenuItems array
+  if (customDrawerButtons['primary']) {
+    customDrawerButtons['primary']
+      .slice(
+        props.isMobile
+          ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+          : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+      )
+      .forEach((element) => {
+        moreButtonMenuItems.push({
+          itemProps: {
+            styles: buttonFlyoutIncreasedSizeStyles
+          },
+          ...element
+        });
+      });
+  }
+  if (customDrawerButtons['secondary']) {
+    customDrawerButtons['secondary'].forEach((element) => {
+      moreButtonMenuItems.push({
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        ...element
+      });
+    });
+  }
+  if (customDrawerButtons['overflow']) {
+    customDrawerButtons['overflow'].forEach((element) => {
+      moreButtonMenuItems.push({
+        itemProps: {
+          styles: buttonFlyoutIncreasedSizeStyles
+        },
+        ...element
+      });
     });
   }
 
@@ -320,9 +376,10 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
             <Camera displayType={options?.displayType} disabled={isDisabled(options?.cameraButton)} />
           )}
           {
-            /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar && (
-              <RaiseHand displayType={options?.displayType} />
-            )
+            /* @conditional-compile-remove(raise-hand) */ showRaiseHandButtonInControlBar &&
+              /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
+                <RaiseHand displayType={options?.displayType} />
+              )
           }
           {screenShareButtonIsEnabled && (
             <ScreenShare
@@ -351,6 +408,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
                 data-ui-id="call-composite-people-button"
                 strings={peopleButtonStrings}
                 disabled={isDisabled(options?.participantsButton)}
+                disableTooltip={props.isMobile}
               />
             )}
           {showDevicesButtonInControlBar && (
@@ -360,10 +418,28 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               disabled={isDisabled(options?.devicesButton)}
             />
           )}
+          {customButtons['primary']
+            ?.slice(
+              0,
+              props.isMobile
+                ? CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_MOBILE_CUSTOM_BUTTONS
+                : CUSTOM_BUTTON_OPTIONS.MAX_PRIMARY_DESKTOP_CUSTOM_BUTTONS
+            )
+            .map((CustomButton, i) => {
+              return (
+                <CustomButton
+                  key={`primary-custom-button-${i}`}
+                  // styles={commonButtonStyles}
+                  showLabel={options?.displayType !== 'compact'}
+                  disableTooltip={props.isMobile}
+                />
+              );
+            })}
           {
             /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
             showMoreButton && (
               <MoreButton
+                disableTooltip={props.isMobile}
                 data-ui-id="common-call-composite-more-button"
                 strings={moreButtonStrings}
                 menuIconProps={{ hidden: true }}
@@ -372,7 +448,6 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               />
             )
           }
-          {customButtons['primary']}
           {isEnabled(options?.endCallButton) && <EndCall displayType={options?.displayType} />}
         </ControlBar>
       </Stack.Item>

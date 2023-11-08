@@ -22,14 +22,15 @@ export const chatMessageActionMenuProps = (menuProps: {
   ariaLabel?: string;
   /** Whether the action menu button is enabled, if not this will always return undefined */
   enabled: boolean;
-  /** Whether to force showing the action menu button - this has no effect if the action menu button is not enabled */
-  forceShow: boolean;
+  /** Whether the menu is shown */
+  menuExpanded: boolean;
   menuButtonRef: React.MutableRefObject<HTMLDivElement | null>;
   onActionButtonClick: () => void;
   theme: Theme;
 }): ChatMessageActionMenuProps | undefined => {
-  const { ariaLabel, enabled, forceShow, theme } = menuProps;
-  const showActionMenu = enabled || forceShow;
+  const { ariaLabel, enabled, theme, menuExpanded } = menuProps;
+  // Show the action button while the flyout is open (otherwise this will dismiss when the pointer is hovered over the flyout)
+  const showActionMenu = enabled || menuExpanded;
 
   const actionMenuProps: ChatMessageActionMenuProps = {
     children: (
@@ -42,9 +43,18 @@ export const chatMessageActionMenuProps = (menuProps: {
         style={{ margin: showActionMenu ? '1px' : 0, minHeight: showActionMenu ? undefined : '30px' }}
         role="button"
         aria-label={showActionMenu ? ariaLabel : undefined}
+        aria-haspopup={showActionMenu}
+        // set expanded to true, only when the action menu is open
+        aria-expanded={menuExpanded}
+        onKeyDown={(e) => {
+          // simulate <button> tag behavior
+          if (showActionMenu && (e.key === 'Enter' || e.key === ' ')) {
+            menuProps.onActionButtonClick();
+          }
+        }}
       >
         {showActionMenu ? (
-          <Icon iconName="ChatMessageOptions" aria-label={ariaLabel} styles={iconWrapperStyle(theme, forceShow)} />
+          <Icon iconName="ChatMessageOptions" aria-label={ariaLabel} styles={iconWrapperStyle(theme, menuExpanded)} />
         ) : undefined}
       </div>
     )

@@ -456,6 +456,7 @@ const MessageThreadStory = (args): JSX.Element => {
     return await delay().then(() => {
       return [
         {
+          attachmentId: attachment.id,
           blobUrl: attachment.previewUrl ?? ''
         }
       ];

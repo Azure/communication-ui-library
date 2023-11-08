@@ -356,9 +356,9 @@ test.describe('Filesharing Edit Message', async () => {
     await page.waitForSelector(dataUiId('file-download-card-group'));
     await page.locator(dataUiId('chat-composite-message')).click();
     await page.locator(dataUiId('chat-composite-message-action-icon')).click();
-    await page.waitForSelector('[id="chat-composite-message-contextual-menu"]');
+    await page.waitForSelector(dataUiId('chat-composite-message-contextual-menu-edit-action'));
     await page.locator(dataUiId('chat-composite-message-contextual-menu-edit-action')).click();
-    await page.waitForSelector('[id="editbox"]');
+    await page.waitForSelector(dataUiId('edit-box'));
 
     expect(
       await stableScreenshot(page, {

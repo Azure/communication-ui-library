@@ -326,7 +326,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+  async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();
@@ -348,7 +348,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private async downloadAuthenticatedFile(
     accessToken: string,
-    options: { attachmentUrls: string[] }
+    options: { attachmentUrls: Record<string, string> }
   ): Promise<AttachmentDownloadResult[]> {
     async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
       const headers = new Headers();
@@ -362,10 +362,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         throw e;
       }
     }
-    const attachmentUrl = options.attachmentUrls[0];
-    const response = await fetchWithAuthentication(attachmentUrl, accessToken);
-    const blob = await response.blob();
-    return [{ blobUrl: URL.createObjectURL(blob) }];
+
+    const attachmentDownloadResults: AttachmentDownloadResult[] = [];
+    for (const id in options.attachmentUrls) {
+      const response = await fetchWithAuthentication(options.attachmentUrls[id], accessToken);
+      const blob = await response.blob();
+      attachmentDownloadResults.push({ attachmentId: id, blobUrl: URL.createObjectURL(blob) });
+    }
+
+    return attachmentDownloadResults;
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {

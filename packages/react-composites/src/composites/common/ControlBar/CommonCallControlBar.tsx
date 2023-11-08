@@ -72,6 +72,8 @@ export interface CommonCallControlBarProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
+  /* @conditional-compile-remove(video-background-effects) */
+  videoBackgroundPickerRef?: React.RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -246,6 +248,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       /* @conditional-compile-remove(close-captions) */ props.isCaptionsSupported ||
       /* @conditional-compile-remove(gallery-layouts) */ props.onUserSetGalleryLayout);
 
+  /*@conditional-compile-remove(rooms) */
+  const role = props.callAdapter.getState().call?.role;
+  /*@conditional-compile-remove(rooms) */
+  const hideRaiseHandButtonInRoomsCall =
+    props.callAdapter.getState().isRoomsCall && role && ['Consumer', 'Unknown'].includes(role);
+
   return (
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
@@ -295,6 +303,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         splitButtonsForDeviceSelection={!props.mobileView}
                         /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
+                        disableTooltip={props.mobileView}
                       />
                     )}
                     {cameraButtonIsEnabled && (
@@ -307,11 +316,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         /* @conditional-compile-remove(video-background-effects) */
                         onClickVideoEffects={props.onClickVideoEffects}
                         componentRef={props.cameraButtonRef}
+                        disableTooltip={props.mobileView}
                       />
                     )}
                     {
                       /* @conditional-compile-remove(raise-hand) */ !props.mobileView &&
-                        isEnabled(options.raiseHandButton) && (
+                        isEnabled(options.raiseHandButton) &&
+                        /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
                           <RaiseHand
                             displayType={options.displayType}
                             styles={commonButtonStyles}
@@ -342,6 +353,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             key={`primary-custom-button-${i}`}
                             styles={commonButtonStyles}
                             showLabel={options.displayType !== 'compact'}
+                            disableTooltip={props.mobileView}
                           />
                         );
                       })}
@@ -351,6 +363,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         strings={moreButtonStrings}
                         onClick={props.onMoreButtonClicked}
                         disabled={props.disableButtonsForLobbyPage}
+                        disableTooltip={props.mobileView}
                       />
                     )}
                     {!props.mobileView && showDesktopMoreButton && (
