@@ -615,11 +615,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
 
       const audioOptions: AudioOptions = { muted: !shouldMicrophoneBeOnInCall };
-      const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
+      const localVideoStream = this.deviceManager.getUnparentedVideoStreams()[0];
       const videoOptions: VideoOptions =
-        selectedCamera && shouldCameraBeOnInCall
-          ? { localVideoStreams: [new SDKLocalVideoStream(selectedCamera)] }
-          : {};
+        localVideoStream && shouldCameraBeOnInCall ? { localVideoStreams: [localVideoStream] } : {};
 
       /* @conditional-compile-remove(teams-adhoc-call) */
       /* @conditional-compile-remove(PSTN-calls) */
@@ -749,9 +747,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
         /* @conditional-compile-remove(video-background-effects) */
         {
           const selectedEffect = this.getState().selectedVideoBackgroundEffect;
-          const selectedCamera = getSelectedCameraFromAdapterState(this.getState());
-          if (selectedEffect && selectedCamera && this.onResolveVideoBackgroundEffectsDependency) {
-            const stream = new SDKLocalVideoStream(selectedCamera);
+          const selectedCameraId = getSelectedCameraFromAdapterState(this.getState())?.id;
+          const camera = (await this.deviceManager.getCameras())?.find((camera) => camera.id === selectedCameraId);
+          if (selectedEffect && camera && this.onResolveVideoBackgroundEffectsDependency) {
+            const stream = new SDKLocalVideoStream(camera);
             const effect = getBackgroundEffectFromSelectedEffect(
               selectedEffect,
               await this.onResolveVideoBackgroundEffectsDependency()
@@ -1146,7 +1145,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     const newArgs = {
       ...args,
       accept: (options: AcceptTransferOptions) => {
-        const videoSource = this.context.getState().call?.localVideoStreams?.[0]?.source;
+        const localVideoStream = this._call?.localVideoStreams?.[0];
         args.accept({
           audioOptions: options?.audioOptions ?? /* maintain audio state if options.audioOptions is not defined */ {
             muted: !!this.context.getState().call?.isMuted
@@ -1154,7 +1153,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
           videoOptions:
             options?.videoOptions ??
             /* maintain video state if options.videoOptions is not defined */
-            (videoSource ? { localVideoStreams: [new LocalVideoStream(videoSource)] } : undefined)
+            (localVideoStream ? { localVideoStreams: [localVideoStream] } : undefined)
         });
       }
     };

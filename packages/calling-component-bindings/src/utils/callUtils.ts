@@ -63,6 +63,7 @@ export const _isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
  * @private
  */
 export const disposeAllLocalPreviewViews = async (callClient: StatefulCallClient): Promise<void> => {
+  console.log('[jaburnsi] disposeAllLocalPreviewViews');
   const unparentedViews = callClient.getState().deviceManager.unparentedViews;
   for (const view of unparentedViews) {
     await callClient.disposeView(undefined, undefined, view);

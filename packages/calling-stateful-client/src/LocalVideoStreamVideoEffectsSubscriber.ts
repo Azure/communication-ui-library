@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(video-background-effects) */
-import { VideoEffectErrorPayload, VideoEffectsFeature } from '@azure/communication-calling';
+import { LocalVideoStream, VideoEffectErrorPayload, VideoEffectsFeature } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamState } from './CallClientState';
 /* @conditional-compile-remove(video-background-effects) */
@@ -10,7 +10,10 @@ import { CallContext } from './CallContext';
 /* @conditional-compile-remove(video-background-effects) */
 import { CallIdRef } from './CallIdRef';
 /* @conditional-compile-remove(video-background-effects) */
-import { convertFromSDKToDeclarativeVideoStreamVideoEffects } from './Converter';
+import {
+  convertFromSDKToDeclarativeVideoStreamVideoEffects,
+  convertSdkLocalStreamToDeclarativeLocalStream
+} from './Converter';
 
 /* @conditional-compile-remove(video-background-effects) */
 /**
@@ -27,12 +30,12 @@ export class LocalVideoStreamVideoEffectsSubscriber {
     /** Owner of the local video stream. This is either the Call (referenced by CallIdRef) or is the device manager's unparented view (referenced by 'unparented') */
     parent: CallIdRef | 'unparented';
     context: CallContext;
-    localVideoStream: LocalVideoStreamState;
+    localVideoStream: LocalVideoStream;
     localVideoStreamEffectsAPI: VideoEffectsFeature;
   }) {
     this._parent = args.parent;
     this._context = args.context;
-    this._localVideoStream = args.localVideoStream;
+    this._localVideoStream = convertSdkLocalStreamToDeclarativeLocalStream(args.localVideoStream);
     this._localVideoStreamEffectsAPI = args.localVideoStreamEffectsAPI;
 
     this.subscribe();

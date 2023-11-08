@@ -6,6 +6,7 @@ import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStream } from '@azure/communication-calling';
+import { convertFromSDKToAudioDeviceState, convertFromSDKToVideoDeviceState } from './Converter';
 
 /**
  * Defines the additional methods added by the stateful on top of {@link @azure/communication-calling#DeviceManager}.
@@ -55,8 +56,12 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     // are not functions we can't proxy them so we'll update whenever we think they may need updating such as at
     // construction time or when certain events happen.
     this._context.setDeviceManagerIsSpeakerSelectionAvailable(this._deviceManager.isSpeakerSelectionAvailable);
-    this._context.setDeviceManagerSelectedMicrophone(this._deviceManager.selectedMicrophone);
-    this._context.setDeviceManagerSelectedSpeaker(this._deviceManager.selectedSpeaker);
+    this._context.setDeviceManagerSelectedMicrophone(
+      convertFromSDKToAudioDeviceState(this._deviceManager.selectedMicrophone)
+    );
+    this._context.setDeviceManagerSelectedSpeaker(
+      convertFromSDKToAudioDeviceState(this._deviceManager.selectedSpeaker)
+    );
   };
 
   private subscribe = (): void => {
@@ -82,27 +87,35 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
    * @param videoDeviceInfo VideoDeviceInfo
    */
   public selectCamera = (videoDeviceInfo: VideoDeviceInfo): void => {
-    this._context.setDeviceManagerSelectedCamera(videoDeviceInfo);
+    this._context.setDeviceManagerSelectedCamera(convertFromSDKToVideoDeviceState(videoDeviceInfo));
   };
 
   private videoDevicesUpdated = async (): Promise<void> => {
     // Device Manager always has a camera with '' name if there are no real camera devices available.
     // We don't want to show that in the UI.
     const realCameras = (await this._deviceManager.getCameras()).filter((c) => !!c.name);
-    this._context.setDeviceManagerCameras(dedupeById(realCameras));
+    this._context.setDeviceManagerCameras(dedupeById(realCameras).map(convertFromSDKToVideoDeviceState));
   };
 
   private audioDevicesUpdated = async (): Promise<void> => {
-    this._context.setDeviceManagerMicrophones(dedupeById(await this._deviceManager.getMicrophones()));
-    this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    this._context.setDeviceManagerMicrophones(
+      dedupeById(await this._deviceManager.getMicrophones()).map(convertFromSDKToAudioDeviceState)
+    );
+    this._context.setDeviceManagerSpeakers(
+      dedupeById(await this._deviceManager.getSpeakers()).map(convertFromSDKToAudioDeviceState)
+    );
   };
 
   private selectedMicrophoneChanged = (): void => {
-    this._context.setDeviceManagerSelectedMicrophone(this._deviceManager.selectedMicrophone);
+    this._context.setDeviceManagerSelectedMicrophone(
+      convertFromSDKToAudioDeviceState(this._deviceManager.selectedMicrophone)
+    );
   };
 
   private selectedSpeakerChanged = (): void => {
-    this._context.setDeviceManagerSelectedSpeaker(this._deviceManager.selectedSpeaker);
+    this._context.setDeviceManagerSelectedSpeaker(
+      convertFromSDKToAudioDeviceState(this._deviceManager.selectedSpeaker)
+    );
   };
 
   public get<P extends keyof DeviceManager>(target: DeviceManager, prop: P): any {
@@ -113,7 +126,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
             // Device Manager always has a camera with '' name if there are no real camera devices available.
             // We don't want to show that in the UI.
             const realCameras = cameras.filter((c) => !!c.name);
-            this._context.setDeviceManagerCameras(dedupeById(realCameras));
+            this._context.setDeviceManagerCameras(dedupeById(realCameras).map(convertFromSDKToVideoDeviceState));
             return realCameras;
           });
         }, 'DeviceManager.getCameras');
@@ -121,7 +134,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getMicrophones': {
         return this._context.withAsyncErrorTeedToState((): Promise<AudioDeviceInfo[]> => {
           return target.getMicrophones().then((microphones: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerMicrophones(dedupeById(microphones));
+            this._context.setDeviceManagerMicrophones(dedupeById(microphones).map(convertFromSDKToAudioDeviceState));
             return microphones;
           });
         }, 'DeviceManager.getMicrophones');
@@ -129,7 +142,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
       case 'getSpeakers': {
         return this._context.withAsyncErrorTeedToState((): Promise<AudioDeviceInfo[]> => {
           return target.getSpeakers().then((speakers: AudioDeviceInfo[]) => {
-            this._context.setDeviceManagerSpeakers(dedupeById(speakers));
+            this._context.setDeviceManagerSpeakers(dedupeById(speakers).map(convertFromSDKToAudioDeviceState));
             return speakers;
           });
         }, 'DeviceManager.getSpeakers');
@@ -138,7 +151,9 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         return this._context.withAsyncErrorTeedToState(
           (...args: Parameters<DeviceManager['selectMicrophone']>): Promise<void> => {
             return target.selectMicrophone(...args).then(() => {
-              this._context.setDeviceManagerSelectedMicrophone(target.selectedMicrophone);
+              this._context.setDeviceManagerSelectedMicrophone(
+                convertFromSDKToAudioDeviceState(target.selectedMicrophone)
+              );
             });
           },
           'DeviceManager.selectMicrophone'
@@ -148,7 +163,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
         return this._context.withAsyncErrorTeedToState(
           (...args: Parameters<DeviceManager['selectSpeaker']>): Promise<void> => {
             return target.selectSpeaker(...args).then(() => {
-              this._context.setDeviceManagerSelectedSpeaker(target.selectedSpeaker);
+              this._context.setDeviceManagerSelectedSpeaker(convertFromSDKToAudioDeviceState(target.selectedSpeaker));
             });
           },
           'DeviceManager.selectSpeaker'

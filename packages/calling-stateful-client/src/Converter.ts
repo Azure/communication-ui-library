@@ -5,7 +5,9 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
+  VideoDeviceInfo,
+  AudioDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -48,7 +50,7 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
   const localVideoStreamEffectsAPI = stream.feature(Features.VideoEffects);
 
   return {
-    source: stream.source,
+    source: convertFromSDKToVideoDeviceState(stream.source),
     mediaStreamType: stream.mediaStreamType,
     view: undefined,
     /* @conditional-compile-remove(video-background-effects) */
@@ -217,4 +219,39 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
   return {
     raisedHandOrderPosition: raisedHand.order
   };
+}
+
+/**
+ * @private
+ */
+export function convertFromSDKToAudioDeviceState<T extends AudioDeviceInfo | undefined>(device: T): T {
+  if (!device) {
+    return device;
+  }
+
+  // The audio device info returned from the Calling SDK has complex private properties that we
+  // cannot serialize. This we must manually we are extract the properties into a new object.
+  return {
+    name: device.name,
+    id: device.id,
+    isSystemDefault: device.isSystemDefault,
+    deviceType: device.deviceType
+  } as T;
+}
+
+/**
+ * @private
+ */
+export function convertFromSDKToVideoDeviceState<T extends VideoDeviceInfo | undefined>(device: T): T {
+  if (!device) {
+    return device;
+  }
+
+  // The video device info returned from the Calling SDK has complex private properties that we
+  // cannot serialize. This we must manually we are extract the properties into a new object.
+  return {
+    name: device.name,
+    id: device.id,
+    deviceType: device.deviceType
+  } as T;
 }
