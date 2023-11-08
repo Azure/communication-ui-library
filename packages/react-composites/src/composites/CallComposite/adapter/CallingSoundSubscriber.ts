@@ -48,6 +48,7 @@ export class CallingSoundSubscriber {
 
   private loadSounds(): CallingSounds {
     const callEndedSound = new Audio(`data:audio/mp3;base64,${callEndedSoundString}`);
+    callEndedSound.preload = 'auto';
     return {
       callEndedSound
     };
