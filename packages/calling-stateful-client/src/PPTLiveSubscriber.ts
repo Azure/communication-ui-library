@@ -17,10 +17,10 @@ export class PPTLiveSubscriber {
   private _context: CallContext;
   private _pptLive: PPTLiveCallFeature;
 
-  constructor(callIdRef: CallIdRef, context: CallContext, pptlive: PPTLiveCallFeature) {
+  constructor(callIdRef: CallIdRef, context: CallContext, pptLive: PPTLiveCallFeature) {
     this._callIdRef = callIdRef;
     this._context = context;
-    this._pptLive = pptlive;
+    this._pptLive = pptLive;
 
     // If pptlive as already started when we joined the call, make sure it is reflected in state as there may not
     // be an event for it.
@@ -33,6 +33,7 @@ export class PPTLiveSubscriber {
 
   private subscribe = (): void => {
     this._pptLive.on('isActiveChanged', this.isAvailableChanged);
+    this.checkAndUpdatePPTLiveParticipant();
   };
 
   public unsubscribe = (): void => {
@@ -41,5 +42,13 @@ export class PPTLiveSubscriber {
 
   private isAvailableChanged = (): void => {
     this._context.setCallPPTLiveActive(this._callIdRef.callId, this._pptLive.isActive);
+    this.checkAndUpdatePPTLiveParticipant();
+  };
+
+  private checkAndUpdatePPTLiveParticipant = (): void => {
+    if (this._pptLive.isActive) {
+      this._context.setCallParticipantPPTLive(this._callIdRef.callId, this._pptLive.target);
+      return;
+    }
   };
 }

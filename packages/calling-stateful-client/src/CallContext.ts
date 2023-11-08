@@ -164,7 +164,9 @@ export class CallContext {
         existingCall.optimalVideoCount.maxRemoteVideoStreams = call.optimalVideoCount.maxRemoteVideoStreams;
         existingCall.recording.isRecordingActive = call.recording.isRecordingActive;
         /* @conditional-compile-remove(ppt-live) */
-        existingCall.pptLive.isPPTLiveActive = call.pptLive.isPPTLiveActive;
+        existingCall.pptLive.isActive = call.pptLive.isActive;
+        /* @conditional-compile-remove(ppt-live) */
+        existingCall.pptLive.target = call.pptLive.target;
         /* @conditional-compile-remove(raise-hand) */
         existingCall.raiseHand.raisedHands = call.raiseHand.raisedHands;
         /* @conditional-compile-remove(raise-hand) */
@@ -351,11 +353,25 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(ppt-live) */
-  public setCallPPTLiveActive(callId: string, isPPTLiveActive: boolean): void {
+  public setCallPPTLiveActive(callId: string, isActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.pptLive.isPPTLiveActive = isPPTLiveActive;
+        call.pptLive.isActive = isActive;
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(ppt-live) */
+  public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const participant = call.remoteParticipants[0];
+        if (participant) {
+          participant.pptLiveStreams = target;
+          call.pptLiveShareRemoteParticipant = toFlatCommunicationIdentifier(participant.identifier);
+        }
       }
     });
   }
