@@ -242,6 +242,7 @@ export type CallAdapterClientState = {
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
+    useSounds?: boolean;
 };
 
 // @public
@@ -1109,6 +1110,9 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
+    soundOptions?: {
+        disableSounds?: boolean;
+    };
 };
 
 // @public

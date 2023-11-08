@@ -149,6 +149,11 @@ export type CallAdapterClientState = {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * State to track whether to use sounds in the call
+   */
+  useSounds?: boolean;
 };
 
 /**

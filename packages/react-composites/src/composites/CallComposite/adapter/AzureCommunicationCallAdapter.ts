@@ -141,6 +141,10 @@ class CallContext {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
+      /* conditional-compile-remove(calling-sounds) */
+      soundOptions?: {
+        disableSounds?: boolean;
+      };
     }
   ) {
     this.state = {
@@ -161,7 +165,8 @@ class CallContext {
       /* @conditional-compile-remove(video-background-effects) */
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
-      cameraStatus: undefined
+      cameraStatus: undefined,
+      useSounds: !options?.soundOptions?.disableSounds
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -1052,7 +1057,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private subscribeCallEvents(): void {
     /* @conditional-compile-remove(calling-sounds) */
-    if (this.call) {
+    if (this.call && this.getState().useSounds) {
       this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.emitter);
     }
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
@@ -1302,6 +1307,16 @@ export type CommonCallAdapterOptions = {
    * and would not be updated again within the lifecycle of adapter.
    */
   onFetchProfile?: OnFetchProfileCallback;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * Options for calling sounds
+   */
+  soundOptions?: {
+    /**
+     * Option to opt out of using calling sounds.
+     */
+    disableSounds?: boolean;
+  };
 };
 
 /**
