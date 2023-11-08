@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, SpinnerType, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -234,6 +234,17 @@ const VideoTileMoreOptionsButton = (props: {
     />
   );
 };
+
+const styleSheet = document.styleSheets[0];
+// const keyframes1 = `@keyframes animate {
+//   0% {transform: translateY(0px);}
+//   100% {transform: translateY(var(--to-position));}
+// }`;
+const keyframes1 = `@keyframes play {
+  from { background-position-y: 8568px; }
+  to { background-position-y: 0px; }
+}`;
+styleSheet.insertRule(keyframes1, styleSheet.cssRules.length);
 
 /**
  * A component to render the video stream for a single call participant.
@@ -547,3 +558,13 @@ const tileInfoContainerTokens = {
 const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
   return withBrackets ? `(${participantString})` : participantString;
 };
+
+const emoticonDynamicStyles = () => {
+  return {
+    animationTimingFunction: `steps(51)`,
+    "--to-position": `-1632px`,
+    "--reaction-animation-duration": `2.125ms`,
+    "--reaction-animation-play-state": "running",
+    "--reaction-animation-iteration-count": 0,
+  }
+}
