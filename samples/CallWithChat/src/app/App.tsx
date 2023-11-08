@@ -32,7 +32,7 @@ import { WEB_APP_TITLE } from './utils/constants';
 /* @conditional-compile-remove(PSTN-calls) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 
-setLogLevel('verbose');
+setLogLevel('error');
 initializeIcons();
 
 interface Credentials {
