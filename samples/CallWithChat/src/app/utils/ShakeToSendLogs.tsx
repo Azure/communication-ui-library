@@ -1,6 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/// This is a react component that will prompt the user to send logs when they shake their device.
+/// This is particularly useful on mobile devices where the console is not easily accessible.
+/// This should be used once in the app.
+///
+/// This component will only render if the device supports the shake feature and is on a mobile device.
+/// On iOS, device motion events require permission granted first.
+/// If the user has not granted permission, this component will prompt the user to grant permission.
+/// If the user has not granted permission, or the user is on desktop, this component will not render.
+/// If the user has granted permission, this component will render and listen for shake events.
+///
+/// This component works by intercepting console logs and storing them in memory.
+/// This component also stores AzureLogger logs but does not forward these to the console to avoid spamming the console.
+
 import { setLogLevel, AzureLogger } from '@azure/logger';
 import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';
 import React from 'react';
