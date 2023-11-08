@@ -1,5 +1,4 @@
-@keyframes fadeInOut {
-    0% {opacity: 0;}
-    50% {opacity: 1;}
-    100% {opacity: 0;}
+@keyframes animate {
+    0% {background-position: 0px;}
+    100% {background-position: -1000px;}
   }
