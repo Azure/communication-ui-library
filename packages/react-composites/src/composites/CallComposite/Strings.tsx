@@ -322,6 +322,16 @@ export interface CallCompositeStrings {
   roomNotFoundDetails?: string;
   /* @conditional-compile-remove(rooms) */
   /**
+   * Title text of the page shown to the user when the user attempts to join a room that is not valid.
+   */
+  roomNotValidTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room that is not valid.
+   */
+  roomNotValidDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
    * Title text of the page shown to the user when the user is removed from a room.
    */
   removedFromRoomTitle: string;

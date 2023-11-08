@@ -60,6 +60,7 @@ export type CallCompositePage =
   | 'removedFromCall'
   | /* @conditional-compile-remove(rooms) */ 'removedFromRoom'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
+  | /* @conditional-compile-remove(rooms) */ 'roomNotValid'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 

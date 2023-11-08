@@ -377,6 +377,17 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    case 'roomNotValid':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageRoomNotValid"
+          title={locale.strings.call.roomNotValidTitle}
+          moreDetails={locale.strings.call.roomNotValidDetails}
+          dataUiId={'room-not-valid-page'}
+          disableStartCallButton={true}
+        />
+      );
+      break;
     case 'deniedPermissionToRoom':
       pageElement = (
         <NoticePage

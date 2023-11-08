@@ -83,6 +83,8 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRemovedFromRoomsCall: <Info20Filled />,
   /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound: <Info20Filled />,
+  /* @conditional-compile-remove(rooms) */
+  NoticePageRoomNotValid: <Info20Filled />,
   /* @conditional-compile-remove(file-sharing) */
   SendBoxAttachFile: <Attach20Regular />,
   /* @conditional-compile-remove(PSTN-calls) */
@@ -219,6 +221,8 @@ export type CallCompositeIcons = {
   NoticePageRemovedFromRoomsCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound?: JSX.Element;
+  /* @conditional-compile-remove(rooms) */
+  NoticePageRoomNotValid?: JSX.Element;
   OptionsCamera?: JSX.Element;
   OptionsMic?: JSX.Element;
   OptionsSpeaker?: JSX.Element;

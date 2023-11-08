@@ -561,6 +561,7 @@ export type CallCompositeIcons = {
     NoticePageRemovedFromCall?: JSX.Element;
     NoticePageRemovedFromRoomsCall?: JSX.Element;
     NoticePageRoomNotFound?: JSX.Element;
+    NoticePageRoomNotValid?: JSX.Element;
     OptionsCamera?: JSX.Element;
     OptionsMic?: JSX.Element;
     OptionsSpeaker?: JSX.Element;
@@ -613,7 +614,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'removedFromRoom' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'removedFromRoom' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(rooms) */ 'roomNotValid' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -743,6 +744,8 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
+    roomNotValidDetails?: string;
+    roomNotValidTitle: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
@@ -2397,6 +2400,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageRemovedFromCall?: JSX.Element | undefined;
     NoticePageRemovedFromRoomsCall?: JSX.Element | undefined;
     NoticePageRoomNotFound?: JSX.Element | undefined;
+    NoticePageRoomNotValid?: JSX.Element | undefined;
     OptionsCamera: JSX.Element | React_2.JSX.Element;
     OptionsMic: JSX.Element | React_2.JSX.Element;
     OptionsSpeaker: JSX.Element | React_2.JSX.Element;

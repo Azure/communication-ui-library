@@ -26,6 +26,8 @@ const REMOVED_PERMISSION_TO_JOIN_ROOM_SUB_CODE = 5317;
 const ROOM_NOT_FOUND_SUB_CODE = 5732;
 /* @conditional-compile-remove(rooms) */
 const DENIED_PERMISSION_TO_ROOM_SUB_CODE = 5828;
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_VALID_SUB_CODE = 5829;
 
 /**
  * @private
@@ -76,6 +78,7 @@ enum CallEndReasons {
   ACCESS_DENIED,
   REMOVED_FROM_CALL,
   ROOM_NOT_FOUND,
+  ROOM_NOT_VALID,
   DENIED_PERMISSION_TO_ROOM,
   REMOVED_PERMISSION_TO_JOIN_ROOM
 }
@@ -109,6 +112,11 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
   /* @conditional-compile-remove(rooms) */
   if (call.callEndReason?.subCode && call.callEndReason.subCode === ROOM_NOT_FOUND_SUB_CODE) {
     return CallEndReasons.ROOM_NOT_FOUND;
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === ROOM_NOT_VALID_SUB_CODE) {
+    return CallEndReasons.ROOM_NOT_VALID;
   }
 
   /* @conditional-compile-remove(rooms) */
@@ -212,6 +220,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     switch (reason) {
       case CallEndReasons.ROOM_NOT_FOUND:
         return 'roomNotFound';
+      case CallEndReasons.ROOM_NOT_VALID:
+        return 'roomNotValid';
       case CallEndReasons.DENIED_PERMISSION_TO_ROOM:
         return 'deniedPermissionToRoom';
       case CallEndReasons.REMOVED_PERMISSION_TO_JOIN_ROOM:
@@ -244,21 +254,7 @@ export const IsCallEndedPage = (
    * EndCallPage ensure you update the END_CALL_PAGES. Afterwards update the `page` parameter
    * type below to allow your new page, i.e. add `| <your new page>
    */
-  page:
-    | 'accessDeniedTeamsMeeting'
-    | 'call'
-    | 'configuration'
-    | 'joinCallFailedDueToNoNetwork'
-    | 'leaving'
-    | 'leftCall'
-    | 'lobby'
-    | 'removedFromCall'
-    | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
-    | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-    | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
-    | /* @conditional-compile-remove(rooms) */ 'removedFromRoom'
-    | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-    | /* @conditional-compile-remove(call-transfer) */ 'transferring'
+  page: CallCompositePage
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
