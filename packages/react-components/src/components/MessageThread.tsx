@@ -388,6 +388,7 @@ const memoizeAllMessages = memoizeFnAll(
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
       messageProps: MessageProps
     ): JSX.Element => {
+      console.log('!!!!!!!!chatMessage', message);
       const messageStatusRenderer =
         showMessageStatus && statusToRender
           ? onRenderMessageStatus
@@ -908,11 +909,17 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
+  const styleProps = useMemo(() => {
+    console.log('!!!!!!!!useMemo styleProps');
+    return styles;
+  }, [styles]);
+
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachments: FileMetadata[], messageId: string): Promise<void> => {
+      console.log('!!!!!!!!onFetchInlineAttachment', attachments, messageId);
       if (!onFetchAttachments) {
         return;
       }
@@ -1178,6 +1185,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
+      console.log('!!!!!!', defaultChatMessageRenderer, 'onRenderAvatar', onRenderAvatar, 'messageProps', messageProps);
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       if (inlineAttachments[messageProps.message.messageId] === undefined) {
         setInlineAttachments((prev) => ({ ...prev, [messageProps.message.messageId]: {} }));
@@ -1270,6 +1278,79 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const theme = useTheme();
   const chatMessageRenderStyles = useChatMessageRenderStyles();
 
+  useEffect(() => {
+    console.log('!!!!!!messages is changed');
+  }, [messages]);
+  useEffect(() => {
+    console.log('!!!!!!showMessageDate is changed');
+  }, [showMessageDate]);
+  useEffect(() => {
+    console.log('!!!!!!showMessageStatus is changed');
+  }, [showMessageStatus]);
+  useEffect(() => {
+    console.log('!!!!!!onRenderAvatar is changed');
+  }, [onRenderAvatar]);
+  useEffect(() => {
+    console.log('!!!!!!isNarrow is changed');
+  }, [isNarrow]);
+  useEffect(() => {
+    console.log('!!!!!!styles is changed');
+  }, [styleProps]);
+
+  useEffect(() => {
+    console.log('!!!!!!onRenderMessageStatus is changed');
+  }, [onRenderMessageStatus]);
+  useEffect(() => {
+    console.log('!!!!!!defaultStatusRenderer is changed');
+  }, [defaultStatusRenderer]);
+  useEffect(() => {
+    console.log('!!!!!!defaultChatMessageRenderer is changed');
+  }, [defaultChatMessageRenderer]);
+  useEffect(() => {
+    console.log('!!!!!!strings is changed');
+  }, [strings]);
+
+  useEffect(() => {
+    console.log('!!!!!!theme is changed');
+  }, [theme]);
+  useEffect(() => {
+    console.log('!!!!!!chatMessageRenderStyles is changed');
+  }, [chatMessageRenderStyles]);
+  useEffect(() => {
+    console.log('!!!!!!participantCount is changed');
+  }, [participantCount]);
+  useEffect(() => {
+    console.log('!!!!!!readCountForHoveredIndicator is changed');
+  }, [readCountForHoveredIndicator]);
+  useEffect(() => {
+    console.log('!!!!!!onRenderMessage is changed');
+  }, [onRenderMessage]);
+  useEffect(() => {
+    console.log('!!!!!!onUpdateMessage is changed');
+  }, [onUpdateMessage]);
+  useEffect(() => {
+    console.log('!!!!!!onCancelEditMessage is changed');
+  }, [onCancelEditMessage]);
+  useEffect(() => {
+    console.log('!!!!!!onDeleteMessage is changed');
+  }, [onDeleteMessage]);
+
+  useEffect(() => {
+    console.log('!!!!!!onSendMessage is changed');
+  }, [onSendMessage]);
+  useEffect(() => {
+    console.log('!!!!!!props.disableEditing is changed');
+  }, [props.disableEditing]);
+  useEffect(() => {
+    console.log('!!!!!!lastSeenChatMessage is changed');
+  }, [lastSeenChatMessage]);
+  useEffect(() => {
+    console.log('!!!!!!lastSendingChatMessage is changed');
+  }, [lastSendingChatMessage]);
+  useEffect(() => {
+    console.log('!!!!!!lastDeliveredChatMessage is changed');
+  }, [lastDeliveredChatMessage]);
+
   const messagesToDisplay = useMemo(
     () =>
       memoizeAllMessages((memoizedMessageFn) => {
@@ -1312,7 +1393,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             showMessageStatus,
             onRenderAvatar,
             isNarrow,
-            styles,
+            styleProps,
             onRenderMessageStatus,
             defaultStatusRenderer,
             defaultChatMessageRenderer,
@@ -1343,7 +1424,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       showMessageStatus,
       onRenderAvatar,
       isNarrow,
-      styles,
+      styleProps,
       onRenderMessageStatus,
       defaultStatusRenderer,
       defaultChatMessageRenderer,
@@ -1371,16 +1452,16 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         <FluentV9ThemeProvider v8Theme={theme}>
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
-            className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
+            className={mergeClasses(classes.root, mergeStyles(styleProps?.chatContainer))}
             ref={chatScrollDivRef}
-            style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
+            style={{ ...createStyleFromV8Style(styleProps?.chatContainer) }}
           >
             {messagesToDisplay}
           </Chat>
         </FluentV9ThemeProvider>
       </LiveAnnouncer>
     );
-  }, [theme, classes.root, styles?.chatContainer, messagesToDisplay]);
+  }, [theme, classes.root, styleProps?.chatContainer, messagesToDisplay]);
 
   return (
     <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
@@ -1388,7 +1469,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
         thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
       {existsNewChatMessage && !disableJumpToNewMessageButton && (
-        <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
+        <div className={mergeStyles(newMessageButtonContainerStyle, styleProps?.newMessageButtonContainer)}>
           {onRenderJumpToNewMessageButton ? (
             onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
           ) : (

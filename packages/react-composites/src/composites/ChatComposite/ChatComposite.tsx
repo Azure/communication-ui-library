@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
-import React from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
@@ -110,13 +110,18 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
    * @private
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const fileSharingOptions = () => {
+  const fileSharingOptions = useMemo(() => {
+    console.log('!!!!!!!!! fileSharingOptions useMemo');
     /* @conditional-compile-remove(file-sharing) */
     return {
       fileSharing: options?.fileSharing
     };
     return {};
-  };
+  }, [options?.fileSharing]);
+
+  useEffect(() => {
+    console.log('!!!!!!!!!! Chat composite adapter is updates');
+  }, [adapter]);
 
   return (
     <div className={chatScreenContainerStyle}>
@@ -129,7 +134,7 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            {...fileSharingOptions()}
+            {...fileSharingOptions}
           />
         </ChatAdapterProvider>
       </BaseProvider>

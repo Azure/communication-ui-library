@@ -23,7 +23,7 @@ import {
 /* @conditional-compile-remove(image-gallery) */
 import { ChatMessage } from '@internal/react-components';
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-gallery) */
 import { useState } from 'react';
 
@@ -61,6 +61,7 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
+import { Message } from '@internal/react-components';
 
 /**
  * @private
@@ -146,6 +147,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const theme = useTheme();
 
   useEffect(() => {
+    console.log('!!!!!!!useEffect fetchData');
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     const fetchData: () => Promise<void> = async () => {
       // Fetch initial data for adapter
@@ -156,11 +158,33 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fetchData();
   }, [adapter]);
 
+  useEffect(() => {
+    console.log('!!!!!!!useEffect empty render');
+  }, []);
+
+  useEffect(() => {
+    console.log('!!!!!!!useEffect adapter');
+  }, [adapter]);
+
   const messageThreadProps = usePropsFor(MessageThread);
+  const [messages, setMessages] = useState<Message[]>(messageThreadProps.messages);
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
+
+  useEffect(() => {
+    console.log('!!!!!!!useEffect set messages ', messageThreadProps.messages);
+    setMessages(messageThreadProps.messages);
+  }, [messageThreadProps.messages]);
+
+  useEffect(() => {
+    console.log('!!!!!!!useEffect messageThreadProps ', messageThreadProps.messages);
+  }, [messageThreadProps]);
+
+  useEffect(() => {
+    console.log('!!!!!!!useEffect ChatScreen messages ', messages);
+  }, [messages]);
 
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
@@ -176,13 +200,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const messageThreadStyles = Object.assign(
-    {},
-    messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
-    styles?.messageThread
-  );
-  const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
-  const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  const messageThreadStyles = useMemo(() => {
+    return Object.assign(
+      {},
+      messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
+      styles?.messageThread
+    );
+  }, [styles?.messageThread, theme.semanticColors.bodyBackground]);
+
+  const typingIndicatorStyles = useMemo(() => {
+    return Object.assign({}, styles?.typingIndicator);
+  }, [styles?.typingIndicator]);
+  const sendBoxStyles = useMemo(() => {
+    return Object.assign({}, styles?.sendBox);
+  }, [styles?.sendBox]);
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(
@@ -233,13 +264,14 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(image-gallery) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
-      const messages = messageThreadProps.messages?.filter((message) => {
+      console.log('!!!!!!!onInlineImageClicked');
+      const filteredMessages = messages.filter((message) => {
         return message.messageId === messageId;
       });
-      if (!messages || messages.length <= 0) {
+      if (!filteredMessages || filteredMessages.length <= 0) {
         return;
       }
-      const chatMessage = messages[0] as ChatMessage;
+      const chatMessage = filteredMessages[0] as ChatMessage;
 
       const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
         return attachment.id === attachmentId;
@@ -291,7 +323,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         }
       }
     },
-    [adapter, fullSizeAttachments, messageThreadProps.messages, onRenderAvatarCallback]
+    [adapter, fullSizeAttachments, messages, onRenderAvatarCallback]
   );
 
   /* @conditional-compile-remove(image-gallery) */
@@ -346,6 +378,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           }
           <MessageThread
             {...messageThreadProps}
+            messages={messages}
             onRenderAvatar={onRenderAvatarCallback}
             onRenderMessage={onRenderMessage}
             /* @conditional-compile-remove(file-sharing) */

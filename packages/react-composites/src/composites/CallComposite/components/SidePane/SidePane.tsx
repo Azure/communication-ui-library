@@ -42,7 +42,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     : props.mobileView
     ? availableSpaceStyles
     : maxWidthStyles;
-
+  //TODO: can it be because of 1 of these things?
   const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
     EmptyElement;
@@ -91,7 +91,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   if (!ContentRender && !OverrideContentRender) {
     return <EmptyElement />;
   }
-
+  //TODO: here? Check if the last commit to this file changed anythign
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
       {HeaderToRender}

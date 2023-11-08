@@ -10,7 +10,7 @@ import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatCompositeProps } from '../ChatComposite';
+import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -295,11 +295,17 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     };
   }, [callWithChatAdapter]);
 
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
+  const chatAdapter: ChatAdapter = useMemo(() => {
+    console.log('!!!!!!!!!CallWithChatComposite: chatAdapter useMemo');
+    return new CallWithChatBackedChatAdapter(callWithChatAdapter);
   }, [callWithChatAdapter]);
+
+  const chatProps = useMemo(() => {
+    console.log('!!!!!!!!!!CallWithChatComposite: chatProps useMemo', props.onFetchAvatarPersonaData);
+    return {
+      onFetchAvatarPersonaData: props.onFetchAvatarPersonaData
+    };
+  }, [props.onFetchAvatarPersonaData]);
 
   /** Constant setting of id for the parent stack of the composite */
   const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
@@ -365,7 +371,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatProps.adapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
@@ -472,10 +478,30 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  const onRenderChatContent = useCallback(
-    (): JSX.Element => (
+  useEffect(() => {
+    console.log('!!!!!!!!!!! CallWithChatCOmposite empty useEffect');
+  }, []);
+
+  useEffect(() => {
+    console.log('!!!!!!!!!!! CallWithChatCOmposite chatProps is changed');
+  }, [chatProps]);
+  useEffect(() => {
+    console.log('!!!!!!!!!!! CallWithChatCOmposite props.fileSharing is changed');
+  }, [props.fileSharing]);
+  useEffect(() => {
+    console.log('!!!!!!!!!!! CallWithChatCOmposite chatAdapter is changed');
+  }, [chatAdapter]);
+  useEffect(() => {
+    console.log('!!!!!!!!!!! CallWithChatCOmposite theme is changed');
+  }, [theme]);
+
+  const onRenderChatContent = useCallback((): JSX.Element => {
+    //TODO: theme forces the update
+    console.log('!!!!!!!!!! onRenderChatContent');
+    return (
       <ChatComposite
         {...chatProps}
+        adapter={chatAdapter}
         fluentTheme={theme}
         options={{
           topic: false,
@@ -484,16 +510,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(file-sharing) */
           fileSharing: props.fileSharing
         }}
-        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+        // onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
-    ),
-    [
-      chatProps,
-      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
-      props.onFetchAvatarPersonaData,
-      theme
-    ]
-  );
+    );
+  }, [chatAdapter, chatProps, props.fileSharing, theme]);
 
   const sidePaneHeaderRenderer = useCallback(
     () => (
