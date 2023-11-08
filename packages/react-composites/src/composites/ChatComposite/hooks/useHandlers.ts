@@ -30,8 +30,14 @@ const createCompositeHandlers = memoizeOne(
     updateThreadTopicName: adapter.setTopic,
     onUpdateMessage: (messageId, content, options?) => {
       const metadata = options?.metadata;
+      /* @conditional-compile-remove(file-sharing) */
       const updatedOptions = options?.attachedFilesMetadata ? { ...options.attachedFilesMetadata } : {};
-      return adapter.updateMessage(messageId, content, metadata, updatedOptions);
+      return adapter.updateMessage(
+        messageId,
+        content,
+        metadata,
+        /* @conditional-compile-remove(file-sharing) */ updatedOptions
+      );
     },
     onDeleteMessage: adapter.deleteMessage
   })

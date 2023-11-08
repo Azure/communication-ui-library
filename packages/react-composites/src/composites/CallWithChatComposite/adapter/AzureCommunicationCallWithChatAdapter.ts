@@ -415,10 +415,16 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     content: string,
     metadata?: Record<string, string>,
     options?: {
+      /* @conditional-compile-remove(file-sharing) */
       attachedFilesMetadata?: FileMetadata[];
     }
   ): Promise<void> {
-    return await this.chatAdapter.updateMessage(messageId, content, metadata, options);
+    return await this.chatAdapter.updateMessage(
+      messageId,
+      content,
+      metadata,
+      /* @conditional-compile-remove(file-sharing) */ options
+    );
   }
   /** Delete an existing message. */
   public async deleteMessage(messageId: string): Promise<void> {
