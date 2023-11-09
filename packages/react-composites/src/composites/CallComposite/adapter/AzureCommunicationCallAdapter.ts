@@ -149,7 +149,6 @@ class CallContext {
       };
     }
   ) {
-    console.log(options);
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
