@@ -15,6 +15,7 @@ import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Image, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
+  configurationCenteredContent,
   configurationSectionStyle,
   fillWidth,
   logoStyles,
@@ -326,7 +327,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
       <Stack verticalFill grow horizontal className={fillWidth}>
         <Stack
-          className={fillWidth}
+          className={configurationCenteredContent(
+            mobileWithPreview,
+            /* @conditional-compile-remove(custom-branding) */
+            !!props.logo
+          )}
           verticalAlign="center"
           verticalFill={mobileWithPreview}
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
