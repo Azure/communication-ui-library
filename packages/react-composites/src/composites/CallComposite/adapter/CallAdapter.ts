@@ -280,7 +280,6 @@ export interface VideoBackgroundImage {
   tooltipText?: string;
 }
 
-/* @conditional-compile-remove(calling-sounds) */
 /**
  * @beta
  * Type for representing a custom sound to use for a calling event
@@ -296,7 +295,6 @@ export type SoundEffect = {
   fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
 };
 
-/* @conditional-compile-remove(calling-sounds) */
 /**
  * @beta
  * Type for representing a set of sounds to use for different calling events

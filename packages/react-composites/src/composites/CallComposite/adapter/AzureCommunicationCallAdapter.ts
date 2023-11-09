@@ -143,7 +143,7 @@ class CallContext {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
-      /* conditional-compile-remove(calling-sounds) */
+      /* @conditional-compile-remove(calling-sounds) */
       soundOptions?: {
         callingSounds?: CallingSounds;
       };

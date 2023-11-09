@@ -71,5 +71,4 @@ export type { CapabilitiesChangedListener } from './CallAdapter';
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
 
-/* @conditional-compile-remove(calling-sounds) */
 export type { CallingSounds, SoundEffect } from './CallAdapter';
