@@ -96,7 +96,7 @@ type CallWithChatClientStateInternal = Omit<
   | /* @conditional-compile-remove(video-background-effects) */ 'selectedVideoBackgroundEffect'
   | /* @conditional-compile-remove(call-transfer) */ 'acceptedTransferCallState'
   | 'cameraStatus'
-  | /* @conditional-compile-remove(calling-sounds) */ 'useSounds'
+  | /* @conditional-compile-remove(calling-sounds) */ 'sounds'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;

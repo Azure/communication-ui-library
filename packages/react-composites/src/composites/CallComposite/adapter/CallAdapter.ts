@@ -41,8 +41,6 @@ import type {
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(calling-sounds) */
-import { CallingSounds } from './AzureCommunicationCallAdapter';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -281,6 +279,34 @@ export interface VideoBackgroundImage {
    */
   tooltipText?: string;
 }
+
+/* @conditional-compile-remove(calling-sounds) */
+/**
+ * @beta
+ * Type for representing a custom sound to use for a calling event
+ */
+export type SoundEffect = {
+  /**
+   * Path to sound effect
+   */
+  path: string;
+  /**
+   * type of file format for the sound effect
+   */
+  fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
+
+/* @conditional-compile-remove(calling-sounds) */
+/**
+ * @beta
+ * Type for representing a set of sounds to use for different calling events
+ */
+export type CallingSounds = {
+  /**
+   * Sound to be played when the call ends
+   */
+  callEnded?: SoundEffect;
+};
 
 /**
  * Options for setting microphone and camera state when joining a call

@@ -3,7 +3,7 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import EventEmitter from 'events';
-import { CallingSounds } from './AzureCommunicationCallAdapter';
+import { CallingSounds } from './CallAdapter';
 
 type CallingSoundsLoaded = {
   callEndedSound: HTMLAudioElement | undefined;

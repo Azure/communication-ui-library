@@ -118,6 +118,8 @@ import { getSelectedCameraFromAdapterState } from '../utils';
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(calling-sounds) */
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
+/* @conditional-compile-remove(calling-sounds) */
+import { CallingSounds } from './CallAdapter';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -1258,34 +1260,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     }
   }
 }
-
-/* @conditional-compile-remove(calling-sounds) */
-/**
- * @beta
- * Type for representing a custom sound to use for a calling event
- */
-export type SoundEffect = {
-  /**
-   * Path to sound effect
-   */
-  path: string;
-  /**
-   * type of file format for the sound effect
-   */
-  fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
-};
-
-/* @conditional-compile-remove(calling-sounds) */
-/**
- * @beta
- * Type for representing a set of sounds to use for different calling events
- */
-export type CallingSounds = {
-  /**
-   * Sound to be played when the call ends
-   */
-  callEnded?: SoundEffect;
-};
 
 /* @conditional-compile-remove(teams-adhoc-call) */
 /* @conditional-compile-remove(PSTN-calls) */
