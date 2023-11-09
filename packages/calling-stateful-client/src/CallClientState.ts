@@ -28,7 +28,11 @@ import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
-import { CommunicationIdentifierKind } from '@azure/communication-common';
+import {
+  CommunicationIdentifierKind,
+  CommunicationIdentifier
+} from '@azure/communication-common';
+import { Queue } from './Queue';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -186,6 +190,31 @@ export interface RaiseHandCallFeatureState {
 export type RaisedHandState = {
   raisedHandOrderPosition: number;
 };
+
+/**
+ * State only version of {@link @azure/communication-calling#ReactionCallFeature}. {@link StatefulCallClient} will
+ * automatically listen for reaction on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ * 
+ * @beta
+ */
+export interface ReactionCallFeatureState {
+  reactionPayloads: Queue<ReactionEventPayload>
+  localParticipantReactionPayload?: ReactionEventPayload
+}
+
+export type ReactionState = {
+  shouldRender: boolean;
+  reactionMessage: ReactionMessage;
+}
+
+export type ReactionMessage = {
+  reactionType: string
+}
+
+export type ReactionEventPayload = {
+  identifier: CommunicationIdentifier;
+  reactionMessage: ReactionMessage;
+}
 
 /**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
@@ -431,6 +460,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
+
+  /**
+   * Proxy of {@link @azure/communication-calling#ReactionCallFeature}.
+   */
+  reaction: ReactionCallFeatureState;
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
