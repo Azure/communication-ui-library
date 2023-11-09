@@ -6,6 +6,7 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
+  ReactionEventPayload,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -387,6 +388,15 @@ export class CallContext {
         } else {
           call.raiseHand.localParticipantRaisedHand = undefined;
         }
+      }
+    });
+  }
+
+  public setReceivedReactionFromParticipant(callId: string, reactionEvent: ReactionEventPayload): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.reaction.reactionPayloads.enqueue(reactionEvent);
       }
     });
   }

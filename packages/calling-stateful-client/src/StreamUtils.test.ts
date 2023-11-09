@@ -13,12 +13,13 @@ import {
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
+import { CallState, LocalVideoStreamState, ReactionEventPayload, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, disposeAllViewsFromCall, disposeAllViews } from './StreamUtils';
 import { createMockLocalVideoStream, createMockRemoteVideoStream } from './TestUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Queue } from './Queue';
 
 jest.mock('@azure/communication-calling', () => {
   return {
