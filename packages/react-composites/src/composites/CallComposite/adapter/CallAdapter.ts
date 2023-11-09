@@ -41,6 +41,8 @@ import type {
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(calling-sounds) */
+import { CallingSounds } from './AzureCommunicationCallAdapter';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -151,9 +153,9 @@ export type CallAdapterClientState = {
   hideAttendeeNames?: boolean;
   /* @conditional-compile-remove(calling-sounds) */
   /**
-   * State to track whether to use sounds in the call
+   * State to track the sounds to be used in the call.
    */
-  useSounds?: boolean;
+  sounds?: CallingSounds;
 };
 
 /**

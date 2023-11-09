@@ -3,10 +3,10 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import EventEmitter from 'events';
-import { callEndedSoundString } from '../../common/sounds/CallEndedSound';
+import { CallingSounds } from './AzureCommunicationCallAdapter';
 
-type CallingSounds = {
-  callEndedSound: HTMLAudioElement;
+type CallingSoundsLoaded = {
+  callEndedSound: HTMLAudioElement | undefined;
 };
 
 /**
@@ -15,14 +15,17 @@ type CallingSounds = {
 export class CallingSoundSubscriber {
   private emitter: EventEmitter;
   private call: CallCommon;
-  private sounds: CallingSounds;
+  sounds?: CallingSounds;
+  private soundsLoaded?: CallingSoundsLoaded;
 
-  constructor(call: CallCommon, emitter: EventEmitter) {
-    console.log('creating calling sounds subscriber');
+  constructor(call: CallCommon, emitter: EventEmitter, sounds?: CallingSounds) {
     this.call = call;
     this.emitter = emitter;
-    this.sounds = this.loadSounds();
-    this.subscribeCallSoundEvents();
+    this.sounds = sounds;
+    if (sounds) {
+      this.soundsLoaded = this.loadSounds(sounds);
+      this.subscribeCallSoundEvents();
+    }
   }
 
   private onCallStateChanged = (): void => {
@@ -31,14 +34,13 @@ export class CallingSoundSubscriber {
       this.emitter.emit('callStateChanged', {
         callState: this.call.state
       });
-      if (this.call.state === 'Disconnected') {
-        this.sounds.callEndedSound.play();
+      if (this.call.state === 'Disconnected' && this.soundsLoaded?.callEndedSound) {
+        this.soundsLoaded.callEndedSound.play();
       }
     });
   };
 
   private subscribeCallSoundEvents(): void {
-    console.log('subscribeCallSoundEvents');
     this.onCallStateChanged();
   }
 
@@ -46,9 +48,13 @@ export class CallingSoundSubscriber {
     this.call.off('stateChanged', this.onCallStateChanged);
   }
 
-  private loadSounds(): CallingSounds {
-    const callEndedSound = new Audio(`data:audio/mp3;base64,${callEndedSoundString}`);
-    callEndedSound.preload = 'auto';
+  private loadSounds(sounds?: CallingSounds): CallingSoundsLoaded | undefined {
+    let callEndedSound: HTMLAudioElement | undefined;
+    if (sounds?.callEnded) {
+      callEndedSound = new Audio(sounds?.callEnded?.path);
+      callEndedSound.preload = 'auto';
+    }
+
     return {
       callEndedSound
     };

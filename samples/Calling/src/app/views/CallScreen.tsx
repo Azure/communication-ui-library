@@ -153,6 +153,9 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       videoBackgroundOptions: {
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      soundOptions: {
+        disableSounds: false
       }
     };
   }, []);

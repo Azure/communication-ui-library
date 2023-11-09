@@ -143,7 +143,7 @@ class CallContext {
       };
       /* conditional-compile-remove(calling-sounds) */
       soundOptions?: {
-        disableSounds?: boolean;
+        sounds?: CallingSounds;
       };
     }
   ) {
@@ -166,7 +166,7 @@ class CallContext {
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
-      useSounds: !options?.soundOptions?.disableSounds
+      sounds: options?.soundOptions?.sounds
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -1057,8 +1057,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   private subscribeCallEvents(): void {
     /* @conditional-compile-remove(calling-sounds) */
-    if (this.call && this.getState().useSounds) {
-      this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.emitter);
+    if (this.call) {
+      this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.emitter, this.getState().sounds);
     }
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
@@ -1085,7 +1085,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     /* @conditional-compile-remove(close-captions) */
     this.unsubscribeFromCaptionEvents();
     /* @conditional-compile-remove(calling-sounds) */
-    this.callingSoundSubscriber.unsubscribeAll();
+    if (this.callingSoundSubscriber) {
+      this.callingSoundSubscriber.unsubscribeAll();
+    }
   }
 
   private isMyMutedChanged = (): void => {
@@ -1256,6 +1258,34 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 }
 
+/* @conditional-compile-remove(calling-sounds) */
+/**
+ * @beta
+ * Type for representing a custom sound to use for a calling event
+ */
+export type SoundEffect = {
+  /**
+   * Path to sound effect
+   */
+  path: string;
+  /**
+   * type of file format for the sound effect
+   */
+  fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
+
+/* @conditional-compile-remove(calling-sounds) */
+/**
+ * @beta
+ * Type for representing a set of sounds to use for different calling events
+ */
+export type CallingSounds = {
+  /**
+   * Sound to be played when the call ends
+   */
+  callEnded?: SoundEffect;
+};
+
 /* @conditional-compile-remove(teams-adhoc-call) */
 /* @conditional-compile-remove(PSTN-calls) */
 /**
@@ -1313,9 +1343,9 @@ export type CommonCallAdapterOptions = {
    */
   soundOptions?: {
     /**
-     * Option to opt out of using calling sounds.
+     * Sounds to use for calling events
      */
-    disableSounds?: boolean;
+    callingSounds?: CallingSounds;
   };
 };
 
