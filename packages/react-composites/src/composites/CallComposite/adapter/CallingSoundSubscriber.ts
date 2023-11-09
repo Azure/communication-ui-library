@@ -7,6 +7,7 @@ import { CallingSounds } from './CallAdapter';
 
 type CallingSoundsLoaded = {
   callEndedSound: HTMLAudioElement | undefined;
+  callRingingSound?: HTMLAudioElement | undefined;
 };
 
 /**
@@ -33,6 +34,23 @@ export class CallingSoundSubscriber {
       this.emitter.emit('callStateChanged', {
         callState: this.call.state
       });
+      if (
+        (this.call.state === 'Ringing' || this.call.state === 'Connecting') &&
+        !(this.call.callerInfo.identifier?.kind === 'phoneNumber') &&
+        this.soundsLoaded?.callRingingSound
+      ) {
+        this.soundsLoaded.callRingingSound.loop = true;
+        this.soundsLoaded.callRingingSound.play().catch((e) => {
+          console.error(e, 'Failed to play call ringing sound, check loader config to make sure it is correct');
+        });
+      }
+      if (
+        (this.call.state === 'Connected' || this.call.state === 'Disconnected') &&
+        this.soundsLoaded?.callRingingSound
+      ) {
+        this.soundsLoaded.callRingingSound.loop = false;
+        this.soundsLoaded.callRingingSound.pause();
+      }
       if (this.call.state === 'Disconnected' && this.soundsLoaded?.callEndedSound) {
         this.soundsLoaded.callEndedSound.play().catch((e) => {
           console.error(e, 'Failed to play call ended sound, check loader config to make sure it is correct');
@@ -55,8 +73,14 @@ export class CallingSoundSubscriber {
       callEndedSound = new Audio(sounds?.callEnded?.path);
       callEndedSound.preload = 'auto';
     }
+    let callRingingSound: HTMLAudioElement | undefined;
+    if (sounds?.callRinging) {
+      callRingingSound = new Audio(sounds?.callRinging?.path);
+      callRingingSound.preload = 'auto';
+    }
     return {
-      callEndedSound
+      callEndedSound,
+      callRingingSound
     };
   }
 }

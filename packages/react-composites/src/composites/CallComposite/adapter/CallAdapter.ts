@@ -304,6 +304,10 @@ export type CallingSounds = {
    * Sound to be played when the call ends
    */
   callEnded?: SoundEffect;
+  /**
+   * Sound to be played when the call is ringing
+   */
+  callRinging?: SoundEffect;
 };
 
 /**
