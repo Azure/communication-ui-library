@@ -117,6 +117,8 @@ import { getBackgroundEffectFromSelectedEffect } from '../utils';
 import { getSelectedCameraFromAdapterState } from '../utils';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(calling-sounds) */
+import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 
 type CallTypeOf<AgentType extends CallAgent | BetaTeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -336,6 +338,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private handlers: CallHandlersOf<AgentType>;
   private participantSubscribers = new Map<string, ParticipantSubscriber>();
   private emitter: EventEmitter = new EventEmitter();
+  /* @conditional-compile-remove(calling-sounds) */
+  private callingSoundSubscriber;
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(video-background-effects) */
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
@@ -1048,6 +1052,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   }
 
   private subscribeCallEvents(): void {
+    /* @conditional-compile-remove(calling-sounds) */
+    if (this.call) {
+      this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.emitter);
+    }
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.on('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
@@ -1072,6 +1080,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
     /* @conditional-compile-remove(close-captions) */
     this.unsubscribeFromCaptionEvents();
+    /* @conditional-compile-remove(calling-sounds) */
+    this.callingSoundSubscriber.unsubscribeAll();
   }
 
   private isMyMutedChanged = (): void => {
