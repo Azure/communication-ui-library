@@ -28,7 +28,7 @@ export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'S
  *
  * @private
  */
-const getTelemetryImplementationHint = (telemetryImplementationHint?: _TelemetryImplementationHint): number => {
+const getTelemetryImplementationHint = (telemetryImplementationHint: _TelemetryImplementationHint): number => {
   switch (telemetryImplementationHint) {
     case 'Call':
       return 1;
@@ -58,7 +58,7 @@ const getTelemetryImplementationHint = (telemetryImplementationHint?: _Telemetry
  *
  * @internal
  */
-export const _getApplicationId = (telemetryImplementationHint?: _TelemetryImplementationHint): string => {
+export const _getApplicationId = (telemetryImplementationHint: _TelemetryImplementationHint): string => {
   const highLevelArtifact = 0;
   const specificImplementation = getTelemetryImplementationHint(telemetryImplementationHint);
   const implementationDetails = 0;

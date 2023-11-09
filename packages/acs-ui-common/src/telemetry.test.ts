@@ -6,10 +6,12 @@ import { _getApplicationId, sanitize } from './telemetry';
 // WARNING: Do not change this format. Restrictions:
 // - The data analytics backend depends on the application ID meeting this format.
 // - The total length of the application ID MUST be <= 24 characters, otherwise events will be dropped.
-const applicationIdFormat = new RegExp('acr/[0-9][0-9]?.[0-9][0-9]?.[0-9][0-9]?(-(alpha|beta)(.[0-9][0-9]?)?)?');
+const applicationIdFormat = new RegExp('acr[0-2][0-4][0]/[0-9][0-9]?.[0-9][0-9]?.[0-9][0-9]?(-(alpha|beta)(.[0-9][0-9]?)?)?');
+
 
 test('applicationId conforms to restrictions', () => {
-  expect(applicationIdFormat.test(_getApplicationId())).toBe(true);
+  const telemetryImplementationHint = 'Call';
+  expect(applicationIdFormat.test(_getApplicationId(telemetryImplementationHint))).toBe(true);
 });
 
 test('sanitize works for all versions in use', () => {
