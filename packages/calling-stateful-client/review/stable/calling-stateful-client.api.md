@@ -31,6 +31,7 @@ import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
+import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
@@ -143,6 +144,9 @@ export interface CaptionsInfo {
 
 // @public
 export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined) => StatefulCallClient;
+
+// @internal
+export const _createStatefulCallClientInner: (args: StatefulCallClientArgs, options?: StatefulCallClientOptions | undefined, telemetryImplementationHint?: _TelemetryImplementationHint) => StatefulCallClient;
 
 // @public
 export type CreateViewResult = {

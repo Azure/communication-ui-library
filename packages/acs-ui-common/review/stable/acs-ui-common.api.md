@@ -46,7 +46,7 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type FunctionWithKey<KeyT, ArgsT extends unknown[], RetT> = (key: KeyT, ...args: ArgsT) => RetT;
 
 // @internal
-export const _getApplicationId: () => string;
+export const _getApplicationId: (telemetryImplementationHint?: _TelemetryImplementationHint | undefined) => string;
 
 // @internal (undocumented)
 export interface _IObjectMap<T> {
@@ -87,6 +87,9 @@ export type TelemetryEvent = {
     level: AzureLogLevel;
     data?: Record<string, unknown>;
 };
+
+// @internal
+export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
 
 // @internal
 export const _toCommunicationIdentifier: (id: string | CommunicationIdentifier) => CommunicationIdentifier;
