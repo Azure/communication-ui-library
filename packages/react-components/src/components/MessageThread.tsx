@@ -924,7 +924,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         return;
       }
       const attachmentDownloadResult = await onFetchAttachments(attachments);
-      const listOfAttachments = inlineAttachments[messageId];
+      const listOfAttachments = inlineAttachments[messageId] ?? {};
       for (const result of attachmentDownloadResult) {
         const { attachmentId, blobUrl } = result;
         listOfAttachments[attachmentId] = blobUrl;
@@ -1186,10 +1186,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       console.log('!!!!!!', defaultChatMessageRenderer, 'onRenderAvatar', onRenderAvatar, 'messageProps', messageProps);
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-      if (inlineAttachments[messageProps.message.messageId] === undefined) {
-        setInlineAttachments((prev) => ({ ...prev, [messageProps.message.messageId]: {} }));
-      }
       if (
         messageProps.message.messageType === 'chat' ||
         /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
