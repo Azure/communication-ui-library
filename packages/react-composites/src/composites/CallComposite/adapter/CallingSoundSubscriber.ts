@@ -16,13 +16,11 @@ type CallingSoundsLoaded = {
 export class CallingSoundSubscriber {
   private emitter: EventEmitter;
   private call: CallCommon;
-  sounds?: CallingSounds;
   private soundsLoaded?: CallingSoundsLoaded;
 
   constructor(call: CallCommon, emitter: EventEmitter, sounds?: CallingSounds) {
     this.call = call;
     this.emitter = emitter;
-    this.sounds = sounds;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
       this.subscribeCallSoundEvents();
