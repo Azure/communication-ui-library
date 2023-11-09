@@ -290,7 +290,7 @@ export class CallSubscriber {
         'NotRendered',
         undefined
       );
-      const currentLocalVideoStreams = this._call.localVideoStreams[0];
+      const currentLocalVideoStreams = this._call.localVideoStreams;
       const localVideoStreams = addedLocalVideoStreamsExcludingScreenShare
         .concat(currentLocalVideoStreams)
         .map((stream) => convertSdkLocalStreamToDeclarativeLocalStream(stream));
