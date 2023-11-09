@@ -143,10 +143,11 @@ class CallContext {
       };
       /* conditional-compile-remove(calling-sounds) */
       soundOptions?: {
-        sounds?: CallingSounds;
+        callingSounds?: CallingSounds;
       };
     }
   ) {
+    console.log(options);
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
@@ -166,7 +167,7 @@ class CallContext {
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
-      sounds: options?.soundOptions?.sounds
+      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.soundOptions?.callingSounds
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();

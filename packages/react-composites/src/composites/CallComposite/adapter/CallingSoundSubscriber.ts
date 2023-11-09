@@ -29,13 +29,14 @@ export class CallingSoundSubscriber {
   }
 
   private onCallStateChanged = (): void => {
-    console.log(this.call);
     this.call.on('stateChanged', () => {
       this.emitter.emit('callStateChanged', {
         callState: this.call.state
       });
       if (this.call.state === 'Disconnected' && this.soundsLoaded?.callEndedSound) {
-        this.soundsLoaded.callEndedSound.play();
+        this.soundsLoaded.callEndedSound.play().catch((e) => {
+          console.error(e, 'Failed to play call ended sound, check loader config to make sure it is correct');
+        });
       }
     });
   };
@@ -54,7 +55,6 @@ export class CallingSoundSubscriber {
       callEndedSound = new Audio(sounds?.callEnded?.path);
       callEndedSound.preload = 'auto';
     }
-
     return {
       callEndedSound
     };
