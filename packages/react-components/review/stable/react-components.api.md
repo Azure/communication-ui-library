@@ -1984,6 +1984,7 @@ export type VideoGalleryParticipant = {
     displayName?: string;
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
+    screenShareStream?: VideoGalleryStream;
 };
 
 // @public
@@ -2021,7 +2022,6 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
-    screenShareStream?: VideoGalleryStream;
 }
 
 // @public

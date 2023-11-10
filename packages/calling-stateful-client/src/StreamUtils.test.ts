@@ -173,7 +173,13 @@ function addMockLocalStream(call: CallState): void {
 }
 
 function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
-  internalContext.setLocalRenderInfo(callId, new SdkLocalVideoStream({} as VideoDeviceInfo), 'NotRendered', undefined);
+  internalContext.setLocalRenderInfo(
+    callId,
+    'Video',
+    new SdkLocalVideoStream({} as VideoDeviceInfo),
+    'NotRendered',
+    undefined
+  );
 }
 
 describe('stream utils', () => {
@@ -217,10 +223,10 @@ describe('stream utils', () => {
     // it is supposed to be creating the view for the local participant.
     await createView(context, internalContext, mockCallId, undefined, {} as LocalVideoStreamState);
 
-    expect(internalContext.getLocalRenderInfo(mockCallId)).toBeDefined();
-    expect(internalContext.getLocalRenderInfo(mockCallId)?.stream).toBeDefined();
-    expect(internalContext.getLocalRenderInfo(mockCallId)?.renderer).toBeDefined();
-    expect(internalContext.getLocalRenderInfo(mockCallId)?.status).toBe('Rendered');
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')).toBeDefined();
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.stream).toBeDefined();
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.renderer).toBeDefined();
+    expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.status).toBe('Rendered');
     expect(context.getState().calls[mockCallId]?.localVideoStreams[0].view).toBeDefined();
   });
 
