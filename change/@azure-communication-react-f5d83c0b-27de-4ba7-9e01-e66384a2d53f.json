@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "release",
-  "comment": "Groom changelog for 1.10.0-beta.1",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

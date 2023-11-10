@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Rooms",
-  "comment": "Hide raised hand button for consumer in rooms call",
-  "packageName": "@azure/communication-react",
-  "email": "79475487+mgamis-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
