@@ -139,7 +139,7 @@ export class InternalCallContext {
 
   public setLocalRenderInfo(
     callId: string,
-    streamId: string,
+    streamKey: string,
     stream: LocalVideoStream,
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
@@ -150,29 +150,29 @@ export class InternalCallContext {
       this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), localRenderInfosForCall);
     }
 
-    localRenderInfosForCall.set(streamId, { stream, status, renderer });
+    localRenderInfosForCall.set(streamKey, { stream, status, renderer });
   }
 
   public getLocalRenderInfosForCall(callId: string): Map<string, LocalRenderInfo> | undefined {
     return this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
   }
 
-  public getLocalRenderInfo(callId: string, streamId: string): LocalRenderInfo | undefined {
+  public getLocalRenderInfo(callId: string, streamKey: string): LocalRenderInfo | undefined {
     const localRenderInfosForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!localRenderInfosForCall) {
       return undefined;
     }
 
-    return localRenderInfosForCall.get(streamId);
+    return localRenderInfosForCall.get(streamKey);
   }
 
-  public deleteLocalRenderInfo(callId: string, streamId: string): void {
+  public deleteLocalRenderInfo(callId: string, streamKey: string): void {
     const localRenderInfoForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!localRenderInfoForCall) {
       return;
     }
 
-    localRenderInfoForCall.delete(streamId);
+    localRenderInfoForCall.delete(streamKey);
   }
 
   public getUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): LocalRenderInfo | undefined {
