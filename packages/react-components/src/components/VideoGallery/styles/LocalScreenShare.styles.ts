@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Theme } from '@fluentui/react';
+import { IStackStyles, mergeStyles, Theme } from '@fluentui/react';
 
 /**
  * @private
@@ -49,3 +49,16 @@ export const screenSharingNotificationTextStyle = mergeStyles({
   // Text component will take body color by default (white in Dark Mode), so forcing it to be parent container color
   color: 'inherit'
 });
+
+/**
+ * @private
+ */
+export const screenShareVideoStyles: IStackStyles = {
+  root: {
+    video: {
+      width: '100%',
+      height: '100%',
+      objectFit: 'contain'
+    }
+  }
+};

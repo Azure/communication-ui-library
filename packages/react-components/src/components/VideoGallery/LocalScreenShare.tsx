@@ -8,6 +8,7 @@ import { useTheme } from '../../theming';
 import { CreateVideoStreamViewResult, VideoGalleryLocalParticipant, VideoStreamOptions } from '../../types';
 import { VideoTile } from '../VideoTile';
 import {
+  screenShareVideoStyles,
   screenSharingContainerStyle,
   screenSharingNotificationContainerStyle,
   screenSharingNotificationIconContainerStyle,
@@ -60,20 +61,7 @@ export const LocalScreenShare = React.memo(
         return undefined;
       }
 
-      return (
-        <StreamMedia
-          videoStreamElement={renderElement}
-          styles={{
-            root: {
-              video: {
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain'
-              }
-            }
-          }}
-        />
-      );
+      return <StreamMedia videoStreamElement={renderElement} styles={screenShareVideoStyles} />;
     }, [renderElement]);
 
     if (!localParticipant || !localParticipant.isScreenSharingOn) {
