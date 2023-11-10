@@ -4,8 +4,12 @@
 import { CallCommon } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { CallingSounds } from './CallAdapter';
-import { CallAdapterLocator, CallParticipantsLocator } from './AzureCommunicationCallAdapter';
+import { CallAdapterLocator } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(calling-sounds) */
+import { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(calling-sounds) */
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(calling-sounds) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 type CallingSoundsLoaded = {
@@ -89,7 +93,9 @@ export class CallingSoundSubscriber {
  * sound when making an outbound call.
  */
 const playRingingSound = (call: CallCommon, locator: CallAdapterLocator): boolean => {
+  /* @conditional-compile-remove(calling-sounds) */
   const callee = (locator as CallParticipantsLocator).participantIds;
+  /* @conditional-compile-remove(calling-sounds) */
   if (
     callee.length >= 1 &&
     !isPhoneNumberIdentifier(fromFlatCommunicationIdentifier(callee[0])) &&
@@ -99,4 +105,5 @@ const playRingingSound = (call: CallCommon, locator: CallAdapterLocator): boolea
   } else {
     return false;
   }
+  return false;
 };
