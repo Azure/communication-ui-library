@@ -4,6 +4,9 @@
 import { CallCommon } from '@azure/communication-calling';
 import EventEmitter from 'events';
 import { CallingSounds } from './CallAdapter';
+import { CallAdapterLocator, CallParticipantsLocator } from './AzureCommunicationCallAdapter';
+import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 type CallingSoundsLoaded = {
   callEndedSound: HTMLAudioElement | undefined;
@@ -17,10 +20,12 @@ export class CallingSoundSubscriber {
   private emitter: EventEmitter;
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
+  private callLocator: CallAdapterLocator;
 
-  constructor(call: CallCommon, emitter: EventEmitter, sounds?: CallingSounds) {
+  constructor(call: CallCommon, emitter: EventEmitter, locator: CallAdapterLocator, sounds?: CallingSounds) {
     this.call = call;
     this.emitter = emitter;
+    this.callLocator = locator;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
       this.subscribeCallSoundEvents();
@@ -32,11 +37,7 @@ export class CallingSoundSubscriber {
       this.emitter.emit('callStateChanged', {
         callState: this.call.state
       });
-      if (
-        (this.call.state === 'Ringing' || this.call.state === 'Connecting') &&
-        !(this.call.callerInfo.identifier?.kind === 'phoneNumber') &&
-        this.soundsLoaded?.callRingingSound
-      ) {
+      if (playRingingSound(this.call, this.callLocator) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.soundsLoaded.callRingingSound.play().catch((e) => {
           console.error(e, 'Failed to play call ringing sound, check loader config to make sure it is correct');
@@ -82,3 +83,20 @@ export class CallingSoundSubscriber {
     };
   }
 }
+
+/**
+ * Helper function to allow the calling sound subscriber to determine when to play the ringing
+ * sound when making an outbound call.
+ */
+const playRingingSound = (call: CallCommon, locator: CallAdapterLocator): boolean => {
+  const callee = (locator as CallParticipantsLocator).participantIds;
+  if (
+    callee.length >= 1 &&
+    !isPhoneNumberIdentifier(fromFlatCommunicationIdentifier(callee[0])) &&
+    (call.state === 'Ringing' || call.state === 'Connecting')
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
