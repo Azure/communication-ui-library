@@ -32,7 +32,12 @@ export const LocalScreenShare = React.memo(
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
   }) => {
-    const { localParticipant, onCreateLocalStreamView, onDisposeLocalStreamView } = props;
+    const { localParticipant, onCreateLocalStreamView } = props;
+
+    const onDisposeLocalStreamView = useMemo(() => {
+      return () => props.onDisposeLocalStreamView?.('ScreenSharing');
+    }, [props.onDisposeLocalStreamView]);
+
     const { isAvailable, renderElement } = localParticipant.screenShareStream || {};
     const locale = useLocale();
     const localVideoStreamProps: LocalVideoStreamLifecycleMaintainerProps = useMemo(
