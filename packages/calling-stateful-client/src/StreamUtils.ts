@@ -55,7 +55,8 @@ async function createViewVideo(
   }
 
   const streamType = stream?.mediaStreamType;
-  const streamId = (stream as RemoteVideoStream).id;
+  const localStreamKey = (stream as LocalVideoStream).mediaStreamType;
+  const remoteStreamId = (stream as RemoteVideoStream).id;
 
   // we want to check to see if there is a participantId this will tell us whether its a local stream or a remote one.
   const participantKey =
@@ -65,7 +66,13 @@ async function createViewVideo(
         : toFlatCommunicationIdentifier(participantId)
       : undefined;
 
-  const streamLogInfo = { callId, participantKey, streamId, streamType, streamEventType };
+  const streamLogInfo = {
+    callId,
+    participantKey,
+    streamId: remoteStreamId ?? localStreamKey,
+    streamType,
+    streamEventType
+  };
 
   // make different logging announcement based on whether or not we are starting a local or remote
   _logStreamEvent(EventNames.CREATING_VIEW, streamLogInfo);
@@ -73,8 +80,8 @@ async function createViewVideo(
   // if we have a participant Id and a stream get the remote info, else get the local render info from state.
   const renderInfo =
     streamEventType === 'createViewRemote' && participantKey
-      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
-      : internalContext.getLocalRenderInfo(callId);
+      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, remoteStreamId)
+      : internalContext.getLocalRenderInfo(callId, localStreamKey);
 
   if (!renderInfo) {
     _logStreamEvent(EventNames.STREAM_NOT_FOUND, streamLogInfo);
@@ -101,7 +108,7 @@ async function createViewVideo(
       internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
-        streamId,
+        remoteStreamId,
         renderInfo.stream as RemoteVideoStream,
         'Rendering',
         renderInfo.renderer
@@ -110,6 +117,7 @@ async function createViewVideo(
       _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
       internalContext.setLocalRenderInfo(
         callId,
+        localStreamKey,
         renderInfo.stream as LocalVideoStream,
         'Rendering',
         renderInfo.renderer
@@ -124,12 +132,18 @@ async function createViewVideo(
     ? internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
-        streamId,
+        remoteStreamId,
         renderInfo.stream as RemoteVideoStream,
         'Rendering',
         undefined
       )
-    : internalContext.setLocalRenderInfo(callId, renderInfo.stream as LocalVideoStream, 'Rendering', renderer);
+    : internalContext.setLocalRenderInfo(
+        callId,
+        localStreamKey,
+        renderInfo.stream as LocalVideoStream,
+        'Rendering',
+        renderer
+      );
 
   let view;
   try {
@@ -140,14 +154,20 @@ async function createViewVideo(
       internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
-        streamId,
+        remoteStreamId,
         renderInfo.stream as RemoteVideoStream,
         'NotRendered',
         undefined
       );
     } else if (streamEventType === 'createViewLocal') {
       _logStreamEvent(EventNames.CREATE_STREAM_FAIL, streamLogInfo, e);
-      internalContext.setLocalRenderInfo(callId, renderInfo.stream as LocalVideoStream, 'NotRendered', undefined);
+      internalContext.setLocalRenderInfo(
+        callId,
+        localStreamKey,
+        renderInfo.stream as LocalVideoStream,
+        'NotRendered',
+        undefined
+      );
     }
     throw e;
   }
@@ -156,8 +176,8 @@ async function createViewVideo(
   // stop rendering.
   const refreshedRenderInfo =
     streamEventType === 'createViewRemote' && participantKey
-      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
-      : internalContext.getLocalRenderInfo(callId);
+      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, remoteStreamId)
+      : internalContext.getLocalRenderInfo(callId, localStreamKey);
 
   if (!refreshedRenderInfo) {
     // RenderInfo was removed. This should not happen unless stream was removed from the call so dispose the renderer
@@ -165,8 +185,8 @@ async function createViewVideo(
     _logStreamEvent(EventNames.RENDER_INFO_NOT_FOUND, streamLogInfo);
     renderer.dispose();
     streamEventType === 'createViewRemote' && participantKey
-      ? context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined)
-      : context.setLocalVideoStreamRendererView(callId, undefined);
+      ? context.setRemoteVideoStreamRendererView(callId, participantKey, remoteStreamId, undefined)
+      : context.setLocalVideoStreamRendererView(callId, localStreamKey, undefined);
     return;
   }
 
@@ -180,20 +200,21 @@ async function createViewVideo(
       internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
-        streamId,
+        remoteStreamId,
         refreshedRenderInfo.stream as RemoteVideoStream,
         'NotRendered',
         undefined
       );
-      context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+      context.setRemoteVideoStreamRendererView(callId, participantKey, remoteStreamId, undefined);
     } else if (streamEventType === 'createViewLocal') {
       internalContext.setLocalRenderInfo(
         callId,
+        localStreamKey,
         refreshedRenderInfo.stream as LocalVideoStream,
         'NotRendered',
         undefined
       );
-      context.setLocalVideoStreamRendererView(callId, undefined);
+      context.setLocalVideoStreamRendererView(callId, localStreamKey, undefined);
     }
     return;
   }
@@ -204,7 +225,7 @@ async function createViewVideo(
     internalContext.setRemoteRenderInfo(
       callId,
       participantKey,
-      streamId,
+      remoteStreamId,
       refreshedRenderInfo.stream as RemoteVideoStream,
       'Rendered',
       renderer
@@ -212,13 +233,23 @@ async function createViewVideo(
     context.setRemoteVideoStreamRendererView(
       callId,
       participantKey,
-      streamId,
+      remoteStreamId,
       convertFromSDKToDeclarativeVideoStreamRendererView(view)
     );
     _logStreamEvent(EventNames.VIEW_RENDER_SUCCEED, streamLogInfo);
   } else if (streamEventType === 'createViewLocal') {
-    internalContext.setLocalRenderInfo(callId, refreshedRenderInfo.stream as LocalVideoStream, 'Rendered', renderer);
-    context.setLocalVideoStreamRendererView(callId, convertFromSDKToDeclarativeVideoStreamRendererView(view));
+    internalContext.setLocalRenderInfo(
+      callId,
+      localStreamKey,
+      refreshedRenderInfo.stream as LocalVideoStream,
+      'Rendered',
+      renderer
+    );
+    context.setLocalVideoStreamRendererView(
+      callId,
+      localStreamKey,
+      convertFromSDKToDeclarativeVideoStreamRendererView(view)
+    );
     _logStreamEvent(EventNames.VIEW_RENDER_SUCCEED, streamLogInfo);
   }
 
@@ -322,7 +353,8 @@ function disposeViewVideo(
   }
 
   const streamType = stream.mediaStreamType;
-  const streamId = (stream as RemoteVideoStream).id;
+  const localStreamKey = (stream as LocalVideoStream).mediaStreamType;
+  const remoteStreamId = (stream as RemoteVideoStream).id;
 
   // we want to check to see if there is a participantId this will tell us whether its a local stream or a remote one.
   const participantKey =
@@ -331,18 +363,18 @@ function disposeViewVideo(
         ? participantId
         : toFlatCommunicationIdentifier(participantId)
       : undefined;
-  const streamLogInfo = { callId, participantKey, streamId, streamType };
+  const streamLogInfo = { callId, participantKey, streamId: remoteStreamId ?? localStreamKey, streamType };
 
   _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
   if (streamEventType === 'disposeViewRemote' && participantKey) {
-    context.setRemoteVideoStreamRendererView(callId, participantKey, streamId, undefined);
+    context.setRemoteVideoStreamRendererView(callId, participantKey, remoteStreamId, undefined);
   }
 
   const renderInfo =
     streamEventType === 'disposeViewRemote' && participantKey
-      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, streamId)
-      : internalContext.getLocalRenderInfo(callId);
+      ? internalContext.getRemoteRenderInfoForParticipant(callId, participantKey, remoteStreamId)
+      : internalContext.getLocalRenderInfo(callId, localStreamKey);
 
   if (!renderInfo) {
     _logStreamEvent(EventNames.DISPOSE_INFO_NOT_FOUND, streamLogInfo);
@@ -372,13 +404,14 @@ function disposeViewVideo(
       ? internalContext.setRemoteRenderInfo(
           callId,
           participantKey,
-          streamId,
+          remoteStreamId,
           renderInfo.stream as RemoteVideoStream,
           'Stopping',
           undefined
         )
       : internalContext.setLocalRenderInfo(
           callId,
+          localStreamKey,
           renderInfo.stream as LocalVideoStream,
           'Stopping',
           renderInfo.renderer
@@ -394,14 +427,20 @@ function disposeViewVideo(
       internalContext.setRemoteRenderInfo(
         callId,
         participantKey,
-        streamId,
+        remoteStreamId,
         renderInfo.stream as RemoteVideoStream,
         'NotRendered',
         undefined
       );
     } else if (streamEventType === 'disposeViewLocal') {
-      internalContext.setLocalRenderInfo(callId, renderInfo.stream as LocalVideoStream, 'NotRendered', undefined);
-      context.setLocalVideoStreamRendererView(callId, undefined);
+      internalContext.setLocalRenderInfo(
+        callId,
+        localStreamKey,
+        renderInfo.stream as LocalVideoStream,
+        'NotRendered',
+        undefined
+      );
+      context.setLocalVideoStreamRendererView(callId, localStreamKey, undefined);
     }
   } else {
     _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
@@ -506,9 +545,9 @@ export function disposeAllViewsFromCall(
   internalContext: InternalCallContext,
   callId: string
 ): void {
-  const callStreams = internalContext.getRemoteRenderInfoForCall(callId);
-  if (callStreams) {
-    for (const [participantKey, participantStreams] of callStreams.entries()) {
+  const remoteStreams = internalContext.getRemoteRenderInfoForCall(callId);
+  if (remoteStreams) {
+    for (const [participantKey, participantStreams] of remoteStreams.entries()) {
       for (const [_, remoteStreamAndRenderer] of participantStreams.entries()) {
         // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
         // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
@@ -522,17 +561,22 @@ export function disposeAllViewsFromCall(
       }
     }
   }
-  const localStreamAndRenderer = internalContext.getLocalRenderInfo(callId);
-  if (localStreamAndRenderer && localStreamAndRenderer.renderer) {
-    // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
-    // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
-    disposeView(
-      context,
-      internalContext,
-      callId,
-      undefined,
-      convertSdkLocalStreamToDeclarativeLocalStream(localStreamAndRenderer.stream)
-    );
+
+  const localStreams = internalContext.getLocalRenderInfosForCall(callId);
+  if (localStreams) {
+    for (const localStreamAndRenderer of localStreams.values()) {
+      if (localStreamAndRenderer && localStreamAndRenderer.renderer) {
+        // We don't want to accept SDK stream as parameter but we also don't cache the declarative stream so we have to
+        // convert the SDK stream to declarative stream which is not pretty so this could use some further refactoring.
+        disposeView(
+          context,
+          internalContext,
+          callId,
+          undefined,
+          convertSdkLocalStreamToDeclarativeLocalStream(localStreamAndRenderer.stream)
+        );
+      }
+    }
   }
 }
 

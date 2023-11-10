@@ -25,24 +25,21 @@ export type RenderStatus = 'NotRendered' | 'Rendering' | 'Rendered' | 'Stopping'
 /**
  * Internal container to hold common state needed to keep track of renders.
  */
-export interface RenderInfo {
+export interface RenderInfo<T> {
   status: RenderStatus;
   renderer: VideoStreamRenderer | undefined;
+  stream: T;
 }
 
 /**
  * Internally used to keep track of the status, renderer, and awaiting promise, associated with a LocalVideoStream.
  */
-export interface LocalRenderInfo extends RenderInfo {
-  stream: LocalVideoStream;
-}
+export type LocalRenderInfo = RenderInfo<LocalVideoStream>;
 
 /**
  * Internally used to keep track of the status, renderer, and awaiting promise, associated with a RemoteVideoStream.
  */
-export interface RemoteRenderInfo extends RenderInfo {
-  stream: RemoteVideoStream;
-}
+export type RemoteRenderInfo = RenderInfo<RemoteVideoStream>;
 
 /**
  * Contains internal data used between different Declarative components to share data.
@@ -51,8 +48,8 @@ export class InternalCallContext {
   // <CallId, <ParticipantKey, <StreamId, RemoteRenderInfo>>
   private _remoteRenderInfos = new Map<string, Map<string, Map<number, RemoteRenderInfo>>>();
 
-  // <CallId, LocalRenderInfo>.
-  private _localRenderInfos = new Map<string, LocalRenderInfo>();
+  // <CallId, <MediaStreamType, LocalRenderInfo>>.
+  private _localRenderInfos = new Map<string, Map<string, LocalRenderInfo>>();
 
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
   // The key is the stream ID. We assume each stream ID to only have one owning render info
@@ -142,23 +139,44 @@ export class InternalCallContext {
 
   public setLocalRenderInfo(
     callId: string,
+    streamId: string,
     stream: LocalVideoStream,
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), { stream, status, renderer });
+    let localRenderInfosForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
+    if (!localRenderInfosForCall) {
+      localRenderInfosForCall = new Map<string, LocalRenderInfo>();
+      this._localRenderInfos.set(this._callIdHistory.latestCallId(callId), localRenderInfosForCall);
+    }
+
+    localRenderInfosForCall.set(streamId, { stream, status, renderer });
   }
 
-  public getLocalRenderInfo(callId: string): LocalRenderInfo | undefined {
+  public getLocalRenderInfosForCall(callId: string): Map<string, LocalRenderInfo> | undefined {
     return this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
   }
 
-  public deleteLocalRenderInfo(callId: string): void {
-    this._localRenderInfos.delete(this._callIdHistory.latestCallId(callId));
+  public getLocalRenderInfo(callId: string, streamId: string): LocalRenderInfo | undefined {
+    const localRenderInfosForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
+    if (!localRenderInfosForCall) {
+      return undefined;
+    }
+
+    return localRenderInfosForCall.get(streamId);
+  }
+
+  public deleteLocalRenderInfo(callId: string, streamId: string): void {
+    const localRenderInfoForCall = this._localRenderInfos.get(this._callIdHistory.latestCallId(callId));
+    if (!localRenderInfoForCall) {
+      return;
+    }
+
+    localRenderInfoForCall.delete(streamId);
   }
 
   public getUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): LocalRenderInfo | undefined {
-    return this._unparentedRenderInfos.get(localVideoStream.source.id);
+    return this._unparentedRenderInfos.get(localVideoStream.mediaStreamType);
   }
 
   public getUnparentedRenderInfos(): LocalVideoStream[] {
@@ -171,23 +189,23 @@ export class InternalCallContext {
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {
-    this._unparentedRenderInfos.set(statefulStream.source.id, { stream, status, renderer });
+    this._unparentedRenderInfos.set(statefulStream.mediaStreamType, { stream, status, renderer });
   }
 
   public deleteUnparentedRenderInfo(localVideoStream: LocalVideoStreamState): void {
     /* @conditional-compile-remove(video-background-effects) */
-    this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.source.id)?.unsubscribe();
+    this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.mediaStreamType)?.unsubscribe();
 
-    this._unparentedRenderInfos.delete(localVideoStream.source.id);
+    this._unparentedRenderInfos.delete(localVideoStream.mediaStreamType);
   }
 
   public subscribeToUnparentedViewVideoEffects(localVideoStream: LocalVideoStream, callContext: CallContext): void {
     /* @conditional-compile-remove(video-background-effects) */
     {
       // Ensure we aren't setting multiple subscriptions
-      this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.source.id)?.unsubscribe();
+      this._unparentedViewVideoEffectsSubscriber.get(localVideoStream.mediaStreamType)?.unsubscribe();
       this._unparentedViewVideoEffectsSubscriber.set(
-        localVideoStream.source.id,
+        localVideoStream.mediaStreamType,
         new LocalVideoStreamVideoEffectsSubscriber({
           parent: 'unparented',
           context: callContext,

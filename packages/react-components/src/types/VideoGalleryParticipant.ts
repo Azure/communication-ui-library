@@ -42,6 +42,8 @@ export type VideoGalleryParticipant = {
   videoStream?: VideoGalleryStream;
   /** Whether participant is screen sharing or not */
   isScreenSharingOn?: boolean;
+  /** Video stream of shared screen */
+  screenShareStream?: VideoGalleryStream;
 };
 
 /**
@@ -106,8 +108,6 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /** Whether participant is speaking or not */
   isSpeaking?: boolean;
-  /** Video stream of shared screen */
-  screenShareStream?: VideoGalleryStream;
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
   /**

@@ -628,7 +628,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
 
-  const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
+  const localScreenShareStreamComponent = (
+    <LocalScreenShare
+      localParticipant={localParticipant}
+      onCreateLocalStreamView={onCreateLocalStreamView}
+      onDisposeLocalStreamView={onDisposeLocalStreamView}
+    />
+  );
 
   const remoteScreenShareComponent = screenShareParticipant && (
     <RemoteScreenShare

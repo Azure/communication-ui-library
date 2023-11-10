@@ -117,11 +117,11 @@ export class CallSubscriber {
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
 
-    // At time of writing only one LocalVideoStream is supported by SDK.
-    if (this._call.localVideoStreams.length > 0) {
+    for (const localVideoStream of this._call.localVideoStreams) {
       this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
-        this._call.localVideoStreams[0],
+        localVideoStream.mediaStreamType,
+        localVideoStream,
         'NotRendered',
         undefined
       );
@@ -161,17 +161,17 @@ export class CallSubscriber {
 
     // If we are unsubscribing that means we no longer want to display any video for this call (callEnded or callAgent
     // disposed) and we should not be updating it any more. So if video is rendering we stop rendering.
-    if (this._call.localVideoStreams && this._call.localVideoStreams[0]) {
+    for (const localVideoStream of this._call.localVideoStreams) {
+      const mediaStreamType = localVideoStream.mediaStreamType;
       disposeView(
         this._context,
         this._internalContext,
         this._callIdRef.callId,
         undefined,
-        convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])
+        convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream)
       );
+      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId, mediaStreamType);
     }
-
-    this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
 
     this._diagnosticsSubscriber.unsubscribe();
     this._recordingSubscriber.unsubscribe();
@@ -276,59 +276,49 @@ export class CallSubscriber {
   };
 
   private localVideoStreamsUpdated = (event: { added: LocalVideoStream[]; removed: LocalVideoStream[] }): void => {
-    // At time of writing only one LocalVideoStream is supported by SDK.
-    if (event.added.length > 0) {
-      const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
+    for (const localVideoStream of event.added) {
+      const mediaStreamType = event.added[0].mediaStreamType;
       // IMPORTANT: The internalContext should be set before context. This is done to ensure that the internal context
       // has the required data when component re-renders due to external state changes.
       this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
-        this._call.localVideoStreams[0],
+        mediaStreamType,
+        localVideoStream,
         'NotRendered',
         undefined
       );
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, [...localVideoStreams]);
 
-      /* @conditional-compile-remove(video-background-effects) */
-      {
-        // Subscribe to video effect changes
-        const localVideoStreamKey = event.added[0].source.id;
-        this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
-        this._localVideoStreamVideoEffectsSubscribers.set(
-          localVideoStreamKey,
-          new LocalVideoStreamVideoEffectsSubscriber({
-            parent: this._callIdRef,
-            context: this._context,
-            localVideoStream: this._call.localVideoStreams[0],
-            localVideoStreamEffectsAPI: this._call.localVideoStreams[0].feature(Features.VideoEffects)
-          })
-        );
-      }
+      // Subscribe to video effect changes
+      this._localVideoStreamVideoEffectsSubscribers.get(mediaStreamType)?.unsubscribe();
+      this._localVideoStreamVideoEffectsSubscribers.set(
+        mediaStreamType,
+        new LocalVideoStreamVideoEffectsSubscriber({
+          parent: this._callIdRef,
+          context: this._context,
+          localVideoStream: localVideoStream,
+          localVideoStreamEffectsAPI: localVideoStream.feature(Features.VideoEffects)
+        })
+      );
     }
-    if (event.removed.length > 0) {
-      /* @conditional-compile-remove(video-background-effects) */
-      {
-        const localVideoStreamKey = event.removed[0].source.id;
-        this._localVideoStreamVideoEffectsSubscribers.get(localVideoStreamKey)?.unsubscribe();
-      }
+    for (const localVideoStream of event.removed) {
+      const mediaStreamType = localVideoStream.mediaStreamType;
+      this._localVideoStreamVideoEffectsSubscribers.get(mediaStreamType)?.unsubscribe();
       disposeView(
         this._context,
         this._internalContext,
         this._callIdRef.callId,
         undefined,
-        convertSdkLocalStreamToDeclarativeLocalStream(event.removed[0])
+        convertSdkLocalStreamToDeclarativeLocalStream(localVideoStream)
       );
-      /**
-       * This check is to make sure that we are not deleting the local render info for the local video stream if there is one.
-       *
-       * TODO: we need to make sure the we are supporting the local screenshare stream that is now being tracked. This is a stop gap solution.
-       */
-      if (event.removed[0].mediaStreamType === 'ScreenSharing') {
-        return;
-      }
-      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId);
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, []);
+
+      this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId, mediaStreamType);
     }
+
+    this._context.setCallLocalVideoStream(
+      this._callIdRef.callId,
+      event.added.map(convertSdkLocalStreamToDeclarativeLocalStream),
+      event.removed.map(convertSdkLocalStreamToDeclarativeLocalStream)
+    );
   };
 
   private dominantSpeakersChanged = (): void => {

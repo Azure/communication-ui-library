@@ -324,13 +324,25 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const localStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
-      if (!localStream) {
-        return;
+      // Find the first available stream, if there is none, then get the first stream
+      const localVideoStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+      const screenShareStream = callState.localVideoStreams.find((item) => item.mediaStreamType === 'ScreenSharing');
+
+      let createViewResult: CreateViewResult | undefined = undefined;
+      if (localVideoStream && !localVideoStream.view) {
+        createViewResult = await callClient.createView(call.id, undefined, localVideoStream, options);
       }
 
-      const { view } = (await callClient.createView(call.id, undefined, localStream, options)) ?? {};
-      return view ? { view } : undefined;
+      if (screenShareStream && !screenShareStream.view) {
+        // Hardcoded `scalingMode` since it is highly unlikely that CONTOSO would ever want to use a different scaling mode for screenshare.
+        // Using `Crop` would crop the contents of screenshare and `Stretch` would warp it.
+        // `Fit` is the only mode that maintains the integrity of the screen being shared.
+        createViewResult = await callClient.createView(call.id, undefined, screenShareStream, {
+          scalingMode: 'Fit'
+        });
+      }
+
+      return createViewResult?.view ? { view: createViewResult?.view } : undefined;
     };
 
     const onCreateRemoteStreamView = async (

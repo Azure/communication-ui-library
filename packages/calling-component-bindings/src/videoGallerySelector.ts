@@ -96,6 +96,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         ? remoteParticipants[screenShareRemoteParticipantId]
         : undefined;
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
+    const localScreenShareStream = localVideoStreams?.find((i) => i.mediaStreamType === 'ScreenSharing');
 
     const dominantSpeakerIds = _dominantSpeakersWithFlatId(dominantSpeakers);
     const dominantSpeakersMap: Record<string, number> = {};
@@ -121,6 +122,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         isMuted,
         isScreenSharingOn,
         localVideoStream,
+        localScreenShareStream,
         /* @conditional-compile-remove(rooms) */
         role,
         /* @conditional-compile-remove(raise-hand) */

@@ -279,11 +279,29 @@ export class CallContext {
     });
   }
 
-  public setCallLocalVideoStream(callId: string, streams: LocalVideoStreamState[]): void {
+  public setCallLocalVideoStream(
+    callId: string,
+    streamsAdded: LocalVideoStreamState[],
+    streamsRemoved: LocalVideoStreamState[]
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.localVideoStreams = streams;
+        for (const removedStream of streamsRemoved) {
+          const index = call.localVideoStreams.findIndex((i) => i.mediaStreamType === removedStream.mediaStreamType);
+          if (index > -1) {
+            call.localVideoStreams.splice(index, 1);
+          }
+        }
+
+        for (const addedStream of streamsAdded) {
+          const index = call.localVideoStreams.findIndex((i) => i.mediaStreamType === addedStream.mediaStreamType);
+          if (index > -1) {
+            call.localVideoStreams[index] = addedStream;
+          } else {
+            call.localVideoStreams.push(addedStream);
+          }
+        }
       }
     });
   }
@@ -414,12 +432,19 @@ export class CallContext {
     });
   }
 
-  public setLocalVideoStreamRendererView(callId: string, view: VideoStreamRendererViewState | undefined): void {
+  public setLocalVideoStreamRendererView(
+    callId: string,
+    localVideoMediaStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        if (call.localVideoStreams.length > 0) {
-          call.localVideoStreams[0].view = view;
+        const localVideoStream = call.localVideoStreams.find(
+          (localVideoStream) => localVideoStream.mediaStreamType === localVideoMediaStreamType
+        );
+        if (localVideoStream) {
+          localVideoStream.view = view;
         }
       }
     });
@@ -760,7 +785,8 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
         (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
+          stream.mediaStreamType === localVideoStream.mediaStreamType &&
+          stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews.splice(foundIndex, 1);
@@ -776,7 +802,8 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
         (stream) =>
-          stream.source.id === localVideoStream.source.id && stream.mediaStreamType === localVideoStream.mediaStreamType
+          stream.mediaStreamType === localVideoStream.mediaStreamType &&
+          stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;
