@@ -4,10 +4,12 @@ This log was last generated on Mon, 06 Nov 2023 16:44:11 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.10.0](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.10.0)
+## [1.10.0](https://github.com/azure/communication-ui-library/tree/1.10.0)
 
 Mon, 06 Nov 2023 16:44:11 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.10.0-beta.1...@azure/communication-react_v1.10.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.9.0...1.10.0)
+
+### Custom Button Injection - General Availability
 
 You can now add your own custom buttons to the CallComposite and CallwithChatComposite on web (on desktop and mobile web). Custom Button Injection enables developers to add their own custom buttons to the call control bar component. Developers have the ability to add buttons to different sections of the call control bar: primary, secondary, or overflow areas of the control bar. With our simplified button API, you can now create a more immersive calling experience that integrates with your applications.
 
