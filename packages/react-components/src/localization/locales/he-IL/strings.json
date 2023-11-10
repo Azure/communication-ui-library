@@ -147,7 +147,7 @@
     "newMessagesIndicator": "הודעות חדשות",
     "noDisplayNameSub": "ללא שם",
     "editBoxCancelButton": "בטל",
-    "editBoxSubmitButton": "שלח",
+    "editBoxSubmitButton": "בוצע",
     "messageReadCount": "נקרא על-ידי {messageReadByCount} מתוך {remoteParticipantsCount}",
     "actionMenuMoreOptions": "אפשרויות נוספות",
     "downloadFile": "הורד קובץ",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "הדף הקודם",
     "rightNavButtonAriaLabel": "הדף הבא"
-  }
+  },
+  "AttendeeRole": "משתתף"
 }
