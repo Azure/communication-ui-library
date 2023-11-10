@@ -169,7 +169,7 @@ function addSdkRemoteStream(
 }
 
 function addMockLocalStream(call: CallState): void {
-  call.localVideoStreams.push({} as LocalVideoStreamState);
+  call.localVideoStreams.push({ mediaStreamType: 'Video' } as LocalVideoStreamState);
 }
 
 function addSdkLocalStream(internalContext: InternalCallContext, callId: string): void {
@@ -221,7 +221,9 @@ describe('stream utils', () => {
 
     // participantId is undefined since when createView is invoked without a participant Id
     // it is supposed to be creating the view for the local participant.
-    await createView(context, internalContext, mockCallId, undefined, {} as LocalVideoStreamState);
+    await createView(context, internalContext, mockCallId, undefined, {
+      mediaStreamType: 'Video'
+    } as LocalVideoStreamState);
 
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')).toBeDefined();
     expect(internalContext.getLocalRenderInfo(mockCallId, 'Video')?.stream).toBeDefined();
@@ -480,7 +482,7 @@ describe('stream utils', () => {
     } as LocalVideoStreamState;
     const incorrectVideoStream = {
       source: { name: 'b', id: 'b', deviceType: 'Unknown' },
-      mediaStreamType: 'Video'
+      mediaStreamType: 'ScreenSharing'
     } as LocalVideoStreamState;
 
     await createView(context, internalContext, undefined, undefined, localVideoStream);
