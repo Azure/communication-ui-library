@@ -131,6 +131,8 @@ export interface ParticipantItemProps {
    * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
    */
   ariaLabelledBy?: string;
+  /** Display border around persona coin */
+  isRaisedHand?: boolean;
 }
 
 /**
@@ -173,7 +175,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     presence: presence,
     initialsTextColor: 'white',
     showOverflowTooltip: showParticipantOverflowTooltip,
-    showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder)
+    showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder),
+    isActive: props.isRaisedHand
   };
 
   const avatar = onRenderAvatar ? (

@@ -208,6 +208,7 @@ const onRenderParticipantDefault = (
       /* @conditional-compile-remove(PSTN-calls) */
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
+      isRaisedHand={callingParticipant?.raisedHand ? true : false}
     />
   );
 };

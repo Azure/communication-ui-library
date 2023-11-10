@@ -43,6 +43,8 @@ export type CustomAvatarOptions = {
    * It has '?' in place of initials, with static font and background colors
    */
   showUnknownPersonaCoin?: boolean;
+  /** Active flag to display border around coin */
+  isActive?: boolean;
 };
 
 /**
