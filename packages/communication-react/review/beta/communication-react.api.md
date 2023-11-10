@@ -387,6 +387,7 @@ export type CallAdapterClientState = {
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -818,6 +819,11 @@ export type CallingHandlersOptions = {
 
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
+
+// @beta
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+};
 
 // @public
 export interface CallingTheme {
@@ -1740,6 +1746,9 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
+    soundOptions?: {
+        callingSounds?: CallingSounds;
+    };
 };
 
 // @public
@@ -3668,6 +3677,12 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
 }
+
+// @beta
+export type SoundEffect = {
+    path: string;
+    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
 
 // @public
 export interface SpokenLanguageStrings {
