@@ -147,7 +147,7 @@
     "newMessagesIndicator": "新しいメッセージ",
     "noDisplayNameSub": "名前がありません",
     "editBoxCancelButton": "取り消し",
-    "editBoxSubmitButton": "送信",
+    "editBoxSubmitButton": "完了",
     "messageReadCount": "{remoteParticipantsCount} の {messageReadByCount} による読み取り",
     "actionMenuMoreOptions": "その他のオプション",
     "downloadFile": "ファイルをダウンロード",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "前のページ",
     "rightNavButtonAriaLabel": "次のページ"
-  }
+  },
+  "AttendeeRole": "出席者"
 }

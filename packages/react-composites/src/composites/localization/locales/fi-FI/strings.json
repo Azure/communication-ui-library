@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "Sulje tekstitysasetus",
     "captionsBannerMoreButtonCallingLabel": "Lisää",
     "captionsBannerMoreButtonTooltip": "Lisää vaihtoehtoja",
+    "dismissModalAriaLabel": "Paikallinen kuva ja etäkuva, palaa puheluun painamalla Enter-näppäintä",
     "spokenLanguageStrings": {
       "ar-ae": "arabia – Arabiemiirikunnat",
       "ar-sa": "arabia – Saudi-Arabia",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "Tarkista, että osallistujan tunnus on kirjoitettu oikein",
     "participantIdIsMalformedTitle": "Osallistujan tunnus ei ole oikeassa muodossa",
     "participantIdIsMalformedMoreDetails": "Tarkista, että osallistujan tunnus on oikeassa muodossa",
-    "moreButtonGalleryControlLabel": "Valikoiman asetukset",
+    "moreButtonGalleryControlLabel": "Näkymä",
     "moreButtonGalleryPositionToggleLabel": "Siirrä valikoima ylimmäiseksi",
-    "moreButtonGallerySpeakerLayoutLabel": "Kaiuttimen asettelu",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen asettelu",
-    "moreButtonGalleryDefaultLayoutLabel": "Valikoiman asettelu",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Kohdistettu sisältö",
+    "moreButtonGallerySpeakerLayoutLabel": "Kaiutin",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynaaminen",
+    "moreButtonGalleryDefaultLayoutLabel": "Valikoimanäkymä",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Huomio sisältöön",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Suuri galleria",
     "capabilityChangedNotification": {
       "turnVideoOn": {

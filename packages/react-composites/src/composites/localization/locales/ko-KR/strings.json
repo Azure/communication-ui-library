@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "캡션 설정 닫기",
     "captionsBannerMoreButtonCallingLabel": "기타",
     "captionsBannerMoreButtonTooltip": "기타 옵션",
+    "dismissModalAriaLabel": "로컬 및 원격 사진 및 그림, Enter 키를 눌러 통화로 돌아가기",
     "spokenLanguageStrings": {
       "ar-ae": "아랍어 - 아랍에미리트",
       "ar-sa": "아라비아어 - 사우디 아라비아",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "참가자 ID가 올바르게 입력되었는지 검사.",
     "participantIdIsMalformedTitle": "참가자 ID의 형식이 잘못되었습니다.",
     "participantIdIsMalformedMoreDetails": "참가자 ID가 올바른 형식인지 검사.",
-    "moreButtonGalleryControlLabel": "갤러리 옵션",
+    "moreButtonGalleryControlLabel": "보기",
     "moreButtonGalleryPositionToggleLabel": "갤러리를 맨 위로 이동",
-    "moreButtonGallerySpeakerLayoutLabel": "스피커 레이아웃",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "동적 레이아웃",
-    "moreButtonGalleryDefaultLayoutLabel": "갤러리 레이아웃",
-    "moreButtonGalleryFocusedContentLayoutLabel": "중요 콘텐츠",
+    "moreButtonGallerySpeakerLayoutLabel": "발표자",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "동적",
+    "moreButtonGalleryDefaultLayoutLabel": "갤러리 보기",
+    "moreButtonGalleryFocusedContentLayoutLabel": "콘텐츠에 포커스 맞추기",
     "moreButtonLargeGalleryDefaultLayoutLabel": "대형 갤러리",
     "capabilityChangedNotification": {
       "turnVideoOn": {

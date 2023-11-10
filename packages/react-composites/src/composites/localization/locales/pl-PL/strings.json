@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "Ustawienie podpisów",
     "captionsBannerMoreButtonCallingLabel": "Więcej",
     "captionsBannerMoreButtonTooltip": "Więcej opcji",
+    "dismissModalAriaLabel": "Lokalny i zdalny obraz i obraz, naciśnij klawisz Enter, aby powrócić do rozmowy",
     "spokenLanguageStrings": {
       "ar-ae": "arabski — Zjednoczone Emiraty Arabskie",
       "ar-sa": "arabski — Arabia Saudyjska",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "Sprawdź, czy identyfikator uczestnika został wprowadzony poprawnie",
     "participantIdIsMalformedTitle": "Identyfikator uczestnika ma niepoprawny format",
     "participantIdIsMalformedMoreDetails": "Sprawdź, czy identyfikator uczestnika ma poprawny format",
-    "moreButtonGalleryControlLabel": "Opcje galerii",
+    "moreButtonGalleryControlLabel": "Zobacz",
     "moreButtonGalleryPositionToggleLabel": "Przenieś galerię na górę",
-    "moreButtonGallerySpeakerLayoutLabel": "Układ osoby mówiącej",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "Układ dynamiczny",
-    "moreButtonGalleryDefaultLayoutLabel": "Układ galerii",
-    "moreButtonGalleryFocusedContentLayoutLabel": "Zawartość priorytetowa",
+    "moreButtonGallerySpeakerLayoutLabel": "Głośnik",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "Dynamiczny",
+    "moreButtonGalleryDefaultLayoutLabel": "Widok galerii",
+    "moreButtonGalleryFocusedContentLayoutLabel": "Skoncentruj się na zawartości",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Duża galeria",
     "capabilityChangedNotification": {
       "turnVideoOn": {
