@@ -73,6 +73,9 @@ import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import {
   CallParticipantsLocator,
+} from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+
+import {
   _createAzureCommunicationCallAdapterInner
 } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 

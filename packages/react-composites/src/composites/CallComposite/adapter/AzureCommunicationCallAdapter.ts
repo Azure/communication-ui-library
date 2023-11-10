@@ -1383,7 +1383,9 @@ export const createAzureCommunicationCallAdapter = async ({
     displayName,
     credential,
     locator,
+    /* @conditional-compile-remove(PSTN-calls) */
     alternateCallerId,
+    /* @conditional-compile-remove(video-background-effects) */
     options
   );
 };
