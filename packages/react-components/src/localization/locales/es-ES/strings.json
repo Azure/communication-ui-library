@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Mensajes nuevos",
     "noDisplayNameSub": "Sin nombre",
     "editBoxCancelButton": "Cancelar",
-    "editBoxSubmitButton": "Enviar",
+    "editBoxSubmitButton": "Listo",
     "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Más opciones",
     "downloadFile": "Descargar archivo",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "página anterior",
     "rightNavButtonAriaLabel": "página siguiente"
-  }
+  },
+  "AttendeeRole": "Asistente"
 }

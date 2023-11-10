@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Yeni iletiler",
     "noDisplayNameSub": "Ad yok",
     "editBoxCancelButton": "İptal",
-    "editBoxSubmitButton": "Gönder",
+    "editBoxSubmitButton": "Bitti",
     "messageReadCount": "{messageReadByCount} / {remoteParticipantsCount} katılımcı tarafından okundu",
     "actionMenuMoreOptions": "Diğer Seçenekler",
     "downloadFile": "Dosyayı indir",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "önceki sayfa",
     "rightNavButtonAriaLabel": "sonraki sayfa"
-  }
+  },
+  "AttendeeRole": "Katılımcı"
 }
