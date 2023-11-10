@@ -277,7 +277,7 @@ export class CallSubscriber {
 
   private localVideoStreamsUpdated = (event: { added: LocalVideoStream[]; removed: LocalVideoStream[] }): void => {
     for (const localVideoStream of event.added) {
-      const mediaStreamType = event.added[0].mediaStreamType;
+      const mediaStreamType = localVideoStream.mediaStreamType;
       // IMPORTANT: The internalContext should be set before context. This is done to ensure that the internal context
       // has the required data when component re-renders due to external state changes.
       this._internalContext.setLocalRenderInfo(
