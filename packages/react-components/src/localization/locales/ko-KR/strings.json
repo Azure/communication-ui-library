@@ -147,7 +147,7 @@
     "newMessagesIndicator": "새 메시지",
     "noDisplayNameSub": "이름 없음",
     "editBoxCancelButton": "취소",
-    "editBoxSubmitButton": "제출",
+    "editBoxSubmitButton": "완료",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount}명이 읽음",
     "actionMenuMoreOptions": "추가 옵션",
     "downloadFile": "파일 다운로드",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "이전 페이지",
     "rightNavButtonAriaLabel": "다음 페이지"
-  }
+  },
+  "AttendeeRole": "참석자"
 }

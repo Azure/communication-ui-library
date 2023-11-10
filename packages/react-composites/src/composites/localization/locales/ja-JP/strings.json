@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "字幕設定を閉じる",
     "captionsBannerMoreButtonCallingLabel": "その他",
     "captionsBannerMoreButtonTooltip": "その他のオプション",
+    "dismissModalAriaLabel": "ローカルとリモートの画像と画像。通話に戻るには Enter キーを押します",
     "spokenLanguageStrings": {
       "ar-ae": "アラビア語 - U.A.E.",
       "ar-sa": "アラビア語 - サウジアラビア",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "参加者 ID が正しく入力チェックしてください",
     "participantIdIsMalformedTitle": "参加者 ID の形式が正しくありません",
     "participantIdIsMalformedMoreDetails": "参加者 ID の形式が正しいことをチェックしてください",
-    "moreButtonGalleryControlLabel": "ギャラリーのオプション",
+    "moreButtonGalleryControlLabel": "表示",
     "moreButtonGalleryPositionToggleLabel": "ギャラリーを上に移動",
-    "moreButtonGallerySpeakerLayoutLabel": "スピーカーのレイアウト",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "動的なレイアウト",
-    "moreButtonGalleryDefaultLayoutLabel": "ギャラリーのレイアウト",
-    "moreButtonGalleryFocusedContentLayoutLabel": "優先コンテンツ",
+    "moreButtonGallerySpeakerLayoutLabel": "スピーカー",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "ダイナミック",
+    "moreButtonGalleryDefaultLayoutLabel": "ギャラリー ビュー",
+    "moreButtonGalleryFocusedContentLayoutLabel": "コンテンツにフォーカスを移動",
     "moreButtonLargeGalleryDefaultLayoutLabel": "ラージ ギャラリー",
     "capabilityChangedNotification": {
       "turnVideoOn": {
