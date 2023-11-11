@@ -66,6 +66,12 @@ export interface AvatarPersonaProps extends IPersonaProps {
   /**
    * If true, show the border for persona coin.
    */
+  /* @conditional-compile-remove(raise-hand) */
+  allowActiveBorder?: boolean;
+  /**
+   * If true, show the border for persona coin.
+   */
+  /* @conditional-compile-remove(raise-hand) */
   isActive?: boolean;
 }
 
@@ -96,24 +102,25 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   /* @conditional-compile-remove(raise-hand) */
   const theme = useTheme();
   /* @conditional-compile-remove(raise-hand) */
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-  /* @conditional-compile-remove(raise-hand) */
-  const raisedHandBorderColor = callingPalette.raiseHandGold;
-  // Display a border for raised handed participants in participant list
-  /* @conditional-compile-remove(raise-hand) */
-  const activePersona = mergeStyles({
-    border: 'solid 2px',
-    borderColor: props.isActive ? raisedHandBorderColor : 'transparent',
-    borderRadius: '50%',
-    padding: '2px',
-    boxSizing: 'content-box'
-  });
+  let activePersona = '';
+  if (props.allowActiveBorder) {
+    const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+    const raisedHandBorderColor = callingPalette.raiseHandGold;
+    // Display a border for raised handed participants in participant list
+    activePersona = mergeStyles({
+      border: 'solid 2px',
+      borderColor: props.isActive ? raisedHandBorderColor : 'transparent',
+      borderRadius: '50%',
+      padding: '2px',
+      boxSizing: 'content-box'
+    });
+  }
 
   return (
     <Persona
       {...props}
       /* @conditional-compile-remove(raise-hand) */
-      className={activePersona}
+      className={props.allowActiveBorder ? activePersona : ''}
       text={data?.text ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}
       imageInitials={data?.imageInitials ?? imageInitials}
