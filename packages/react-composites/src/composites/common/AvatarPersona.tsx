@@ -69,7 +69,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
   /* @conditional-compile-remove(raise-hand) */
   allowActiveBorder?: boolean;
   /**
-   * If true, show the border for persona coin.
+   * If true, show the active border for persona coin.
    */
   /* @conditional-compile-remove(raise-hand) */
   isActive?: boolean;
