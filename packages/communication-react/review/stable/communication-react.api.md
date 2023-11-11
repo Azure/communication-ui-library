@@ -1775,6 +1775,7 @@ export type CustomAvatarOptions = {
     size?: PersonaSize;
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
+    isActive?: boolean;
 };
 
 // @public
@@ -2600,6 +2601,7 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 export interface ParticipantItemProps {
     ariaLabelledBy?: string;
     displayName?: string;
+    isRaisedHand?: boolean;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
