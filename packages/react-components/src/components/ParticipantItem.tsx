@@ -176,6 +176,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     initialsTextColor: 'white',
     showOverflowTooltip: showParticipantOverflowTooltip,
     showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder),
+    /* @conditional-compile-remove(raise-hand) */
     isActive: props.isRaisedHand
   };
 

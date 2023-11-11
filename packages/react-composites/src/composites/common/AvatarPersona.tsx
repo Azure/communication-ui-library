@@ -1,9 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IPersonaProps, Persona, PersonaInitialsColor, mergeStyles } from '@fluentui/react';
+import { IPersonaProps, Persona, PersonaInitialsColor } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
 import { useTheme, CallingTheme } from '@internal/react-components';
+/* @conditional-compile-remove(raise-hand) */
+import { mergeStyles } from '@fluentui/react';
 
 /**
  * Custom data attributes for displaying avatar for a user.
@@ -91,10 +93,14 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     })();
   }, [data, dataProvider, userId]);
 
+  /* @conditional-compile-remove(raise-hand) */
   const theme = useTheme();
+  /* @conditional-compile-remove(raise-hand) */
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+  /* @conditional-compile-remove(raise-hand) */
   const raisedHandBorderColor = callingPalette.raiseHandGold;
   // Display a border for raised handed participants in participant list
+  /* @conditional-compile-remove(raise-hand) */
   const activePersona = mergeStyles({
     border: 'solid 2px',
     borderColor: props.isActive ? raisedHandBorderColor : 'transparent',
@@ -106,6 +112,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
   return (
     <Persona
       {...props}
+      /* @conditional-compile-remove(raise-hand) */
       className={activePersona}
       text={data?.text ?? text}
       imageUrl={data?.imageUrl ?? imageUrl}

@@ -44,6 +44,7 @@ export type CustomAvatarOptions = {
    */
   showUnknownPersonaCoin?: boolean;
   /** Active flag to display border around coin */
+  /* @conditional-compile-remove(raise-hand) */
   isActive?: boolean;
 };
 
