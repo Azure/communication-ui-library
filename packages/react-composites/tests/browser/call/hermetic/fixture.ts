@@ -176,7 +176,7 @@ export function defaultMockRemoteParticipant(displayName?: string): MockRemotePa
  */
 export function defaultMockBotParticipant(displayName?: string): MockRemoteParticipantState {
   return {
-    identifier: { kind: 'communicationUser', communicationUserId: `28:orgid:${displayName ?? 'bot'}-id` },
+    identifier: { kind: 'microsoftTeamsApp', teamsAppId: `28:orgid:${displayName ?? 'bot'}-id` },
     state: 'Connected',
     videoStreams: {},
     isMuted: true,

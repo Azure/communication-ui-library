@@ -38,7 +38,7 @@ test.describe('VideoGallery tests', async () => {
   });
 
   test('VideoGallery should not show MicrosoftTeamsAppIdentifer participants', async ({ page, serverUrl }) => {
-    const bot = defaultMockBotParticipant();
+    const bot = defaultMockBotParticipant('bot-participant');
     const initialState = defaultMockCallAdapterState([bot]);
 
     await page.goto(
