@@ -3,6 +3,7 @@
 
 import * as reselect from 'reselect';
 import { getLocalVideoStreams, getRemoteParticipants } from './baseSelectors';
+import { isMicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -21,6 +22,6 @@ export const getRemoteParticipantsConnectedSelector = reselect.createSelector(
   [getRemoteParticipants],
   (remoteParticipants) => {
     const participants = Object.values(remoteParticipants ?? {});
-    return participants.filter((p) => p.state === 'Connected');
+    return participants.filter((p) => p.state === 'Connected' && !isMicrosoftTeamsAppIdentifier(p.identifier));
   }
 );
