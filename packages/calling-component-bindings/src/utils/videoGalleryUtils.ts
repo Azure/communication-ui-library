@@ -15,7 +15,7 @@ import { _isRingingPSTNParticipant } from './callUtils';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './callUtils';
 import { checkIsSpeaking } from './SelectorUtils';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
 
@@ -52,6 +52,10 @@ export const _videoGalleryRemoteParticipantsMemo: (
             !['InLobby', 'Idle', 'Connecting', 'Disconnected'].includes(participant.state) ||
             isPhoneNumberIdentifier(participant.identifier)
           );
+        })
+        // Filter out MicrosoftBot participants
+        .filter((participant: RemoteParticipantState) => {
+          return !isMicrosoftTeamsAppIdentifier(participant.identifier);
         })
         .map((participant: RemoteParticipantState) => {
           const state = _isRingingPSTNParticipant(participant);
