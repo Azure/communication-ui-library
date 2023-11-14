@@ -1,8 +1,8 @@
 {
   "type": "prerelease",
-  "area": "fix",
-  "workstream": "Cleaning up release package.json",
-  "comment": "fixed script location",
+  "area": "improvement",
+  "workstream": "Release 1.10.0",
+  "comment": "merging prerelease branch back into main",
   "packageName": "@azure/communication-react",
   "email": "alkwa@microsoft.com",
   "dependentChangeType": "patch"
