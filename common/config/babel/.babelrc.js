@@ -85,7 +85,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // custom branding for the composites
         'custom-branding',
         // Feature for sounds during different calling events
-        'calling-sounds'
+        'calling-sounds',
+        // feature for pptlive
+        'ppt-live'
       ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -106,7 +108,7 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // custom branding for the composites
         'custom-branding',
         // feature for pptlive
-        'ppt-live'
+        'ppt-live',
         // Feature for sounds during different calling events
         'calling-sounds'
       ],

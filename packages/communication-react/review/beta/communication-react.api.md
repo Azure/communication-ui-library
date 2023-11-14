@@ -879,6 +879,8 @@ export interface CallState {
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    pptLive: PPTLiveCallFeatureState;
+    pptLiveShareRemoteParticipant?: string;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -3487,6 +3489,12 @@ export type ParticipantsRemovedListener = (event: {
 // @public
 export type ParticipantState = 'Idle' | 'Connecting' | 'Ringing' | 'Connected' | 'Hold' | 'InLobby' | 'EarlyMedia' | 'Disconnected';
 
+// @public
+export interface PPTLiveCallFeatureState {
+    isActive: boolean;
+    target: HTMLElement | undefined;
+}
+
 // @beta
 export type Profile = {
     displayName?: string;
@@ -3552,6 +3560,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    pptLiveStreams?: HTMLElement;
     raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
@@ -4137,6 +4146,7 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
