@@ -332,14 +332,14 @@ export interface CallCompositeStrings {
   roomNotValidDetails?: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * Title text of the page shown to the user when the user is removed from a room.
+   * Title text of the page shown to the user when the user's permission to join the room is removed.
    */
-  removedFromRoomTitle: string;
+  removedPermissionToJoinRoomTitle: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * More details text of the page shown to the user when the user is removed from a room.
+   * More details text of the page shown to the user when the user's permission to join the room is removed.
    */
-  removedFromRoomDetails?: string;
+  removedPermissionToJoinRoomDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Video Effects pane title.

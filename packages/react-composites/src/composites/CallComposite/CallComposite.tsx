@@ -399,12 +399,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case 'removedFromRoom':
+    case 'removedPermissionToJoinRoom':
       pageElement = (
         <NoticePage
           iconName="NoticePageRemovedFromRoomsCall"
-          title={locale.strings.call.removedFromRoomTitle}
-          moreDetails={locale.strings.call.removedFromRoomDetails}
+          title={locale.strings.call.removedPermissionToJoinRoomTitle}
+          moreDetails={locale.strings.call.removedPermissionToJoinRoomDetails}
           dataUiId={'removed-from-room-page'}
           disableStartCallButton={true}
         />

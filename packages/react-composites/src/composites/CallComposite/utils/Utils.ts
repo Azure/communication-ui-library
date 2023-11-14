@@ -224,7 +224,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       case CallEndReasons.DENIED_PERMISSION_TO_ROOM:
         return 'deniedPermissionToRoom';
       case CallEndReasons.REMOVED_PERMISSION_TO_JOIN_ROOM:
-        return 'removedFromRoom';
+        return 'removedPermissionToJoinRoom';
     }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:

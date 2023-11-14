@@ -417,7 +417,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'removedFromRoom' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(rooms) */ 'roomNotValid' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'removedPermissionToJoinRoom' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(rooms) */ 'roomNotValid' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -536,8 +536,8 @@ export interface CallCompositeStrings {
     removeBackgroundTooltip?: string;
     removedFromCallMoreDetails?: string;
     removedFromCallTitle: string;
-    removedFromRoomDetails?: string;
-    removedFromRoomTitle: string;
+    removedPermissionToJoinRoomDetails?: string;
+    removedPermissionToJoinRoomTitle: string;
     removeMenuLabel: string;
     resumeCallButtonAriaLabel: string;
     resumeCallButtonLabel: string;

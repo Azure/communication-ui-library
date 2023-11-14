@@ -58,7 +58,7 @@ export type CallCompositePage =
   | 'lobby'
   | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'removedFromRoom'
+  | /* @conditional-compile-remove(rooms) */ 'removedPermissionToJoinRoom'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
   | /* @conditional-compile-remove(rooms) */ 'roomNotValid'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
