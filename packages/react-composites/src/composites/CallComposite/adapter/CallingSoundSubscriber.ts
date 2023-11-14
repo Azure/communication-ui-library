@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { CallCommon } from '@azure/communication-calling';
-import EventEmitter from 'events';
 import { CallingSounds } from './CallAdapter';
 import { CallAdapterLocator } from './AzureCommunicationCallAdapter';
 /* @conditional-compile-remove(calling-sounds) */
@@ -21,14 +20,12 @@ type CallingSoundsLoaded = {
  * @private
  */
 export class CallingSoundSubscriber {
-  private emitter: EventEmitter;
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
   private callLocator: CallAdapterLocator;
 
-  constructor(call: CallCommon, emitter: EventEmitter, locator: CallAdapterLocator, sounds?: CallingSounds) {
+  constructor(call: CallCommon, locator: CallAdapterLocator, sounds?: CallingSounds) {
     this.call = call;
-    this.emitter = emitter;
     this.callLocator = locator;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
@@ -38,10 +35,7 @@ export class CallingSoundSubscriber {
 
   private onCallStateChanged = (): void => {
     this.call.on('stateChanged', () => {
-      this.emitter.emit('callStateChanged', {
-        callState: this.call.state
-      });
-      if (playRingingSound(this.call, this.callLocator) && this.soundsLoaded?.callRingingSound) {
+      if (shouldPlayRingingSound(this.call, this.callLocator) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.soundsLoaded.callRingingSound.play().catch((e) => {
           console.error(e, 'Failed to play call ringing sound, check loader config to make sure it is correct');
@@ -68,6 +62,12 @@ export class CallingSoundSubscriber {
 
   public unsubscribeAll(): void {
     this.call.off('stateChanged', this.onCallStateChanged);
+    if (this.soundsLoaded?.callRingingSound) {
+      this.soundsLoaded.callRingingSound.pause();
+    }
+    if (this.soundsLoaded?.callEndedSound) {
+      this.soundsLoaded.callEndedSound.pause();
+    }
   }
 
   private loadSounds(sounds?: CallingSounds): CallingSoundsLoaded | undefined {
@@ -92,7 +92,7 @@ export class CallingSoundSubscriber {
  * Helper function to allow the calling sound subscriber to determine when to play the ringing
  * sound when making an outbound call.
  */
-const playRingingSound = (call: CallCommon, locator: CallAdapterLocator): boolean => {
+const shouldPlayRingingSound = (call: CallCommon, locator: CallAdapterLocator): boolean => {
   /* @conditional-compile-remove(calling-sounds) */
   const callee = (locator as CallParticipantsLocator).participantIds;
   /* @conditional-compile-remove(calling-sounds) */
