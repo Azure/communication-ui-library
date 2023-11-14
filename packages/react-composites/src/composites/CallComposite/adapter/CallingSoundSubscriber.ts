@@ -61,9 +61,6 @@ export class CallingSoundSubscriber {
     if (this.soundsLoaded?.callRingingSound) {
       this.soundsLoaded.callRingingSound.pause();
     }
-    if (this.soundsLoaded?.callEndedSound) {
-      this.soundsLoaded.callEndedSound.pause();
-    }
   }
 
   private loadSounds(sounds?: CallingSounds): CallingSoundsLoaded | undefined {
