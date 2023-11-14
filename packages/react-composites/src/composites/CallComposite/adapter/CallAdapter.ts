@@ -56,9 +56,9 @@ export type CallCompositePage =
   | 'leftCall'
   | 'leaving'
   | 'lobby'
-  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
+  | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'removedPermissionToJoinRoom'
+  | /* @conditional-compile-remove(rooms) */ 'inviteToRoomRemoved'
   | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
   | /* @conditional-compile-remove(rooms) */ 'roomNotValid'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
@@ -72,7 +72,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
+  /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom',
   'removedFromCall',
   /* @conditional-compile-remove(rooms) */ 'roomNotFound',
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'

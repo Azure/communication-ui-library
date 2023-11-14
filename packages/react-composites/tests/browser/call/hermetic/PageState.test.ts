@@ -56,7 +56,7 @@ test.describe('Page state tests', async () => {
   /* @conditional-compile-remove(rooms) */
   test('Page when local participant tries to join a room that they are not invited to', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
-    initialState.page = 'deniedPermissionToRoom';
+    initialState.page = 'notInvitedToRoom';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('not-invited-to-room-page'));
@@ -66,7 +66,7 @@ test.describe('Page state tests', async () => {
   /* @conditional-compile-remove(rooms) */
   test('Page when local participant is removed from a room', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
-    initialState.page = 'removedPermissionToJoinRoom';
+    initialState.page = 'inviteToRoomRemoved';
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('removed-from-room-page'));

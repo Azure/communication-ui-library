@@ -388,23 +388,23 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    case 'deniedPermissionToRoom':
+    case 'notInvitedToRoom':
       pageElement = (
         <NoticePage
-          iconName="NoticePageAccessDeniedRoomsCall"
-          title={locale.strings.call.deniedPermissionToRoomTitle}
-          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
+          iconName="NoticePageInviteToRoomRemoved"
+          title={locale.strings.call.notInvitedToRoomTitle}
+          moreDetails={locale.strings.call.notInvitedToRoomDetails}
           dataUiId={'not-invited-to-room-page'}
           disableStartCallButton={true}
         />
       );
       break;
-    case 'removedPermissionToJoinRoom':
+    case 'inviteToRoomRemoved':
       pageElement = (
         <NoticePage
-          iconName="NoticePageRemovedFromRoomsCall"
-          title={locale.strings.call.removedPermissionToJoinRoomTitle}
-          moreDetails={locale.strings.call.removedPermissionToJoinRoomDetails}
+          iconName="NoticePageNotInvitedToRoom"
+          title={locale.strings.call.inviteToRoomRemovedTitle}
+          moreDetails={locale.strings.call.inviteToRoomRemovedDetails}
           dataUiId={'removed-from-room-page'}
           disableStartCallButton={true}
         />

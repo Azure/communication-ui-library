@@ -334,12 +334,12 @@ export interface CallCompositeStrings {
   /**
    * Title text of the page shown to the user when the user's permission to join the room is removed.
    */
-  removedPermissionToJoinRoomTitle: string;
+  inviteToRoomRemovedTitle: string;
   /* @conditional-compile-remove(rooms) */
   /**
    * More details text of the page shown to the user when the user's permission to join the room is removed.
    */
-  removedPermissionToJoinRoomDetails?: string;
+  inviteToRoomRemovedDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Video Effects pane title.
@@ -387,14 +387,14 @@ export interface CallCompositeStrings {
   cameraOffBackgroundEffectWarningText?: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   * Title text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
-  deniedPermissionToRoomTitle: string;
+  notInvitedToRoomTitle: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   * More details text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
-  deniedPermissionToRoomDetails?: string;
+  notInvitedToRoomDetails?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Control bar People button ToolTipContent

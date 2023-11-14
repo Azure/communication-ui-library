@@ -80,7 +80,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageLeftCall: <CallEnd20Filled />,
   NoticePageRemovedFromCall: <Info20Filled />,
   /* @conditional-compile-remove(rooms) */
-  NoticePageRemovedFromRoomsCall: <Info20Filled />,
+  NoticePageNotInvitedToRoom: <Info20Filled />,
   /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound: <Info20Filled />,
   /* @conditional-compile-remove(rooms) */
@@ -94,7 +94,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
   /* @conditional-compile-remove(rooms) */
-  NoticePageAccessDeniedRoomsCall: <Info20Filled />,
+  NoticePageInviteToRoomRemoved: <Info20Filled />,
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground: <VideoBackgroundEffect20Regular />,
   /* @conditional-compile-remove(video-background-effects) */
@@ -218,7 +218,7 @@ export type CallCompositeIcons = {
   NoticePageLeftCall?: JSX.Element;
   NoticePageRemovedFromCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
-  NoticePageRemovedFromRoomsCall?: JSX.Element;
+  NoticePageNotInvitedToRoom?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
   NoticePageRoomNotFound?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
@@ -239,7 +239,7 @@ export type CallCompositeIcons = {
   /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
   /* @conditional-compile-remove(rooms) */
-  NoticePageAccessDeniedRoomsCall?: JSX.Element;
+  NoticePageInviteToRoomRemoved?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */
   BlurVideoBackground?: JSX.Element;
   /* @conditional-compile-remove(video-background-effects) */

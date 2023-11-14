@@ -25,7 +25,7 @@ const REMOVED_PERMISSION_TO_JOIN_ROOM_SUB_CODE = 5317;
 /* @conditional-compile-remove(rooms) */
 const ROOM_NOT_FOUND_SUB_CODE = 5732;
 /* @conditional-compile-remove(rooms) */
-const DENIED_PERMISSION_TO_ROOM_SUB_CODE = 5828;
+const NO_PERMISSION_TO_JOIN_ROOM_SUB_CODE = 5828;
 /* @conditional-compile-remove(rooms) */
 const ROOM_NOT_VALID_SUB_CODE = 5829;
 
@@ -79,7 +79,7 @@ enum CallEndReasons {
   REMOVED_FROM_CALL,
   ROOM_NOT_FOUND,
   ROOM_NOT_VALID,
-  DENIED_PERMISSION_TO_ROOM,
+  NO_PERMISSION_TO_JOIN_ROOM,
   REMOVED_PERMISSION_TO_JOIN_ROOM
 }
 
@@ -119,8 +119,8 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
   }
 
   /* @conditional-compile-remove(rooms) */
-  if (call.callEndReason?.subCode && call.callEndReason.subCode === DENIED_PERMISSION_TO_ROOM_SUB_CODE) {
-    return CallEndReasons.DENIED_PERMISSION_TO_ROOM;
+  if (call.callEndReason?.subCode && call.callEndReason.subCode === NO_PERMISSION_TO_JOIN_ROOM_SUB_CODE) {
+    return CallEndReasons.NO_PERMISSION_TO_JOIN_ROOM;
   }
 
   /* @conditional-compile-remove(rooms) */
@@ -221,10 +221,10 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
         return 'roomNotFound';
       case CallEndReasons.ROOM_NOT_VALID:
         return 'roomNotValid';
-      case CallEndReasons.DENIED_PERMISSION_TO_ROOM:
-        return 'deniedPermissionToRoom';
+      case CallEndReasons.NO_PERMISSION_TO_JOIN_ROOM:
+        return 'notInvitedToRoom';
       case CallEndReasons.REMOVED_PERMISSION_TO_JOIN_ROOM:
-        return 'removedPermissionToJoinRoom';
+        return 'inviteToRoomRemoved';
     }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
