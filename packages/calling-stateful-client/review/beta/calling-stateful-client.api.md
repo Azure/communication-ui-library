@@ -121,6 +121,8 @@ export interface CallState {
     kind: CallKind;
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
+    pptLive: PPTLiveCallFeatureState;
+    pptLiveShareRemoteParticipant?: string;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -260,6 +262,12 @@ export interface OptimalVideoCountFeatureState {
 }
 
 // @public
+export interface PPTLiveCallFeatureState {
+    isActive: boolean;
+    target: HTMLElement | undefined;
+}
+
+// @public
 export type RaisedHandState = {
     raisedHandOrderPosition: number;
 };
@@ -282,6 +290,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | MicrosoftTeamsAppKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    pptLiveStreams?: HTMLElement;
     raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;

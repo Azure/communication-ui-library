@@ -375,7 +375,7 @@ export interface RemoteParticipantState {
    */
   raisedHand?: RaisedHandState;
 
-  /* @conditional-compile-remove(raise-hand) */
+  /* @conditional-compile-remove(ppt-live) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    */
