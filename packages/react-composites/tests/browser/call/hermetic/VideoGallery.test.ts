@@ -5,6 +5,7 @@ import {
   addScreenshareStream,
   addVideoStream,
   buildUrlWithMockAdapter,
+  defaultMockBotParticipant,
   defaultMockCallAdapterState,
   defaultMockRemoteParticipant,
   defaultMockRemotePSTNParticipant,
@@ -24,6 +25,21 @@ test.describe('VideoGallery tests', async () => {
 
     const participants = [paul];
     const initialState = defaultMockCallAdapterState(participants);
+
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, {
+        ...initialState,
+        displayName: ''
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
+  });
+
+  test('VideoGallery should not show MicrosoftTeamsAppIdentifer participants', async ({ page, serverUrl }) => {
+    const bot = defaultMockBotParticipant();
+    const initialState = defaultMockCallAdapterState([bot]);
 
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {

@@ -168,6 +168,24 @@ export function defaultMockRemoteParticipant(displayName?: string): MockRemotePa
 }
 
 /**
+ * Create a mock isMicrosoftTeamsApp Bot for hermetic e2e tests.
+ *
+ * Use this to add participants to state created via {@link defaultCallAdapterState}.
+ *
+ * @private
+ */
+export function defaultMockBotParticipant(displayName?: string): MockRemoteParticipantState {
+  return {
+    identifier: { kind: 'communicationUser', communicationUserId: `28:orgid:${displayName ?? 'bot'}-id` },
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: true,
+    isSpeaking: false,
+    displayName: displayName
+  };
+}
+
+/**
  * Create the default {@link MockRemoteParticipantState} for a PSTN participant in a hermetic e2e test
  *
  * use to add PSTN participants to the {@link defaultCallAdapterState}
