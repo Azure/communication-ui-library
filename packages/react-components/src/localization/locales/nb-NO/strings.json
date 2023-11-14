@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Nye meldinger",
     "noDisplayNameSub": "Uten navn",
     "editBoxCancelButton": "Avbryt",
-    "editBoxSubmitButton": "Send inn",
+    "editBoxSubmitButton": "Fullført",
     "messageReadCount": "Lest av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Flere alternativer",
     "downloadFile": "Last ned fil",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "forrige side",
     "rightNavButtonAriaLabel": "neste side"
-  }
+  },
+  "AttendeeRole": "Deltaker"
 }

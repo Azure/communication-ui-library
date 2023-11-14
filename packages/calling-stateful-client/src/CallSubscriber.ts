@@ -288,18 +288,25 @@ export class CallSubscriber {
   };
 
   private localVideoStreamsUpdated = (event: { added: LocalVideoStream[]; removed: LocalVideoStream[] }): void => {
+    // Exclude screenshare streams from added local video streams
+    const addedLocalVideoStreamsExcludingScreenShare = event.added.filter(
+      (localVideoStream) => localVideoStream.mediaStreamType !== 'ScreenSharing'
+    );
     // At time of writing only one LocalVideoStream is supported by SDK.
-    if (event.added.length > 0) {
-      const localVideoStreams = [convertSdkLocalStreamToDeclarativeLocalStream(this._call.localVideoStreams[0])];
+    if (addedLocalVideoStreamsExcludingScreenShare.length > 0) {
       // IMPORTANT: The internalContext should be set before context. This is done to ensure that the internal context
       // has the required data when component re-renders due to external state changes.
       this._internalContext.setLocalRenderInfo(
         this._callIdRef.callId,
-        this._call.localVideoStreams[0],
+        addedLocalVideoStreamsExcludingScreenShare[0],
         'NotRendered',
         undefined
       );
-      this._context.setCallLocalVideoStream(this._callIdRef.callId, [...localVideoStreams]);
+      const currentLocalVideoStreams = this._call.localVideoStreams;
+      const localVideoStreams = addedLocalVideoStreamsExcludingScreenShare
+        .concat(currentLocalVideoStreams)
+        .map((stream) => convertSdkLocalStreamToDeclarativeLocalStream(stream));
+      this._context.setCallLocalVideoStream(this._callIdRef.callId, localVideoStreams);
 
       /* @conditional-compile-remove(video-background-effects) */
       {

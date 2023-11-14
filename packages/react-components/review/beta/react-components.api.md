@@ -2242,7 +2242,8 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, options?: {
+    metadata?: Record<string, string>;
     attachedFilesMetadata?: FileMetadata[];
 }) => Promise<void>;
 

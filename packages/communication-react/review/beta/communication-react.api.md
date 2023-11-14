@@ -33,7 +33,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationUserKind } from '@azure/communication-common';
+import type { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
@@ -62,9 +62,7 @@ import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
-import { MicrosoftTeamsAppKind } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
@@ -74,7 +72,6 @@ import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
-import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
@@ -91,7 +88,6 @@ import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TransferRequestedEventArgs } from '@azure/communication-calling';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
-import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
@@ -391,6 +387,7 @@ export type CallAdapterClientState = {
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -822,6 +819,11 @@ export type CallingHandlersOptions = {
 
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
+
+// @beta
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+};
 
 // @public
 export interface CallingTheme {
@@ -1627,7 +1629,8 @@ export type ChatHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+    onUpdateMessage: (messageId: string, content: string, options?: {
+        metadata?: Record<string, string>;
         attachedFilesMetadata?: FileMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
@@ -1743,6 +1746,9 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
+    soundOptions?: {
+        callingSounds?: CallingSounds;
+    };
 };
 
 // @public
@@ -3543,7 +3549,7 @@ export interface RecordingCallFeature {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
-    identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | MicrosoftTeamsAppKind;
+    identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
@@ -3671,6 +3677,12 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     primaryButton?: IButtonStyles;
     troubleshootingLink?: ILinkStyles;
 }
+
+// @beta
+export type SoundEffect = {
+    path: string;
+    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
 
 // @public
 export interface SpokenLanguageStrings {
@@ -3969,7 +3981,8 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, options?: {
+    metadata?: Record<string, string>;
     attachedFilesMetadata?: FileMetadata[];
 }) => Promise<void>;
 

@@ -28,14 +28,7 @@ import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
-import {
-  CommunicationUserKind,
-  MicrosoftTeamsUserKind,
-  PhoneNumberKind,
-  UnknownIdentifierKind,
-  CommunicationIdentifierKind,
-  MicrosoftTeamsAppKind
-} from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -332,12 +325,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.identifier}.
    */
-  identifier:
-    | CommunicationUserKind
-    | PhoneNumberKind
-    | MicrosoftTeamsUserKind
-    | UnknownIdentifierKind
-    | MicrosoftTeamsAppKind;
+  identifier: CommunicationIdentifierKind;
   /**
    * Proxy of {@link @azure/communication-calling#RemoteParticipant.displayName}.
    */
