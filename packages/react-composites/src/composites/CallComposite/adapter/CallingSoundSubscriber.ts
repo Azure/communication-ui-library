@@ -12,8 +12,8 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 type CallingSoundsLoaded = {
-  callEndedSound: HTMLAudioElement | undefined;
-  callRingingSound?: HTMLAudioElement | undefined;
+  callEndedSound?: HTMLAudioElement;
+  callRingingSound?: HTMLAudioElement;
 };
 
 /**
@@ -37,9 +37,7 @@ export class CallingSoundSubscriber {
     this.call.on('stateChanged', () => {
       if (shouldPlayRingingSound(this.call, this.callLocator) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
-        this.soundsLoaded.callRingingSound.play().catch((e) => {
-          console.error(e, 'Failed to play call ringing sound, check loader config to make sure it is correct');
-        });
+        this.playSound(this.soundsLoaded.callRingingSound);
       }
       if (
         (this.call.state === 'Connected' || this.call.state === 'Disconnected') &&
@@ -49,9 +47,7 @@ export class CallingSoundSubscriber {
         this.soundsLoaded.callRingingSound.pause();
       }
       if (this.call.state === 'Disconnected' && this.soundsLoaded?.callEndedSound) {
-        this.soundsLoaded.callEndedSound.play().catch((e) => {
-          console.error(e, 'Failed to play call ended sound, check loader config to make sure it is correct');
-        });
+        this.playSound(this.soundsLoaded.callEndedSound);
       }
     });
   };
@@ -71,12 +67,12 @@ export class CallingSoundSubscriber {
   }
 
   private loadSounds(sounds?: CallingSounds): CallingSoundsLoaded | undefined {
-    let callEndedSound: HTMLAudioElement | undefined;
+    let callEndedSound;
     if (sounds?.callEnded) {
       callEndedSound = new Audio(sounds?.callEnded?.path);
       callEndedSound.preload = 'auto';
     }
-    let callRingingSound: HTMLAudioElement | undefined;
+    let callRingingSound;
     if (sounds?.callRinging) {
       callRingingSound = new Audio(sounds?.callRinging?.path);
       callRingingSound.preload = 'auto';
@@ -85,6 +81,12 @@ export class CallingSoundSubscriber {
       callEndedSound,
       callRingingSound
     };
+  }
+
+  private playSound(sound: HTMLAudioElement): void {
+    sound.play().catch((e) => {
+      console.error(e, 'Failed to play sound, check loader config to make sure it is correct');
+    });
   }
 }
 
