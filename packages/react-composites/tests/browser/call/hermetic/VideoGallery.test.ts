@@ -44,12 +44,12 @@ test.describe('VideoGallery tests', async () => {
     await page.goto(
       buildUrlWithMockAdapter(serverUrl, {
         ...initialState,
-        displayName: ''
+        displayName: 'test-user'
       })
     );
 
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('video-avatar-with-person-icon-when-no-displayname.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-gallery-show-no-bots.png');
   });
 
   /* @conditional-compile-remove(PSTN-calls) */
