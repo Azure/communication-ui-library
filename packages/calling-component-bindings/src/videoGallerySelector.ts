@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '@internal/react-components';
+import { CallClientState, Queue, ReactionEventPayload, RemoteParticipantState } from '@internal/calling-stateful-client';
+import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
@@ -13,6 +13,7 @@ import {
   getIsMuted,
   getIsScreenSharingOn,
   getLocalVideoStreams,
+  getReceivedReactions,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 /* @conditional-compile-remove(rooms) */
@@ -48,6 +49,7 @@ export type VideoGallerySelector = (
   dominantSpeakers?: string[];
   /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
+  receivedReactions?: Queue<ReactionEventPayload>;
 };
 
 /**
@@ -71,7 +73,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    getReceivedReactions,
   ],
   (
     screenShareRemoteParticipantId,
@@ -89,7 +92,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    reactionPayloads,
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -135,7 +139,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       ),
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
-      maxRemoteVideoStreams: optimalVideoCount
+      maxRemoteVideoStreams: optimalVideoCount,
+      receivedReactions: reactionPayloads,
     };
   }
 );

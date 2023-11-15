@@ -42,4 +42,5 @@ export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
 export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';
 /* @conditional-compile-remove(optimal-video-count) */
 export type { OptimalVideoCountFeatureState } from './CallClientState';
-export type { ReactionCallFeatureState } from './CallClientState';
+export type { ReactionCallFeatureState, ReactionEventPayload, ReactionMessage } from './CallClientState';
+export type {Queue} from './Queue';
