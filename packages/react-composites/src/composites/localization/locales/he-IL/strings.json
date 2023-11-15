@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "סגור הגדרת כתוביות",
     "captionsBannerMoreButtonCallingLabel": "עוד",
     "captionsBannerMoreButtonTooltip": "אפשרויות נוספות",
+    "dismissModalAriaLabel": "תמונה מקומית ותמונה מרוחקת, הקש על Enter כדי לחזור לשיחה.",
     "spokenLanguageStrings": {
       "ar-ae": "ערבית - איחוד האמירויות",
       "ar-sa": "ערבית - ערב הסעודית",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "בדוק שמזהה המשתתף הוזן כראוי",
     "participantIdIsMalformedTitle": "מזהה המשתתף אינו בתבנית הנכונה",
     "participantIdIsMalformedMoreDetails": "בדוק שמזהה המשתתף מופיע בתבנית הנכונה",
-    "moreButtonGalleryControlLabel": "אפשרויות גלריה",
+    "moreButtonGalleryControlLabel": "הצג",
     "moreButtonGalleryPositionToggleLabel": "העבר את הגלריה לחלק העליון",
-    "moreButtonGallerySpeakerLayoutLabel": "פריסת דובר",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "פריסה דינמית",
-    "moreButtonGalleryDefaultLayoutLabel": "פריסת גלריה",
-    "moreButtonGalleryFocusedContentLayoutLabel": "תוכן ממוקד",
+    "moreButtonGallerySpeakerLayoutLabel": "רמקול",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "דינמי",
+    "moreButtonGalleryDefaultLayoutLabel": "תצוגת גלריה",
+    "moreButtonGalleryFocusedContentLayoutLabel": "התמקדות בתוכן",
     "moreButtonLargeGalleryDefaultLayoutLabel": "גלריה גדולה",
     "capabilityChangedNotification": {
       "turnVideoOn": {
