@@ -364,53 +364,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   let pageElement: JSX.Element | undefined;
-  /* @conditional-compile-remove(rooms) */
-  switch (page) {
-    case 'roomNotFound':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageRoomNotFound"
-          title={locale.strings.call.roomNotFoundTitle}
-          moreDetails={locale.strings.call.roomNotFoundDetails}
-          dataUiId={'room-not-found-page'}
-          disableStartCallButton={true}
-        />
-      );
-      break;
-    case 'roomNotValid':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageRoomNotValid"
-          title={locale.strings.call.roomNotValidTitle}
-          moreDetails={locale.strings.call.roomNotValidDetails}
-          dataUiId={'room-not-valid-page'}
-          disableStartCallButton={true}
-        />
-      );
-      break;
-    case 'notInvitedToRoom':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageInviteToRoomRemoved"
-          title={locale.strings.call.notInvitedToRoomTitle}
-          moreDetails={locale.strings.call.notInvitedToRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
-          disableStartCallButton={true}
-        />
-      );
-      break;
-    case 'inviteToRoomRemoved':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageNotInvitedToRoom"
-          title={locale.strings.call.inviteToRoomRemovedTitle}
-          moreDetails={locale.strings.call.inviteToRoomRemovedDetails}
-          dataUiId={'removed-from-room-page'}
-          disableStartCallButton={true}
-        />
-      );
-      break;
-  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -689,6 +642,15 @@ const getQueryOptions = (options: {
   return { video: true, audio: true };
 };
 
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5732;
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_VALID_SUB_CODE = 5829;
+/* @conditional-compile-remove(rooms) */
+const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
+/* @conditional-compile-remove(rooms) */
+const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
+
 const getEndedCallStrings = (
   locale: CompositeLocale,
   endedCall?: CallState
@@ -696,6 +658,37 @@ const getEndedCallStrings = (
   let title = locale.strings.call.leftCallTitle;
   let moreDetails = locale.strings.call.leftCallMoreDetails;
   let disableStartCallButton = false;
+  /* @conditional-compile-remove(rooms) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case ROOM_NOT_FOUND_SUB_CODE:
+      if (locale.strings.call.roomNotFoundTitle) {
+        title = locale.strings.call.roomNotFoundTitle;
+        moreDetails = locale.strings.call.roomNotFoundDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case ROOM_NOT_VALID_SUB_CODE:
+      if (locale.strings.call.roomNotValidTitle) {
+        title = locale.strings.call.roomNotValidTitle;
+        moreDetails = locale.strings.call.roomNotValidDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case NOT_INVITED_TO_ROOM_SUB_CODE:
+      if (locale.strings.call.notInvitedToRoomTitle) {
+        title = locale.strings.call.notInvitedToRoomTitle;
+        moreDetails = locale.strings.call.notInvitedToRoomDetails;
+        disableStartCallButton = true;
+      }
+      break;
+    case INVITE_TO_ROOM_REMOVED_SUB_CODE:
+      if (locale.strings.call.inviteToRoomRemovedTitle) {
+        title = locale.strings.call.inviteToRoomRemovedTitle;
+        moreDetails = locale.strings.call.inviteToRoomRemovedDetails;
+        disableStartCallButton = true;
+      }
+      break;
+  }
   /* @conditional-compile-remove(teams-adhoc-call) */
   switch (endedCall?.callEndReason?.subCode) {
     case 10037:

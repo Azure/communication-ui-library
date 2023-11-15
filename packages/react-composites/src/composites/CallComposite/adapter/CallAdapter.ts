@@ -52,15 +52,11 @@ export type CallCompositePage =
   | 'call'
   | 'configuration'
   | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
-  | /* @conditional-compile-remove(rooms) */ 'inviteToRoomRemoved'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'leaving'
   | 'lobby'
-  | /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotValid'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
@@ -72,9 +68,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  /* @conditional-compile-remove(rooms) */ 'notInvitedToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
