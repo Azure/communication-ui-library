@@ -651,6 +651,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     <RemotePPTLive
       {...pptLiveParticipant}
       renderElement={pptLiveParticipant.pptLiveStream}
+      onCreateRemoteStreamView={onCreateRemoteStreamView}
       onDisposeRemoteStreamView={onDisposeRemotePPTLiveStreamView}
     />
   );
@@ -720,7 +721,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, screenShareParticipant]);
+  }, [layout, layoutProps, pptLiveParticipant, screenShareParticipant]);
 
   return (
     <div

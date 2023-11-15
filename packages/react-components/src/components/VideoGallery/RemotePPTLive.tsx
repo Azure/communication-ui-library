@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
@@ -26,10 +26,16 @@ export const RemotePPTLive = React.memo(
     isSpeaking?: boolean;
     renderElement?: HTMLElement;
   }) => {
-    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView } = props;
+    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
     if (!renderElement) {
       onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
     }
+
+    useEffect(() => {
+      return () => {
+        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
+      };
+    }, [onDisposeRemoteStreamView, userId]);
 
     return (
       <VideoTile

@@ -49,6 +49,8 @@ export class PPTLiveSubscriber {
     if (this._pptLive.isActive) {
       this._context.setCallParticipantPPTLive(this._callIdRef.callId, this._pptLive.target);
       return;
+    } else {
+      this._context.setCallParticipantPPTLive(this._callIdRef.callId, undefined);
     }
   };
 }
