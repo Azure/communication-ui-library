@@ -2,7 +2,9 @@
 // Licensed under the MIT License.
 
 import { createMockCall } from '../../CallComposite/adapter/TestUtils';
+/* @conditional-compile-remove(calling-sounds) */
 import { CallingSounds } from './CallAdapter';
+/* @conditional-compile-remove(calling-sounds) */
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 
 const audioMocks = {
@@ -18,6 +20,11 @@ global.Audio = jest.fn().mockImplementation(() => ({
 }));
 
 describe('Calling sound subscriber tests', () => {
+  test('test to fulfill no empty runners', () => {
+    const mockCall = createMockCall();
+    expect(mockCall).toBeDefined();
+  });
+  /* @conditional-compile-remove(calling-sounds) */
   test('should play ringing sound when call is ringing', () => {
     const locator = { participantIds: ['8:orgid:30138458-6b40-40d6-8c29-6b127031581a'] };
     const call = createMockCall();
@@ -35,6 +42,7 @@ describe('Calling sound subscriber tests', () => {
     expect(audioMocks.Audio.play).toHaveBeenCalled();
   });
 
+  /* @conditional-compile-remove(calling-sounds) */
   test('should play ended sound when call is ended', () => {
     const locator = { participantIds: ['8:orgid:30138458-6b40-40d6-8c29-6b127031581a'] };
     const call = createMockCall();
@@ -46,5 +54,19 @@ describe('Calling sound subscriber tests', () => {
     expect(soundSubscriber).toBeDefined();
     call.testHelperSetCallState('Disconnected');
     expect(audioMocks.Audio.play).toHaveBeenCalled();
+  });
+
+  /* @conditional-compile-remove(calling-sounds) */
+  test('should not play sound when call is made to PSTN user', () => {
+    const locator = { participantIds: ['+14045554444'] };
+    const call = createMockCall();
+    const sounds: CallingSounds = {
+      callRinging: { path: 'test/path/ringing' },
+      callEnded: { path: 'test/path/ended' }
+    };
+    const soundSubscriber = new CallingSoundSubscriber(call, locator, sounds);
+    expect(soundSubscriber).toBeDefined();
+    call.testHelperSetCallState('Ringing');
+    expect(audioMocks.Audio.play).not.toHaveBeenCalled();
   });
 });
