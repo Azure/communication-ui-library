@@ -28,13 +28,14 @@ export const _generateTheme = (accentColor: string, variant: 'light' | 'dark'): 
     throw new Error(`Could not parse background color: ${isDark ? '#252423' : '#ffffff'}`);
   }
 
-  // Generate theme from base colors.
+  // Generate theme from base colors. This API is mostly undocumented and used internally by Fluent.
+  // For usage, see: https://github.com/microsoft/fluentui/blob/88efc19c9513db18cb5b7c63fa0f47ba496755a2/packages/react/src/components/ThemeGenerator/ThemeGenerator.ts#L8C14-L8C28
   const themeRules = themeRulesStandardCreator();
   ThemeGenerator.insureSlots(themeRules, isDark);
   ThemeGenerator.setSlot(themeRules[BaseSlots[BaseSlots.primaryColor]], primaryColor, isDark, true, true);
   ThemeGenerator.setSlot(themeRules[BaseSlots[BaseSlots.backgroundColor]], backgroundColor, isDark, true, true);
 
-  // There is a bug in fluentv8 theme generator that causes the foregroundColor to be generated incorrectly.
+  // There is a bug in fluentv8 theme generator that causes the foregroundColor to be generated incorrectly: https://github.com/microsoft/fluentui/issues/29853.
   // Ideally we could do: ThemeGenerator.setSlot(themeRules[BaseSlots[foregroundColor]], colors.textColor, isDark, true, true);
   // Until this fluent bug is fixed, use manually calculated foreground colors (this result is the same as the result of the color calcuation the above line would return).
   const foregroundColors = getForegroundColors(isDark);
