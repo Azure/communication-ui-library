@@ -42,6 +42,34 @@ describe('Adapter is created as expected', () => {
     expect(adapter).toBeDefined();
     expect(adapter.getState().sounds).toBeDefined();
     expect(adapter.getState().sounds?.callEnded).toBeDefined();
+    expect(adapter.getState().sounds?.callEnded).toEqual({ path: 'test/path/ended' });
     expect(adapter.getState().sounds?.callRinging).toBeDefined();
+    expect(adapter.getState().sounds?.callRinging).toEqual({ path: 'test/path/ringing' });
+  });
+
+  test('when creating an adapter with one sound we should see it and not the other', async () => {
+    const mockCallClient = new MockCallClient() as unknown as StatefulCallClient;
+
+    const mockCallAgent = new MockCallAgent();
+    const locator = { participantIds: ['some user id'] };
+    const options: CommonCallAdapterOptions = {
+      soundOptions: {
+        callingSounds: {
+          callEnded: { path: 'test/path/ended' }
+        }
+      }
+    };
+
+    const adapter = await createAzureCommunicationCallAdapterFromClient(
+      mockCallClient,
+      mockCallAgent,
+      locator,
+      options
+    );
+    expect(adapter).toBeDefined();
+    expect(adapter.getState().sounds).toBeDefined();
+    expect(adapter.getState().sounds?.callEnded).toBeDefined();
+    expect(adapter.getState().sounds?.callEnded).toEqual({ path: 'test/path/ended' });
+    expect(adapter.getState().sounds?.callRinging).toBeUndefined();
   });
 });
