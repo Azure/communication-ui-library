@@ -285,7 +285,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    pptLiveStreams?: HTMLElement;
+    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;

@@ -18,6 +18,7 @@ export interface OrganizedParticipantsArgs {
   maxRemoteVideoStreams?: number;
   maxOverflowGalleryDominantSpeakers?: number;
   isScreenShareActive?: boolean;
+  isPPTLiveActive?: boolean;
   pinnedParticipantUserIds?: string[];
   /* @conditional-compile-remove(gallery-layouts) */
   layout?: VideoGalleryLayout;
@@ -48,6 +49,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     maxRemoteVideoStreams = DEFAULT_MAX_VIDEO_SREAMS,
     maxOverflowGalleryDominantSpeakers = DEFAULT_MAX_OVERFLOW_GALLERY_DOMINANT_SPEAKERS,
     isScreenShareActive = false,
+    isPPTLiveActive = false,
     pinnedParticipantUserIds = [],
     /* @conditional-compile-remove(gallery-layouts) */
     layout
@@ -74,7 +76,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   };
 
   visibleGridParticipants.current =
-    pinnedParticipantUserIds.length > 0 || isScreenShareActive
+    pinnedParticipantUserIds.length > 0 || isScreenShareActive || isPPTLiveActive
       ? []
       : smartDominantSpeakerParticipants({
           participants: participantsToSortTrampoline(),
@@ -118,7 +120,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   });
 
   const getGridParticipants = useCallback((): VideoGalleryRemoteParticipant[] => {
-    if (isScreenShareActive) {
+    if (isScreenShareActive || isPPTLiveActive) {
       return [];
     }
     // if we have no grid participants we need to cap the max number of overflowGallery participants in the grid
@@ -136,6 +138,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
+    isPPTLiveActive,
     maxRemoteVideoStreamsToUse
   ]);
 
@@ -145,7 +148,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
     | VideoGalleryParticipant
     | VideoGalleryRemoteParticipant
   )[] => {
-    if (isScreenShareActive && localParticipant) {
+    if ((isScreenShareActive || isPPTLiveActive) && localParticipant) {
       const localParticipantPlusOverflow = [localParticipant].concat(
         visibleGridParticipants.current.concat(visibleOverflowGalleryParticipants.current)
       );
@@ -153,7 +156,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return localParticipantPlusOverflow.concat(callingParticipants);
       return localParticipantPlusOverflow;
-    } else if (isScreenShareActive) {
+    } else if (isScreenShareActive || isPPTLiveActive) {
       // If screen sharing is active, assign video and audio participants as overflow gallery participants
       /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
       return visibleGridParticipants.current.concat(
@@ -178,6 +181,7 @@ const _useOrganizedParticipants = (props: OrganizedParticipantsArgs): OrganizedP
   }, [
     /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ callingParticipants,
     isScreenShareActive,
+    isPPTLiveActive,
     localParticipant,
     maxRemoteVideoStreamsToUse
   ]);
@@ -223,12 +227,13 @@ const _useOrganizedParticipantsWithPinnedParticipants = (
   }
 
   return {
-    gridParticipants: props.isScreenShareActive ? [] : pinnedParticipants,
-    overflowGalleryParticipants: props.isScreenShareActive
-      ? pinnedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
-      : useOrganizedParticipantsResult.gridParticipants.concat(
-          useOrganizedParticipantsResult.overflowGalleryParticipants
-        )
+    gridParticipants: props.isScreenShareActive || props.isPPTLiveActive ? [] : pinnedParticipants,
+    overflowGalleryParticipants:
+      props.isScreenShareActive || props.isPPTLiveActive
+        ? pinnedParticipants.concat(useOrganizedParticipantsResult.overflowGalleryParticipants)
+        : useOrganizedParticipantsResult.gridParticipants.concat(
+            useOrganizedParticipantsResult.overflowGalleryParticipants
+          )
   };
 };
 

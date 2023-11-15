@@ -11,8 +11,10 @@ import {
   getDominantSpeakers,
   getIdentifier,
   getIsMuted,
+  getIsPPTLiveOn,
   getIsScreenSharingOn,
   getLocalVideoStreams,
+  getPPTLiveShareRemoteParticipant,
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
@@ -43,6 +45,7 @@ export type VideoGallerySelector = (
   props: CallingBaseSelectorProps
 ) => {
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+  pptLiveShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
@@ -71,7 +74,11 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(ppt-live) */
+    getIsPPTLiveOn,
+    /* @conditional-compile-remove(ppt-live) */
+    getPPTLiveShareRemoteParticipant
   ],
   (
     screenShareRemoteParticipantId,
@@ -89,11 +96,18 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(raise-hand) */
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(ppt-live) */
+    isPPTLiveOn,
+    pptLiveShareRemoteParticipantId
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
         ? remoteParticipants[screenShareRemoteParticipantId]
+        : undefined;
+    const pptLiveShareRemoteParticipant =
+      pptLiveShareRemoteParticipantId && remoteParticipants
+        ? remoteParticipants[pptLiveShareRemoteParticipantId]
         : undefined;
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
 
@@ -112,6 +126,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
             /* @conditional-compile-remove(raise-hand) */
+            screenShareRemoteParticipant.pptLiveStream,
             screenShareRemoteParticipant.raisedHand
           )
         : undefined,
@@ -119,7 +134,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         identifier,
         displayName,
         isMuted,
-        isScreenSharingOn,
+        isScreenSharingOn && isPPTLiveOn,
         localVideoStream,
         /* @conditional-compile-remove(rooms) */
         role,
@@ -135,7 +150,20 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       ),
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
-      maxRemoteVideoStreams: optimalVideoCount
+      maxRemoteVideoStreams: optimalVideoCount,
+      pptLiveShareParticipant: pptLiveShareRemoteParticipant
+        ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
+            toFlatCommunicationIdentifier(pptLiveShareRemoteParticipant.identifier),
+            pptLiveShareRemoteParticipant.isMuted,
+            checkIsSpeaking(pptLiveShareRemoteParticipant),
+            pptLiveShareRemoteParticipant.videoStreams,
+            pptLiveShareRemoteParticipant.state,
+            pptLiveShareRemoteParticipant.displayName,
+            /* @conditional-compile-remove(ppt-live) */
+            pptLiveShareRemoteParticipant.pptLiveStream,
+            pptLiveShareRemoteParticipant.raisedHand
+          )
+        : undefined
     };
   }
 );

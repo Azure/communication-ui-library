@@ -106,6 +106,13 @@ export const getLocalParticipantRaisedHand = (
 export const getIsScreenSharingOn = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
   state.calls[props.callId]?.isScreenSharingOn;
 
+/* @conditional-compile-remove(ppt-live) */
+/**
+ * @private
+ */
+export const getIsPPTLiveOn = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined =>
+  state.calls[props.callId]?.pptLive.isActive;
+
 /**
  * @private
  */
@@ -134,6 +141,15 @@ export const getScreenShareRemoteParticipant = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): string | undefined => state.calls[props.callId]?.screenShareRemoteParticipant;
+
+/* @conditional-compile-remove(ppt-live) */
+/**
+ * @private
+ */
+export const getPPTLiveShareRemoteParticipant = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): string | undefined => state.calls[props.callId]?.pptLiveShareRemoteParticipant;
 
 /**
  * @private

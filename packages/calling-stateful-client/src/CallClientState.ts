@@ -367,7 +367,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    */
-  pptLiveStreams?: HTMLElement;
+  pptLiveStream?: HTMLElement;
 }
 
 /**

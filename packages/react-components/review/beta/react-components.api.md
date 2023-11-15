@@ -2367,6 +2367,8 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
+    // (undocumented)
+    onDisposeRemotePPTLiveStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;

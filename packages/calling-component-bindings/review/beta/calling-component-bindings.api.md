@@ -376,6 +376,7 @@ export const _videoGalleryRemoteParticipantsMemo: (remoteParticipants: RemotePar
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    pptLiveShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

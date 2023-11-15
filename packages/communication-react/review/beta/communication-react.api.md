@@ -3560,7 +3560,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    pptLiveStreams?: HTMLElement;
+    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
@@ -4123,6 +4123,8 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
+    // (undocumented)
+    onDisposeRemotePPTLiveStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -4156,6 +4158,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    pptLiveShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

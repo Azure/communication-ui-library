@@ -44,6 +44,7 @@ import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
+import { RemotePPTLive } from './VideoGallery/RemotePPTLive';
 
 /**
  * @private
@@ -223,6 +224,8 @@ export interface VideoGalleryProps {
   onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a remote screen share stream view */
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(ppt-live) */
+  onDisposeRemotePPTLiveStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -333,6 +336,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteScreenShareStreamView,
+    /* @conditional-compile-remove(ppt-live) */
+    onDisposeRemotePPTLiveStreamView,
     onDisposeRemoteVideoStreamView,
     styles,
     layout,
@@ -627,6 +632,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
+  const pptLiveParticipant = remoteParticipants.find((participant) => participant.pptLiveStream !== undefined);
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -640,6 +646,14 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     />
   );
 
+  /* @conditional-compile-remove(ppt-live) */
+  const pptLiveComponent = pptLiveParticipant && (
+    <RemotePPTLive
+      {...pptLiveParticipant}
+      renderElement={pptLiveParticipant.pptLiveStream}
+      onDisposeRemoteStreamView={onDisposeRemotePPTLiveStreamView}
+    />
+  );
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
@@ -651,6 +665,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants,
       localParticipant,
       screenShareComponent,
+      /* @conditional-compile-remove(ppt-live) */ pptLiveComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
       dominantSpeakers,
@@ -667,18 +682,19 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       remoteParticipants,
       localParticipant,
       screenShareComponent,
+      pptLiveComponent,
       showCameraSwitcherInLocalPreview,
       maxRemoteVideoStreams,
       dominantSpeakers,
       styles,
+      onRenderRemoteVideoTile,
+      defaultOnRenderVideoTile,
       localVideoTile,
       containerWidth,
       containerHeight,
-      onRenderRemoteVideoTile,
-      defaultOnRenderVideoTile,
-      /* @conditional-compile-remove(pinned-participants) */ pinnedParticipants,
-      /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
-      /* @conditional-compile-remove(click-to-call) */ localVideoTileSize
+      pinnedParticipants,
+      overflowGalleryPosition,
+      localVideoTileSize
     ]
   );
 
@@ -699,7 +715,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, /* @conditional-compile-remove(gallery-layouts) */ screenShareParticipant]);
+  }, [layout, layoutProps, screenShareParticipant]);
 
   return (
     <div
