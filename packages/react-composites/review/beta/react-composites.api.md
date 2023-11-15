@@ -242,6 +242,7 @@ export type CallAdapterClientState = {
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -584,6 +585,12 @@ export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 export type CallIdChangedListener = (event: {
     callId: string;
 }) => void;
+
+// @beta
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
+};
 
 // @beta
 export type CallParticipantsLocator = {
@@ -1109,6 +1116,9 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
+    soundOptions?: {
+        callingSounds?: CallingSounds;
+    };
 };
 
 // @public
@@ -1738,6 +1748,12 @@ export type Profile = {
 export interface RemoteVideoTileMenuOptions {
     isHidden?: boolean;
 }
+
+// @beta
+export type SoundEffect = {
+    path: string;
+    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
 
 // @public
 export type TeamsAdapterOptions = CommonCallAdapterOptions;

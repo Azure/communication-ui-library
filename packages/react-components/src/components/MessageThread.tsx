@@ -553,9 +553,9 @@ export type UpdateMessageCallback = (
   messageId: string,
   content: string,
   /* @conditional-compile-remove(file-sharing) */
-  metadata?: Record<string, string>,
-  /* @conditional-compile-remove(file-sharing) */
   options?: {
+    /* @conditional-compile-remove(file-sharing) */
+    metadata?: Record<string, string>;
     attachedFilesMetadata?: FileMetadata[];
   }
 ) => Promise<void>;

@@ -36,7 +36,7 @@ import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { UnsupportedBrowserPage } from './views/UnsupportedBrowserPage';
 
-setLogLevel('verbose');
+setLogLevel('error');
 
 console.log(
   `ACS sample calling app. Last Updated ${buildTime} Using @azure/communication-calling:${callingSDKVersion} and @azure/communication-react:${communicationReactSDKVersion}`

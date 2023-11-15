@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Simplifying RemoteParticipantState",
+  "comment": "Collapsing other identifiers to just CommunicationIdentifierKind",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
