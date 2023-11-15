@@ -111,6 +111,7 @@
     "captionsSettingsCloseModalButtonAriaLabel": "关闭字幕设置",
     "captionsBannerMoreButtonCallingLabel": "更多",
     "captionsBannerMoreButtonTooltip": "更多选项",
+    "dismissModalAriaLabel": "本地和远程图片和图像，按 Enter 返回呼叫",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯语 - 阿拉伯联合酋长国",
       "ar-sa": "阿拉伯语 - 沙特阿拉伯",
@@ -202,12 +203,12 @@
     "unableToResolveTenantMoreDetails": "请检查正确输入参与者 ID",
     "participantIdIsMalformedTitle": "参与者 ID 的格式不正确",
     "participantIdIsMalformedMoreDetails": "请检查参与者 ID 的格式正确",
-    "moreButtonGalleryControlLabel": "库选项",
+    "moreButtonGalleryControlLabel": "查看",
     "moreButtonGalleryPositionToggleLabel": "将库移到顶部",
-    "moreButtonGallerySpeakerLayoutLabel": "扬声器布局",
-    "moreButtonGalleryFloatingLocalLayoutLabel": "动态布局",
-    "moreButtonGalleryDefaultLayoutLabel": "库布局",
-    "moreButtonGalleryFocusedContentLayoutLabel": "重点内容",
+    "moreButtonGallerySpeakerLayoutLabel": "扬声器",
+    "moreButtonGalleryFloatingLocalLayoutLabel": "动态",
+    "moreButtonGalleryDefaultLayoutLabel": "库视图",
+    "moreButtonGalleryFocusedContentLayoutLabel": "关注内容",
     "moreButtonLargeGalleryDefaultLayoutLabel": "大型画廊模式",
     "capabilityChangedNotification": {
       "turnVideoOn": {

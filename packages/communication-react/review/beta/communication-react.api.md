@@ -387,6 +387,7 @@ export type CallAdapterClientState = {
     selectedVideoBackgroundEffect?: VideoBackgroundEffect;
     acceptedTransferCallState?: CallState;
     hideAttendeeNames?: boolean;
+    sounds?: CallingSounds;
 };
 
 // @public
@@ -818,6 +819,12 @@ export type CallingHandlersOptions = {
 
 // @public
 export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
+
+// @beta
+export type CallingSounds = {
+    callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
+};
 
 // @public
 export interface CallingTheme {
@@ -1623,7 +1630,8 @@ export type ChatHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+    onUpdateMessage: (messageId: string, content: string, options?: {
+        metadata?: Record<string, string>;
         attachedFilesMetadata?: FileMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
@@ -1739,6 +1747,9 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
+    soundOptions?: {
+        callingSounds?: CallingSounds;
+    };
 };
 
 // @public
@@ -3668,6 +3679,12 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
     troubleshootingLink?: ILinkStyles;
 }
 
+// @beta
+export type SoundEffect = {
+    path: string;
+    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
+
 // @public
 export interface SpokenLanguageStrings {
     // (undocumented)
@@ -3965,7 +3982,8 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, options?: {
+    metadata?: Record<string, string>;
     attachedFilesMetadata?: FileMetadata[];
 }) => Promise<void>;
 

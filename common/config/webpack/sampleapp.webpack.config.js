@@ -52,6 +52,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           test: /\.svg/,
           type: 'asset/inline'
+        },
+        {
+          test: /\.mp3$/,
+          loader: 'file-loader'
         }
       ]
     },

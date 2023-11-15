@@ -153,6 +153,13 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       videoBackgroundOptions: {
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(calling-sounds) */
+      soundOptions: {
+        callingSounds: {
+          callEnded: { path: '/sounds/callEnded.mp3' },
+          callRinging: { path: '/sounds/callRinging.mp3' }
+        }
       }
     };
   }, []);
