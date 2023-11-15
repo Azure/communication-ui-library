@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+/* @conditional-compile-remove(calling-sounds) */
 import {
   CommonCallAdapterOptions,
   createAzureCommunicationCallAdapterFromClient
 } from './AzureCommunicationCallAdapter';
+/* @conditional-compile-remove(calling-sounds) */
 import { MockCallAgent, MockCallClient } from '../../CallWithChatComposite/adapter/TestUtils';
+/* @conditional-compile-remove(calling-sounds) */
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 
 describe('Adapter is created as expected', () => {
