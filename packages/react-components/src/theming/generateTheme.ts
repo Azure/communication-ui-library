@@ -29,7 +29,7 @@ export const _generateTheme = (accentColor: string, variant: 'light' | 'dark'): 
   }
 
   // Generate theme from base colors. This API is mostly undocumented and used internally by Fluent.
-  // For usage, see: https://github.com/microsoft/fluentui/blob/88efc19c9513db18cb5b7c63fa0f47ba496755a2/packages/react/src/components/ThemeGenerator/ThemeGenerator.ts#L8C14-L8C28
+  // For usage, see: https://github.com/microsoft/fluentui/blob/88efc19c9513db18cb5b7c63fa0f47ba496755a2/packages/react/src/components/ThemeGenerator/ThemeGenerator.ts
   const themeRules = themeRulesStandardCreator();
   ThemeGenerator.insureSlots(themeRules, isDark);
   ThemeGenerator.setSlot(themeRules[BaseSlots[BaseSlots.primaryColor]], primaryColor, isDark, true, true);
