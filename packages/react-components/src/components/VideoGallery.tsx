@@ -703,6 +703,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (screenShareParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;
     }
+    /* @conditional-compile-remove(gallery-layouts) */
+    /* @conditional-compile-remove(ppt-live) */
+    if (pptLiveParticipant && layout === 'focusedContent') {
+      return <FocusedContentLayout {...layoutProps} />;
+    }
     if (layout === 'floatingLocalVideo') {
       return <FloatingLocalVideoLayout {...layoutProps} />;
     }

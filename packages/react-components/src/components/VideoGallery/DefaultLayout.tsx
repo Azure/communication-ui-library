@@ -33,6 +33,7 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     dominantSpeakers,
     localVideoComponent,
     screenShareComponent,
+    pptLiveComponent,
     onRenderRemoteParticipant,
     styles,
     maxRemoteVideoStreams,
@@ -58,9 +59,11 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
     dominantSpeakers,
     maxRemoteVideoStreams,
     isScreenShareActive: !!screenShareComponent,
-    maxOverflowGalleryDominantSpeakers: screenShareComponent
-      ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
-      : childrenPerPage.current,
+    isPPTLiveActive: !!pptLiveComponent,
+    maxOverflowGalleryDominantSpeakers:
+      screenShareComponent || pptLiveComponent
+        ? childrenPerPage.current - ((pinnedParticipantUserIds.length + 1) % childrenPerPage.current)
+        : childrenPerPage.current,
     /* @conditional-compile-remove(pinned-participants) */ pinnedParticipantUserIds,
     /* @conditional-compile-remove(gallery-layouts) */ layout: 'default'
   });
@@ -148,8 +151,8 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
           <></>
         )
       }
-      {screenShareComponent ? (
-        screenShareComponent
+      {screenShareComponent || pptLiveComponent ? (
+        screenShareComponent || pptLiveComponent
       ) : (
         <GridLayout key="grid-layout" styles={styles?.gridLayout}>
           {gridTiles}
