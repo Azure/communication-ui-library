@@ -109,3 +109,5 @@ test-results/
 */**/CHANGELOG.md
 # Used by tooling to stash away change files for stable build
 change-stable/
+
+apis/
