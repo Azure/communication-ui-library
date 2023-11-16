@@ -61,7 +61,7 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
-import { Message } from '@internal/react-components';
+// import { Message } from '@internal/react-components';
 
 /**
  * @private
@@ -146,6 +146,13 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const theme = useTheme();
 
+  // useEffect(() => {
+  //   console.log('!!!!!!!useEffect empty render');
+  // }, []);
+
+  // useEffect(() => {
+  //   console.log('!!!!!!!useEffect adapter', adapter);
+  // }, [adapter]);
   useEffect(() => {
     console.log('!!!!!!!useEffect fetchData');
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
@@ -158,14 +165,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fetchData();
   }, [adapter]);
 
-  useEffect(() => {
-    console.log('!!!!!!!useEffect empty render');
-  }, []);
-
-  useEffect(() => {
-    console.log('!!!!!!!useEffect adapter');
-  }, [adapter]);
-
+  // console.log('!!!!!!!ChatScreen props ', props);
   const messageThreadProps = usePropsFor(MessageThread);
   // const [messages, setMessages] = useState<Message[]>(messageThreadProps.messages);
   const sendBoxProps = usePropsFor(SendBox);
@@ -214,6 +214,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const sendBoxStyles = useMemo(() => {
     return Object.assign({}, styles?.sendBox);
   }, [styles?.sendBox]);
+  // const userId = useMemo(() => {
+  //   console.log('!!!!!!!useMemo userId is it changed?', toFlatCommunicationIdentifier(adapter.getState().userId));
+  //   return toFlatCommunicationIdentifier(adapter.getState().userId);
+  // }, [adapter]);
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(

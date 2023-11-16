@@ -254,7 +254,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   );
 
   const getContent = useCallback(() => {
-    console.log('!!!!! getContent');
     /* @conditional-compile-remove(data-loss-prevention) */
     if (message.messageType === 'blocked') {
       return (

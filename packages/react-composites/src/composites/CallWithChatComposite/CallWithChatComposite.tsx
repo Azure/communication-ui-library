@@ -478,26 +478,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  useEffect(() => {
-    console.log('!!!!!!!!!!! CallWithChatCOmposite empty useEffect');
-  }, []);
-
-  useEffect(() => {
-    console.log('!!!!!!!!!!! CallWithChatCOmposite chatProps is changed');
-  }, [chatProps]);
-  useEffect(() => {
-    console.log('!!!!!!!!!!! CallWithChatCOmposite props.fileSharing is changed');
-  }, [props.fileSharing]);
-  useEffect(() => {
-    console.log('!!!!!!!!!!! CallWithChatCOmposite chatAdapter is changed');
-  }, [chatAdapter]);
-  useEffect(() => {
-    console.log('!!!!!!!!!!! CallWithChatCOmposite theme is changed');
-  }, [theme]);
-
   const onRenderChatContent = useCallback((): JSX.Element => {
-    //TODO: theme forces the update
-    console.log('!!!!!!!!!! onRenderChatContent');
     return (
       <ChatComposite
         {...chatProps}
@@ -510,10 +491,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           /* @conditional-compile-remove(file-sharing) */
           fileSharing: props.fileSharing
         }}
-        // onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+        onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     );
-  }, [chatAdapter, chatProps, props.fileSharing, theme]);
+  }, [chatAdapter, chatProps, props.fileSharing, props.onFetchAvatarPersonaData, theme]);
 
   const sidePaneHeaderRenderer = useCallback(
     () => (

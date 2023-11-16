@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Icon, IStyle, mergeStyles, PrimaryButton, Theme, IPersona, Persona, PersonaSize } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, PrimaryButton /*, Theme, IPersona, Persona, PersonaSize*/ } from '@fluentui/react';
 import {
-  Chat,
-  ChatMessage as FluentChatMessage,
-  ChatMyMessage as FluentChatMyMessage
+  Chat
+  //   ChatMessage as FluentChatMessage,
+  //   ChatMyMessage as FluentChatMyMessage
 } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import {
@@ -16,11 +16,11 @@ import {
   messageThreadWrapperContainerStyle,
   useChatStyles,
   buttonWithIconStyles,
-  newMessageButtonStyle,
-  noMessageStatusStyle,
-  useChatMessageRenderStyles,
-  gutterWithAvatar,
-  gutterWithHiddenAvatar
+  newMessageButtonStyle
+  // noMessageStatusStyle,
+  // useChatMessageRenderStyles,
+  // gutterWithAvatar,
+  // gutterWithHiddenAvatar
 } from './styles/MessageThread.styles';
 import { delay } from './utils/delay';
 import {
@@ -28,10 +28,10 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  CommunicationParticipant,
+  // CommunicationParticipant,
   OnRenderAvatarCallback,
-  ParticipantAddedSystemMessage,
-  ParticipantRemovedSystemMessage,
+  // ParticipantAddedSystemMessage,
+  // ParticipantRemovedSystemMessage,
   Message,
   ReadReceiptsBySenderId,
   ComponentSlotStyle
@@ -40,8 +40,8 @@ import {
 import { BlockedMessage } from '../types';
 import { MessageStatusIndicator, MessageStatusIndicatorProps } from './MessageStatusIndicator';
 import { memoizeFnAll, MessageStatus } from '@internal/acs-ui-common';
-import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
-import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
+// import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './SystemMessage';
+// import { ChatMessageComponent } from './ChatMessage/ChatMessageComponent';
 import { useLocale } from '../localization/LocalizationProvider';
 import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
@@ -59,6 +59,10 @@ import { MentionOptions } from './MentionPopover';
 /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { createStyleFromV8Style } from './styles/v8StyleShim';
+import {
+  ChatMessageComponentWrapper,
+  ChatMessageComponentWrapperProps
+} from './ChatMessage/ChatMessageComponentWrapper';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -259,14 +263,6 @@ const DefaultJumpToNewMessageButton = (props: JumpToNewMessageButtonProps): JSX.
   );
 };
 
-const generateParticipantsStr = (participants: CommunicationParticipant[], defaultName: string): string =>
-  participants
-    .map(
-      (participant) =>
-        `${!participant.displayName || participant.displayName === '' ? defaultName : participant.displayName}`
-    )
-    .join(', ');
-
 /**
  * A component to render a single message.
  *
@@ -274,106 +270,262 @@ const generateParticipantsStr = (participants: CommunicationParticipant[], defau
  */
 export type MessageRenderer = (props: MessageProps) => JSX.Element;
 
-const ParticipantSystemMessageComponent = ({
-  message,
-  style,
-  defaultName
-}: {
-  message: ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage;
-  style?: ComponentSlotStyle;
-  defaultName: string;
-}): JSX.Element => {
-  const { strings } = useLocale();
-  const participantsStr = generateParticipantsStr(message.participants, defaultName);
-  const messageSuffix =
-    message.systemMessageType === 'participantAdded'
-      ? strings.messageThread.participantJoined
-      : strings.messageThread.participantLeft;
+// const memoizeAllMessages = memoizeFnAll(
+//   (
+//     _messageKey: string,
+//     message: Message,
+//     showMessageDate: boolean,
+//     showMessageStatus: boolean,
+//     onRenderAvatar: OnRenderAvatarCallback | undefined,
+//     shouldOverlapAvatarAndMessage: boolean,
+//     styles: MessageThreadStyles | undefined,
+//     onRenderMessageStatus:
+//       | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
+//       | undefined,
+//     defaultStatusRenderer: (
+//       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+//       status: MessageStatus,
+//       participantCount: number,
+//       readCount: number
+//     ) => JSX.Element,
+//     defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
+//     strings: MessageThreadStrings,
+//     theme: Theme,
+//     chatMessageRenderStyles: Record<
+//       | 'bodyCommon'
+//       | 'bodyMyMessage'
+//       | 'rootCommon'
+//       | 'rootMyMessage'
+//       | 'rootMessage'
+//       | 'bodyWithoutAvatar'
+//       | 'bodyWithAvatar'
+//       | 'avatarNoOverlap'
+//       | 'avatarOverlap',
+//       string
+//     >,
+//     _attached?: boolean | string,
+//     statusToRender?: MessageStatus,
+//     participantCount?: number,
+//     readCount?: number,
+//     onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
+//     onUpdateMessage?: UpdateMessageCallback,
+//     onCancelEditMessage?: CancelEditCallback,
+//     onDeleteMessage?: (messageId: string) => Promise<void>,
+//     onSendMessage?: (content: string) => Promise<void>,
+//     disableEditing?: boolean
+//   ): JSX.Element => {
+//     const messageProps: MessageProps = {
+//       message,
+//       strings,
+//       showDate: showMessageDate,
+//       onUpdateMessage,
+//       onCancelEditMessage,
+//       onDeleteMessage,
+//       onSendMessage,
+//       disableEditing
+//     };
 
-  if (participantsStr !== '') {
-    return (
-      <SystemMessageComponent
-        iconName={(message.iconName ? message.iconName : '') as SystemMessageIconTypes}
-        content={`${participantsStr} ${messageSuffix}`}
-        containerStyle={style}
-      />
-    );
-  }
-  return <></>;
-};
+//     // const chatMessage = (
+//     //   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
+//     //   messageProps: MessageProps
+//     // ): JSX.Element => {
+//     //   console.log('!!!!!!!!chatMessage', message);
+//       const messageStatusRenderer =
+//         showMessageStatus && statusToRender
+//           ? onRenderMessageStatus
+//             ? (status: MessageStatus) => onRenderMessageStatus({ status })
+//             : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
+//           : () => <div className={mergeStyles(noMessageStatusStyle)} />;
 
-const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
-  const message = props.message;
-  switch (message.messageType) {
-    case 'system':
-      switch (message.systemMessageType) {
-        case 'content':
-          return (
-            <SystemMessageComponent
-              iconName={(message.iconName ? message.iconName : '') as SystemMessageIconTypes}
-              content={message.content ?? ''}
-              containerStyle={props?.messageContainerStyle}
-            />
-          );
-        case 'participantAdded':
-        case 'participantRemoved':
-          return (
-            <ParticipantSystemMessageComponent
-              message={message}
-              style={props.messageContainerStyle}
-              defaultName={props.strings.noDisplayNameSub}
-            />
-          );
-      }
-  }
-  return <></>;
-};
+//     //   let chatMessageComponent: JSX.Element;
+//     //   const shouldShowAvatar = message.attached === 'top' || message.attached === false;
+//     //   const attached = shouldShowAvatar ? 'top' : 'center';
+//     //   if (message.mine === true) {
+//     //     chatMessageComponent = (
+//     //       <FluentChatMyMessage
+//     //         attached={attached}
+//     //         root={{
+//     //           // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+//     //           className: mergeClasses(
+//     //             chatMessageRenderStyles.rootMyMessage,
+//     //             chatMessageRenderStyles.rootCommon,
+//     //             mergeStyles(styles?.myChatItemMessageContainer)
+//     //           ),
+//     //           style:
+//     //             styles?.myChatItemMessageContainer !== undefined
+//     //               ? createStyleFromV8Style(styles?.myChatItemMessageContainer)
+//     //               : {},
+//     //           role: 'none'
+//     //         }}
+//     //         body={{
+//     //           className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
+//     //           // make body not focusable to remove repetitions from narrators.
+//     //           // inner components are already focusable
+//     //           tabIndex: -1,
+//     //           role: 'none'
+//     //         }}
+//     //         statusIcon={
+//     //           <div
+//     //             className={mergeStyles(
+//     //               { paddingLeft: '0.25rem' },
+//     //               styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
+//     //             )}
+//     //           >
+//     //             {message.status ? messageStatusRenderer(message.status) : undefined}
+//     //           </div>
+//     //         }
+//     //       >
+//     //         {onRenderMessage === undefined
+//     //           ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
+//     //           : onRenderMessage(messageProps, defaultChatMessageRenderer)}
+//     //       </FluentChatMyMessage>
+//     //     );
+//     //   } else {
+//     //     const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
+//     //     const personaOptions: IPersona = {
+//     //       hidePersonaDetails: true,
+//     //       size: PersonaSize.size32,
+//     //       text: message.senderDisplayName,
+//     //       showOverflowTooltip: false
+//     //     };
+//     //     chatMessageComponent = (
+//     //       <FluentChatMessage
+//     //         attached={attached}
+//     //         root={{ className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) }}
+//     //         body={{
+//     //           // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+//     //           className: mergeClasses(
+//     //             chatMessageRenderStyles.bodyCommon,
+//     //             !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
+//     //             shouldOverlapAvatarAndMessage
+//     //               ? chatMessageRenderStyles.avatarOverlap
+//     //               : chatMessageRenderStyles.avatarNoOverlap,
+//     //             mergeStyles(styles?.chatItemMessageContainer)
+//     //           ),
+//     //           style:
+//     //             styles?.chatItemMessageContainer !== undefined
+//     //               ? createStyleFromV8Style(styles?.chatItemMessageContainer)
+//     //               : {},
+//     //           // make body not focusable to remove repetitions from narrators.
+//     //           // inner components are already focusable
+//     //           tabIndex: -1,
+//     //           role: 'none'
+//     //         }}
+//     //         avatar={
+//     //           <div className={mergeStyles(chatAvatarStyle)}>
+//     //             {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
+//     //           </div>
+//     //         }
+//     //       >
+//     //         {onRenderMessage === undefined
+//     //           ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
+//     //           : onRenderMessage(messageProps, defaultChatMessageRenderer)}
+//     //       </FluentChatMessage>
+//     //     );
+//     //   }
+//     //   return <div key={_messageKey}>{chatMessageComponent}</div>;
+//     // };
+
+//   //   /* @conditional-compile-remove(data-loss-prevention) */
+//   //   // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stabilize)
+//   //   if (message.messageType === 'blocked') {
+//   //     const myChatMessageStyle =
+//   //       message.status === 'failed'
+//   //         ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
+//   //         : styles?.myChatMessageContainer;
+//   //     const blockedMessageStyle = styles?.blockedMessageContainer;
+//   //     messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
+//   //     return chatMessage(message, messageProps);
+//   //   }
+
+//   //   switch (message.messageType) {
+//   //     case 'chat': {
+//   //       const myChatMessageStyle =
+//   //         message.status === 'failed'
+//   //           ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
+//   //           : styles?.myChatMessageContainer;
+//   //       const chatMessageStyle = styles?.chatMessageContainer;
+//   //       messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
+//   //       return chatMessage(message, messageProps);
+//   //     }
+
+//   //     case 'system': {
+//   //       messageProps.messageContainerStyle = styles?.systemMessageContainer;
+//   //       const systemMessageComponent =
+//   //         onRenderMessage === undefined ? (
+//   //           <DefaultSystemMessage {...messageProps} />
+//   //         ) : (
+//   //           onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
+//   //         );
+//   //       return (
+//   //         <div key={_messageKey} style={{ paddingTop: '0.5rem' }}>
+//   //           {systemMessageComponent}
+//   //         </div>
+//   //       );
+//   //     }
+
+//   //     default: {
+//   //       // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
+//   //       const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
+//   //       return (
+//   //         <div key={_messageKey} style={{ paddingTop: '1rem', paddingBottom: '0.25rem' }}>
+//   //           {customMessageComponent}
+//   //         </div>
+//   //       );
+//   //     }
+//   //   }
+//   // }
+// );
 
 const memoizeAllMessages = memoizeFnAll(
   (
-    _messageKey: string,
     message: Message,
     showMessageDate: boolean,
     showMessageStatus: boolean,
-    onRenderAvatar: OnRenderAvatarCallback | undefined,
-    shouldOverlapAvatarAndMessage: boolean,
-    styles: MessageThreadStyles | undefined,
-    onRenderMessageStatus:
-      | ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null)
-      | undefined,
-    defaultStatusRenderer: (
-      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
-      status: MessageStatus,
-      participantCount: number,
-      readCount: number
-    ) => JSX.Element,
-    defaultChatMessageRenderer: (message: _MessagePropsInternal) => JSX.Element,
     strings: MessageThreadStrings,
-    theme: Theme,
-    chatMessageRenderStyles: Record<
-      | 'bodyCommon'
-      | 'bodyMyMessage'
-      | 'rootCommon'
-      | 'rootMyMessage'
-      | 'rootMessage'
-      | 'bodyWithoutAvatar'
-      | 'bodyWithAvatar'
-      | 'avatarNoOverlap'
-      | 'avatarOverlap',
-      string
-    >,
-    _attached?: boolean | string,
-    statusToRender?: MessageStatus,
-    participantCount?: number,
-    readCount?: number,
-    onRenderMessage?: (message: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element,
+    index: number,
     onUpdateMessage?: UpdateMessageCallback,
     onCancelEditMessage?: CancelEditCallback,
     onDeleteMessage?: (messageId: string) => Promise<void>,
     onSendMessage?: (content: string) => Promise<void>,
-    disableEditing?: boolean
-  ): JSX.Element => {
-    const messageProps: MessageProps = {
+    disableEditing?: boolean,
+    lastSeenChatMessage?: string,
+    lastSendingChatMessage?: string,
+    lastDeliveredChatMessage?: string
+  ): _ChatMessageProps => {
+    let key: string | undefined = message.messageId;
+    let statusToRender: MessageStatus | undefined = undefined;
+
+    if (
+      message.messageType === 'chat' ||
+      /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+    ) {
+      if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
+        key = message.clientMessageId;
+      }
+      if (showMessageStatus && message.mine) {
+        switch (message.messageId) {
+          case lastSeenChatMessage: {
+            statusToRender = 'seen';
+            break;
+          }
+          case lastSendingChatMessage: {
+            statusToRender = 'sending';
+            break;
+          }
+          case lastDeliveredChatMessage: {
+            statusToRender = 'delivered';
+            break;
+          }
+        }
+      }
+      if (message.mine && message.status === 'failed') {
+        statusToRender = 'failed';
+      }
+    }
+    return {
+      key: key ?? 'id_' + index,
+      statusToRender,
       message,
       strings,
       showDate: showMessageDate,
@@ -381,158 +533,9 @@ const memoizeAllMessages = memoizeFnAll(
       onCancelEditMessage,
       onDeleteMessage,
       onSendMessage,
-      disableEditing
+      disableEditing,
+      showMessageStatus
     };
-
-    const chatMessage = (
-      message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
-      messageProps: MessageProps
-    ): JSX.Element => {
-      console.log('!!!!!!!!chatMessage', message);
-      const messageStatusRenderer =
-        showMessageStatus && statusToRender
-          ? onRenderMessageStatus
-            ? (status: MessageStatus) => onRenderMessageStatus({ status })
-            : (status: MessageStatus) => defaultStatusRenderer(message, status, participantCount ?? 0, readCount ?? 0)
-          : () => <div className={mergeStyles(noMessageStatusStyle)} />;
-
-      let chatMessageComponent: JSX.Element;
-      const shouldShowAvatar = message.attached === 'top' || message.attached === false;
-      const attached = shouldShowAvatar ? 'top' : 'center';
-      if (message.mine === true) {
-        chatMessageComponent = (
-          <FluentChatMyMessage
-            attached={attached}
-            root={{
-              // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-              className: mergeClasses(
-                chatMessageRenderStyles.rootMyMessage,
-                chatMessageRenderStyles.rootCommon,
-                mergeStyles(styles?.myChatItemMessageContainer)
-              ),
-              style:
-                styles?.myChatItemMessageContainer !== undefined
-                  ? createStyleFromV8Style(styles?.myChatItemMessageContainer)
-                  : {},
-              role: 'none'
-            }}
-            body={{
-              className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
-              // make body not focusable to remove repetitions from narrators.
-              // inner components are already focusable
-              tabIndex: -1,
-              role: 'none'
-            }}
-            statusIcon={
-              <div
-                className={mergeStyles(
-                  { paddingLeft: '0.25rem' },
-                  styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-                )}
-              >
-                {message.status ? messageStatusRenderer(message.status) : undefined}
-              </div>
-            }
-          >
-            {onRenderMessage === undefined
-              ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
-              : onRenderMessage(messageProps, defaultChatMessageRenderer)}
-          </FluentChatMyMessage>
-        );
-      } else {
-        const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
-        const personaOptions: IPersona = {
-          hidePersonaDetails: true,
-          size: PersonaSize.size32,
-          text: message.senderDisplayName,
-          showOverflowTooltip: false
-        };
-        chatMessageComponent = (
-          <FluentChatMessage
-            attached={attached}
-            root={{ className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) }}
-            body={{
-              // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-              className: mergeClasses(
-                chatMessageRenderStyles.bodyCommon,
-                !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
-                shouldOverlapAvatarAndMessage
-                  ? chatMessageRenderStyles.avatarOverlap
-                  : chatMessageRenderStyles.avatarNoOverlap,
-                mergeStyles(styles?.chatItemMessageContainer)
-              ),
-              style:
-                styles?.chatItemMessageContainer !== undefined
-                  ? createStyleFromV8Style(styles?.chatItemMessageContainer)
-                  : {},
-              // make body not focusable to remove repetitions from narrators.
-              // inner components are already focusable
-              tabIndex: -1,
-              role: 'none'
-            }}
-            avatar={
-              <div className={mergeStyles(chatAvatarStyle)}>
-                {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
-              </div>
-            }
-          >
-            {onRenderMessage === undefined
-              ? defaultChatMessageRenderer({ ...messageProps, messageStatusRenderer })
-              : onRenderMessage(messageProps, defaultChatMessageRenderer)}
-          </FluentChatMessage>
-        );
-      }
-      return <div key={_messageKey}>{chatMessageComponent}</div>;
-    };
-
-    /* @conditional-compile-remove(data-loss-prevention) */
-    // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stabilize)
-    if (message.messageType === 'blocked') {
-      const myChatMessageStyle =
-        message.status === 'failed'
-          ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
-          : styles?.myChatMessageContainer;
-      const blockedMessageStyle = styles?.blockedMessageContainer;
-      messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : blockedMessageStyle;
-      return chatMessage(message, messageProps);
-    }
-
-    switch (message.messageType) {
-      case 'chat': {
-        const myChatMessageStyle =
-          message.status === 'failed'
-            ? styles?.failedMyChatMessageContainer ?? styles?.myChatMessageContainer
-            : styles?.myChatMessageContainer;
-        const chatMessageStyle = styles?.chatMessageContainer;
-        messageProps.messageContainerStyle = message.mine ? myChatMessageStyle : chatMessageStyle;
-        return chatMessage(message, messageProps);
-      }
-
-      case 'system': {
-        messageProps.messageContainerStyle = styles?.systemMessageContainer;
-        const systemMessageComponent =
-          onRenderMessage === undefined ? (
-            <DefaultSystemMessage {...messageProps} />
-          ) : (
-            onRenderMessage(messageProps, (props) => <DefaultSystemMessage {...props} />)
-          );
-        return (
-          <div key={_messageKey} style={{ paddingTop: '0.5rem' }}>
-            {systemMessageComponent}
-          </div>
-        );
-      }
-
-      default: {
-        // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
-        const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage(messageProps);
-        return (
-          <div key={_messageKey} style={{ paddingTop: '1rem', paddingBottom: '0.25rem' }}>
-            {customMessageComponent}
-          </div>
-        );
-      }
-    }
   }
 );
 
@@ -647,8 +650,7 @@ export type MessageThreadProps = {
   /**
    * Optional callback to override render of the button for jumping to the new message.
    *
-   * @param newMessageButtonProps - button props of type JumpToNewMessageButtonProps
-   */
+   * @param newMessageButtonProps - button props of type JumpToNewMessageButtonProps 0  */
   onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
   /**
    * Optional callback to override loading of previous messages.
@@ -819,14 +821,23 @@ export type MessageProps = {
   onSendMessage?: (messageId: string) => Promise<void>;
 };
 
+// /**
+//  * @internal
+//  */
+// export type _MessagePropsInternal = MessageProps & {
+//   /**
+//    * Render the message status indicator.
+//    */
+//   messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+// };
+
 /**
  * @internal
  */
-export type _MessagePropsInternal = MessageProps & {
-  /**
-   * Render the message status indicator.
-   */
-  messageStatusRenderer?: (status: MessageStatus) => JSX.Element | null;
+export type _ChatMessageProps = MessageProps & {
+  key: string;
+  statusToRender: MessageStatus | undefined;
+  showMessageStatus?: boolean;
 };
 
 /**
@@ -880,17 +891,17 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    onDisplayDateTimeString,
+    // onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments,
+    onFetchAttachments
     /* @conditional-compile-remove(mention) */
-    mentionOptions,
+    // mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked
+    // onInlineImageClicked
   } = props;
-  const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
+  // const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
-  const [messages, setMessages] = useState<Message[]>([]);
+  // const [messages, setMessages] = useState<Message[]>([]); // <=this is the reason of re-renders in self host when it's used in messagestodisplay!
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
   const [chatMessagesInitialized, setChatMessagesInitialized] = useState<boolean>(false);
@@ -909,17 +920,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
-  const styleProps = useMemo(() => {
-    console.log('!!!!!!!!useMemo styleProps');
-    return styles;
-  }, [styles]);
-
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachments: FileMetadata[], messageId: string): Promise<void> => {
-      console.log('!!!!!!!!onFetchInlineAttachment', attachments, messageId);
       if (!onFetchAttachments) {
         return;
       }
@@ -959,10 +964,20 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const chatScrollDivRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
+  const messages = useMemo(() => {
+    console.log('!!!!!!!!!!! ----------------- useMemo messages', newMessages);
+    return newMessages;
+  }, [newMessages]);
+
+  useEffect(() => {
+    console.log('!!!!!!!!!!! ----------------------------------- messages are changed', messages);
+  }, [messages]);
+
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
     messagesRef.current = messagesWithAttachedValue;
-    setMessages(messagesWithAttachedValue);
+    console.log('!!!!!!!!setMessagesRef messagesWithAttachedValue', messagesWithAttachedValue);
+    // setMessages(messagesWithAttachedValue);
   };
 
   const isAtBottomOfScrollRef = useRef(isAtBottomOfScroll);
@@ -1139,6 +1154,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   useEffect(() => {
     setLatestPreviousChatMessage(getLatestChatMessage(messagesRef.current));
     setLatestCurrentChatMessage(getLatestChatMessage(newMessages));
+    console.log('!!!!!!!----- useEffect newMessages', newMessages);
     setMessagesRef(newMessages);
     !chatMessagesInitializedRef.current && setChatMessagesInitializedRef(true);
     setLastDeliveredChatMessage(getLastChatMessageIdWithStatus(newMessages, 'delivered'));
@@ -1182,65 +1198,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-  // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
-  const defaultChatMessageRenderer = useCallback(
-    (messageProps: MessageProps) => {
-      console.log('!!!!!!', defaultChatMessageRenderer, 'onRenderAvatar', onRenderAvatar, 'messageProps', messageProps);
-      if (
-        messageProps.message.messageType === 'chat' ||
-        /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
-      ) {
-        return (
-          <ChatMessageComponent
-            {...messageProps}
-            onRenderFileDownloads={onRenderFileDownloads}
-            /* @conditional-compile-remove(file-sharing) */
-            strings={strings}
-            message={messageProps.message}
-            userId={props.userId}
-            remoteParticipantsCount={participantCount ? participantCount - 1 : 0}
-            shouldOverlapAvatarAndMessage={isNarrow}
-            onRenderAvatar={onRenderAvatar}
-            showMessageStatus={showMessageStatus}
-            messageStatus={messageProps.message.status}
-            onActionButtonClick={onActionButtonClickMemo}
-            /* @conditional-compile-remove(date-time-customization) */
-            onDisplayDateTimeString={onDisplayDateTimeString}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            onFetchAttachments={onFetchInlineAttachment}
-            /* @conditional-compile-remove(image-gallery) */
-            onInlineImageClicked={onInlineImageClicked}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-            attachmentsMap={inlineAttachments[messageProps.message.messageId] ?? {}}
-            /* @conditional-compile-remove(mention) */
-            mentionOptions={mentionOptions}
-          />
-        );
-      }
-      return <></>;
-    },
-    [
-      onRenderFileDownloads,
-      /* @conditional-compile-remove(file-sharing) */
-      strings,
-      props.userId,
-      participantCount,
-      isNarrow,
-      onRenderAvatar,
-      showMessageStatus,
-      onActionButtonClickMemo,
-      /* @conditional-compile-remove(date-time-customization) */
-      onDisplayDateTimeString,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-      onFetchInlineAttachment,
-      /* @conditional-compile-remove(image-gallery) */
-      onInlineImageClicked,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-      inlineAttachments,
-      /* @conditional-compile-remove(mention) */
-      mentionOptions
-    ]
-  );
 
   const defaultStatusRenderer = useCallback(
     (
@@ -1272,192 +1229,236 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   );
 
   const theme = useTheme();
-  const chatMessageRenderStyles = useChatMessageRenderStyles();
+  // const chatMessageRenderStyles = useChatMessageRenderStyles();
 
-  useEffect(() => {
-    console.log('!!!!!!messages is changed');
-  }, [messages]);
-  useEffect(() => {
-    console.log('!!!!!!showMessageDate is changed');
-  }, [showMessageDate]);
-  useEffect(() => {
-    console.log('!!!!!!showMessageStatus is changed');
-  }, [showMessageStatus]);
-  useEffect(() => {
-    console.log('!!!!!!onRenderAvatar is changed');
-  }, [onRenderAvatar]);
-  useEffect(() => {
-    console.log('!!!!!!isNarrow is changed');
-  }, [isNarrow]);
-  useEffect(() => {
-    console.log('!!!!!!styles is changed');
-  }, [styleProps]);
+  const messagesToDisplay = useMemo(() => {
+    return memoizeAllMessages((memoizedMessageFn) => {
+      return newMessages.map((message: Message, index: number): _ChatMessageProps => {
+        return memoizedMessageFn(
+          message,
+          showMessageDate,
+          showMessageStatus,
+          strings,
+          index,
+          onUpdateMessage,
+          onCancelEditMessage,
+          onDeleteMessage,
+          onSendMessage,
+          props.disableEditing,
+          lastDeliveredChatMessage,
+          lastSeenChatMessage,
+          lastSendingChatMessage
+        );
+      });
+    });
+  }, [
+    lastDeliveredChatMessage,
+    lastSeenChatMessage,
+    lastSendingChatMessage,
+    newMessages,
+    onCancelEditMessage,
+    onDeleteMessage,
+    onSendMessage,
+    onUpdateMessage,
+    props.disableEditing,
+    showMessageDate,
+    showMessageStatus,
+    strings
+  ]);
 
-  useEffect(() => {
-    console.log('!!!!!!onRenderMessageStatus is changed');
-  }, [onRenderMessageStatus]);
-  useEffect(() => {
-    console.log('!!!!!!defaultStatusRenderer is changed');
-  }, [defaultStatusRenderer]);
-  useEffect(() => {
-    console.log('!!!!!!defaultChatMessageRenderer is changed');
-  }, [defaultChatMessageRenderer]);
-  useEffect(() => {
-    console.log('!!!!!!strings is changed');
-  }, [strings]);
+  // const messagesToDisplay = useMemo(
+  //   () =>
+  //     memoizeAllMessages((memoizedMessageFn) => {
+  //       return messages.map((message: Message, index: number): JSX.Element => {
+  //         let key: string | undefined = message.messageId;
+  //         let statusToRender: MessageStatus | undefined = undefined;
 
-  useEffect(() => {
-    console.log('!!!!!!theme is changed');
-  }, [theme]);
-  useEffect(() => {
-    console.log('!!!!!!chatMessageRenderStyles is changed');
-  }, [chatMessageRenderStyles]);
-  useEffect(() => {
-    console.log('!!!!!!participantCount is changed');
-  }, [participantCount]);
-  useEffect(() => {
-    console.log('!!!!!!readCountForHoveredIndicator is changed');
-  }, [readCountForHoveredIndicator]);
-  useEffect(() => {
-    console.log('!!!!!!onRenderMessage is changed');
-  }, [onRenderMessage]);
-  useEffect(() => {
-    console.log('!!!!!!onUpdateMessage is changed');
-  }, [onUpdateMessage]);
-  useEffect(() => {
-    console.log('!!!!!!onCancelEditMessage is changed');
-  }, [onCancelEditMessage]);
-  useEffect(() => {
-    console.log('!!!!!!onDeleteMessage is changed');
-  }, [onDeleteMessage]);
+  //         if (
+  //           message.messageType === 'chat' ||
+  //           /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+  //         ) {
+  //           if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
+  //             key = message.clientMessageId;
+  //           }
+  //           if (showMessageStatus && message.mine) {
+  //             switch (message.messageId) {
+  //               case lastSeenChatMessage: {
+  //                 statusToRender = 'seen';
+  //                 break;
+  //               }
+  //               case lastSendingChatMessage: {
+  //                 statusToRender = 'sending';
+  //                 break;
+  //               }
+  //               case lastDeliveredChatMessage: {
+  //                 statusToRender = 'delivered';
+  //                 break;
+  //               }
+  //             }
+  //           }
+  //           if (message.mine && message.status === 'failed') {
+  //             statusToRender = 'failed';
+  //           }
+  //         }
 
-  useEffect(() => {
-    console.log('!!!!!!onSendMessage is changed');
-  }, [onSendMessage]);
-  useEffect(() => {
-    console.log('!!!!!!props.disableEditing is changed');
-  }, [props.disableEditing]);
-  useEffect(() => {
-    console.log('!!!!!!lastSeenChatMessage is changed');
-  }, [lastSeenChatMessage]);
-  useEffect(() => {
-    console.log('!!!!!!lastSendingChatMessage is changed');
-  }, [lastSendingChatMessage]);
-  useEffect(() => {
-    console.log('!!!!!!lastDeliveredChatMessage is changed');
-  }, [lastDeliveredChatMessage]);
+  //         return memoizedMessageFn(
+  //           key ?? 'id_' + index,
+  //           message,
+  //           showMessageDate,
+  //           showMessageStatus,
+  //           onRenderAvatar,
+  //           isNarrow,
+  //           styleProps,
+  //           onRenderMessageStatus,
+  //           defaultStatusRenderer,
+  //           defaultChatMessageRenderer,
+  //           strings,
+  //           theme,
+  //           chatMessageRenderStyles,
+  //           // Temporary solution to make sure we re-render if attach attribute is changed.
+  //           // The proper fix should be in selector.
+  //           message.messageType === 'chat' ||
+  //             /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+  //             ? message.attached
+  //             : undefined,
+  //           statusToRender,
+  //           participantCount,
+  //           readCountForHoveredIndicator,
+  //           onRenderMessage,
+  //           onUpdateMessage,
+  //           onCancelEditMessage,
+  //           onDeleteMessage,
+  //           onSendMessage,
+  //           props.disableEditing
+  //         );
+  //       });
+  //     }),
+  //   [
+  //     messages,
+  //     showMessageDate,
+  //     showMessageStatus,
+  //     onRenderAvatar,
+  //     isNarrow,
+  //     styleProps,
+  //     onRenderMessageStatus,
+  //     defaultStatusRenderer,
+  //     defaultChatMessageRenderer,
+  //     strings,
+  //     theme,
+  //     chatMessageRenderStyles,
+  //     participantCount,
+  //     readCountForHoveredIndicator,
+  //     onRenderMessage,
+  //     onUpdateMessage,
+  //     onCancelEditMessage,
+  //     onDeleteMessage,
+  //     onSendMessage,
+  //     props.disableEditing,
+  //     lastSeenChatMessage,
+  //     lastSendingChatMessage,
+  //     lastDeliveredChatMessage
+  //   ]
+  // );
 
-  const messagesToDisplay = useMemo(
-    () =>
-      memoizeAllMessages((memoizedMessageFn) => {
-        return messages.map((message: Message, index: number): JSX.Element => {
-          let key: string | undefined = message.messageId;
-          let statusToRender: MessageStatus | undefined = undefined;
+  // const messagesToDisplay = useMemo(() => {
+  //   return messages.map((message: Message, index: number): JSX.Element => {
+  //     let key: string | undefined = message.messageId;
+  //     let statusToRender: MessageStatus | undefined = undefined;
 
-          if (
-            message.messageType === 'chat' ||
-            /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-          ) {
-            if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
-              key = message.clientMessageId;
-            }
-            if (showMessageStatus && message.mine) {
-              switch (message.messageId) {
-                case lastSeenChatMessage: {
-                  statusToRender = 'seen';
-                  break;
-                }
-                case lastSendingChatMessage: {
-                  statusToRender = 'sending';
-                  break;
-                }
-                case lastDeliveredChatMessage: {
-                  statusToRender = 'delivered';
-                  break;
-                }
-              }
-            }
-            if (message.mine && message.status === 'failed') {
-              statusToRender = 'failed';
-            }
-          }
-
-          return memoizedMessageFn(
-            key ?? 'id_' + index,
-            message,
-            showMessageDate,
-            showMessageStatus,
-            onRenderAvatar,
-            isNarrow,
-            styleProps,
-            onRenderMessageStatus,
-            defaultStatusRenderer,
-            defaultChatMessageRenderer,
-            strings,
-            theme,
-            chatMessageRenderStyles,
-            // Temporary solution to make sure we re-render if attach attribute is changed.
-            // The proper fix should be in selector.
-            message.messageType === 'chat' ||
-              /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
-              ? message.attached
-              : undefined,
-            statusToRender,
-            participantCount,
-            readCountForHoveredIndicator,
-            onRenderMessage,
-            onUpdateMessage,
-            onCancelEditMessage,
-            onDeleteMessage,
-            onSendMessage,
-            props.disableEditing
-          );
-        });
-      }),
-    [
-      messages,
-      showMessageDate,
-      showMessageStatus,
-      onRenderAvatar,
-      isNarrow,
-      styleProps,
-      onRenderMessageStatus,
-      defaultStatusRenderer,
-      defaultChatMessageRenderer,
-      strings,
-      theme,
-      chatMessageRenderStyles,
-      participantCount,
-      readCountForHoveredIndicator,
-      onRenderMessage,
-      onUpdateMessage,
-      onCancelEditMessage,
-      onDeleteMessage,
-      onSendMessage,
-      props.disableEditing,
-      lastSeenChatMessage,
-      lastSendingChatMessage,
-      lastDeliveredChatMessage
-    ]
-  );
+  //     if (
+  //       message.messageType === 'chat' ||
+  //       /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked'
+  //     ) {
+  //       if ((!message.messageId || message.messageId === '') && 'clientMessageId' in message) {
+  //         key = message.clientMessageId;
+  //       }
+  //       if (showMessageStatus && message.mine) {
+  //         switch (message.messageId) {
+  //           case lastSeenChatMessage: {
+  //             statusToRender = 'seen';
+  //             break;
+  //           }
+  //           case lastSendingChatMessage: {
+  //             statusToRender = 'sending';
+  //             break;
+  //           }
+  //           case lastDeliveredChatMessage: {
+  //             statusToRender = 'delivered';
+  //             break;
+  //           }
+  //         }
+  //       }
+  //       if (message.mine && message.status === 'failed') {
+  //         statusToRender = 'failed';
+  //       }
+  //     }
+  //     const messageProps: MessageProps = {
+  //       message,
+  //       strings,
+  //       showDate: showMessageDate,
+  //       onUpdateMessage,
+  //       onCancelEditMessage,
+  //       onDeleteMessage,
+  //       onSendMessage,
+  //       disableEditing: props.disableEditing
+  //     };
+  //     return (
+  //       <ChatMessageComponentWrapper
+  //         messageProps={messageProps}
+  //         userId={userId}
+  //         key={key ?? 'id_' + index}
+  //         styles={styles}
+  //         shouldOverlapAvatarAndMessage={isNarrow}
+  //         strings={strings}
+  //         onRenderMessageStatus={onRenderMessageStatus}
+  //         defaultStatusRenderer={defaultStatusRenderer}
+  //         onActionButtonClick={onActionButtonClickMemo}
+  //         onFetchInlineAttachment={onFetchInlineAttachment}
+  //         inlineAttachments={inlineAttachments}
+  //         statusToRender={statusToRender}
+  //       />
+  //     );
+  //   });
+  // }, [
+  //   defaultStatusRenderer,
+  //   inlineAttachments,
+  //   isNarrow,
+  //   lastDeliveredChatMessage,
+  //   lastSeenChatMessage,
+  //   lastSendingChatMessage,
+  //   messages,
+  //   onActionButtonClickMemo,
+  //   onCancelEditMessage,
+  //   onDeleteMessage,
+  //   onFetchInlineAttachment,
+  //   onRenderMessageStatus,
+  //   onSendMessage,
+  //   onUpdateMessage,
+  //   props.disableEditing,
+  //   showMessageDate,
+  //   showMessageStatus,
+  //   strings,
+  //   styles,
+  //   userId
+  // ]);
 
   const classes = useChatStyles();
-  const chatBody = useMemo(() => {
-    return (
-      <LiveAnnouncer>
-        <FluentV9ThemeProvider v8Theme={theme}>
-          <Chat
-            // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
-            className={mergeClasses(classes.root, mergeStyles(styleProps?.chatContainer))}
-            ref={chatScrollDivRef}
-            style={{ ...createStyleFromV8Style(styleProps?.chatContainer) }}
-          >
-            {messagesToDisplay}
-          </Chat>
-        </FluentV9ThemeProvider>
-      </LiveAnnouncer>
-    );
-  }, [theme, classes.root, styleProps?.chatContainer, messagesToDisplay]);
+  // const chatBody = useMemo(() => {
+  //   return (
+  //     <LiveAnnouncer>
+  //       <FluentV9ThemeProvider v8Theme={theme}>
+  //         <Chat
+  //           // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
+  //           className={mergeClasses(classes.root, mergeStyles(styleProps?.chatContainer))}
+  //           ref={chatScrollDivRef}
+  //           style={{ ...createStyleFromV8Style(styleProps?.chatContainer) }}
+  //         >
+  //           {messagesToDisplay}
+  //         </Chat>
+  //       </FluentV9ThemeProvider>
+  //     </LiveAnnouncer>
+  //   );
+  // }, [theme, classes.root, styleProps?.chatContainer, messagesToDisplay]);
 
   return (
     <div className={mergeStyles(messageThreadWrapperContainerStyle)} ref={chatThreadRef}>
@@ -1465,7 +1466,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         tab ordering. Because the New Messages button floats on top of the chat body it is in a higher z-index and
         thus Users should be able to tab navigate to the new messages button _before_ tab focus is taken to the chat body.*/}
       {existsNewChatMessage && !disableJumpToNewMessageButton && (
-        <div className={mergeStyles(newMessageButtonContainerStyle, styleProps?.newMessageButtonContainer)}>
+        <div className={mergeStyles(newMessageButtonContainerStyle, styles?.newMessageButtonContainer)}>
           {onRenderJumpToNewMessageButton ? (
             onRenderJumpToNewMessageButton({ text: strings.newMessagesIndicator, onClick: scrollToBottom })
           ) : (
@@ -1473,15 +1474,46 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
           )}
         </div>
       )}
-      {chatBody}
+      <LiveAnnouncer>
+        <FluentV9ThemeProvider v8Theme={theme}>
+          <Chat
+            // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
+            className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
+            ref={chatScrollDivRef}
+            style={{ ...createStyleFromV8Style(styles?.chatContainer) }}
+          >
+            {/* {messagesToDisplay} */}
+            {messagesToDisplay.map((message: _ChatMessageProps): JSX.Element => {
+              return (
+                <MemoChatMessageComponentWrapper
+                  {...message}
+                  userId={userId}
+                  key={message.key}
+                  styles={styles}
+                  shouldOverlapAvatarAndMessage={isNarrow}
+                  strings={strings}
+                  onRenderAvatar={onRenderAvatar}
+                  onRenderMessage={onRenderMessage}
+                  onRenderMessageStatus={onRenderMessageStatus}
+                  defaultStatusRenderer={defaultStatusRenderer}
+                  onActionButtonClick={onActionButtonClickMemo}
+                  onFetchInlineAttachment={onFetchInlineAttachment}
+                  inlineAttachments={inlineAttachments}
+                  statusToRender={message.statusToRender}
+                  readCount={readCountForHoveredIndicator}
+                  participantCount={participantCount}
+                />
+              );
+            })}
+          </Chat>
+        </FluentV9ThemeProvider>
+      </LiveAnnouncer>
     </div>
   );
 };
 
-const onRenderFileDownloadsTrampoline = (
-  props: MessageThreadProps
-): ((userId: string, message: ChatMessage) => JSX.Element) | undefined => {
-  /* @conditional-compile-remove(file-sharing) */
-  return props.onRenderFileDownloads;
-  return undefined;
-};
+const MemoChatMessageComponentWrapper = React.memo((obj: ChatMessageComponentWrapperProps): JSX.Element => {
+  // messageProps: MessageProps; // this is what cause rerender
+  console.log('!!!!!!!!!!!!!!!!! MemoChatMessageComponentWrapper render item', obj.message.messageId, obj);
+  return <ChatMessageComponentWrapper {...obj} />;
+});

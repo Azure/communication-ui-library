@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 import { Stack } from '@fluentui/react';
 import {
   containerContextStyles,
@@ -75,14 +75,16 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     props.onPeopleButtonClicked,
     props.disablePeopleButton,
     props.disableChatButton,
-    sidePaneRenderer,
+    sidePaneRenderer?.id,
     closePane
   ]);
 
   const HeaderToRender =
     props.mobileView && (overrideSidePaneId === 'chat' || sidePaneRenderer?.id === 'people') ? LegacyHeader : Header();
 
-  const ContentRender = overrideSidePane?.isActive ? undefined : sidePaneRenderer?.contentRenderer;
+  const ContentRender = useMemo(() => {
+    return overrideSidePane?.isActive ? undefined : sidePaneRenderer?.contentRenderer;
+  }, [overrideSidePane?.isActive, sidePaneRenderer?.contentRenderer]);
   const OverrideContentRender =
     overrideSidePane?.isActive || overrideSidePane?.persistRenderingWhenClosed
       ? overrideSidePane.renderer.contentRenderer
@@ -91,7 +93,6 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   if (!ContentRender && !OverrideContentRender) {
     return <EmptyElement />;
   }
-  //TODO: here? Check if the last commit to this file changed anythign
   return (
     <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
       {HeaderToRender}

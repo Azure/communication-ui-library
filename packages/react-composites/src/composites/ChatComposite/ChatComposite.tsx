@@ -111,17 +111,12 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
    */
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const fileSharingOptions = useMemo(() => {
-    console.log('!!!!!!!!! fileSharingOptions useMemo');
     /* @conditional-compile-remove(file-sharing) */
     return {
       fileSharing: options?.fileSharing
     };
     return {};
   }, [options?.fileSharing]);
-
-  useEffect(() => {
-    console.log('!!!!!!!!!! Chat composite adapter is updates');
-  }, [adapter]);
 
   return (
     <div className={chatScreenContainerStyle}>
