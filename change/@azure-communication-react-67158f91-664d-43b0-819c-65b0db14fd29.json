@@ -1,8 +1,8 @@
 {
-  "type": "patch",
-  "area": "fix",
-  "workstream": "A11y",
-  "comment": "Call focus to background effects picker on mount",
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Calling sounds",
+  "comment": "Introduce sound options API to CallAdapter options",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"
