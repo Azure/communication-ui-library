@@ -103,8 +103,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'gallery-layout-composite',
         // feature for hiding attendee name in the teams meeting
         'hide-attendee-name',
-        // custom branding for the composites
-        'custom-branding',
         // Feature for sounds during different calling events
         'calling-sounds'
       ],

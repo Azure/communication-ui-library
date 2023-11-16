@@ -147,7 +147,7 @@
     "newMessagesIndicator": "新消息",
     "noDisplayNameSub": "无名称",
     "editBoxCancelButton": "取消",
-    "editBoxSubmitButton": "提交",
+    "editBoxSubmitButton": "完成",
     "messageReadCount": "{messageReadByCount}/{remoteParticipantsCount} 人已读",
     "actionMenuMoreOptions": "更多选项",
     "downloadFile": "下载文件",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "上一页",
     "rightNavButtonAriaLabel": "下一页"
-  }
+  },
+  "AttendeeRole": "与会者"
 }

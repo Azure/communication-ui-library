@@ -362,6 +362,9 @@ export type CallCompositeIcons = {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element;
     NoticePageLeftCall?: JSX.Element;
     NoticePageRemovedFromCall?: JSX.Element;
+    NoticePageNotInvitedToRoom?: JSX.Element;
+    NoticePageRoomNotFound?: JSX.Element;
+    NoticePageRoomNotValid?: JSX.Element;
     OptionsCamera?: JSX.Element;
     OptionsMic?: JSX.Element;
     OptionsSpeaker?: JSX.Element;
@@ -374,7 +377,7 @@ export type CallCompositeIcons = {
     PeoplePaneAddPerson?: JSX.Element;
     PeoplePaneOpenDialpad?: JSX.Element;
     DialpadStartCall?: JSX.Element;
-    NoticePageAccessDeniedRoomsCall?: JSX.Element;
+    NoticePageInviteToRoomRemoved?: JSX.Element;
     BlurVideoBackground?: JSX.Element;
     RemoveVideoBackgroundEffect?: JSX.Element;
     GalleryOptions?: JSX.Element;
@@ -414,7 +417,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom' | 'removedFromCall' | /* @conditional-compile-remove(rooms) */ 'roomNotFound' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | /* @conditional-compile-remove(PSTN-calls) */ 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -467,8 +470,6 @@ export interface CallCompositeStrings {
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     defaultPlaceHolder: string;
-    deniedPermissionToRoomDetails?: string;
-    deniedPermissionToRoomTitle: string;
     dialpadCloseModalButtonAriaLabel: string;
     dialpadModalAriaLabel: string;
     dialpadModalTitle: string;
@@ -481,6 +482,8 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     holdScreenLabel: string;
+    inviteToRoomRemovedDetails?: string;
+    inviteToRoomRemovedTitle: string;
     learnMore: string;
     leavingCallTitle?: string;
     leftCallMoreDetails?: string;
@@ -510,6 +513,8 @@ export interface CallCompositeStrings {
     noCamerasLabel: string;
     noMicrophonesLabel: string;
     noSpeakersLabel: string;
+    notInvitedToRoomDetails?: string;
+    notInvitedToRoomTitle: string;
     openDialpadButtonLabel: string;
     openDtmfDialpadLabel: string;
     outboundCallingNoticeString: string;
@@ -542,6 +547,8 @@ export interface CallCompositeStrings {
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
     roomNotFoundTitle: string;
+    roomNotValidDetails?: string;
+    roomNotValidTitle: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
@@ -589,6 +596,7 @@ export type CallIdChangedListener = (event: {
 // @beta
 export type CallingSounds = {
     callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
 };
 
 // @beta
@@ -1350,6 +1358,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NoticePageJoinCallFailedDueToNoNetwork?: JSX.Element | undefined;
     NoticePageLeftCall?: JSX.Element | undefined;
     NoticePageRemovedFromCall?: JSX.Element | undefined;
+    NoticePageNotInvitedToRoom?: JSX.Element | undefined;
+    NoticePageRoomNotFound?: JSX.Element | undefined;
+    NoticePageRoomNotValid?: JSX.Element | undefined;
     OptionsCamera: JSX.Element | React_2.JSX.Element;
     OptionsMic: JSX.Element | React_2.JSX.Element;
     OptionsSpeaker: JSX.Element | React_2.JSX.Element;
@@ -1360,7 +1371,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PeoplePaneAddPerson?: JSX.Element | undefined;
     PeoplePaneOpenDialpad?: JSX.Element | undefined;
     DialpadStartCall?: JSX.Element | undefined;
-    NoticePageAccessDeniedRoomsCall?: JSX.Element | undefined;
+    NoticePageInviteToRoomRemoved?: JSX.Element | undefined;
     BlurVideoBackground?: JSX.Element | undefined;
     RemoveVideoBackgroundEffect?: JSX.Element | undefined;
     GalleryOptions?: JSX.Element | undefined;
