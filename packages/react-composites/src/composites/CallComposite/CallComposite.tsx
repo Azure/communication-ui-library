@@ -364,29 +364,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   let pageElement: JSX.Element | undefined;
-  /* @conditional-compile-remove(rooms) */
-  switch (page) {
-    case 'roomNotFound':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageAccessDeniedRoomsCall"
-          title={locale.strings.call.roomNotFoundTitle}
-          moreDetails={locale.strings.call.roomNotFoundDetails}
-          dataUiId={'room-not-found-page'}
-        />
-      );
-      break;
-    case 'deniedPermissionToRoom':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageAccessDeniedRoomsCall"
-          title={locale.strings.call.deniedPermissionToRoomTitle}
-          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
-        />
-      );
-      break;
-  }
   switch (page) {
     case 'configuration':
       pageElement = (
@@ -458,10 +435,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     case 'leftCall': {
-      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
+      const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
       pageElement = (
         <NoticePage
-          iconName="NoticePageLeftCall"
+          iconName={iconName}
           title={title}
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
@@ -665,13 +642,58 @@ const getQueryOptions = (options: {
   return { video: true, audio: true };
 };
 
-const getEndedCallStrings = (
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5732;
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_VALID_SUB_CODE = 5829;
+/* @conditional-compile-remove(rooms) */
+const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
+/* @conditional-compile-remove(rooms) */
+const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
+
+const getEndedCallPageProps = (
   locale: CompositeLocale,
   endedCall?: CallState
-): { title: string; moreDetails?: string; disableStartCallButton: boolean } => {
+): { title: string; moreDetails?: string; disableStartCallButton: boolean; iconName: keyof CallCompositeIcons } => {
   let title = locale.strings.call.leftCallTitle;
   let moreDetails = locale.strings.call.leftCallMoreDetails;
   let disableStartCallButton = false;
+  let iconName: keyof CallCompositeIcons = 'NoticePageLeftCall';
+  /* @conditional-compile-remove(rooms) */
+  switch (endedCall?.callEndReason?.subCode) {
+    case ROOM_NOT_FOUND_SUB_CODE:
+      if (locale.strings.call.roomNotFoundTitle) {
+        title = locale.strings.call.roomNotFoundTitle;
+        moreDetails = locale.strings.call.roomNotFoundDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageRoomNotFound';
+      }
+      break;
+    case ROOM_NOT_VALID_SUB_CODE:
+      if (locale.strings.call.roomNotValidTitle) {
+        title = locale.strings.call.roomNotValidTitle;
+        moreDetails = locale.strings.call.roomNotValidDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageRoomNotValid';
+      }
+      break;
+    case NOT_INVITED_TO_ROOM_SUB_CODE:
+      if (locale.strings.call.notInvitedToRoomTitle) {
+        title = locale.strings.call.notInvitedToRoomTitle;
+        moreDetails = locale.strings.call.notInvitedToRoomDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageNotInvitedToRoom';
+      }
+      break;
+    case INVITE_TO_ROOM_REMOVED_SUB_CODE:
+      if (locale.strings.call.inviteToRoomRemovedTitle) {
+        title = locale.strings.call.inviteToRoomRemovedTitle;
+        moreDetails = locale.strings.call.inviteToRoomRemovedDetails;
+        disableStartCallButton = true;
+        iconName = 'NoticePageInviteToRoomRemoved';
+      }
+      break;
+  }
   /* @conditional-compile-remove(teams-adhoc-call) */
   switch (endedCall?.callEndReason?.subCode) {
     case 10037:
@@ -703,5 +725,5 @@ const getEndedCallStrings = (
       }
       break;
   }
-  return { title, moreDetails, disableStartCallButton };
+  return { title, moreDetails, disableStartCallButton, iconName };
 };
