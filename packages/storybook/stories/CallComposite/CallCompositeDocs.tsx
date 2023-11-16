@@ -183,6 +183,12 @@ export const Docs: () => JSX.Element = () => {
         can inject a background and logo into the Composite configuration page to present to your users. This is done by
         passing background and logo properties to the `options` of the Composite.
       </Description>
+      <Description>
+        **Image recommendations.** The background image should be as simple and uncluttered as possible to avoid text
+        becoming unreadable against the background. The image should have a minimum size of 576x576 pixels and a maximum
+        size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the logo image is
+        128x128 pixels.
+      </Description>
       <Stack horizontalAlign="center">
         <img
           style={{ width: '100%', maxWidth: '50rem' }}
@@ -190,7 +196,7 @@ export const Docs: () => JSX.Element = () => {
           alt="CallComposite with a logo and background applied"
         />
       </Stack>
-      <Source code="<CallComposite options={{ logo: { url: 'https://...', alt: 'My company logo' }, backgroundImage: { url: 'https://...' }}} />" />
+      <Source code="<CallComposite options={{ logo: { url: 'https://...', alt: 'My company logo', variant: 'square' }, backgroundImage: { url: 'https://...' }}} />" />
 
       <div ref={refCustomDataModel}>
         <Heading>Custom Data Model</Heading>
