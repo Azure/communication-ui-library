@@ -60,11 +60,11 @@ async function main() {
 
   modifyFeatureDefinitionsFile(feature, isAlphaFeature ? 'alphaToBeta' : 'betaToStable');
   console.log(`Generating baseline.api.json file`);
-  const baselineFilePath = await generateApiFile(true);
+  const baselineFilePath = await generateApiFile(false);
 
   modifyFeatureDefinitionsFile(feature, isAlphaFeature ? 'betaToAlpha' : 'stableToBeta');
   console.log(`Generating feature.api.json file`);
-  const featureFilePath = await generateApiFile(false);
+  const featureFilePath = await generateApiFile(true);
 
   // restore the feature definitions file
   fs.copyFileSync(`${featureDefinitionsFile}.bak`, featureDefinitionsFile);
