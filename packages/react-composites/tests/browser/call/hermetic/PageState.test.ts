@@ -67,7 +67,7 @@ test.describe('Page state tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
     await waitForSelector(page, dataUiId('left-call-page'));
-    expect(await stableScreenshot(page)).toMatchSnapshot('removed-from-room-page.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('invite-to-room-removed-page.png');
   });
 });
 
