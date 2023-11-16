@@ -185,9 +185,9 @@ export const Docs: () => JSX.Element = () => {
       </Description>
       <Description>
         **Image recommendations.** The background image should be as simple and uncluttered as possible to avoid text
-        becoming unreadable against the background. The image should have a minimum size of 576x576 pixels and a maximum
-        size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the logo image is
-        128x128 pixels.
+        becoming unreadable against the background. The background image should have a minimum size of 576x576 pixels
+        and a maximum size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the
+        logo image is 128x128 pixels.
       </Description>
       <Stack horizontalAlign="center">
         <img
