@@ -435,10 +435,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     case 'leftCall': {
-      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
+      const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
       pageElement = (
         <NoticePage
-          iconName="NoticePageLeftCall"
+          iconName={iconName}
           title={title}
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
@@ -651,13 +651,14 @@ const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
 /* @conditional-compile-remove(rooms) */
 const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;
 
-const getEndedCallStrings = (
+const getEndedCallPageProps = (
   locale: CompositeLocale,
   endedCall?: CallState
-): { title: string; moreDetails?: string; disableStartCallButton: boolean } => {
+): { title: string; moreDetails?: string; disableStartCallButton: boolean; iconName: keyof CallCompositeIcons } => {
   let title = locale.strings.call.leftCallTitle;
   let moreDetails = locale.strings.call.leftCallMoreDetails;
   let disableStartCallButton = false;
+  let iconName: keyof CallCompositeIcons = 'NoticePageLeftCall';
   /* @conditional-compile-remove(rooms) */
   switch (endedCall?.callEndReason?.subCode) {
     case ROOM_NOT_FOUND_SUB_CODE:
@@ -665,6 +666,7 @@ const getEndedCallStrings = (
         title = locale.strings.call.roomNotFoundTitle;
         moreDetails = locale.strings.call.roomNotFoundDetails;
         disableStartCallButton = true;
+        iconName = 'NoticePageRoomNotFound';
       }
       break;
     case ROOM_NOT_VALID_SUB_CODE:
@@ -672,6 +674,7 @@ const getEndedCallStrings = (
         title = locale.strings.call.roomNotValidTitle;
         moreDetails = locale.strings.call.roomNotValidDetails;
         disableStartCallButton = true;
+        iconName = 'NoticePageRoomNotValid';
       }
       break;
     case NOT_INVITED_TO_ROOM_SUB_CODE:
@@ -679,6 +682,7 @@ const getEndedCallStrings = (
         title = locale.strings.call.notInvitedToRoomTitle;
         moreDetails = locale.strings.call.notInvitedToRoomDetails;
         disableStartCallButton = true;
+        iconName = 'NoticePageNotInvitedToRoom';
       }
       break;
     case INVITE_TO_ROOM_REMOVED_SUB_CODE:
@@ -686,6 +690,7 @@ const getEndedCallStrings = (
         title = locale.strings.call.inviteToRoomRemovedTitle;
         moreDetails = locale.strings.call.inviteToRoomRemovedDetails;
         disableStartCallButton = true;
+        iconName = 'NoticePageInviteToRoomRemoved';
       }
       break;
   }
@@ -720,5 +725,5 @@ const getEndedCallStrings = (
       }
       break;
   }
-  return { title, moreDetails, disableStartCallButton };
+  return { title, moreDetails, disableStartCallButton, iconName };
 };
