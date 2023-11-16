@@ -64,7 +64,7 @@
     "returnToCallButtonAriaLabel": "Back",
     "roomNotFoundDetails": "The room ID provided could not be found.",
     "roomNotFoundTitle": "Room not found",
-    "roomNotValidDetails": "This room's valid time paramters needs to be updated.",
+    "roomNotValidDetails": "This room is not valid at this current time.",
     "roomNotValidTitle": "Room not valid",
     "inviteToRoomRemovedDetails": "Your invite to join this room was removed.",
     "inviteToRoomRemovedTitle": "Invite to room removed",
