@@ -14,7 +14,10 @@ import { isPhoneNumberIdentifier } from '@azure/communication-common';
 type CallingSoundsLoaded = {
   callEndedSound?: HTMLAudioElement;
   callRingingSound?: HTMLAudioElement;
+  callBusySound?: HTMLAudioElement;
 };
+
+const CALL_REJECTED_CODE = 603;
 
 /**
  * @private
@@ -47,7 +50,11 @@ export class CallingSoundSubscriber {
         this.soundsLoaded.callRingingSound.pause();
       }
       if (this.call.state === 'Disconnected' && this.soundsLoaded?.callEndedSound) {
-        this.playSound(this.soundsLoaded.callEndedSound);
+        if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
+          this.playSound(this.soundsLoaded.callBusySound);
+        } else {
+          this.playSound(this.soundsLoaded.callEndedSound);
+        }
       }
     });
   };
@@ -74,9 +81,15 @@ export class CallingSoundSubscriber {
       callRingingSound = new Audio(sounds?.callRinging?.path);
       callRingingSound.preload = 'auto';
     }
+    let callBusySound;
+    if (sounds?.callBusy) {
+      callBusySound = new Audio(sounds?.callBusy?.path);
+      callBusySound.preload = 'auto';
+    }
     return {
       callEndedSound,
-      callRingingSound
+      callRingingSound,
+      callBusySound
     };
   }
 
