@@ -69,4 +69,17 @@ describe('Calling sound subscriber tests', () => {
     call.testHelperSetCallState('Ringing');
     expect(audioMocks.Audio.play).not.toHaveBeenCalled();
   });
+
+  /* @conditional-compile-remove(calling-sounds) */
+  test('should play busy sound when call is rejected', () => {
+    const locator = { participantIds: ['+14045554444'] };
+    const call = createMockCall();
+    const sounds: CallingSounds = {
+      callBusy: { path: 'test/path/busy' }
+    };
+    const soundSubscriber = new CallingSoundSubscriber(call, locator, sounds);
+    expect(soundSubscriber).toBeDefined();
+    call.testHelperSetCallEndReason({ code: 603, subCode: 0 });
+    expect(audioMocks.Audio.play).not.toHaveBeenCalled();
+  });
 });

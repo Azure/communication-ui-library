@@ -35,7 +35,8 @@ describe('Adapter is created as expected', () => {
       soundOptions: {
         callingSounds: {
           callEnded: { path: 'test/path/ended' },
-          callRinging: { path: 'test/path/ringing' }
+          callRinging: { path: 'test/path/ringing' },
+          callBusy: { path: 'test/path/busy' }
         }
       }
     };
@@ -52,6 +53,8 @@ describe('Adapter is created as expected', () => {
     expect(adapter.getState().sounds?.callEnded).toEqual({ path: 'test/path/ended' });
     expect(adapter.getState().sounds?.callRinging).toBeDefined();
     expect(adapter.getState().sounds?.callRinging).toEqual({ path: 'test/path/ringing' });
+    expect(adapter.getState().sounds?.callBusy).toBeDefined();
+    expect(adapter.getState().sounds?.callBusy).toEqual({ path: 'test/path/busy' });
   });
   /* @conditional-compile-remove(calling-sounds) */
   test('when creating an adapter with one sound we should see it and not the other', async () => {
@@ -78,5 +81,6 @@ describe('Adapter is created as expected', () => {
     expect(adapter.getState().sounds?.callEnded).toBeDefined();
     expect(adapter.getState().sounds?.callEnded).toEqual({ path: 'test/path/ended' });
     expect(adapter.getState().sounds?.callRinging).toBeUndefined();
+    expect(adapter.getState().sounds?.callBusy).toBeUndefined();
   });
 });
