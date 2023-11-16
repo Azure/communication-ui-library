@@ -20,10 +20,6 @@ import { VideoEffectProcessor } from '@azure/communication-calling';
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
-/* @conditional-compile-remove(rooms) */
-const ROOM_NOT_FOUND_SUB_CODE = 5751;
-/* @conditional-compile-remove(rooms) */
-const DENIED_PERMISSION_TO_ROOM_SUB_CODE = 5828;
 
 /**
  * @private
@@ -74,7 +70,9 @@ enum CallEndReasons {
   ACCESS_DENIED,
   REMOVED_FROM_CALL,
   ROOM_NOT_FOUND,
-  DENIED_PERMISSION_TO_ROOM
+  ROOM_NOT_VALID,
+  NO_PERMISSION_TO_JOIN_ROOM,
+  REMOVED_PERMISSION_TO_JOIN_ROOM
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
@@ -100,16 +98,6 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 
   if (call.callEndReason?.subCode && REMOVED_FROM_CALL_SUB_CODES.includes(call.callEndReason.subCode)) {
     return CallEndReasons.REMOVED_FROM_CALL;
-  }
-
-  /* @conditional-compile-remove(rooms) */
-  if (call.callEndReason?.subCode && call.callEndReason.subCode === ROOM_NOT_FOUND_SUB_CODE) {
-    return CallEndReasons.ROOM_NOT_FOUND;
-  }
-
-  /* @conditional-compile-remove(rooms) */
-  if (call.callEndReason?.subCode && call.callEndReason.subCode === DENIED_PERMISSION_TO_ROOM_SUB_CODE) {
-    return CallEndReasons.DENIED_PERMISSION_TO_ROOM;
   }
 
   if (call.callEndReason) {
@@ -199,13 +187,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   if (previousCall) {
     const reason = getCallEndReason(previousCall);
-    /* @conditional-compile-remove(rooms) */
-    switch (reason) {
-      case CallEndReasons.ROOM_NOT_FOUND:
-        return 'roomNotFound';
-      case CallEndReasons.DENIED_PERMISSION_TO_ROOM:
-        return 'deniedPermissionToRoom';
-    }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
         return 'accessDeniedTeamsMeeting';
@@ -233,20 +214,7 @@ export const IsCallEndedPage = (
    * EndCallPage ensure you update the END_CALL_PAGES. Afterwards update the `page` parameter
    * type below to allow your new page, i.e. add `| <your new page>
    */
-  page:
-    | 'accessDeniedTeamsMeeting'
-    | 'call'
-    | 'configuration'
-    | 'joinCallFailedDueToNoNetwork'
-    | 'leaving'
-    | 'leftCall'
-    | 'lobby'
-    | 'removedFromCall'
-    | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
-    | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
-    | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
-    | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-    | /* @conditional-compile-remove(call-transfer) */ 'transferring'
+  page: CallCompositePage
 ): boolean => END_CALL_PAGES.includes(page);
 
 /**
