@@ -371,7 +371,7 @@ export class CallContext {
       const participantKey = call.pptLiveShareRemoteParticipant;
       if (call && participantKey) {
         const participant = call.remoteParticipants[participantKey];
-        if (participant) {
+        if (participant && target) {
           participant.pptLiveStream = target;
         }
       }

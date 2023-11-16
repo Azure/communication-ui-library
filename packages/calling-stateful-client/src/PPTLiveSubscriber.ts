@@ -33,7 +33,6 @@ export class PPTLiveSubscriber {
 
   private subscribe = (): void => {
     this._pptLive.on('isActiveChanged', this.isAvailableChanged);
-    this.checkAndUpdatePPTLiveParticipant();
   };
 
   public unsubscribe = (): void => {
@@ -48,7 +47,6 @@ export class PPTLiveSubscriber {
   private checkAndUpdatePPTLiveParticipant = (): void => {
     if (this._pptLive.isActive) {
       this._context.setCallParticipantPPTLive(this._callIdRef.callId, this._pptLive.target);
-      return;
     } else {
       this._context.setCallParticipantPPTLive(this._callIdRef.callId, undefined);
     }
