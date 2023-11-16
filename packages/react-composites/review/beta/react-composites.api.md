@@ -596,6 +596,7 @@ export type CallIdChangedListener = (event: {
 // @beta
 export type CallingSounds = {
     callEnded?: SoundEffect;
+    callRinging?: SoundEffect;
 };
 
 // @beta

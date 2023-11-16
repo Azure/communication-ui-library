@@ -157,7 +157,8 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       /* @conditional-compile-remove(calling-sounds) */
       soundOptions: {
         callingSounds: {
-          callEnded: { path: '/sounds/callEnded.mp3' }
+          callEnded: { path: '/sounds/callEnded.mp3' },
+          callRinging: { path: '/sounds/callRinging.mp3' }
         }
       }
     };

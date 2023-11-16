@@ -1,6 +1,8 @@
 {
   "type": "none",
-  "comment": "Update CCC to Conditional Compilation doc",
+  "area": "feature",
+  "workstream": "",
+  "comment": "Update CTE sdk ref",
   "packageName": "@azure/communication-react",
   "email": "jiangnanhello@live.com",
   "dependentChangeType": "none"
