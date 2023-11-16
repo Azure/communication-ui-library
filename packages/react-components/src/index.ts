@@ -28,6 +28,7 @@ export { COMPONENT_LOCALE_ZH_CN } from './localization/locales/zh-CN/ComponentLo
 export { COMPONENT_LOCALE_ZH_TW } from './localization/locales/zh-TW/ComponentLocale';
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
+export * from './theming/generateTheme';
 
 export type {
   BaseCustomStyles,
