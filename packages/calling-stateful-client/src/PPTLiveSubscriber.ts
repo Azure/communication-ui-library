@@ -2,7 +2,8 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(ppt-live) */
-import { PPTLiveCallFeature } from '@azure/communication-calling';
+import { Call, Features, PPTLiveCallFeature } from '@azure/communication-calling';
+import { CallCommon } from './BetaToStableTypes';
 /* @conditional-compile-remove(ppt-live) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(ppt-live) */
@@ -15,12 +16,14 @@ import { CallIdRef } from './CallIdRef';
 export class PPTLiveSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
+  private _call: CallCommon;
   private _pptLive: PPTLiveCallFeature;
 
-  constructor(callIdRef: CallIdRef, context: CallContext, pptLive: PPTLiveCallFeature) {
+  constructor(callIdRef: CallIdRef, context: CallContext, call: CallCommon) {
     this._callIdRef = callIdRef;
     this._context = context;
-    this._pptLive = pptLive;
+    this._pptLive = call.feature(Features.PPTLive);
+    this._call = call;
 
     // If pptlive as already started when we joined the call, make sure it is reflected in state as there may not
     // be an event for it.
@@ -44,8 +47,11 @@ export class PPTLiveSubscriber {
     this.checkAndUpdatePPTLiveParticipant();
   };
 
-  private checkAndUpdatePPTLiveParticipant = (): void => {
+  private checkAndUpdatePPTLiveParticipant = async (): Promise<void> => {
     if (this._pptLive.isActive) {
+      if (this._call.isScreenSharingOn) {
+        await this._call.stopScreenSharing();
+      }
       this._context.setCallParticipantPPTLive(this._callIdRef.callId, this._pptLive.target);
     } else {
       this._context.setCallParticipantPPTLive(this._callIdRef.callId, undefined);

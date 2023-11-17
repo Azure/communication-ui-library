@@ -77,11 +77,7 @@ export class CallSubscriber {
       this._call.feature(Features.Recording)
     );
     /* @conditional-compile-remove(ppt-live) */
-    this._pptLiveSubscriber = new PPTLiveSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.PPTLive)
-    );
+    this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
     this._transcriptionSubscriber = new TranscriptionSubscriber(
       this._callIdRef,
       this._context,

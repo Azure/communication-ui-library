@@ -1,10 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
@@ -13,34 +12,12 @@ import { _formatString } from '@internal/acs-ui-common';
  * https://reactjs.org/docs/react-api.html#reactmemo
  */
 export const RemotePPTLive = React.memo(
-  (props: {
-    userId: string;
-    displayName?: string;
-    onCreateRemoteStreamView?: (
-      userId: string,
-      options?: VideoStreamOptions
-    ) => Promise<void | CreateVideoStreamViewResult>;
-    onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
-    isAvailable?: boolean;
-    isMuted?: boolean;
-    isSpeaking?: boolean;
-    renderElement?: HTMLElement;
-  }) => {
-    const { userId, displayName, isMuted, renderElement, onCreateRemoteStreamView, onDisposeRemoteStreamView } = props;
-    if (!renderElement) {
-      onCreateRemoteStreamView && onCreateRemoteStreamView(userId);
-    }
-
-    useEffect(() => {
-      return () => {
-        onDisposeRemoteStreamView && onDisposeRemoteStreamView(userId);
-      };
-    }, [onDisposeRemoteStreamView, userId]);
+  (props: { userId: string; displayName?: string; renderElement?: HTMLElement }) => {
+    const { displayName, renderElement } = props;
 
     return (
       <VideoTile
         displayName={displayName}
-        isMuted={isMuted}
         renderElement={
           renderElement ? <StreamMedia videoStreamElement={renderElement} loadingState="none" /> : undefined
         }

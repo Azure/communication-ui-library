@@ -647,14 +647,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(ppt-live) */
-  const pptLiveComponent = pptLiveParticipant && (
-    <RemotePPTLive
-      {...pptLiveParticipant}
-      renderElement={pptLiveParticipant.pptLiveStream}
-      onCreateRemoteStreamView={onCreateRemoteStreamView}
-      onDisposeRemoteStreamView={onDisposeRemotePPTLiveStreamView}
-    />
+  const pptLiveRemoteComponent = pptLiveParticipant && (
+    <RemotePPTLive {...pptLiveParticipant} renderElement={pptLiveParticipant.pptLiveStream} />
   );
+
+  const pptLiveComponent = pptLiveRemoteComponent ? pptLiveRemoteComponent : undefined;
   const screenShareComponent = remoteScreenShareComponent
     ? remoteScreenShareComponent
     : localParticipant.isScreenSharingOn
