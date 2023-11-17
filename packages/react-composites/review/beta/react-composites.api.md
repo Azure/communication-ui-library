@@ -191,6 +191,7 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    disposeLocalScreenShareStreamView(): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
@@ -622,6 +623,7 @@ export interface CallWithChatAdapterManagement {
     clearFileUploads: () => void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
+    disposeLocalScreenShareStreamView(): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
@@ -1621,6 +1623,8 @@ export class _MockCallAdapter implements CallAdapter {
     createStreamView(): Promise<void>;
     // (undocumented)
     dispose(): void;
+    // (undocumented)
+    disposeLocalScreenShareStreamView(): Promise<void>;
     // (undocumented)
     disposeLocalVideoStreamView(): Promise<void>;
     // (undocumented)

@@ -784,9 +784,7 @@ export class CallContext {
   public deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.mediaStreamType === localVideoStream.mediaStreamType &&
-          stream.mediaStreamType === localVideoStream.mediaStreamType
+        (stream) => stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews.splice(foundIndex, 1);
@@ -801,9 +799,7 @@ export class CallContext {
   ): void {
     this.modifyState((draft: CallClientState) => {
       const foundIndex = draft.deviceManager.unparentedViews.findIndex(
-        (stream) =>
-          stream.mediaStreamType === localVideoStream.mediaStreamType &&
-          stream.mediaStreamType === localVideoStream.mediaStreamType
+        (stream) => stream.mediaStreamType === localVideoStream.mediaStreamType
       );
       if (foundIndex !== -1) {
         draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;

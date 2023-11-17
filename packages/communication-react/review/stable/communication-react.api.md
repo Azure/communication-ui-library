@@ -205,6 +205,7 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
 // @public
 export interface CallAdapterCallOperations {
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    disposeLocalScreenShareStreamView(): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
@@ -685,6 +686,7 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
+    disposeLocalScreenShareStreamView(): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
@@ -1429,7 +1431,11 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
+    onDisposeLocalScreenShareStreamView: () => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeLocalStreamView: () => Promise<void>;
+    // (undocumented)
+    onDisposeLocalVideoStreamView: () => Promise<void>;
     // (undocumented)
     onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
@@ -3234,7 +3240,10 @@ export interface VideoGalleryProps {
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onDisposeLocalScreenShareStreamView?: () => Promise<void>;
+    // @deprecated (undocumented)
     onDisposeLocalStreamView?: () => void;
+    onDisposeLocalVideoStreamView?: () => Promise<void>;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;

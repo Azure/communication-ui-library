@@ -595,6 +595,8 @@ export default {
     onPinParticipant: hiddenControl,
     onUnpinParticipant: hiddenControl,
     layout: hiddenControl,
+    onDisposeLocalVideoStreamView: hiddenControl,
+    onDisposeLocalScreenShareStreamView: hiddenControl,
     onDisposeRemoteVideoStreamView: hiddenControl,
     onDisposeRemoteScreenShareStreamView: hiddenControl
   },

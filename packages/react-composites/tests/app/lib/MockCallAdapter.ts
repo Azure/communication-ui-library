@@ -93,6 +93,9 @@ export class MockCallAdapter implements CallAdapter {
   disposeLocalVideoStreamView(): Promise<void> {
     return Promise.resolve();
   }
+  disposeLocalScreenShareStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
   disposeRemoteVideoStreamView(): Promise<void> {
     return Promise.resolve();
   }

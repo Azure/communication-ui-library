@@ -389,6 +389,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async disposeLocalVideoStreamView(): Promise<void> {
     await this.callAdapter.disposeLocalVideoStreamView();
   }
+  /** Dispose of the local video stream */
+  public async disposeLocalScreenShareStreamView(): Promise<void> {
+    await this.callAdapter.disposeLocalScreenShareStreamView();
+  }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
     await this.chatAdapter.fetchInitialData();

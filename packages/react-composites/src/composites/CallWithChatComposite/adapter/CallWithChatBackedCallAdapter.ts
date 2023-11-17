@@ -143,6 +143,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
     return this.callWithChatAdapter.disposeScreenShareStreamView(remoteUserId);
   }
+  public disposeLocalScreenShareStreamView(): Promise<void> {
+    return this.callWithChatAdapter.disposeLocalScreenShareStreamView();
+  }
   public disposeRemoteVideoStreamView(remoteUserId: string): Promise<void> {
     return this.callWithChatAdapter.disposeRemoteVideoStreamView(remoteUserId);
   }

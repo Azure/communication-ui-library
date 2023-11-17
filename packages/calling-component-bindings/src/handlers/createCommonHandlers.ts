@@ -20,12 +20,7 @@ import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import {
-  CreateViewResult,
-  LocalVideoStreamState,
-  StatefulCallClient,
-  StatefulDeviceManager
-} from '@internal/calling-stateful-client';
+import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
@@ -77,9 +72,14 @@ export interface CommonCallingHandlers {
    * @deprecated use {@link onDisposeRemoteVideoStreamView} and {@link onDisposeRemoteScreenShareStreamView} instead.
    */
   onDisposeRemoteStreamView: (userId: string) => Promise<void>;
-  onDisposeLocalStreamView: (stream?: LocalVideoStreamState) => Promise<void>;
+  /**
+   * @deprecated use {@link onDisposeLocalVideoStreamView} and {@link onDisposeLocalScreenShareStreamView} instead.
+   */
+  onDisposeLocalStreamView: () => Promise<void>;
   onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
   onDisposeRemoteScreenShareStreamView: (userId: string) => Promise<void>;
+  onDisposeLocalVideoStreamView: () => Promise<void>;
+  onDisposeLocalScreenShareStreamView: () => Promise<void>;
   /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
@@ -476,12 +476,10 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const onDisposeLocalStreamView = async (mediaStreamType?: MediaStreamType): Promise<void> => {
+    const onDisposeLocalStreamView = async (mediaStreamType: MediaStreamType = 'Video'): Promise<void> => {
       // If the user is currently in a call, dispose of the local stream view attached to that call.
       const callState = call && callClient.getState().calls[call.id];
-      const localVideoStream = callState?.localVideoStreams.find(
-        (item) => item.mediaStreamType === (mediaStreamType ?? 'Video')
-      );
+      const localVideoStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === mediaStreamType);
       if (call && localVideoStream) {
         callClient.disposeView(call.id, undefined, localVideoStream);
       }
@@ -490,6 +488,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       // since those are only used for LocalPreview currently.
       // TODO: we need to remember which LocalVideoStream was used for LocalPreview and dispose that one.
       await disposeAllLocalPreviewViews(callClient);
+    };
+
+    const onDisposeLocalVideoStreamView = async (): Promise<void> => {
+      return await onDisposeLocalStreamView('Video');
+    };
+
+    const onDisposeLocalScreenShareStreamView = async (): Promise<void> => {
+      return await onDisposeLocalStreamView('ScreenSharing');
     };
 
     /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
@@ -594,6 +600,8 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStartLocalVideo,
       onDisposeRemoteStreamView,
       onDisposeLocalStreamView,
+      onDisposeLocalVideoStreamView,
+      onDisposeLocalScreenShareStreamView,
       onDisposeRemoteScreenShareStreamView,
       onDisposeRemoteVideoStreamView,
       /* @conditional-compile-remove(raise-hand) */
