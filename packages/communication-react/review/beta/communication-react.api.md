@@ -831,6 +831,7 @@ export type CallingReturnProps<Component extends (props: any) => JSX.Element> = 
 export type CallingSounds = {
     callEnded?: SoundEffect;
     callRinging?: SoundEffect;
+    callBusy?: SoundEffect;
 };
 
 // @public
