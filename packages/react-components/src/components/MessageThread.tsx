@@ -1062,13 +1062,18 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onRenderMessageStatus={onRenderMessageStatus}
                   defaultStatusRenderer={defaultStatusRenderer}
                   onActionButtonClick={onActionButtonClickMemo}
-                  onFetchInlineAttachment={onFetchInlineAttachment}
-                  inlineAttachments={inlineAttachments}
                   statusToRender={message.statusToRender}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
+                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+                  onFetchInlineAttachment={onFetchInlineAttachment}
+                  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+                  inlineAttachments={inlineAttachments}
+                  /* @conditional-compile-remove(image-gallery) */
                   onInlineImageClicked={onInlineImageClicked}
+                  /* @conditional-compile-remove(date-time-customization) */
                   onDisplayDateTimeString={onDisplayDateTimeString}
+                  /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
                 />
               );
