@@ -3,7 +3,7 @@
 
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useMemo } from 'react';
-import { MessageProps, MessageRenderer, _ChatMessageProps } from '../MessageThread';
+import { MessageProps, _ChatMessageProps } from '../MessageThread';
 import { ChatMessage } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
@@ -111,18 +111,12 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
   );
 
   const messageRenderer = useCallback(
-    (
-      messageProps: MessageProps,
-      defaultChatMessageRenderer: (messageProps: MessageProps) => React.JSX.Element,
-      onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element
-    ) => {
-      //TODO: check if there should be dependencies
-      /// check if it can be just func outside of component
+    (messageProps: MessageProps) => {
       return onRenderMessage === undefined
         ? defaultChatMessageRenderer({ ...messageProps })
         : onRenderMessage(messageProps, defaultChatMessageRenderer);
     },
-    []
+    [defaultChatMessageRenderer, onRenderMessage]
   );
 
   const messageStatusRenderer = useCallback(
@@ -211,7 +205,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             </div>
           }
         >
-          {messageRenderer({ ...props }, defaultChatMessageRenderer, onRenderMessage)}
+          {messageRenderer({ ...props })}
         </FluentChatMyMessage>
       </div>
     );
@@ -253,7 +247,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             </div>
           }
         >
-          {messageRenderer({ ...props }, defaultChatMessageRenderer, onRenderMessage)}
+          {messageRenderer({ ...props })}
         </FluentChatMessage>
       </div>
     );
