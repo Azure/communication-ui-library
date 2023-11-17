@@ -146,15 +146,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const adapter = useAdapter();
   const theme = useTheme();
 
-  // useEffect(() => {
-  //   console.log('!!!!!!!useEffect empty render');
-  // }, []);
-
-  // useEffect(() => {
-  //   console.log('!!!!!!!useEffect adapter', adapter);
-  // }, [adapter]);
   useEffect(() => {
-    console.log('!!!!!!!useEffect fetchData');
     // Initial data should be always fetched by the composite(or external caller) instead of the adapter
     const fetchData: () => Promise<void> = async () => {
       // Fetch initial data for adapter
@@ -201,10 +193,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const sendBoxStyles = useMemo(() => {
     return Object.assign({}, styles?.sendBox);
   }, [styles?.sendBox]);
-  // const userId = useMemo(() => {
-  //   console.log('!!!!!!!useMemo userId is it changed?', toFlatCommunicationIdentifier(adapter.getState().userId));
-  //   return toFlatCommunicationIdentifier(adapter.getState().userId);
-  // }, [adapter]);
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(
@@ -255,7 +243,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   /* @conditional-compile-remove(image-gallery) */
   const onInlineImageClicked = useCallback(
     async (attachmentId: string, messageId: string): Promise<void> => {
-      console.log('!!!!!!!onInlineImageClicked');
       const messages = messageThreadProps.messages?.filter((message) => {
         return message.messageId === messageId;
       });

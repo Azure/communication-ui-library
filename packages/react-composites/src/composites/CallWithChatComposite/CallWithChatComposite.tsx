@@ -296,16 +296,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   }, [callWithChatAdapter]);
 
   const chatAdapter: ChatAdapter = useMemo(() => {
-    console.log('!!!!!!!!!CallWithChatComposite: chatAdapter useMemo');
     return new CallWithChatBackedChatAdapter(callWithChatAdapter);
   }, [callWithChatAdapter]);
-
-  const chatProps = useMemo(() => {
-    console.log('!!!!!!!!!!CallWithChatComposite: chatProps useMemo', props.onFetchAvatarPersonaData);
-    return {
-      onFetchAvatarPersonaData: props.onFetchAvatarPersonaData
-    };
-  }, [props.onFetchAvatarPersonaData]);
 
   /** Constant setting of id for the parent stack of the composite */
   const compositeParentDivId = useId('callWithChatCompositeParentDiv-internal');
@@ -478,10 +470,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  const onRenderChatContent = useCallback((): JSX.Element => {
-    return (
+  const onRenderChatContent = useCallback(
+    (): JSX.Element => (
       <ChatComposite
-        {...chatProps}
         adapter={chatAdapter}
         fluentTheme={theme}
         options={{
@@ -493,8 +484,14 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         }}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
-    );
-  }, [chatAdapter, chatProps, props.fileSharing, props.onFetchAvatarPersonaData, theme]);
+    ),
+    [
+      chatAdapter,
+      /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
+      props.onFetchAvatarPersonaData,
+      theme
+    ]
+  );
 
   const sidePaneHeaderRenderer = useCallback(
     () => (
