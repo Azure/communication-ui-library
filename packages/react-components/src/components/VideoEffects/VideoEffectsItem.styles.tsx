@@ -59,18 +59,22 @@ export const videoEffectsItemContainerStyles = (args: {
           transform: 'translate(-1rem, -3.3rem)'
         }
       },
-      ':focus': {
-        ':after': {
-          outline: 'none',
-          transform: 'translate(-0.1rem, -0.2rem)'
-        }
-      },
       ':hover': {
         ':after': {
           border:
             args.disabled && !args.isSelected
               ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
-              : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
+              : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`,
+          transform: 'translate(-1rem, -3.3rem)'
+        }
+      },
+      ':focus': {
+        ':after': {
+          outline: 'none',
+          transform: 'translate(-0.1rem, -0.2rem)',
+          ':hover': {
+            transform: 'translate(-0.1rem, -0.2rem)'
+          }
         }
       }
     }
