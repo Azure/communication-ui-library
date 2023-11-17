@@ -1,25 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React, { useEffect } from 'react';
+import { MessageStatus } from '@internal/acs-ui-common';
+import React from 'react';
 import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps } from '../MessageThread';
-import {
-  ChatMessage,
-  CommunicationParticipant,
-  ComponentSlotStyle,
-  OnRenderAvatarCallback,
-  ParticipantAddedSystemMessage,
-  ParticipantRemovedSystemMessage
-} from '../../types';
+import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { FileMetadata } from '../FileDownloadCards';
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
-import { SystemMessage as SystemMessageComponent, SystemMessageIconTypes } from './../SystemMessage';
-import { useLocale } from '../../localization/LocalizationProvider';
 import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentWrapper';
+import { DefaultSystemMessage } from './DefaultSystemMessage';
 
 /**
  * @private
@@ -29,13 +21,8 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
    * UserId of the current user.
    */
   userId: string;
-  // key: string;
-  // need for onRenderMessage for all other cases `message` prop should be used as it has more strict type
-  // messageProps: MessageProps;
   styles: MessageThreadStyles | undefined;
   shouldOverlapAvatarAndMessage: boolean;
-  /* @conditional-compile-remove(file-sharing) */
-  // strings: MessageThreadStrings;
   onRenderMessageStatus: ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null) | undefined;
   defaultStatusRenderer: (
     message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
@@ -68,7 +55,6 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   inlineAttachments: Record<string, Record<string, string>>;
   /* @conditional-compile-remove(mention) */
   mentionOptions?: MentionOptions;
-  // statusToRender: MessageStatus | undefined;
 };
 
 /**
@@ -130,66 +116,3 @@ export const ChatMessageComponentWrapper = (props: ChatMessageComponentWrapperPr
     }
   }
 };
-
-const DefaultSystemMessage: MessageRenderer = (props: MessageProps) => {
-  const message = props.message;
-  switch (message.messageType) {
-    case 'system':
-      switch (message.systemMessageType) {
-        case 'content':
-          return (
-            <SystemMessageComponent
-              iconName={(message.iconName ? message.iconName : '') as SystemMessageIconTypes}
-              content={message.content ?? ''}
-              containerStyle={props?.messageContainerStyle}
-            />
-          );
-        case 'participantAdded':
-        case 'participantRemoved':
-          return (
-            <ParticipantSystemMessageComponent
-              message={message}
-              style={props.messageContainerStyle}
-              defaultName={props.strings.noDisplayNameSub}
-            />
-          );
-      }
-  }
-  return <></>;
-};
-
-const ParticipantSystemMessageComponent = ({
-  message,
-  style,
-  defaultName
-}: {
-  message: ParticipantAddedSystemMessage | ParticipantRemovedSystemMessage;
-  style?: ComponentSlotStyle;
-  defaultName: string;
-}): JSX.Element => {
-  const { strings } = useLocale();
-  const participantsStr = generateParticipantsStr(message.participants, defaultName);
-  const messageSuffix =
-    message.systemMessageType === 'participantAdded'
-      ? strings.messageThread.participantJoined
-      : strings.messageThread.participantLeft;
-
-  if (participantsStr !== '') {
-    return (
-      <SystemMessageComponent
-        iconName={(message.iconName ? message.iconName : '') as SystemMessageIconTypes}
-        content={`${participantsStr} ${messageSuffix}`}
-        containerStyle={style}
-      />
-    );
-  }
-  return <></>;
-};
-
-const generateParticipantsStr = (participants: CommunicationParticipant[], defaultName: string): string =>
-  participants
-    .map(
-      (participant) =>
-        `${!participant.displayName || participant.displayName === '' ? defaultName : participant.displayName}`
-    )
-    .join(', ');
