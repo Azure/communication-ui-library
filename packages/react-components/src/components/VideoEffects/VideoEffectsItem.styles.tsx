@@ -47,9 +47,23 @@ export const videoEffectsItemContainerStyles = (args: {
       ':after': {
         content: '""',
         boxSizing: 'border-box',
-        height: '100%',
-        width: '100%',
-        borderRadius: '0.25rem'
+        height: '3.373rem',
+        width: '4.85rem',
+        borderRadius: '0.25rem',
+        transform: 'translate(-1rem, -3.3rem)',
+        display: 'flex'
+      },
+      ':active': {
+        ':after': {
+          outline: 'none',
+          transform: 'translate(-1rem, -3.3rem)'
+        }
+      },
+      ':focus': {
+        ':after': {
+          outline: 'none',
+          transform: 'translate(-0.1rem, -0.2rem)'
+        }
       },
       ':hover': {
         ':after': {
@@ -58,11 +72,6 @@ export const videoEffectsItemContainerStyles = (args: {
               ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
               : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
         }
-      }
-    },
-    rootFocused: {
-      ':after': {
-        outline: `2px solid ${args.theme.palette.neutralQuaternaryAlt}`
       }
     }
   };
