@@ -244,7 +244,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   /* @conditional-compile-remove(image-gallery) */
   const handleOnInlineImageClicked = useCallback(
     async (attachmentId: string): Promise<void> => {
-      console.log('!!!!! handleOnInlineImageClicked');
       if (onInlineImageClicked === undefined) {
         return;
       }

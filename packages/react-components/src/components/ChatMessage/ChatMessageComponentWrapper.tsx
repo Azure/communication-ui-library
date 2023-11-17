@@ -76,9 +76,6 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
  */
 export const ChatMessageComponentWrapper = (props: ChatMessageComponentWrapperProps): JSX.Element => {
   const { message, styles, onRenderMessage, key: messageKey } = props;
-  useEffect(() => {
-    console.log('!!!!!!!!!!!!!! ChatMessageComponentWrapper messageProps', message);
-  }, [message]);
 
   /* @conditional-compile-remove(data-loss-prevention) */
   // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stabilize)

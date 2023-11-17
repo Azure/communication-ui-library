@@ -891,13 +891,13 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onDeleteMessage,
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
-    // onDisplayDateTimeString,
+    onDisplayDateTimeString,
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-    onFetchAttachments
+    onFetchAttachments,
     /* @conditional-compile-remove(mention) */
-    // mentionOptions,
+    mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
-    // onInlineImageClicked
+    onInlineImageClicked
   } = props;
   // const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
 
@@ -935,7 +935,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         listOfAttachments[attachmentId] = blobUrl;
       }
 
-      if (Object.keys(listOfAttachments).length > 0) {
+      if (Object.keys(listOfAttachments).length > 0 && attachmentDownloadResult.length > 0) {
         setInlineAttachments((prev) => ({ ...prev, [messageId]: listOfAttachments }));
       }
     },
@@ -1502,6 +1502,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   statusToRender={message.statusToRender}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
+                  onInlineImageClicked={onInlineImageClicked}
+                  onDisplayDateTimeString={onDisplayDateTimeString}
+                  mentionOptions={mentionOptions}
                 />
               );
             })}
@@ -1513,7 +1516,5 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 };
 
 const MemoChatMessageComponentWrapper = React.memo((obj: ChatMessageComponentWrapperProps): JSX.Element => {
-  // messageProps: MessageProps; // this is what cause rerender
-  console.log('!!!!!!!!!!!!!!!!! MemoChatMessageComponentWrapper render item', obj.message.messageId, obj);
   return <ChatMessageComponentWrapper {...obj} />;
 });

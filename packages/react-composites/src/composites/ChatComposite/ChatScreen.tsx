@@ -173,19 +173,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const headerProps = useAdaptedSelector(getHeaderProps);
   const errorBarProps = usePropsFor(ErrorBar);
 
-  // useEffect(() => {
-  //   console.log('!!!!!!!useEffect set messages ', messageThreadProps.messages);
-  //   // setMessages(messageThreadProps.messages);
-  // }, [messageThreadProps.messages]);
-
-  useEffect(() => {
-    console.log('!!!!!!!useEffect messageThreadProps ', messageThreadProps.messages);
-  }, [messageThreadProps]);
-
-  // useEffect(() => {
-  //   console.log('!!!!!!!useEffect ChatScreen messages ', messages);
-  // }, [messages]);
-
   const onRenderAvatarCallback = useCallback(
     (userId, defaultOptions) => {
       return (

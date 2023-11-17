@@ -42,7 +42,6 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     : props.mobileView
     ? availableSpaceStyles
     : maxWidthStyles;
-  //TODO: can it be because of 1 of these things?
   const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
     EmptyElement;

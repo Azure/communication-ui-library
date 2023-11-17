@@ -76,21 +76,22 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
+  const { onFetchAttachment, message, attachmentsMap } = props;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
-    const attachments = props.message.attachedFilesMetadata?.filter((fileMetadata) => {
+    const attachments = message.attachedFilesMetadata?.filter((fileMetadata) => {
       return fileMetadata.attachmentType === 'inlineImage';
     });
 
-    if (props.attachmentsMap && attachments) {
+    if (attachmentsMap && attachments) {
       attachments.forEach((fileMetadata) => {
-        if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
-          props.onFetchAttachment([fileMetadata], props.message.messageId);
+        if (onFetchAttachment && attachmentsMap && attachmentsMap[fileMetadata.id] === undefined) {
+          onFetchAttachment([fileMetadata], message.messageId);
           return;
         }
       });
     }
-  }, [props]);
+  }, [message.attachedFilesMetadata, message.messageId, onFetchAttachment, attachmentsMap]);
 
   return (
     <MessageContentWithLiveAria

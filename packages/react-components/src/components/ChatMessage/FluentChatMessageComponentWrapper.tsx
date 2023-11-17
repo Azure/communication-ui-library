@@ -67,10 +67,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      // console.log('!!!!!! defaultChatMessageRenderer', isDefaultMessageRenderer);
-      // setIsDefaultMessageRenderer(true);
-      // isDefaultMessageRenderer.current = true;
-      console.log('!!!!!! defaultChatMessageRenderer', message.messageId);
       if (
         messageProps.message.messageType === 'chat' ||
         /* @conditional-compile-remove(data-loss-prevention) */ messageProps.message.messageType === 'blocked'
@@ -104,21 +100,19 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       }
       return <></>;
     },
-    // TODO: update dependencies
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
-      // inlineAttachments,
-      // mentionOptions,
-      // onActionButtonClick,
-      // onDisplayDateTimeString,
-      // onFetchInlineAttachment,
-      // onInlineImageClicked,
-      // onRenderAvatar,
-      // onRenderFileDownloadsMemo,
-      // participantCount,
-      // shouldOverlapAvatarAndMessage,
-      // showMessageStatus,
-      // userId
+      inlineAttachments,
+      mentionOptions,
+      onActionButtonClick,
+      onDisplayDateTimeString,
+      onFetchInlineAttachment,
+      onInlineImageClicked,
+      onRenderAvatar,
+      onRenderFileDownloadsMemo,
+      participantCount,
+      shouldOverlapAvatarAndMessage,
+      showMessageStatus,
+      userId
     ]
   );
 
@@ -178,6 +172,11 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     return shouldShowAvatar ? 'top' : 'center';
   }, [shouldShowAvatar]);
 
+  // Fluent UI message components are used here as
+  // for default message renderer, timestamp and author name should be shown but
+  // they aren't shown for custom render.
+  // More investigations are needed to check if this can be simplified with states.
+  // Status and avatar should be shown for custom and default renderers.
   if (message.mine === true) {
     return (
       <div>
