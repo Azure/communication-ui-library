@@ -526,6 +526,18 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+    /* @conditional-compile-remove(calling-sounds) */
+    case 'callRejected':
+      pageElement = (
+        <NoticePage
+          iconName="NoticePageCallRejected"
+          title={locale.strings.call.callRejectedTitle}
+          moreDetails={locale.strings.call.callRejectedMoreDetails}
+          dataUiId={'call-rejected-page'}
+          disableStartCallButton={true}
+        />
+      );
+      break;
   }
 
   /* @conditional-compile-remove(unsupported-browser) */

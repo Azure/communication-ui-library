@@ -58,7 +58,8 @@ export type CallCompositePage =
   | 'lobby'
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-  | /* @conditional-compile-remove(call-transfer) */ 'transferring';
+  | /* @conditional-compile-remove(call-transfer) */ 'transferring'
+  | /* @conditional-compile-remove(calling-sounds) */ 'callRejected';
 
 /**
  * Subset of CallCompositePages that represent an end call state.

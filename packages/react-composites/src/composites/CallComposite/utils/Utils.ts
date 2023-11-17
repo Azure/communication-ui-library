@@ -20,6 +20,7 @@ import { VideoEffectProcessor } from '@azure/communication-calling';
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
+const CALL_REJECTED_CODE = 603;
 
 /**
  * @private
@@ -72,7 +73,8 @@ enum CallEndReasons {
   ROOM_NOT_FOUND,
   ROOM_NOT_VALID,
   NO_PERMISSION_TO_JOIN_ROOM,
-  REMOVED_PERMISSION_TO_JOIN_ROOM
+  REMOVED_PERMISSION_TO_JOIN_ROOM,
+  REJECTED
 }
 
 const getCallEndReason = (call: CallState): CallEndReasons => {
@@ -98,6 +100,10 @@ const getCallEndReason = (call: CallState): CallEndReasons => {
 
   if (call.callEndReason?.subCode && REMOVED_FROM_CALL_SUB_CODES.includes(call.callEndReason.subCode)) {
     return CallEndReasons.REMOVED_FROM_CALL;
+  }
+
+  if (call.callEndReason?.code && call.callEndReason?.code === CALL_REJECTED_CODE) {
+    return CallEndReasons.REJECTED;
   }
 
   if (call.callEndReason) {
@@ -187,6 +193,10 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   if (previousCall) {
     const reason = getCallEndReason(previousCall);
+    switch (reason) {
+      case CallEndReasons.REJECTED:
+        return 'callRejected';
+    }
     switch (reason) {
       case CallEndReasons.ACCESS_DENIED:
         return 'accessDeniedTeamsMeeting';

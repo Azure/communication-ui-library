@@ -116,6 +116,8 @@
     "captionsBannerMoreButtonCallingLabel": "More",
     "captionsBannerMoreButtonTooltip": "More options",
     "dismissModalAriaLabel": "Local and remote picture and picture, press enter to return to call",
+    "callRejectedTitle": "The call could not be completed",
+    "callRejectedMoreDetails": "The person you are trying to reach is unavailable. Please try again later.",
     "spokenLanguageStrings": {
       "ar-ae": "Arabic - U.A.E.",
       "ar-sa": "Arabic - Saudi Arabia",

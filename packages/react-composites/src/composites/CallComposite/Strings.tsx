@@ -663,4 +663,14 @@ export interface CallCompositeStrings {
    * String for the dismiss control on the local and remote PIP on mobile
    */
   dismissModalAriaLabel?: string;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * String for title when the call is rejected by the callee
+   */
+  callRejectedTitle: string;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * String for more details when the call is rejected by the callee
+   */
+  callRejectedMoreDetails?: string;
 }
