@@ -22,6 +22,7 @@ import { CallCompositeIcons } from '../../common/icons';
 const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
 const REMOTE_PSTN_USER_HUNG_UP = 560000;
 const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300, REMOTE_PSTN_USER_HUNG_UP];
+/* @conditional-compile-remove(calling-sounds) */
 const CALL_REJECTED_CODE = 603;
 /* @conditional-compile-remove(rooms) */
 const ROOM_NOT_FOUND_SUB_CODE = 5732;
