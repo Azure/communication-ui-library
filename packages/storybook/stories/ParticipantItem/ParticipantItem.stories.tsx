@@ -125,7 +125,8 @@ export default {
     presence: hiddenControl,
     styles: hiddenControl,
     strings: hiddenControl,
-    userId: hiddenControl
+    userId: hiddenControl,
+    isRaisedHand: { ...controlsToAdd.isRaisedHand, defaultValue: true }
   },
   parameters: {
     docs: {

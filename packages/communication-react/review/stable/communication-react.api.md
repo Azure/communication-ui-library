@@ -1776,6 +1776,7 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
     isActive?: boolean;
+    activeBorderColor?: string;
 };
 
 // @public

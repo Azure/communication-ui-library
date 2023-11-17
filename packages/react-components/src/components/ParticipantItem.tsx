@@ -17,7 +17,7 @@ import {
 import React, { useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-import { useTheme } from '../theming';
+import { useTheme, CallingTheme } from '../theming';
 import { BaseCustomStyles, OnRenderAvatarCallback } from '../types';
 import {
   iconContainerStyle,
@@ -169,6 +169,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
 
+  /* @conditional-compile-remove(raise-hand) */
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+  /* @conditional-compile-remove(raise-hand) */
+  const raisedHandBorderColor = callingPalette.raiseHandGold;
+
   const avatarOptions = {
     text: me ? meAvatarText : displayName?.trim() || strings.displayNamePlaceholder,
     size: PersonaSize.size32,
@@ -177,7 +182,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     showOverflowTooltip: showParticipantOverflowTooltip,
     showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder),
     /* @conditional-compile-remove(raise-hand) */
-    isActive: props.isRaisedHand
+    isActive: props.isRaisedHand,
+    /* @conditional-compile-remove(raise-hand) */
+    activeBorderColor: raisedHandBorderColor
   };
 
   const avatar = onRenderAvatar ? (

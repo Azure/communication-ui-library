@@ -267,6 +267,7 @@ export const controlsToAdd = {
   isMuted: { control: 'boolean', defaultValue: false, name: 'Is muted' },
   isSpeaking: { control: 'boolean', defaultValue: false, name: 'Is Speaking' },
   isScreenSharing: { control: 'boolean', defaultValue: false, name: 'Is screen sharing' },
+  isRaisedHand: { control: 'boolean', defaultValue: false, name: 'Is Raised Hand' },
   isSendBoxWithWarning: { control: 'boolean', defaultValue: false, name: 'Has warning/information message' },
   isVideoAvailable: { control: 'boolean', defaultValue: true, name: 'Is video available' },
   isVideoMirrored: { control: 'boolean', defaultValue: false, name: 'Is video mirrored' },
