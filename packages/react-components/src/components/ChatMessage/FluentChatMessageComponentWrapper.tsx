@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { MessageProps, MessageRenderer, _ChatMessageProps } from '../MessageThread';
 import { ChatMessage } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -51,8 +51,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     statusToRender
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-  // const [isDefaultMessageRenderer, setIsDefaultMessageRenderer] = useState<boolean>(false);
-  // const isDefaultMessageRendererValueUpdated = useRef(false);
 
   const onRenderFileDownloadsMemo = useMemo(() => {
     /* @conditional-compile-remove(file-sharing) */
@@ -174,8 +172,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       <div>
         <FluentChatMyMessage
           attached={attached}
-          // timestamp={isDefaultMessageRenderer /*.current*/ === true ? <div>timestamp</div> : undefined}
-          // author={isDefaultMessageRenderer /*.current*/ === true ? <div>Author name</div> : undefined}
           root={{
             // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
             className: mergeClasses(
@@ -231,8 +227,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       <div>
         <FluentChatMessage
           attached={attached}
-          // timestamp={<div>timestamp</div>}
-          // author={isDefaultMessageRenderer /*.current*/ === true ? <div>Author name</div> : undefined}
           root={{ className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) }}
           body={{
             // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
