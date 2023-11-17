@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Nieuwe berichten",
     "noDisplayNameSub": "Geen naam",
     "editBoxCancelButton": "Annuleren",
-    "editBoxSubmitButton": "Verzenden",
+    "editBoxSubmitButton": "Gereed",
     "messageReadCount": "Gelezen door {messageReadByCount} van {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Meer opties",
     "downloadFile": "Bestand downloaden",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "vorige pagina",
     "rightNavButtonAriaLabel": "volgende pagina"
-  }
+  },
+  "AttendeeRole": "Genodigde"
 }

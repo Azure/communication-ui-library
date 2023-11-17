@@ -91,3 +91,6 @@ export type { TransferRequestedListener } from './adapter';
 export type { CapabilitiesChangedListener } from './adapter';
 /* @conditional-compile-remove(capabilities) */
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
+
+/* @conditional-compile-remove(calling-sounds) */
+export type { CallingSounds, SoundEffect } from './adapter';

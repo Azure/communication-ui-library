@@ -1,8 +1,8 @@
 {
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Bugfix",
-  "comment": "Dismiss moredrawer when dialpad opens",
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Calling sounds",
+  "comment": "Introduce sound options API to CallAdapter options",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "patch"

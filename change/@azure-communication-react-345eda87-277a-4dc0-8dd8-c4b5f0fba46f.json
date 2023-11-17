@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "Update Dependencies",
-  "comment": "Remove unused dependencies; migrate to @babel/eslint-parser",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "none"
-}
