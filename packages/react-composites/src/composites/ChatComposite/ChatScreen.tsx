@@ -61,7 +61,6 @@ import { _FileDownloadCards } from '@internal/react-components';
 import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
-// import { Message } from '@internal/react-components';
 
 /**
  * @private
@@ -157,9 +156,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     fetchData();
   }, [adapter]);
 
-  // console.log('!!!!!!!ChatScreen props ', props);
   const messageThreadProps = usePropsFor(MessageThread);
-  // const [messages, setMessages] = useState<Message[]>(messageThreadProps.messages);
   const sendBoxProps = usePropsFor(SendBox);
   const typingIndicatorProps = usePropsFor(TypingIndicator);
   const headerProps = useAdaptedSelector(getHeaderProps);

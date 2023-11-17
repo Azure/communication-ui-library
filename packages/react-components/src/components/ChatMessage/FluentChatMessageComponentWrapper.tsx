@@ -60,10 +60,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     return undefined;
   }, [onRenderFileDownloads]);
 
-  // useEffect(() => {
-  //   console.log('!!!!!! isDefaultMessageRenderer', isDefaultMessageRenderer);
-  // }, [isDefaultMessageRenderer]);
-
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
@@ -130,10 +126,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     },
     []
   );
-
-  useEffect(() => {
-    console.log('!!!!!!defaultChatMessageRenderer is changed');
-  }, [defaultChatMessageRenderer]);
 
   const messageStatusRenderer = useCallback(
     (

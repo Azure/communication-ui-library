@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommunicationParticipant, MessageRenderer, MessageProps } from '@internal/react-components';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { ChatCompositeIcons } from '../common/icons';
 import { ChatAdapter } from './adapter/ChatAdapter';
