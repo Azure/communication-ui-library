@@ -193,6 +193,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   if (previousCall) {
     const reason = getCallEndReason(previousCall);
+    /* @conditional-compile-remove(calling-sounds) */
     switch (reason) {
       case CallEndReasons.REJECTED:
         return 'callRejected';
