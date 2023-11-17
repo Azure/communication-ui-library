@@ -56,9 +56,7 @@ export type CallCompositePage =
   | 'leftCall'
   | 'leaving'
   | 'lobby'
-  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
@@ -70,9 +68,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
@@ -308,6 +304,10 @@ export type CallingSounds = {
    * Sound to be played when the call is ringing
    */
   callRinging?: SoundEffect;
+  /**
+   * Sound to be played when the call is rejected by the user being callede
+   */
+  callBusy?: SoundEffect;
 };
 
 /**

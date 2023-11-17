@@ -17,7 +17,7 @@ export const overlayContainerStyle: IStyle = {
 export const titleStyle: (palette: IPalette, isVideoReady: boolean) => IStyle = (palette, isVideoReady) => {
   return {
     fontSize: '1rem',
-    color: isVideoReady ? 'white' : palette.blue,
+    color: isVideoReady ? 'white' : palette.themePrimary,
     textAlign: 'center'
   };
 };
@@ -34,6 +34,6 @@ export const videoTileStyles = {
  */
 export const moreDetailsStyle = (palette: IPalette, isVideoReady: boolean): IStyle => ({
   fontSize: '0.75rem',
-  color: isVideoReady ? 'white' : palette.blue,
+  color: isVideoReady ? 'white' : palette.themePrimary,
   textAlign: 'center'
 });
