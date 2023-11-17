@@ -14,7 +14,7 @@ import {
 /* @conditional-compile-remove(video-background-effects) */
 import { onResolveVideoEffectDependencyLazy, AzureCommunicationCallAdapterOptions } from '@azure/communication-react';
 import { Spinner } from '@fluentui/react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
@@ -143,7 +143,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     },
     afterAdapterCreate
   );
-  const [count, setCount] = useState(0);
 
   // Dispose of the adapter in the window's before unload event.
   // This ensures the service knows the user intentionally left the call if the user
@@ -159,27 +158,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
 
   return (
-    <div
-      id="focused-try"
-      style={{ margin: '50', background: 'red' }}
-      onClick={() => {
-        console.log('!!!!!!!!focused-try', count);
-        setCount(count + 1);
-      }}
-    >
-      <CallWithChatComposite
-        adapter={adapter}
-        fluentTheme={currentTheme.theme}
-        rtl={currentRtl}
-        joinInvitationURL={window.location.href}
-        formFactor={isMobileSession ? 'mobile' : 'desktop'}
-        onFetchAvatarPersonaData={async (userId) => {
-          console.log('!!!!!!!!onFetchAvatarPersonaData', userId);
-          await new Promise((resolve) => setTimeout(resolve, 300));
-          return { imageUrl: count.toString() };
-        }}
-      />
-    </div>
+    <CallWithChatComposite
+      adapter={adapter}
+      fluentTheme={currentTheme.theme}
+      rtl={currentRtl}
+      joinInvitationURL={window.location.href}
+      formFactor={isMobileSession ? 'mobile' : 'desktop'}
+    />
   );
 };
 
