@@ -63,7 +63,7 @@ export interface AvatarPersonaProps extends IPersonaProps {
    */
   dataProvider?: AvatarPersonaDataCallback;
   /**
-   * If true, show the border for persona coin.
+   * Allow to show colored border around persona coin, but isActive is what shows it.
    */
   /* @conditional-compile-remove(raise-hand) */
   allowActiveBorder?: boolean;
