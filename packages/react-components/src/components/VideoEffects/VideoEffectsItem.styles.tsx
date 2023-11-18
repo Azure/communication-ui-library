@@ -53,12 +53,6 @@ export const videoEffectsItemContainerStyles = (args: {
         transform: 'translate(-1rem, -3.3rem)',
         display: 'flex'
       },
-      ':active': {
-        ':after': {
-          outline: 'none',
-          transform: 'translate(-1rem, -3.3rem)'
-        }
-      },
       ':hover': {
         ':after': {
           border:
@@ -75,6 +69,12 @@ export const videoEffectsItemContainerStyles = (args: {
           ':hover': {
             transform: 'translate(-0.1rem, -0.2rem)'
           }
+        }
+      },
+      ':active': {
+        ':after': {
+          outline: 'none',
+          transform: 'translate(-1rem, -3.3rem)'
         }
       }
     }
