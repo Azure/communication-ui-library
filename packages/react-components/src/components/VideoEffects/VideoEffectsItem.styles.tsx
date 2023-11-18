@@ -5,6 +5,8 @@ import { IButtonStyles, IStackStyles, ITheme } from '@fluentui/react';
 
 const VideoEffectsItemContainerHeight = '3.375rem';
 const VideoEffectsItemContainerWidth = '4.83rem';
+const VideoEffectsItemContainerBorderHeight = '3.373rem';
+const VideoEffectsItemContainerBorderWidth = '4.85rem';
 const VideoEffectsItemContainerBorderSize = '2px';
 
 /** @private */
@@ -47,8 +49,8 @@ export const videoEffectsItemContainerStyles = (args: {
       ':after': {
         content: '""',
         boxSizing: 'border-box',
-        height: '3.373rem',
-        width: '4.85rem',
+        height: VideoEffectsItemContainerBorderHeight,
+        width: VideoEffectsItemContainerBorderWidth,
         borderRadius: '0.25rem',
         transform: 'translate(-1rem, -3.3rem)',
         display: 'flex'
