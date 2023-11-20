@@ -28,9 +28,9 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
   onRenderMessageStatus: ((messageStatusIndicatorProps: MessageStatusIndicatorProps) => JSX.Element | null) | undefined;
   defaultStatusRenderer: (
     message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
-    status: MessageStatus,
     participantCount: number,
-    readCount: number
+    readCount: number,
+    status?: MessageStatus
   ) => JSX.Element;
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
   onRenderAvatar?: OnRenderAvatarCallback;

@@ -148,7 +148,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
         onRenderMessageStatus ? (
           onRenderMessageStatus({ status: message.status })
         ) : (
-          defaultStatusRenderer(message, message.status, participantCount ?? 0, readCount ?? 0)
+          defaultStatusRenderer(message, participantCount ?? 0, readCount ?? 0, message.status)
         )
       ) : (
         <div className={mergeStyles(noMessageStatusStyle)} />
