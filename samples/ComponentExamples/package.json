@@ -27,7 +27,7 @@
     "@azure/communication-calling": "1.19.1-beta.2 || ^1.18.1",
     "@azure/communication-common": "^2.3.0",
     "@azure/communication-identity": "^1.2.0",
-    "@azure/communication-react": "1.10.1-beta.0",
+    "@azure/communication-react": "1.11.0-beta.1",
     "@fluentui/react": "^8.110.4",
     "react": "18.2.0",
     "react-dom": "18.2.0",
