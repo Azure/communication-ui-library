@@ -696,17 +696,21 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
         return;
       }
       const attachmentDownloadResult = await onFetchAttachments(attachments);
-      const listOfAttachments = inlineAttachments[messageId] ?? {};
-      for (const result of attachmentDownloadResult) {
-        const { attachmentId, blobUrl } = result;
-        listOfAttachments[attachmentId] = blobUrl;
-      }
 
-      if (Object.keys(listOfAttachments).length > 0 && attachmentDownloadResult.length > 0) {
-        setInlineAttachments((prev) => ({ ...prev, [messageId]: listOfAttachments }));
+      if (attachmentDownloadResult.length > 0) {
+        setInlineAttachments((prev) => {
+          // The new state should always be based on the previous one
+          // otherwise there can be issues with renders
+          const listOfAttachments = prev[messageId] ?? {};
+          for (const result of attachmentDownloadResult) {
+            const { attachmentId, blobUrl } = result;
+            listOfAttachments[attachmentId] = blobUrl;
+          }
+          return { ...prev, [messageId]: listOfAttachments };
+        });
       }
     },
-    [inlineAttachments, onFetchAttachments]
+    [onFetchAttachments]
   );
 
   const isAllChatMessagesLoadedRef = useRef(false);
