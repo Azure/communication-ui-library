@@ -112,7 +112,8 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       borderColor: props.isActive ? props.activeBorderColor : 'transparent',
       borderRadius: '50%',
       padding: '2px',
-      boxSizing: 'content-box'
+      boxSizing: 'content-box',
+      margin: '-4px'
     });
   }
 
