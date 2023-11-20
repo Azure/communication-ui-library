@@ -116,7 +116,10 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
       fileSharing: options?.fileSharing
     };
     return {};
-  }, [options?.fileSharing]);
+  }, [
+    /* @conditional-compile-remove(file-sharing) */
+    options?.fileSharing
+  ]);
 
   return (
     <div className={chatScreenContainerStyle}>
