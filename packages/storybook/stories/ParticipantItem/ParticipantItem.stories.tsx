@@ -4,7 +4,7 @@
 // also exported from '@storybook/react' if you can deal with breaking changes in 6.1
 import { ParticipantItem as ParticipantItemComponent } from '@azure/communication-react';
 import { Stack, mergeStyles } from '@fluentui/react';
-import { MicOff16Regular, ShareScreenStart20Filled } from '@fluentui/react-icons';
+import { MicOff16Regular, ShareScreenStart20Filled, HandLeft16Regular } from '@fluentui/react-icons';
 import { Title, Description, Props, Heading, Source, Canvas } from '@storybook/addon-docs';
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
@@ -95,6 +95,7 @@ const ParticipantItemStory: (args) => JSX.Element = (args) => {
         menuItems={menuItems}
         onRenderIcon={() => (
           <Stack horizontal tokens={tokenProps}>
+            {args.isRaisedHand && <HandLeft16Regular className={iconStyles} primaryFill="currentColor" />}
             {args.isScreenSharing && <ShareScreenStart20Filled className={iconStyles} primaryFill="currentColor" />}
             {args.isMuted && <MicOff16Regular className={iconStyles} primaryFill="currentColor" />}
           </Stack>
@@ -126,7 +127,7 @@ export default {
     styles: hiddenControl,
     strings: hiddenControl,
     userId: hiddenControl,
-    isRaisedHand: { ...controlsToAdd.isRaisedHand, defaultValue: true }
+    isRaisedHand: { ...controlsToAdd.isRaisedHand, defaultValue: false }
   },
   parameters: {
     docs: {
