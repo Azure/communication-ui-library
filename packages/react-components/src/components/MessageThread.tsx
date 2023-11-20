@@ -692,7 +692,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachments: FileMetadata[], messageId: string): Promise<void> => {
-      if (!onFetchAttachments) {
+      if (!onFetchAttachments || attachments.length === 0) {
         return;
       }
       const attachmentDownloadResult = await onFetchAttachments(attachments);

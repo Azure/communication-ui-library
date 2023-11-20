@@ -79,17 +79,14 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   const { onFetchAttachment, message, attachmentsMap } = props;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
+    if (!attachmentsMap || !onFetchAttachment) {
+      return;
+    }
     const attachments = message.attachedFilesMetadata?.filter((fileMetadata) => {
-      return fileMetadata.attachmentType === 'inlineImage';
+      return fileMetadata.attachmentType === 'inlineImage' && attachmentsMap[fileMetadata.id] === undefined;
     });
-
-    if (attachmentsMap && attachments) {
-      attachments.forEach((fileMetadata) => {
-        if (onFetchAttachment && attachmentsMap && attachmentsMap[fileMetadata.id] === undefined) {
-          onFetchAttachment([fileMetadata], message.messageId);
-          return;
-        }
-      });
+    if (attachments && attachments.length > 0) {
+      onFetchAttachment(attachments, message.messageId);
     }
   }, [message.attachedFilesMetadata, message.messageId, onFetchAttachment, attachmentsMap]);
 
