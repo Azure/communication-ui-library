@@ -7,7 +7,9 @@ import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps }
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 import { MessageStatusIndicatorProps } from '../MessageStatusIndicator';
 import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentWrapper';

@@ -40,10 +40,15 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     participantCount,
     readCount,
     onActionButtonClick,
+    /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchInlineAttachment,
+    /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     inlineAttachments,
+    /* @conditional-compile-remove(mention) */
     mentionOptions,
     userId,
     onRenderFileDownloads,
@@ -95,18 +100,23 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       return <></>;
     },
     [
-      inlineAttachments,
-      mentionOptions,
       onActionButtonClick,
-      onDisplayDateTimeString,
-      onFetchInlineAttachment,
-      onInlineImageClicked,
       onRenderAvatar,
       onRenderFileDownloadsMemo,
       participantCount,
       shouldOverlapAvatarAndMessage,
       showMessageStatus,
-      userId
+      userId,
+      /* @conditional-compile-remove(date-time-customization) */
+      onDisplayDateTimeString,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      onFetchInlineAttachment,
+      /* @conditional-compile-remove(image-gallery) */
+      onInlineImageClicked,
+      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+      inlineAttachments,
+      /* @conditional-compile-remove(mention) */
+      mentionOptions
     ]
   );
 

@@ -76,7 +76,15 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
-  const { onFetchAttachment, message, attachmentsMap } = props;
+  const {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
+    message,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    attachmentsMap,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onFetchAttachment
+  } = props;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     if (!attachmentsMap || !onFetchAttachment) {
