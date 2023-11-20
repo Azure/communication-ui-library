@@ -24,6 +24,7 @@ import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
+import { ITheme } from '@fluentui/react';
 import { ITooltipHostProps } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
@@ -992,6 +993,9 @@ export interface FluentThemeProviderProps {
 export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings: _DeviceMenuStrings, primaryActionItem?: IContextualMenuItem | undefined, isSelectCamAllowed?: boolean, isSelectMicAllowed?: boolean) => {
     items: IContextualMenuItem[];
 } | undefined;
+
+// @internal
+export const _generateTheme: (accentColor: string, variant: 'light' | 'dark') => ITheme;
 
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;

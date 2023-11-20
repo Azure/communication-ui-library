@@ -45,21 +45,36 @@ test.describe('Page state tests', async () => {
 
   /* @conditional-compile-remove(rooms) */
   test('Page when local participant tries to join a room that cannot be not found', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    initialState.page = 'roomNotFound';
+    const initialState = defaultMockCallAdapterState(undefined, undefined, true, ROOM_NOT_FOUND_SUB_CODE);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
-    await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+    await waitForSelector(page, dataUiId('left-call-page'));
     expect(await stableScreenshot(page)).toMatchSnapshot('room-not-found-page.png');
   });
 
   /* @conditional-compile-remove(rooms) */
   test('Page when local participant tries to join a room that they are not invited to', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState();
-    initialState.page = 'deniedPermissionToRoom';
+    const initialState = defaultMockCallAdapterState(undefined, undefined, true, NOT_INVITED_TO_ROOM_SUB_CODE);
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     await waitForPageFontsLoaded(page);
-    await waitForSelector(page, dataUiId('call-composite-start-call-button'));
+    await waitForSelector(page, dataUiId('left-call-page'));
     expect(await stableScreenshot(page)).toMatchSnapshot('permission-denied-to-room-page.png');
   });
+
+  /* @conditional-compile-remove(rooms) */
+  test('Page when local participant has their invite to room removed', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState(undefined, undefined, true, INVITE_TO_ROOM_REMOVED_SUB_CODE);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+    await waitForPageFontsLoaded(page);
+    await waitForSelector(page, dataUiId('left-call-page'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('invite-to-room-removed-page.png');
+  });
 });
+
+// Copied from CallComposite.tsx
+/* @conditional-compile-remove(rooms) */
+const ROOM_NOT_FOUND_SUB_CODE = 5732;
+/* @conditional-compile-remove(rooms) */
+const NOT_INVITED_TO_ROOM_SUB_CODE = 5828;
+/* @conditional-compile-remove(rooms) */
+const INVITE_TO_ROOM_REMOVED_SUB_CODE = 5317;

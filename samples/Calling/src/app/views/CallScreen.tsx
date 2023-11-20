@@ -158,7 +158,8 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       soundOptions: {
         callingSounds: {
           callEnded: { path: '/sounds/callEnded.mp3' },
-          callRinging: { path: '/sounds/callRinging.mp3' }
+          callRinging: { path: '/sounds/callRinging.mp3' },
+          callBusy: { path: '/sounds/callBusy.mp3' }
         }
       }
     };
