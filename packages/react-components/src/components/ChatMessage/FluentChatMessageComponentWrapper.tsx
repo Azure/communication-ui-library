@@ -136,9 +136,9 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
         | undefined,
       defaultStatusRenderer: (
         message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
-        status: MessageStatus,
         participantCount: number,
-        readCount: number
+        readCount: number,
+        status?: MessageStatus
       ) => JSX.Element,
       showMessageStatus?: boolean,
       participantCount?: number,
@@ -146,9 +146,9 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     ) => {
       return showMessageStatus && statusToRender ? (
         onRenderMessageStatus ? (
-          onRenderMessageStatus({ status: statusToRender })
+          onRenderMessageStatus({ status: message.status })
         ) : (
-          defaultStatusRenderer(message, statusToRender, participantCount ?? 0, readCount ?? 0)
+          defaultStatusRenderer(message, message.status, participantCount ?? 0, readCount ?? 0)
         )
       ) : (
         <div className={mergeStyles(noMessageStatusStyle)} />

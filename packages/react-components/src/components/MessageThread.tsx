@@ -965,9 +965,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const defaultStatusRenderer = useCallback(
     (
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
-      status: MessageStatus,
       participantCount: number,
-      readCount: number
+      readCount: number,
+      status?: MessageStatus
     ) => {
       const onToggleToolTip = (isToggled: boolean): void => {
         if (isToggled && readReceiptsBySenderIdRef.current) {
@@ -1066,7 +1066,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onRenderMessageStatus={onRenderMessageStatus}
                   defaultStatusRenderer={defaultStatusRenderer}
                   onActionButtonClick={onActionButtonClickMemo}
-                  statusToRender={message.statusToRender}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
                   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
