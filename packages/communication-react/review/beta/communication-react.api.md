@@ -3335,8 +3335,8 @@ export const ParticipantItem: (props: ParticipantItemProps) => JSX.Element;
 // @public
 export interface ParticipantItemProps {
     ariaLabelledBy?: string;
+    coinBorderColor?: string;
     displayName?: string;
-    isRaisedHand?: boolean;
     me?: boolean;
     menuItems?: IContextualMenuItem[];
     onClick?: (props?: ParticipantItemProps) => void;
@@ -3344,6 +3344,7 @@ export interface ParticipantItemProps {
     onRenderIcon?: (props?: ParticipantItemProps) => JSX.Element | null;
     participantState?: ParticipantState;
     presence?: PersonaPresence;
+    showCoinBorder?: boolean;
     showParticipantOverflowTooltip?: boolean;
     strings?: Partial<ParticipantItemStrings>;
     styles?: ParticipantItemStyles;
