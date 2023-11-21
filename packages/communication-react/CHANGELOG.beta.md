@@ -10,18 +10,14 @@ Mon, 20 Nov 2023 21:42:07 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.10.0...1.11.0-beta.1)
 
 ### Features
-- Make Custom Branding Composite options available in beta builds ([PR #3802](https://github.com/azure/communication-ui-library/pull/3802) by 2684369+JamesBurnside@users.noreply.github.com)
 - Ability to generate theme from single accent color ([PR #3797](https://github.com/azure/communication-ui-library/pull/3797) by 2684369+JamesBurnside@users.noreply.github.com)
-- Ability to set a logo on the configuration page of the CallComposite and CallWithChatComposite ([PR #3699](https://github.com/azure/communication-ui-library/pull/3699) by 2684369+JamesBurnside@users.noreply.github.com)
 ### Improvements
 - Improve how background and logo are applied in the Call Composites ([PR #3741](https://github.com/azure/communication-ui-library/pull/3741) by 2684369+JamesBurnside@users.noreply.github.com)
 - Remove isRoomsCall from CallWithChatAdapterState ([PR #3800](https://github.com/azure/communication-ui-library/pull/3800) by 79475487+mgamis-msft@users.noreply.github.com)
 - Update rooms call end pages UI including icons and strings ([PR #3758](https://github.com/azure/communication-ui-library/pull/3758) by 79475487+mgamis-msft@users.noreply.github.com)
-- Update CTE sdk ref ([PR #3610](https://github.com/azure/communication-ui-library/pull/3610) by jiangnanhello@live.com)
 - Update the API for onUpdateMessage, moved metadata into options bag ([PR #3760](https://github.com/azure/communication-ui-library/pull/3760) by 9044372+JoshuaLai@users.noreply.github.com)
 - Simplify types use in the RemoteParticipantstate by collapsing other identifiers to just CommunicationIdentifierKind ([PR #3761](https://github.com/azure/communication-ui-library/pull/3761) by alkwa@microsoft.com)
 - Update Calling dependency to use the latest version 1.18.1 for stable and 1.19.1-beta.2 for beta ([PR #3738](https://github.com/azure/communication-ui-library/pull/3738) and [PR #3732](https://github.com/azure/communication-ui-library/pull/3732) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Update Custom Button Injection Storybook ([PR #3729](https://github.com/azure/communication-ui-library/pull/3729) by edwardlee@microsoft.com)
 ### Bug Fixes
 - Fix the usage of the cleanup script to remove unnecessary properties in the communication-react package.json ([PR #3702](https://github.com/azure/communication-ui-library/pull/3702) by alkwa@microsoft.com)
 - Fix lobby page text using incorrect theme token value. ([PR #3797](https://github.com/azure/communication-ui-library/pull/3797) by 2684369+JamesBurnside@users.noreply.github.com)
