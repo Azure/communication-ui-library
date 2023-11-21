@@ -470,6 +470,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           styles={localVideoTileStyles}
           /* @conditional-compile-remove(raise-hand) */
           raisedHand={localParticipant.raisedHand}
+          reaction={localParticipant.reaction}
         />
       </Stack>
     );

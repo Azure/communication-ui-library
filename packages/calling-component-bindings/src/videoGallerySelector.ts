@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { CallClientState, Queue, ReactionEventPayload, RemoteParticipantState } from '@internal/calling-stateful-client';
+import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
@@ -12,6 +12,7 @@ import {
   getIdentifier,
   getIsMuted,
   getIsScreenSharingOn,
+  getLocalParticipantReaction,
   getLocalVideoStreams,
   getReceivedReactions,
   getScreenShareRemoteParticipant
@@ -49,7 +50,6 @@ export type VideoGallerySelector = (
   dominantSpeakers?: string[];
   /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
-  receivedReactions?: Queue<ReactionEventPayload>;
 };
 
 /**
@@ -74,7 +74,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    getReceivedReactions,
+    getLocalParticipantReaction,
   ],
   (
     screenShareRemoteParticipantId,
@@ -93,7 +93,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
-    reactionPayloads,
+    reaction,
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -128,7 +128,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         /* @conditional-compile-remove(rooms) */
         role,
         /* @conditional-compile-remove(raise-hand) */
-        raisedHand
+        raisedHand,
+        reaction
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         updateUserDisplayNamesTrampoline(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
@@ -139,8 +140,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       ),
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
-      maxRemoteVideoStreams: optimalVideoCount,
-      receivedReactions: reactionPayloads,
+      maxRemoteVideoStreams: optimalVideoCount
     };
   }
 );

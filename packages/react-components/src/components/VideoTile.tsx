@@ -8,7 +8,7 @@ import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback, Reaction } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { CallingTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
@@ -29,7 +29,7 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
+import { getCurrentRelativeUnixTime, getVideoTileOverrideColor, reactionEmoji } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
@@ -140,7 +140,8 @@ export interface VideoTileProps {
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
-  reaction?: boolean;
+  /** When the participant has reacted, animate the reaction. */
+  reaction?: Reaction;
 
   /* @conditional-compile-remove(one-to-n-calling) */
   /* @conditional-compile-remove(PSTN-calls) */
@@ -365,6 +366,23 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   /* @conditional-compile-remove(raise-hand) */
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
+  console.log('Mohtasim, ' + reaction?.reactionType + '\n should render?: ' + reaction?.shouldRender);
+
+  let urlPath = (reaction != undefined)?reactionEmoji.get(reaction?.reactionType): '';
+
+  let reactionAnimationStyle = {
+    height: '84px',
+    width: '84px',
+    animationName: 'play',
+    backgroundImage: urlPath,
+    overflow: 'hidden',
+    animation: 'play 5.12s steps(102)',
+    animationPlayState: 'running',
+    animationIterationCount: 'infinite'
+  }
+
+  let currentUnitTimestamp = getCurrentRelativeUnixTime();
+
   return (
     <Stack
       data-ui-id={ids.videoTile}
@@ -417,46 +435,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-
-        {   
-            reaction && (
-              <Stack 
-                className={mergeStyles(
-                  videoContainerStyles, 
-                  {
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
-                  }
-                )} >
-              <div style={{
-                    height: '84px',
-                    width: '84px',
-                    animationName: 'play',
-                    backgroundImage: `url(${require('./assets/clapEmoji.png')})`,
-                    overflow: 'hidden',
-                    animation: 'play 5.12s steps(102)',
-                    animationPlayState: 'running',
-                    animationIterationCount: 'infinite'
-                  }} /> 
-              {/* <Image
-              draggable = {false}
-              src = {likeEmoji}
-              style = {{
-                animationTimingFunction: `step-start(51)`,
-                offsetPosition: '-1623px',
-                animationDuration: '2.125s',
-                animationPlayState: 'running',
-                
-              }}
-               /> */}
-
-                </Stack>
-            )
-           
-        }
-
+        {reaction?.shouldRender && (currentUnitTimestamp - reaction.receivedTimeStamp) < 2000 && (
+            <Stack 
+              className={mergeStyles(
+                videoContainerStyles, 
+                {
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  backgroundColor: reaction ? 'rgba(0, 0, 0, 0.5)' : 'transparent'
+                }
+              )} >
+              <div style={reactionAnimationStyle} />
+            </Stack>
+        )}
         {(canShowLabel || participantStateString) && (
           <Stack horizontal className={tileInfoContainerStyle} tokens={tileInfoContainerTokens}>
             <Stack horizontal className={tileInfoStyle}>

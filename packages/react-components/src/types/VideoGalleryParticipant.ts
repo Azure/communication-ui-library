@@ -6,7 +6,7 @@
 import { ParticipantState } from './ParticipantListParticipant';
 
 /* @conditional-compile-remove(raise-hand) */
-import { RaisedHand } from './ParticipantListParticipant';
+import { RaisedHand, Reaction } from './ParticipantListParticipant';
 /**
  * Scaling mode of a {@link VideoGalleryStream}.
  *
@@ -96,6 +96,8 @@ export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
   /* @conditional-compile-remove(raise-hand) */
   /** Whether local participant is raised a hand */
   raisedHand?: RaisedHand;
+  /** Whether local participant has reacted */
+  reaction?: Reaction;
 }
 
 /**
@@ -118,4 +120,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /* @conditional-compile-remove(raise-hand) */
   /** Whether participant is raised a hand */
   raisedHand?: RaisedHand;
+  /** Whether participant has reacted */
+  reaction?: Reaction;
 }

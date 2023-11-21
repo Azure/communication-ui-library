@@ -29,10 +29,8 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(capabilities) */
 import { ParticipantRole } from '@azure/communication-calling';
 import {
-  CommunicationIdentifierKind,
-  CommunicationIdentifier
+  CommunicationIdentifierKind
 } from '@azure/communication-common';
-import { Queue } from './Queue';
 
 /**
  * State only version of {@link @azure/communication-calling#CallAgent} except calls is moved to be a child directly of
@@ -198,28 +196,20 @@ export type RaisedHandState = {
  * @public
  */
 export interface ReactionCallFeatureState {
-  reactionPayloads: Queue<ReactionEventPayload>
-  localParticipantReactionPayload?: ReactionEventPayload
+  isEnable: boolean;
+  localParticipantReactionPayload?: ReactionState;
 }
 
+/**
+ * State only version of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload} with UI helper props.
+ * Reation state with a comparative timestamp which helps UI to decide to render the reaction accordingly.
+ * 
+ * @public
+ */
 export type ReactionState = {
   shouldRender: boolean;
-  reactionMessage: ReactionMessage;
-}
-
-/**
- * @public
- */
-export type ReactionMessage = {
-  reactionType: string
-}
-
-/**
- * @public
- */
-export type ReactionEventPayload = {
-  identifier: CommunicationIdentifier;
-  reactionMessage: ReactionMessage;
+  reactionType: string;
+  receivedTimeStamp: number;
 }
 
 /**
@@ -380,7 +370,10 @@ export interface RemoteParticipantState {
    */
   raisedHand?: RaisedHandState;
 
-
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload}.
+   */
+  reaction?: ReactionState;
 }
 
 /**
@@ -473,6 +466,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#ReactionCallFeature}.
    */
   reaction: ReactionCallFeatureState;
+
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.

@@ -18,6 +18,7 @@ import { checkIsSpeaking } from './SelectorUtils';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+import { ReactionState } from '@internal/calling-stateful-client';
 
 /** @internal */
 export const _dominantSpeakersWithFlatId = (dominantSpeakers?: DominantSpeakersInfo): undefined | string[] => {
@@ -71,7 +72,8 @@ export const _videoGalleryRemoteParticipantsMemo: (
             state,
             displayName,
             /* @conditional-compile-remove(raise-hand) */
-            participant.raisedHand
+            participant.raisedHand,
+            participant.reaction
           );
         })
     );
@@ -87,7 +89,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     state: RemoteParticipantConnectionState,
     displayName?: string,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand?: unknown // temp unknown type to build stable
+    raisedHand?: unknown, // temp unknown type to build stable
+    reaction?: unknown
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -97,7 +100,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       state,
       displayName,
       /* @conditional-compile-remove(raise-hand) */
-      raisedHand as RaisedHandState
+      raisedHand as RaisedHandState,
+      reaction as ReactionState
     );
   }
 );
@@ -111,7 +115,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   state: RemoteParticipantConnectionState,
   displayName?: string,
   /* @conditional-compile-remove(raise-hand) */
-  raisedHand?: unknown // temp unknown type to build stable
+  raisedHand?: unknown, // temp unknown type to build stable
+  reaction?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -144,7 +149,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(PSTN-calls) */
     state,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: raisedHand as RaisedHandState
+    raisedHand: raisedHand as RaisedHandState,
+    reaction: reaction as ReactionState,
   };
 };
 
@@ -172,7 +178,8 @@ export const memoizeLocalParticipant = memoizeOne(
     isScreenSharingOn,
     localVideoStream,
     /* @conditional-compile-remove(rooms) */ role,
-    /* @conditional-compile-remove(raise-hand) */ raisedHand
+    /* @conditional-compile-remove(raise-hand) */ raisedHand,
+    reaction
   ) => ({
     userId: identifier,
     displayName: displayName ?? '',
@@ -186,6 +193,7 @@ export const memoizeLocalParticipant = memoizeOne(
     /* @conditional-compile-remove(rooms) */
     role,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: raisedHand
+    raisedHand: raisedHand,
+    reaction: reaction, 
   })
 );

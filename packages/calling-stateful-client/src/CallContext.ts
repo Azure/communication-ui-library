@@ -6,7 +6,7 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
-  ReactionEventPayload,
+  ReactionMessage,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -51,9 +51,10 @@ import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
-import { convertFromSDKToCaptionInfoState } from './Converter';
+import { convertFromSDKToCaptionInfoState, convertFromSDKToReactionState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
+import { DRAFT_STATE } from 'immer/dist/internal';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -74,6 +75,7 @@ export class CallContext {
   private _emitter: EventEmitter;
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
+  private _timeOutId: Map<string, any> = new Map<string, any>();
 
   constructor(
     userId: CommunicationIdentifierKind,
@@ -401,11 +403,51 @@ export class CallContext {
     });
   }
 
-  public setReceivedReactionFromParticipant(callId: string, reactionEvent: ReactionEventPayload): void {
+  public setReceivedReactionFromParticipant(callId: string, participantKey: string, reactionMessage: ReactionMessage | null): void {
+    let baseTimeStamp = new Date();
+    baseTimeStamp.setMonth(0);
+    baseTimeStamp.setDate(1);
+    baseTimeStamp.setHours(0, 0, 0, 0);
+  
+    let baseUnixTimestamp = Math.floor(baseTimeStamp.getTime() / 1000);
+    let currentUnixTimestamp = Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if (call) {
-        call.reaction.reactionPayloads.enqueue(reactionEvent);
+      if(call) {
+        const participant = call.remoteParticipants[participantKey];
+        // We might see concurrency issue here.
+        if(participant) {
+
+          if(reactionMessage == null) {
+            participant.reaction = { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+          } else {
+            if(participant.reaction?.shouldRender && (currentUnixTimestamp - participant.reaction?.receivedTimeStamp) < 3000) {
+              participant.reaction = { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+              clearTimeout(this._timeOutId[participantKey]);
+            }
+  
+            participant.reaction = reactionMessage ? convertFromSDKToReactionState(reactionMessage.reactionType) : { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+            
+            this._timeOutId[participantKey] = setTimeout(() => {
+              clearParticipantReactionState(this, callId, participantKey);
+            }, 2170);
+          }
+        } else if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
+
+          if(reactionMessage == null) {
+            call.reaction.localParticipantReactionPayload = { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+          } else {
+            if(call.reaction.localParticipantReactionPayload?.shouldRender && (currentUnixTimestamp - call.reaction?.localParticipantReactionPayload.receivedTimeStamp) < 3000) {
+                clearParticipantReactionState(this, callId, participantKey);
+                clearTimeout(this._timeOutId[participantKey]);
+              }
+          call.reaction.localParticipantReactionPayload = reactionMessage ? convertFromSDKToReactionState(reactionMessage.reactionType) : { shouldRender: false, reactionType: '', receivedTimeStamp: 0};
+          this._timeOutId[participantKey] = setTimeout( () => {
+            clearParticipantReactionState(this, callId, participantKey);
+          }, 2170);
+          }
+ 
+        } 
       }
     });
   }
@@ -1032,3 +1074,9 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
   }
   return oldestCallId;
 };
+
+
+function clearParticipantReactionState(arg0: CallContext, callId: string, participantKey: string) {
+  arg0.setReceivedReactionFromParticipant(callId, participantKey, null);
+}
+

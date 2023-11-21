@@ -288,20 +288,16 @@ export interface RaiseHandCallFeature {
 // @public
 export interface ReactionCallFeatureState {
     // (undocumented)
-    localParticipantReactionPayload?: ReactionEventPayload;
+    isEnable: boolean;
     // (undocumented)
-    reactionPayloads: Queue<ReactionEventPayload>;
+    localParticipantReactionPayload?: ReactionState;
 }
 
-// @public (undocumented)
-export type ReactionEventPayload = {
-    identifier: CommunicationIdentifier;
-    reactionMessage: ReactionMessage;
-};
-
-// @public (undocumented)
-export type ReactionMessage = {
+// @public
+export type ReactionState = {
+    shouldRender: boolean;
     reactionType: string;
+    receivedTimeStamp: number;
 };
 
 // @public
@@ -317,6 +313,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
+    reaction?: ReactionState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {

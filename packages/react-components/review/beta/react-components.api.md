@@ -175,6 +175,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
 };
 
 // @internal
@@ -1403,6 +1404,7 @@ export const _LocalVideoTile: React_2.MemoExoticComponent<(props: {
     styles?: VideoTileStylesProps | undefined;
     personaMinSize?: number | undefined;
     raisedHand?: RaisedHand | undefined;
+    reaction?: Reaction | undefined;
 }) => React_2.JSX.Element>;
 
 // @public
@@ -1885,6 +1887,13 @@ export interface _RatingScale {
     lowScoreThreshold: number;
     upperBound: number;
 }
+
+// @public
+export type Reaction = {
+    shouldRender: boolean;
+    reactionType: string;
+    receivedTimeStamp: number;
+};
 
 // @public
 export type ReadReceiptsBySenderId = {
@@ -2505,6 +2514,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
 }
 
 // @public
@@ -2552,6 +2562,7 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -2638,8 +2649,7 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
-    // (undocumented)
-    reaction?: boolean;
+    reaction?: Reaction;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

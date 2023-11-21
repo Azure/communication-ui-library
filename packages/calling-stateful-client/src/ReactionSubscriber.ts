@@ -32,6 +32,6 @@ export class ReactionSubscriber {
   };
 
   private reactionEvent = (event): void => {
-    this._context.setReceivedReactionFromParticipant(this._callIdRef.callId, event);
+    this._context.setReceivedReactionFromParticipant(this._callIdRef.callId, event.identifier, event.reactionMessage);
   }
 }

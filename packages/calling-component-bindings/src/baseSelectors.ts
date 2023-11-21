@@ -14,9 +14,8 @@ import {
   LocalVideoStreamState,
   CallErrors,
   DiagnosticsCallFeatureState,
-  ReactionEventPayload,
-  Queue
 } from '@internal/calling-stateful-client';
+import { ReactionState } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(raise-hand) */
@@ -63,11 +62,6 @@ export const getCapabilites = (
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
 
-export const getReceivedReactions = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): Queue<ReactionEventPayload> | undefined => state.calls[props.callId]?.reaction?.reactionPayloads;
-
 /**
  * @private
  */
@@ -105,6 +99,13 @@ export const getLocalParticipantRaisedHand = (
   props: CallingBaseSelectorProps
 ): RaisedHandState | undefined => {
   return state.calls[props.callId]?.raiseHand?.localParticipantRaisedHand;
+};
+
+export const getLocalParticipantReaction = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): ReactionState | undefined => {
+  return state.calls[props.callId]?.reaction?.localParticipantReactionPayload;
 };
 
 /**

@@ -882,6 +882,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     isMuted?: boolean;
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
 };
 
 // @beta
@@ -918,6 +919,7 @@ export interface CallState {
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
+    reaction: ReactionCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -3564,6 +3566,21 @@ export type Profile = {
     displayName?: string;
 };
 
+// @public (undocumented)
+export class Queue<T> {
+    constructor();
+    // (undocumented)
+    dequeue(): T | undefined;
+    // (undocumented)
+    enqueue(item: T): void;
+    // (undocumented)
+    isEmpty(): boolean;
+    // (undocumented)
+    peek(): T | undefined;
+    // (undocumented)
+    size(): number;
+}
+
 // @public
 export type RaisedHand = {
     raisedHandOrderPosition: number;
@@ -3605,6 +3622,28 @@ export interface RaiseHandCallFeature {
 }
 
 // @public
+export type Reaction = {
+    shouldRender: boolean;
+    reactionType: string;
+    receivedTimeStamp: number;
+};
+
+// @public
+export interface ReactionCallFeatureState {
+    // (undocumented)
+    isEnable: boolean;
+    // (undocumented)
+    localParticipantReactionPayload?: ReactionState;
+}
+
+// @public
+export type ReactionState = {
+    shouldRender: boolean;
+    reactionType: string;
+    receivedTimeStamp: number;
+};
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
@@ -3625,6 +3664,7 @@ export interface RemoteParticipantState {
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;
+    reaction?: ReactionState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
     videoStreams: {
@@ -4220,6 +4260,7 @@ export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | /* @conditio
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
 }
 
 // @public
@@ -4267,6 +4308,7 @@ export interface VideoGalleryProps {
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
     // @beta
     state?: ParticipantState;
@@ -4366,6 +4408,7 @@ export interface VideoTileProps {
     personaMaxSize?: number;
     personaMinSize?: number;
     raisedHand?: RaisedHand;
+    reaction?: Reaction;
     renderElement?: JSX.Element | null;
     showLabel?: boolean;
     showMuteIndicator?: boolean;

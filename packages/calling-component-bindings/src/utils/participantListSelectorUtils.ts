@@ -7,6 +7,7 @@ import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-
 import { CallParticipantListParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from '@internal/calling-stateful-client';
+import { ReactionState } from '@internal/calling-stateful-client';
 
 /**
  * @private
@@ -98,7 +99,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
     isScreenSharing: boolean,
     isSpeaking: boolean,
     raisedHand: RaisedHandState | undefined,
-    localUserCanRemoveOthers: boolean
+    localUserCanRemoveOthers: boolean,
+    reaction: ReactionState | undefined,
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipantBeta(
       userId,
@@ -108,7 +110,8 @@ export const memoizedConvertAllremoteParticipantsBeta = memoizeFnAll(
       isScreenSharing,
       isSpeaking,
       raisedHand,
-      localUserCanRemoveOthers
+      localUserCanRemoveOthers,
+      reaction
     );
   }
 );
@@ -145,7 +148,8 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
   isScreenSharing: boolean,
   isSpeaking: boolean,
   raisedHand: RaisedHandState | undefined,
-  localUserCanRemoveOthers: boolean
+  localUserCanRemoveOthers: boolean,
+  reaction: ReactionState | undefined,
 ): CallParticipantListParticipant => {
   return {
     ...convertRemoteParticipantToParticipantListParticipant(
@@ -157,6 +161,7 @@ const convertRemoteParticipantToParticipantListParticipantBeta = (
       isSpeaking,
       localUserCanRemoveOthers
     ),
-    raisedHand
+    raisedHand,
+    reaction
   };
 };

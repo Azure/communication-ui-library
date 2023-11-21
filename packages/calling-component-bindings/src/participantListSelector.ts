@@ -8,7 +8,8 @@ import {
   getDisplayName,
   getIsScreenSharingOn,
   getIsMuted,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  getLocalParticipantReaction
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
@@ -82,7 +83,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.isSpeaking,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
-            localUserCanRemoveOthers
+            localUserCanRemoveOthers,
+            participant.reaction,
           );
         })
         .sort((a, b) => {
@@ -136,7 +138,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getRole,
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    getLocalParticipantReaction
   ],
   (
     userId,
@@ -149,7 +152,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     role,
     partitipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
-    isHideAttendeeNamesEnabled
+    isHideAttendeeNamesEnabled,
+    reaction
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -175,7 +179,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       raisedHand: raisedHand,
       state: 'Connected',
       // Local participant can never remove themselves.
-      isRemovable: false
+      isRemovable: false,
+      reaction: reaction,
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

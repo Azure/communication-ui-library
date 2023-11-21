@@ -20,6 +20,8 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   /* @conditional-compile-remove(raise-hand) */
   /** Whether calling participant is raised hand */
   raisedHand?: RaisedHand;
+  /** Whether calling participant has reacted */
+  reaction?: Reaction;
 };
 
 /* @conditional-compile-remove(raise-hand) */
@@ -31,6 +33,26 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
 export type RaisedHand = {
   raisedHandOrderPosition: number;
 };
+
+/**
+ * Reaction state with reaction type to render
+ * 
+ * @public
+ */
+export type Reaction = {
+  /**
+   * Dictates if reaction should start animating or not
+   */
+  shouldRender: boolean;
+  /**
+   * Specifies the type of reaction videoTile should render
+   */
+  reactionType: string;
+  /**
+   * Received timestamp relative to 01-01-2020 0:0:0 hours
+   */
+  receivedTimeStamp: number;
+}
 
 /**
  * Participants displayed in a {@link ParticipantList}.

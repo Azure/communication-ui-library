@@ -42,10 +42,8 @@ import { ParticipantRole } from '@azure/communication-calling';
 import { ParticipantsButton } from '@internal/react-components';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
-import { Queue } from '@internal/calling-stateful-client';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
-import { ReactionEventPayload } from '@internal/calling-stateful-client';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
@@ -386,7 +384,6 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];
     optimalVideoCount?: number;
-    receivedReactions?: Queue<ReactionEventPayload>;
 };
 
 // (No @packageDocumentation comment for this package)

@@ -13,13 +13,12 @@ import {
 /* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
-import { CallState, LocalVideoStreamState, ReactionEventPayload, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
+import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, disposeAllViewsFromCall, disposeAllViews } from './StreamUtils';
 import { createMockLocalVideoStream, createMockRemoteVideoStream } from './TestUtils';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Queue } from './Queue';
 
 jest.mock('@azure/communication-calling', () => {
   return {
@@ -89,7 +88,7 @@ function createMockCall(mockCallId: string): CallState {
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
-    reaction: { reactionPayloads: new Queue<ReactionEventPayload>() },
+    reaction: { isEnable: true, localParticipantReactionPayload: undefined },
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
     startTime: new Date(),
