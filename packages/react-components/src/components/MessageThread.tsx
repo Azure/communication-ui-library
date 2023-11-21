@@ -667,7 +667,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     /* @conditional-compile-remove(mention) */
     mentionOptions,
     /* @conditional-compile-remove(image-gallery) */
-    onInlineImageClicked
+    onInlineImageClicked,
+    /* @conditional-compile-remove(file-sharing) */
+    onRenderFileDownloads
   } = props;
   // We need this state to wait for one tick and scroll to bottom after messages have been initialized.
   // Otherwise chatScrollDivRef.current.clientHeight is wrong if we scroll to bottom before messages are initialized.
@@ -1068,6 +1070,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onActionButtonClick={onActionButtonClickMemo}
                   readCount={readCountForHoveredIndicator}
                   participantCount={participantCount}
+                  /* @conditional-compile-remove(file-sharing) */
+                  fileDownloadHandler={props.fileDownloadHandler}
                   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
                   onFetchInlineAttachment={onFetchInlineAttachment}
                   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -1078,6 +1082,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
                   onDisplayDateTimeString={onDisplayDateTimeString}
                   /* @conditional-compile-remove(mention) */
                   mentionOptions={mentionOptions}
+                  /* @conditional-compile-remove(file-sharing) */
+                  onRenderFileDownloads={onRenderFileDownloads}
                 />
               );
             })}

@@ -50,6 +50,8 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     inlineAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
+    /* @conditional-compile-remove(file-sharing) */
+    fileDownloadHandler,
     userId,
     onRenderFileDownloads,
     defaultStatusRenderer,
@@ -94,6 +96,8 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
             attachmentsMap={inlineAttachments[messageProps.message.messageId] ?? {}}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
+            /* @conditional-compile-remove(file-sharing) */
+            fileDownloadHandler={fileDownloadHandler}
           />
         );
       }
@@ -116,7 +120,9 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       inlineAttachments,
       /* @conditional-compile-remove(mention) */
-      mentionOptions
+      mentionOptions,
+      /* @conditional-compile-remove(file-sharing) */
+      fileDownloadHandler
     ]
   );
 
