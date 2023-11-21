@@ -51,10 +51,11 @@ import { CallIdHistory } from './CallIdHistory';
 /* @conditional-compile-remove(video-background-effects) */
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
-import { convertFromSDKToCaptionInfoState, convertFromSDKToReactionState } from './Converter';
+import { convertFromSDKToCaptionInfoState } from './Converter';
 /* @conditional-compile-remove(raise-hand) */
 import { convertFromSDKToRaisedHandState } from './Converter';
-import { DRAFT_STATE } from 'immer/dist/internal';
+/* @conditional-compile-remove(reaction) */
+import { convertFromSDKToReactionState } from './Converter';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -403,6 +404,7 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(reaction) */
   public setReceivedReactionFromParticipant(callId: string, participantKey: string, reactionMessage: ReactionMessage | null): void {
     let baseTimeStamp = new Date();
     baseTimeStamp.setMonth(0);
@@ -1075,7 +1077,7 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
   return oldestCallId;
 };
 
-
+/* @conditional-compile-remove(reaction) */
 function clearParticipantReactionState(arg0: CallContext, callId: string, participantKey: string) {
   arg0.setReceivedReactionFromParticipant(callId, participantKey, null);
 }

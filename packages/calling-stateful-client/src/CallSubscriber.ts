@@ -28,6 +28,7 @@ import { RaiseHandSubscriber } from './RaiseHandSubscriber';
 import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
+/* @conditional-compile-remove(reaction) */
 import { ReactionSubscriber } from './ReactionSubscriber';
 
 /**
@@ -51,6 +52,7 @@ export class CallSubscriber {
   private _captionsSubscriber?: CaptionsSubscriber;
   /* @conditional-compile-remove(raise-hand) */
   private _raiseHandSubscriber?: RaiseHandSubscriber;
+  /* @conditional-compile-remove(reaction) */
   private _reactionSubscriber?: ReactionSubscriber;
   /* @conditional-compile-remove(video-background-effects) */
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
@@ -85,7 +87,7 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.RaiseHand)
     );
-
+    /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber = new ReactionSubscriber(
       this._callIdRef,
       this._context,
@@ -192,7 +194,7 @@ export class CallSubscriber {
     this._raiseHandSubscriber?.unsubscribe();
     /* @conditional-compile-remove(capabilities) */
     this._capabilitiesSubscriber.unsubscribe();
-
+    /* @conditional-compile-remove(reaction) */
     this._reactionSubscriber?.unsubscribe();
   };
 

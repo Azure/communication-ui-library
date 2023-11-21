@@ -19,7 +19,6 @@ import {
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
-  ReactionState
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
@@ -38,6 +37,8 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from './CallClientState';
+/* @conditional-compile-remove(reaction) */
+import { ReactionState } from './CallClientState';
 
 /**
  * @private
@@ -135,6 +136,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     recording: { isRecordingActive: false },
     /* @conditional-compile-remove(raise-hand) */
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(reaction) */
     reaction: { isEnable: false, localParticipantReactionPayload: undefined }, 
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
@@ -221,6 +223,10 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
   };
 }
 
+/* @conditional-compile-remove(reaction) */
+/**
+ * @private
+ */
 export function convertFromSDKToReactionState(reactionType: string): ReactionState {
   // Preferebly we should configure this baseTimeStamp for reaction with ECS.
   let baseTimeStamp = new Date();

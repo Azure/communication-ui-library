@@ -189,6 +189,7 @@ export type RaisedHandState = {
   raisedHandOrderPosition: number;
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * State only version of {@link @azure/communication-calling#ReactionCallFeature}. {@link StatefulCallClient} will
  * automatically listen for reaction on the call and update the state exposed by {@link StatefulCallClient} accordingly.
@@ -200,6 +201,7 @@ export interface ReactionCallFeatureState {
   localParticipantReactionPayload?: ReactionState;
 }
 
+/* @conditional-compile-remove(reaction) */
 /**
  * State only version of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload} with UI helper props.
  * Reation state with a comparative timestamp which helps UI to decide to render the reaction accordingly.
@@ -370,6 +372,7 @@ export interface RemoteParticipantState {
    */
   raisedHand?: RaisedHandState;
 
+  /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload}.
    */
@@ -461,12 +464,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
-
+  /* @conditional-compile-remove(reaction) */
   /**
    * Proxy of {@link @azure/communication-calling#ReactionCallFeature}.
    */
   reaction: ReactionCallFeatureState;
-
   /**
    * Stores the currently active screenshare participant's key. If there is no screenshare active, then this will be
    * undefined. You can use this key to access the remoteParticipant data in {@link CallState.remoteParticipants} object.
