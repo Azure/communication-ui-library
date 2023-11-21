@@ -110,6 +110,7 @@ export interface CallState {
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
+    htmlShareRemoteParticipant?: string;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
@@ -117,7 +118,6 @@ export interface CallState {
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
-    pptLiveShareRemoteParticipant?: string;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -282,10 +282,10 @@ export interface RecordingCallFeature {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
+    htmlStream?: HTMLElement;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;

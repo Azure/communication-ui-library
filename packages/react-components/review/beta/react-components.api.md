@@ -2371,8 +2371,6 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
-    // (undocumented)
-    onDisposeRemotePPTLiveStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -2395,8 +2393,8 @@ export interface VideoGalleryProps {
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    htmlStream?: HTMLElement;
     isSpeaking?: boolean;
-    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta

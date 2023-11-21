@@ -14,7 +14,7 @@ import {
   getIsPPTLiveOn,
   getIsScreenSharingOn,
   getLocalVideoStreams,
-  getPPTLiveShareRemoteParticipant,
+  getHtmlShareRemoteParticipant,
   getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
@@ -45,7 +45,7 @@ export type VideoGallerySelector = (
   props: CallingBaseSelectorProps
 ) => {
   screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-  pptLiveShareParticipant: VideoGalleryRemoteParticipant | undefined;
+  htmlShareParticipant: VideoGalleryRemoteParticipant | undefined;
   localParticipant: VideoGalleryLocalParticipant;
   remoteParticipants: VideoGalleryRemoteParticipant[];
   dominantSpeakers?: string[];
@@ -78,7 +78,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(ppt-live) */
     getIsPPTLiveOn,
     /* @conditional-compile-remove(ppt-live) */
-    getPPTLiveShareRemoteParticipant
+    getHtmlShareRemoteParticipant
   ],
   (
     screenShareRemoteParticipantId,
@@ -99,16 +99,14 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isHideAttendeeNamesEnabled,
     /* @conditional-compile-remove(ppt-live) */
     isPPTLiveOn,
-    pptLiveShareRemoteParticipantId
+    htmlRemoteParticipantId
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
         ? remoteParticipants[screenShareRemoteParticipantId]
         : undefined;
-    const pptLiveShareRemoteParticipant =
-      pptLiveShareRemoteParticipantId && remoteParticipants
-        ? remoteParticipants[pptLiveShareRemoteParticipantId]
-        : undefined;
+    const htmlRemoteParticipant =
+      htmlRemoteParticipantId && remoteParticipants ? remoteParticipants[htmlRemoteParticipantId] : undefined;
     const localVideoStream = localVideoStreams?.find((i) => i.mediaStreamType === 'Video');
 
     const dominantSpeakerIds = _dominantSpeakersWithFlatId(dominantSpeakers);
@@ -126,7 +124,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
             /* @conditional-compile-remove(raise-hand) */
-            screenShareRemoteParticipant.pptLiveStream,
+            screenShareRemoteParticipant.htmlStream,
             screenShareRemoteParticipant.raisedHand
           )
         : undefined,
@@ -151,17 +149,17 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
       maxRemoteVideoStreams: optimalVideoCount,
-      pptLiveShareParticipant: pptLiveShareRemoteParticipant
+      htmlShareParticipant: htmlRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
-            toFlatCommunicationIdentifier(pptLiveShareRemoteParticipant.identifier),
-            pptLiveShareRemoteParticipant.isMuted,
-            checkIsSpeaking(pptLiveShareRemoteParticipant),
-            pptLiveShareRemoteParticipant.videoStreams,
-            pptLiveShareRemoteParticipant.state,
-            pptLiveShareRemoteParticipant.displayName,
+            toFlatCommunicationIdentifier(htmlRemoteParticipant.identifier),
+            htmlRemoteParticipant.isMuted,
+            checkIsSpeaking(htmlRemoteParticipant),
+            htmlRemoteParticipant.videoStreams,
+            htmlRemoteParticipant.state,
+            htmlRemoteParticipant.displayName,
             /* @conditional-compile-remove(ppt-live) */
-            pptLiveShareRemoteParticipant.pptLiveStream,
-            pptLiveShareRemoteParticipant.raisedHand
+            htmlRemoteParticipant.htmlStream,
+            htmlRemoteParticipant.raisedHand
           )
         : undefined
     };

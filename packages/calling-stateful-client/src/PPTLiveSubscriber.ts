@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(ppt-live) */
-import { Call, Features, PPTLiveCallFeature } from '@azure/communication-calling';
+import { Features, PPTLiveCallFeature } from '@azure/communication-calling';
 import { CallCommon } from './BetaToStableTypes';
 /* @conditional-compile-remove(ppt-live) */
 import { CallContext } from './CallContext';

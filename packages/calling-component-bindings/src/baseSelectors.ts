@@ -146,10 +146,10 @@ export const getScreenShareRemoteParticipant = (
 /**
  * @private
  */
-export const getPPTLiveShareRemoteParticipant = (
+export const getHtmlShareRemoteParticipant = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): string | undefined => state.calls[props.callId]?.pptLiveShareRemoteParticipant;
+): string | undefined => state.calls[props.callId]?.htmlShareRemoteParticipant;
 
 /**
  * @private

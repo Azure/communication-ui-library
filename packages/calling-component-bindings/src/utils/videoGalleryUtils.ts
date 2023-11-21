@@ -70,7 +70,7 @@ export const _videoGalleryRemoteParticipantsMemo: (
             participant.videoStreams,
             state,
             displayName,
-            participant.pptLiveStream,
+            participant.htmlStream,
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand
           );
@@ -87,7 +87,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     videoStreams: { [key: number]: RemoteVideoStreamState },
     state: RemoteParticipantConnectionState,
     displayName?: string,
-    pptLiveStream?: HTMLElement,
+    htmlStream?: HTMLElement,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand?: unknown // temp unknown type to build stable
   ): VideoGalleryRemoteParticipant => {
@@ -98,7 +98,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       videoStreams,
       state,
       displayName,
-      pptLiveStream,
+      htmlStream,
       /* @conditional-compile-remove(raise-hand) */
       raisedHand as RaisedHandState
     );
@@ -113,7 +113,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   videoStreams: { [key: number]: RemoteVideoStreamState },
   state: RemoteParticipantConnectionState,
   displayName?: string,
-  pptLiveStream?: HTMLElement,
+  htmlStream?: HTMLElement,
   /* @conditional-compile-remove(raise-hand) */
   raisedHand?: unknown // temp unknown type to build stable
 ): VideoGalleryRemoteParticipant => {
@@ -143,7 +143,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     isSpeaking,
     videoStream,
     screenShareStream,
-    pptLiveStream,
+    htmlStream,
     isScreenSharingOn: screenShareStream !== undefined && screenShareStream.isAvailable,
     /* @conditional-compile-remove(one-to-n-calling) */
     /* @conditional-compile-remove(PSTN-calls) */

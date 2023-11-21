@@ -44,7 +44,7 @@ import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
-import { RemotePPTLive } from './VideoGallery/RemotePPTLive';
+import { RemoteHtml } from './VideoGallery/RemoteHtml';
 
 /**
  * @private
@@ -224,8 +224,6 @@ export interface VideoGalleryProps {
   onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
   /** Callback to dispose a remote screen share stream view */
   onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(ppt-live) */
-  onDisposeRemotePPTLiveStreamView?: (userId: string) => Promise<void>;
   /** Callback to render a particpant avatar */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
@@ -336,8 +334,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onDisposeLocalStreamView,
     onCreateRemoteStreamView,
     onDisposeRemoteScreenShareStreamView,
-    /* @conditional-compile-remove(ppt-live) */
-    onDisposeRemotePPTLiveStreamView,
     onDisposeRemoteVideoStreamView,
     styles,
     layout,
@@ -632,7 +628,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
-  const pptLiveParticipant = remoteParticipants.find((participant) => participant.pptLiveStream !== undefined);
+  const htmlParticipant = remoteParticipants.find((participant) => participant.htmlStream !== undefined);
 
   const localScreenShareStreamComponent = <LocalScreenShare localParticipant={localParticipant} />;
 
@@ -647,8 +643,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   /* @conditional-compile-remove(ppt-live) */
-  const pptLiveRemoteComponent = pptLiveParticipant && (
-    <RemotePPTLive {...pptLiveParticipant} renderElement={pptLiveParticipant.pptLiveStream} />
+  const pptLiveRemoteComponent = htmlParticipant && (
+    <RemoteHtml {...htmlParticipant} renderElement={htmlParticipant.htmlStream} />
   );
 
   const pptLiveComponent = pptLiveRemoteComponent ? pptLiveRemoteComponent : undefined;
@@ -703,7 +699,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
     /* @conditional-compile-remove(gallery-layouts) */
     /* @conditional-compile-remove(ppt-live) */
-    if (pptLiveParticipant && layout === 'focusedContent') {
+    if (htmlParticipant && layout === 'focusedContent') {
       return <FocusedContentLayout {...layoutProps} />;
     }
     if (layout === 'floatingLocalVideo') {
@@ -718,7 +714,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, pptLiveParticipant, screenShareParticipant]);
+  }, [layout, layoutProps, htmlParticipant, screenShareParticipant]);
 
   return (
     <div

@@ -262,7 +262,7 @@ export class CallContext {
           call.remoteParticipants[toFlatCommunicationIdentifier(participant.identifier)] = participant;
         });
         // add the fake logic.
-        call.pptLiveShareRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
+        call.htmlShareRemoteParticipant = toFlatCommunicationIdentifier(addRemoteParticipant[0].identifier);
       }
     });
   }
@@ -368,11 +368,11 @@ export class CallContext {
   public setCallParticipantPPTLive(callId: string, target: HTMLElement | undefined): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      const participantKey = call.pptLiveShareRemoteParticipant;
+      const participantKey = call.htmlShareRemoteParticipant;
       if (call && participantKey) {
         const participant = call.remoteParticipants[participantKey];
         if (participant) {
-          participant.pptLiveStream = target;
+          participant.htmlStream = target;
         }
       }
     });

@@ -367,7 +367,7 @@ export interface RemoteParticipantState {
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    */
-  pptLiveStream?: HTMLElement;
+  htmlStream?: HTMLElement;
 }
 
 /**
@@ -480,7 +480,7 @@ export interface CallState {
    *
    * This property is added by the stateful layer and is not a proxy of SDK state
    */
-  pptLiveShareRemoteParticipant?: string;
+  htmlShareRemoteParticipant?: string;
   /**
    * Stores the local date when the call started on the client. This property is added by the stateful layer and is not
    * a proxy of SDK state.

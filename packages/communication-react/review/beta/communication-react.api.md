@@ -882,6 +882,7 @@ export interface CallState {
     dominantSpeakers?: DominantSpeakersInfo;
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
+    htmlShareRemoteParticipant?: string;
     id: string;
     isMuted: boolean;
     isScreenSharingOn: boolean;
@@ -889,7 +890,6 @@ export interface CallState {
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
-    pptLiveShareRemoteParticipant?: string;
     raiseHand: RaiseHandCallFeature;
     recording: RecordingCallFeature;
     remoteParticipants: {
@@ -3568,10 +3568,10 @@ export interface RecordingCallFeature {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
+    htmlStream?: HTMLElement;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHandState;
     role?: ParticipantRole;
     state: RemoteParticipantState_2;
@@ -4134,8 +4134,6 @@ export interface VideoGalleryProps {
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalStreamView?: () => void;
-    // (undocumented)
-    onDisposeRemotePPTLiveStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
@@ -4158,8 +4156,8 @@ export interface VideoGalleryProps {
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    htmlStream?: HTMLElement;
     isSpeaking?: boolean;
-    pptLiveStream?: HTMLElement;
     raisedHand?: RaisedHand;
     screenShareStream?: VideoGalleryStream;
     // @beta
@@ -4169,7 +4167,7 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
 // @public
 export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     screenShareParticipant: VideoGalleryRemoteParticipant | undefined;
-    pptLiveShareParticipant: VideoGalleryRemoteParticipant | undefined;
+    htmlShareParticipant: VideoGalleryRemoteParticipant | undefined;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
     dominantSpeakers?: string[];

@@ -122,5 +122,5 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
   /**
    * Proxy of {@link @azure/communication-calling#Call.PPTLive.target}.
    */
-  pptLiveStream?: HTMLElement;
+  htmlStream?: HTMLElement;
 }

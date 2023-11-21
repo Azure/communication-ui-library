@@ -11,17 +11,13 @@ import { _formatString } from '@internal/acs-ui-common';
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
  * https://reactjs.org/docs/react-api.html#reactmemo
  */
-export const RemotePPTLive = React.memo(
-  (props: { userId: string; displayName?: string; renderElement?: HTMLElement }) => {
-    const { displayName, renderElement } = props;
+export const RemoteHtml = React.memo((props: { userId: string; displayName?: string; renderElement?: HTMLElement }) => {
+  const { displayName, renderElement } = props;
 
-    return (
-      <VideoTile
-        displayName={displayName}
-        renderElement={
-          renderElement ? <StreamMedia videoStreamElement={renderElement} loadingState="none" /> : undefined
-        }
-      />
-    );
-  }
-);
+  return (
+    <VideoTile
+      displayName={displayName}
+      renderElement={renderElement ? <StreamMedia videoStreamElement={renderElement} loadingState="none" /> : undefined}
+    />
+  );
+});
