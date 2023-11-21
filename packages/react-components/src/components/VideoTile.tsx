@@ -235,15 +235,14 @@ const VideoTileMoreOptionsButton = (props: {
   );
 };
 
+/* @conditional-compile-remove(reaction) */
 const styleSheet = document.styleSheets[0];
-// const keyframes1 = `@keyframes animate {
-//   0% {transform: translateY(0px);}
-//   100% {transform: translateY(var(--to-position));}
-// }`;
+/* @conditional-compile-remove(reaction) */
 const keyframes1 = `@keyframes play {
   from { background-position-y: 8568px; }
   to { background-position-y: 0px; }
 }`;
+/* @conditional-compile-remove(reaction) */
 styleSheet.insertRule(keyframes1, styleSheet.cssRules.length);
 
 /**
@@ -558,13 +557,3 @@ const tileInfoContainerTokens = {
 const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
   return withBrackets ? `(${participantString})` : participantString;
 };
-
-// const emoticonDynamicStyles = () => {
-//   return {
-//     animationTimingFunction: `steps(51)`,
-//     "--to-position": `-1632px`,
-//     "--reaction-animation-duration": `2.125ms`,
-//     "--reaction-animation-play-state": "running",
-//     "--reaction-animation-iteration-count": 0,
-//   }
-// }
