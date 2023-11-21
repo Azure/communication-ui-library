@@ -4,10 +4,10 @@ This log was last generated on Mon, 20 Nov 2023 21:42:07 GMT and should not be m
 
 <!-- Start content -->
 
-## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/@azure/communication-react_v1.11.0-beta.1)
+## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
 
 Mon, 20 Nov 2023 21:42:07 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/@azure/communication-react_v1.10.0...@azure/communication-react_v1.11.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.10.0...1.11.0-beta.1)
 
 ### Features
 - Make Custom Branding Composite options available in beta builds ([PR #3802](https://github.com/azure/communication-ui-library/pull/3802) by 2684369+JamesBurnside@users.noreply.github.com)
