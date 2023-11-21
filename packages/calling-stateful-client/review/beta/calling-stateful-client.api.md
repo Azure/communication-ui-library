@@ -262,21 +262,6 @@ export interface OptimalVideoCountFeatureState {
     maxRemoteVideoStreams: number;
 }
 
-// @public (undocumented)
-export class Queue<T> {
-    constructor();
-    // (undocumented)
-    dequeue(): T | undefined;
-    // (undocumented)
-    enqueue(item: T): void;
-    // (undocumented)
-    isEmpty(): boolean;
-    // (undocumented)
-    peek(): T | undefined;
-    // (undocumented)
-    size(): number;
-}
-
 // @public
 export type RaisedHandState = {
     raisedHandOrderPosition: number;

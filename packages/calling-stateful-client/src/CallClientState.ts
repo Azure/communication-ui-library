@@ -208,29 +208,6 @@ export type ReactionState = {
 };
 
 /**
- * State only version of {@link @azure/communication-calling#ReactionCallFeature}. {@link StatefulCallClient} will
- * automatically listen for reaction on the call and update the state exposed by {@link StatefulCallClient} accordingly.
- * 
- * @public
- */
-export interface ReactionCallFeatureState {
-  isEnable: boolean;
-  localParticipantReactionPayload?: ReactionState;
-}
-
-/**
- * State only version of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload} with UI helper props.
- * Reation state with a comparative timestamp which helps UI to decide to render the reaction accordingly.
- * 
- * @public
- */
-export type ReactionState = {
-  shouldRender: boolean;
-  reactionType: string;
-  receivedTimeStamp: number;
-}
-
-/**
  * State only version of {@link @azure/communication-calling#LocalVideoStream}.
  *
  * @public
