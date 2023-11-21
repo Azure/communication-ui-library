@@ -53,6 +53,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
     userId,
+    /* @conditional-compile-remove(file-sharing) */
     onRenderFileDownloads,
     defaultStatusRenderer,
     statusToRender
@@ -63,7 +64,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     /* @conditional-compile-remove(file-sharing) */
     return onRenderFileDownloads;
     return undefined;
-  }, [onRenderFileDownloads]);
+  }, [/* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
@@ -75,6 +76,7 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
         return (
           <ChatMessageComponent
             {...messageProps}
+            /* @conditional-compile-remove(file-sharing) */
             onRenderFileDownloads={onRenderFileDownloadsMemo}
             /* @conditional-compile-remove(file-sharing) */
             strings={messageProps.strings}
