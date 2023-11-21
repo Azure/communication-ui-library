@@ -64,6 +64,7 @@ export type {
 /* @conditional-compile-remove(raise-hand) */
 export type { RaisedHand } from './types';
 
+/* @conditional-compile-remove(reaction) */
 export type { Reaction } from './types';
 
 /* @conditional-compile-remove(close-captions) */

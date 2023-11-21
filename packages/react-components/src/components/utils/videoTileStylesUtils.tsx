@@ -11,6 +11,7 @@ export const getVideoTileOverrideColor = (isVideoRendered: boolean, theme: Theme
   return { color: isVideoRendered ? palette[color] : theme.palette[color] };
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */
@@ -24,6 +25,7 @@ export const getCurrentRelativeUnixTime = () => {
   return Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
 }
 
+/* @conditional-compile-remove(reaction) */
 /**
  * @private
  */

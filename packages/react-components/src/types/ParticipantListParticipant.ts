@@ -21,6 +21,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   /** Whether calling participant is raised hand */
   raisedHand?: RaisedHand;
   /** Whether calling participant has reacted */
+  /* @conditional-compile-remove(reaction) */
   reaction?: Reaction;
 };
 
@@ -34,6 +35,7 @@ export type RaisedHand = {
   raisedHandOrderPosition: number;
 };
 
+/* @conditional-compile-remove(reaction) */
 /**
  * Reaction state with reaction type to render
  * 

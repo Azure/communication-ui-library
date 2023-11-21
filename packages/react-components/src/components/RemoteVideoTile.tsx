@@ -195,6 +195,7 @@ export const _RemoteVideoTile = React.memo(
           isMuted={remoteParticipant.isMuted}
           /* @conditional-compile-remove(raise-hand) */
           raisedHand={remoteParticipant.raisedHand}
+          /* @conditional-compile-remove(reaction) */
           reaction={remoteParticipant.reaction}
           isSpeaking={remoteParticipant.isSpeaking}
           showMuteIndicator={showMuteIndicator}

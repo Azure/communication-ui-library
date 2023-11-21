@@ -8,11 +8,13 @@ import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
-import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback, Reaction } from '../types';
+import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { CallingTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHand } from '../types';
+/* @conditional-compile-remove(reaction) */
+import { Reaction } from '../types';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(one-to-n-calling) */
@@ -29,7 +31,9 @@ import {
   tileInfoContainerStyle,
   participantStateStringStyles
 } from './styles/VideoTile.styles';
-import { getCurrentRelativeUnixTime, getVideoTileOverrideColor, reactionEmoji } from './utils/videoTileStylesUtils';
+import { getVideoTileOverrideColor } from './utils/videoTileStylesUtils';
+/* @conditional-compile-remove(reaction) */
+import { reactionEmoji, getCurrentRelativeUnixTime } from './utils/videoTileStylesUtils';
 /* @conditional-compile-remove(pinned-participants) */
 import { pinIconStyle } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(pinned-participants) */
@@ -140,6 +144,7 @@ export interface VideoTileProps {
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
+  /* @conditional-compile-remove(reaction) */
   /** When the participant has reacted, animate the reaction. */
   reaction?: Reaction;
 
@@ -226,15 +231,14 @@ const VideoTileMoreOptionsButton = (props: {
   );
 };
 
+/* @conditional-compile-remove(reaction) */
 const styleSheet = document.styleSheets[0];
-// const keyframes1 = `@keyframes animate {
-//   0% {transform: translateY(0px);}
-//   100% {transform: translateY(var(--to-position));}
-// }`;
+/* @conditional-compile-remove(reaction) */
 const keyframes1 = `@keyframes play {
   from { background-position-y: 8568px; }
   to { background-position-y: 0px; }
 }`;
+/* @conditional-compile-remove(reaction) */
 styleSheet.insertRule(keyframes1, styleSheet.cssRules.length);
 
 /**
@@ -263,6 +267,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     isSpeaking,
     /* @conditional-compile-remove(raise-hand) */
     raisedHand,
+    /* @conditional-compile-remove(reaction) */
     reaction,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
@@ -366,10 +371,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
   /* @conditional-compile-remove(raise-hand) */
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
-  console.log('Mohtasim, ' + reaction?.reactionType + '\n should render?: ' + reaction?.shouldRender);
 
+  /* @conditional-compile-remove(reaction) */
   let urlPath = (reaction != undefined)?reactionEmoji.get(reaction?.reactionType): '';
-
+  /* @conditional-compile-remove(reaction) */
   let reactionAnimationStyle = {
     height: '84px',
     width: '84px',
@@ -380,7 +385,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     animationPlayState: 'running',
     animationIterationCount: 'infinite'
   }
-
+  /* @conditional-compile-remove(reaction) */
   let currentUnitTimestamp = getCurrentRelativeUnixTime();
 
   return (
@@ -435,7 +440,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             )}
           </Stack>
         )}
-        {reaction?.shouldRender && (currentUnitTimestamp - reaction.receivedTimeStamp) < 2000 && (
+        
+        { /* @conditional-compile-remove(reaction) */
+        reaction?.shouldRender && (currentUnitTimestamp - reaction.receivedTimeStamp) < 3000 && (
             <Stack 
               className={mergeStyles(
                 videoContainerStyles, 
@@ -539,13 +546,3 @@ const tileInfoContainerTokens = {
 const bracketedParticipantString = (participantString: string, withBrackets: boolean): string => {
   return withBrackets ? `(${participantString})` : participantString;
 };
-
-// const emoticonDynamicStyles = () => {
-//   return {
-//     animationTimingFunction: `steps(51)`,
-//     "--to-position": `-1632px`,
-//     "--reaction-animation-duration": `2.125ms`,
-//     "--reaction-animation-play-state": "running",
-//     "--reaction-animation-iteration-count": 0,
-//   }
-// }
