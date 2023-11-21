@@ -82,6 +82,7 @@ export const ReactionAnimationVideoTile: () => JSX.Element = () => {
       const react: Reaction = {
         shouldRender: showReaction,
         reactionType: reactionKind,
+        receivedTimeStamp: 0, // Put relatively current unix time. See VideTile component for an example.
       }
     
       return (
