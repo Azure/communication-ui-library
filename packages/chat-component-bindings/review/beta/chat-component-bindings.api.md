@@ -47,7 +47,7 @@ export type ChatHandlers = {
     onRemoveParticipant: (userId: string) => Promise<void>;
     updateThreadTopicName: (topicName: string) => Promise<void>;
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
-    onUpdateMessage: (messageId: string, content: string, options?: {
+    onUpdateMessage: (messageId: string, content: string, /* @conditional-compile-remove(file-sharing) */ options?: {
         metadata?: Record<string, string>;
         attachedFilesMetadata?: FileMetadata[];
     }) => Promise<void>;
