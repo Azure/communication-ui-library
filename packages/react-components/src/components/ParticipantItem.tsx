@@ -131,10 +131,10 @@ export interface ParticipantItemProps {
    * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
    */
   ariaLabelledBy?: string;
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(raise-hand) */
   /** Display border around persona coin */
   showCoinBorder?: boolean;
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(raise-hand) */
   /** Display border around persona coin */
   coinBorderColor?: string;
 }
