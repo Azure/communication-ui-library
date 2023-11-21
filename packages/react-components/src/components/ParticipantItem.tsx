@@ -17,7 +17,7 @@ import {
 import React, { useMemo, useRef, useState } from 'react';
 import { useIdentifiers } from '../identifiers';
 import { useLocale } from '../localization';
-import { useTheme, CallingTheme } from '../theming';
+import { useTheme } from '../theming';
 import { BaseCustomStyles, OnRenderAvatarCallback } from '../types';
 import {
   iconContainerStyle,
@@ -131,8 +131,12 @@ export interface ParticipantItemProps {
    * Takes in a unique id value of the element you would like to be read before the ParticipantItem.
    */
   ariaLabelledBy?: string;
+  /* @conditional-compile-remove(PSTN-calls) */
   /** Display border around persona coin */
-  isRaisedHand?: boolean;
+  showCoinBorder?: boolean;
+  /* @conditional-compile-remove(PSTN-calls) */
+  /** Display border around persona coin */
+  coinBorderColor?: string;
 }
 
 /**
@@ -169,11 +173,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
 
-  /* @conditional-compile-remove(raise-hand) */
-  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-  /* @conditional-compile-remove(raise-hand) */
-  const raisedHandBorderColor = callingPalette.raiseHandGold;
-
   const avatarOptions = {
     text: me ? meAvatarText : displayName?.trim() || strings.displayNamePlaceholder,
     size: PersonaSize.size32,
@@ -182,9 +181,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     showOverflowTooltip: showParticipantOverflowTooltip,
     showUnknownPersonaCoin: !me && (!displayName?.trim() || displayName === strings.displayNamePlaceholder),
     /* @conditional-compile-remove(raise-hand) */
-    isActive: props.isRaisedHand,
+    isActive: props.showCoinBorder,
     /* @conditional-compile-remove(raise-hand) */
-    activeBorderColor: raisedHandBorderColor
+    activeBorderColor: props.coinBorderColor
   };
 
   const avatar = onRenderAvatar ? (

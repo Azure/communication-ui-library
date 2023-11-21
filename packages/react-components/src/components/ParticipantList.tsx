@@ -14,7 +14,7 @@ import {
 /* @conditional-compile-remove(total-participant-count) */ /* @conditional-compile-remove(raise-hand) */
 import { Text } from '@fluentui/react';
 /* @conditional-compile-remove(raise-hand) */
-import { useTheme } from '../theming';
+import { useTheme, CallingTheme } from '../theming';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 import React, { useCallback, useMemo } from 'react';
@@ -148,6 +148,9 @@ const onRenderParticipantDefault = (
   /* @conditional-compile-remove(hide-attendee-name) */
   displayName = formatDisplayName();
 
+  /* @conditional-compile-remove(raise-hand) */
+  const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+
   const onRenderIcon =
     callingParticipant?.isScreenSharing ||
     callingParticipant?.isMuted ||
@@ -209,7 +212,9 @@ const onRenderParticipantDefault = (
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
       /* @conditional-compile-remove(raise-hand) */
-      isRaisedHand={callingParticipant?.raisedHand ? true : false}
+      showCoinBorder={callingParticipant?.raisedHand ? true : false}
+      /* @conditional-compile-remove(raise-hand) */
+      coinBorderColor={callingPalette.raiseHandGold}
     />
   );
 };
