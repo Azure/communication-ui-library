@@ -9,7 +9,6 @@ import {
   getIsScreenSharingOn,
   getIsMuted,
   CallingBaseSelectorProps,
-  getLocalParticipantReaction
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 /* @conditional-compile-remove(hide-attendee-name) */
@@ -23,6 +22,8 @@ import { memoizedConvertAllremoteParticipantsBetaRelease } from './utils/partici
 import { memoizedConvertAllremoteParticipantsBeta } from './utils/participantListSelectorUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReaction } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
@@ -84,6 +85,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             /* @conditional-compile-remove(raise-hand) */
             participant.raisedHand,
             localUserCanRemoveOthers,
+            /* @conditional-compile-remove(reaction) */
             participant.reaction,
           );
         })
@@ -139,6 +141,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getParticipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
     getLocalParticipantReaction
   ],
   (
@@ -153,6 +156,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     partitipantCount,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
     reaction
   ): {
     participants: CallParticipantListParticipant[];
@@ -180,6 +184,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       state: 'Connected',
       // Local participant can never remove themselves.
       isRemovable: false,
+      /* @conditional-compile-remove(reaction) */
       reaction: reaction,
     });
     /* @conditional-compile-remove(total-participant-count) */

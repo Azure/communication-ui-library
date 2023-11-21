@@ -12,9 +12,7 @@ import {
   getIdentifier,
   getIsMuted,
   getIsScreenSharingOn,
-  getLocalParticipantReaction,
   getLocalVideoStreams,
-  getReceivedReactions,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 /* @conditional-compile-remove(rooms) */
@@ -34,6 +32,8 @@ import {
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
+/* @conditional-compile-remove(reaction) */
+import { getLocalParticipantReaction } from './baseSelectors';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -74,6 +74,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getLocalParticipantRaisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
     getLocalParticipantReaction,
   ],
   (
@@ -93,6 +94,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     raisedHand,
     /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
+    /* @conditional-compile-remove(reaction) */
     reaction,
   ) => {
     const screenShareRemoteParticipant =
@@ -129,6 +131,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
         role,
         /* @conditional-compile-remove(raise-hand) */
         raisedHand,
+        /* @conditional-compile-remove(reaction) */
         reaction
       ),
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
