@@ -1126,9 +1126,7 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
-    soundOptions?: {
-        callingSounds?: CallingSounds;
-    };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -1766,7 +1764,6 @@ export interface RemoteVideoTileMenuOptions {
 // @beta
 export type SoundEffect = {
     path: string;
-    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
 };
 
 // @public

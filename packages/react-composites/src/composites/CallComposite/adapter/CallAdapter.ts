@@ -285,10 +285,6 @@ export type SoundEffect = {
    * Path to sound effect
    */
   path: string;
-  /**
-   * type of file format for the sound effect
-   */
-  fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
 };
 
 /**

@@ -1313,14 +1313,9 @@ export type CommonCallAdapterOptions = {
   onFetchProfile?: OnFetchProfileCallback;
   /* @conditional-compile-remove(calling-sounds) */
   /**
-   * Options for calling sounds
+   * Sounds to use for calling events
    */
-  soundOptions?: {
-    /**
-     * Sounds to use for calling events
-     */
-    callingSounds?: CallingSounds;
-  };
+  callingSounds?: CallingSounds;
 };
 
 /**

@@ -32,12 +32,10 @@ describe('Adapter is created as expected', () => {
     const mockCallAgent = new MockCallAgent();
     const locator = { participantIds: ['some user id'] };
     const options: CommonCallAdapterOptions = {
-      soundOptions: {
-        callingSounds: {
-          callEnded: { path: 'test/path/ended' },
-          callRinging: { path: 'test/path/ringing' },
-          callBusy: { path: 'test/path/busy' }
-        }
+      callingSounds: {
+        callEnded: { path: 'test/path/ended' },
+        callRinging: { path: 'test/path/ringing' },
+        callBusy: { path: 'test/path/busy' }
       }
     };
 
@@ -63,10 +61,8 @@ describe('Adapter is created as expected', () => {
     const mockCallAgent = new MockCallAgent();
     const locator = { participantIds: ['some user id'] };
     const options: CommonCallAdapterOptions = {
-      soundOptions: {
-        callingSounds: {
-          callEnded: { path: 'test/path/ended' }
-        }
+      callingSounds: {
+        callEnded: { path: 'test/path/ended' }
       }
     };
 
