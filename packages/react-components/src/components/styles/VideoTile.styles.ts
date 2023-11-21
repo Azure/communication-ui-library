@@ -3,7 +3,6 @@
 
 import { IButtonStyles, IStyle, keyframes, memoizeFunction, mergeStyles, Theme, ITheme } from '@fluentui/react';
 
-
 /**
  * @private
  */
