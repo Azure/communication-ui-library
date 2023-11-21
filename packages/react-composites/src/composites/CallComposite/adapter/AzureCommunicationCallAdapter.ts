@@ -144,9 +144,7 @@ class CallContext {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
       /* @conditional-compile-remove(calling-sounds) */
-      soundOptions?: {
-        callingSounds?: CallingSounds;
-      };
+      callingSounds?: CallingSounds;
     }
   ) {
     this.state = {
@@ -168,7 +166,7 @@ class CallContext {
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
-      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.soundOptions?.callingSounds
+      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.callingSounds
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
