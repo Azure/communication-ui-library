@@ -119,6 +119,14 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           target: 'http://[::1]:8080'
         },
         {
+          path: '/getRoom',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/removeUserFromRoom',
+          target: 'http://[::1]:8080'
+        },
+        {
           path: '/uploadToAzureBlobStorage',
           target: 'http://[::1]:8080'
         }
