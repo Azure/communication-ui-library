@@ -4,7 +4,8 @@
 import { CallCommon } from '@azure/communication-calling';
 import { CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(calling-sounds) */
-import { CommunicationIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 type CallingSoundsLoaded = {
   callEndedSound?: HTMLAudioElement;

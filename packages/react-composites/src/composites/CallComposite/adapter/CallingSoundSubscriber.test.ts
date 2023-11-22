@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(calling-sounds) */
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { createMockCall } from '../../CallComposite/adapter/TestUtils';
 /* @conditional-compile-remove(calling-sounds) */

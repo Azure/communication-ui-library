@@ -209,6 +209,7 @@ class CallContext {
     this.callId = callId;
   }
 
+  /* @conditional-compile-remove(calling-sounds) */
   public setTargetCallee(targetCallees: CommunicationIdentifier[]): void {
     this.setState({ ...this.state, targetCallees });
   }
@@ -895,6 +896,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       return backendId as CommunicationIdentifier;
     });
 
+    /* @conditional-compile-remove(calling-sounds) */
     this.context.setTargetCallee(idsToAdd);
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
