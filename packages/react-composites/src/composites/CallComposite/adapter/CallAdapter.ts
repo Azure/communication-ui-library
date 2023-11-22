@@ -304,6 +304,10 @@ export type CallingSounds = {
    * Sound to be played when the call is ringing
    */
   callRinging?: SoundEffect;
+  /**
+   * Sound to be played when the call is rejected by the user being callede
+   */
+  callBusy?: SoundEffect;
 };
 
 /**
