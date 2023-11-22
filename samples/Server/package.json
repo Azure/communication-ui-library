@@ -33,7 +33,7 @@
     "http-errors": "^1.6.3",
     "morgan": "^1.9.1",
     "node-fetch": "2.6.7",
-    "@azure/communication-rooms": "1.0.0-beta.1"
+    "@azure/communication-rooms": "1.1.0-beta.1 || ^1.1.0"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
