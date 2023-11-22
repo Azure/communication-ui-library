@@ -963,7 +963,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(PSTN-calls) */
   public async resumeCall(): Promise<void> {
     if (this.call?.state === 'LocalHold') {
-      this.handlers.onToggleHold();
+      this.handlers.onToggleHold().then(() => {
+        if (this.call?.feature(Features.Capabilities).capabilities.turnVideoOn.isPresent === false) {
+          this.stopCamera();
+        }
+      });
     }
   }
 
@@ -1068,6 +1072,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.on('idChanged', this.callIdChanged.bind(this));
     /* @conditional-compile-remove(close-captions) */
     this.call?.on('stateChanged', this.subscribeToCaptionEvents.bind(this));
+    /* @conditional-compile-remove(rooms) */
+    this.call?.on('roleChanged', this.roleChanged.bind(this));
     /* @conditional-compile-remove(call-transfer) */
     this.call?.feature(Features.Transfer).on('transferRequested', this.transferRequested.bind(this));
     /* @conditional-compile-remove(capabilities) */
@@ -1083,6 +1089,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
+    /* @conditional-compile-remove(rooms) */
+    this.call?.off('roleChanged', this.roleChanged.bind(this));
 
     /* @conditional-compile-remove(close-captions) */
     this.unsubscribeFromCaptionEvents();
@@ -1183,7 +1191,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   /* @conditional-compile-remove(capabilities) */
   private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
     if (data.newValue.turnVideoOn?.isPresent === false) {
-      this.stopCamera();
+      // Only stop camera when the call state is not on hold. The Calling SDK does not allow us to stop camera when
+      // the call state is on hold.
+      if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
+        this.stopCamera();
+      }
+      this.disposeLocalVideoStreamView();
     }
     if (data.newValue.unmuteMic?.isPresent === false) {
       this.mute();
@@ -1192,6 +1205,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       this.stopScreenShare();
     }
     this.emitter.emit('capabilitiesChanged', data);
+  }
+
+  /* @conditional-compile-remove(rooms) */
+  private roleChanged(): void {
+    if (this.call?.role === 'Consumer') {
+      this.call?.feature(Features.RaiseHand).lowerHand();
+    }
   }
 
   private callIdChanged(): void {
