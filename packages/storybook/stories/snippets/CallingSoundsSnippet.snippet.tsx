@@ -43,9 +43,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       credential,
       locator: { groupId },
       options: {
-        soundOptions: {
-          callingSounds: callingSounds
-        }
+        callingSounds: callingSounds
       }
     };
   }, [credential, groupId, userId]);
