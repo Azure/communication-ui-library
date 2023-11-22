@@ -76,7 +76,8 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     return undefined;
   }, [/* @conditional-compile-remove(file-sharing) */ onRenderFileDownloads]);
 
-  // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
+  // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
+  // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
       if (
@@ -134,7 +135,9 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       /* @conditional-compile-remove(mention) */
       mentionOptions,
       /* @conditional-compile-remove(file-sharing) */
-      fileDownloadHandler
+      fileDownloadHandler,
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      new Date().toDateString()
     ]
   );
 
