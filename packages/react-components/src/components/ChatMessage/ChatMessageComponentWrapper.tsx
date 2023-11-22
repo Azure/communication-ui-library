@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { MessageStatus } from '@internal/acs-ui-common';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { MessageProps, MessageRenderer, MessageThreadStyles, _ChatMessageProps } from '../MessageThread';
 import { ChatMessage, OnRenderAvatarCallback } from '../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -72,6 +72,16 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
 export const ChatMessageComponentWrapper = (props: ChatMessageComponentWrapperProps): JSX.Element => {
   const { message, styles, onRenderMessage, key: messageKey } = props;
 
+  const systemMessageStyle = useMemo(() => {
+    return {
+      paddingTop: '0.5rem'
+    };
+  }, []);
+
+  const customMessageStyle = useMemo(() => {
+    return { paddingTop: '1rem', paddingBottom: '0.25rem' };
+  }, []);
+
   /* @conditional-compile-remove(data-loss-prevention) */
   // Similar logic as switch statement case 'chat', if statement for conditional compile (merge logic to switch case when stabilize)
   if (message.messageType === 'blocked') {
@@ -108,7 +118,7 @@ export const ChatMessageComponentWrapper = (props: ChatMessageComponentWrapperPr
           onRenderMessage({ ...props, messageContainerStyle }, (props) => <DefaultSystemMessage {...props} />)
         );
       return (
-        <div key={messageKey} style={{ paddingTop: '0.5rem' }}>
+        <div key={messageKey} style={systemMessageStyle}>
           {systemMessageComponent}
         </div>
       );
@@ -118,7 +128,7 @@ export const ChatMessageComponentWrapper = (props: ChatMessageComponentWrapperPr
       // We do not handle custom type message by default, users can handle custom type by using onRenderMessage function.
       const customMessageComponent = onRenderMessage === undefined ? <></> : onRenderMessage({ ...props });
       return (
-        <div key={messageKey} style={{ paddingTop: '1rem', paddingBottom: '0.25rem' }}>
+        <div key={messageKey} style={customMessageStyle}>
           {customMessageComponent}
         </div>
       );
