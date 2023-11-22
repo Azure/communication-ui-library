@@ -76,8 +76,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       new CopyPlugin({
         patterns: [
           { from: path.resolve(sampleAppDir, "public/manifest.json"), to: "manifest.json" },
-          { from: path.resolve(sampleAppDir, "public/backgrounds"), to: "backgrounds",  noErrorOnMissing: true },
-          { from: path.resolve(sampleAppDir, "public/sounds"), to: "sounds",  noErrorOnMissing: true }
+          { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true }
         ]
       })
     ],
