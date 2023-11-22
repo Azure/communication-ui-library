@@ -94,7 +94,11 @@ export type CallAdapterClientState = {
   displayName?: string;
   call?: CallState;
   /* @conditional-compile-remove(calling-sounds) */
-  callee?: CommunicationIdentifier[];
+  /**
+   * State to track who the original call went out to. will be undefined the call is not a outbound
+   * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
+   */
+  targetCallees?: CommunicationIdentifier[];
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
@@ -286,7 +290,7 @@ export type SoundEffect = {
   /**
    * Path to sound effect
    */
-  path: string;
+  url: string;
 };
 
 /**

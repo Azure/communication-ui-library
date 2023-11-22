@@ -153,7 +153,7 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
-      /* @conditional-compile-remove(calling-sounds) */ callee: undefined,
+      /* @conditional-compile-remove(calling-sounds) */ targetCallees: undefined,
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
@@ -209,8 +209,8 @@ class CallContext {
     this.callId = callId;
   }
 
-  public setCallee(callee: CommunicationIdentifier[]): void {
-    this.setState({ ...this.state, callee });
+  public setTargetCallee(targetCallees: CommunicationIdentifier[]): void {
+    this.setState({ ...this.state, targetCallees });
   }
 
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
@@ -895,7 +895,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       return backendId as CommunicationIdentifier;
     });
 
-    this.context.setCallee(idsToAdd);
+    this.context.setTargetCallee(idsToAdd);
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
     if (!call) {
@@ -1067,7 +1067,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     if (this.call) {
       this.callingSoundSubscriber = new CallingSoundSubscriber(
         this.call,
-        this.getState().callee,
+        this.getState().targetCallees,
         this.getState().sounds
       );
     }

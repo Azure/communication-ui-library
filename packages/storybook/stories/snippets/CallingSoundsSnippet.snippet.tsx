@@ -34,9 +34,9 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
      * You will need to provide paths to where your sounds will live and make sure that they are loaded appropriately.
      */
     const callingSounds: CallingSounds = {
-      callRinging: { path: 'path/to/your/ring/tone.mp3' },
-      callEnded: { path: 'path/to/your/end/call/tone.mp3' },
-      callBusy: { path: 'path/to/your/busy/tone.mp3' }
+      callRinging: { url: 'path/to/your/ring/tone.mp3' },
+      callEnded: { url: 'path/to/your/end/call/tone.mp3' },
+      callBusy: { url: 'path/to/your/busy/tone.mp3' }
     };
     return {
       userId,

@@ -374,7 +374,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
-    callee?: CommunicationIdentifier[];
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -3694,7 +3694,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
 
 // @beta
 export type SoundEffect = {
-    path: string;
+    url: string;
 };
 
 // @public

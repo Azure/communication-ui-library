@@ -68,17 +68,17 @@ export class CallingSoundSubscriber {
   private loadSounds(sounds?: CallingSounds): CallingSoundsLoaded | undefined {
     let callEndedSound;
     if (sounds?.callEnded) {
-      callEndedSound = new Audio(sounds?.callEnded?.path);
+      callEndedSound = new Audio(sounds?.callEnded?.url);
       callEndedSound.preload = 'auto';
     }
     let callRingingSound;
     if (sounds?.callRinging) {
-      callRingingSound = new Audio(sounds?.callRinging?.path);
+      callRingingSound = new Audio(sounds?.callRinging?.url);
       callRingingSound.preload = 'auto';
     }
     let callBusySound;
     if (sounds?.callBusy) {
-      callBusySound = new Audio(sounds?.callBusy?.path);
+      callBusySound = new Audio(sounds?.callBusy?.url);
       callBusySound.preload = 'auto';
     }
     return {
