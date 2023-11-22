@@ -997,7 +997,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const messagesToDisplay = useMemo(() => {
     return memoizeAllMessages((memoizedMessageFn) => {
-      return newMessages.map((message: Message, index: number): _ChatMessageProps => {
+      return messages.map((message: Message, index: number): _ChatMessageProps => {
         return memoizedMessageFn(
           message,
           showMessageDate,
@@ -1019,7 +1019,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     lastDeliveredChatMessage,
     lastSeenChatMessage,
     lastSendingChatMessage,
-    newMessages,
+    messages,
     onCancelEditMessage,
     onDeleteMessage,
     onSendMessage,
