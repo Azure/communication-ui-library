@@ -103,7 +103,8 @@ const isPSTNCall = (call: CallCommon, callee?: CommunicationIdentifier[]): boole
   /* @conditional-compile-remove(calling-sounds) */
   if (
     callee &&
-    (callee.length >= 1 || !isPhoneNumberIdentifier(callee[0])) &&
+    callee.length >= 1 &&
+    !isPhoneNumberIdentifier(callee[0]) &&
     (call.state === 'Ringing' || call.state === 'Connecting')
   ) {
     return true;
