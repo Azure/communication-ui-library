@@ -170,7 +170,7 @@ describe('Message blocked should display default blocked text correctly', () => 
 });
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-describe.only('Message should display image and attachment correctly', () => {
+describe('Message should display image and attachment correctly', () => {
   beforeAll(() => {
     registerIcons({
       icons: {
@@ -180,7 +180,7 @@ describe.only('Message should display image and attachment correctly', () => {
     });
   });
 
-  test.only('Message richtext/html img src should be correct', async () => {
+  test('Message richtext/html img src should be correct', async () => {
     const imgId1 = 'SomeImageId1';
     const imgId2 = 'SomeImageId2';
     const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';

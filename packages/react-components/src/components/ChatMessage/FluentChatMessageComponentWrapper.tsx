@@ -21,11 +21,21 @@ import { ChatMessageComponentWrapperProps } from './ChatMessageComponentWrapper'
 import { ChatMessageComponent } from './ChatMessageComponent';
 import { ChatMessage as FluentChatMessage, ChatMyMessage as FluentChatMyMessage } from '@fluentui-contrib/react-chat';
 
+/**
+ * Props for {@link FluentChatMessageComponentWrapper}
+ *
+ * @private
+ */
 type FluentChatMessageComponentWrapperProps = ChatMessageComponentWrapperProps & {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
 };
 
 /**
+ * The component for rendering a chat message using Fluent UI components
+ * and handling default and custom renderers.
+ * This component handles rendering for chat message body, avatar and message status.
+ * The chat message body, avatar and message status should be shown for both default and custom renderers.
+ *
  * @private
  */
 export const FluentChatMessageComponentWrapper = (props: FluentChatMessageComponentWrapperProps): JSX.Element => {
@@ -165,7 +175,6 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     [message, statusToRender]
   );
 
-  // let chatMessageComponent: JSX.Element;
   const shouldShowAvatar = useMemo(() => {
     return message.attached === 'top' || message.attached === false;
   }, [message.attached]);
@@ -174,11 +183,10 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     return shouldShowAvatar ? 'top' : 'center';
   }, [shouldShowAvatar]);
 
-  // Fluent UI message components are used here as
-  // for default message renderer, timestamp and author name should be shown but
-  // they aren't shown for custom render.
+  // Fluent UI message components are used here as for default message renderer,
+  // timestamp and author name should be shown but they aren't shown for custom renderer.
   // More investigations are needed to check if this can be simplified with states.
-  // Status and avatar should be shown for custom and default renderers.
+  // Status and avatar should be shown for both custom and default renderers.
   if (message.mine === true) {
     return (
       <div>

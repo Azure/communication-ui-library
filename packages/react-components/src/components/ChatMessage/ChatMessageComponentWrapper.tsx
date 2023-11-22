@@ -16,6 +16,8 @@ import { FluentChatMessageComponentWrapper } from './FluentChatMessageComponentW
 import { DefaultSystemMessage } from './DefaultSystemMessage';
 
 /**
+ * Props for {@link ChatMessageComponentWrapper}
+ *
  * @private
  */
 export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
@@ -63,6 +65,8 @@ export type ChatMessageComponentWrapperProps = _ChatMessageProps & {
 };
 
 /**
+ * The wrapper component to display different types of chat message.
+ *
  * @private
  */
 export const ChatMessageComponentWrapper = (props: ChatMessageComponentWrapperProps): JSX.Element => {

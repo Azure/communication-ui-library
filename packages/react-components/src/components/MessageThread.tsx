@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Icon, IStyle, mergeStyles, PrimaryButton /*, Theme, IPersona, Persona, PersonaSize*/ } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, PrimaryButton } from '@fluentui/react';
 import { Chat } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
 import {
