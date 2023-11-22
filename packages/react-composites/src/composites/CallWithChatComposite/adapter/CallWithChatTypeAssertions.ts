@@ -97,6 +97,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'cameraStatus'
   | /* @conditional-compile-remove(calling-sounds) */ 'sounds'
   | /* @conditional-compile-remove(rooms) */ 'isRoomsCall'
+  | /* @conditional-compile-remove(calling-sounds) */ 'callee'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;

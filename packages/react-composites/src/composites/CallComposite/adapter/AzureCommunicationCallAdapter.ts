@@ -153,6 +153,7 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
+      /* @conditional-compile-remove(calling-sounds) */ callee: undefined,
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
@@ -206,6 +207,10 @@ class CallContext {
   // This is the key to find current call object in client state
   public setCurrentCallId(callId: string | undefined): void {
     this.callId = callId;
+  }
+
+  public setCallee(callee: CommunicationIdentifier[]): void {
+    this.setState({ ...this.state, callee });
   }
 
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
@@ -866,7 +871,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   public startCall(
     participants:
-      | string[]
+      | string[] /* @conditional-compile-remove(calling-sounds) */
       /* @conditional-compile-remove(PSTN-calls) */
       | CommunicationIdentifier[],
     options?: StartCallOptions
@@ -889,6 +894,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
       return backendId as CommunicationIdentifier;
     });
+
+    this.context.setCallee(idsToAdd);
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
     if (!call) {
@@ -1058,7 +1065,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private subscribeCallEvents(): void {
     /* @conditional-compile-remove(calling-sounds) */
     if (this.call) {
-      this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.locator, this.getState().sounds);
+      this.callingSoundSubscriber = new CallingSoundSubscriber(
+        this.call,
+        this.getState().callee,
+        this.getState().sounds
+      );
     }
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
