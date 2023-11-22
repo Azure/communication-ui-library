@@ -16,8 +16,6 @@ import createThread from './routes/createThread';
 import addUser from './routes/addUser';
 import createRoom from './routes/createRoom';
 import addUserToRoom from './routes/addUserToRoom';
-import getRoom from './routes/getRoom';
-import removeUserFromRoom from './routes/removeUserFromRoom';
 import uploadToAzureBlobStorage from './routes/uploadToAzureBlobStorage';
 
 const app = express();
@@ -75,18 +73,6 @@ app.use('/createRoom', cors(), createRoom);
  * purpose: Calling: add user to room with the given role
  */
 app.use('/addUserToRoom', cors(), addUserToRoom);
-
-/**
- * route: /getRoom
- * purpose: Calling: get room
- */
-app.use('/getRoom', cors(), getRoom);
-
-/**
- * route: /getRoom
- * purpose: Calling: list participants
- */
-app.use('/removeUserFromRoom', cors(), removeUserFromRoom);
 
 /**
  * route: /getLogUploadData
