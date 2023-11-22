@@ -1089,6 +1089,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     this.call?.off('isMutedChanged', this.isMyMutedChanged.bind(this));
     this.call?.off('isScreenSharingOnChanged', this.isScreenSharingOnChanged.bind(this));
     this.call?.off('idChanged', this.callIdChanged.bind(this));
+    /* @conditional-compile-remove(rooms) */
     this.call?.off('roleChanged', this.roleChanged.bind(this));
 
     /* @conditional-compile-remove(close-captions) */
