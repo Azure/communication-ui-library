@@ -104,7 +104,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for hiding attendee name in the teams meeting
         'hide-attendee-name',
         // Feature for sounds during different calling events
-        'calling-sounds'
+        'calling-sounds',
+         // feature for hiding attendee name in the teams meeting
+         'hide-attendee-name',
+         // custom branding for the composites
+         'custom-branding'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.
