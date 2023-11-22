@@ -183,6 +183,109 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
     return shouldShowAvatar ? 'top' : 'center';
   }, [shouldShowAvatar]);
 
+  const myMessageRootProps = useMemo(() => {
+    return {
+      // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+      className: mergeClasses(
+        chatMessageRenderStyles.rootMyMessage,
+        chatMessageRenderStyles.rootCommon,
+        mergeStyles(styles?.myChatItemMessageContainer)
+      ),
+      style:
+        styles?.myChatItemMessageContainer !== undefined
+          ? createStyleFromV8Style(styles?.myChatItemMessageContainer)
+          : {},
+      role: 'none'
+    };
+  }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMyMessage, styles?.myChatItemMessageContainer]);
+
+  const myMessageBodyProps = useMemo(() => {
+    return {
+      className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
+      // make body not focusable to remove repetitions from narrators.
+      // inner components are already focusable
+      tabIndex: -1,
+      role: 'none'
+    };
+  }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage]);
+
+  const myMessageStatusIcon = useMemo(() => {
+    return (
+      <div
+        className={mergeStyles(
+          { paddingLeft: '0.25rem' },
+          styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
+        )}
+      >
+        {message.status
+          ? messageStatusRenderer(
+              onRenderMessageStatus,
+              defaultStatusRenderer,
+              showMessageStatus,
+              participantCount,
+              readCount
+            )
+          : undefined}
+      </div>
+    );
+  }, [
+    defaultStatusRenderer,
+    message.mine,
+    message.status,
+    messageStatusRenderer,
+    onRenderMessageStatus,
+    participantCount,
+    readCount,
+    showMessageStatus,
+    styles
+  ]);
+
+  const messageRootProps = useMemo(() => {
+    return { className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) };
+  }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMessage]);
+
+  const messageBodyProps = useMemo(() => {
+    return {
+      // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+      className: mergeClasses(
+        chatMessageRenderStyles.bodyCommon,
+        !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
+        shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
+        mergeStyles(styles?.chatItemMessageContainer)
+      ),
+      style:
+        styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {},
+      // make body not focusable to remove repetitions from narrators.
+      // inner components are already focusable
+      tabIndex: -1,
+      role: 'none'
+    };
+  }, [
+    chatMessageRenderStyles.avatarNoOverlap,
+    chatMessageRenderStyles.avatarOverlap,
+    chatMessageRenderStyles.bodyCommon,
+    chatMessageRenderStyles.bodyWithAvatar,
+    chatMessageRenderStyles.bodyWithoutAvatar,
+    shouldOverlapAvatarAndMessage,
+    shouldShowAvatar,
+    styles?.chatItemMessageContainer
+  ]);
+
+  const avatar = useMemo(() => {
+    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
+    const personaOptions: IPersona = {
+      hidePersonaDetails: true,
+      size: PersonaSize.size32,
+      text: message.senderDisplayName,
+      showOverflowTooltip: false
+    };
+    return (
+      <div className={mergeStyles(chatAvatarStyle)}>
+        {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
+      </div>
+    );
+  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
+
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.
   // More investigations are needed to check if this can be simplified with states.
@@ -192,87 +295,18 @@ export const FluentChatMessageComponentWrapper = (props: FluentChatMessageCompon
       <div>
         <FluentChatMyMessage
           attached={attached}
-          root={{
-            // myChatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-            className: mergeClasses(
-              chatMessageRenderStyles.rootMyMessage,
-              chatMessageRenderStyles.rootCommon,
-              mergeStyles(styles?.myChatItemMessageContainer)
-            ),
-            style:
-              styles?.myChatItemMessageContainer !== undefined
-                ? createStyleFromV8Style(styles?.myChatItemMessageContainer)
-                : {},
-            role: 'none'
-          }}
-          body={{
-            className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            tabIndex: -1,
-            role: 'none'
-          }}
-          statusIcon={
-            <div
-              className={mergeStyles(
-                { paddingLeft: '0.25rem' },
-                styles?.messageStatusContainer ? styles.messageStatusContainer(message.mine ?? false) : ''
-              )}
-            >
-              {message.status
-                ? messageStatusRenderer(
-                    onRenderMessageStatus,
-                    defaultStatusRenderer,
-                    showMessageStatus,
-                    participantCount,
-                    readCount
-                  )
-                : undefined}
-            </div>
-          }
+          root={myMessageRootProps}
+          body={myMessageBodyProps}
+          statusIcon={myMessageStatusIcon}
         >
           {messageRenderer({ ...props })}
         </FluentChatMyMessage>
       </div>
     );
   } else {
-    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
-    const personaOptions: IPersona = {
-      hidePersonaDetails: true,
-      size: PersonaSize.size32,
-      text: message.senderDisplayName,
-      showOverflowTooltip: false
-    };
     return (
       <div>
-        <FluentChatMessage
-          attached={attached}
-          root={{ className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) }}
-          body={{
-            // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-            className: mergeClasses(
-              chatMessageRenderStyles.bodyCommon,
-              !shouldShowAvatar ? chatMessageRenderStyles.bodyWithoutAvatar : chatMessageRenderStyles.bodyWithAvatar,
-              shouldOverlapAvatarAndMessage
-                ? chatMessageRenderStyles.avatarOverlap
-                : chatMessageRenderStyles.avatarNoOverlap,
-              mergeStyles(styles?.chatItemMessageContainer)
-            ),
-            style:
-              styles?.chatItemMessageContainer !== undefined
-                ? createStyleFromV8Style(styles?.chatItemMessageContainer)
-                : {},
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            tabIndex: -1,
-            role: 'none'
-          }}
-          avatar={
-            <div className={mergeStyles(chatAvatarStyle)}>
-              {onRenderAvatar ? onRenderAvatar?.(message.senderId, personaOptions) : <Persona {...personaOptions} />}
-            </div>
-          }
-        >
+        <FluentChatMessage attached={attached} root={messageRootProps} body={messageBodyProps} avatar={avatar}>
           {messageRenderer({ ...props })}
         </FluentChatMessage>
       </div>
