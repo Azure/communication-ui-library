@@ -94,14 +94,13 @@ export const OverflowGallery = (props: {
   const scrollableHorizontalGalleryContainerStyles = useMemo(() => {
     if (isNarrow && parentWidth) {
       return {
-        width:
-          props.layout === 'default'
-            ? `${_convertPxToRem(parentWidth) - 1}rem`
-            : `${_convertPxToRem(parentWidth) - SMALL_FLOATING_MODAL_SIZE_REM.width - 1}rem`
+        width: shouldFloatLocalVideo
+          ? `${_convertPxToRem(parentWidth) - SMALL_FLOATING_MODAL_SIZE_REM.width - 1}rem`
+          : `${_convertPxToRem(parentWidth) - 1}rem`
       };
     }
     return undefined;
-  }, [isNarrow, parentWidth, props.layout]);
+  }, [isNarrow, parentWidth, shouldFloatLocalVideo]);
 
   /* @conditional-compile-remove(vertical-gallery) */
   if (overflowGalleryPosition === 'verticalRight') {
