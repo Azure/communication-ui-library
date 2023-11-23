@@ -31,7 +31,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 import { buttonFlyoutIncreasedSizeStyles } from '../styles/Buttons.styles';
 /* @conditional-compile-remove(PSTN-calls) */
 import { SendDtmfDialpad } from '../../common/SendDtmfDialpad';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
@@ -74,7 +74,7 @@ const controlBarStyles = memoizeFunction((background: string) => ({ root: { back
  */
 export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX.Element => {
   const options = useMemo(() => (typeof props.options === 'boolean' ? {} : props.options), [props.options]);
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(rooms) */
   const adapter = useAdapter();
 
   /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(close-captions) */ /* @conditional-compile-remove(raise-hand) */
