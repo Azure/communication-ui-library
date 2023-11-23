@@ -10,7 +10,7 @@ import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatCompositeProps } from '../ChatComposite';
+import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -300,10 +300,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     };
   }, [callWithChatAdapter]);
 
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
+  const chatAdapter: ChatAdapter = useMemo(() => {
+    return new CallWithChatBackedChatAdapter(callWithChatAdapter);
   }, [callWithChatAdapter]);
 
   /** Constant setting of id for the parent stack of the composite */
@@ -370,7 +368,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatProps.adapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
@@ -480,7 +478,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const onRenderChatContent = useCallback(
     (): JSX.Element => (
       <ChatComposite
-        {...chatProps}
+        adapter={chatAdapter}
         fluentTheme={theme}
         options={{
           topic: false,
@@ -493,7 +491,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       />
     ),
     [
-      chatProps,
+      chatAdapter,
       /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
       props.onFetchAvatarPersonaData,
       theme

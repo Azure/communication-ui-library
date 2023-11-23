@@ -3,13 +3,9 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import { CallingSounds } from './CallAdapter';
-import { CallAdapterLocator } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(calling-sounds) */
-import { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(calling-sounds) */
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(calling-sounds) */
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { CommunicationIdentifier } from '@azure/communication-common';
 
 type CallingSoundsLoaded = {
   callEndedSound?: HTMLAudioElement;
@@ -25,11 +21,11 @@ const CALL_REJECTED_CODE = 603;
 export class CallingSoundSubscriber {
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
-  private callLocator: CallAdapterLocator;
+  private callee: CommunicationIdentifier[] | undefined;
 
-  constructor(call: CallCommon, locator: CallAdapterLocator, sounds?: CallingSounds) {
+  constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
     this.call = call;
-    this.callLocator = locator;
+    this.callee = callee;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
       this.subscribeCallSoundEvents();
@@ -38,7 +34,7 @@ export class CallingSoundSubscriber {
 
   private onCallStateChanged = (): void => {
     this.call.on('stateChanged', () => {
-      if (shouldPlayRingingSound(this.call, this.callLocator) && this.soundsLoaded?.callRingingSound) {
+      if (isPSTNCall(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
       }
@@ -73,17 +69,17 @@ export class CallingSoundSubscriber {
   private loadSounds(sounds?: CallingSounds): CallingSoundsLoaded | undefined {
     let callEndedSound;
     if (sounds?.callEnded) {
-      callEndedSound = new Audio(sounds?.callEnded?.path);
+      callEndedSound = new Audio(sounds?.callEnded?.url);
       callEndedSound.preload = 'auto';
     }
     let callRingingSound;
     if (sounds?.callRinging) {
-      callRingingSound = new Audio(sounds?.callRinging?.path);
+      callRingingSound = new Audio(sounds?.callRinging?.url);
       callRingingSound.preload = 'auto';
     }
     let callBusySound;
     if (sounds?.callBusy) {
-      callBusySound = new Audio(sounds?.callBusy?.path);
+      callBusySound = new Audio(sounds?.callBusy?.url);
       callBusySound.preload = 'auto';
     }
     return {
@@ -104,13 +100,12 @@ export class CallingSoundSubscriber {
  * Helper function to allow the calling sound subscriber to determine when to play the ringing
  * sound when making an outbound call.
  */
-const shouldPlayRingingSound = (call: CallCommon, locator: CallAdapterLocator): boolean => {
-  /* @conditional-compile-remove(calling-sounds) */
-  const callee = (locator as CallParticipantsLocator).participantIds;
+const isPSTNCall = (call: CallCommon, callee?: CommunicationIdentifier[]): boolean => {
   /* @conditional-compile-remove(calling-sounds) */
   if (
+    callee &&
     callee.length >= 1 &&
-    !isPhoneNumberIdentifier(fromFlatCommunicationIdentifier(callee[0])) &&
+    !isPhoneNumberIdentifier(callee[0]) &&
     (call.state === 'Ringing' || call.state === 'Connecting')
   ) {
     return true;
