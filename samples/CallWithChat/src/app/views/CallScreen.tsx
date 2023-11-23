@@ -44,37 +44,37 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     const videoBackgroundImages = [
       {
         key: 'ab1',
-        url: '/backgrounds/contoso.png',
+        url: '/assets/backgrounds/contoso.png',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab2',
-        url: '/backgrounds/abstract2.jpg',
+        url: '/assets/backgrounds/abstract2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab3',
-        url: '/backgrounds/abstract3.jpg',
+        url: '/assets/backgrounds/abstract3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab4',
-        url: '/backgrounds/room1.jpg',
+        url: '/assets/backgrounds/room1.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab5',
-        url: '/backgrounds/room2.jpg',
+        url: '/assets/backgrounds/room2.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab6',
-        url: '/backgrounds/room3.jpg',
+        url: '/assets/backgrounds/room3.jpg',
         tooltipText: 'Custom Background'
       },
       {
         key: 'ab7',
-        url: '/backgrounds/room4.jpg',
+        url: '/assets/backgrounds/room4.jpg',
         tooltipText: 'Custom Background'
       }
     ];
