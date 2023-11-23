@@ -32,7 +32,7 @@ import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata, FileMetadataAttachmentType } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentType, ChatAttachment } from '@azure/communication-chat';
+import { ChatAttachmentType, ChatAttachment } from '@azure/communication-chat';
 
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
@@ -102,7 +102,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const mapAttachmentType = (attachmentType: AttachmentType): FileMetadataAttachmentType => {
+const mapAttachmentType = (attachmentType: ChatAttachmentType): FileMetadataAttachmentType => {
   if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
     return 'inlineImage';
   } else if (attachmentType === 'file') {

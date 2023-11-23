@@ -47,8 +47,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'teams-adhoc-call',
         // Joining calls using teams token
         'teams-identity-support',
-        // Chat teams interop to display images and file attachments in chat messages
-        'teams-inline-images-and-file-sharing',
         'unsupported-browser',
         // Support Calling SDK isReceiving flag, shows a loading spinner on the video tile when isAvailable is true but isReceiving is false
         'video-stream-is-receiving-flag',
@@ -70,8 +68,6 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'capabilities',
         // Feature for custom video gallery layouts
         'gallery-layouts',
-        // Feature image gallery
-        'image-gallery',
         // Feature for large Gallery layout
         'large-gallery',
         // feature for positioning the overflowGallery at the top of the screen in the composite
@@ -130,7 +126,11 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'vertical-gallery',
         // API for injecting custom buttons in he control bar for
         // `CallComposite` and `CallWithChatComposite`.
-        'control-bar-button-injection'
+        'control-bar-button-injection',
+        // Chat teams interop to display images and file attachments in chat messages
+        'teams-inline-images-and-file-sharing',
+        // Feature image gallery
+        'image-gallery',
       ]
     }
   ]);

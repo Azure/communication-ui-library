@@ -30,11 +30,9 @@ import {
 } from './ChatAdapter';
 import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(file-sharing) */
-import {
-  FileUploadAdapter,
-  AzureCommunicationFileUploadAdapter,
-  convertFileUploadsUiStateToMessageMetadata
-} from './AzureCommunicationFileUploadAdapter';
+import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from './AzureCommunicationFileUploadAdapter';
+/* @conditional-compile-remove(file-sharing) */
+import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
@@ -136,7 +134,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     if (options && options.credential) {
       this.credential = options.credential;
     }
-    /* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(file-sharing) */
     this.fileUploadAdapter = new AzureCommunicationFileUploadAdapter(this.context);
 
     const onStateChange = (clientState: ChatClientState): void => {

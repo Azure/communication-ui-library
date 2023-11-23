@@ -3,13 +3,15 @@
 
 import { FileMetadata } from '@internal/react-components';
 import { FileUploadManager, FileUploadState } from '../file-sharing';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import produce from 'immer';
 /* @conditional-compile-remove(file-sharing) */
-import { FileSharingMetadata, FileUpload } from '../file-sharing';
-/* @conditional-compile-remove(file-sharing) */
+import { FileSharingMetadata } from '../file-sharing';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { FileUpload } from '../file-sharing';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatContext } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAdapterState } from './ChatAdapter';
 
 /**
@@ -31,7 +33,6 @@ export interface FileUploadAdapter {
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
 }
 
-/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -88,7 +89,6 @@ class FileUploadContext {
   }
 }
 
-/* @conditional-compile-remove(file-sharing) */
 /**
  * @internal
  */
@@ -203,7 +203,7 @@ export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUpl
   return { fileSharingMetadata: JSON.stringify(fileMetadata) };
 };
 
-/* @conditional-compile-remove(file-sharing) */
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * @private
  */
