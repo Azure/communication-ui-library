@@ -836,6 +836,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Subscribe function for 'roleChanged' event.
+   */
+  on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -915,6 +920,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Subscribe function for 'roleChanged' event.
+   */
+  off(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // This type remains for non-breaking change reason
