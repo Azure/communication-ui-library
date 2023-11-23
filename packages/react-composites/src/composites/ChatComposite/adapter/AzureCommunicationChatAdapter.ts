@@ -37,6 +37,7 @@ import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
@@ -272,12 +273,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     content: string,
     metadata?: Record<string, string>,
     options?: {
+      /* @conditional-compile-remove(file-sharing) */
       attachedFilesMetadata?: FileMetadata[];
     }
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove(file-sharing) */
-      return await this.handlers.onUpdateMessage(messageId, content, metadata, options);
+      const updatedOptions = options
+        ? { attachedFilesMetadata: options.attachedFilesMetadata, metadata: metadata }
+        : {};
+      /* @conditional-compile-remove(file-sharing) */
+      return await this.handlers.onUpdateMessage(messageId, content, updatedOptions);
       return await this.handlers.onUpdateMessage(messageId, content);
     });
   }

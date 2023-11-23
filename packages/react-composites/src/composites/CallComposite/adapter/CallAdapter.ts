@@ -56,9 +56,7 @@ export type CallCompositePage =
   | 'leftCall'
   | 'leaving'
   | 'lobby'
-  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
@@ -70,9 +68,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
@@ -149,6 +145,11 @@ export type CallAdapterClientState = {
    * Hide attendee names in teams meeting
    */
   hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * State to track the sounds to be used in the call.
+   */
+  sounds?: CallingSounds;
 };
 
 /**
@@ -274,6 +275,40 @@ export interface VideoBackgroundImage {
    */
   tooltipText?: string;
 }
+
+/**
+ * @beta
+ * Type for representing a custom sound to use for a calling event
+ */
+export type SoundEffect = {
+  /**
+   * Path to sound effect
+   */
+  path: string;
+  /**
+   * type of file format for the sound effect
+   */
+  fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+};
+
+/**
+ * @beta
+ * Type for representing a set of sounds to use for different calling events
+ */
+export type CallingSounds = {
+  /**
+   * Sound to be played when the call ends
+   */
+  callEnded?: SoundEffect;
+  /**
+   * Sound to be played when the call is ringing
+   */
+  callRinging?: SoundEffect;
+  /**
+   * Sound to be played when the call is rejected by the user being callede
+   */
+  callBusy?: SoundEffect;
+};
 
 /**
  * Options for setting microphone and camera state when joining a call

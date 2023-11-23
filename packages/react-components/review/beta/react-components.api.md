@@ -25,6 +25,7 @@ import { IRenderFunction } from '@fluentui/react';
 import { IStyle } from '@fluentui/react';
 import { IStyleFunctionOrObject } from '@fluentui/react';
 import { ITextFieldStyles } from '@fluentui/react';
+import { ITheme } from '@fluentui/react';
 import { ITooltipHostProps } from '@fluentui/react';
 import { MessageStatus } from '@internal/acs-ui-common';
 import { PartialTheme } from '@fluentui/react';
@@ -1184,6 +1185,9 @@ export const _generateDefaultDeviceMenuProps: (props: _DeviceMenuProps, strings:
     items: IContextualMenuItem[];
 } | undefined;
 
+// @internal
+export const _generateTheme: (accentColor: string, variant: 'light' | 'dark') => ITheme;
+
 // @public
 export const GridLayout: (props: GridLayoutProps) => JSX.Element;
 
@@ -2242,7 +2246,8 @@ export interface UnsupportedOperatingSystemStrings {
 }
 
 // @public
-export type UpdateMessageCallback = (messageId: string, content: string, metadata?: Record<string, string>, options?: {
+export type UpdateMessageCallback = (messageId: string, content: string, options?: {
+    metadata?: Record<string, string>;
     attachedFilesMetadata?: FileMetadata[];
 }) => Promise<void>;
 

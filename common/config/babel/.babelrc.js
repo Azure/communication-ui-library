@@ -79,7 +79,9 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for hiding attendee name in the teams meeting
         'hide-attendee-name',
         // custom branding for the composites
-        'custom-branding'
+        'custom-branding',
+        // Feature for sounds during different calling events
+        'calling-sounds'
       ],
       // A list of in progress beta feature.
       // These features are still beta feature but "in progress"
@@ -97,8 +99,12 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         'gallery-layout-composite',
         // feature for hiding attendee name in the teams meeting
         'hide-attendee-name',
-        // custom branding for the composites
-        'custom-branding'
+        // Feature for sounds during different calling events
+        'calling-sounds',
+         // feature for hiding attendee name in the teams meeting
+         'hide-attendee-name',
+         // custom branding for the composites
+         'custom-branding'
       ],
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
       // A list of stabilized features.

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStyle, mergeStyles } from '@fluentui/react';
+import { IStyle, ITheme, mergeStyles } from '@fluentui/react';
 import {
   CONFIGURATION_PAGE_SECTION_HEIGHT_REM,
   CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM,
@@ -15,13 +15,16 @@ const localPreviewContainerStyle: IStyle = {
 /**
  * @private
  */
-export const localPreviewContainerStyleDesktop = mergeStyles({
-  ...localPreviewContainerStyle,
-  width: '100%',
-  height: `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
-  minWidth: `${CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM}rem`,
-  maxWidth: `${CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM}rem`
-});
+export const localPreviewContainerStyleDesktop = (theme: ITheme): string =>
+  mergeStyles({
+    ...localPreviewContainerStyle,
+    width: '100%',
+    height: `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`,
+    minWidth: `${CONFIGURATION_PAGE_SECTION_MIN_WIDTH_REM}rem`,
+    maxWidth: `${CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM}rem`,
+    border: `0.0625rem solid ${theme.palette.neutralLight}`,
+    boxShadow: theme.effects.elevation4
+  });
 
 /**
  * @private
@@ -29,7 +32,8 @@ export const localPreviewContainerStyleDesktop = mergeStyles({
 export const localPreviewContainerStyleMobile = mergeStyles({
   ...localPreviewContainerStyle,
   width: '100%',
-  height: '100%'
+  height: '100%',
+  minHeight: `${CONFIGURATION_PAGE_SECTION_HEIGHT_REM}rem`
 });
 
 /**

@@ -465,6 +465,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconName: captionSettingsProp.isCaptionsFeatureActive ? 'CaptionsOffIcon' : 'CaptionsIcon',
         styles: { root: { lineHeight: 0 } }
       },
+      onItemClick: onToggleChange,
       disabled: props.disableButtonsForHoldScreen,
       secondaryComponent: (
         <Stack verticalFill verticalAlign="center">

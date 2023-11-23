@@ -24,6 +24,9 @@ export const CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM = 20.625;
 /** @private */
 export const CONFIGURATION_PAGE_SECTION_HEIGHT_REM = 13.625;
 
+const LOGO_HEIGHT_REM = 3;
+const LOGO_MARGIN_BOTTOM_REM = 1;
+
 /**
  * @private
  */
@@ -244,6 +247,20 @@ export const fillWidth = mergeStyles({
 });
 
 /** @private */
+export const configurationCenteredContent = (fillsHeight: boolean, hasLogo?: boolean): string =>
+  mergeStyles({
+    width: '100%',
+    position: 'relative',
+
+    // If the content does not fill the height, center it vertically.
+    // We do not include the logo in the centering per design. This allows it to fade
+    // in and not shift the content. To exclude the logo, we subtract the logo height
+    // and margin from the actual height. This allows the flex box's natural centering
+    // to appropriately center the content.
+    height: `calc(100% - ${!fillsHeight && hasLogo ? `${LOGO_HEIGHT_REM + LOGO_MARGIN_BOTTOM_REM}rem` : '0rem'})`
+  });
+
+/** @private */
 export const panelStyles: Partial<IPanelStyles> = {
   content: {
     display: 'flex',
@@ -274,7 +291,11 @@ export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
     overflow: 'initial', // prevent the image being clipped
     display: 'flex',
     justifyContent: 'center',
-    marginBottom: '1rem'
+    marginBottom: `${LOGO_MARGIN_BOTTOM_REM}rem`
   },
-  image: { borderRadius: shape === 'circle' ? '100%' : undefined, height: '3rem', width: '3rem' }
+  image: {
+    borderRadius: shape === 'circle' ? '100%' : undefined,
+    height: `${LOGO_HEIGHT_REM}rem`,
+    width: `${LOGO_HEIGHT_REM}rem` // width should match height
+  }
 });
