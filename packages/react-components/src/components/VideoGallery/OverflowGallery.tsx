@@ -13,7 +13,6 @@ import { VerticalGalleryStyles } from '../VerticalGallery';
 /* @conditional-compile-remove(vertical-gallery) */
 import { OverflowGalleryPosition } from '../VideoGallery';
 /* @conditional-compile-remove(gallery-layouts) */
-import { VideoGalleryLayout } from '../VideoGallery';
 import { ScrollableHorizontalGallery } from './ScrollableHorizontalGallery';
 import {
   SMALL_HORIZONTAL_GALLERY_TILE_SIZE_REM,
@@ -46,8 +45,6 @@ export const OverflowGallery = (props: {
   /* @conditional-compile-remove(vertical-gallery) */
   overflowGalleryPosition?: OverflowGalleryPosition;
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
-  /* @conditional-compile-remove(gallery-layouts) */
-  layout?: VideoGalleryLayout;
   parentWidth?: number;
 }): JSX.Element => {
   const {
