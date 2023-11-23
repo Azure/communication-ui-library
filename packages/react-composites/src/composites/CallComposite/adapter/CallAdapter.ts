@@ -924,7 +924,7 @@ export interface CallAdapterSubscribers {
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   /* @conditional-compile-remove(rooms) */
   /**
-   * Subscribe function for 'roleChanged' event.
+   * Unsubscribe function for 'roleChanged' event.
    */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
