@@ -23,7 +23,7 @@ import {
 /* @conditional-compile-remove(image-gallery) */
 import { ChatMessage } from '@internal/react-components';
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-gallery) */
 import { useState } from 'react';
 
@@ -176,13 +176,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const messageThreadStyles = Object.assign(
-    {},
-    messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
-    styles?.messageThread
-  );
-  const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
-  const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  const messageThreadStyles = useMemo(() => {
+    return Object.assign(
+      {},
+      messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
+      styles?.messageThread
+    );
+  }, [styles?.messageThread, theme.semanticColors.bodyBackground]);
+
+  const typingIndicatorStyles = useMemo(() => {
+    return Object.assign({}, styles?.typingIndicator);
+  }, [styles?.typingIndicator]);
+  const sendBoxStyles = useMemo(() => {
+    return Object.assign({}, styles?.sendBox);
+  }, [styles?.sendBox]);
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(

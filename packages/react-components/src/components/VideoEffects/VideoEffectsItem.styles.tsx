@@ -5,6 +5,8 @@ import { IButtonStyles, IStackStyles, ITheme } from '@fluentui/react';
 
 const VideoEffectsItemContainerHeight = '3.375rem';
 const VideoEffectsItemContainerWidth = '4.83rem';
+const VideoEffectsItemContainerBorderHeight = '3.373rem';
+const VideoEffectsItemContainerBorderWidth = '4.85rem';
 const VideoEffectsItemContainerBorderSize = '2px';
 
 /** @private */
@@ -47,22 +49,35 @@ export const videoEffectsItemContainerStyles = (args: {
       ':after': {
         content: '""',
         boxSizing: 'border-box',
-        height: '100%',
-        width: '100%',
-        borderRadius: '0.25rem'
+        height: VideoEffectsItemContainerBorderHeight,
+        width: VideoEffectsItemContainerBorderWidth,
+        borderRadius: '0.25rem',
+        transform: 'translate(-1rem, -3.3rem)',
+        display: 'flex'
       },
       ':hover': {
         ':after': {
           border:
             args.disabled && !args.isSelected
               ? `${borderDefaultThickness} solid ${args.theme.palette.neutralQuaternaryAlt}`
-              : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`
+              : `${borderActiveThickness} solid ${args.theme.palette.themePrimary}`,
+          transform: 'translate(-1rem, -3.3rem)'
         }
-      }
-    },
-    rootFocused: {
-      ':after': {
-        outline: `2px solid ${args.theme.palette.neutralQuaternaryAlt}`
+      },
+      ':focus': {
+        ':after': {
+          outline: 'none',
+          transform: 'translate(-0.1rem, -0.2rem)',
+          ':hover': {
+            transform: 'translate(-0.1rem, -0.2rem)'
+          }
+        }
+      },
+      ':active': {
+        ':after': {
+          outline: 'none',
+          transform: 'translate(-1rem, -3.3rem)'
+        }
       }
     }
   };
