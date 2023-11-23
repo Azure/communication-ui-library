@@ -267,7 +267,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           message={message}
           strings={strings}
           /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-          onFetchAttachment={props.onFetchAttachments}
+          onFetchAttachments={props.onFetchAttachments}
           /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */

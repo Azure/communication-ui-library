@@ -602,13 +602,15 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'circle' | 'square';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
@@ -1208,13 +1210,15 @@ export type CallWithChatCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
+    branding?: {
+        logo?: {
+            url: string;
+            alt?: string;
+            shape?: 'circle' | 'square';
+        };
+        backgroundImage?: {
+            url: string;
+        };
     };
 };
 
