@@ -218,17 +218,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         userId={userId}
         fileMetadata={message['attachedFilesMetadata'] || []}
         downloadHandler={fileDownloadHandler}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     ),
-    [
-      userId,
-      message,
-      /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-      strings,
-      fileDownloadHandler
-    ]
+    [userId, message, strings, fileDownloadHandler]
   );
 
   const editedOn = 'editedOn' in message ? message.editedOn : undefined;

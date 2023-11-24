@@ -1069,6 +1069,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // we need to get previousTop before it prepend contents
   // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
   useEffect(() => {
+    console.log('newMessages', newMessages);
+
     if (!chatScrollDivRef.current) {
       return;
     }
