@@ -9,7 +9,8 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery
+  VideoGallery,
+  ReactionButton
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
@@ -41,6 +42,7 @@ import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
+import { reactionButtonSelector } from '..';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -137,6 +139,10 @@ export const getSelector = <Component extends (props: any) => JSX.Element | unde
   if (component === RaiseHandButton) {
     return findConditionalCompiledSelector(component);
   }
+  /* @conditional-compile-remove(reaction) */
+  if (component === ReactionButton) {
+    return findConditionalCompiledSelector(component);
+  }
   return findSelector(component);
 };
 
@@ -181,5 +187,7 @@ const findConditionalCompiledSelector = (component: (props: any) => JSX.Element 
     case RaiseHandButton:
       /* @conditional-compile-remove(raise-hand) */
       return raiseHandButtonSelector;
+    case ReactionButton:
+      return reactionButtonSelector;
   }
 };

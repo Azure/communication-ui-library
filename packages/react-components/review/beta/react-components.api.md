@@ -1919,6 +1919,21 @@ export type Reaction = {
 };
 
 // @public
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @public
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @public
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;
