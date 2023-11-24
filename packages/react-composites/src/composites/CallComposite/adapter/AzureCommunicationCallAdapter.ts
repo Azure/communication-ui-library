@@ -144,9 +144,7 @@ class CallContext {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
       /* @conditional-compile-remove(calling-sounds) */
-      soundOptions?: {
-        callingSounds?: CallingSounds;
-      };
+      callingSounds?: CallingSounds;
     }
   ) {
     this.state = {
@@ -155,6 +153,7 @@ class CallContext {
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
+      /* @conditional-compile-remove(calling-sounds) */ targetCallees: undefined,
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       isTeamsCall,
@@ -168,7 +167,7 @@ class CallContext {
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
       /* @conditional-compile-remove(video-background-effects) */ selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
-      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.soundOptions?.callingSounds
+      /* @conditional-compile-remove(calling-sounds) */ sounds: options?.callingSounds
     };
     this.emitter.setMaxListeners(options?.maxListeners ?? 50);
     this.bindPublicMethods();
@@ -208,6 +207,11 @@ class CallContext {
   // This is the key to find current call object in client state
   public setCurrentCallId(callId: string | undefined): void {
     this.callId = callId;
+  }
+
+  /* @conditional-compile-remove(calling-sounds) */
+  public setTargetCallee(targetCallees: CommunicationIdentifier[]): void {
+    this.setState({ ...this.state, targetCallees });
   }
 
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
@@ -868,7 +872,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
 
   public startCall(
     participants:
-      | string[]
+      | string[] /* @conditional-compile-remove(calling-sounds) */
       /* @conditional-compile-remove(PSTN-calls) */
       | CommunicationIdentifier[],
     options?: StartCallOptions
@@ -891,6 +895,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
       }
       return backendId as CommunicationIdentifier;
     });
+
+    /* @conditional-compile-remove(calling-sounds) */
+    this.context.setTargetCallee(idsToAdd);
 
     const call = this.handlers.onStartCall(idsToAdd, options) as CallTypeOf<AgentType>;
     if (!call) {
@@ -1032,6 +1039,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   on(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangeHandler): void;
+  /* @conditional-compile-remove(capabilities) */
+  on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1064,7 +1073,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   private subscribeCallEvents(): void {
     /* @conditional-compile-remove(calling-sounds) */
     if (this.call) {
-      this.callingSoundSubscriber = new CallingSoundSubscriber(this.call, this.locator, this.getState().sounds);
+      this.callingSoundSubscriber = new CallingSoundSubscriber(
+        this.call,
+        this.getState().targetCallees,
+        this.getState().sounds
+      );
     }
     this.call?.on('remoteParticipantsUpdated', this.onRemoteParticipantsUpdated.bind(this));
     this.call?.on('isMutedChanged', this.isMyMutedChanged.bind(this));
@@ -1212,6 +1225,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
     if (this.call?.role === 'Consumer') {
       this.call?.feature(Features.RaiseHand).lowerHand();
     }
+    this.emitter.emit('roleChanged');
   }
 
   private callIdChanged(): void {
@@ -1251,6 +1265,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   off(event: 'transferRequested', listener: TransferRequestedListener): void;
   /* @conditional-compile-remove(capabilities) */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  off(event: 'roleChanged', listener: PropertyChangedEvent): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {
@@ -1333,14 +1349,9 @@ export type CommonCallAdapterOptions = {
   onFetchProfile?: OnFetchProfileCallback;
   /* @conditional-compile-remove(calling-sounds) */
   /**
-   * Options for calling sounds
+   * Sounds to use for calling events
    */
-  soundOptions?: {
-    /**
-     * Sounds to use for calling events
-     */
-    callingSounds?: CallingSounds;
-  };
+  callingSounds?: CallingSounds;
 };
 
 /**

@@ -374,6 +374,7 @@ export type CallAdapterClientState = {
     userId: CommunicationIdentifierKind;
     displayName?: string;
     call?: CallState;
+    targetCallees?: CommunicationIdentifier[];
     devices: DeviceManagerState;
     endedCall?: CallState;
     isTeamsCall: boolean;
@@ -427,6 +428,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     off(event: 'transferRequested', listener: TransferRequestedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -445,6 +447,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     on(event: 'transferRequested', listener: TransferRequestedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+    on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // @public
@@ -1761,9 +1764,7 @@ export type CommonCallAdapterOptions = {
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
     };
     onFetchProfile?: OnFetchProfileCallback;
-    soundOptions?: {
-        callingSounds?: CallingSounds;
-    };
+    callingSounds?: CallingSounds;
 };
 
 // @public
@@ -3699,8 +3700,7 @@ export interface SitePermissionsStyles extends BaseCustomStyles {
 
 // @beta
 export type SoundEffect = {
-    path: string;
-    fileType?: 'mp3' | 'wav' | 'ogg' | 'aac' | 'flac';
+    url: string;
 };
 
 // @public

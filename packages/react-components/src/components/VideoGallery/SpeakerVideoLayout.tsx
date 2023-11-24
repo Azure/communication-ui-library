@@ -183,7 +183,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         isShort={isShort}
         onFetchTilesToRender={setIndexesToRender}
         isNarrow={isNarrow}
-        shouldFloatLocalVideo={true}
+        shouldFloatLocalVideo={!!localVideoComponent}
         overflowGalleryElements={overflowGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
@@ -205,7 +205,8 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
     /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
-    parentWidth
+    parentWidth,
+    localVideoComponent
   ]);
 
   return (
