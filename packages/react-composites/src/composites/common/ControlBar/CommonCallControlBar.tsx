@@ -340,6 +340,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                           />
                         )
                     }
+                    {
+                      <Reaction 
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        disabled={props.disableButtonsForHoldScreen}
+                      />
+                    }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
                         option={options.screenShareButton}

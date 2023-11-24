@@ -10,6 +10,7 @@ import {
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
+  getLocalParticipantReaction,
   getLocalVideoStreams
 } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
