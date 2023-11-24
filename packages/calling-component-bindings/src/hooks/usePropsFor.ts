@@ -9,7 +9,8 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery
+  VideoGallery,
+  ReactionButton
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
