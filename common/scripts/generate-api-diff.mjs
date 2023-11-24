@@ -20,6 +20,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { getBuildFlavor } from './lib/getBuildFlavor.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -31,6 +32,9 @@ async function main() {
   if (fs.existsSync(destinationDir)) {
     fs.rmSync(destinationDir, { recursive: true });
   }
+
+  // Store the active development flavor to restore to once the cmd finishes
+  const initialDevelopmentFlavor = getBuildFlavor();
 
   const { feature } = parseArgs(process.argv);
   const { features, inProgressFeatures, stabilizedFeatures } = featureDefinitions;
@@ -71,7 +75,7 @@ async function main() {
   fs.rmSync(`${featureDefinitionsFile}.bak`);
 
   // restore the flavor
-  await exec('rush switch-flavor:beta');
+  await exec(`rush switch-flavor:${initialDevelopmentFlavor}`);
 
   console.log(`Done generating api.json files, files can be found at:`);
   console.log(`  - ${baselineFilePath}`);

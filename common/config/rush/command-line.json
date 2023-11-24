@@ -87,7 +87,7 @@
       "commandKind": "global",
       "name": "generate-api-diff",
       "summary": "Generate two api files for a supplied feature name",
-      "description": "Generate two api files that differ only by a supplied feature name. Note: This result of this commands will switch current flavor to beta.",
+      "description": "Supply a feature name and this command will generate two api files under <repo-root>/api. The first file `baseline.api.json` is the @azure/communication-react API result on the current branch with the supplied feature removed. The second file is `feature.api.json` and is the @azure/communication-react API result with the feature included. The two files can then be uploaded to APIView.dev for comparing the API difference with the supplied feature enabled. This is particularly useful for generating an API view for ARB reviews.",
       "shellCommand": "node common/scripts/generate-api-diff.mjs",
       "safeForSimultaneousRushProcesses": true
     },
