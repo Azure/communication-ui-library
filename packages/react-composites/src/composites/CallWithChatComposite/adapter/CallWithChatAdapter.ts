@@ -38,7 +38,7 @@ import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -369,7 +369,7 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**

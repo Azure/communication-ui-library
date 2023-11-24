@@ -47,16 +47,16 @@ import { isNarrowWidth, _useContainerWidth } from './utils/responsive';
 import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveReadMessage';
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { FileMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
 import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { createStyleFromV8Style } from './styles/v8StyleShim';
 
@@ -228,7 +228,7 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /** String for aria text in file attachment group*/
   fileCardGroupMessage: string;
 }
@@ -670,7 +670,7 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /**
    * Optional callback to retrieve the inline image in a message.
    * @param attachment - FileMetadata object we want to render
@@ -744,7 +744,7 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(image-gallery) */
+
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
@@ -879,11 +879,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     onSendMessage,
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
     onFetchAttachments,
     /* @conditional-compile-remove(mention) */
     mentionOptions,
-    /* @conditional-compile-remove(image-gallery) */
+
     onInlineImageClicked
   } = props;
   const onRenderFileDownloads = onRenderFileDownloadsTrampoline(props);
@@ -907,9 +907,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // readCount and participantCount will only need to be updated on-fly when user hover on an indicator
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   const onFetchInlineAttachment = useCallback(
     async (attachments: FileMetadata[], messageId: string): Promise<void> => {
       if (!onFetchAttachments) {
@@ -938,7 +937,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     }
   }, [onLoadPreviousChatMessages]);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     initializeFileTypeIcons();
   }, []);
@@ -1177,7 +1175,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp need to be regenerated)
   const defaultChatMessageRenderer = useCallback(
     (messageProps: MessageProps) => {
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       if (inlineAttachments[messageProps.message.messageId] === undefined) {
         setInlineAttachments((prev) => ({ ...prev, [messageProps.message.messageId]: {} }));
       }
@@ -1201,11 +1198,8 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
             onActionButtonClick={onActionButtonClickMemo}
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             onFetchAttachments={onFetchInlineAttachment}
-            /* @conditional-compile-remove(image-gallery) */
             onInlineImageClicked={onInlineImageClicked}
-            /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
             attachmentsMap={inlineAttachments[messageProps.message.messageId] ?? {}}
             /* @conditional-compile-remove(mention) */
             mentionOptions={mentionOptions}
@@ -1226,11 +1220,11 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       onActionButtonClickMemo,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
       onFetchInlineAttachment,
-      /* @conditional-compile-remove(image-gallery) */
+
       onInlineImageClicked,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
       inlineAttachments,
       /* @conditional-compile-remove(mention) */
       mentionOptions

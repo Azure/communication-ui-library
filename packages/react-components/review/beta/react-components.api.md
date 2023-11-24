@@ -728,7 +728,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme &  ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -1150,10 +1150,10 @@ export interface FileDownloadError {
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
+export type FileMetadata = FileSharingMetadata |  ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'fileSharing' |  'inlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingMetadata extends BaseFileMetadata {
@@ -1318,7 +1318,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme &  ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';

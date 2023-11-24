@@ -3,7 +3,7 @@
 
 import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { FileMetadata } from '../components/FileDownloadCards';
 
 /**
@@ -71,9 +71,9 @@ export interface ChatMessage extends MessageCommon {
    * {@link @azure/communication-chat#ChatMessage.metadata}
    */
   metadata?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /**
-   * @beta
+   * @public
    * A list of files attached to the message.
    * {@link FileMetadata}
    */

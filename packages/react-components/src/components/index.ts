@@ -14,9 +14,8 @@ export { SendBox } from './SendBox';
 /* @conditional-compile-remove(mention) */
 export { _MentionPopover } from './MentionPopover';
 
-/* @conditional-compile-remove(image-gallery) */
 export { ImageGallery } from './ImageGallery';
-/* @conditional-compile-remove(image-gallery) */
+
 export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';
@@ -31,7 +30,6 @@ export type {
   MentionPopoverStrings
 } from './MentionPopover';
 
-/* @conditional-compile-remove(image-gallery) */
 export type { ImageGalleryProps, ImageGalleryImageProps } from './ImageGallery';
 
 /* @conditional-compile-remove(file-sharing) */

@@ -69,7 +69,7 @@ export interface BaseCustomStyles {
     root?: IStyle;
 }
 
-// @beta
+// @public
 export interface BaseFileMetadata {
     attachmentType: FileMetadataAttachmentType;
     extension: string;
@@ -322,7 +322,6 @@ export interface _CaptionsSettingsModalStrings {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
     attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
@@ -582,7 +581,7 @@ export interface CustomMessage extends MessageCommon {
 }
 
 // @public
-export const darkTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const darkTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export const DEFAULT_COMPONENT_ICONS: {
@@ -988,13 +987,13 @@ export interface FileDownloadError {
 // @beta
 export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
-// @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
+// @public
+export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
 
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+// @public (undocumented)
+export type FileMetadataAttachmentType = 'fileSharing' | 'inlineImage' | 'unknown';
 
-// @beta
+// @public
 export interface FileSharingMetadata extends BaseFileMetadata {
     // (undocumented)
     attachmentType: 'fileSharing';
@@ -1095,7 +1094,7 @@ export interface _Identifiers {
     videoTile: string;
 }
 
-// @beta
+// @public
 export interface ImageFileMetadata extends BaseFileMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
@@ -1103,10 +1102,10 @@ export interface ImageFileMetadata extends BaseFileMetadata {
     previewUrl?: string;
 }
 
-// @beta
+// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
-// @beta
+// @public
 export interface ImageGalleryImageProps {
     altText?: string;
     downloadFilename: string;
@@ -1115,7 +1114,7 @@ export interface ImageGalleryImageProps {
     titleIcon?: JSX.Element;
 }
 
-// @beta
+// @public
 export interface ImageGalleryProps {
     images: Array<ImageGalleryImageProps>;
     isOpen: boolean;
@@ -1138,7 +1137,7 @@ export interface JumpToNewMessageButtonProps {
 }
 
 // @public
-export const lightTheme: PartialTheme & CallingTheme & /* @conditional-compile-remove(image-gallery) */ ChatTheme;
+export const lightTheme: PartialTheme & CallingTheme & ChatTheme;
 
 // @public
 export type LoadingState = 'loading' | 'none';

@@ -17,7 +17,7 @@ import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { FileMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
@@ -92,18 +92,18 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /**
    * Optional function to fetch attachments.
    */
   onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
+
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -158,7 +158,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
-    /* @conditional-compile-remove(image-gallery) */
+
     onInlineImageClicked,
     shouldOverlapAvatarAndMessage
   } = props;
@@ -241,7 +241,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return undefined;
   }, [editedOn, message.messageType, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
-  /* @conditional-compile-remove(image-gallery) */
   const handleOnInlineImageClicked = useCallback(
     async (attachmentId: string): Promise<void> => {
       if (onInlineImageClicked === undefined) {
@@ -266,27 +265,16 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           onFetchAttachment={props.onFetchAttachments}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}
-          /* @conditional-compile-remove(image-gallery) */
           onInlineImageClicked={handleOnInlineImageClicked}
         />
         {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
-  }, [
-    defaultOnRenderFileDownloads,
-    message,
-    props,
-    strings,
-    userId,
-    /* @conditional-compile-remove(image-gallery) */
-    handleOnInlineImageClicked
-  ]);
+  }, [defaultOnRenderFileDownloads, message, props, strings, userId, handleOnInlineImageClicked]);
 
   const isBlockedMessage =
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';

@@ -3,14 +3,14 @@
 
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ChatClient, ChatMessage } from '@azure/communication-chat';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { CommunicationGetTokenOptions } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import {
   createAzureCommunicationChatAdapter,
   createAzureCommunicationChatAdapterFromClient
 } from './AzureCommunicationChatAdapter';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { AzureCommunicationChatAdapterOptions } from './AzureCommunicationChatAdapter';
 import { ChatAdapter, ChatAdapterState } from './ChatAdapter';
 import { StubChatClient, StubChatThreadClient, failingPagedAsyncIterator, pagedAsyncIterator } from './StubChatClient';
@@ -24,7 +24,6 @@ const ChatClientMock = ChatClient as jest.MockedClass<typeof ChatClient>;
 
 describe('Adapter is created as expected', () => {
   it('when creating a new adapter from stateful client', async () => {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     const fakeToken: CommunicationTokenCredential = {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       getToken: (options?: CommunicationGetTokenOptions): Promise<MockAccessToken> => {
@@ -38,14 +37,10 @@ describe('Adapter is created as expected', () => {
 
     const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
     const threadClient = statefulChatClient.getChatThreadClient('threadId');
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
     const options: AzureCommunicationChatAdapterOptions = { credential: fakeToken };
 
-    const adapter = await createAzureCommunicationChatAdapterFromClient(
-      statefulChatClient,
-      threadClient,
-      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ options
-    );
+    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient, options);
     expect(adapter).toBeDefined();
   });
 });
@@ -165,7 +160,6 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.sendTypingNotification');
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('when downloadAttachments with no access token fails', async () => {
     const threadClient = new StubChatThreadClient();
     const adapter = await createChatAdapterWithStubs(new StubChatClient(threadClient));
@@ -176,7 +170,7 @@ describe('Error is reflected in state and events', () => {
     expect(errorListener.errors[0].target).toBe('ChatThreadClient.getMessage');
     expect(errorListener.errors[0].innerError.message).toBe('AccessToken is null');
   });
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   it('when downloadAttachments fails with bad respnse', async () => {
     const threadClient = new StubChatThreadClient();
     const fakeToken: CommunicationTokenCredential = {
@@ -202,7 +196,6 @@ describe('Error is reflected in state and events', () => {
   });
 });
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 type MockAccessToken = {
   token: string;
   expiresOnTimestamp: number;

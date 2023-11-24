@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { FileMetadata, _FileDownloadCards, FileSharingMetadata } from './FileDownloadCards';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
 import { ImageFileMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
@@ -37,7 +37,6 @@ describe('FileDownloadCards should be rendered properly', () => {
     expect(card).toBeDefined();
   });
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   it('should not render if it is ImageFileMetadata', async () => {
     const metadata = {
       name: 'MockImageFileCard',

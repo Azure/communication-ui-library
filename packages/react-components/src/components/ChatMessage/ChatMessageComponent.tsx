@@ -83,19 +83,19 @@ type ChatMessageComponentProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /**
    * Optional function to fetch attachments.
    * @beta
    */
   onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
+
   /**
    * Optional callback called when an inline image is clicked.
    * @beta
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -157,11 +157,8 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         /* @conditional-compile-remove(date-time-customization) */
         onDisplayDateTimeString={props.onDisplayDateTimeString}
         strings={props.strings}
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         onFetchAttachments={props.onFetchAttachments}
-        /* @conditional-compile-remove(image-gallery) */
         onInlineImageClicked={props.onInlineImageClicked}
-        /* @conditional-compile-remove(image-gallery) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
