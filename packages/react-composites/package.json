@@ -105,7 +105,7 @@
     "@types/react-linkify": "^1.0.0",
     "@types/react": "18.2.29",
     "@types/uuid": "^9.0.6",
-    "@types/yargs": "17.0.29",
+    "@types/yargs": "^17.0.29",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "@zerollup/ts-transform-paths": "^1.7.18",
@@ -161,6 +161,6 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "4.15.1",
     "webpack": "5.89.0",
-    "yargs": "17.7.2"
+    "yargs": "^17.7.2"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "name": "@internal/scripts",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "beachball": "beachball",
+    "lint": "",
+    "lint:fix": "",
+    "build": "",
+    "build:stable": "",
+    "clean": "",
+    "test": "",
+    "test:ci-coverage": "",
+    "test:stable": "",
+    "prettier": "",
+    "prettier:check": ""
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.29",
+    "yargs": "^17.7.2"
+  }
+}
