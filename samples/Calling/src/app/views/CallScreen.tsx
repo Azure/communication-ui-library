@@ -153,6 +153,12 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
       videoBackgroundOptions: {
         videoBackgroundImages,
         onResolveDependency: onResolveVideoEffectDependencyLazy
+      },
+      /* @conditional-compile-remove(calling-sounds) */
+      callingSounds: {
+        callEnded: { url: '/assets/sounds/callEnded.mp3' },
+        callRinging: { url: '/assets/sounds/callRinging.mp3' },
+        callBusy: { url: '/assets/sounds/callBusy.mp3' }
       }
     };
   }, []);
@@ -188,37 +194,37 @@ const convertPageStateToString = (state: CallAdapterState): string => {
 const videoBackgroundImages = [
   {
     key: 'ab1',
-    url: '/backgrounds/contoso.png',
+    url: '/assets/backgrounds/contoso.png',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab2',
-    url: '/backgrounds/abstract2.jpg',
+    url: '/assets/backgrounds/abstract2.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab3',
-    url: '/backgrounds/abstract3.jpg',
+    url: '/assets/backgrounds/abstract3.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab4',
-    url: '/backgrounds/room1.jpg',
+    url: '/assets/backgrounds/room1.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab5',
-    url: '/backgrounds/room2.jpg',
+    url: '/assets/backgrounds/room2.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab6',
-    url: '/backgrounds/room3.jpg',
+    url: '/assets/backgrounds/room3.jpg',
     tooltipText: 'Custom Background'
   },
   {
     key: 'ab7',
-    url: '/backgrounds/room4.jpg',
+    url: '/assets/backgrounds/room4.jpg',
     tooltipText: 'Custom Background'
   }
 ];

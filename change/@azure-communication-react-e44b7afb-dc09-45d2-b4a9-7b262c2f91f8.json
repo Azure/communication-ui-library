@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "fix",
-  "workstream": "Fix startCall handler so that it can start a call using communication identifiers",
-  "comment": "Fixes startCall handler so that it can call using identifiers as well as the flat strings",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
