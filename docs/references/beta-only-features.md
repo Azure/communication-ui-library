@@ -177,6 +177,21 @@ You an help with the manual step of figuring out what the CHANGELOG is in each r
 * `patch`, `minor` or `major` for changes that affect the stable (and of course beta) flavor build as appropriate.
 * `none` for documentation changes etc that don't affect the NPM bundle meaningfully.
 
+## Creating an API View for ACS and ARB Reviews
+
+To create an API view for ACS and ARB reviews, you can use the following command:
+
+```sh
+rushx generate-api-diff --feature <FEATURE_NAME>
+```
+
+This will generate two files:
+
+* `baseline.api.json`: This file contains the API of `@azure/communication-react` of the current branch _without_ the feature included.
+* `feature.api.json`: This file contains the API of `@azure/communication-react` of the current branch _with_ the feature included.
+
+You can then use these files to create an API view for ACS and ARB reviews on <https://apiview.dev>.
+
 ## Writing changelog of in progress feature
 1. When you are developing in-progress features, choose `none` when you do the `rush changelog`, so release driver can ignore them when grooming the release log. 
 
