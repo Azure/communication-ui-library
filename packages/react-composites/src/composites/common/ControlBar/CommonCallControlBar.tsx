@@ -43,6 +43,7 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
 /* @conditional-compile-remove(raise-hand) */
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
+import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 /**
  * @private
  */
@@ -327,6 +328,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                             disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                           />
                         )
+                    }
+                    {
+                      <Reaction 
+                        displayType={options.displayType}
+                        styles={commonButtonStyles}
+                        disabled={props.disableButtonsForHoldScreen}
+                      />
                     }
                     {screenShareButtonIsEnabled && (
                       <ScreenShare
