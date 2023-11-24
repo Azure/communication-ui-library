@@ -66,7 +66,7 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @beta
+// @public
 export interface AttachmentDownloadResult {
     // (undocumented)
     attachmentId: string;

@@ -494,7 +494,8 @@ const convertEventType = (type: string): ChatMessageType => {
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Configuration options to include when creating AzureCommunicationChatAdapter.
- * @beta
+ *
+ * @public
  */
 export type AzureCommunicationChatAdapterOptions = {
   credential?: CommunicationTokenCredential;

@@ -83,7 +83,7 @@ export interface ImageGalleryProps {
 /**
  * Strings of {@link ImageGallery} that can be overridden.
  *
- * @beta
+ * @public
  */
 export interface ImageGalleryStrings {
   /**

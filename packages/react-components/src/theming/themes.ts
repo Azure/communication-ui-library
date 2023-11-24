@@ -23,13 +23,13 @@ export interface CallingTheme {
 /**
  * Custom Fluent theme palette used by chat related components in this library.
  *
- * @beta
+ * @public
  */
 export interface ChatTheme {
   /**
    * Custom Fluent theme palette used by chat related components in this library.
    *
-   * @beta
+   * @public
    */
   chatPalette: {
     modalOverlayBlack: string;

@@ -21,19 +21,14 @@ import {
   MessageContentType,
   ReadReceiptsBySenderId
 } from '@internal/react-components';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import { ACSKnownMessageType } from './utils/constants';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { FileMetadata, FileMetadataAttachmentType } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { ChatAttachmentType, ChatAttachment } from '@azure/communication-chat';
-
 const memoizedAllConvertChatMessage = memoizeFnAll(
   (
     _key: string,
@@ -43,10 +38,6 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
-    /* @conditional-compile-remove(data-loss-prevention) */
-    if (chatMessage.policyViolation) {
-      return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
-    }
     if (
       messageType === ACSKnownMessageType.text ||
       messageType === ACSKnownMessageType.richtextHtml ||
@@ -58,32 +49,18 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     }
   }
 );
-
-/* @conditional-compile-remove(file-sharing) */
-const extractAttachedFilesMetadata = (metadata: Record<string, string>): FileMetadata[] => {
-  const fileMetadata = metadata['fileSharingMetadata'];
-  if (!fileMetadata) {
-    return [];
-  }
-  try {
-    return JSON.parse(fileMetadata);
-  } catch (e) {
-    console.error(e);
-    return [];
-  }
-};
-
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
   const fileMetadata: FileMetadata[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
+    const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
     if (attachmentType === 'inlineImage') {
       fileMetadata.push({
         attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
-        extension: attachment.contentType ?? '',
+        extension: contentType,
         url: extractAttachmentUrl(attachment),
         previewUrl: attachment.previewUrl
       });
@@ -92,9 +69,11 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
         attachmentType: attachmentType,
         id: attachment.id,
         name: attachment.name ?? '',
-        extension: attachment.contentType ?? '',
+        extension: contentType,
         url: extractAttachmentUrl(attachment),
-        payload: { teamsFileAttachment: 'true' }
+        payload: {
+          teamsFileAttachment: 'true'
+        }
       });
     }
   });
@@ -103,28 +82,24 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const mapAttachmentType = (attachmentType: ChatAttachmentType): FileMetadataAttachmentType => {
-  if (attachmentType === 'teamsImage' || attachmentType === 'teamsInlineImage') {
+  if (attachmentType === 'image') {
     return 'inlineImage';
-  } else if (attachmentType === 'file') {
-    return 'fileSharing';
   }
   return 'unknown';
 };
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
-  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
+  return attachment.url || '';
 };
-
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     const teamsImageHtmlContent = attachments
-      .filter((attachment) => attachment.attachmentType === 'teamsImage')
+      .filter((attachment) => attachment.attachmentType === 'image')
       .map((attachment) => generateImageAttachmentImgHtml(attachment))
       .join('');
-
     if (teamsImageHtmlContent) {
       return (message.content?.message ?? '') + teamsImageHtmlContent;
     }
@@ -134,48 +109,32 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const generateImageAttachmentImgHtml = (attachment: ChatAttachment): string => {
-  return `\r\n<p><img alt="image" src="" itemscope="${attachment.contentType}" id="${attachment.id}"></p>`;
+  const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
+  return `\r\n<p><img alt="image" src="" itemscope="${contentType}" id="${attachment.id}"></p>`;
+};
+
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+const extractAttachmentContentTypeFromName = (name?: string): string | undefined => {
+  if (name === undefined) {
+    return undefined;
+  }
+  const indexOfLastDot = name.lastIndexOf('.');
+  if (indexOfLastDot === undefined || indexOfLastDot < 0) {
+    return undefined;
+  }
+  const contentType = name.substring(indexOfLastDot + 1);
+  return contentType;
 };
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
   let fileMetadata: FileMetadata[] = [];
-
-  /* @conditional-compile-remove(file-sharing) */
-  if (message.metadata) {
-    fileMetadata = fileMetadata.concat(extractAttachedFilesMetadata(message.metadata));
-  }
-
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   if (message.content?.attachments) {
     fileMetadata = fileMetadata.concat(extractTeamsAttachmentsMetadata(message.content?.attachments));
   }
-
   return fileMetadata;
 };
-
-/* @conditional-compile-remove(data-loss-prevention) */
-const convertToUiBlockedMessage = (
-  message: ChatMessageWithStatus,
-  userId: string,
-  isSeen: boolean,
-  isLargeGroup: boolean
-): BlockedMessage => {
-  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
-  return {
-    messageType: 'blocked',
-    createdOn: message.createdOn,
-    warningText: undefined,
-    status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
-    senderDisplayName: message.senderDisplayName,
-    senderId: messageSenderId,
-    messageId: message.id,
-    deletedOn: message.deletedOn,
-    mine: messageSenderId === userId,
-    link: DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL
-  };
-};
-
 const convertToUiChatMessage = (
   message: ChatMessageWithStatus,
   userId: string,
@@ -201,7 +160,6 @@ const convertToUiChatMessage = (
     attachedFilesMetadata: extractFilesMetadata(message)
   };
 };
-
 const convertToUiSystemMessage = (message: ChatMessageWithStatus): SystemMessage => {
   const systemMessageType = message.type;
   if (systemMessageType === 'participantAdded' || systemMessageType === 'participantRemoved') {
@@ -312,7 +270,6 @@ export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =
             );
           })
       );
-
       updateMessagesWithAttached(convertedMessages);
       return {
         userId,
@@ -323,14 +280,12 @@ export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =
       };
     }
   );
-
 const sanitizedMessageContentType = (type: string): MessageContentType => {
   const lowerCaseType = type.toLowerCase();
   return lowerCaseType === 'text' || lowerCaseType === 'html' || lowerCaseType === 'richtext/html'
     ? lowerCaseType
     : 'unknown';
 };
-
 const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
@@ -339,10 +294,6 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
     message.metadata?.['fileSharingMetadata'] ||
     /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ message.content?.attachments
   ) {
-    return true;
-  }
-  /* @conditional-compile-remove(data-loss-prevention) */
-  if (message.policyViolation) {
     return true;
   }
   return !!(message.content && message.content?.message !== '');
