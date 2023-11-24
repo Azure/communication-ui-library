@@ -790,15 +790,15 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
-  const createCallAdapterPromise = _createAzureCommunicationCallAdapterInner(
+  const createCallAdapterPromise = _createAzureCommunicationCallAdapterInner({
     userId,
     displayName,
     credential,
-    callAdapterLocator,
+    locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions,
-    'CallWithChat' as _TelemetryImplementationHint
-  );
+    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions,
+    telemetryImplementationHint: 'CallWithChat' as _TelemetryImplementationHint
+  });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
     ? getChatThreadFromTeamsLink(locator.meetingLink)
