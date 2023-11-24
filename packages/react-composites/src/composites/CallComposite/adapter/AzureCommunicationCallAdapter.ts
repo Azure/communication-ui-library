@@ -1428,7 +1428,7 @@ export const createAzureCommunicationCallAdapter = async ({
   /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
   /* @conditional-compile-remove(video-background-effects) */ options
 }: AzureCommunicationCallAdapterArgs): Promise<CallAdapter> => {
-  return _createAzureCommunicationCallAdapterInner(
+  return _createAzureCommunicationCallAdapterInner({
     userId,
     displayName,
     credential,
@@ -1437,7 +1437,7 @@ export const createAzureCommunicationCallAdapter = async ({
     alternateCallerId,
     /* @conditional-compile-remove(video-background-effects) */
     options
-  );
+  });
 };
 
 /**
@@ -1445,15 +1445,23 @@ export const createAzureCommunicationCallAdapter = async ({
  *
  * @internal
  */
-export const _createAzureCommunicationCallAdapterInner = async (
-  userId: CommunicationUserIdentifier,
-  displayName: string,
-  credential: CommunicationTokenCredential,
-  locator: CallAdapterLocator,
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string,
-  /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions,
-  telemetryImplementationHint: _TelemetryImplementationHint = 'Call'
-): Promise<CallAdapter> => {
+export const _createAzureCommunicationCallAdapterInner = async ({
+  userId,
+  displayName,
+  credential,
+  locator,
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
+  /* @conditional-compile-remove(video-background-effects) */ options,
+  telemetryImplementationHint = 'Call'
+}: {
+  userId: CommunicationUserIdentifier;
+  displayName: string;
+  credential: CommunicationTokenCredential;
+  locator: CallAdapterLocator;
+  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  /* @conditional-compile-remove(video-background-effects) */ options?: AzureCommunicationCallAdapterOptions;
+  telemetryImplementationHint?: _TelemetryImplementationHint;
+}): Promise<CallAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Invalid identifier. Please provide valid identifier object.');
   }
@@ -1461,7 +1469,8 @@ export const _createAzureCommunicationCallAdapterInner = async (
   const callClient = _createStatefulCallClientInner(
     {
       userId,
-      /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+      /* @conditional-compile-remove(PSTN-calls) */
+      alternateCallerId
     },
     undefined,
     telemetryImplementationHint
