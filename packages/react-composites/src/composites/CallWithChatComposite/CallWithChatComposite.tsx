@@ -10,7 +10,7 @@ import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatCompositeProps } from '../ChatComposite';
+import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -186,39 +186,44 @@ export type CallWithChatCompositeOptions = {
   };
   /* @conditional-compile-remove(custom-branding) */
   /**
-   * Logo displayed on the configuration page.
+   * Options for setting additional customizations related to personalized branding.
    */
-  logo?: {
+  branding?: {
     /**
-     * URL for the logo image.
-     *
-     * @remarks
-     * Recommended size is 80x80 pixels.
+     * Logo displayed on the configuration page.
      */
-    url: string;
+    logo?: {
+      /**
+       * URL for the logo image.
+       *
+       * @remarks
+       * Recommended size is 80x80 pixels.
+       */
+      url: string;
+      /**
+       * Alt text for the logo image.
+       */
+      alt?: string;
+      /**
+       * The logo can be displayed as a circle or a square.
+       *
+       * @defaultValue 'circle'
+       */
+      shape?: 'circle' | 'square';
+    };
+    /* @conditional-compile-remove(custom-branding) */
     /**
-     * Alt text for the logo image.
+     * Background image displayed on the configuration page.
      */
-    alt?: string;
-    /**
-     * The logo can be displayed as a circle or a square.
-     *
-     * @defaultValue 'circle'
-     */
-    shape?: 'circle' | 'square';
-  };
-  /* @conditional-compile-remove(custom-branding) */
-  /**
-   * Background image displayed on the configuration page.
-   */
-  backgroundImage?: {
-    /**
-     * URL for the background image.
-     *
-     * @remarks
-     * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
-     */
-    url: string;
+    backgroundImage?: {
+      /**
+       * URL for the background image.
+       *
+       * @remarks
+       * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+       */
+      url: string;
+    };
   };
 };
 
@@ -295,10 +300,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     };
   }, [callWithChatAdapter]);
 
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
+  const chatAdapter: ChatAdapter = useMemo(() => {
+    return new CallWithChatBackedChatAdapter(callWithChatAdapter);
   }, [callWithChatAdapter]);
 
   /** Constant setting of id for the parent stack of the composite */
@@ -365,7 +368,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatProps.adapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
@@ -475,7 +478,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const onRenderChatContent = useCallback(
     (): JSX.Element => (
       <ChatComposite
-        {...chatProps}
+        adapter={chatAdapter}
         fluentTheme={theme}
         options={{
           topic: false,
@@ -488,7 +491,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       />
     ),
     [
-      chatProps,
+      chatAdapter,
       /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
       props.onFetchAvatarPersonaData,
       theme
@@ -590,9 +593,9 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
         /* @conditional-compile-remove(custom-branding) */
-        logo={options?.logo}
+        logo={options?.branding?.logo}
         /* @conditional-compile-remove(custom-branding) */
-        backgroundImage={options?.backgroundImage}
+        backgroundImage={options?.branding?.backgroundImage}
       />
     </BaseProvider>
   );

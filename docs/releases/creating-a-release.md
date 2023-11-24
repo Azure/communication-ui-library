@@ -25,7 +25,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 Ask feature owners to create a PR to add a pre-release changelog and remove the feature from the in-progress-feature/feature list.
 
 For all the features that are going into this release, ask the feature owners to:
-- Remove the feature from the inProgressFeatures array or the feature array in the .babelrc.js
+- Remove the feature from the inProgressFeatures array or the feature array in the [feature list](../../common/config/babel/features.js)
 - Create a change log summarizing the feature and set the change as 'prerelease'
   
 [Shiproom Dashboard](https://skype.visualstudio.com/SPOOL/_dashboards/dashboard/c38163f7-e172-4afa-a4c2-76e888b5cddc)

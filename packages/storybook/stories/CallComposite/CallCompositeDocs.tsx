@@ -196,7 +196,7 @@ export const Docs: () => JSX.Element = () => {
           alt="CallComposite with a logo and background applied"
         />
       </Stack>
-      <Source code="<CallComposite options={{ logo: { url: 'https://...', alt: 'My company logo', shape: 'square' }, backgroundImage: { url: 'https://...' }}} />" />
+      <Source code="<CallComposite options={{ branding: { logo: { url: 'https://...', alt: 'My company logo', shape: 'square' }, backgroundImage: { url: 'https://...' } } }} />" />
 
       <div ref={refCustomDataModel}>
         <Heading>Custom Data Model</Heading>

@@ -71,6 +71,9 @@ dependencies:
   '@rush-temp/sample-static-html-composites':
     specifier: file:./projects/sample-static-html-composites.tgz
     version: file:projects/sample-static-html-composites.tgz
+  '@rush-temp/scripts':
+    specifier: file:./projects/scripts.tgz
+    version: file:projects/scripts.tgz
   '@rush-temp/server':
     specifier: file:./projects/server.tgz
     version: file:projects/server.tgz
@@ -2609,7 +2612,6 @@ packages:
 
   /@fluentui/react-infobutton@9.0.0-beta.71(@types/react-dom@18.2.14)(@types/react@18.2.29)(react-dom@18.2.0)(react@18.2.0)(scheduler@0.23.0):
     resolution: {integrity: sha512-kLxgX577cihAG9TVDR76PlzjjhmcTrL2FR8vZ1lUj1UlG9hsCshJhUnBagd1AeSImFvJnzQxqf6nOu+QwnJXIQ==}
-    deprecated: '@fluentui/react-infobutton has been deprecated, please use @fluentui/react-infolabel instead.'
     peerDependencies:
       '@types/react': '>=16.14.0 <19.0.0'
       '@types/react-dom': '>=16.14.0 <19.0.0'
@@ -20366,7 +20368,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-45OXjpLbE4FbqN00sYisJ8lnZk7wDA5xh6gp53SL676iYwv8nBQHFfLMuBPD6eUVbi/P/CWXo7vLt5zWYHHo2A==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-RpVXWMTAB7A/+4wPM4mXX8AUR9jkYWsKhPmToNpUn5+psbwmNuNB2Zo/Y35oHF0juPnKa3URsj4IjISh0GosFg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20556,6 +20558,15 @@ packages:
       - uglify-js
       - utf-8-validate
       - webpack-dev-server
+    dev: false
+
+  file:projects/scripts.tgz:
+    resolution: {integrity: sha512-bDw92ULh79UtEB3X5e+FZGr0fNIUev0GGLu7uBEQIVgJjigYJGIp6bz01+cVUcNqkP6zKjqrafhWXBkB43ckYw==, tarball: file:projects/scripts.tgz}
+    name: '@rush-temp/scripts'
+    version: 0.0.0
+    dependencies:
+      '@types/yargs': 17.0.29
+      yargs: 17.7.2
     dev: false
 
   file:projects/server.tgz:

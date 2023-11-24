@@ -118,8 +118,6 @@ export const DefaultLayout = (props: DefaultLayoutProps): JSX.Element => {
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
-        /* @conditional-compile-remove(gallery-layouts) */
-        layout={'default'}
         parentWidth={parentWidth}
       />
     );

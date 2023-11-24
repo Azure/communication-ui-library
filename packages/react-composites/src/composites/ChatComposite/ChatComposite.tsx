@@ -105,19 +105,6 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
 
   const formFactor = props['formFactor'] || 'desktop';
 
-  /**
-   * @TODO Remove this function and pass the props directly when file-sharing is promoted to stable.
-   * @private
-   */
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  const fileSharingOptions = () => {
-    /* @conditional-compile-remove(file-sharing) */
-    return {
-      fileSharing: options?.fileSharing
-    };
-    return {};
-  };
-
   return (
     <div className={chatScreenContainerStyle}>
       <BaseProvider {...props}>
@@ -129,7 +116,8 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            {...fileSharingOptions()}
+            /* @conditional-compile-remove(file-sharing) */
+            fileSharing={options?.fileSharing}
           />
         </ChatAdapterProvider>
       </BaseProvider>
