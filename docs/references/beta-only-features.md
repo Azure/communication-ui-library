@@ -110,7 +110,7 @@ rush update:stable
 
 # Conditionally adding a feature
 
-You must first define your new feature by adding it to the `features` and `inProgressFeatures` (not ready for release) list in [this config file](../../common/config/babel/.babelrc.js).
+You must first define your new feature by adding it to the `features` and `inProgressFeatures` (not ready for release) list in [this config file](../../common/config/babel/features.js).
 
 You will need to make your feature [independently removable](#independently-removable-feature) when you are adding them, otherwise you might see some CI failures when raising your PR.
 
@@ -118,13 +118,13 @@ This repository contains a [live document](../../packages/acs-ui-common/src/cond
 feature.
 
 ## When the feature is ready for beta release
-When your feature are ready for beta release, remove it from inProgressFeatures, but keep it in features list, in [this config file](../../common/config/babel/.babelrc.js).
+When your feature are ready for beta release, remove it from inProgressFeatures, but keep it in features list, in [this config file](../../common/config/babel/features.js).
 
 ## Stabilizing a feature
 
 Careful scoping of defined features will allow you to easily stabilize the feature. When you are ready to add your feature to the stable build:
 
-- One-step stabilization: Include all associated conditionally compiled code in the stable flavored build by moving your feature to `stabilizedFeatures` in the [defined features config file]((../../common/config/babel/.babelrc.js)).
+- One-step stabilization: Include all associated conditionally compiled code in the stable flavored build by moving your feature to `stabilizedFeatures` in the [defined features config file](../../common/config/babel/features.js).
   - Switch to stable flavor and build, test and run samples to try out your stabilized feature.
   - You will also get the updated API files for the stable build from this step. You can use this for API review.
 - Clean up: Once your feature is shipped in a stable release, remove all references to conditional compilation directive for your feature, and remove your feature from `stabilizedFeatures` list.
