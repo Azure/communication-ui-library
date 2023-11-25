@@ -193,13 +193,14 @@ packages:
       - supports-color
     dev: false
 
-  /@azure/communication-rooms@1.0.0-beta.1:
-    resolution: {integrity: sha512-s1nTZ6XiAY0N0ICjinJkPx0NFMLnK+nmBOeLCQPVefMwE0XB3JRhT5Bjo5KLcnxmIy9Cl+74Dlcrs6fbh6b5pA==}
-    engines: {node: '>=12.0.0'}
+  /@azure/communication-rooms@1.1.0-beta.1:
+    resolution: {integrity: sha512-KQsW4uaWgY2RsYjaZZ8OJonLZuALV0+sooJ97JyJYuHe5yBMSo8uREQ1pSPETcYno6gC3Jenf5mg5BnY4Q1yXA==}
+    engines: {node: '>=14.0.0'}
     dependencies:
       '@azure/communication-common': 2.3.0
       '@azure/core-auth': 1.5.0
       '@azure/core-client': 1.7.3
+      '@azure/core-paging': 1.5.0
       '@azure/core-rest-pipeline': 1.12.1
       '@azure/core-tracing': 1.0.1
       '@azure/logger': 1.0.4
@@ -20367,7 +20368,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-45OXjpLbE4FbqN00sYisJ8lnZk7wDA5xh6gp53SL676iYwv8nBQHFfLMuBPD6eUVbi/P/CWXo7vLt5zWYHHo2A==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-RpVXWMTAB7A/+4wPM4mXX8AUR9jkYWsKhPmToNpUn5+psbwmNuNB2Zo/Y35oHF0juPnKa3URsj4IjISh0GosFg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -20560,7 +20561,7 @@ packages:
     dev: false
 
   file:projects/scripts.tgz:
-    resolution: {integrity: sha512-vag1+kvSfaLmK/pMKMKnKJsjPealjIKbiBfVmOte0aneck3cPtQwsQOBq0tWJJRuiQ8zyYEi56Qgp6tJoXHuvg==, tarball: file:projects/scripts.tgz}
+    resolution: {integrity: sha512-bDw92ULh79UtEB3X5e+FZGr0fNIUev0GGLu7uBEQIVgJjigYJGIp6bz01+cVUcNqkP6zKjqrafhWXBkB43ckYw==, tarball: file:projects/scripts.tgz}
     name: '@rush-temp/scripts'
     version: 0.0.0
     dependencies:
@@ -20569,14 +20570,14 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-fP/J0dFBAkIQ9BE+UMu5fOI4cOEz819IW09fUb3m2CG1ZrTAmXO7Xql+3/Ffb6bd1zKmbr0nn5FT8BwBdRkawA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-CqNBiM/DtfjM8xwEy0UUL1XCuec/83WY7B5v6h4qvKmAkLC/BLBb9a8lzQK7pyJnI4fFSwW5Zl6MgUV9kFalrw==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
       '@azure/communication-chat': 1.3.2
       '@azure/communication-common': 2.3.0
       '@azure/communication-identity': 1.2.0
-      '@azure/communication-rooms': 1.0.0-beta.1
+      '@azure/communication-rooms': 1.1.0-beta.1
       '@azure/storage-blob': 12.16.0
       '@types/cookie-parser': 1.4.5
       '@types/copy-webpack-plugin': 6.4.3
