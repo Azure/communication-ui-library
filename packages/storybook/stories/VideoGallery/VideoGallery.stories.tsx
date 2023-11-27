@@ -7,8 +7,6 @@ import { ArgsTable, Canvas, Description, Heading, Source, Subheading, Title } fr
 import { Meta } from '@storybook/react/types-6-0';
 import React from 'react';
 import { yellowBannerPalette } from '../BetaBanners/BannerPalettes';
-import { DetailedBetaBanner } from '../BetaBanners/DetailedBetaBanner';
-import { SingleLineBetaBanner } from '../BetaBanners/SingleLineBetaBanner';
 import { StorybookBanner } from '../BetaBanners/StorybookBanner';
 
 import { COMPONENT_FOLDER_PREFIX } from '../constants';
@@ -120,7 +118,6 @@ const getDocs: () => JSX.Element = () => {
         <FloatingLocalVideoExample />
       </Canvas>
       <Subheading>Speaker layout</Subheading>
-      <SingleLineBetaBanner></SingleLineBetaBanner>
       <Description>
         Speaker Layout is meant to highlight the current dominant speaker in the call. For this view in the video
         gallery the only participant that is in the grid view is the participant talking. All other participants are in
@@ -131,7 +128,6 @@ const getDocs: () => JSX.Element = () => {
         <SpeakerLayoutExample />
       </Canvas>
       <Subheading>Focused Content Layout</Subheading>
-      <SingleLineBetaBanner></SingleLineBetaBanner>
       <Description>
         This layout is meant to highlight the current screenshare stream. In this view when the screenshare is present
         the other participants will be removed from the grid view and the overflow gallery will be hidden from view.
@@ -142,7 +138,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Overflow Gallery</Heading>
-      <DetailedBetaBanner></DetailedBetaBanner>
       <Description>
         In the VideoGallery, when there are participants who are not to be prioritized in the grid view, the
         VideoGallery will enter a new layout called Overflow Layout. When in this mode, the VideoGallery will create a
@@ -290,7 +285,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Remote video tile contextual menu</Heading>
-      <DetailedBetaBanner />
       <Description>
         The VideoGallery provides a contextual menu for each remote video tile which can be accessed by hovering the
         remote video tile and clicking menu button next to the participant display name. You can try it out in any of
@@ -309,7 +303,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Pinning Participants</Heading>
-      <DetailedBetaBanner />
       <Description>
         The contextual menu will have a menu item to pin a participant's video tile such that only pinned participants
         are shown in the GridLayout. This is shown in the video clip below. Pinned participants will be shown in the
@@ -364,7 +357,6 @@ const getDocs: () => JSX.Element = () => {
       </Canvas>
 
       <Heading>Remote video stream rendering options</Heading>
-      <DetailedBetaBanner />
       <Description>
         When `useProps` hook is used to provide the props to VideoGallery from the [stateful
         client](./?path=/docs/statefulclient-overview--page), prop `remoteParticipants` will contain information on the
@@ -419,7 +411,6 @@ const getDocs: () => JSX.Element = () => {
       <Source code={renderingOptionsDefault} />
 
       <Heading>Local video tile aspect ratio options</Heading>
-      <SingleLineBetaBanner version={'1.7.0-beta.1'} />
       <Description>
         The local video tile can have its aspect ratio controlled to ensure the expected behavior for the device
         formfactor and orientation. If left unset it will follow the default of `followDeviceOrientation` which will
@@ -453,7 +444,6 @@ const getDocs: () => JSX.Element = () => {
       </Stack>
 
       <Heading>Optimal Video Count and 3x3 Video Tiles</Heading>
-      <DetailedBetaBanner />
       <Description>
         The Optimal Video Count (OVC) feature provides a way to make sure that the number of videos rendered within the
         gallery is appropiate and that all videos are rendering in the best quality possible. This feature is used in
