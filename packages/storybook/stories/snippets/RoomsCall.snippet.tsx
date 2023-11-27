@@ -14,12 +14,11 @@ export type ContainerProps = {
   token: string;
   locator: string;
   displayName: string;
+  roomId: string;
   formFactor?: 'desktop' | 'mobile';
   fluentTheme?: PartialTheme | Theme;
-  callInvitationURL?: string;
   locale?: CompositeLocale;
   options?: CallCompositeOptions;
-  roomId?: string;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -37,19 +36,13 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator: props.roomId
-        ? {
-            roomId: props.roomId
-          }
-        : undefined
+      locator: {
+        roomId: props.roomId
+      }
     },
     undefined,
     leaveCall
   );
-
-  if (!props.roomId) {
-    return <>Room id is not provided.</>;
-  }
 
   if (adapter) {
     return (
@@ -58,7 +51,6 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
           adapter={adapter}
           formFactor={props.formFactor}
           fluentTheme={props.fluentTheme}
-          callInvitationUrl={props?.callInvitationURL}
           locale={props?.locale}
           options={props?.options}
         />
