@@ -15,12 +15,13 @@ import {
   TranscriptionCallFeature,
   CallFeatureFactory,
   StartCallOptions,
-  RoomLocator
+  RoomLocator,
+  TeamsMeetingIdLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import {
-  GroupChatCallLocator,
   MeetingLocator,
+  GroupChatCallLocator,
   PushNotificationData,
   ConnectionStateChangedEvent,
   ConnectionState
@@ -97,9 +98,10 @@ class MockCallAgent implements CallAgent {
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
-  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingIdLocator, options?: JoinCallOptions): Call;
   join(roomLocator: RoomLocator, options?: JoinCallOptions): Call;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   join(meetingLocator: any, options?: any): Call {

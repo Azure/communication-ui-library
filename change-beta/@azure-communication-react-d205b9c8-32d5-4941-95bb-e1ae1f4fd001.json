@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "improvement",
+  "workstream": "Improvement",
+  "comment": "Update configuration page design with tighter alignment between local preview and controls and more compact start call button.",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

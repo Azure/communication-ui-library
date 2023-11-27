@@ -1,4 +1,7 @@
 const plugins = [];
+
+const featureDefinitions = require('./features');
+
 process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
   plugins.push([
     '../../common/scripts/babel-conditional-preprocess',
@@ -99,31 +102,8 @@ process.env['COMMUNICATION_REACT_FLAVOR'] !== 'beta' &&
         // feature for gallery layout in the composite 
         'gallery-layout-composite'
       ],
+      ...featureDefinitions,
       betaReleaseMode: process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta-release',
-      // A list of stabilized features.
-      // These features can be listed in the conditional compilation directives without
-      // causing a build failure, but they are ignored by the preprocessing step.
-      stabilizedFeatures: [
-        // Demo feature. Used in live-documentation of conditional compilation.
-        // Do not use in production code.
-        'stabilizedDemo',
-        // feature for blurred background and replace background effects
-        'video-background-effects',
-        // Pinned Participants
-        'pinned-participants',
-        // Feature for capabilities
-        'capabilities',
-        // Closed captions
-        'close-captions',
-        // Optimal Video Count
-        'optimal-video-count',
-        // raise hands feature
-        'raise-hand',
-        // Feature for gallery layouts
-        'gallery-layouts',
-        // feature  for vertical overflow gallery
-        'vertical-gallery'
-      ]
     }
   ]);
 

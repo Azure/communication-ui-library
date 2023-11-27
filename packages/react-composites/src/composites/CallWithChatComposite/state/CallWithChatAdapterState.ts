@@ -76,9 +76,6 @@ export interface CallWithChatClientState {
   devices: DeviceManagerState;
   /** State of whether the active call is a Teams interop call */
   isTeamsCall: boolean;
-  /* @conditional-compile-remove(rooms) */
-  /** State of whether the active call is a rooms call */
-  isRoomsCall: boolean;
   /* @conditional-compile-remove(PSTN-calls) */
   /** alternateCallerId for PSTN call */
   alternateCallerId?: string | undefined;
@@ -94,6 +91,9 @@ export interface CallWithChatClientState {
   /* @conditional-compile-remove(video-background-effects) */
   /** State to track the selected video background effect */
   selectedVideoBackgroundEffect?: VideoBackgroundEffect;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /** Hide attendee names in teams meeting */
+  hideAttendeeNames?: boolean;
 }
 
 /**
@@ -123,8 +123,6 @@ export function callWithChatAdapterStateFromBackingStates(
     devices: callAdapterState.devices,
     isLocalPreviewMicrophoneEnabled: callAdapterState.isLocalPreviewMicrophoneEnabled,
     isTeamsCall: callAdapterState.isTeamsCall,
-    /* @conditional-compile-remove(rooms) */
-    isRoomsCall: callAdapterState.isRoomsCall,
     latestCallErrors: callAdapterState.latestErrors,
     latestChatErrors: chatAdapterState.latestErrors,
     /* @conditional-compile-remove(file-sharing) */
@@ -138,7 +136,10 @@ export function callWithChatAdapterStateFromBackingStates(
     /* @conditional-compile-remove(video-background-effects) */
     onResolveVideoEffectDependency: callAdapterState.onResolveVideoEffectDependency,
     /* @conditional-compile-remove(video-background-effects) */
-    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect
+    selectedVideoBackgroundEffect: callAdapterState.selectedVideoBackgroundEffect,
+    /* @conditional-compile-remove(hide-attendee-name) */
+    /** Hide attendee names in teams meeting */
+    hideAttendeeNames: callAdapterState.hideAttendeeNames
   };
 }
 

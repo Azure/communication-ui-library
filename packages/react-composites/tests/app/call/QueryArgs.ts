@@ -23,6 +23,10 @@ export interface QueryArgs {
   rtl?: boolean;
   localVideoTilePosition?: false | ('grid' | 'floating');
   enableVideoEffect?: boolean;
+  logo?: 'circle' | 'square';
+  backgroundImage?: boolean;
+  galleryLayout?: string;
+  playSounds?: boolean;
 
   // These are only set for live tests.
   // TODO: Separate the args out better.
@@ -32,7 +36,6 @@ export interface QueryArgs {
   displayName: string;
   mockRemoteParticipantCount: number;
   enableVideoEffects?: boolean;
-  galleryLayout?: string;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -71,6 +74,9 @@ export function parseQueryArgs(): QueryArgs {
       : undefined,
     localVideoTilePosition,
     enableVideoEffects: Boolean(params.enableVideoEffects),
-    galleryLayout: params.galleryLayout ?? ''
+    galleryLayout: params.galleryLayout ?? '',
+    logo: params.logo as 'circle' | 'square' | undefined,
+    backgroundImage: Boolean(params.backgroundImage),
+    playSounds: Boolean(params.playSounds)
   };
 }

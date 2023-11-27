@@ -169,7 +169,7 @@ const VideoEffectsPaneTrampoline = (
 
   /* @conditional-compile-remove(video-background-effects) */
   return (
-    <Stack className={mergeStyles({ paddingLeft: '0.5rem' })}>
+    <Stack tokens={{ childrenGap: '0.75rem' }} className={mergeStyles({ paddingLeft: '0.5rem' })}>
       {activeVideoEffectError && isCameraOn && (
         <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(activeVideoEffectError)}>
           {locale.strings.call.unableToStartVideoEffect}

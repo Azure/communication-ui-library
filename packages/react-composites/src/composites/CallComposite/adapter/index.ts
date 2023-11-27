@@ -3,6 +3,7 @@
 
 export {
   createAzureCommunicationCallAdapter,
+  _createAzureCommunicationCallAdapterInner,
   createAzureCommunicationCallAdapterFromClient,
   useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';
@@ -70,3 +71,5 @@ export type { CapabilitiesChangedListener } from './CallAdapter';
 
 /* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
+
+export type { CallingSounds, SoundEffect } from './CallAdapter';

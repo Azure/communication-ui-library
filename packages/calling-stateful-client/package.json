@@ -1,13 +1,13 @@
 {
   "name": "@internal/calling-stateful-client",
-  "version": "1.9.0-beta.1",
+  "version": "1.10.1-beta.0",
   "description": "Stateful proxy over the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
   "types": "dist/calling-stateful-client.d.ts",
   "scripts": {
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
-    "build:esm": "rushx _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
+    "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
@@ -28,20 +28,20 @@
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs && rushx _api-extractor:by-flavor",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_test:by-flavor": "(rushx _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
+    "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest"
   },
   "dependencies": {
     "@azure/communication-common": "^2.3.0",
     "@azure/logger": "^1.0.4",
-    "@internal/acs-ui-common": "1.9.0-beta.1",
+    "@internal/acs-ui-common": "1.10.1-beta.0",
     "events": "^3.3.0",
     "immer": "9.0.6"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.18.2-beta.1 || ^1.17.1"
+    "@azure/communication-calling": "1.19.1-beta.2 || ^1.18.1"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.18.2-beta.1 || ^1.17.1",
+    "@azure/communication-calling": "1.19.1-beta.2 || ^1.18.1",
     "@azure/core-auth": "^1.4.0",
     "@babel/cli": "^7.16.0",
     "@babel/core": "^7.16.0",

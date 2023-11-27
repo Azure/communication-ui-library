@@ -23,7 +23,7 @@ import {
 /* @conditional-compile-remove(image-gallery) */
 import { ChatMessage } from '@internal/react-components';
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(image-gallery) */
 import { useState } from 'react';
 
@@ -176,13 +176,20 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     [onFetchAvatarPersonaData]
   );
 
-  const messageThreadStyles = Object.assign(
-    {},
-    messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
-    styles?.messageThread
-  );
-  const typingIndicatorStyles = Object.assign({}, styles?.typingIndicator);
-  const sendBoxStyles = Object.assign({}, styles?.sendBox);
+  const messageThreadStyles = useMemo(() => {
+    return Object.assign(
+      {},
+      messageThreadChatCompositeStyles(theme.semanticColors.bodyBackground),
+      styles?.messageThread
+    );
+  }, [styles?.messageThread, theme.semanticColors.bodyBackground]);
+
+  const typingIndicatorStyles = useMemo(() => {
+    return Object.assign({}, styles?.typingIndicator);
+  }, [styles?.typingIndicator]);
+  const sendBoxStyles = useMemo(() => {
+    return Object.assign({}, styles?.sendBox);
+  }, [styles?.sendBox]);
   const userId = toFlatCommunicationIdentifier(adapter.getState().userId);
 
   const fileUploadButtonOnChange = useCallback(
@@ -216,12 +223,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onRenderInlineAttachment = useCallback(
-    async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
-      if (attachment.attachmentType === 'inlineImage' && attachment.previewUrl) {
-        const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.previewUrl] });
-        return blob;
-      }
-      return [{ blobUrl: '' }];
+    async (attachment: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+      const entry: Record<string, string> = {};
+      attachment.forEach((target) => {
+        if (target.attachmentType === 'inlineImage' && target.previewUrl) {
+          entry[target.id] = target.previewUrl;
+        }
+      });
+
+      const blob = await adapter.downloadAttachments({ attachmentUrls: entry });
+      return blob;
     },
     [adapter]
   );
@@ -274,7 +285,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
 
       if (attachment.attachmentType === 'inlineImage' && attachment.url) {
-        const blob = await adapter.downloadAttachments({ attachmentUrls: [attachment.url] });
+        const blob = await adapter.downloadAttachments({ attachmentUrls: { [attachment.id]: attachment.url } });
         if (blob[0]) {
           const blobUrl = blob[0].blobUrl;
           setFullSizeAttachments((prev) => ({ ...prev, [attachment.id]: blobUrl }));

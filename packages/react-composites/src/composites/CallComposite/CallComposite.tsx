@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallCompositeIcons } from '../common/icons';
-import { CompositeLocale, useLocale } from '../localization';
+import { useLocale } from '../localization';
 import { CommonCallAdapter } from './adapter/CallAdapter';
 import { CallAdapterProvider, useAdapter } from './adapter/CallAdapterProvider';
 import { CallPage } from './pages/CallPage';
@@ -37,8 +37,12 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
-import { CallState } from '@internal/calling-stateful-client';
-import { filterLatestErrors, trackErrorAsDismissed, updateTrackedErrorsWithActiveErrors } from './utils';
+import {
+  filterLatestErrors,
+  getEndedCallPageProps,
+  trackErrorAsDismissed,
+  updateTrackedErrorsWithActiveErrors
+} from './utils';
 import { TrackedErrors } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
@@ -228,6 +232,47 @@ export type CallCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Options for setting additional customizations related to personalized branding.
+   */
+  branding?: {
+    /**
+     * Logo displayed on the configuration page.
+     */
+    logo?: {
+      /**
+       * URL for the logo image.
+       *
+       * @remarks
+       * Recommended size is 80x80 pixels.
+       */
+      url: string;
+      /**
+       * Alt text for the logo image.
+       */
+      alt?: string;
+      /**
+       * The logo can be displayed as a circle or a square.
+       *
+       * @defaultValue 'circle'
+       */
+      shape?: 'circle' | 'square';
+    };
+    /* @conditional-compile-remove(custom-branding) */
+    /**
+     * Background image displayed on the configuration page.
+     */
+    backgroundImage?: {
+      /**
+       * URL for the background image.
+       *
+       * @remarks
+       * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+       */
+      url: string;
+    };
+  };
 };
 
 type MainScreenProps = {
@@ -240,6 +285,7 @@ type MainScreenProps = {
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  onCloseChatPane?: () => void;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -327,36 +373,16 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
 
   let pageElement: JSX.Element | undefined;
-  /* @conditional-compile-remove(rooms) */
-  switch (page) {
-    case 'roomNotFound':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageAccessDeniedRoomsCall"
-          title={locale.strings.call.roomNotFoundTitle}
-          moreDetails={locale.strings.call.roomNotFoundDetails}
-          dataUiId={'room-not-found-page'}
-        />
-      );
-      break;
-    case 'deniedPermissionToRoom':
-      pageElement = (
-        <NoticePage
-          iconName="NoticePageAccessDeniedRoomsCall"
-          title={locale.strings.call.deniedPermissionToRoomTitle}
-          moreDetails={locale.strings.call.deniedPermissionToRoomDetails}
-          dataUiId={'not-invited-to-room-page'}
-        />
-      );
-      break;
-  }
   switch (page) {
     case 'configuration':
       pageElement = (
         <ConfigurationPage
           mobileView={props.mobileView}
           startCallHandler={(): void => {
-            adapter.joinCall();
+            adapter.joinCall({
+              microphoneOn: 'keep',
+              cameraOn: 'keep'
+            });
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
           latestErrors={latestErrors}
@@ -370,6 +396,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onNetworkingTroubleShootingClick={props.options?.onNetworkingTroubleShootingClick}
           /* @conditional-compile-remove(capabilities) */
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          /* @conditional-compile-remove(custom-branding) */
+          logo={props.options?.branding?.logo}
+          /* @conditional-compile-remove(custom-branding) */
+          backgroundImage={props.options?.branding?.backgroundImage}
         />
       );
       break;
@@ -414,10 +444,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     case 'leftCall': {
-      const { title, moreDetails, disableStartCallButton } = getEndedCallStrings(locale, endedCall);
+      const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
       pageElement = (
         <NoticePage
-          iconName="NoticePageLeftCall"
+          iconName={iconName}
           title={title}
           moreDetails={moreDetails}
           dataUiId={'left-call-page'}
@@ -469,6 +499,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
+          onCloseChatPane={props.onCloseChatPane}
           latestErrors={latestErrors}
           onDismissError={onDismissError}
           /* @conditional-compile-remove(gallery-layouts) */
@@ -551,7 +582,7 @@ export const CallComposite = (props: CallCompositeProps): JSX.Element => <CallCo
 export interface InternalCallCompositeProps {
   overrideSidePane?: InjectedSidePaneProps;
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
-
+  onCloseChatPane?: () => void;
   // legacy property to avoid breaking change
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
 }
@@ -588,6 +619,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             onSidePaneIdChange={props.onSidePaneIdChange}
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
+            onCloseChatPane={props.onCloseChatPane}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
@@ -617,45 +649,4 @@ const getQueryOptions = (options: {
     };
   }
   return { video: true, audio: true };
-};
-
-const getEndedCallStrings = (
-  locale: CompositeLocale,
-  endedCall?: CallState
-): { title: string; moreDetails?: string; disableStartCallButton: boolean } => {
-  let title = locale.strings.call.leftCallTitle;
-  let moreDetails = locale.strings.call.leftCallMoreDetails;
-  let disableStartCallButton = false;
-  /* @conditional-compile-remove(teams-adhoc-call) */
-  switch (endedCall?.callEndReason?.subCode) {
-    case 10037:
-      if (locale.strings.call.participantCouldNotBeReachedTitle) {
-        title = locale.strings.call.participantCouldNotBeReachedTitle;
-        moreDetails = locale.strings.call.participantCouldNotBeReachedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10124:
-      if (locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle) {
-        title = locale.strings.call.permissionToReachTargetParticipantNotAllowedTitle;
-        moreDetails = locale.strings.call.permissionToReachTargetParticipantNotAllowedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10119:
-      if (locale.strings.call.unableToResolveTenantTitle) {
-        title = locale.strings.call.unableToResolveTenantTitle;
-        moreDetails = locale.strings.call.unableToResolveTenantMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-    case 10044:
-      if (locale.strings.call.participantIdIsMalformedTitle) {
-        title = locale.strings.call.participantIdIsMalformedTitle;
-        moreDetails = locale.strings.call.participantIdIsMalformedMoreDetails;
-        disableStartCallButton = true;
-      }
-      break;
-  }
-  return { title, moreDetails, disableStartCallButton };
 };
