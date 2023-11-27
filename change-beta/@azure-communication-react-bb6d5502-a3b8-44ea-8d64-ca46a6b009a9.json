@@ -1,9 +1,0 @@
-{
-  "type": "none",
-  "area": "fix",
-  "workstream": "Mobile Options Menu fix",
-  "comment": "Fix up menu size and appearance on mobile",
-  "packageName": "@azure/communication-react",
-  "email": "3941071+emlynmac@users.noreply.github.com",
-  "dependentChangeType": "none"
-}

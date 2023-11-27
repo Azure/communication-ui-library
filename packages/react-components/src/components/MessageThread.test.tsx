@@ -185,8 +185,8 @@ describe('Message should display image and attachment correctly', () => {
     const imgId2 = 'SomeImageId2';
     const expectedImgSrc1 = 'http://localhost/someImgSrcUrl1';
     const expectedImgSrc2 = 'http://localhost/someImgSrcUrl2';
-    const expectedOnFetchAttachmentCount = 2;
-    let onFetchAttachmentCount = 0;
+    const expectedOnFetchAttachmentsCount = 1;
+    let onFetchAttachmentsCount = 0;
     const sampleMessage: ChatMessage = {
       messageType: 'chat',
       senderId: 'user3',
@@ -216,24 +216,25 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
-      onFetchAttachmentCount++;
-      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
-      return [
-        {
+    const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+      onFetchAttachmentsCount++;
+      return attachments.map((attachment): AttachmentDownloadResult => {
+        const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
+        return {
+          attachmentId: attachment.id,
           blobUrl: url
-        }
-      ];
+        };
+      });
     };
 
     const { container } = render(
-      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />
+      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachments} />
     );
 
     await waitFor(async () => {
       expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedImgSrc1);
       expect(container.querySelector(`#${imgId2}`)?.getAttribute('src')).toEqual(expectedImgSrc2);
-      expect(onFetchAttachmentCount).toEqual(expectedOnFetchAttachmentCount);
+      expect(onFetchAttachmentsCount).toEqual(expectedOnFetchAttachmentsCount);
     });
   });
 
@@ -286,18 +287,19 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
       return [
         {
+          attachmentId: attachments[0].id,
           blobUrl: url
         }
       ];
     };
 
     const { container } = render(
-      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachment} />
+      <MessageThread userId="user1" messages={[sampleMessage]} onFetchAttachments={onFetchAttachments} />
     );
 
     await waitFor(async () => {
@@ -306,11 +308,11 @@ describe('Message should display image and attachment correctly', () => {
 
       // Frist attachment: previewUrl !== undefine, will not show DownloadFile Icon
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
-      expect(fileDownloadCards?.children[0].textContent).toEqual(fildName1);
+      expect(fileDownloadCards?.children[0].children[0].textContent).toEqual(fildName1);
 
       // Second attachment: id === undefined, will show DownloadFile Icon
       expect(fileDownloadCards?.children[1].innerHTML).toContain(DownloadFileIconName);
-      expect(fileDownloadCards?.children[1].textContent).toEqual(fildName2);
+      expect(fileDownloadCards?.children[1].children[0].textContent).toEqual(fildName2);
 
       // Inline Image attachment
       expect(container.querySelector(`#${imgId1}`)?.getAttribute('src')).toEqual(expectedFilePreviewSrc1);

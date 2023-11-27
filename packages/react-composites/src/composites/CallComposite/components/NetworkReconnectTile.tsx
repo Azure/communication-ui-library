@@ -13,7 +13,6 @@ import {
   titleStyle
 } from '../styles/NetworkReconnectTile.styles';
 import { useHandlers } from '../hooks/useHandlers';
-import { useLocalVideoStartTrigger } from './MediaGallery';
 import { CallCompositeIcon } from '../../common/icons';
 
 /**
@@ -33,9 +32,6 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
   const strings = useLocale().strings.call;
 
   const handlers = useHandlers(ExpandedLocalVideoTile);
-  // This tile may be shown at the beginning of a call.
-  // So we need to transition local video to the call.
-  useLocalVideoStartTrigger(!!props.localParticipantVideoStream.isAvailable);
 
   return (
     <ExpandedLocalVideoTile

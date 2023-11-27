@@ -96,7 +96,7 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   return (
     <Stack
       data-ui-id="call-composite-local-preview"
-      className={props.mobileView ? localPreviewContainerStyleMobile : localPreviewContainerStyleDesktop}
+      className={props.mobileView ? localPreviewContainerStyleMobile : localPreviewContainerStyleDesktop(theme)}
     >
       <VideoTile
         styles={localPreviewTileStyle}

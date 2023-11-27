@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Nya meddelanden",
     "noDisplayNameSub": "Inget namn",
     "editBoxCancelButton": "Avbryt",
-    "editBoxSubmitButton": "Skicka",
+    "editBoxSubmitButton": "Klar",
     "messageReadCount": "Läst av {messageReadByCount} av {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Fler alternativ",
     "downloadFile": "Ladda ner fil",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "föregående sida",
     "rightNavButtonAriaLabel": "nästa sida"
-  }
+  },
+  "AttendeeRole": "Deltagare"
 }

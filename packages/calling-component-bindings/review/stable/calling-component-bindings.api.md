@@ -22,7 +22,6 @@ import { CameraButton } from '@internal/react-components';
 import { _CaptionsInfo } from '@internal/react-components';
 import { Common } from '@internal/acs-ui-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
-import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CreateVideoStreamViewResult } from '@internal/react-components';
 import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DevicesButton } from '@internal/react-components';
@@ -32,7 +31,6 @@ import { ErrorBar } from '@internal/react-components';
 import { MicrophoneButton } from '@internal/react-components';
 import { ParticipantList } from '@internal/react-components';
 import { ParticipantsButton } from '@internal/react-components';
-import { PhoneNumberIdentifier } from '@azure/communication-common';
 import { default as React_2 } from 'react';
 import { ReactElement } from 'react';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
@@ -40,7 +38,6 @@ import { ScreenShareButton } from '@internal/react-components';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulDeviceManager } from '@internal/calling-stateful-client';
-import { UnknownIdentifier } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoGallery } from '@internal/react-components';
 import { VideoGalleryLocalParticipant } from '@internal/react-components';
@@ -172,7 +169,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)

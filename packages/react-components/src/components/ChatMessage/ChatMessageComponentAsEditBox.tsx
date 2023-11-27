@@ -125,7 +125,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return (
       <>
         <InputBoxComponent
-          id={'editbox'}
+          data-ui-id="edit-box"
           textFieldRef={editTextFieldRef}
           inputClassName={editBoxStyle}
           placeholderText={strings.editBoxPlaceholderText}

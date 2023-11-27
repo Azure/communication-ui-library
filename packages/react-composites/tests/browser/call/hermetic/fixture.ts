@@ -17,7 +17,7 @@ import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/com
 /* @conditional-compile-remove(capabilities) */
 import type { ParticipantCapabilities } from '@azure/communication-calling';
 /* @conditional-compile-remove(capabilities) */
-import { CapabilitiesFeatureState } from '@internal/calling-stateful-client';
+import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -57,7 +57,8 @@ const usePage = async ({ browser }, use) => {
 export function defaultMockCallAdapterState(
   participants?: MockRemoteParticipantState[],
   role?: ParticipantRole,
-  isRoomsCall?: boolean
+  isRoomsCall?: boolean,
+  callEndReasonSubCode?: number
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
@@ -71,7 +72,7 @@ export function defaultMockCallAdapterState(
   return {
     displayName: 'Agnes Thompson',
     isLocalPreviewMicrophoneEnabled: true,
-    page: 'call',
+    page: callEndReasonSubCode ? 'leftCall' : 'call',
     call: {
       id: 'call1',
       /* @conditional-compile-remove(teams-identity-support) */
@@ -115,6 +116,15 @@ export function defaultMockCallAdapterState(
       /* @conditional-compile-remove(capabilities) */
       capabilitiesFeature: role ? getCapabilitiesFromRole(role) : undefined
     },
+    endedCall: callEndReasonSubCode
+      ? {
+          ...defaultEndedCallState,
+          callEndReason: {
+            code: 0,
+            subCode: callEndReasonSubCode
+          }
+        }
+      : undefined,
     userId: { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
       isSpeakerSelectionAvailable: true,
@@ -399,5 +409,43 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   reaction: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
+  }
+};
+
+const defaultEndedCallState: CallState = {
+  id: 'call0',
+  /* @conditional-compile-remove(teams-identity-support) */
+  kind: 'Call' as CallKind,
+  callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
+  direction: 'Incoming',
+  transcription: { isTranscriptionActive: false },
+  recording: { isRecordingActive: false },
+  startTime: new Date(500000000000),
+  endTime: new Date(500000000000),
+  diagnostics: { network: { latest: {} }, media: { latest: {} } },
+  state: 'Disconnected',
+  localVideoStreams: [],
+  isMuted: true,
+  isScreenSharingOn: false,
+  remoteParticipants: {},
+  remoteParticipantsEnded: {},
+  /** @conditional-compile-remove(raise-hand) */
+  raiseHand: { raisedHands: [] },
+  captionsFeature: {
+    captions: [],
+    supportedSpokenLanguages: [],
+    supportedCaptionLanguages: [],
+    currentCaptionLanguage: '',
+    currentSpokenLanguage: '',
+    isCaptionsFeatureActive: false,
+    startCaptionsInProgress: false
+  },
+  /* @conditional-compile-remove(call-transfer) */
+  transfer: {
+    acceptedTransfers: {}
+  },
+  /* @conditional-compile-remove(optimal-video-count) */
+  optimalVideoCount: {
+    maxRemoteVideoStreams: 4
   }
 };

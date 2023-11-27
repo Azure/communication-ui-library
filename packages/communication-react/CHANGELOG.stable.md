@@ -1,8 +1,50 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Fri, 06 Oct 2023 19:59:45 GMT and should not be manually modified.
+This log was last generated on Mon, 06 Nov 2023 16:44:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## [1.10.0](https://github.com/azure/communication-ui-library/tree/1.10.0)
+
+Mon, 06 Nov 2023 16:44:11 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.9.0...1.10.0)
+
+### Custom Button Injection - General Availability
+
+You can now add your own custom buttons to the CallComposite and CallwithChatComposite on web (on desktop and mobile web). Custom Button Injection enables developers to add their own custom buttons to the call control bar component. Developers have the ability to add buttons to different sections of the call control bar: primary, secondary, or overflow areas of the control bar. With our simplified button API, you can now create a more immersive calling experience that integrates with your applications.
+
+### Features
+- Update and stabilize custom button injection ([PR #3642](https://github.com/azure/communication-ui-library/pull/3642) by edwardlee@microsoft.com)
+
+### Improvements
+- Update the ACS common package to new stable version ([PR #3634](https://github.com/azure/communication-ui-library/pull/3634) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update to map to attachments to message id ([PR #3679](https://github.com/azure/communication-ui-library/pull/3679) by 9044372+JoshuaLai@users.noreply.github.com)
+- Add background image to configuration page on call composite and call with chat composite ([PR #3703](https://github.com/azure/communication-ui-library/pull/3703) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update configuration page design with tighter alignment between local preview and controls and more compact start call button. ([PR #3726](https://github.com/azure/communication-ui-library/pull/3726) by 2684369+JamesBurnside@users.noreply.github.com)
+- Error message position and font update for edit message component ([PR #3680](https://github.com/azure/communication-ui-library/pull/3680) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Center the configuration page text above the device details on desktop formFactor ([PR #3698](https://github.com/azure/communication-ui-library/pull/3698) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update backward-compatible packages ([PR #3690](https://github.com/azure/communication-ui-library/pull/3690) by 3941071+emlynmac@users.noreply.github.com)
+- Update image padding for ImageGallery ([PR #3651](https://github.com/azure/communication-ui-library/pull/3651) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+### Bug Fixes
+- Remove unused dependencies; migrate to @babel/eslint-parser ([PR #3692](https://github.com/azure/communication-ui-library/pull/3692) by 3941071+emlynmac@users.noreply.github.com)
+- Fix startCall handler so that it can call using identifiers as well as the flat strings ([PR #3712](https://github.com/azure/communication-ui-library/pull/3712) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update PiP in the composites to return to the call screen when the pip is tapped and not dragged ([PR #3722](https://github.com/azure/communication-ui-library/pull/3722) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix file card tooltip ([PR #3708](https://github.com/azure/communication-ui-library/pull/3708) by 77021369+jimchou-dev@users.noreply.github.com)
+- Fix error saying failed to turn off video when starting a call in react18 strict mode ([PR #3734](https://github.com/azure/communication-ui-library/pull/3734) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix Call with Chat adapter creation hook to handle multiple invokations ([PR #3676](https://github.com/azure/communication-ui-library/pull/3676) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix for an issue with narrator focus for message menu button ([PR #3728](https://github.com/azure/communication-ui-library/pull/3728) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Remove bottom paddings for the edit message buttons ([PR #3683](https://github.com/azure/communication-ui-library/pull/3683) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Add disableToolTip prop for ControlBarButton component ([PR #3721](https://github.com/azure/communication-ui-library/pull/3721) by edwardlee@microsoft.com)
+- Fix an issue when the menu button was not accessible sometimes ([PR #3672](https://github.com/azure/communication-ui-library/pull/3672) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix the padding for the warning bar in the effects picker and the background label ([PR #3725](https://github.com/azure/communication-ui-library/pull/3725) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add in prop to not fade in the persona ([PR #3688](https://github.com/azure/communication-ui-library/pull/3688) by alkwa@microsoft.com)
+- Fix issue where the local participant cannot remove others in a call ([PR #3714](https://github.com/azure/communication-ui-library/pull/3714) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Prevent possible endless loop of switching between scrollable and paginated horizontal gallery in VideoGallery ([PR #3730](https://github.com/azure/communication-ui-library/pull/3730) by 79475487+mgamis-msft@users.noreply.github.com)
+- Call focus to background effects picker on mount ([PR #3681](https://github.com/azure/communication-ui-library/pull/3681) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Update start call in adapter to handle new ids from the ACS Common package ([PR #3674](https://github.com/azure/communication-ui-library/pull/3674) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons ([PR #3643](https://github.com/azure/communication-ui-library/pull/3643) by carolinecao@microsoft.com)
+- Fix issue where submenu in the mobile bottom sheet drawer were not focusing on the first item ([PR #3678](https://github.com/azure/communication-ui-library/pull/3678) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Dismiss moredrawer when dialpad opens ([PR #3720](https://github.com/azure/communication-ui-library/pull/3720) by 94866715+dmceachernmsft@users.noreply.github.com)
 
 ## [1.9.0](https://github.com/azure/communication-ui-library/tree/1.9.0)
 

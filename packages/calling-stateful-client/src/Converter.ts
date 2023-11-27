@@ -93,7 +93,9 @@ export function convertSdkParticipantToDeclarativeParticipant(
     isMuted: participant.isMuted,
     isSpeaking: participant.isSpeaking,
     /* @conditional-compile-remove(raise-hand) */
-    raisedHand: undefined
+    raisedHand: undefined,
+    /* @conditional-compile-remove(hide-attendee-name) */
+    role: participant.role
   };
 }
 
@@ -155,7 +157,10 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     /* @conditional-compile-remove(optimal-video-count) */
     optimalVideoCount: {
       maxRemoteVideoStreams: call.feature(Features.OptimalVideoCount).optimalVideoCount
-    }
+    },
+    /* @conditional-compile-remove(hide-attendee-name) */
+    // TODO: Replace this once the SDK supports hide attendee name
+    hideAttendeeNames: true
   };
 }
 

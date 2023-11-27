@@ -147,7 +147,7 @@
     "newMessagesIndicator": "رسائل جديدة",
     "noDisplayNameSub": "لا يوجد اسم",
     "editBoxCancelButton": "إلغاء الأمر",
-    "editBoxSubmitButton": "إرسال",
+    "editBoxSubmitButton": "تم",
     "messageReadCount": "تمت القراءة بواسطة {messageReadByCount} من {remoteParticipantsCount}",
     "actionMenuMoreOptions": "المزيد من الخيارات",
     "downloadFile": "تنزيل ملف",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "الصفحة السابقة",
     "rightNavButtonAriaLabel": "الصفحة التالية"
-  }
+  },
+  "AttendeeRole": "الحضور"
 }

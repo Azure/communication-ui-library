@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Nové zprávy",
     "noDisplayNameSub": "Bez jména",
     "editBoxCancelButton": "Zrušit",
-    "editBoxSubmitButton": "Odeslat",
+    "editBoxSubmitButton": "Hotovo",
     "messageReadCount": "Přečetl(a) {messageReadByCount} z {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Další možnosti",
     "downloadFile": "Stáhnout soubor",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "předchozí stránka",
     "rightNavButtonAriaLabel": "další stránka"
-  }
+  },
+  "AttendeeRole": "Účastník"
 }

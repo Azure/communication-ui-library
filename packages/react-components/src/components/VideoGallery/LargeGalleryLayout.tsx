@@ -131,6 +131,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        parentWidth={parentWidth}
       />
     );
   }, [
@@ -140,7 +141,8 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    parentWidth
   ]);
 
   return (

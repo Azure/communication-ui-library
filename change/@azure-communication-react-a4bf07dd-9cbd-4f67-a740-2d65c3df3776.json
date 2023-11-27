@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons",
-  "comment": "Add onFetchAvatar to captionsBanner component to allow passing in custom avatar icons",
-  "packageName": "@azure/communication-react",
-  "email": "carolinecao@microsoft.com",
-  "dependentChangeType": "patch"
-}
