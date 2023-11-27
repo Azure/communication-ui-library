@@ -17,7 +17,8 @@ import {
   TeamsMeetingLinkLocator,
   VideoDeviceInfo,
   AudioDeviceInfo,
-  RoomLocator
+  RoomLocator,
+  TeamsMeetingIdLocator
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -290,6 +291,7 @@ export class MockCallAgent implements CallAgent {
   join(groupLocator: GroupLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(groupChatCallLoctor: GroupChatCallLocator, options?: JoinCallOptions): Call;
+  join(meetingLocator: TeamsMeetingIdLocator, options?: JoinCallOptions): Call;
   join(meetingLocator: TeamsMeetingLinkLocator, options?: JoinCallOptions): Call;
   /* @conditional-compile-remove(calling-beta-sdk) */
   join(meetingLocator: MeetingLocator, options?: JoinCallOptions): Call;

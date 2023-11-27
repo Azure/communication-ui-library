@@ -3,7 +3,7 @@
 
 import * as express from 'express';
 import { getResourceConnectionString } from '../lib/envHelper';
-import { RoomsClient, RoomParticipant, Role } from '@azure/communication-rooms';
+import { RoomsClient, RoomParticipant, ParticipantRole } from '@azure/communication-rooms';
 
 const router = express.Router();
 interface AddUserToRoomParam {
@@ -31,13 +31,12 @@ router.post('/', async function (req, res, next) {
   // request payload to add participants
   const addParticipantsList: RoomParticipant[] = [
     {
-      id: { communicationUserId: addUserToRoomParam.userId },
-      role: addUserToRoomParam.role as Role
+      id: { kind: 'communicationUser', communicationUserId: addUserToRoomParam.userId },
+      role: addUserToRoomParam.role as ParticipantRole
     }
   ];
 
-  await roomsClient.addParticipants(addUserToRoomParam.roomId, addParticipantsList);
-  res.send(201);
+  res.send(await roomsClient.addOrUpdateParticipants(addUserToRoomParam.roomId, addParticipantsList));
 });
 
 export default router;

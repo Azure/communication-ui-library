@@ -127,6 +127,11 @@ jobs:
           git tag ${{ steps.version.outputs.version }}
           git push --tags
 
+      # Clean package.json
+      - name: Remove devDependencies and beachball from package.json
+        run: node ../../common/scripts/prepare-package-json.js
+        working-directory: ./packages/communication-react
+
       # Publish package
       - name: Package alpha packages for release
         run: npm pack

@@ -322,6 +322,26 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when the user attempts to join a room that cannot be found.
    */
   roomNotFoundDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user attempts to join a room that is not valid.
+   */
+  roomNotValidTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user attempts to join a room that is not valid.
+   */
+  roomNotValidDetails?: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Title text of the page shown to the user when the user's permission to join the room is removed.
+   */
+  inviteToRoomRemovedTitle: string;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * More details text of the page shown to the user when the user's permission to join the room is removed.
+   */
+  inviteToRoomRemovedDetails?: string;
   /* @conditional-compile-remove(video-background-effects) */
   /**
    * Video Effects pane title.
@@ -369,14 +389,14 @@ export interface CallCompositeStrings {
   cameraOffBackgroundEffectWarningText?: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * Title text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   * Title text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
-  deniedPermissionToRoomTitle: string;
+  notInvitedToRoomTitle: string;
   /* @conditional-compile-remove(rooms) */
   /**
-   * More details text of the page shown to the user when the user attempts to join a room to which they are not invited.
+   * More details text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
-  deniedPermissionToRoomDetails?: string;
+  notInvitedToRoomDetails?: string;
   /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Control bar People button ToolTipContent
@@ -721,4 +741,18 @@ export interface CallCompositeStrings {
    * Corresponding texts to each call issue
    */
   surveyIssues: SurveyIssues;
+  /**
+   * String for the dismiss control on the local and remote PIP on mobile
+   */
+  dismissModalAriaLabel?: string;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * String for title when the call is rejected by the callee
+   */
+  callRejectedTitle: string;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * String for more details when the call is rejected by the callee
+   */
+  callRejectedMoreDetails?: string;
 }

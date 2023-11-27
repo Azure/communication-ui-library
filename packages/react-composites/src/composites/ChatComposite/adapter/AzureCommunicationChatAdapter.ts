@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import {
-  createStatefulChatClient,
+  _createStatefulChatClientInner,
   ChatClientState,
   ChatError,
   StatefulChatClient
@@ -17,7 +17,7 @@ import type {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent
 } from '@azure/communication-chat';
-import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { toFlatCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import EventEmitter from 'events';
 import {
   ChatAdapter,
@@ -39,6 +39,7 @@ import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentDownloadResult } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
@@ -274,12 +275,17 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     content: string,
     metadata?: Record<string, string>,
     options?: {
+      /* @conditional-compile-remove(file-sharing) */
       attachedFilesMetadata?: FileMetadata[];
     }
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
       /* @conditional-compile-remove(file-sharing) */
-      return await this.handlers.onUpdateMessage(messageId, content, metadata, options);
+      const updatedOptions = options
+        ? { attachedFilesMetadata: options.attachedFilesMetadata, metadata: metadata }
+        : {};
+      /* @conditional-compile-remove(file-sharing) */
+      return await this.handlers.onUpdateMessage(messageId, content, updatedOptions);
       return await this.handlers.onUpdateMessage(messageId, content);
     });
   }
@@ -326,7 +332,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  async downloadAttachments(options: { attachmentUrls: string[] }): Promise<AttachmentDownloadResult[]> {
+  async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
     return this.asyncTeeErrorToEventEmitter(async () => {
       if (this.credential === undefined) {
         const e = new Error();
@@ -348,7 +354,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   private async downloadAuthenticatedFile(
     accessToken: string,
-    options: { attachmentUrls: string[] }
+    options: { attachmentUrls: Record<string, string> }
   ): Promise<AttachmentDownloadResult[]> {
     async function fetchWithAuthentication(url: string, token: string): Promise<Response> {
       const headers = new Headers();
@@ -362,10 +368,15 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
         throw e;
       }
     }
-    const attachmentUrl = options.attachmentUrls[0];
-    const response = await fetchWithAuthentication(attachmentUrl, accessToken);
-    const blob = await response.blob();
-    return [{ blobUrl: URL.createObjectURL(blob) }];
+
+    const attachmentDownloadResults: AttachmentDownloadResult[] = [];
+    for (const id in options.attachmentUrls) {
+      const response = await fetchWithAuthentication(options.attachmentUrls[id], accessToken);
+      const blob = await response.blob();
+      attachmentDownloadResults.push({ attachmentId: id, blobUrl: URL.createObjectURL(blob) });
+    }
+
+    return attachmentDownloadResults;
   }
 
   private messageReceivedListener(event: ChatMessageReceivedEvent): void {
@@ -518,16 +529,36 @@ export const createAzureCommunicationChatAdapter = async ({
   credential,
   threadId
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
+  return _createAzureCommunicationChatAdapterInner(endpointUrl, userId, displayName, credential, threadId);
+};
+
+/**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ *
+ * @internal
+ */
+export const _createAzureCommunicationChatAdapterInner = async (
+  endpoint: string,
+  userId: CommunicationUserIdentifier,
+  displayName: string,
+  credential: CommunicationTokenCredential,
+  threadId: string,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'Chat'
+): Promise<ChatAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
 
-  const chatClient = createStatefulChatClient({
-    userId,
-    displayName,
-    endpoint: endpointUrl,
-    credential: credential
-  });
+  const chatClient = _createStatefulChatClientInner(
+    {
+      userId,
+      displayName,
+      endpoint,
+      credential
+    },
+    undefined,
+    telemetryImplementationHint
+  );
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
 

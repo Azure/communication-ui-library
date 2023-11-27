@@ -8,6 +8,7 @@ import {
   existsOnPage,
   hidePiPiP,
   isTestProfileDesktop,
+  isTestProfileMobile,
   pageClick,
   stableScreenshot,
   waitForSelector
@@ -51,21 +52,32 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
 });
 
 test.describe('Rooms CallScreen tests for different roles', async () => {
-  test('All CallControls are enabled for Presenter', async ({ page, serverUrl }) => {
+  test('All CallControls are enabled for Presenter', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState([], 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter.png');
+    if (isTestProfileMobile(testInfo)) {
+      await pageClick(page, dataUiId(IDS.moreButton));
+      expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-presenter-click-more-button.png');
+    }
   });
 
-  test('Screen Share is disabled for Attendee', async ({ page, serverUrl }) => {
+  test('Screen Share is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
+    if (isTestProfileMobile(testInfo)) {
+      await pageClick(page, dataUiId(IDS.moreButton));
+      expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee-click-more-button.png');
+    }
   });
 
-  test('Only few CallControls are enabled for Consumer with remote participants', async ({ page, serverUrl }) => {
+  test('Only few CallControls are enabled for Consumer with remote participants', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
     const participants = [paul, vasily];
@@ -73,6 +85,10 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
+    if (isTestProfileMobile(testInfo)) {
+      await pageClick(page, dataUiId(IDS.moreButton));
+      expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-click-more-button.png');
+    }
   });
 });
 

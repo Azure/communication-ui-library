@@ -147,7 +147,7 @@
     "newMessagesIndicator": "Новые сообщения",
     "noDisplayNameSub": "Без имени",
     "editBoxCancelButton": "Отмена",
-    "editBoxSubmitButton": "Отправить",
+    "editBoxSubmitButton": "Готово",
     "messageReadCount": "Прочитали: {messageReadByCount} из {remoteParticipantsCount}",
     "actionMenuMoreOptions": "Дополнительные параметры",
     "downloadFile": "Скачать файл",
@@ -341,5 +341,6 @@
   "verticalGallery": {
     "leftNavButtonAriaLabel": "предыдущая страница",
     "rightNavButtonAriaLabel": "следующая страница"
-  }
+  },
+  "AttendeeRole": "Участник"
 }

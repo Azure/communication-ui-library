@@ -15,7 +15,8 @@ import {
   dropDownStyles,
   dropDownTitleIconStyles,
   mainStackTokens,
-  optionIconStyles
+  optionIconStyles,
+  soundStackTokens
 } from '../styles/LocalDeviceSettings.styles';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(rooms) */ /* @conditional-compile-remove(video-background-effects) */
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -252,7 +253,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         >
           {soundLabel}
         </Label>
-        <Stack data-ui-id="call-composite-sound-settings" tokens={mainStackTokens}>
+        <Stack data-ui-id="call-composite-sound-settings" tokens={soundStackTokens}>
           <ConfigurationPageMicDropdown
             micGrantedDropdown={micGrantedDropdown}
             micPermissionGranted={micPermissionGranted ?? false}

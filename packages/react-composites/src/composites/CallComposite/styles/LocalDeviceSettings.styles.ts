@@ -3,18 +3,20 @@
 
 import { IDropdownStyles, IStackTokens, Theme, mergeStyles } from '@fluentui/react';
 
+const DROPDOWN_HEIGHT_REM = 2.25;
+
 /**
  * @private
  */
 export const mainStackTokens: IStackTokens = {
-  childrenGap: '1rem'
+  childrenGap: '0.5rem'
 };
 
 /**
  * @private
  */
-export const micStackTokens: IStackTokens = {
-  childrenGap: '1rem'
+export const soundStackTokens: IStackTokens = {
+  childrenGap: '0.5rem'
 };
 
 /**
@@ -22,16 +24,16 @@ export const micStackTokens: IStackTokens = {
  */
 export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   caretDownWrapper: {
-    height: '2.5rem',
-    lineHeight: '2.5rem'
+    height: `${DROPDOWN_HEIGHT_REM}rem`,
+    lineHeight: `${DROPDOWN_HEIGHT_REM}rem`
   },
   dropdownItem: {
     fontSize: '0.875rem',
-    height: '2.5rem',
+    height: `${DROPDOWN_HEIGHT_REM}rem`,
     background: theme.palette.white
   },
   dropdown: {
-    height: '2.5rem',
+    height: `${DROPDOWN_HEIGHT_REM}rem`,
     width: '100%',
     svg: {
       verticalAlign: 'top'
@@ -39,14 +41,17 @@ export const dropDownStyles = (theme: Theme): Partial<IDropdownStyles> => ({
   },
   title: {
     fontSize: '0.875rem',
-    height: '2.5rem',
-    lineHeight: '2.3125rem',
+    height: `${DROPDOWN_HEIGHT_REM}rem`,
+    lineHeight: '2rem',
     borderRadius: '0.25rem',
     border: `1px solid ${theme.palette.neutralQuaternaryAlt}`
   },
   label: {
     fontWeight: 600,
-    fontSize: '0.875rem'
+    fontSize: '0.875rem',
+
+    // Add z-index to ensure labels are rendered above the configuration section background
+    zIndex: 1
   },
   errorMessage: {
     fontSize: '0.875rem'

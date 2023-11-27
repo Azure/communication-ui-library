@@ -28,9 +28,9 @@ export type ChatHandlers = {
     messageId: string,
     content: string,
     /* @conditional-compile-remove(file-sharing) */
-    metadata?: Record<string, string>,
-    /* @conditional-compile-remove(file-sharing) */
     options?: {
+      /* @conditional-compile-remove(file-sharing) */
+      metadata?: Record<string, string>;
       attachedFilesMetadata?: FileMetadata[];
     }
   ) => Promise<void>;
@@ -62,12 +62,12 @@ export const createDefaultChatHandlers = memoizeOne(
       onUpdateMessage: async (
         messageId: string,
         content: string,
-        metadata?: Record<string, string>,
         options?: {
+          metadata?: Record<string, string>;
           attachedFilesMetadata?: FileMetadata[];
         }
       ) => {
-        const updatedMetadata = metadata ? { ...metadata } : {};
+        const updatedMetadata = options?.metadata ? { ...options.metadata } : {};
         updatedMetadata['fileSharingMetadata'] = JSON.stringify(options?.attachedFilesMetadata || []);
         await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },

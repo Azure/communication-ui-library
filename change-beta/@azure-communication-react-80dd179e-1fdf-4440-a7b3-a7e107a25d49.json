@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Fixing Captions Display Image fade in to just not fade in anymore",
-  "comment": "adding in fluent prop to not fade in the persona",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}
