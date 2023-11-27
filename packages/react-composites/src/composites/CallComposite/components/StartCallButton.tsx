@@ -14,6 +14,7 @@ export interface StartCallButtonProps extends IButtonProps {
   className?: string;
   /** If set, the button is intended to rejoin an existing call. */
   rejoinCall?: boolean;
+  hideIcon?: boolean;
 }
 
 /**
@@ -30,7 +31,7 @@ export const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
       className={mergeStyles(buttonStyle, props.className)}
       styles={buttonWithIconStyles}
       text={rejoinCall ? locale.strings.call.rejoinCallButtonLabel : locale.strings.call.startCallButtonLabel}
-      onRenderIcon={() => <Video20Filled className={videoCameraIconStyle} />}
+      onRenderIcon={props.hideIcon ? undefined : () => <Video20Filled className={videoCameraIconStyle} />}
     />
   );
 };

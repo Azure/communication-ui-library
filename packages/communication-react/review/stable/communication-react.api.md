@@ -31,7 +31,7 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { CommunicationTokenCredential } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import { CommunicationUserKind } from '@azure/communication-common';
+import type { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
@@ -55,8 +55,6 @@ import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
-import { MicrosoftTeamsAppKind } from '@azure/communication-common';
-import { MicrosoftTeamsUserKind } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
@@ -65,8 +63,6 @@ import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
 import { PersonaPresence } from '@fluentui/react';
 import { PersonaSize } from '@fluentui/react';
-import { PhoneNumberIdentifier } from '@azure/communication-common';
-import { PhoneNumberKind } from '@azure/communication-common';
 import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import type { RemoteParticipant } from '@azure/communication-calling';
@@ -78,8 +74,6 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
-import { UnknownIdentifier } from '@azure/communication-common';
-import { UnknownIdentifierKind } from '@azure/communication-common';
 import { VideoDeviceInfo } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
 import { VideoStreamRenderer } from '@azure/communication-calling';
@@ -430,6 +424,7 @@ export type CallCompositeIcons = {
     FocusedContentGalleryLayout?: JSX.Element;
     OverflowGalleryTop?: JSX.Element;
     LargeGalleryLayout?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
 };
 
 // @public
@@ -495,6 +490,7 @@ export interface CallCompositeStrings {
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
     defaultPlaceHolder: string;
+    dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
@@ -904,6 +900,7 @@ export type CallWithChatCompositeIcons = {
     ParticipantItemScreenShareStart?: JSX.Element;
     VideoTileMicOff?: JSX.Element;
     LocalCameraSwitch?: JSX.Element;
+    DefaultCustomButton?: JSX.Element;
     EditBoxCancel?: JSX.Element;
     EditBoxSubmit?: JSX.Element;
     MessageDelivered?: JSX.Element;
@@ -1419,6 +1416,7 @@ export type CommonCallControlOptions = {
     raiseHandButton?: boolean | {
         disabled: boolean;
     };
+    onFetchCustomButtonProps?: CustomCallControlButtonCallback[];
     peopleButton?: boolean;
 };
 
@@ -1461,7 +1459,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
     // (undocumented)
-    onStartCall: (participants: (CommunicationUserIdentifier | PhoneNumberIdentifier | UnknownIdentifier)[], options?: StartCallOptions) => void;
+    onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
     onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     // (undocumented)
@@ -1687,6 +1685,7 @@ export const ControlBarButton: (props: ControlBarButtonProps) => JSX.Element;
 
 // @public
 export interface ControlBarButtonProps extends IButtonProps {
+    disableTooltip?: boolean;
     labelKey?: string;
     onRenderOffIcon?: IRenderFunction<IButtonProps>;
     onRenderOnIcon?: IRenderFunction<IButtonProps>;
@@ -1777,6 +1776,36 @@ export type CustomAvatarOptions = {
     styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
     text?: string;
 };
+
+// @public
+export type CustomCallControlButtonCallback = (args: CustomCallControlButtonCallbackArgs) => CustomCallControlButtonProps;
+
+// @public
+export interface CustomCallControlButtonCallbackArgs {
+    displayType?: CallControlDisplayType;
+}
+
+// @public
+export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'secondary';
+
+// @public
+export interface CustomCallControlButtonProps {
+    disabled?: boolean;
+    iconName?: string;
+    id?: string;
+    onItemClick?: () => void;
+    placement: CustomCallControlButtonPlacement;
+    showLabel?: boolean;
+    strings?: CustomCallControlButtonStrings;
+}
+
+// @public
+export interface CustomCallControlButtonStrings {
+    ariaDescription?: string;
+    ariaLabel?: string;
+    label?: string;
+    tooltipContent?: string;
+}
 
 // @public
 export interface CustomMessage extends MessageCommon {
@@ -1936,6 +1965,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     FocusedContentGalleryLayout?: JSX.Element | undefined;
     OverflowGalleryTop?: JSX.Element | undefined;
     LargeGalleryLayout?: JSX.Element | undefined;
+    DefaultCustomButton?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2780,7 +2810,7 @@ export interface RecordingCallFeature {
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     displayName?: string;
-    identifier: CommunicationUserKind | PhoneNumberKind | MicrosoftTeamsUserKind | UnknownIdentifierKind | MicrosoftTeamsAppKind;
+    identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
     raisedHand?: RaisedHandState;

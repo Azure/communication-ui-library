@@ -1,7 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { AzureLogger } from '@azure/logger';
+/// This is a react component that will prompt the user to send logs when they shake their device.
+/// This is particularly useful on mobile devices where the console is not easily accessible.
+/// This should be used once in the app.
+///
+/// This component will only render if the device supports the shake feature and is on a mobile device.
+/// On iOS, device motion events require permission granted first.
+/// If the user has not granted permission, this component will prompt the user to grant permission.
+/// If the user has not granted permission, or the user is on desktop, this component will not render.
+/// If the user has granted permission, this component will render and listen for shake events.
+///
+/// This component works by intercepting console logs and storing them in memory.
+/// This component also stores AzureLogger logs but does not forward these to the console to avoid spamming the console.
+
+import { setLogLevel, AzureLogger } from '@azure/logger';
 import { DefaultButton, Dialog, DialogFooter, DialogType, Link, PrimaryButton, Spinner, Text } from '@fluentui/react';
 import React from 'react';
 import { useEffect } from 'react';
@@ -27,21 +40,24 @@ const storeLog = (logType: string, log: string | undefined): void => {
  * This is particularly useful on mobile devices where the console is not easily accessible.
  */
 const startRecordingLogs = (): void => {
-  function hookLogType(logType: string): (...args: unknown[]) => void {
+  function hookLogType(logType: string, outputToConsole: boolean): (...args: unknown[]) => void {
     const original = console[logType].bind(console);
     return function (...args: unknown[]) {
       storeLog(logType, safeJSONStringify(args));
-      original.apply(console, args);
+      if (outputToConsole) {
+        original.apply(console, args);
+      }
     };
   }
 
-  console.log = hookLogType('log');
-  console.warn = hookLogType('warn');
-  console.error = hookLogType('error');
-  console.info = hookLogType('info');
-  console.debug = hookLogType('debug');
+  console.log = hookLogType('log', true);
+  console.warn = hookLogType('warn', true);
+  console.error = hookLogType('error', true);
+  console.info = hookLogType('info', true);
+  console.debug = hookLogType('debug', true);
 
-  AzureLogger.log = hookLogType('log');
+  setLogLevel('verbose');
+  AzureLogger.log = hookLogType('log', false);
 
   window.addEventListener('error', function (event) {
     storeLog('error', safeJSONStringify(event));

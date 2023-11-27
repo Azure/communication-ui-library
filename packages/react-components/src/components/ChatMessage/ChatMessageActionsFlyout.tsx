@@ -79,6 +79,7 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
     };
     const { onRenderAvatar } = props;
     return {
+      'data-ui-id': 'chat-composite-message-contextual-menu-read-name-list-item',
       key: person.displayName,
       text: person.displayName,
       itemProps: { styles: props.increaseFlyoutItemSize ? menuItemIncreasedSizeStyles : undefined },
@@ -145,7 +146,6 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
         },
         calloutProps: preventUnwantedDismissProps,
         subMenuProps: {
-          id: 'chat-composite-message-contextual-menu-read-name-list',
           items: messageReadByList ?? [],
           calloutProps: preventUnwantedDismissProps,
           styles: concatStyleSets({
@@ -226,7 +226,6 @@ export const ChatMessageActionFlyout = (props: ChatMessageActionFlyoutProps): JS
   // gap space uses pixels
   return (
     <ContextualMenu
-      id="chat-composite-message-contextual-menu"
       alignTargetEdge={true}
       gapSpace={2 /*px*/}
       isBeakVisible={false}

@@ -31,7 +31,7 @@ export type { CallWithChatCompositeStrings } from './Strings';
 
 /* @conditional-compile-remove(control-bar-button-injection) */
 export type {
-  CustomCallControlButtonPlacement as CustomCallWithChatControlButtonPlacement,
-  CustomCallControlButtonCallback as CustomCallWithChatControlButtonCallback,
-  CustomCallControlButtonProps as CustomCallWithChatControlButtonProps
+  CustomCallControlButtonPlacement,
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonProps
 } from '../common/ControlBar/CustomButton';

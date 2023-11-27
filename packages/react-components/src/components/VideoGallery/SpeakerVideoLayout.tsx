@@ -183,7 +183,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         isShort={isShort}
         onFetchTilesToRender={setIndexesToRender}
         isNarrow={isNarrow}
-        shouldFloatLocalVideo={true}
+        shouldFloatLocalVideo={!!localVideoComponent}
         overflowGalleryElements={overflowGalleryTiles}
         horizontalGalleryStyles={styles?.horizontalGallery}
         /* @conditional-compile-remove(vertical-gallery) */
@@ -193,6 +193,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         onChildrenPerPageChange={(n: number) => {
           childrenPerPage.current = n;
         }}
+        parentWidth={parentWidth}
       />
     );
   }, [
@@ -203,7 +204,9 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
     styles?.horizontalGallery,
     /* @conditional-compile-remove(vertical-gallery) */ overflowGalleryPosition,
     setIndexesToRender,
-    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery
+    /* @conditional-compile-remove(vertical-gallery) */ styles?.verticalGallery,
+    parentWidth,
+    localVideoComponent
   ]);
 
   return (

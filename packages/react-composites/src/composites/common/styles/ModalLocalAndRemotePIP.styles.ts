@@ -51,7 +51,15 @@ export const getPipStyles = (theme: ITheme): ModalLocalAndRemotePIPStyles => ({
  * @private
  */
 export const PIPContainerStyle: IStackStyles = {
-  root: { position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none' }
+  root: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    pointerEvents: 'none',
+    ':focus-within': {
+      outline: '1px solid #00000000'
+    }
+  }
 };
 
 /**
@@ -76,7 +84,11 @@ export const modalStyle: IStyleFunctionOrObject<IModalStyleProps, IModalStyles> 
     width: '100%',
     height: '100%',
     // pointer events for root Modal div set to none to make descendants interactive
-    pointerEvents: 'none'
+    pointerEvents: 'none',
+    ':focus-within': {
+      outline: '3px solid #00000000',
+      outlineOffset: '-3px'
+    }
   }
 };
 

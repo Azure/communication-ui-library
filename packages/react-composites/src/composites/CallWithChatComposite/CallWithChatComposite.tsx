@@ -10,7 +10,7 @@ import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
 import { CallWithChatBackedChatAdapter } from './adapter/CallWithChatBackedChatAdapter';
 import { CallAdapter } from '../CallComposite';
-import { ChatComposite, ChatCompositeProps } from '../ChatComposite';
+import { ChatComposite, ChatAdapter } from '../ChatComposite';
 import { BaseProvider, BaseCompositeProps } from '../common/BaseComposite';
 import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -33,18 +33,17 @@ import { RemoteVideoTileMenuOptions } from '../CallComposite/CallComposite';
 import { LocalVideoTileOptions } from '../CallComposite/CallComposite';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite/CallComposite';
-import {
-  CommonCallControlOptions,
-  CustomCallControlButtonCallbackArgs,
-  _CommonCallControlOptions
-} from '../common/types/CommonCallControlOptions';
+import { CommonCallControlOptions } from '../common/types/CommonCallControlOptions';
 import { ChatButtonWithUnreadMessagesBadge } from './ChatButton/ChatButtonWithUnreadMessagesBadge';
 import { getDesktopCommonButtonStyles } from '../common/ControlBar/CommonCallControlBar';
 import { InjectedSidePaneProps } from '../CallComposite/components/SidePane/SidePaneProvider';
 import { isDisabled } from '../CallComposite/utils';
-import { CustomCallControlButtonCallback } from '../common/ControlBar/CustomButton';
+import {
+  CustomCallControlButtonCallback,
+  CustomCallControlButtonCallbackArgs
+} from '../common/ControlBar/CustomButton';
 import { SidePaneHeader } from '../common/SidePaneHeader';
-import { _CallControlOptions } from '../CallComposite/types/CallControlOptions';
+import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
 /* @conditional-compile-remove(gallery-layouts) */
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -208,6 +207,46 @@ export type CallWithChatCompositeOptions = {
         suggestion: string;
       }[]
     ) => Promise<void>;
+  /* @conditional-compile-remove(custom-branding) */
+  /**
+   * Options for setting additional customizations related to personalized branding.
+   */
+  branding?: {
+    /**
+     * Logo displayed on the configuration page.
+     */
+    logo?: {
+      /**
+       * URL for the logo image.
+       *
+       * @remarks
+       * Recommended size is 80x80 pixels.
+       */
+      url: string;
+      /**
+       * Alt text for the logo image.
+       */
+      alt?: string;
+      /**
+       * The logo can be displayed as a circle or a square.
+       *
+       * @defaultValue 'circle'
+       */
+      shape?: 'circle' | 'square';
+    };
+    /* @conditional-compile-remove(custom-branding) */
+    /**
+     * Background image displayed on the configuration page.
+     */
+    backgroundImage?: {
+      /**
+       * URL for the background image.
+       *
+       * @remarks
+       * Background image should be larger than 576x567 pixels and smaller than 2048x2048 pixels pixels.
+       */
+      url: string;
+    };
   };
 };
 
@@ -264,6 +303,15 @@ type CallWithChatScreenProps = {
         suggestion: string;
       }[]
     ) => Promise<void>;
+  /* @conditional-compile-remove(custom-branding) */
+  logo?: {
+    url: string;
+    alt?: string;
+    shape?: 'circle' | 'square';
+  };
+  /* @conditional-compile-remove(custom-branding) */
+  backgroundImage?: {
+    url: string;
   };
 };
 
@@ -300,10 +348,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     };
   }, [callWithChatAdapter]);
 
-  const chatProps: ChatCompositeProps = useMemo(() => {
-    return {
-      adapter: new CallWithChatBackedChatAdapter(callWithChatAdapter)
-    };
+  const chatAdapter: ChatAdapter = useMemo(() => {
+    return new CallWithChatBackedChatAdapter(callWithChatAdapter);
   }, [callWithChatAdapter]);
 
   /** Constant setting of id for the parent stack of the composite */
@@ -370,7 +416,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     [chatButtonDisabled, mobileView, toggleChat, showChatButton]
   );
 
-  const unreadChatMessagesCount = useUnreadMessagesTracker(chatProps.adapter, isChatOpen);
+  const unreadChatMessagesCount = useUnreadMessagesTracker(chatAdapter, isChatOpen);
 
   const customChatButton: CustomCallControlButtonCallback = useCallback(
     (args: CustomCallControlButtonCallbackArgs) => ({
@@ -387,6 +433,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
           unreadChatMessagesCount={unreadChatMessagesCount}
           // As chat is disabled when on hold, we don't want to show the unread badge when on hold
           hideUnreadChatMessagesBadge={isOnHold}
+          disableTooltip={mobileView}
         />
       )
     }),
@@ -429,7 +476,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
                 ...injectedCustomButtonsFromProps
               ],
               legacyControlBarExperience: false
-            } as _CallControlOptions),
+            } as CallControlOptions),
       /* @conditional-compile-remove(call-readiness) */
       deviceChecks: props.deviceChecks,
       /* @conditional-compile-remove(call-readiness) */
@@ -445,7 +492,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(click-to-call) */
       localVideoTile: props.localVideoTile,
       /* @conditional-compile-remove(end-of-call-survey) */
-      surveyOptions: surveyOptions
+      surveyOptions: surveyOptions,
+      /* @conditional-compile-remove(custom-branding) */
+      logo: props.logo,
+      /* @conditional-compile-remove(custom-branding) */
+      backgroundImage: props.backgroundImage
     }),
     [
       props.callControls,
@@ -468,14 +519,18 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       /* @conditional-compile-remove(pinned-participants) */
       props.remoteVideoTileMenuOptions,
       /* @conditional-compile-remove(end-of-call-survey) */
-      surveyOptions
+      surveyOptions,
+      /* @conditional-compile-remove(custom-branding) */
+      props.logo,
+      /* @conditional-compile-remove(custom-branding) */
+      props.backgroundImage
     ]
   );
 
   const onRenderChatContent = useCallback(
     (): JSX.Element => (
       <ChatComposite
-        {...chatProps}
+        adapter={chatAdapter}
         fluentTheme={theme}
         options={{
           topic: false,
@@ -488,7 +543,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       />
     ),
     [
-      chatProps,
+      chatAdapter,
       /* @conditional-compile-remove(file-sharing) */ props.fileSharing,
       props.onFetchAvatarPersonaData,
       theme
@@ -555,6 +610,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               overrideSidePane={overrideSidePaneProps}
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}
+              onCloseChatPane={closeChat}
             />
           </Stack.Item>
         </Stack>
@@ -589,6 +645,10 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         localVideoTile={options?.localVideoTile}
         /* @conditional-compile-remove(gallery-layouts) */
         galleryOptions={options?.galleryOptions}
+        /* @conditional-compile-remove(custom-branding) */
+        logo={options?.branding?.logo}
+        /* @conditional-compile-remove(custom-branding) */
+        backgroundImage={options?.branding?.backgroundImage}
       />
     </BaseProvider>
   );

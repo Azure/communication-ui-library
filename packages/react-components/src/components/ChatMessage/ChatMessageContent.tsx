@@ -33,7 +33,7 @@ type ChatMessageContentProps = {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachment?: (attachment: FileMetadata) => Promise<void>;
+  onFetchAttachments?: (attachments: FileMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
@@ -76,19 +76,27 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
+  const {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
+    message,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    attachmentsMap,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onFetchAttachments
+  } = props;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
-    props.message.attachedFilesMetadata?.map((fileMetadata) => {
-      if (
-        props.onFetchAttachment &&
-        props.attachmentsMap &&
-        fileMetadata.attachmentType === 'inlineImage' &&
-        props.attachmentsMap[fileMetadata.id] === undefined
-      ) {
-        props.onFetchAttachment(fileMetadata);
-      }
+    if (!attachmentsMap || !onFetchAttachments) {
+      return;
+    }
+    const attachments = message.attachedFilesMetadata?.filter((fileMetadata) => {
+      return fileMetadata.attachmentType === 'inlineImage' && attachmentsMap[fileMetadata.id] === undefined;
     });
-  }, [props]);
+    if (attachments && attachments.length > 0) {
+      onFetchAttachments(attachments, message.messageId);
+    }
+  }, [message.attachedFilesMetadata, message.messageId, onFetchAttachments, attachmentsMap]);
 
   return (
     <MessageContentWithLiveAria

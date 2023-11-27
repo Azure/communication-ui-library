@@ -58,9 +58,7 @@ export type CallCompositePage =
   | 'leftCall'
   | 'leaving'
   | 'lobby'
-  | /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom'
   | 'removedFromCall'
-  | /* @conditional-compile-remove(rooms) */ 'roomNotFound'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | /* @conditional-compile-remove(call-transfer) */ 'transferring';
 
@@ -72,9 +70,7 @@ export const END_CALL_PAGES: CallCompositePage[] = [
   'accessDeniedTeamsMeeting',
   'joinCallFailedDueToNoNetwork',
   'leftCall',
-  /* @conditional-compile-remove(rooms) */ 'deniedPermissionToRoom',
   'removedFromCall',
-  /* @conditional-compile-remove(rooms) */ 'roomNotFound',
   /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
 ];
 
@@ -99,6 +95,12 @@ export type CallAdapterClientState = {
   userId: CommunicationIdentifierKind;
   displayName?: string;
   call?: CallState;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * State to track who the original call went out to. will be undefined the call is not a outbound
+   * modality. This includes, groupCalls, Rooms calls, and Teams InteropMeetings.
+   */
+  targetCallees?: CommunicationIdentifier[];
   devices: DeviceManagerState;
   endedCall?: CallState;
   isTeamsCall: boolean;
@@ -146,6 +148,16 @@ export type CallAdapterClientState = {
    * Call from transfer request accepted by local user
    */
   acceptedTransferCallState?: CallState;
+  /* @conditional-compile-remove(hide-attendee-name) */
+  /**
+   * Hide attendee names in teams meeting
+   */
+  hideAttendeeNames?: boolean;
+  /* @conditional-compile-remove(calling-sounds) */
+  /**
+   * State to track the sounds to be used in the call.
+   */
+  sounds?: CallingSounds;
 };
 
 /**
@@ -271,6 +283,36 @@ export interface VideoBackgroundImage {
    */
   tooltipText?: string;
 }
+
+/**
+ * @beta
+ * Type for representing a custom sound to use for a calling event
+ */
+export type SoundEffect = {
+  /**
+   * Path to sound effect
+   */
+  url: string;
+};
+
+/**
+ * @beta
+ * Type for representing a set of sounds to use for different calling events
+ */
+export type CallingSounds = {
+  /**
+   * Sound to be played when the call ends
+   */
+  callEnded?: SoundEffect;
+  /**
+   * Sound to be played when the call is ringing
+   */
+  callRinging?: SoundEffect;
+  /**
+   * Sound to be played when the call is rejected by the user being callede
+   */
+  callBusy?: SoundEffect;
+};
 
 /**
  * Options for setting microphone and camera state when joining a call
@@ -805,6 +847,11 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'capabilitiesChanged' event.
    */
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Subscribe function for 'roleChanged' event.
+   */
+  on(event: 'roleChanged', listener: PropertyChangedEvent): void;
 
   /**
    * Unsubscribe function for 'participantsJoined' event.
@@ -884,6 +931,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'capabilitiesChanged' event.
    */
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
+  /* @conditional-compile-remove(rooms) */
+  /**
+   * Unsubscribe function for 'roleChanged' event.
+   */
+  off(event: 'roleChanged', listener: PropertyChangedEvent): void;
 }
 
 // This type remains for non-breaking change reason

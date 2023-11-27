@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IconButton, Spinner, SpinnerSize } from '@fluentui/react';
+import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 /* @conditional-compile-remove(file-sharing) */
@@ -96,9 +96,11 @@ export type FileMetadata =
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
+ * Meta Data of the attachment object returned by the ACS SDK.
  * @beta
  */
 export interface AttachmentDownloadResult {
+  attachmentId: string;
   blobUrl: string;
 }
 
@@ -271,23 +273,25 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
               return true;
             })
             .map((file) => (
-              <_FileCard
-                fileName={file.name}
-                key={file.name}
-                fileExtension={file.extension}
-                actionIcon={
-                  showSpinner ? (
-                    <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                  ) : true &&
-                    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-                    isShowDownloadIcon(file) ? (
-                    <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
-                      <DownloadIconTrampoline />
-                    </IconButton>
-                  ) : undefined
-                }
-                actionHandler={() => fileDownloadHandler(userId, file)}
-              />
+              <TooltipHost content={downloadFileButtonString()} key={file.name}>
+                <_FileCard
+                  fileName={file.name}
+                  key={file.name}
+                  fileExtension={file.extension}
+                  actionIcon={
+                    showSpinner ? (
+                      <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
+                    ) : true &&
+                      /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+                      isShowDownloadIcon(file) ? (
+                      <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
+                        <DownloadIconTrampoline />
+                      </IconButton>
+                    ) : undefined
+                  }
+                  actionHandler={() => fileDownloadHandler(userId, file)}
+                />
+              </TooltipHost>
             ))}
       </_FileCardGroup>
     </div>

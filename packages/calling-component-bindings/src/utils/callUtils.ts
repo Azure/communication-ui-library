@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus } from '@azure/communication-calling';
+import { CallState as CallStatus, ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(unsupported-browser) */
 import { Features, EnvironmentInfo } from '@azure/communication-calling';
 import {
@@ -137,4 +137,29 @@ export const _isRingingPSTNParticipant = (participant: RemoteParticipantState): 
   return isPhoneNumberIdentifier(participant.identifier) && participant.state === 'Connecting'
     ? 'Ringing'
     : participant.state;
+};
+
+/**
+ * @private
+ * Changes the display name of the participant based on the local and remote user's role.
+ */
+export const maskDisplayNameWithRole = (
+  displayName: string | undefined,
+  localUserRole?: ParticipantRole,
+  participantRole?: ParticipantRole,
+  isHideAttendeeNamesEnabled?: boolean
+): string | undefined => {
+  let maskedDisplayName = displayName;
+  if (isHideAttendeeNamesEnabled && participantRole && participantRole === 'Attendee') {
+    if (localUserRole && localUserRole === 'Attendee') {
+      maskedDisplayName = '{AttendeeRole}';
+    }
+    if (
+      localUserRole &&
+      (localUserRole === 'Presenter' || localUserRole === 'Co-organizer' || localUserRole === 'Organizer')
+    ) {
+      maskedDisplayName = `{AttendeeRole}(${displayName})`;
+    }
+  }
+  return maskedDisplayName;
 };
