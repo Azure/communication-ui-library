@@ -71,7 +71,7 @@ type ChatMessageComponentProps = {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
-
+  /* @conditional-compile-remove(date-time-customization) */
   /**
    * Optional function to provide customized date format.
    * @beta
@@ -106,11 +106,11 @@ type ChatMessageComponentProps = {
  * @private
  */
 export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Element => {
+  const { onDeleteMessage, onSendMessage, message } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
 
-  const { onDeleteMessage, onSendMessage, message } = props;
   const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
   const content = 'content' in message ? message.content : undefined;
   const onRemoveClick = useCallback(() => {
@@ -161,7 +161,7 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         onFetchAttachments={props.onFetchAttachments}
         /* @conditional-compile-remove(image-gallery) */
         onInlineImageClicked={props.onInlineImageClicked}
-        /* @conditional-compile-remove(image-gallery) */
+        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}

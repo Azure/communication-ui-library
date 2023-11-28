@@ -11,7 +11,11 @@ import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarati
 import { InternalCallContext } from './InternalCallContext';
 import { createView, disposeView, CreateViewResult } from './StreamUtils';
 import { CommunicationIdentifier, CommunicationUserIdentifier, getIdentifierKind } from '@azure/communication-common';
-import { toFlatCommunicationIdentifier, _getApplicationId } from '@internal/acs-ui-common';
+import {
+  toFlatCommunicationIdentifier,
+  _getApplicationId,
+  _TelemetryImplementationHint
+} from '@internal/acs-ui-common';
 import { callingStatefulLogger } from './Logger';
 /* @conditional-compile-remove(teams-identity-support) */
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
@@ -327,9 +331,24 @@ export const createStatefulCallClient = (
   args: StatefulCallClientArgs,
   options?: StatefulCallClientOptions
 ): StatefulCallClient => {
-  callingStatefulLogger.info(`Creating calling stateful client using library version: ${_getApplicationId()}`);
+  return _createStatefulCallClientInner(args, options);
+};
+
+/**
+ * This inner function is used to allow injection of TelemetryImplementationHint without changing the public API.
+ *
+ * @internal
+ */
+export const _createStatefulCallClientInner = (
+  args: StatefulCallClientArgs,
+  options?: StatefulCallClientOptions,
+  telemetryImplementationHint: _TelemetryImplementationHint = 'StatefulComponents'
+): StatefulCallClient => {
+  callingStatefulLogger.info(
+    `Creating calling stateful client using library version: ${_getApplicationId(telemetryImplementationHint)}`
+  );
   return createStatefulCallClientWithDeps(
-    new CallClient(withTelemetryTag(options?.callClientOptions)),
+    new CallClient(withTelemetryTag(telemetryImplementationHint, options?.callClientOptions)),
     new CallContext(
       getIdentifierKind(args.userId),
       options?.maxStateChangeListeners,
@@ -394,9 +413,12 @@ export const createStatefulCallClientWithDeps = (
   return new Proxy(callClient, new ProxyCallClient(context, internalContext)) as StatefulCallClient;
 };
 
-const withTelemetryTag = (options?: CallClientOptions): CallClientOptions => {
+const withTelemetryTag = (
+  telemetryImplementationHint: _TelemetryImplementationHint,
+  options?: CallClientOptions
+): CallClientOptions => {
   const tags = options?.diagnostics?.tags ?? [];
-  tags.push(_getApplicationId());
+  tags.push(_getApplicationId(telemetryImplementationHint));
   return {
     ...options,
     diagnostics: {

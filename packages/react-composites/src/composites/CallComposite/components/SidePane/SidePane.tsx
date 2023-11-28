@@ -75,7 +75,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     props.onPeopleButtonClicked,
     props.disablePeopleButton,
     props.disableChatButton,
-    sidePaneRenderer,
+    sidePaneRenderer?.id,
     closePane
   ]);
 
