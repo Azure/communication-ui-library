@@ -404,14 +404,6 @@ export type CallCompositeOptions = {
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
-    };
 };
 
 // @public
@@ -893,14 +885,6 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
-    };
-    logo?: {
-        url: string;
-        alt?: string;
-        shape?: 'circle' | 'square';
-    };
-    backgroundImage?: {
-        url: string;
     };
 };
 
