@@ -14,20 +14,20 @@ import { _formatString } from '@internal/acs-ui-common';
 /**
  * @public
  */
-export type FileMetadataAttachmentType = 'fileSharing' | 'inlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'file' | 'image' | 'unknown';
 
 /**
- * Base interface that all Meta Data should extend.
- * Typically used for ACS to ACS file transfers.
+ * Base interface that all attachment types should extend.
+ *
  * @public
  */
-export interface BaseFileMetadata {
+export interface BaseChatAttachment {
   /**
    * File name to be displayed.
    */
   name: string;
   /**
-   * Extension is used for rendering the file icon.
+   * The extension is used as a hint for rendering the file icon.
    * An unknown extension will be rendered as a generic icon.
    * Example: `jpeg`
    */
@@ -52,8 +52,8 @@ export interface BaseFileMetadata {
  * Typically used for ACS to ACS file transfers.
  * @public
  */
-export interface FileSharingMetadata extends BaseFileMetadata {
-  attachmentType: 'fileSharing';
+export interface FileAttachment extends BaseChatAttachment {
+  attachmentType: 'file';
 
   /*
    * Optional dictionary of meta data asscoiated with the file.
@@ -65,12 +65,12 @@ export interface FileSharingMetadata extends BaseFileMetadata {
  * Meta Data containing data for images.
  * @public
  */
-export interface ImageFileMetadata extends BaseFileMetadata {
+export interface ImageAttachment extends BaseChatAttachment {
   /*
    * Attachment type of the file.
    * Possible values {@link FileDownloadHandler}.
    */
-  attachmentType: 'inlineImage';
+  attachmentType: 'image';
 
   /*
    * Preview URL for the file.
@@ -83,7 +83,7 @@ export interface ImageFileMetadata extends BaseFileMetadata {
  * Meta Data containing information about the uploaded file.
  * @public
  */
-export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
+export type ChatAttachment = FileAttachment | ImageAttachment;
 
 /**
  * Meta Data of the attachment object returned by the ACS SDK.
@@ -145,7 +145,7 @@ export interface FileDownloadError {
  * @param userId - The user ID of the user downloading the file.
  * @param fileMetadata - The {@link FileMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileAttachment) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
@@ -158,7 +158,7 @@ export interface _FileDownloadCards {
   /**
    * A chat message metadata that inculdes file metadata
    */
-  fileMetadata: FileMetadata[];
+  fileMetadata: FileAttachment[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -170,7 +170,7 @@ export interface _FileDownloadCards {
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
   /**
-   * Optional arialabel strings for file download cards
+   * Optional aria label strings for file download cards
    */
   strings?: _FileDownloadCardsStrings;
 }
@@ -196,13 +196,13 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
-  const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
-    return attachment.attachmentType === 'fileSharing';
+  const isFileSharingAttachment = useCallback((attachment: FileAttachment): boolean => {
+    return attachment.attachmentType === 'file';
     return false;
   }, []);
 
-  const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
-    return attachment.attachmentType === 'fileSharing' && attachment.payload?.teamsFileAttachment !== 'true';
+  const isShowDownloadIcon = useCallback((attachment: FileAttachment): boolean => {
+    return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
 
@@ -221,7 +221,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId, file: FileMetadata) => {
+    async (userId, file: FileAttachment) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
