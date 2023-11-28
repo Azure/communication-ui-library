@@ -156,7 +156,7 @@ export interface _FileDownloadCardsProps {
   /**
    * A chat message metadata that includes file metadata
    */
-  fileMetadata: FileAttachment[];
+  fileMetadata: BaseChatAttachment[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -194,12 +194,14 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
-  const isFileSharingAttachment = useCallback((attachment: FileAttachment): boolean => {
+  const isFileSharingAttachment = useCallback((attachment: BaseChatAttachment): boolean => {
     return attachment.attachmentType === 'file';
   }, []);
 
-  const isShowDownloadIcon = useCallback((attachment: FileAttachment): boolean => {
-    return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
+  const isShowDownloadIcon = useCallback((attachment: BaseChatAttachment): boolean => {
+    return (
+      attachment.attachmentType === 'file' && (attachment as FileAttachment).payload?.teamsFileAttachment !== 'true'
+    );
     return true;
   }, []);
 
@@ -263,7 +265,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                       </IconButton>
                     ) : undefined
                   }
-                  actionHandler={() => fileDownloadHandler(userId, file)}
+                  actionHandler={() => fileDownloadHandler(userId, file as FileAttachment)}
                 />
               </TooltipHost>
             ))}

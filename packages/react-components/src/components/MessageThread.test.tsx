@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 
-import { AttachmentDownloadResult, ChatAttachment, FileAttachment, ImageAttachment } from './FileDownloadCards';
+import { AttachmentDownloadResult, BaseChatAttachment, FileAttachment, ImageAttachment } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -214,9 +214,9 @@ describe('Message should display image and attachment correctly', () => {
         } as ImageAttachment
       ]
     };
-    const onFetchAttachment = async (attachments: ChatAttachment[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: BaseChatAttachment[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachments[0].attachmentType === 'image' ? attachments[0].previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'image' ? (attachments[0] as ImageAttachment).previewUrl ?? '' : '';
       return [
         {
           attachmentId: attachments[0].id,
@@ -285,9 +285,9 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachments: ChatAttachment[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: BaseChatAttachment[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachments[0].attachmentType === 'image' ? attachments[0].previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'image' ? (attachments[0] as ImageAttachment).previewUrl ?? '' : '';
       return [
         {
           attachmentId: attachments[0].id,

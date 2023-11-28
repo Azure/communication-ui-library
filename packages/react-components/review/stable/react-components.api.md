@@ -65,17 +65,17 @@ export interface AttachmentDownloadResult {
 }
 
 // @public
-export interface BaseCustomStyles {
-    root?: IStyle;
-}
-
-// @public
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
+export interface BaseChatAttachment {
+    attachmentType: ChatAttachmentType;
     extension: string;
     id: string;
     name: string;
     url: string;
+}
+
+// @public
+export interface BaseCustomStyles {
+    root?: IStyle;
 }
 
 // @public
@@ -319,10 +319,16 @@ export interface _CaptionsSettingsModalStrings {
 }
 
 // @public
+export type ChatAttachment = FileAttachment | ImageAttachment;
+
+// @public (undocumented)
+export type ChatAttachmentType = 'file' | 'image' | 'unknown';
+
+// @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    attachedFilesMetadata?: FileMetadata[];
+    attachedFilesMetadata?: BaseChatAttachment[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -936,6 +942,14 @@ export interface _ExtendedIModalProps extends IModalProps {
     minDragPosition?: _ICoordinates;
 }
 
+// @public
+export interface FileAttachment extends BaseChatAttachment {
+    // (undocumented)
+    attachmentType: 'file';
+    // (undocumented)
+    payload?: Record<string, string>;
+}
+
 // @internal
 export const _FileCard: (props: _FileCardProps) => JSX.Element;
 
@@ -961,16 +975,16 @@ export interface _FileCardProps {
 }
 
 // @internal (undocumented)
-export interface _FileDownloadCards {
+export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata: FileMetadata[];
+    fileMetadata: BaseChatAttachment[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
 }
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
 // @internal
 export interface _FileDownloadCardsStrings {
@@ -985,21 +999,7 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
-
-// @public
-export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
-
-// @public (undocumented)
-export type FileMetadataAttachmentType = 'file' | 'inlineImage' | 'unknown';
-
-// @public
-export interface FileSharingMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'file';
-    // (undocumented)
-    payload?: Record<string, string>;
-}
+export type FileDownloadHandler = (userId: string, fileMetadata: FileAttachment) => Promise<URL | FileDownloadError>;
 
 // @internal
 export interface _FileUploadCardsStrings {
@@ -1095,9 +1095,9 @@ export interface _Identifiers {
 }
 
 // @public
-export interface ImageFileMetadata extends BaseFileMetadata {
+export interface ImageAttachment extends BaseChatAttachment {
     // (undocumented)
-    attachmentType: 'inlineImage';
+    attachmentType: 'image';
     // (undocumented)
     previewUrl?: string;
 }
@@ -1269,7 +1269,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: BaseChatAttachment[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
