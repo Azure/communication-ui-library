@@ -26,7 +26,7 @@ import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata, FileMetadataAttachmentType } from '@internal/react-components';
+import { FileAttachment, FileMetadataAttachmentType } from '@internal/react-components';
 
 import { ChatAttachmentType, ChatAttachment } from '@azure/communication-chat';
 const memoizedAllConvertChatMessage = memoizeFnAll(
@@ -50,12 +50,12 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
   }
 );
 
-const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMetadata[] => {
-  const fileMetadata: FileMetadata[] = [];
+const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileAttachment[] => {
+  const fileMetadata: FileAttachment[] = [];
   attachments.forEach((attachment) => {
     const attachmentType = mapAttachmentType(attachment.attachmentType);
     const contentType = extractAttachmentContentTypeFromName(attachment.name) ?? '';
-    if (attachmentType === 'inlineImage') {
+    if (attachmentType === 'image') {
       fileMetadata.push({
         attachmentType: attachmentType,
         id: attachment.id,
@@ -64,7 +64,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
         url: extractAttachmentUrl(attachment),
         previewUrl: attachment.previewUrl
       });
-    } else if (attachmentType === 'fileSharing') {
+    } else if (attachmentType === 'file') {
       fileMetadata.push({
         attachmentType: attachmentType,
         id: attachment.id,
@@ -82,7 +82,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
 
 const mapAttachmentType = (attachmentType: ChatAttachmentType): FileMetadataAttachmentType => {
   if (attachmentType === 'image') {
-    return 'inlineImage';
+    return 'image';
   }
   return 'unknown';
 };
@@ -122,8 +122,8 @@ const extractAttachmentContentTypeFromName = (name?: string): string | undefined
 };
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-const extractFilesMetadata = (message: ChatMessageWithStatus): FileMetadata[] => {
-  let fileMetadata: FileMetadata[] = [];
+const extractFilesMetadata = (message: ChatMessageWithStatus): FileAttachment[] => {
+  let fileMetadata: FileAttachment[] = [];
 
   if (message.content?.attachments) {
     fileMetadata = fileMetadata.concat(extractTeamsAttachmentsMetadata(message.content?.attachments));

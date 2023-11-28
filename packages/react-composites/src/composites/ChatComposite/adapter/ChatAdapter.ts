@@ -12,7 +12,7 @@ import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
 
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { FileAttachment } from '@internal/react-components';
 
 /**
  * {@link ChatAdapter} state for pure UI purposes.
@@ -96,7 +96,7 @@ export interface ChatAdapterThreadManagement {
     metadata?: Record<string, string>,
     /* @conditional-compile-remove(file-sharing) */
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      attachedFilesMetadata?: FileAttachment[];
     }
   ): Promise<void>;
   /**

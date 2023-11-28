@@ -38,7 +38,7 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { FileAttachment } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../file-sharing';
 
@@ -274,7 +274,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(file-sharing) */
-      attachedFilesMetadata?: FileMetadata[];
+      attachedFilesMetadata?: FileAttachment[];
     }
   ): Promise<void> {
     return await this.asyncTeeErrorToEventEmitter(async () => {
@@ -300,7 +300,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+  registerCompletedFileUploads(metadata: FileAttachment[]): FileUploadManager[] {
     return this.fileUploadAdapter.registerCompletedFileUploads(metadata);
   }
 
@@ -325,7 +325,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   }
 
   /* @conditional-compile-remove(file-sharing) */
-  updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+  updateFileUploadMetadata(id: string, metadata: FileAttachment): void {
     this.fileUploadAdapter.updateFileUploadMetadata(id, metadata);
   }
 

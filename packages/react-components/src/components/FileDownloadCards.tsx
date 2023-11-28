@@ -44,7 +44,6 @@ export interface BaseChatAttachment {
   /**
    * Attachment Type
    */
-
   attachmentType: FileMetadataAttachmentType;
 }
 /**
@@ -56,7 +55,7 @@ export interface FileAttachment extends BaseChatAttachment {
   attachmentType: 'file';
 
   /*
-   * Optional dictionary of meta data asscoiated with the file.
+   * Optional dictionary of metadata associated with the file.
    */
   payload?: Record<string, string>;
 }
@@ -143,7 +142,7 @@ export interface FileDownloadError {
  *
  * ```
  * @param userId - The user ID of the user downloading the file.
- * @param fileMetadata - The {@link FileMetadata} containing file `url`, `extension` and `name`.
+ * @param fileMetadata - The {@link FileAttachment} containing file `url`, `extension` and `name`.
  */
 export type FileDownloadHandler = (userId: string, fileMetadata: FileAttachment) => Promise<URL | FileDownloadError>;
 

@@ -4,7 +4,7 @@
 import { MessageStatus } from '@internal/acs-ui-common';
 import { CommunicationParticipant } from './CommunicationParticipant';
 
-import { FileMetadata } from '../components/FileDownloadCards';
+import { BaseChatAttachment } from '../components/FileDownloadCards';
 
 /**
  * Indicate whether a chat message should be displayed merged with the message before / after it.
@@ -75,9 +75,9 @@ export interface ChatMessage extends MessageCommon {
   /**
    * @public
    * A list of files attached to the message.
-   * {@link FileMetadata}
+   * {@link FileAttachment}
    */
-  attachedFilesMetadata?: FileMetadata[];
+  attachedFilesMetadata?: BaseChatAttachment[];
 }
 
 /**

@@ -57,7 +57,7 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
 
-import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
+import { AttachmentDownloadResult, FileAttachment } from '@internal/react-components';
 
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 
@@ -214,10 +214,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   );
 
   const onRenderInlineAttachment = useCallback(
-    async (attachment: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    async (attachment: FileAttachment[]): Promise<AttachmentDownloadResult[]> => {
       const entry: Record<string, string> = {};
       attachment.forEach((target) => {
-        if (target.attachmentType === 'inlineImage' && target.previewUrl) {
+        if (target.attachmentType === 'image' && target.previewUrl) {
           entry[target.id] = target.previewUrl;
         }
       });
@@ -274,7 +274,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         return;
       }
 
-      if (attachment.attachmentType === 'inlineImage' && attachment.url) {
+      if (attachment.attachmentType === 'image' && attachment.url) {
         const blob = await adapter.downloadAttachments({ attachmentUrls: { [attachment.id]: attachment.url } });
         if (blob[0]) {
           const blobUrl = blob[0].blobUrl;

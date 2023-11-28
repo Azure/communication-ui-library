@@ -41,7 +41,7 @@ import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { FileAttachment } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadManager } from '../../ChatComposite';
 /* @conditional-compile-remove(PSTN-calls) */
@@ -353,7 +353,7 @@ export interface CallWithChatAdapterManagement {
   registerActiveFileUploads: (files: File[]) => FileUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+  registerCompletedFileUploads: (metadata: FileAttachment[]) => FileUploadManager[];
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   clearFileUploads: () => void;
@@ -368,7 +368,7 @@ export interface CallWithChatAdapterManagement {
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
-  updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  updateFileUploadMetadata: (id: string, metadata: FileAttachment) => void;
 
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
   /* @conditional-compile-remove(PSTN-calls) */

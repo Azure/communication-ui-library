@@ -23,7 +23,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { FileAttachment } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -416,7 +416,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(file-sharing) */
-      attachedFilesMetadata?: FileMetadata[];
+      attachedFilesMetadata?: FileAttachment[];
     }
   ): Promise<void> {
     return await this.chatAdapter.updateMessage(
@@ -435,7 +435,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.chatAdapter.registerActiveFileUploads(files);
   };
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
+  public registerCompletedFileUploads = (metadata: FileAttachment[]): FileUploadManager[] => {
     return this.chatAdapter.registerCompletedFileUploads(metadata);
   };
   /* @conditional-compile-remove(file-sharing) */
@@ -455,7 +455,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadErrorMessage(id, errorMessage);
   };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
+  public updateFileUploadMetadata = (id: string, metadata: FileAttachment): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
 

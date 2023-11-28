@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
-import { FileMetadata } from '../FileDownloadCards';
+import { FileAttachment } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -44,7 +44,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      attachedFilesMetadata?: FileAttachment[];
     }
   ) => void;
   message: ChatMessage;
@@ -215,13 +215,13 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
-const isMessageEmpty = (messageText: string, attachedFilesMetadata: FileMetadata[]): boolean =>
+const isMessageEmpty = (messageText: string, attachedFilesMetadata: FileAttachment[]): boolean =>
   messageText.trim().length === 0 && attachedFilesMetadata.length === 0;
-const getMessageState = (messageText: string, attachedFilesMetadata: FileMetadata[]): MessageState =>
+const getMessageState = (messageText: string, attachedFilesMetadata: FileAttachment[]): MessageState =>
   isMessageEmpty(messageText, attachedFilesMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
 
 // @TODO: Remove when file-sharing feature becomes stable.
-const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+const getMessageAttachedFilesMetadata = (message: ChatMessage): FileAttachment[] | undefined => {
   /* @conditional-compile-remove(file-sharing) */
   return message.attachedFilesMetadata;
   return [];

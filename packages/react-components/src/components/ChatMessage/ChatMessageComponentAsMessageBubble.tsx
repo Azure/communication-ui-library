@@ -18,7 +18,7 @@ import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
 
-import { FileMetadata } from '../FileDownloadCards';
+import { FileAttachment } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -96,7 +96,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
   /**
    * Optional function to fetch attachments.
    */
-  onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
+  onFetchAttachments?: (attachment: FileAttachment[], messageId: string) => Promise<void>;
 
   /**
    * Optional callback called when an inline image is clicked.

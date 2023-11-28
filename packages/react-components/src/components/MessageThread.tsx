@@ -48,7 +48,7 @@ import getParticipantsWhoHaveReadMessage from './utils/getParticipantsWhoHaveRea
 /* @conditional-compile-remove(file-sharing) */
 import { FileDownloadHandler } from './FileDownloadCards';
 
-import { FileMetadata } from './FileDownloadCards';
+import { FileAttachment } from './FileDownloadCards';
 
 import { AttachmentDownloadResult } from './FileDownloadCards';
 import { useTheme } from '../theming';
@@ -555,7 +555,7 @@ export type UpdateMessageCallback = (
   options?: {
     /* @conditional-compile-remove(file-sharing) */
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachedFilesMetadata?: FileAttachment[];
   }
 ) => Promise<void>;
 /**
@@ -673,10 +673,10 @@ export type MessageThreadProps = {
 
   /**
    * Optional callback to retrieve the inline image in a message.
-   * @param attachment - FileMetadata object we want to render
+   * @param attachment - FileAttachment object we want to render
    * @beta
    */
-  onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+  onFetchAttachments?: (attachments: FileAttachment[]) => Promise<AttachmentDownloadResult[]>;
   /**
    * Optional callback to edit a message.
    *
@@ -910,7 +910,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
 
   const onFetchInlineAttachment = useCallback(
-    async (attachments: FileMetadata[], messageId: string): Promise<void> => {
+    async (attachments: FileAttachment[], messageId: string): Promise<void> => {
       if (!onFetchAttachments) {
         return;
       }

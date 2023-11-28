@@ -311,7 +311,7 @@ export type {
   FileDownloadError
 } from '../../react-components/src';
 
-export type { FileMetadata } from '../../react-components/src';
+export type { FileAttachment } from '../../react-components/src';
 
 export type {
   BaseFileMetadata,

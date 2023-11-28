@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { FileMetadata, _FileDownloadCards, FileSharingMetadata } from './FileDownloadCards';
+import { FileAttachment, _FileDownloadCards, FileSharingMetadata } from './FileDownloadCards';
 
 import { ImageFileMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
@@ -43,7 +43,7 @@ describe('FileDownloadCards should be rendered properly', () => {
       extension: 'png',
       url: 'mockUrl',
       id: 'mockId',
-      attachmentType: 'inlineImage',
+      attachmentType: 'image',
       previewUrl: 'mockPreviewUrl'
     } as ImageFileMetadata;
 
@@ -63,5 +63,5 @@ const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void
 
 interface MockDownloadCardProps {
   userId: string;
-  fileMetadata: FileMetadata[];
+  fileMetadata: FileAttachment[];
 }

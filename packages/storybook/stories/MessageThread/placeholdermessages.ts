@@ -7,7 +7,7 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  FileMetadata
+  FileAttachment
 } from '@azure/communication-react';
 
 export const MessageThreadStoryContainerStyles = {
@@ -100,12 +100,12 @@ export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
   };
 };
 
-const GenerateMockMessageAttachments = (): FileMetadata[] => {
+const GenerateMockMessageAttachments = (): FileAttachment[] => {
   return [
     {
       id: 'SomeImageId',
       name: 'SomeImageId',
-      attachmentType: 'inlineImage',
+      attachmentType: 'image',
       extension: 'png',
       url: 'images/github.png',
       previewUrl: 'images/github.png'

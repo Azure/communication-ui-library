@@ -4,7 +4,7 @@
 import { EventEmitter } from 'events';
 import { nanoid } from 'nanoid';
 import { _MAX_EVENT_LISTENERS } from '@internal/acs-ui-common';
-import { FileMetadata } from '@internal/react-components';
+import { FileAttachment } from '@internal/react-components';
 
 /**
  * Contains the state attibutes of a file upload like name, progress etc.
@@ -28,9 +28,9 @@ export interface FileUploadState {
   progress: number;
 
   /**
-   * Meta Data {@link FileMetadata} containing information about the uploaded file.
+   * Meta Data {@link FileAttachment} containing information about the uploaded file.
    */
-  metadata?: FileMetadata;
+  metadata?: FileAttachment;
 
   /**
    * Error message to be displayed to the user if the upload fails.
@@ -70,9 +70,9 @@ export interface FileUploadManager {
   /**
    * Mark the upload as complete.
    * Requires the `metadata` param containing uploaded file information.
-   * @param metadata - {@link FileMetadata}
+   * @param metadata - {@link FileAttachment}
    */
-  notifyUploadCompleted: (metadata: FileMetadata) => void;
+  notifyUploadCompleted: (metadata: FileAttachment) => void;
   /**
    * Mark the upload as failed.
    * @param message - An error message that can be displayed to the user.
@@ -94,11 +94,11 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
    */
   public readonly fileName: string;
   /**
-   * Optional object of type {@link FileMetadata}
+   * Optional object of type {@link FileAttachment}
    */
-  public metadata?: FileMetadata;
+  public metadata?: FileAttachment;
 
-  constructor(data: File | FileMetadata) {
+  constructor(data: File | FileAttachment) {
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(_MAX_EVENT_LISTENERS);
     this.id = nanoid();
@@ -114,7 +114,7 @@ export class FileUpload implements FileUploadManager, FileUploadEventEmitter {
     this._emitter.emit('uploadProgressChange', this.id, value);
   }
 
-  notifyUploadCompleted(metadata: FileMetadata): void {
+  notifyUploadCompleted(metadata: FileAttachment): void {
     this._emitter.emit('uploadComplete', this.id, metadata);
   }
 
@@ -168,7 +168,7 @@ type UploadProgressListener = (id: string, value: number) => void;
  * Listener for `uploadComplete` event.
  * @beta
  */
-type UploadCompleteListener = (id: string, metadata: FileMetadata) => void;
+type UploadCompleteListener = (id: string, metadata: FileAttachment) => void;
 /**
  * Listener for `uploadFailed` event.
  * @beta

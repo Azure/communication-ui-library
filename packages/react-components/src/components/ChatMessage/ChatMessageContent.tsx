@@ -19,7 +19,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 
-import { FileMetadata } from '../FileDownloadCards';
+import { BaseChatAttachment } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -33,7 +33,7 @@ type ChatMessageContentProps = {
 
   attachmentsMap?: Record<string, string>;
 
-  onFetchAttachment?: (attachments: FileMetadata[], messageId: string) => Promise<void>;
+  onFetchAttachment?: (attachments: BaseChatAttachment[], messageId: string) => Promise<void>;
 
   onInlineImageClicked?: (attachmentId: string) => void;
 };
@@ -78,7 +78,7 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   useEffect(() => {
     const attachments = props.message.attachedFilesMetadata?.filter((fileMetadata) => {
-      return fileMetadata.attachmentType === 'inlineImage';
+      return fileMetadata.attachmentType === 'image';
     });
 
     if (props.attachmentsMap && attachments) {
@@ -196,8 +196,8 @@ const htmlToReactParser = Parser();
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
-    function isImageNode(file: FileMetadata): boolean {
-      return file.attachmentType === 'inlineImage' && file.id === node.attribs.id;
+    function isImageNode(file: BaseChatAttachment): boolean {
+      return file.attachmentType === 'image' && file.id === node.attribs.id;
     }
 
     // Process img node with id in attachments list

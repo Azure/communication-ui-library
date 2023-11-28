@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 
-import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
+import { AttachmentDownloadResult, FileAttachment } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -199,7 +199,7 @@ describe('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'inlineImage',
+          attachmentType: 'image',
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedImgSrc1
@@ -207,16 +207,16 @@ describe('Message should display image and attachment correctly', () => {
         {
           id: imgId2,
           name: imgId2,
-          attachmentType: 'inlineImage',
+          attachmentType: 'image',
           extension: 'png',
           url: expectedImgSrc2,
           previewUrl: expectedImgSrc2
         }
       ]
     };
-    const onFetchAttachment = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: FileAttachment[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'image' ? attachments[0].previewUrl ?? '' : '';
       return [
         {
           attachmentId: attachments[0].id,
@@ -263,7 +263,7 @@ describe('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'inlineImage',
+          attachmentType: 'image',
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedFilePreviewSrc1
@@ -285,9 +285,9 @@ describe('Message should display image and attachment correctly', () => {
         }
       ]
     };
-    const onFetchAttachment = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: FileAttachment[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
-      const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
+      const url = attachments[0].attachmentType === 'image' ? attachments[0].previewUrl ?? '' : '';
       return [
         {
           attachmentId: attachments[0].id,
@@ -344,7 +344,7 @@ describe('Message should display image and attachment correctly', () => {
         {
           id: imgId1,
           name: imgId1,
-          attachmentType: 'inlineImage',
+          attachmentType: 'image',
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedFilePreviewSrc1

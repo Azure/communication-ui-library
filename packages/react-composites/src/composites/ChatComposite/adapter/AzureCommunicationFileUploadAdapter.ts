@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FileMetadata } from '@internal/react-components';
+import { FileAttachment } from '@internal/react-components';
 import { FileUploadManager, FileUploadState } from '../file-sharing';
 /* @conditional-compile-remove(file-sharing) */
 import produce from 'immer';
@@ -23,12 +23,12 @@ export type FileUploadsUiState = Record<string, FileUploadState>;
  */
 export interface FileUploadAdapter {
   registerActiveFileUploads: (files: File[]) => FileUploadManager[];
-  registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+  registerCompletedFileUploads: (metadata: FileAttachment[]) => FileUploadManager[];
   clearFileUploads: () => void;
   cancelFileUpload: (id: string) => void;
   updateFileUploadProgress: (id: string, progress: number) => void;
   updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
-  updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+  updateFileUploadMetadata: (id: string, metadata: FileAttachment) => void;
 }
 
 /* @conditional-compile-remove(file-sharing) */
@@ -123,7 +123,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     this.deleteFileUploads(ids);
   }
 
-  private registerFileUploads(files: File[] | FileMetadata[]): FileUploadManager[] {
+  private registerFileUploads(files: File[] | FileAttachment[]): FileUploadManager[] {
     this.deleteErroneousFileUploads();
     const fileUploads: FileUpload[] = [];
     files.forEach((file) => fileUploads.push(new FileUpload(file)));
@@ -137,7 +137,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     return this.registerFileUploads(files);
   }
 
-  registerCompletedFileUploads(metadata: FileMetadata[]): FileUploadManager[] {
+  registerCompletedFileUploads(metadata: FileAttachment[]): FileUploadManager[] {
     return this.registerFileUploads(metadata);
   }
 
@@ -167,7 +167,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
     });
   }
 
-  updateFileUploadMetadata(id: string, metadata: FileMetadata): void {
+  updateFileUploadMetadata(id: string, metadata: FileAttachment): void {
     this.context.updateFileUpload(id, { progress: 1, metadata });
   }
 
@@ -190,7 +190,7 @@ export class AzureCommunicationFileUploadAdapter implements FileUploadAdapter {
  * @private
  */
 export const convertFileUploadsUiStateToMessageMetadata = (fileUploads?: FileUploadsUiState): FileSharingMetadata => {
-  const fileMetadata: FileMetadata[] = [];
+  const fileMetadata: FileAttachment[] = [];
   if (fileUploads) {
     Object.keys(fileUploads).forEach((key) => {
       const file = fileUploads[key];
