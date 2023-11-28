@@ -244,7 +244,7 @@ export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =
       const convertedMessages = memoizedAllConvertChatMessage((memoizedFn) =>
         Object.values(chatMessages)
           .filter(
-            (message) =>
+            (message: ChatMessage) =>
               message.type.toLowerCase() === ACSKnownMessageType.text ||
               message.type.toLowerCase() === ACSKnownMessageType.richtextHtml ||
               message.type.toLowerCase() === ACSKnownMessageType.html ||
@@ -255,7 +255,7 @@ export const messageThreadSelectorWithThread: () => MessageThreadSelector = () =
               message.clientMessageId !== undefined
           )
           .filter(isMessageValidToRender)
-          .map((message) => {
+          .map((message: ChatMessage) => {
             return memoizedFn(
               message.id ?? message.clientMessageId,
               message,

@@ -23,7 +23,7 @@
     "_typecheck": "rushx _by-flavor \"npm run _if-preprocess && echo skip || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)\""
   },
   "dependencies": {
-    "@azure/communication-chat": "/workspaces/communication-ui-library/azure-communication-chat-1.4.0.tgz",
+    "@azure/communication-chat": "1.4.0-alpha.20231124.1",
     "@azure/communication-calling": "1.19.1-beta.2 || ^1.18.1",
     "@azure/communication-common": "^2.3.0",
     "@azure/communication-identity": "^1.2.0",
