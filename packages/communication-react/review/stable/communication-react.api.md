@@ -2206,12 +2206,12 @@ export type ErrorType = keyof ErrorBarStrings;
 export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
 
 // @public (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | 'inlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'file' | 'inlineImage' | 'unknown';
 
 // @public
 export interface FileSharingMetadata extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
     // (undocumented)
     payload?: Record<string, string>;
 }

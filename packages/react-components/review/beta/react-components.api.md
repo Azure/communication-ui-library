@@ -1153,12 +1153,12 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) =
 export type FileMetadata = FileSharingMetadata |  ImageFileMetadata;
 
 // @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' |  'inlineImage' | 'unknown';
+export type FileMetadataAttachmentType = 'file' |  'inlineImage' | 'unknown';
 
 // @beta
 export interface FileSharingMetadata extends BaseFileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
     // (undocumented)
     payload?: Record<string, string>;
 }

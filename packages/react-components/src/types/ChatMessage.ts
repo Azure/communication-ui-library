@@ -114,7 +114,7 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
 }
 
 /**
- * A system message with arbitary content.
+ * A system message with arbitrary content.
  *
  * @public
  */

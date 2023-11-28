@@ -26,7 +26,7 @@ import { ACSKnownMessageType } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 
 /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileAttachment, FileMetadataAttachmentType } from '@internal/react-components';
+import { FileAttachment, ChatAttachmentType } from '@internal/react-components';
 
 import { ChatAttachmentType, ChatAttachment } from '@azure/communication-chat';
 const memoizedAllConvertChatMessage = memoizeFnAll(
@@ -80,7 +80,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileAtt
   return fileMetadata;
 };
 
-const mapAttachmentType = (attachmentType: ChatAttachmentType): FileMetadataAttachmentType => {
+const mapAttachmentType = (attachmentType: ChatAttachmentType): ChatAttachmentType => {
   if (attachmentType === 'image') {
     return 'image';
   }

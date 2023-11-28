@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 
-import { AttachmentDownloadResult, FileAttachment } from './FileDownloadCards';
+import { AttachmentDownloadResult, ChatAttachment, FileAttachment, ImageAttachment } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -203,7 +203,7 @@ describe('Message should display image and attachment correctly', () => {
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedImgSrc1
-        },
+        } as ImageAttachment,
         {
           id: imgId2,
           name: imgId2,
@@ -211,10 +211,10 @@ describe('Message should display image and attachment correctly', () => {
           extension: 'png',
           url: expectedImgSrc2,
           previewUrl: expectedImgSrc2
-        }
+        } as ImageAttachment
       ]
     };
-    const onFetchAttachment = async (attachments: FileAttachment[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: ChatAttachment[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
       const url = attachments[0].attachmentType === 'image' ? attachments[0].previewUrl ?? '' : '';
       return [
@@ -267,25 +267,25 @@ describe('Message should display image and attachment correctly', () => {
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedFilePreviewSrc1
-        },
+        } as ImageAttachment,
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'txt',
           url: expectedFileSrc1,
           payload: { teamsFileAttachment: 'true' }
-        },
+        } as FileAttachment,
         {
           id: fildId2,
           name: fildName2,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'pdf',
           url: expectedFileSrc2
         }
       ]
     };
-    const onFetchAttachment = async (attachments: FileAttachment[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachment = async (attachments: ChatAttachment[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
       const url = attachments[0].attachmentType === 'image' ? attachments[0].previewUrl ?? '' : '';
       return [
@@ -304,7 +304,7 @@ describe('Message should display image and attachment correctly', () => {
       const DownloadFileIconName = 'DownloadFile';
       const fileDownloadCards = container.querySelector('[data-ui-id="file-download-card-group"]')?.firstElementChild;
 
-      // Frist attachment: previewUrl !== undefine, will not show DownloadFile Icon
+      // First attachment: previewUrl !== undefine, will not show DownloadFile Icon
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[0].children[0].textContent).toEqual(fildName1);
 
@@ -348,19 +348,19 @@ describe('Message should display image and attachment correctly', () => {
           extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedFilePreviewSrc1
-        },
+        } as ImageAttachment,
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'txt',
           url: expectedFileSrc1,
           payload: { teamsFileAttachment: 'true' }
-        },
+        } as FileAttachment,
         {
           id: fildId2,
           name: fildName2,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'pdf',
           url: expectedFileSrc2
         }

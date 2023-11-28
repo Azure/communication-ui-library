@@ -30,11 +30,8 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-
   attachmentsMap?: Record<string, string>;
-
   onFetchAttachment?: (attachments: BaseChatAttachment[], messageId: string) => Promise<void>;
-
   onInlineImageClicked?: (attachmentId: string) => void;
 };
 

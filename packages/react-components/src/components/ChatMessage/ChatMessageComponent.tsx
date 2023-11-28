@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../t
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, FileAttachment } from '../FileDownloadCards';
+import { FileDownloadHandler, FileAttachment, BaseChatAttachment } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 
@@ -88,7 +88,7 @@ type ChatMessageComponentProps = {
    * Optional function to fetch attachments.
    * @beta
    */
-  onFetchAttachments?: (attachment: FileAttachment[], messageId: string) => Promise<void>;
+  onFetchAttachments?: (attachment: BaseChatAttachment[], messageId: string) => Promise<void>;
 
   /**
    * Optional callback called when an inline image is clicked.

@@ -315,7 +315,7 @@ export type { FileAttachment } from '../../react-components/src';
 
 export type {
   BaseFileMetadata,
-  FileMetadataAttachmentType,
+  ChatAttachmentType,
   AttachmentDownloadResult,
   FileSharingMetadata,
   ImageFileMetadata

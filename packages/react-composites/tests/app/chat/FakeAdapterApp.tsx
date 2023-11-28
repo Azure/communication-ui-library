@@ -134,7 +134,7 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         name: file.name,
         extension: file.extension,
         url: file.url,
-        attachmentType: 'fileSharing',
+        attachmentType: 'file',
         id: file.id
       });
     } else if (file.error) {
@@ -162,7 +162,7 @@ const sendRemoteFileSharingMessage = (
       type: 'text',
       metadata: {
         fileSharingMetadata: JSON.stringify([
-          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'fileSharing', id: uuidv4() }
+          { name: 'SampleFile1.pdf', extension: 'pdf', attachmentType: 'file', id: uuidv4() }
         ])
       }
     }

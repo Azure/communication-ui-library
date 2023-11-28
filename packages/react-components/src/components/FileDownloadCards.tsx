@@ -14,7 +14,7 @@ import { _formatString } from '@internal/acs-ui-common';
 /**
  * @public
  */
-export type FileMetadataAttachmentType = 'file' | 'image' | 'unknown';
+export type ChatAttachmentType = 'file' | 'image' | 'unknown';
 
 /**
  * Base interface that all attachment types should extend.
@@ -39,12 +39,11 @@ export interface BaseChatAttachment {
   /**
    * Unique ID of the file.
    */
-
   id: string;
   /**
    * Attachment Type
    */
-  attachmentType: FileMetadataAttachmentType;
+  attachmentType: ChatAttachmentType;
 }
 /**
  * Meta Data containing basic information about the uploaded file.
@@ -149,13 +148,13 @@ export type FileDownloadHandler = (userId: string, fileMetadata: FileAttachment)
 /**
  * @internal
  */
-export interface _FileDownloadCards {
+export interface _FileDownloadCardsProps {
   /**
    * User id of the local participant
    */
   userId: string;
   /**
-   * A chat message metadata that inculdes file metadata
+   * A chat message metadata that includes file metadata
    */
   fileMetadata: FileAttachment[];
   /**
@@ -183,7 +182,7 @@ const actionIconStyle = { height: '1rem' };
 /**
  * @internal
  */
-export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
+export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
@@ -197,7 +196,6 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
 
   const isFileSharingAttachment = useCallback((attachment: FileAttachment): boolean => {
     return attachment.attachmentType === 'file';
-    return false;
   }, []);
 
   const isShowDownloadIcon = useCallback((attachment: FileAttachment): boolean => {
@@ -211,9 +209,6 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
 
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata.filter(isFileSharingAttachment).length}`
-      });
-      return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.length}`
       });
     },
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
