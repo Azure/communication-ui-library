@@ -84,6 +84,14 @@
       "safeForSimultaneousRushProcesses": true
     },
     {
+      "commandKind": "global",
+      "name": "generate-api-diff",
+      "summary": "Generate two api files for a supplied feature name",
+      "description": "Supply a feature name and this command will generate two api files under <repo-root>/api. The first file `baseline.api.json` is the @azure/communication-react API result on the current branch with the supplied feature removed. The second file is `feature.api.json` and is the @azure/communication-react API result with the feature included. The two files can then be uploaded to APIView.dev for comparing the API difference with the supplied feature enabled. This is particularly useful for generating an API view for ARB reviews.",
+      "shellCommand": "node common/scripts/generate-api-diff.mjs",
+      "safeForSimultaneousRushProcesses": true
+    },
+    {
       "commandKind": "bulk",
       "name": "build",
       "summary": "Build all projects that haven't been built, or have changed since they were last built",
@@ -161,5 +169,15 @@
       "safeForSimultaneousRushProcesses": true
     }
   ],
-  "parameters": []
+  "parameters": [
+    {
+      "parameterKind": "string",
+      "longName": "--feature",
+      "shortName": "-f",
+      "required": true,
+      "argumentName": "FEATURE_NAME",
+      "description": "Feature name. Note: This must match the name given in features.js",
+      "associatedCommands": ["generate-api-diff"]
+    }
+  ]
 }

@@ -17,6 +17,33 @@ export const sanitize = (version: string): string => {
 };
 
 /**
+ * Indicates the type of implementation for the UILibrary.
+ *
+ * @internal
+ */
+export type _TelemetryImplementationHint = 'Call' | 'Chat' | 'CallWithChat' | 'StatefulComponents';
+
+/**
+ * Takes a telemetry implementation hint and returns the numerical value.
+ *
+ * @private
+ */
+const getTelemetryImplementationHint = (telemetryImplementationHint: _TelemetryImplementationHint): number => {
+  switch (telemetryImplementationHint) {
+    case 'Call':
+      return 1;
+    case 'Chat':
+      return 2;
+    case 'CallWithChat':
+      return 3;
+    case 'StatefulComponents':
+      return 4;
+    default:
+      return 0;
+  }
+};
+
+/**
  * Application ID to be included in telemetry data from the UI library.
  * Template: acXYYY/<version>
  * Where:
@@ -31,7 +58,10 @@ export const sanitize = (version: string): string => {
  *
  * @internal
  */
-export const _getApplicationId = (): string => {
+export const _getApplicationId = (telemetryImplementationHint: _TelemetryImplementationHint): string => {
+  const highLevelArtifact = 0;
+  const specificImplementation = getTelemetryImplementationHint(telemetryImplementationHint);
+  const implementationDetails = 0;
   const version = telemetryVersion['default'];
-  return sanitize(`acr/${version}`);
+  return sanitize(`acr${highLevelArtifact}${specificImplementation}${implementationDetails}/${version}`);
 };

@@ -32,12 +32,10 @@ describe('Adapter is created as expected', () => {
     const mockCallAgent = new MockCallAgent();
     const locator = { participantIds: ['some user id'] };
     const options: CommonCallAdapterOptions = {
-      soundOptions: {
-        callingSounds: {
-          callEnded: { path: 'test/path/ended' },
-          callRinging: { path: 'test/path/ringing' },
-          callBusy: { path: 'test/path/busy' }
-        }
+      callingSounds: {
+        callEnded: { url: 'test/url/ended' },
+        callRinging: { url: 'test/url/ringing' },
+        callBusy: { url: 'test/url/busy' }
       }
     };
 
@@ -50,11 +48,11 @@ describe('Adapter is created as expected', () => {
     expect(adapter).toBeDefined();
     expect(adapter.getState().sounds).toBeDefined();
     expect(adapter.getState().sounds?.callEnded).toBeDefined();
-    expect(adapter.getState().sounds?.callEnded).toEqual({ path: 'test/path/ended' });
+    expect(adapter.getState().sounds?.callEnded).toEqual({ url: 'test/url/ended' });
     expect(adapter.getState().sounds?.callRinging).toBeDefined();
-    expect(adapter.getState().sounds?.callRinging).toEqual({ path: 'test/path/ringing' });
+    expect(adapter.getState().sounds?.callRinging).toEqual({ url: 'test/url/ringing' });
     expect(adapter.getState().sounds?.callBusy).toBeDefined();
-    expect(adapter.getState().sounds?.callBusy).toEqual({ path: 'test/path/busy' });
+    expect(adapter.getState().sounds?.callBusy).toEqual({ url: 'test/url/busy' });
   });
   /* @conditional-compile-remove(calling-sounds) */
   test('when creating an adapter with one sound we should see it and not the other', async () => {
@@ -63,10 +61,8 @@ describe('Adapter is created as expected', () => {
     const mockCallAgent = new MockCallAgent();
     const locator = { participantIds: ['some user id'] };
     const options: CommonCallAdapterOptions = {
-      soundOptions: {
-        callingSounds: {
-          callEnded: { path: 'test/path/ended' }
-        }
+      callingSounds: {
+        callEnded: { url: 'test/url/ended' }
       }
     };
 
@@ -79,7 +75,7 @@ describe('Adapter is created as expected', () => {
     expect(adapter).toBeDefined();
     expect(adapter.getState().sounds).toBeDefined();
     expect(adapter.getState().sounds?.callEnded).toBeDefined();
-    expect(adapter.getState().sounds?.callEnded).toEqual({ path: 'test/path/ended' });
+    expect(adapter.getState().sounds?.callEnded).toEqual({ url: 'test/url/ended' });
     expect(adapter.getState().sounds?.callRinging).toBeUndefined();
     expect(adapter.getState().sounds?.callBusy).toBeUndefined();
   });
