@@ -25,7 +25,6 @@ export const CONFIGURATION_PAGE_SECTION_MAX_WIDTH_REM = 20.625;
 export const CONFIGURATION_PAGE_SECTION_HEIGHT_REM = 13.625;
 
 const LOGO_HEIGHT_REM = 3;
-const LOGO_MARGIN_BOTTOM_REM = 1;
 
 /**
  * @private
@@ -115,21 +114,43 @@ export const selectionContainerStyle = (theme: ITheme): string =>
 /**
  * @private
  */
-export const titleContainerStyleDesktop = mergeStyles({
-  fontSize: '1.25rem',
-  lineHeight: '1.75rem',
-  fontWeight: 600
-});
+export const titleContainerStyleDesktop = (theme: ITheme): string =>
+  mergeStyles(
+    {
+      fontSize: '1.25rem',
+      lineHeight: '1.75rem',
+      fontWeight: 600
+    },
+    configurationPageTextDecoration(theme)
+  );
 
 /**
  * @private
  */
-export const titleContainerStyleMobile = mergeStyles({
-  fontSize: '1.0625rem',
-  lineHeight: '1.375rem',
-  fontWeight: 600,
-  textAlign: 'center'
-});
+export const titleContainerStyleMobile = (theme: ITheme): string =>
+  mergeStyles(
+    {
+      fontSize: '1.0625rem',
+      lineHeight: '1.375rem',
+      fontWeight: 600,
+      textAlign: 'center'
+    },
+    configurationPageTextDecoration(theme)
+  );
+
+/**
+ * Ensure configuration page text is legible on top of a background image.
+ * @private
+ */
+const configurationPageTextDecoration = (theme: ITheme): IStyle => {
+  return {
+    textShadow: `0px 0px 8px ${theme.palette.whiteTranslucent40}`,
+    fill: theme.semanticColors.bodyText,
+    stroke: theme.palette.whiteTranslucent40,
+    paintOrder: 'stroke fill',
+    strokeWidth: _pxToRem(1.5)
+  };
+};
 
 /**
  * @private
@@ -257,7 +278,7 @@ export const configurationCenteredContent = (fillsHeight: boolean, hasLogo?: boo
     // in and not shift the content. To exclude the logo, we subtract the logo height
     // and margin from the actual height. This allows the flex box's natural centering
     // to appropriately center the content.
-    height: `calc(100% - ${!fillsHeight && hasLogo ? `${LOGO_HEIGHT_REM + LOGO_MARGIN_BOTTOM_REM}rem` : '0rem'})`
+    height: `calc(100% - ${!fillsHeight && hasLogo ? `${LOGO_HEIGHT_REM}rem` : '0rem'})`
   });
 
 /** @private */
@@ -290,8 +311,7 @@ export const logoStyles = (shape: 'circle' | 'square'): IImageStyles => ({
   root: {
     overflow: 'initial', // prevent the image being clipped
     display: 'flex',
-    justifyContent: 'center',
-    marginBottom: `${LOGO_MARGIN_BOTTOM_REM}rem`
+    justifyContent: 'center'
   },
   image: {
     borderRadius: shape === 'circle' ? '100%' : undefined,
