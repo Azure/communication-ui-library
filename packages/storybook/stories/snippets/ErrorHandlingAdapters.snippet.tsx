@@ -41,7 +41,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
      * errors that can occur in the calling experience. When these events happen using the callback you
      * can update your application to render the appropriate UI to recover from the error.
      *
-     * If you do nothing on this event worry not the CallComposite and adapter do catch the error internally
+     * If you do nothing on this event the CallComposite and adapter do catch the error internally
      * and will recover from it on its own.
      */
     adapter.on('error', (e: any) => {
