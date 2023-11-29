@@ -169,7 +169,7 @@ export type OverflowGalleryPosition =
 /**
  * different modes of the local video tile
  *
- * @beta
+ * @public
  */
 export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrientation';
 
