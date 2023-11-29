@@ -137,20 +137,7 @@ export const getRemoteParticipants = (
   | undefined
   | {
       [keys: string]: RemoteParticipantState;
-    } => {
-  /* @conditional-compile-remove(rooms) */
-  // Filter out consumers from remote participants
-  {
-    const remoteParticipants = { ...state.call?.remoteParticipants };
-    Object.keys(remoteParticipants).forEach((k) => {
-      if (remoteParticipants[k].role === 'Consumer') {
-        delete remoteParticipants[k];
-      }
-    });
-    return remoteParticipants;
-  }
-  return state.call?.remoteParticipants;
-};
+    } => state.call?.remoteParticipants;
 
 /* @conditional-compile-remove(unsupported-browser) */
 /**
