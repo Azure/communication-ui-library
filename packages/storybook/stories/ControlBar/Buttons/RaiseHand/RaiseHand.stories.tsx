@@ -10,6 +10,7 @@ import { COMPONENT_FOLDER_PREFIX } from '../../../constants';
 import { controlsToAdd, hiddenControl } from '../../../controlsUtils';
 import { CustomRaiseHandButtonExample } from './snippets/Custom.snippet';
 import { RaiseHandButtonExample } from './snippets/Default.snippet';
+import { ReactionButtonWithLabelExample } from './snippets/Reaction.snippet';
 import { RaiseHandButtonWithLabelExample } from './snippets/WithLabel.snippet';
 
 const CustomButtonExampleText = require('!!raw-loader!./snippets/Custom.snippet.tsx').default;
@@ -64,6 +65,19 @@ const getDocs: () => JSX.Element = () => {
       </Description>
       <Canvas mdxSource={CustomButtonExampleText}>
         <CustomRaiseHandButtonExample />
+      </Canvas>
+
+      <Heading>Reaction Button Example</Heading>
+      <Description>
+        You can change the styles of the `RaiseHandButton` as you would customized any Button (styles, primary,
+        onRenderIcon, onRenderText, etc... ).
+      </Description>
+      <Description>
+        Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+        to each element to avoid warning for children in a list.
+      </Description>
+      <Canvas mdxSource={CustomButtonExampleText}>
+        <ReactionButtonWithLabelExample />
       </Canvas>
 
       <Heading>RaiseHandButton Props</Heading>
