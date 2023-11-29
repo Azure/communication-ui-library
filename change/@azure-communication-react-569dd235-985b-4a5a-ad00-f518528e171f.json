@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "Accessibility",
-  "comment": "Added an announcement when a message is deleted",
+  "comment": "Add a Narrator announcement when a message is deleted",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
