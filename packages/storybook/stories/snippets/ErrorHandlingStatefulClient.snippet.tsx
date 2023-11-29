@@ -8,8 +8,7 @@ import {
   CallProvider,
   createStatefulCallClient,
   StatefulCallClient,
-  CallClientState,
-  CallErrors
+  CallClientState
 } from '@azure/communication-react';
 import { initializeIcons, registerIcons } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
@@ -32,12 +31,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [call, setCall] = useState<Call>();
 
   /**
-   * This state reflects the same state coming out of our stateful client.
-   * When we add to this state we can do checks to see what the different errors are. should there be something
-   * in there that we want to trigger a UI change for we can reference this for more information about what
-   * the error is.
+   * This state we will store the message from the latest error that was emitted.
    */
-  const [latestErrors, setLatestErrors] = useState<CallErrors>();
+  const [latestError, setLatestError] = useState<string>();
 
   useEffect(() => {
     const statefulCallClient = createStatefulCallClient({
@@ -52,16 +48,20 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     statefulCallClient.onStateChange((state: CallClientState) => {
       console.log(`CallClient state changed to ${state}`);
       /**
-       * Here we are comparing the latest errors that are in the stateful client and storing them into our
-       * own state.
+       * Here we can check against the different errors that we hold in the stateful client. To see a complete list
+       * checkout the {@link CallErrors} type that we export from communication react.
+       *
+       * In this example we are checking for the start screenshare to fail and storing the message on failure.
+       * During this event the UI can be replaced with a new screen for example showing that something failed if
+       * the {@link ErrorBar} component is not being used.
        */
-      if (state.latestErrors !== latestErrors) {
-        setLatestErrors(state.latestErrors);
+      if (state.latestErrors['Call.startScreenSharing']) {
+        setLatestError(state.latestErrors['Call.startScreenSharing'].message);
       }
     });
 
     setStatefulCallClient(statefulCallClient);
-  }, [latestErrors, userId]);
+  }, [call, latestError, userId]);
 
   useEffect(() => {
     const tokenCredential = new AzureCommunicationTokenCredential(userAccessToken);
