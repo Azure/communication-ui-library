@@ -50,6 +50,7 @@ import {
   ChatMessageComponentWrapper,
   ChatMessageComponentWrapperProps
 } from './ChatMessage/ChatMessageComponentWrapper';
+import { Announcer } from './Announcer';
 
 const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
   return (
@@ -211,6 +212,8 @@ export interface MessageThreadStrings {
   editBoxSubmitButton: string;
   /** String for action menu indicating there are more options */
   actionMenuMoreOptions?: string;
+  /** Aria label to announce when a message is deleted */
+  messageDeletedAnnouncementAriaLabel: string;
   /* @conditional-compile-remove(file-sharing) */
   /** String for download file button in file card */
   downloadFile: string;
@@ -715,6 +718,47 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     [onFetchAttachments]
   );
 
+  const localeStrings = useLocale().strings.messageThread;
+  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
+
+  const latestDeletedMessageIdRef = useRef<string | undefined>(undefined);
+  const deletedMessageAriaLabel = useMemo(() => {
+    // as MessageThread doesn't know when a message is deleted,
+    // we need to keep track of the latest deleted message id and check if it still exists in `newMessages`
+    if (
+      !latestDeletedMessageIdRef.current ||
+      newMessages.find((message) => message.messageId === latestDeletedMessageIdRef.current)
+    ) {
+      return undefined;
+    }
+
+    return strings.messageDeletedAnnouncementAriaLabel;
+  }, [newMessages, strings.messageDeletedAnnouncementAriaLabel]);
+
+  useEffect(() => {
+    if (deletedMessageAriaLabel !== undefined) {
+      // reset value to avoid the announcement repetition during re-renders
+      // it should be done in useEffect hook as if it's done in `deletedMessageAriaLabel` then
+      // `deletedMessageAriaLabel` is considered impure
+      latestDeletedMessageIdRef.current = undefined;
+    }
+  }, [deletedMessageAriaLabel]);
+
+  const onDeleteMessageCallback = useCallback(
+    async (messageId: string): Promise<void> => {
+      if (!onDeleteMessage) {
+        return;
+      }
+      try {
+        await onDeleteMessage(messageId);
+        latestDeletedMessageIdRef.current = messageId;
+      } catch (e) {
+        console.log('onDeleteMessage failed: messageId', messageId, 'error', e);
+      }
+    },
+    [onDeleteMessage]
+  );
+
   const isAllChatMessagesLoadedRef = useRef(false);
   // isAllChatMessagesLoadedRef needs to be updated every time when a new adapter is set in order to display correct data
   // onLoadPreviousChatMessages is updated when a new adapter is set
@@ -961,9 +1005,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     []
   );
 
-  const localeStrings = useLocale().strings.messageThread;
-  const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
-
   const defaultStatusRenderer = useCallback(
     (
       message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
@@ -1006,7 +1047,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
           index,
           onUpdateMessage,
           onCancelEditMessage,
-          onDeleteMessage,
+          onDeleteMessageCallback,
           onSendMessage,
           props.disableEditing,
           lastDeliveredChatMessage,
@@ -1021,7 +1062,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     lastSendingChatMessage,
     messages,
     onCancelEditMessage,
-    onDeleteMessage,
+    onDeleteMessageCallback,
     onSendMessage,
     onUpdateMessage,
     props.disableEditing,
@@ -1048,6 +1089,10 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
+          {/* // doesn't work with strict mode */}
+          {/* do we need it like this? probably we don't */}
+          {/* {deletedMessageAriaLabel && <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'polite'} />} */}
+          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'polite'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
