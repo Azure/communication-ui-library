@@ -198,6 +198,7 @@ export type {
 export type {
   _IdentifierProviderProps,
   _Identifiers,
+  AttachmentDownloadResult,
   ActiveErrorMessage,
   BaseCustomStyles,
   CallParticipantListParticipant,
@@ -316,7 +317,6 @@ export type { FileMetadata } from '../../react-components/src';
 export type {
   BaseFileMetadata,
   FileMetadataAttachmentType,
-  AttachmentDownloadResult,
   FileSharingMetadata,
   ImageFileMetadata
 } from '../../react-components/src';
