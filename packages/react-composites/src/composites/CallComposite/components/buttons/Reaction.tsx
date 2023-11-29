@@ -36,7 +36,7 @@ export const Reaction = (props: {
 
   return (
     <ReactionButton
-      data-ui-id="call-composite-raisehand-button"
+      data-ui-id="call-composite-reaction-button"
       {...reactionButtonProps}
       showLabel={props.displayType !== 'compact'}
       disabled={raiseHandButtonDisabled || props.disabled}

@@ -47,6 +47,7 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from '../../common/ControlBar/CustomButton';
+import { Reaction } from './buttons/Reaction';
 /**
  * @private
  */
@@ -400,6 +401,9 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
               /* @conditional-compile-remove(rooms) */ !hideRaiseHandButtonInRoomsCall && (
                 <RaiseHand displayType={options?.displayType} />
               )
+          }
+          {
+            <Reaction displayType={options?.displayType} />
           }
           {screenShareButtonIsEnabled && (
             <ScreenShare
