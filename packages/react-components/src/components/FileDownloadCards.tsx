@@ -94,7 +94,6 @@ export type FileMetadata =
   | FileSharingMetadata
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Meta Data of the attachment object returned by the ACS SDK.
  * @public

@@ -56,6 +56,14 @@ export type AnnouncerProps = {
 };
 
 // @public
+export interface AttachmentDownloadResult {
+    // (undocumented)
+    attachmentId: string;
+    // (undocumented)
+    blobUrl: string;
+}
+
+// @public
 export interface BaseCustomStyles {
     root?: IStyle;
 }
