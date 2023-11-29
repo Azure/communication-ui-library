@@ -1089,9 +1089,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          {/* // doesn't work with strict mode */}
-          {/* do we need it like this? probably we don't */}
-          {/* {deletedMessageAriaLabel && <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'polite'} />} */}
           <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'polite'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
