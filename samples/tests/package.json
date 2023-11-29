@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "build": "echo skip",
+    "clean": "",
     "test": "echo skip",
     "test:ci-coverage": "echo skip",
     "test:e2e:bundle": "rushx _by-flavor \"cross-env SERVE_PATH=../StaticHtmlComposites/dist playwright test StaticHtmlComposites/\"",
