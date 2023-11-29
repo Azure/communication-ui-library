@@ -21,7 +21,7 @@ export type FileMetadataAttachmentType =
   | 'unknown';
 
 /**
- * Base interface that all Meta Data should extend.
+ * Base interface that all Metadata should extend.
  * Typically used for ACS to ACS file transfers.
  * @beta
  */
@@ -52,7 +52,7 @@ export interface BaseFileMetadata {
   attachmentType: FileMetadataAttachmentType;
 }
 /**
- * Meta Data containing basic information about the uploaded file.
+ * Metadata containing basic information about the uploaded file.
  * Typically used for ACS to ACS file transfers.
  * @beta
  */
@@ -61,14 +61,14 @@ export interface FileSharingMetadata extends BaseFileMetadata {
   attachmentType: 'fileSharing';
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
-   * Optional dictionary of meta data asscoiated with the file.
+   * Optional dictionary of Metadata asscoiated with the file.
    */
   payload?: Record<string, string>;
 }
 
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
- * Meta Data containing data for images.
+ * Metadata containing data for images.
  * @beta
  */
 export interface ImageFileMetadata extends BaseFileMetadata {
@@ -87,7 +87,7 @@ export interface ImageFileMetadata extends BaseFileMetadata {
 }
 
 /**
- * Meta Data containing information about the uploaded file.
+ * Metadata containing information about the uploaded file.
  * @beta
  */
 export type FileMetadata =
@@ -95,7 +95,7 @@ export type FileMetadata =
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
 
 /**
- * Meta Data of the attachment object returned by the ACS SDK.
+ * Metadata of the attachment object returned by the ACS SDK.
  * @public
  */
 export interface AttachmentDownloadResult {
