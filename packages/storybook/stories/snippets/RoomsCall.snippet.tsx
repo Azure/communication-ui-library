@@ -1,12 +1,6 @@
+import { RoomLocator } from '@azure/communication-calling';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import {
-  CallAdapter,
-  CallComposite,
-  CallCompositeOptions,
-  CompositeLocale,
-  useAzureCommunicationCallAdapter
-} from '@azure/communication-react';
-import { PartialTheme, Theme } from '@fluentui/react';
+import { CallAdapter, CallComposite, useAzureCommunicationCallAdapter } from '@azure/communication-react';
 import React, { useMemo } from 'react';
 
 export type ContainerProps = {
@@ -14,11 +8,7 @@ export type ContainerProps = {
   token: string;
   locator: string;
   displayName: string;
-  roomId: string;
-  formFactor?: 'desktop' | 'mobile';
-  fluentTheme?: PartialTheme | Theme;
-  locale?: CompositeLocale;
-  options?: CallCompositeOptions;
+  roomLocator: RoomLocator;
 };
 
 export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
@@ -36,9 +26,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
       userId: props.userId,
       displayName: props.displayName, // Max 256 Characters
       credential,
-      locator: {
-        roomId: props.roomId
-      }
+      locator: props.roomLocator
     },
     undefined,
     leaveCall
@@ -47,13 +35,7 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
   if (adapter) {
     return (
       <div style={{ height: '90vh', width: '90vw' }}>
-        <CallComposite
-          adapter={adapter}
-          formFactor={props.formFactor}
-          fluentTheme={props.fluentTheme}
-          locale={props?.locale}
-          options={props?.options}
-        />
+        <CallComposite adapter={adapter} />
       </div>
     );
   }
