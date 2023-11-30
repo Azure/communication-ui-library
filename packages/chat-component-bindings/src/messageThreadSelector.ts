@@ -81,10 +81,7 @@ const extractTeamsAttachmentsMetadata = (attachments: ChatAttachment[]): FileMet
 };
 
 const mapAttachmentType = (attachmentType: ChatAttachmentType): FileMetadataAttachmentType => {
-  if (attachmentType === 'image') {
-    return 'inlineImage';
-  }
-  return 'unknown';
+  return attachmentType;
 };
 
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
@@ -94,7 +91,7 @@ const processChatMessageContent = (message: ChatMessageWithStatus): string | und
   if (sanitizedMessageContentType(message.type).includes('html') && message.content?.attachments) {
     const attachments: ChatAttachment[] = message.content?.attachments;
     const teamsImageHtmlContent = attachments
-      .filter((attachment) => attachment.attachmentType === 'image')
+      .filter((attachment) => attachment.attachmentType === 'image' && !message.content?.message?.includes(attachment.id))
       .map((attachment) => generateImageAttachmentImgHtml(attachment))
       .join('');
     if (teamsImageHtmlContent) {
