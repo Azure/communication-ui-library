@@ -157,7 +157,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     fileDownloadHandler,
     /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked,
@@ -213,25 +212,26 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
-  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-  const defaultOnRenderFileDownloads = useCallback(
-    () => (
+  const defaultOnRenderFileDownloads = useCallback(() => {
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    const fileMetadata = (message as ChatMessage).files;
+    return (
       <_FileDownloadCards
         userId={userId}
-        fileMetadata={(message as ChatMessage).files || []}
+        fileMetadata={fileMetadata || []}
         downloadHandler={fileDownloadHandler}
+        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
-    ),
-    [
-      userId,
-      message,
-      /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-      strings,
-      /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-      fileDownloadHandler
-    ]
-  );
+    );
+  }, [
+    userId,
+    message,
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    strings,
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    fileDownloadHandler
+  ]);
 
   const editedOn = 'editedOn' in message ? message.editedOn : undefined;
   const getMessageDetails = useCallback(() => {
@@ -277,15 +277,10 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           /* @conditional-compile-remove(image-gallery) */
           onInlineImageClicked={handleOnInlineImageClicked}
         />
-        {
-          /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/ props.onRenderFileDownloads
-            ? props.onRenderFileDownloads(userId, message)
-            : defaultOnRenderFileDownloads()
-        }
+        {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
       </div>
     );
   }, [
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     defaultOnRenderFileDownloads,
     message,
     props,
