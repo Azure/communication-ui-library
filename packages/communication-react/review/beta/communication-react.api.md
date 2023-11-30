@@ -1655,8 +1655,6 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: AttachmentMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1669,6 +1667,10 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    files?: FileMetadata[];
+    // @beta
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -2912,9 +2914,7 @@ export interface IncomingCallState {
 export interface InlineImageMetadata {
     // (undocumented)
     attachmentType: 'inlineImage';
-    extension: string;
     id: string;
-    name: string;
     // (undocumented)
     previewUrl?: string;
     url: string;
