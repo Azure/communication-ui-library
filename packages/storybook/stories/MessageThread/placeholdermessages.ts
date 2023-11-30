@@ -7,7 +7,7 @@ import {
   ChatMessage,
   CustomMessage,
   SystemMessage,
-  AttachmentMetadata
+  InlineImageMetadata
 } from '@azure/communication-react';
 
 export const MessageThreadStoryContainerStyles = {
@@ -82,7 +82,7 @@ export const GenerateMockNewChatMessageWithInlineImage = (): ChatMessage => {
     mine: false,
     attached: false,
     contentType: 'html',
-    attachedFilesMetadata: GenerateMockMessageAttachments()
+    inlineImages: GenerateMockMessageAttachments()
   };
 };
 
@@ -100,13 +100,11 @@ export const GenerateMockNewChatMessageWithMention = (): ChatMessage => {
   };
 };
 
-const GenerateMockMessageAttachments = (): AttachmentMetadata[] => {
+const GenerateMockMessageAttachments = (): InlineImageMetadata[] => {
   return [
     {
       id: 'SomeImageId',
-      name: 'SomeImageId',
       attachmentType: 'inlineImage',
-      extension: 'png',
       url: 'images/github.png',
       previewUrl: 'images/github.png'
     }
