@@ -2,13 +2,14 @@
 // Licensed under the MIT License.
 
 import { ChatParticipant, ChatThreadClient } from '@azure/communication-chat';
-import type { AttachmentMetadata } from '@internal/react-components';
+import type { FileMetadata } from '@internal/react-components';
 
 /**
  * Type to represent a file upload the local participant will perform.
  * @internal
  */
-export type _MockFileUpload = AttachmentMetadata & {
+export type _MockFileUpload = FileMetadata & {
+  id: string;
   uploadComplete?: boolean;
   error?: string;
   progress?: number;

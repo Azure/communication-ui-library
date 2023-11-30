@@ -34,6 +34,7 @@ import { DeviceManagerState } from '@internal/calling-stateful-client';
 import { DtmfTone } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { FileDownloadHandler } from '@internal/react-components';
+import type { FileMetadata } from '@internal/react-components';
 import { GroupCallLocator } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { MessageProps } from '@internal/react-components';
@@ -1730,7 +1731,8 @@ export class _MockCallAdapter implements CallAdapter {
 }
 
 // @internal
-export type _MockFileUpload = AttachmentMetadata & {
+export type _MockFileUpload = FileMetadata & {
+    id: string;
     uploadComplete?: boolean;
     error?: string;
     progress?: number;
