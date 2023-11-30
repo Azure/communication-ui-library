@@ -19,7 +19,7 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -33,7 +33,7 @@ type ChatMessageContentProps = {
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentsMap?: Record<string, string>;
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  onFetchAttachments?: (attachments: FileMetadata[], messageId: string) => Promise<void>;
+  onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
@@ -90,13 +90,13 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
     if (!attachmentsMap || !onFetchAttachments) {
       return;
     }
-    const attachments = message.attachedFilesMetadata?.filter((fileMetadata) => {
-      return fileMetadata.attachmentType === 'inlineImage' && attachmentsMap[fileMetadata.id] === undefined;
+    const attachments = message.inlineImages?.filter((inlinedImages) => {
+      return inlinedImages.attachmentType === 'inlineImage' && attachmentsMap[inlinedImages.id] === undefined;
     });
     if (attachments && attachments.length > 0) {
       onFetchAttachments(attachments, message.messageId);
     }
-  }, [message.attachedFilesMetadata, message.messageId, onFetchAttachments, attachmentsMap]);
+  }, [message.inlineImages, message.messageId, onFetchAttachments, attachmentsMap]);
 
   return (
     <MessageContentWithLiveAria
@@ -204,17 +204,13 @@ const htmlToReactParser = Parser();
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
-    function isImageNode(file: FileMetadata): boolean {
+    function isImageNode(file: AttachmentMetadata): boolean {
       return file.attachmentType === 'inlineImage' && file.id === node.attribs.id;
     }
 
     // Process img node with id in attachments list
     return (
-      node.name &&
-      node.name === 'img' &&
-      node.attribs &&
-      node.attribs.id &&
-      props.message.attachedFilesMetadata?.find(isImageNode)
+      node.name && node.name === 'img' && node.attribs && node.attribs.id && props.message.files?.find(isImageNode)
     );
   },
   processNode: (node, children, index): JSX.Element => {

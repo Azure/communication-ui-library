@@ -2,7 +2,7 @@ import {
   FluentThemeProvider,
   MessageThread,
   Message,
-  FileMetadata,
+  AttachmentMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery,
@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 export const MessageThreadWithInlineImageExample: () => JSX.Element = () => {
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
 
-  const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
     // * Your custom function to fetch image behind authenticated blob storage/server
     // const response = await fetchImage(attachment.previewUrl ?? '', token);
     // const blob = await response.blob();

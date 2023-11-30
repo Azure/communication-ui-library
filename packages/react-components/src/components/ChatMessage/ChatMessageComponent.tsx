@@ -9,7 +9,7 @@ import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../t
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
-import { FileDownloadHandler, FileMetadata } from '../FileDownloadCards';
+import { FileDownloadHandler, AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from '../MentionPopover';
 
@@ -24,7 +24,7 @@ type ChatMessageComponentProps = {
     content: string,
     metadata?: Record<string, string>,
     options?: {
-      attachedFilesMetadata?: FileMetadata[];
+      attachedFilesMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onCancelEditMessage?: (messageId: string) => void;
@@ -88,7 +88,7 @@ type ChatMessageComponentProps = {
    * Optional function to fetch attachments.
    * @beta
    */
-  onFetchAttachments?: (attachment: FileMetadata[], messageId: string) => Promise<void>;
+  onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
   /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.

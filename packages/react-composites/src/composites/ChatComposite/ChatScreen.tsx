@@ -58,7 +58,7 @@ import { FileDownloadErrorBar } from './FileDownloadErrorBar';
 /* @conditional-compile-remove(file-sharing) */
 import { _FileDownloadCards } from '@internal/react-components';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, FileMetadata } from '@internal/react-components';
+import { AttachmentDownloadResult, AttachmentMetadata } from '@internal/react-components';
 /* @conditional-compile-remove(image-gallery) */
 import { ImageGallery, ImageGalleryImageProps } from '@internal/react-components';
 
@@ -223,7 +223,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onRenderInlineAttachment = useCallback(
-    async (attachment: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    async (attachment: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
       const entry: Record<string, string> = {};
       attachment.forEach((target) => {
         if (target.attachmentType === 'inlineImage' && target.previewUrl) {
@@ -248,16 +248,15 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       }
       const chatMessage = messages[0] as ChatMessage;
 
-      const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+      const inlinedImages = chatMessage.inlineImages?.filter((attachment) => {
         return attachment.id === attachmentId;
       });
 
-      if (!attachments || attachments.length <= 0) {
+      if (!inlinedImages || inlinedImages.length <= 0) {
         return;
       }
 
-      const attachment = attachments[0];
-      attachment.name = chatMessage.senderDisplayName || '';
+      const attachment = inlinedImages[0];
 
       const titleIconRenderOptions = {
         text: chatMessage.senderDisplayName,
@@ -267,7 +266,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       };
       const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(chatMessage.senderId, titleIconRenderOptions);
       const galleryImage: ImageGalleryImageProps = {
-        title: attachment.name,
+        title: chatMessage.senderDisplayName || '',
         titleIcon: titleIcon,
         downloadFilename: attachment.id,
         imageUrl: ''

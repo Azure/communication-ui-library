@@ -9,7 +9,7 @@ import { ChatMessage } from '../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../types';
 /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-import { AttachmentDownloadResult, FileMetadata } from './FileDownloadCards';
+import { AttachmentDownloadResult, AttachmentMetadata } from './FileDownloadCards';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 /* @conditional-compile-remove(date-time-customization) @conditional-compile-remove(data-loss-prevention) */
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
@@ -197,26 +197,22 @@ describe('Message should display image and attachment correctly', () => {
       mine: false,
       attached: false,
       contentType: 'html',
-      attachedFilesMetadata: [
+      inlineImages: [
         {
           id: imgId1,
-          name: imgId1,
           attachmentType: 'inlineImage',
-          extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedImgSrc1
         },
         {
           id: imgId2,
-          name: imgId2,
           attachmentType: 'inlineImage',
-          extension: 'png',
           url: expectedImgSrc2,
           previewUrl: expectedImgSrc2
         }
       ]
     };
-    const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentsCount++;
       return attachments.map((attachment): AttachmentDownloadResult => {
         const url = attachment.attachmentType === 'inlineImage' ? attachment.previewUrl ?? '' : '';
@@ -261,19 +257,11 @@ describe('Message should display image and attachment correctly', () => {
       mine: false,
       attached: false,
       contentType: 'html',
-      attachedFilesMetadata: [
-        {
-          id: imgId1,
-          name: imgId1,
-          attachmentType: 'inlineImage',
-          extension: 'png',
-          url: expectedImgSrc1,
-          previewUrl: expectedFilePreviewSrc1
-        },
+      files: [
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'txt',
           url: expectedFileSrc1,
           payload: { teamsFileAttachment: 'true' }
@@ -281,13 +269,21 @@ describe('Message should display image and attachment correctly', () => {
         {
           id: fildId2,
           name: fildName2,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'pdf',
           url: expectedFileSrc2
         }
+      ],
+      inlineImages: [
+        {
+          id: imgId1,
+          attachmentType: 'inlineImage',
+          url: expectedImgSrc1,
+          previewUrl: expectedFilePreviewSrc1
+        }
       ]
     };
-    const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+    const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
       onFetchAttachmentCount++;
       const url = attachments[0].attachmentType === 'inlineImage' ? attachments[0].previewUrl ?? '' : '';
       return [
@@ -343,19 +339,19 @@ describe('Message should display image and attachment correctly', () => {
       mine: false,
       attached: false,
       contentType: 'html',
-      attachedFilesMetadata: [
+      inlineImages: [
         {
           id: imgId1,
-          name: imgId1,
           attachmentType: 'inlineImage',
-          extension: 'png',
           url: expectedImgSrc1,
           previewUrl: expectedFilePreviewSrc1
-        },
+        }
+      ],
+      files: [
         {
           id: fildId1,
           name: fildName1,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'txt',
           url: expectedFileSrc1,
           payload: { teamsFileAttachment: 'true' }
@@ -363,7 +359,7 @@ describe('Message should display image and attachment correctly', () => {
         {
           id: fildId2,
           name: fildName2,
-          attachmentType: 'fileSharing',
+          attachmentType: 'file',
           extension: 'pdf',
           url: expectedFileSrc2
         }
