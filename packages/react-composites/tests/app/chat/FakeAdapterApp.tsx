@@ -9,7 +9,8 @@ import {
   FileDownloadError,
   FileDownloadHandler,
   lightTheme,
-  darkTheme
+  darkTheme,
+  FileMetadata
 } from '@internal/react-components';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
@@ -136,7 +137,7 @@ const handleFileUploads = (adapter: ChatAdapter, fileUploads: _MockFileUpload[])
         url: file.url,
         attachmentType: 'file',
         id: file.id
-      });
+      } as FileMetadata);
     } else if (file.error) {
       const fileUploads = adapter.registerActiveFileUploads([new File([], file.name)]);
       fileUploads[0].notifyUploadFailed(file.error);
@@ -180,7 +181,7 @@ const sendRemoteInlineImageMessage = (
   const remoteParticipantId = getIdentifierKind(remoteParticipant.id);
 
   if (localParticipantId.kind === 'microsoftTeamsApp' || remoteParticipantId.kind === 'microsoftTeamsApp') {
-    throw new Error('Unsupported indentifier kind: microsoftBot');
+    throw new Error('Unsupported identifier kind: microsoftBot');
   }
 
   const thread: Thread = chatClientModel.checkedGetThread(localParticipant.id, threadId);
