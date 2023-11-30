@@ -157,7 +157,7 @@ export type FileDownloadHandler = (
 /**
  * @internal
  */
-export interface _FileDownloadCards {
+export interface _FileDownloadCardsProps {
   /**
    * User id of the local participant
    */
@@ -165,7 +165,7 @@ export interface _FileDownloadCards {
   /**
    * A chat message metadata that includes file metadata
    */
-  fileMetadata: AttachmentMetadata[];
+  fileMetadata?: AttachmentMetadata[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -191,7 +191,7 @@ const actionIconStyle = { height: '1rem' };
 /**
  * @internal
  */
-export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
+export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
@@ -221,10 +221,10 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
       /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.filter(isFileSharingAttachment).length}`
+        fileCount: `${fileMetadata?.filter(isFileSharingAttachment).length ?? 0}`
       });
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.length}`
+        fileCount: `${fileMetadata?.length ?? 0}`
       });
     },
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]

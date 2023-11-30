@@ -1122,16 +1122,16 @@ export interface _FileCardProps {
 }
 
 // @internal (undocumented)
-export interface _FileDownloadCards {
+export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata: AttachmentMetadata[];
+    fileMetadata?: AttachmentMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
 }
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
 // @internal
 export interface _FileDownloadCardsStrings {

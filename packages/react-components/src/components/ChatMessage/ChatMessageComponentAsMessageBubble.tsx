@@ -213,12 +213,11 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   }, [setChatMessageActionFlyoutTarget]);
 
   const defaultOnRenderFileDownloads = useCallback(() => {
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-    const fileMetadata = (message as ChatMessage).files;
     return (
       <_FileDownloadCards
         userId={userId}
-        fileMetadata={fileMetadata || []}
+        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+        fileMetadata={(message as ChatMessage).files || []}
         downloadHandler={fileDownloadHandler}
         /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
