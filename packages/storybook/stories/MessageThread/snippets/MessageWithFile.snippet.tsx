@@ -19,7 +19,7 @@ export const MessageWithFile: () => JSX.Element = () => {
             attached: false,
             status: 'seen' as MessageStatus,
             contentType: 'text',
-            attachedFilesMetadata: [
+            files: [
               {
                 id: 'SomeUniqueId1',
                 name: 'RouterConfig.xlsx',
