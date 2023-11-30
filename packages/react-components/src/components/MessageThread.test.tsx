@@ -302,7 +302,7 @@ describe('Message should display image and attachment correctly', () => {
       const DownloadFileIconName = 'DownloadFile';
       const fileDownloadCards = container.querySelector('[data-ui-id="file-download-card-group"]')?.firstElementChild;
 
-      // First attachment: previewUrl !== undefine, will not show DownloadFile Icon
+      // First attachment: previewUrl !== undefined, will not show DownloadFile Icon
       expect(fileDownloadCards?.children[0].innerHTML).not.toContain(DownloadFileIconName);
       expect(fileDownloadCards?.children[0].children[0].textContent).toEqual(fildName1);
 
