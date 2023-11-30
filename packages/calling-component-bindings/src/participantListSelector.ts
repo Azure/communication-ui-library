@@ -6,7 +6,6 @@ import { createSelector } from 'reselect';
 import {
   getIdentifier,
   getDisplayName,
-  getRemoteParticipants,
   getIsScreenSharingOn,
   getIsMuted,
   CallingBaseSelectorProps
@@ -29,6 +28,7 @@ import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/c
 import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './utils/callUtils';
+import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 
 const convertRemoteParticipantsToParticipantListParticipants = (
   remoteParticipants: RemoteParticipantState[],
@@ -128,7 +128,7 @@ export const participantListSelector: ParticipantListSelector = createSelector(
   [
     getIdentifier,
     getDisplayName,
-    getRemoteParticipants,
+    getRemoteParticipantsExcludingConsumers,
     getIsScreenSharingOn,
     getIsMuted,
     /* @conditional-compile-remove(raise-hand) */ getLocalParticipantRaisedHand,
