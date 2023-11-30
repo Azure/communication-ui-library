@@ -46,7 +46,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
      */
     adapter.on('error', (e: any) => {
       /**
-       * Recovery code goes here
+       * Error handling code goes here
        */
       console.log('Adapter error event:', e);
     });
