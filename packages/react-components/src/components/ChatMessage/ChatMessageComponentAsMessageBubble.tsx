@@ -157,6 +157,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     fileDownloadHandler,
     /* @conditional-compile-remove(image-gallery) */
     onInlineImageClicked,
@@ -212,13 +213,13 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
   const defaultOnRenderFileDownloads = useCallback(
     () => (
       <_FileDownloadCards
         userId={userId}
         fileMetadata={(message as ChatMessage).files || []}
         downloadHandler={fileDownloadHandler}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     ),
@@ -227,6 +228,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
       message,
       /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
       strings,
+      /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
       fileDownloadHandler
     ]
   );
@@ -275,10 +277,15 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
           /* @conditional-compile-remove(image-gallery) */
           onInlineImageClicked={handleOnInlineImageClicked}
         />
-        {props.onRenderFileDownloads ? props.onRenderFileDownloads(userId, message) : defaultOnRenderFileDownloads()}
+        {
+          /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/ props.onRenderFileDownloads
+            ? props.onRenderFileDownloads(userId, message)
+            : defaultOnRenderFileDownloads()
+        }
       </div>
     );
   }, [
+    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
     defaultOnRenderFileDownloads,
     message,
     props,
