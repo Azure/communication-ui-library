@@ -3,15 +3,30 @@
 
 import { createSelector } from 'reselect';
 import { getRemoteParticipants } from './baseSelectors';
+import { RemoteParticipantState } from '@internal/calling-stateful-client';
 
 /**
  * @private
  */
-export const getRemoteParticipantsExcludingConsumers = createSelector([getRemoteParticipants], (remoteParticipants) => {
-  /* @conditional-compile-remove(rooms) */
-  {
-    const participants = Object.values(remoteParticipants ?? {});
-    return participants.filter((remoteParticipants) => remoteParticipants.role !== 'Consumer');
+export const getRemoteParticipantsExcludingConsumers = createSelector(
+  [getRemoteParticipants],
+  (
+    remoteParticipants
+  ):
+    | {
+        [keys: string]: RemoteParticipantState;
+      }
+    | undefined => {
+    /* @conditional-compile-remove(rooms) */
+    {
+      const newRemoteParticipants = { ...remoteParticipants };
+      Object.keys(newRemoteParticipants).forEach((k) => {
+        if (newRemoteParticipants[k].role === 'Consumer') {
+          delete newRemoteParticipants[k];
+        }
+      });
+      return newRemoteParticipants;
+    }
+    return remoteParticipants;
   }
-  return remoteParticipants;
-});
+);
