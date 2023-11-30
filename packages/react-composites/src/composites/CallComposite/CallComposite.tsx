@@ -247,25 +247,27 @@ export type CallCompositeOptions = {
      * Note that free form text response survey option is only going to be enabled when this callback is provided
      * User will need to handle all free form text response on their own
      */
-    onSubmitSurvey?: (
+    onSurveySubmitted?: (
       callId: string,
+      surveyId:string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
        * This part of the result will always be send to calling sdk
        * This callback provides user with the ability to gain access to survey data
        */
-      surveyResults: CallSurvey,
+      submittedSurvey: CallSurvey,
       /**
        * This is the survey results containing free form text
        * This part of the result will not be handled by composites
        * User will need to collect and handle this information 100% on their own
-       * Free form text survey is not going to show in the UI if onSubmitSurvey is not populated
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
        */
       improvementSuggestions: {
         category: 'audio' | 'video' | 'screenshare';
         suggestion: string;
       }[]
     ) => Promise<void>;
+  }
   /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
