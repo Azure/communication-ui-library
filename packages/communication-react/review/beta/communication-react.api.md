@@ -529,6 +529,7 @@ export type CallCompositeIcons = {
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     RaiseHandContextualMenuItem?: JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element;
     LowerHandContextualMenuItem?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
@@ -2446,24 +2447,25 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
     ControlButtonMicProhibited?: JSX.Element | undefined;
-    ControlButtonRaiseHand: JSX.Element;
-    ControlButtonLowerHand: JSX.Element;
-    RaiseHandContextualMenuItem: JSX.Element;
-    LowerHandContextualMenuItem: JSX.Element;
-    ErrorBarCallCameraAccessDenied: JSX.Element;
-    ErrorBarCallCameraAlreadyInUse: JSX.Element;
-    ErrorBarCallLocalVideoFreeze: JSX.Element;
-    ErrorBarCallMacOsCameraAccessDenied: JSX.Element;
-    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneAccessDenied: JSX.Element;
-    ErrorBarCallMicrophoneMutedBySystem: JSX.Element;
-    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element;
-    ErrorBarCallNetworkQualityLow: JSX.Element;
-    ErrorBarCallNoMicrophoneFound: JSX.Element;
-    ErrorBarCallNoSpeakerFound: JSX.Element;
-    ErrorBarClear: JSX.Element;
-    HorizontalGalleryLeftButton: JSX.Element;
-    HorizontalGalleryRightButton: JSX.Element;
+    ControlButtonRaiseHand: JSX.Element | React_2.JSX.Element;
+    ControlButtonLowerHand: JSX.Element | React_2.JSX.Element;
+    RaiseHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
+    ReactionContextualMenuItem?: JSX.Element | undefined;
+    LowerHandContextualMenuItem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallCameraAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallCameraAlreadyInUse: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallLocalVideoFreeze: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMacOsCameraAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMacOsMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneAccessDenied: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneMutedBySystem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallMicrophoneUnmutedBySystem: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNetworkQualityLow: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNoMicrophoneFound: JSX.Element | React_2.JSX.Element;
+    ErrorBarCallNoSpeakerFound: JSX.Element | React_2.JSX.Element;
+    ErrorBarClear: JSX.Element | React_2.JSX.Element;
+    HorizontalGalleryLeftButton: JSX.Element | React_2.JSX.Element;
+    HorizontalGalleryRightButton: JSX.Element | React_2.JSX.Element;
     LobbyScreenConnectingToCall?: JSX.Element | undefined;
     LobbyScreenWaitingToBeAdmitted?: JSX.Element | undefined;
     LocalDeviceSettingsCamera?: JSX.Element | undefined;
@@ -3659,6 +3661,18 @@ export type Reaction = {
     reactionType: string;
     receivedTimeStamp: number;
 };
+
+// @public
+export interface ReactionButtonProps extends ControlBarButtonProps {
+    strings?: Partial<ReactionButtonStrings>;
+}
+
+// @public
+export interface ReactionButtonStrings {
+    label: string;
+    tooltipContent?: string;
+    tooltipDisabledContent?: string;
+}
 
 // @public
 export interface ReactionCallFeatureState {

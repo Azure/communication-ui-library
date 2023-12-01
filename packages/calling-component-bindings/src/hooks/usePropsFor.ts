@@ -9,8 +9,7 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery,
-  ReactionButton
+  VideoGallery
 } from '@internal/react-components';
 /* @conditional-compile-remove(dialpad) */ /* @conditional-compile-remove(PSTN-calls) */
 import { Dialpad } from '@internal/react-components';
@@ -42,7 +41,10 @@ import { AreEqual } from '@internal/acs-ui-common';
 import { ParticipantsButton } from '@internal/react-components';
 import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
-import { reactionButtonSelector } from '..';
+/* @conditional-compile-remove(reaction) */
+import { reactionButtonSelector } from '../callControlSelectors';
+/* @conditional-compile-remove(reaction) */
+import { ReactionButton } from '@internal/react-components';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
