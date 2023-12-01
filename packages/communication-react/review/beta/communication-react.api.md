@@ -150,6 +150,9 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
+// @beta
+export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+
 // @public
 export type AvatarPersonaData = {
     text?: string;
@@ -225,15 +228,6 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @beta
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @beta
@@ -956,7 +950,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // @beta (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     removeParticipant(userId: string): Promise<void>;
     // @beta
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -988,7 +982,7 @@ export interface CallWithChatAdapterManagement {
     // @beta (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // @beta (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // @beta (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>): Promise<void>;
@@ -1532,7 +1526,7 @@ export interface ChatAdapterThreadManagement {
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
     updateMessage(messageId: string, content: string, metadata?: Record<string, string>, options?: {
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }): Promise<void>;
 }
 
@@ -1541,6 +1535,9 @@ export type ChatAdapterUiState = {
     error?: Error;
     fileUploads?: FileUploadsUiState;
 };
+
+// @beta
+export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
 
 // @public
 export type ChatBaseSelectorProps = {
@@ -1649,7 +1646,7 @@ export type ChatHandlers = {
     onLoadPreviousChatMessages: (messagesToLoad: number) => Promise<boolean>;
     onUpdateMessage: (messageId: string, content: string, options?: {
         metadata?: Record<string, string>;
-        attachedFilesMetadata?: FileMetadata[];
+        attachmentMetadata?: AttachmentMetadata[];
     }) => Promise<void>;
     onDeleteMessage: (messageId: string) => Promise<void>;
 };
@@ -1658,8 +1655,6 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1672,6 +1667,10 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    files?: FileMetadata[];
+    // @beta
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -2697,20 +2696,18 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
-
-// @beta
-export interface FileSharingMetadata extends BaseFileMetadata {
+export interface FileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
     // (undocumented)
     payload?: Record<string, string>;
+    url: string;
 }
 
 // @beta
@@ -2730,11 +2727,11 @@ export interface FileUploadAdapter {
     // (undocumented)
     registerActiveFileUploads: (files: File[]) => FileUploadManager[];
     // (undocumented)
-    registerCompletedFileUploads: (metadata: FileMetadata[]) => FileUploadManager[];
+    registerCompletedFileUploads: (metadata: AttachmentMetadata[]) => FileUploadManager[];
     // (undocumented)
     updateFileUploadErrorMessage: (id: string, errorMessage: string) => void;
     // (undocumented)
-    updateFileUploadMetadata: (id: string, metadata: FileMetadata) => void;
+    updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
     // (undocumented)
     updateFileUploadProgress: (id: string, progress: number) => void;
 }
@@ -2752,7 +2749,7 @@ export type FileUploadHandler = (userId: string, fileUploads: FileUploadManager[
 export interface FileUploadManager {
     file?: File;
     id: string;
-    notifyUploadCompleted: (metadata: FileMetadata) => void;
+    notifyUploadCompleted: (metadata: AttachmentMetadata) => void;
     notifyUploadFailed: (message: string) => void;
     notifyUploadProgressChanged: (value: number) => void;
 }
@@ -2762,7 +2759,7 @@ export interface FileUploadState {
     error?: FileUploadError;
     filename: string;
     id: string;
-    metadata?: FileMetadata;
+    metadata?: AttachmentMetadata;
     progress: number;
 }
 
@@ -2872,14 +2869,6 @@ export interface _Identifiers {
 }
 
 // @beta
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @beta
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
 // @beta
@@ -2919,6 +2908,16 @@ export interface IncomingCallState {
     endTime?: Date;
     id: string;
     startTime: Date;
+}
+
+// @beta
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
@@ -3150,7 +3149,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -4003,7 +4002,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @public

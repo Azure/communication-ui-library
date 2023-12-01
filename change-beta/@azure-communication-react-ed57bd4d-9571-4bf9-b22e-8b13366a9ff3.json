@@ -1,9 +1,9 @@
 {
   "type": "prerelease",
   "area": "improvement",
-  "workstream": "Release 1.10.0",
-  "comment": "merging prerelease branch back into main",
+  "workstream": "release",
+  "comment": "new beta release",
   "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
