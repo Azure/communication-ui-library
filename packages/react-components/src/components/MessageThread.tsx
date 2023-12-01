@@ -340,7 +340,7 @@ export type UpdateMessageCallback = (
   options?: {
     /* @conditional-compile-remove(file-sharing) */
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: AttachmentMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
   }
 ) => Promise<void>;
 /**

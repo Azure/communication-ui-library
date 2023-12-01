@@ -473,7 +473,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+    const attachments = chatMessage.attachmentMetadata?.filter((attachment) => {
       return attachment.id === attachmentId;
     });
 

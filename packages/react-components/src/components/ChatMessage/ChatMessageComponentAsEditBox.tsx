@@ -44,7 +44,7 @@ export type ChatMessageComponentAsEditBoxProps = {
     text: string,
     metadata?: Record<string, string>,
     options?: {
-      attachedFilesMetadata?: AttachmentMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => void;
   message: ChatMessage;
@@ -65,10 +65,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
-  const [attachedFilesMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
+  const [attachmentMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
-  const messageState = getMessageState(textValue, attachedFilesMetadata ?? []);
+  const messageState = getMessageState(textValue, attachmentMetadata ?? []);
   const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageEditContainerStyles();
@@ -103,23 +103,23 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const onRenderFileUploads = useCallback(() => {
     return (
-      !!attachedFilesMetadata &&
-      attachedFilesMetadata.length > 0 && (
+      !!attachmentMetadata &&
+      attachmentMetadata.length > 0 && (
         <div style={{ margin: '0.25rem' }}>
           <_FileUploadCards
-            activeFileUploads={attachedFilesMetadata?.map((file) => ({
+            activeFileUploads={attachmentMetadata?.map((file) => ({
               id: file.name,
               filename: file.name,
               progress: 1
             }))}
             onCancelFileUpload={(fileId) => {
-              setAttachedFilesMetadata(attachedFilesMetadata?.filter((file) => file.name !== fileId));
+              setAttachedFilesMetadata(attachmentMetadata?.filter((file) => file.name !== fileId));
             }}
           />
         </div>
       )
     );
-  }, [attachedFilesMetadata]);
+  }, [attachmentMetadata]);
 
   const getContent = (): JSX.Element => {
     return (
@@ -139,7 +139,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           onEnterKeyDown={() => {
             submitEnabled &&
               onSubmit(textValue, message.metadata, {
-                attachedFilesMetadata
+                attachmentMetadata
               });
           }}
           supportNewline={false}
@@ -183,7 +183,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
               onClick={(e) => {
                 submitEnabled &&
                   onSubmit(textValue, message.metadata, {
-                    attachedFilesMetadata
+                    attachmentMetadata
                   });
                 e.stopPropagation();
               }}
@@ -215,10 +215,10 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 };
 
 const isMessageTooLong = (messageText: string): boolean => messageText.length > MAXIMUM_LENGTH_OF_MESSAGE;
-const isMessageEmpty = (messageText: string, attachedFilesMetadata: AttachmentMetadata[]): boolean =>
-  messageText.trim().length === 0 && attachedFilesMetadata.length === 0;
-const getMessageState = (messageText: string, attachedFilesMetadata: AttachmentMetadata[]): MessageState =>
-  isMessageEmpty(messageText, attachedFilesMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
+const isMessageEmpty = (messageText: string, attachmentMetadata: AttachmentMetadata[]): boolean =>
+  messageText.trim().length === 0 && attachmentMetadata.length === 0;
+const getMessageState = (messageText: string, attachmentMetadata: AttachmentMetadata[]): MessageState =>
+  isMessageEmpty(messageText, attachmentMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
 
 // @TODO: Remove when file-sharing feature becomes stable.
 const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {

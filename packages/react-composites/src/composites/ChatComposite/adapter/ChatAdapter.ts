@@ -94,7 +94,7 @@ export interface ChatAdapterThreadManagement {
     metadata?: Record<string, string>,
     /* @conditional-compile-remove(file-sharing) */
     options?: {
-      attachedFilesMetadata?: AttachmentMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void>;
   /**
