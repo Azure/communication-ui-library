@@ -473,7 +473,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.attachmentMetadata?.filter((attachment) => {
+    const attachments = chatMessage.inlineImages?.filter((attachment) => {
       return attachment.id === attachmentId;
     });
 
@@ -482,7 +482,6 @@ const MessageThreadStory = (args): JSX.Element => {
     }
 
     const attachment = attachments[0];
-    attachment.name = chatMessage.senderDisplayName || '';
     const title = 'Message Thread Image';
     const titleIcon = (
       <Persona text={chatMessage.senderDisplayName} size={PersonaSize.size32} hidePersonaDetails={true} />
