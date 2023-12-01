@@ -216,8 +216,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     return (
       <_FileDownloadCards
         userId={userId}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
-        fileMetadata={(message as ChatMessage).files || []}
+        fileMetadata={message['attachedFilesMetadata'] || []}
         downloadHandler={fileDownloadHandler}
         /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
