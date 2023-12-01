@@ -1,6 +1,33 @@
 # Change Log - @azure/communication-react
 
-This log was last generated on Mon, 23 Oct 2023 18:27:26 GMT and should not be manually modified.
+This log was last generated on Mon, 20 Nov 2023 21:42:07 GMT and should not be manually modified.
+
+<!-- Start content -->
+
+## [1.11.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.11.0-beta.1)
+
+Mon, 20 Nov 2023 21:42:07 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.10.0...1.11.0-beta.1)
+
+### Features
+- Ability to generate theme from single accent color ([PR #3797](https://github.com/azure/communication-ui-library/pull/3797) by 2684369+JamesBurnside@users.noreply.github.com)
+### Improvements
+- Improve how background and logo are applied in the Call Composites ([PR #3741](https://github.com/azure/communication-ui-library/pull/3741) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove isRoomsCall from CallWithChatAdapterState ([PR #3800](https://github.com/azure/communication-ui-library/pull/3800) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update rooms call end pages UI including icons and strings ([PR #3758](https://github.com/azure/communication-ui-library/pull/3758) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update the API for onUpdateMessage, moved metadata into options bag ([PR #3760](https://github.com/azure/communication-ui-library/pull/3760) by 9044372+JoshuaLai@users.noreply.github.com)
+- Simplify types use in the RemoteParticipantstate by collapsing other identifiers to just CommunicationIdentifierKind ([PR #3761](https://github.com/azure/communication-ui-library/pull/3761) by alkwa@microsoft.com)
+- Update Calling dependency to use the latest version 1.18.1 for stable and 1.19.1-beta.2 for beta ([PR #3738](https://github.com/azure/communication-ui-library/pull/3738) and [PR #3732](https://github.com/azure/communication-ui-library/pull/3732) by 94866715+dmceachernmsft@users.noreply.github.com)
+### Bug Fixes
+- Fix the usage of the cleanup script to remove unnecessary properties in the communication-react package.json ([PR #3702](https://github.com/azure/communication-ui-library/pull/3702) by alkwa@microsoft.com)
+- Fix lobby page text using incorrect theme token value. ([PR #3797](https://github.com/azure/communication-ui-library/pull/3797) by 2684369+JamesBurnside@users.noreply.github.com)
+- Hide raised hand button for consumer in rooms call ([PR #3723](https://github.com/azure/communication-ui-library/pull/3723) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add handlers for Enter and Space keys for message menu button ([PR #3755](https://github.com/azure/communication-ui-library/pull/3755) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix local video stream rendering when camera is turned on while screensharing is active ([PR #3779](https://github.com/azure/communication-ui-library/pull/3779) by 79475487+mgamis-msft@users.noreply.github.com)
+- Add ability to start captions on mobile with keyboard with toggle on toplevel menu item and not secondary component ([PR #3801](https://github.com/azure/communication-ui-library/pull/3801) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Render gallery content only when people pane screens on mobile aren't present ([PR #3754](https://github.com/azure/communication-ui-library/pull/3754) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Prevent possible endless loop of switching between scrollable and paginated horizontal gallery in VideoGallery ([PR #3730](https://github.com/azure/communication-ui-library/pull/3730) by 79475487+mgamis-msft@users.noreply.github.com)
+
 
 ## [1.10.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.10.0-beta.1)
 
