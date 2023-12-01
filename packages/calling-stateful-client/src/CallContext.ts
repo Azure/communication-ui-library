@@ -392,15 +392,6 @@ export class CallContext {
     });
   }
 
-  public setReceivedReactionFromParticipant(callId: string, reactionEvent: ReactionEventPayload): void {
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if (call) {
-        call.reaction.reactionPayloads.enqueue(reactionEvent);
-      }
-    });
-  }
-
   /* @conditional-compile-remove(raise-hand) */
   public setParticipantIsRaisedHand(callId: string, participantKey: string, raisedHand: RaisedHand | undefined): void {
     this.modifyState((draft: CallClientState) => {

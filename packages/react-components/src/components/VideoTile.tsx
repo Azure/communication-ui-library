@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, IStyle, mergeStyles, Persona, SpinnerType, Stack, Text } from '@fluentui/react';
+import { Icon, IStyle, mergeStyles, Persona, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(pinned-participants) */
 import { IconButton } from '@fluentui/react';
 import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
@@ -559,12 +559,12 @@ const bracketedParticipantString = (participantString: string, withBrackets: boo
   return withBrackets ? `(${participantString})` : participantString;
 };
 
-const emoticonDynamicStyles = () => {
-  return {
-    animationTimingFunction: `steps(51)`,
-    "--to-position": `-1632px`,
-    "--reaction-animation-duration": `2.125ms`,
-    "--reaction-animation-play-state": "running",
-    "--reaction-animation-iteration-count": 0,
-  }
-}
+// const emoticonDynamicStyles = () => {
+//   return {
+//     animationTimingFunction: `steps(51)`,
+//     "--to-position": `-1632px`,
+//     "--reaction-animation-duration": `2.125ms`,
+//     "--reaction-animation-play-state": "running",
+//     "--reaction-animation-iteration-count": 0,
+//   }
+// }
