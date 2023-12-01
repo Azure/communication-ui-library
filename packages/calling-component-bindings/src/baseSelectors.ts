@@ -13,7 +13,9 @@ import {
   RemoteParticipantState,
   LocalVideoStreamState,
   CallErrors,
-  DiagnosticsCallFeatureState
+  DiagnosticsCallFeatureState,
+  ReactionEventPayload,
+  Queue
 } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(reaction) */
 import { ReactionState } from '@internal/calling-stateful-client';
@@ -62,6 +64,11 @@ export const getCapabilites = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
+
+export const getReceivedReactions = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): Queue<ReactionEventPayload> | undefined => state.calls[props.callId]?.reaction?.reactionPayloads;
 
 /**
  * @private

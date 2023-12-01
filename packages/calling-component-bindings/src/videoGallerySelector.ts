@@ -52,6 +52,7 @@ export type VideoGallerySelector = (
   dominantSpeakers?: string[];
   /* @conditional-compile-remove(optimal-video-count) */
   optimalVideoCount?: number;
+  receivedReactions?: Queue<ReactionEventPayload>;
 };
 
 /**
@@ -147,7 +148,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       ),
       dominantSpeakers: dominantSpeakerIds,
       /* @conditional-compile-remove(optimal-video-count) */
-      maxRemoteVideoStreams: optimalVideoCount
+      maxRemoteVideoStreams: optimalVideoCount,
+      receivedReactions: reactionPayloads,
     };
   }
 );

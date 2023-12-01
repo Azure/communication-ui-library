@@ -10,9 +10,15 @@ export const ReactionAnimationVideoTile: () => JSX.Element = () => {
 
     const displayName = 'Marcus Aurelius';
 
+    var timeOutId;
+
     const handleReactionClick = () => {
+        if(timeOutId != undefined) {
+          setShowReaction(false);
+          clearTimeout(timeOutId);
+        }
         setShowReaction(true);
-        setTimeout(() => setShowReaction(false), 2000); // Reaction fades out after 1 second
+        timeOutId = setTimeout(() => setShowReaction(false), 3000); // Reaction fades out after 1 second
       };
     const contextualMenu: IContextualMenuProps = {
         items: [
