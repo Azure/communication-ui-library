@@ -8,7 +8,7 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  FileMetadata,
+  AttachmentMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery
@@ -450,7 +450,7 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachments = async (attachments: FileMetadata[]): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
@@ -473,7 +473,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+    const attachments = chatMessage.attachmentMetadata?.filter((attachment) => {
       return attachment.id === attachmentId;
     });
 
