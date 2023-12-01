@@ -1732,7 +1732,6 @@ export class _MockCallAdapter implements CallAdapter {
 
 // @internal
 export type _MockFileUpload = FileMetadata & {
-    id: string;
     uploadComplete?: boolean;
     error?: string;
     progress?: number;
