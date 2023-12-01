@@ -37,6 +37,7 @@ import { getLocalParticipantReactionState } from './baseSelectors';
 /* @conditional-compile-remove(reaction) */
 import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
 
+
 /**
  * Selector type for {@link VideoGallery} component.
  *
