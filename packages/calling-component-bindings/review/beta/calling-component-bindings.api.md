@@ -325,6 +325,15 @@ export type ReactionButtonSelector = (state: CallClientState, props: CallingBase
 export const reactionButtonSelector: ReactionButtonSelector;
 
 // @public
+export type ReactionButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked?: boolean;
+    disabled?: boolean;
+};
+
+// @public
+export const reactionButtonSelector: ReactionButtonSelector;
+
+// @public
 export type ScreenShareButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     checked?: boolean;
     disabled?: boolean;
