@@ -3,6 +3,8 @@
 
 export * from './index-public';
 
+export { _createStatefulCallClientInner } from './StatefulCallClient';
+
 export { _isACSCall, _isACSCallAgent, _isTeamsCall, _isTeamsCallAgent } from './TypeGuards';
 
 export type { CallAgentCommon, CallCommon, TeamsCall, TeamsCallAgent, IncomingCallCommon } from './BetaToStableTypes';

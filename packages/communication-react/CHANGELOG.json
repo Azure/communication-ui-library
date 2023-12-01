@@ -2,6 +2,442 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 20 Nov 2023 21:42:07 GMT",
+      "tag": "@azure/communication-react_v1.11.0-beta.1",
+      "version": "1.11.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b58f6bde63673d9e1973aba2d589d607069f0bcd",
+            "area": "feature",
+            "workstream": "Calling sounds",
+            "comment": "Introduce the calling sound for ringing, only plays when calling teams and ACS users, not PSTN"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "abfc338cab12fa8294087827b34b3b190713c722",
+            "area": "fix",
+            "workstream": "Cleaning up release package.json",
+            "comment": "fix pathing for nightlycd"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6e6cbd317237391fd9414b1cf087b16c5c14ec48",
+            "area": "feature",
+            "workstream": "String translation",
+            "comment": "String translation for beta release"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "35cd5a1cd7c95b7f44cdf88ff032ca56a5ac4dc0",
+            "area": "feature",
+            "workstream": "Custom Branding",
+            "comment": "Improve how background and logo are applied in the Call Composites"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5b5808cc9ae983905a4b752c82069a1072f8a090",
+            "area": "improvement",
+            "workstream": "ChatSDK",
+            "comment": "Update dev dependency of chat sdk"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6da7d4d6eaabb73e8b2bc0e4815033d730824ef1",
+            "area": "feature",
+            "workstream": "Calling sounds",
+            "comment": "Introduce sound options API to CallAdapter options"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "717826fb823b224109a6057890286decafcd4b7f",
+            "area": "feature",
+            "workstream": "Calling sounds",
+            "comment": "Introduce testing for calling sounds on the CallAdapter implementation"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "510aefa6e51b87626a2e93d3581acc63eeb14360",
+            "area": "feature",
+            "workstream": "Rooms"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1b2006bf0a35b13a53b85b87f46d809aa9984930",
+            "area": "improvement",
+            "workstream": "InlineImages",
+            "comment": "Update to map to attachments to message id"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a64aef04f398941aa5457b9e7e55337b7bd0300b",
+            "area": "fix",
+            "workstream": "Cleaning up release package.json",
+            "comment": "fixed script location"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6e6cbd317237391fd9414b1cf087b16c5c14ec48",
+            "area": "feature",
+            "workstream": "String translation",
+            "comment": "String translation "
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "08508b085a0512358504a4eb0da95942c525c367",
+            "area": "improvement",
+            "workstream": "Fileattachment",
+            "comment": "Updating the API for onUpdateMessage"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cb9472c7ca9a4ba48e9d3ccf016c1cdaf1bc70f3",
+            "area": "improvement",
+            "workstream": "Release 1.10.0",
+            "comment": "merging prerelease branch back into main"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6e6cbd317237391fd9414b1cf087b16c5c14ec48",
+            "area": "feature",
+            "workstream": "String translation",
+            "comment": "String translation"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7faadf490f7f0542765ec127c1b6c3053c63cd4b",
+            "area": "improvement",
+            "workstream": "Custom Branding",
+            "comment": "Add background image to configuration page on call composite and call with chat composite"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "95b1f39c89ca3178f97301630e962408aa508185",
+            "area": "feature",
+            "workstream": "Custom Branding",
+            "comment": "Make Custom Branding Composite options available in beta builds"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a7a0e23c72079647a22fc3b5572eae1017be313c",
+            "area": "feature",
+            "workstream": "Custom Branding",
+            "comment": "Generate theme from single accent color"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "66d2f0f957bde3d7e679497d0f281b149cf49d87",
+            "area": "feature",
+            "workstream": "Custom Branding",
+            "comment": "Add ability to set a logo on the configuration page of the CallComposite and CallWithChatComposite"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "550a96f4dc5bb069e12cb6389c0e840cb4de17f3",
+            "area": "feature",
+            "workstream": "Calling sounds",
+            "comment": "Create Calling sounds subscriber in the call adapter to listen to different call events and play sounds accordingly"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "73134c8e0fe4fa1e78692debb068f6018c0e6a06",
+            "area": "feature",
+            "workstream": "Rooms",
+            "comment": "Update rooms call end pages"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "583bdca958f4621c1f35ff3690b7ecca1c25dd5d",
+            "area": "feature",
+            "workstream": "Calling sounds",
+            "comment": "Introduce sound for when a call is rejected by the callee"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a7a0e23c72079647a22fc3b5572eae1017be313c",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix lobby page text using incorrect theme token value."
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "aa99b57282a54faeef45ad4a779bdcf2c9790986",
+            "area": "improvement",
+            "workstream": "Simplifying RemoteParticipantState",
+            "comment": "Collapsing other identifiers to just CommunicationIdentifierKind"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "84b4c01a23d470bd0a713317b9a531fc956dc218",
+            "area": "fix",
+            "workstream": "Rooms",
+            "comment": "Hide raised hand button for consumer in rooms call"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a62eeda83595467b26539c6aedb7bfc9131d9497",
+            "area": "fix",
+            "workstream": "FluentUI",
+            "comment": "Fix for an issue with narrator focus for message menu button"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a4cb001d8a12bff1f0cc259b2ef4d135aeac639c",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "Add disableToolTip prop for ControlBarButton component"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "85c41a522f36bdbcb2c31fa369b837142f4eebd7",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "Fix the padding for the warning bar in the effects picker and the background label"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eb235899617d9be88ffb7a5639710317f6f3225d",
+            "area": "fix",
+            "workstream": "FluentUI",
+            "comment": "Add handlers for Enter and Space keys for message menu button"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "16b0f79c344f3a57b12a3ff43639d6d1a2a07224",
+            "area": "fix",
+            "workstream": "Local video stream rendering",
+            "comment": "Fix local video stream rendering when camera is turned on while screensharing is active"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8a822ee7dfad03d7f80484058d02de554a5f81fa",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Add ability start captions on mobile with keyboard with toggle on toplevel menu item and not secondary component"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "cfae695d5f1a07a93586eb5033cefdea8a7fb1f1",
+            "area": "fix",
+            "workstream": "Rooms",
+            "comment": "Fixes issue where the local participant cannot remove others in a call"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6798e070ac0bd3d8ad22287244030f358568ac55",
+            "area": "fix",
+            "workstream": "VideoGallery",
+            "comment": "Prevent possible endless loop of switching between scrollable and paginated horizontal gallery in VideoGallery"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8d8fd5211d52c1a3c1dabe646397a79a00e999e0",
+            "area": "fix",
+            "workstream": "Bugfix",
+            "comment": "Dismiss moredrawer when dialpad opens"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eb5c621732e571c211526fc39c6745839ce76a93",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "Update PiP in the composites to return to the call screen when the pip is tapped and not dragged"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f7e08c4e093df9f2c5501836ce22bce87577a01a",
+            "area": "improvement",
+            "workstream": "Updating locale strings for release 1.10.0",
+            "comment": "TDBuild - updating localized resource files."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1b1969b015d65822368b36a06f165eddc269d98e",
+            "area": "fix",
+            "workstream": "Bug fix",
+            "comment": "Render gallery content only when people pane screens on mobile aren't present"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b440ce13a7b2f2fc8e88e513b82158c85897d6fa",
+            "area": "fix",
+            "workstream": "Tooltip",
+            "comment": "Fix file card tooltip"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1da35cdae5c8028762d268a75624257a47473f3b",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update @azure/communication-chat peerDependency to match devDependency"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a42d925ed6ad267165e3b414522a63792c738872",
+            "area": "fix",
+            "workstream": "Bug Fix",
+            "comment": "Fix erroneous error saying failed to turn off video when starting a call in react18 strict mode"
+          }
+        ],
+        "none": [
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d71f456aa64c6c48f31026181cd04d19eb7307e4",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update release notes"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "3e3af708facf27d0c08582d9ca4f56ac90c19128",
+            "area": "feature",
+            "workstream": "",
+            "comment": "Update CTE sdk ref"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ce6dad3c8656139eb365548fa07e0dd2f215b041",
+            "area": "improvement",
+            "workstream": "dependency updates",
+            "comment": "update beta calling version"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6a0a42a38d6873581e5a23aef79394d7e6f3f302",
+            "area": "improvement",
+            "workstream": "SDK updates",
+            "comment": "Update Calling dependency to use the latest version 1.18.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8c790d43b0e5d90500415aa0bdc142f4f919b50f",
+            "area": "improvement",
+            "workstream": "none",
+            "comment": "Small doc typo fix"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c313979dce2bfef5992ed57372daf4099a4864d7",
+            "area": "improvement",
+            "workstream": "Storybook",
+            "comment": "Update Custom Button Injection Storybook entries"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "2ddffbf90644bfbe7ac3943966ac50156ca20fff",
+            "comment": "Update CCC to Conditional Compilation doc"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f651aa96f371119c7008e22ed8c24ba3a1955274",
+            "area": "improvement",
+            "workstream": "none",
+            "comment": "Doc improvements"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "45a1ebe42bc74721728d53c5f0523d1cf3e6cf83",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Reduce console output noise in sample apps"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d8521f143e874d79edb1ab1f165fbc7afa58ecac",
+            "area": "improvement",
+            "workstream": "Grooming release changelog",
+            "comment": "Remove lines from beta changelog if it already exists in stable changelog"
+          }
+        ],
+        "minor": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f018ebf7cc289aa67b477ddb6726b923b5208247",
+            "area": "feature",
+            "workstream": "Hide Attendee Names",
+            "comment": "Change display name for remote participants as Attendee if hide attendee name is on"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "13c0b70cc4d76b171a5a2a695f7d1b558840573d",
+            "area": "improvement",
+            "workstream": "KTLO",
+            "comment": "Center the configuration page text above the device details on desktop formFactor"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1b3cb877bcb8e0c84a2d7e7e883e50bfcb81de1f",
+            "area": "improvement",
+            "workstream": "Improvement",
+            "comment": "Update configuration page design with tighter alignment between local preview and controls and more compact start call button."
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1834263709df231f36872e04c8fd4c326e198b95",
+            "area": "fix",
+            "workstream": "Fix startCall handler so that it can start a call using communication identifiers",
+            "comment": "Fixes startCall handler so that it can call using identifiers as well as the flat strings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 Nov 2023 16:44:11 GMT",
       "tag": "@azure/communication-react_v1.10.0",
       "version": "1.10.0",

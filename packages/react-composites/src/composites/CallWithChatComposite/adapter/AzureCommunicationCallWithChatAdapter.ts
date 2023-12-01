@@ -23,7 +23,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
-import { FileMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -34,7 +34,6 @@ import {
   IsSpeakingChangedListener,
   CallAdapter,
   CallAdapterState,
-  createAzureCommunicationCallAdapter,
   CallEndedListener
 } from '../../CallComposite';
 import {
@@ -55,7 +54,7 @@ import {
   mergeChatAdapterStateIntoCallWithChatAdapterState
 } from '../state/CallWithChatAdapterState';
 import {
-  createAzureCommunicationChatAdapter,
+  _createAzureCommunicationChatAdapterInner,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 
@@ -74,6 +73,8 @@ import { AdapterError } from '../../common/adapters';
 /* @conditional-compile-remove(teams-adhoc-call) */
 import { CallParticipantsLocator } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
 
+import { _createAzureCommunicationCallAdapterInner } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
+
 import {
   CallAdapterLocator,
   createAzureCommunicationCallAdapterFromClient
@@ -82,7 +83,7 @@ import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatThreadClient } from '@azure/communication-chat';
 import { useEffect, useRef, useState } from 'react';
-import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { _toCommunicationIdentifier, _TelemetryImplementationHint } from '@internal/acs-ui-common';
 import { JoinCallOptions } from '../../CallComposite/adapter/CallAdapter';
 /* @conditional-compile-remove(video-background-effects) */
 import { AzureCommunicationCallAdapterOptions } from '../../CallComposite/adapter/AzureCommunicationCallAdapter';
@@ -416,7 +417,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     metadata?: Record<string, string>,
     options?: {
       /* @conditional-compile-remove(file-sharing) */
-      attachedFilesMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ): Promise<void> {
     return await this.chatAdapter.updateMessage(
@@ -435,7 +436,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.chatAdapter.registerActiveFileUploads(files);
   };
   /* @conditional-compile-remove(file-sharing) */
-  public registerCompletedFileUploads = (metadata: FileMetadata[]): FileUploadManager[] => {
+  public registerCompletedFileUploads = (metadata: AttachmentMetadata[]): FileUploadManager[] => {
     return this.chatAdapter.registerCompletedFileUploads(metadata);
   };
   /* @conditional-compile-remove(file-sharing) */
@@ -455,7 +456,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.chatAdapter.updateFileUploadErrorMessage(id, errorMessage);
   };
   /* @conditional-compile-remove(file-sharing) */
-  public updateFileUploadMetadata = (id: string, metadata: FileMetadata): void => {
+  public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
 
@@ -789,25 +790,27 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   /* @conditional-compile-remove(video-background-effects) */ callAdapterOptions
 }: AzureCommunicationCallWithChatAdapterArgs): Promise<CallWithChatAdapter> => {
   const callAdapterLocator = isTeamsMeetingLinkLocator(locator) ? locator : locator.callLocator;
-  const createCallAdapterPromise = createAzureCommunicationCallAdapter({
+  const createCallAdapterPromise = _createAzureCommunicationCallAdapterInner({
     userId,
     displayName,
     credential,
     locator: callAdapterLocator,
     /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId,
-    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions
+    /* @conditional-compile-remove(video-background-effects) */ options: callAdapterOptions,
+    telemetryImplementationHint: 'CallWithChat' as _TelemetryImplementationHint
   });
 
   const threadId = isTeamsMeetingLinkLocator(locator)
     ? getChatThreadFromTeamsLink(locator.meetingLink)
     : locator.chatThreadId;
-  const createChatAdapterPromise = createAzureCommunicationChatAdapter({
+  const createChatAdapterPromise = _createAzureCommunicationChatAdapterInner(
     endpoint,
     userId,
     displayName,
     credential,
-    threadId
-  });
+    threadId,
+    'CallWithChat' as _TelemetryImplementationHint
+  );
 
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);
   return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);

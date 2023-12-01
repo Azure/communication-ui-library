@@ -155,12 +155,10 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
         onResolveDependency: onResolveVideoEffectDependencyLazy
       },
       /* @conditional-compile-remove(calling-sounds) */
-      soundOptions: {
-        callingSounds: {
-          callEnded: { path: '/assets/sounds/callEnded.mp3' },
-          callRinging: { path: '/assets/sounds/callRinging.mp3' },
-          callBusy: { path: '/assets/sounds/callBusy.mp3' }
-        }
+      callingSounds: {
+        callEnded: { url: '/assets/sounds/callEnded.mp3' },
+        callRinging: { url: '/assets/sounds/callRinging.mp3' },
+        callBusy: { url: '/assets/sounds/callBusy.mp3' }
       }
     };
   }, []);

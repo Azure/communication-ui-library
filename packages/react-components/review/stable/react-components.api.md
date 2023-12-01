@@ -56,6 +56,9 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
+// @beta
+export type AttachmentMetadata = FileMetadata;
+
 // @public
 export interface AttachmentDownloadResult {
     // (undocumented)
@@ -67,15 +70,6 @@ export interface AttachmentDownloadResult {
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @public
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @public
@@ -961,16 +955,16 @@ export interface _FileCardProps {
 }
 
 // @internal (undocumented)
-export interface _FileDownloadCards {
+export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata: FileMetadata[];
+    fileMetadata?: AttachmentMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
 }
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
 // @internal
 export interface _FileDownloadCardsStrings {
@@ -985,20 +979,13 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
-// @public
-export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
-
-// @public (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | 'inlineImage' | 'unknown';
-
-// @public
-export interface FileSharingMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'fileSharing';
-    // (undocumented)
-    payload?: Record<string, string>;
+// @beta
+export interface FileMetadata {
+    extension: string;
+    name: string;
+    url: string;
 }
 
 // @internal

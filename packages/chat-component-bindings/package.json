@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.10.1-beta.0",
+  "version": "1.11.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -33,9 +33,9 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.0",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.10.1-beta.0",
-    "@internal/chat-stateful-client": "1.10.1-beta.0",
-    "@internal/react-components": "1.10.1-beta.0",
+    "@internal/acs-ui-common": "1.11.0-beta.1",
+    "@internal/chat-stateful-client": "1.11.0-beta.1",
+    "@internal/react-components": "1.11.0-beta.1",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
@@ -47,11 +47,11 @@
   "devDependencies": {
     "@azure/communication-chat": "/workspaces/communication-ui-library/azure-communication-chat-1.4.0.tgz",
     "@babel/cli": "^7.16.0",
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.23.5",
     "@microsoft/api-documenter": "~7.23.9",
     "@microsoft/api-extractor": "~7.38.0",
     "@types/jest": "^29.5.2",
-    "@types/react": "18.2.29",
+    "@types/react": "18.2.39",
     "@zerollup/ts-transform-paths": "^1.7.18",
     "copyfiles": "^2.4.1",
     "cpx": "^1.5.0",

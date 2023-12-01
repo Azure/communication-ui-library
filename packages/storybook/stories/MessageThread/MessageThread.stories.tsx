@@ -8,7 +8,7 @@ import {
   CustomMessage,
   SystemMessage,
   MessageRenderer,
-  FileMetadata,
+  AttachmentMetadata,
   AttachmentDownloadResult,
   ImageGalleryImageProps,
   ImageGallery
@@ -450,14 +450,14 @@ const MessageThreadStory = (args): JSX.Element => {
     return Promise.resolve();
   };
 
-  const onFetchAttachment = async (attachment: FileMetadata): Promise<AttachmentDownloadResult[]> => {
+  const onFetchAttachments = async (attachments: AttachmentMetadata[]): Promise<AttachmentDownloadResult[]> => {
     // Mocking promise
     const delay = (): Promise<void> => new Promise((resolve) => setTimeout(resolve, 3000));
     return await delay().then(() => {
       return [
         {
-          attachmentId: attachment.id,
-          blobUrl: attachment.previewUrl ?? ''
+          attachmentId: attachments[0].id,
+          blobUrl: attachments[0].previewUrl ?? ''
         }
       ];
     });
@@ -473,7 +473,7 @@ const MessageThreadStory = (args): JSX.Element => {
     }
     const chatMessage = messages[0] as ChatMessage;
 
-    const attachments = chatMessage.attachedFilesMetadata?.filter((attachment) => {
+    const attachments = chatMessage.attachmentMetadata?.filter((attachment) => {
       return attachment.id === attachmentId;
     });
 
@@ -531,7 +531,7 @@ const MessageThreadStory = (args): JSX.Element => {
         disableJumpToNewMessageButton={!args.enableJumpToNewMessageButton}
         onLoadPreviousChatMessages={onLoadPreviousMessages}
         onRenderMessage={onRenderMessage}
-        onFetchAttachments={onFetchAttachment}
+        onFetchAttachments={onFetchAttachments}
         onInlineImageClicked={onInlineImageClicked}
         onUpdateMessage={onUpdateMessageCallback}
         onRenderAvatar={(userId?: string) => {

@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { FileMetadata, _FileDownloadCards, FileSharingMetadata } from './FileDownloadCards';
-
-import { ImageFileMetadata } from './FileDownloadCards';
+import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { InlineImageMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 
@@ -25,8 +25,8 @@ describe('FileDownloadCards should be rendered properly', () => {
       extension: 'docx',
       url: 'mockUrl',
       id: 'mockId',
-      attachmentType: 'fileSharing'
-    } as FileSharingMetadata;
+      attachmentType: 'file'
+    } as AttachmentMetadata;
 
     const props = {
       userId: 'MockUserId',
@@ -45,7 +45,7 @@ describe('FileDownloadCards should be rendered properly', () => {
       id: 'mockId',
       attachmentType: 'inlineImage',
       previewUrl: 'mockPreviewUrl'
-    } as ImageFileMetadata;
+    } as InlineImageMetadata;
 
     const props = {
       userId: 'MockUserId',
@@ -63,5 +63,5 @@ const renderFileDownloadCardsWithDefaults = (props: MockDownloadCardProps): void
 
 interface MockDownloadCardProps {
   userId: string;
-  fileMetadata: FileMetadata[];
+  fileMetadata: AttachmentMetadata[];
 }

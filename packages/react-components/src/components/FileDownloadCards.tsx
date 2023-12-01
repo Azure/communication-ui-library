@@ -12,82 +12,83 @@ import { iconButtonClassName } from './styles/IconButton.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
 /**
- * @public
+ * Represents the type of attachment
+ * @beta
  */
-export type FileMetadataAttachmentType = 'fileSharing' | 'inlineImage' | 'unknown';
+export type ChatAttachmentType =
+  | 'file'
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
+  | 'unknown';
 
 /**
- * Base interface that all Meta Data should extend.
- * Typically used for ACS to ACS file transfers.
- * @public
+ * Metadata containing basic information about the uploaded file.
+ *
+ * @beta
  */
-export interface BaseFileMetadata {
+export interface FileMetadata {
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  attachmentType: 'file';
   /**
-   * File name to be displayed.
-   */
-  name: string;
-  /**
-   * Extension is used for rendering the file icon.
-   * An unknown extension will be rendered as a generic icon.
-   * Example: `jpeg`
+   * Extension hint, useful for rendering a specific icon.
+   * An unknown or empty extension will be rendered as a generic icon.
+   * Example: `pdf`
    */
   extension: string;
-  /**
-   * Download URL for the file.
-   */
-  url: string;
   /**
    * Unique ID of the file.
    */
 
   id: string;
   /**
-   * Attachment Type
+   * File name to be displayed.
    */
-
-  attachmentType: FileMetadataAttachmentType;
-}
-/**
- * Meta Data containing basic information about the uploaded file.
- * Typically used for ACS to ACS file transfers.
- * @public
- */
-export interface FileSharingMetadata extends BaseFileMetadata {
-  attachmentType: 'fileSharing';
-
+  name: string;
+  /**
+   * Download URL for the file.
+   */
+  url: string;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
-   * Optional dictionary of meta data asscoiated with the file.
+   * Optional dictionary of meta data associated with the file.
    */
   payload?: Record<string, string>;
 }
 
 /**
- * Meta Data containing data for images.
- * @public
+ * Metadata for rendering images inline with a message.
+ * This does not include images attached as files.
+ * @beta
  */
-export interface ImageFileMetadata extends BaseFileMetadata {
+export interface InlineImageMetadata {
   /*
-   * Attachment type of the file.
-   * Possible values {@link FileDownloadHandler}.
+   * Type of the attachment
    */
   attachmentType: 'inlineImage';
-
+  /**
+   * Unique ID of the attachment.
+   */
+  id: string;
   /*
-   * Preview URL for the file.
-   * Used in the message bubble for inline images.
+   * Preview URL for low resolution version.
    */
   previewUrl?: string;
+  /**
+   * Download URL for the full resolution version.
+   */
+  url: string;
 }
 
 /**
- * Meta Data containing information about the uploaded file.
- * @public
+ * Metadata containing information about the uploaded file.
+ * @beta
  */
-export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
+export type AttachmentMetadata =
+  | FileMetadata
+  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
 
 /**
- * Meta Data of the attachment object returned by the ACS SDK.
- * @public
+ * Metadata of the attachment object returned by the ACS SDK.
+ * @beta
  */
 export interface AttachmentDownloadResult {
   attachmentId: string;
@@ -143,22 +144,25 @@ export interface FileDownloadError {
  *
  * ```
  * @param userId - The user ID of the user downloading the file.
- * @param fileMetadata - The {@link FileMetadata} containing file `url`, `extension` and `name`.
+ * @param fileMetadata - The {@link AttachmentMetadata} containing file `url`, `extension` and `name`.
  */
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (
+  userId: string,
+  fileMetadata: AttachmentMetadata
+) => Promise<URL | FileDownloadError>;
 
 /**
  * @internal
  */
-export interface _FileDownloadCards {
+export interface _FileDownloadCardsProps {
   /**
    * User id of the local participant
    */
   userId: string;
   /**
-   * A chat message metadata that inculdes file metadata
+   * A chat message metadata that includes file metadata
    */
-  fileMetadata: FileMetadata[];
+  fileMetadata?: AttachmentMetadata[];
   /**
    * A function of type {@link FileDownloadHandler} for handling file downloads.
    * If the function is not specified, the file's `url` will be opened in a new tab to
@@ -170,7 +174,7 @@ export interface _FileDownloadCards {
    */
   onDownloadErrorMessage?: (errMsg: string) => void;
   /**
-   * Optional arialabel strings for file download cards
+   * Optional aria label strings for file download cards
    */
   strings?: _FileDownloadCardsStrings;
 }
@@ -184,7 +188,7 @@ const actionIconStyle = { height: '1rem' };
 /**
  * @internal
  */
-export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
+export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element => {
   const { userId, fileMetadata } = props;
   const [showSpinner, setShowSpinner] = useState(false);
   const localeStrings = useLocaleStringsTrampoline();
@@ -196,13 +200,16 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
     [props.strings?.downloadFile, localeStrings.downloadFile]
   );
 
-  const isFileSharingAttachment = useCallback((attachment: FileMetadata): boolean => {
-    return attachment.attachmentType === 'fileSharing';
+  const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    return attachment.attachmentType === 'file';
     return false;
   }, []);
 
-  const isShowDownloadIcon = useCallback((attachment: FileMetadata): boolean => {
-    return attachment.attachmentType === 'fileSharing' && attachment.payload?.teamsFileAttachment !== 'true';
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
 
@@ -211,17 +218,17 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
 
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.filter(isFileSharingAttachment).length}`
+        fileCount: `${fileMetadata?.filter(isFileSharingAttachment).length ?? 0}`
       });
       return _formatString(fileGroupLocaleString, {
-        fileCount: `${fileMetadata.length}`
+        fileCount: `${fileMetadata?.length ?? 0}`
       });
     },
     [props.strings?.fileCardGroupMessage, localeStrings.fileCardGroupMessage, fileMetadata, isFileSharingAttachment]
   );
 
   const fileDownloadHandler = useCallback(
-    async (userId, file: FileMetadata) => {
+    async (userId, file: AttachmentMetadata) => {
       if (!props.downloadHandler) {
         window.open(file.url, '_blank', 'noopener,noreferrer');
       } else {
@@ -254,6 +261,7 @@ export const _FileDownloadCards = (props: _FileDownloadCards): JSX.Element => {
               return isFileSharingAttachment(attachment);
               return true;
             })
+            .map((file) => file as FileMetadata)
             .map((file) => (
               <TooltipHost content={downloadFileButtonString()} key={file.name}>
                 <_FileCard

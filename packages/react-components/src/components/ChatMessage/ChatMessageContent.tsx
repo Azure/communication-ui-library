@@ -18,8 +18,8 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-
-import { FileMetadata } from '../FileDownloadCards';
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
 import { defaultOnMentionRender } from './MentionRenderer';
@@ -32,9 +32,9 @@ type ChatMessageContentProps = {
   mentionDisplayOptions?: MentionDisplayOptions;
 
   attachmentsMap?: Record<string, string>;
-
-  onFetchAttachment?: (attachments: FileMetadata[], messageId: string) => Promise<void>;
-
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+  onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
+  /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
 
@@ -76,20 +76,27 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 };
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
+  const {
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
+    message,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    attachmentsMap,
+    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    onFetchAttachments
+  } = props;
+  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
-    const attachments = props.message.attachedFilesMetadata?.filter((fileMetadata) => {
-      return fileMetadata.attachmentType === 'inlineImage';
-    });
-
-    if (props.attachmentsMap && attachments) {
-      attachments.forEach((fileMetadata) => {
-        if (props.onFetchAttachment && props.attachmentsMap && props.attachmentsMap[fileMetadata.id] === undefined) {
-          props.onFetchAttachment([fileMetadata], props.message.messageId);
-          return;
-        }
-      });
+    if (!attachmentsMap || !onFetchAttachments) {
+      return;
     }
-  }, [props]);
+    const attachments = message.inlineImages?.filter((inlinedImages) => {
+      return attachmentsMap[inlinedImages.id] === undefined;
+    });
+    if (attachments && attachments.length > 0) {
+      onFetchAttachments(attachments, message.messageId);
+    }
+  }, [message.inlineImages, message.messageId, onFetchAttachments, attachmentsMap]);
 
   return (
     <MessageContentWithLiveAria
@@ -196,8 +203,8 @@ const htmlToReactParser = Parser();
 const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructionType => ({
   // Custom <img> processing
   shouldProcessNode: (node): boolean => {
-    function isImageNode(file: FileMetadata): boolean {
-      return file.attachmentType === 'inlineImage' && file.id === node.attribs.id;
+    function matchingImageNode(imageMetadata: InlineImageMetadata): boolean {
+      return imageMetadata.id === node.attribs.id;
     }
 
     // Process img node with id in attachments list
@@ -206,7 +213,7 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
       node.name === 'img' &&
       node.attribs &&
       node.attribs.id &&
-      props.message.attachedFilesMetadata?.find(isImageNode)
+      props.message.inlineImages?.find(matchingImageNode)
     );
   },
   processNode: (node, children, index): JSX.Element => {
