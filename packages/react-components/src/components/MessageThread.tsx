@@ -723,9 +723,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   // id for the latest deleted message
   const [latestDeletedMessageId, setLatestDeletedMessageId] = useState<string | undefined>(undefined);
-  // this value is used to check if a message is deleted in the current render
+  // this value is used to check if a message is deleted for the previous value of messages array
   const previousMessagesRef = useRef<Message[]>([]);
-  // this value is used as a aria label for Narrator to notify when a message is deleted
+  // an aria label for Narrator to notify when a message is deleted
   const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
 
   const onDeleteMessageCallback = useCallback(
