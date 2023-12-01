@@ -450,7 +450,7 @@ export type MessageThreadProps = {
   onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
   /* @conditional-compile-remove(file-sharing) */
   /**
-   * Optional callback to render uploaded files in the message component.
+   * Optional callback to render attached files in the message component.
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;

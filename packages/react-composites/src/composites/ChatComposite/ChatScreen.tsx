@@ -208,10 +208,10 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
 
   /* @conditional-compile-remove(file-sharing) */
   const onRenderFileDownloads = useCallback(
-    (userId, message) => (
+    (userId, message: ChatMessage) => (
       <_FileDownloadCards
         userId={userId}
-        fileMetadata={message.attachedFilesMetadata || []}
+        fileMetadata={message.files || []}
         downloadHandler={fileSharing?.downloadHandler}
         onDownloadErrorMessage={(errorMessage: string) => {
           setDownloadErrorMessage(errorMessage);
