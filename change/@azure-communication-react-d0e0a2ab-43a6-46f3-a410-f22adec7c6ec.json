@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "SDK updates",
-  "comment": "Update Calling dependency to use the latest version 1.18.1",
+  "workstream": "Storybook",
+  "comment": "Introduce new snippets in the error handling concepts to explicitely show how to interact with errors in the stateful client and adapters",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"

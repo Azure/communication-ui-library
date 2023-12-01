@@ -1,8 +1,8 @@
 {
   "type": "none",
   "area": "improvement",
-  "workstream": "dependency updates",
-  "comment": "update beta calling version",
+  "workstream": "Storybook",
+  "comment": "Introduce new snippets in the error handling concepts to explicitely show how to interact with errors in the stateful client and adapters",
   "packageName": "@azure/communication-react",
   "email": "94866715+dmceachernmsft@users.noreply.github.com",
   "dependentChangeType": "none"
