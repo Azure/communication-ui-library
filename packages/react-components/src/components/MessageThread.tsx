@@ -721,28 +721,12 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const localeStrings = useLocale().strings.messageThread;
   const strings = useMemo(() => ({ ...localeStrings, ...props.strings }), [localeStrings, props.strings]);
 
-  const latestDeletedMessageIdRef = useRef<string | undefined>(undefined);
-  const deletedMessageAriaLabel = useMemo(() => {
-    // as MessageThread doesn't know when a message is deleted,
-    // we need to keep track of the latest deleted message id and check if it still exists in `newMessages`
-    if (
-      !latestDeletedMessageIdRef.current ||
-      newMessages.find((message) => message.messageId === latestDeletedMessageIdRef.current)
-    ) {
-      return undefined;
-    }
-
-    return strings.messageDeletedAnnouncementAriaLabel;
-  }, [newMessages, strings.messageDeletedAnnouncementAriaLabel]);
-
-  useEffect(() => {
-    if (deletedMessageAriaLabel !== undefined) {
-      // reset value to avoid the announcement repetition during re-renders
-      // it should be done in useEffect hook as if it's done in `deletedMessageAriaLabel` then
-      // `deletedMessageAriaLabel` is considered impure
-      latestDeletedMessageIdRef.current = undefined;
-    }
-  }, [deletedMessageAriaLabel]);
+  // id for the latest deleted message
+  const [latestDeletedMessageId, setLatestDeletedMessageId] = useState<string | undefined>(undefined);
+  // this value is used to check if a message is deleted in the current render
+  const previousMessagesRef = useRef<Message[]>([]);
+  // this value is used as a aria label for Narrator to notify when a message is deleted
+  const [deletedMessageAriaLabel, setDeletedMessageAriaLabel] = useState<string | undefined>(undefined);
 
   const onDeleteMessageCallback = useCallback(
     async (messageId: string): Promise<void> => {
@@ -751,7 +735,9 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       }
       try {
         await onDeleteMessage(messageId);
-        latestDeletedMessageIdRef.current = messageId;
+        // reset deleted message label in case if there was a value already (messages are deleted 1 after another)
+        setDeletedMessageAriaLabel(undefined);
+        setLatestDeletedMessageId(messageId);
       } catch (e) {
         console.log('onDeleteMessage failed: messageId', messageId, 'error', e);
       }
@@ -784,6 +770,27 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const messages = useMemo(() => {
     return newMessages;
   }, [newMessages]);
+
+  useEffect(() => {
+    if (latestDeletedMessageId === undefined) {
+      setDeletedMessageAriaLabel(undefined);
+    } else {
+      if (!previousMessagesRef.current.find((message) => message.messageId === latestDeletedMessageId)) {
+        // the message is deleted in previousMessagesRef
+        // no need to update deletedMessageAriaLabel
+        setDeletedMessageAriaLabel(undefined);
+      } else if (!messages.find((message) => message.messageId === latestDeletedMessageId)) {
+        // the message is deleted in messages array but still exists in previousMessagesRef
+        // update deletedMessageAriaLabel
+        setDeletedMessageAriaLabel(strings.messageDeletedAnnouncementAriaLabel);
+      } else {
+        // the message exists in both arrays
+        // no need to update deletedMessageAriaLabel
+        setDeletedMessageAriaLabel(undefined);
+      }
+    }
+    previousMessagesRef.current = messages;
+  }, [latestDeletedMessageId, messages, strings.messageDeletedAnnouncementAriaLabel]);
 
   const messagesRef = useRef(messages);
   const setMessagesRef = (messagesWithAttachedValue: Message[]): void => {
@@ -1089,7 +1096,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
       )}
       <LiveAnnouncer>
         <FluentV9ThemeProvider v8Theme={theme}>
-          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'polite'} />
+          <Announcer announcementString={deletedMessageAriaLabel} ariaLive={'assertive'} />
           <Chat
             // styles?.chatContainer used in className and style prop as style prop can't handle CSS selectors
             className={mergeClasses(classes.root, mergeStyles(styles?.chatContainer))}
