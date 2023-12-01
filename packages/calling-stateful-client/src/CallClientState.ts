@@ -214,28 +214,20 @@ export type ReactionState = {
  * @public
  */
 export interface ReactionCallFeatureState {
-  reactionPayloads: Queue<ReactionEventPayload>
-  localParticipantReactionPayload?: ReactionEventPayload
+  isEnable: boolean;
+  localParticipantReactionPayload?: ReactionState;
 }
 
+/**
+ * State only version of {@link @azure/communication-calling#Call.Reaction.ReactionEventPayload} with UI helper props.
+ * Reation state with a comparative timestamp which helps UI to decide to render the reaction accordingly.
+ * 
+ * @public
+ */
 export type ReactionState = {
   shouldRender: boolean;
-  reactionMessage: ReactionMessage;
-}
-
-/**
- * @public
- */
-export type ReactionMessage = {
-  reactionType: string
-}
-
-/**
- * @public
- */
-export type ReactionEventPayload = {
-  identifier: CommunicationIdentifier;
-  reactionMessage: ReactionMessage;
+  reactionType: string;
+  receivedTimeStamp: number;
 }
 
 /**

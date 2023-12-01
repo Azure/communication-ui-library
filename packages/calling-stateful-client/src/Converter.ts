@@ -5,7 +5,7 @@ import {
   RemoteParticipant as SdkRemoteParticipant,
   RemoteVideoStream as SdkRemoteVideoStream,
   LocalVideoStream as SdkLocalVideoStream,
-  VideoStreamRendererView
+  VideoStreamRendererView,
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(close-captions) */
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -19,7 +19,7 @@ import {
   LocalVideoStreamState as DeclarativeLocalVideoStream,
   IncomingCallState as DeclarativeIncomingCall,
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
-  ReactionEventPayload
+  ReactionState
 } from './CallClientState';
 /* @conditional-compile-remove(close-captions) */
 import { CaptionsInfo } from './CallClientState';
@@ -38,7 +38,6 @@ import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(raise-hand) */
 import { RaisedHandState } from './CallClientState';
-import { Queue } from './Queue';
 
 /**
  * @private
@@ -221,4 +220,21 @@ export function convertFromSDKToRaisedHandState(raisedHand: RaisedHand): RaisedH
   return {
     raisedHandOrderPosition: raisedHand.order
   };
+}
+
+export function convertFromSDKToReactionState(reactionType: string): ReactionState {
+  // Preferebly we should configure this baseTimeStamp for reaction with ECS.
+  let baseTimeStamp = new Date();
+  baseTimeStamp.setMonth(0);
+  baseTimeStamp.setDate(1);
+  baseTimeStamp.setHours(0, 0, 0, 0);
+
+  let baseUnixTimestamp = Math.floor(baseTimeStamp.getTime() / 1000);
+  let currentUnitTimestamp = Math.floor(new Date().getTime() / 1000) - baseUnixTimestamp;
+
+  return {
+    shouldRender: true,
+    reactionType: reactionType,
+    receivedTimeStamp: currentUnitTimestamp
+  }
 }

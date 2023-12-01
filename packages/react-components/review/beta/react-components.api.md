@@ -1912,6 +1912,13 @@ export interface ReactionButtonStrings {
 }
 
 // @public
+export type Reaction = {
+    shouldRender: boolean;
+    reactionType: string;
+    receivedTimeStamp: number;
+};
+
+// @public
 export type ReadReceiptsBySenderId = {
     [key: string]: {
         lastReadMessage: string;

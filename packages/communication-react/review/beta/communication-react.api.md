@@ -922,6 +922,7 @@ export interface CallState {
     localVideoStreams: LocalVideoStreamState[];
     optimalVideoCount: OptimalVideoCountFeatureState;
     raiseHand: RaiseHandCallFeature;
+    reaction: ReactionCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -3587,6 +3588,21 @@ export type Profile = {
     displayName?: string;
 };
 
+// @public (undocumented)
+export class Queue<T> {
+    constructor();
+    // (undocumented)
+    dequeue(): T | undefined;
+    // (undocumented)
+    enqueue(item: T): void;
+    // (undocumented)
+    isEmpty(): boolean;
+    // (undocumented)
+    peek(): T | undefined;
+    // (undocumented)
+    size(): number;
+}
+
 // @public
 export type RaisedHand = {
     raisedHandOrderPosition: number;
@@ -3650,6 +3666,28 @@ export interface ReactionButtonStrings {
 export type ReactionState = {
     reactionMessage: ReactionMessage;
     receivedAt: Date;
+};
+
+// @public
+export type Reaction = {
+    shouldRender: boolean;
+    reactionType: string;
+    receivedTimeStamp: number;
+};
+
+// @public
+export interface ReactionCallFeatureState {
+    // (undocumented)
+    isEnable: boolean;
+    // (undocumented)
+    localParticipantReactionPayload?: ReactionState;
+}
+
+// @public
+export type ReactionState = {
+    shouldRender: boolean;
+    reactionType: string;
+    receivedTimeStamp: number;
 };
 
 // @public
