@@ -6,7 +6,6 @@ import {
   AudioDeviceInfo,
   DeviceAccess,
   DominantSpeakersInfo,
-  ReactionEventPayload,
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
