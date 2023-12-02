@@ -366,10 +366,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(pinned-participants) */
   const drawerMenuHostId = useId('drawerMenuHost', drawerMenuHostIdFromProp);
 
-  const localTileNotInGrid = !!(
+  const localTileNotInGrid =
     (layout === 'floatingLocalVideo' || /* @conditional-compile-remove(gallery-layouts) */ layout === 'speaker') &&
-    remoteParticipants.length > 0
-  );
+    remoteParticipants.length > 0;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -409,6 +408,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // Use pinnedParticipants from props but if it is not defined use the maintained state of pinned participants
   const pinnedParticipants = props.pinnedParticipants ?? pinnedParticipantsState;
 
+  const showLocalVideoTileLabel =
+    !(
+      (localTileNotInGrid && isNarrow) ||
+      /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
+        '9:16'
+    ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -456,13 +461,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           initialsName={initialsName}
           localVideoViewOptions={localVideoViewOptions}
           onRenderAvatar={onRenderAvatar}
-          showLabel={
-            !(
-              (localTileNotInGrid && isNarrow) ||
-              /*@conditional-compile-remove(click-to-call) */ /* @conditional-compile-remove(rooms) */ localVideoTileSize ===
-                '9:16'
-            ) || /* @conditional-compile-remove(gallery-layouts) */ layout === 'default'
-          }
+          showLabel={showLocalVideoTileLabel}
           showMuteIndicator={showMuteIndicator}
           showCameraSwitcherInLocalPreview={showCameraSwitcherInLocalPreview}
           localVideoCameraCycleButtonProps={localVideoCameraCycleButtonProps}
@@ -495,7 +494,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /*@conditional-compile-remove(click-to-call) */
     localVideoTileSize,
     /* @conditional-compile-remove(gallery-layouts) */
-    layout
+    layout,
+    showLocalVideoTileLabel
   ]);
 
   /* @conditional-compile-remove(pinned-participants) */
