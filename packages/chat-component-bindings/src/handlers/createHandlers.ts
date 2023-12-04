@@ -7,7 +7,7 @@ import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common
 import { StatefulChatClient } from '@internal/chat-stateful-client';
 import { ChatMessage, ChatMessageReadReceipt, ChatThreadClient, SendMessageOptions } from '@azure/communication-chat';
 import memoizeOne from 'memoize-one';
-import { FileMetadata } from '@internal/react-components';
+import { AttachmentMetadata } from '@internal/react-components';
 
 /**
  * Object containing all the handlers required for chat components.
@@ -31,7 +31,7 @@ export type ChatHandlers = {
     options?: {
       /* @conditional-compile-remove(file-sharing) */
       metadata?: Record<string, string>;
-      attachedFilesMetadata?: FileMetadata[];
+      attachmentMetadata?: AttachmentMetadata[];
     }
   ) => Promise<void>;
   onDeleteMessage: (messageId: string) => Promise<void>;
@@ -64,11 +64,11 @@ export const createDefaultChatHandlers = memoizeOne(
         content: string,
         options?: {
           metadata?: Record<string, string>;
-          attachedFilesMetadata?: FileMetadata[];
+          attachmentMetadata?: AttachmentMetadata[];
         }
       ) => {
         const updatedMetadata = options?.metadata ? { ...options.metadata } : {};
-        updatedMetadata['fileSharingMetadata'] = JSON.stringify(options?.attachedFilesMetadata || []);
+        updatedMetadata['fileSharingMetadata'] = JSON.stringify(options?.attachmentMetadata || []);
         await chatThreadClient.updateMessage(messageId, { content, metadata: updatedMetadata });
       },
       onDeleteMessage: async (messageId: string) => {

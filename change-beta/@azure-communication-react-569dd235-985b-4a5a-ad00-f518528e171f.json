@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "FluentUI",
-  "comment": "Fix for an issue with narrator focus for message menu button",
+  "workstream": "Accessibility",
+  "comment": "Add a Narrator announcement when a message is deleted",
   "packageName": "@azure/communication-react",
   "email": "98852890+vhuseinova-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
