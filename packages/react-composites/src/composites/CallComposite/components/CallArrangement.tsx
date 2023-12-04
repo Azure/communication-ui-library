@@ -329,9 +329,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   containerWidth={containerWidth}
                   containerHeight={containerHeight}
                   isMobile={props.mobileView}
-                  /* @conditional-compile-remove(one-to-n-calling) */
                   peopleButtonChecked={isPeoplePaneOpen}
-                  /* @conditional-compile-remove(one-to-n-calling) */
                   onPeopleButtonClicked={togglePeoplePane}
                   displayVertical={verticalControlBar}
                 />

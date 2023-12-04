@@ -395,12 +395,10 @@ export interface CallCompositeStrings {
    * More details text of the page shown to the user when the user attempts to join a room they are not invited to.
    */
   notInvitedToRoomDetails?: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Control bar People button ToolTipContent
    */
   peopleButtonTooltipOpen: string;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /**
    * Control bar People button ToolTipContent
    */
