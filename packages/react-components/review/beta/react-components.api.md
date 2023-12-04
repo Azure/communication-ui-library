@@ -74,21 +74,15 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
+// @beta
+export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+
 // @internal
 export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
 
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @beta
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @beta
@@ -452,12 +446,13 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
+// @beta
+export type ChatAttachmentType = 'file' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    // @beta
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -470,6 +465,10 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    // @beta
+    files?: FileMetadata[];
+    // @beta
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -1150,16 +1149,16 @@ export interface _FileCardProps {
 }
 
 // @internal (undocumented)
-export interface _FileDownloadCards {
+export const _FileDownloadCards: (props: _FileDownloadCardsProps) => JSX.Element;
+
+// @internal (undocumented)
+export interface _FileDownloadCardsProps {
     downloadHandler?: FileDownloadHandler;
-    fileMetadata: FileMetadata[];
+    fileMetadata?: AttachmentMetadata[];
     onDownloadErrorMessage?: (errMsg: string) => void;
     strings?: _FileDownloadCardsStrings;
     userId: string;
 }
-
-// @internal (undocumented)
-export const _FileDownloadCards: (props: _FileDownloadCards) => JSX.Element;
 
 // @internal
 export interface _FileDownloadCardsStrings {
@@ -1174,20 +1173,18 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
-export type FileMetadata = FileSharingMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ ImageFileMetadata;
-
-// @beta (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage' | 'unknown';
-
-// @beta
-export interface FileSharingMetadata extends BaseFileMetadata {
+export interface FileMetadata {
     // (undocumented)
-    attachmentType: 'fileSharing';
+    attachmentType: 'file';
+    extension: string;
+    id: string;
+    name: string;
     // (undocumented)
     payload?: Record<string, string>;
+    url: string;
 }
 
 // @internal
@@ -1303,14 +1300,6 @@ export interface _Identifiers {
 }
 
 // @beta
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @beta
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
 // @beta
@@ -1340,6 +1329,15 @@ export interface ImageGalleryStrings {
 
 // @internal (undocumented)
 export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
+// @beta
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
+}
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -1533,7 +1531,7 @@ export type MessageThreadProps = {
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
     onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;
@@ -2388,7 +2386,7 @@ export interface UnsupportedOperatingSystemStrings {
 // @public
 export type UpdateMessageCallback = (messageId: string, content: string, options?: {
     metadata?: Record<string, string>;
-    attachedFilesMetadata?: FileMetadata[];
+    attachmentMetadata?: AttachmentMetadata[];
 }) => Promise<void>;
 
 // @internal
