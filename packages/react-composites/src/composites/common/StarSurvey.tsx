@@ -3,34 +3,18 @@
 
 import React from 'react';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { useState } from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { _StarSurvey, _StarSurveyStrings, _CallSurvey, _CallSurveyResponse } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
 import { _captionSettingsSelector } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { useLocale } from '../../localization';
-/* @conditional-compile-remove(end-of-call-survey) */
-import { useHandlers } from '../hooks/useHandlers';
+import { useLocale } from '../localization';
 
 /** @private */
 export const StarSurvey = (
-  /* @conditional-compile-remove(end-of-call-survey) */ props: { onSubmitStarSurvey: (ratings: number) => void }
+  /* @conditional-compile-remove(end-of-call-survey) */ props: { onStarRatingSelected: (ratings: number) => void }
 ): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
-  const { onSubmitStarSurvey } = props;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const starSurveyHandler = useHandlers(StarSurvey);
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const [showSurvey, setShowSurvey] = useState(true);
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const onDismiss = (): void => {
-    setShowSurvey(false);
-  };
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const onConfirmStarSurvey = (rating: number): void => {
-    onSubmitStarSurvey(rating);
-  };
+  const { onStarRatingSelected } = props;
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
 
@@ -50,18 +34,7 @@ export const StarSurvey = (
   };
 
   /* @conditional-compile-remove(end-of-call-survey) */
-  return (
-    <>
-      {showSurvey && (
-        <_StarSurvey
-          onDismissStarSurvey={onDismiss}
-          strings={StarSurveyStrings}
-          onConfirmStarSurvey={onConfirmStarSurvey}
-          {...starSurveyHandler}
-        />
-      )}
-    </>
-  );
+  return <_StarSurvey strings={StarSurveyStrings} onStarRatingSelected={onStarRatingSelected} />;
 
   return <></>;
 };

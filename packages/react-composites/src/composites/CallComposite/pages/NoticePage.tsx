@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-/* @conditional-compile-remove(end-of-call-survey) */
-import { useState } from 'react';
 import { IStyle, mergeStyles, Stack, Text } from '@fluentui/react';
 import {
   containerStyle,
@@ -16,12 +14,11 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { StartCallButton } from '../components/StartCallButton';
 import { CallCompositeIcon, CallCompositeIcons } from '../../common/icons';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { StarSurvey } from '../components/StarSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
-import { TagsSurvey } from '../components/TagsSurvey';
-/* @conditional-compile-remove(end-of-call-survey) */
-import { _AudioIssue, _OverallIssue, _ScreenshareIssue, _VideoIssue } from '@internal/react-components';
 import { CallSurvey } from '@azure/communication-calling';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { useHandlers } from '../hooks/useHandlers';
+/* @conditional-compile-remove(end-of-call-survey) */
+import { SurveyPane } from '../../common/SurveyPane';
 
 /**
  * @private
@@ -48,9 +45,21 @@ export interface NoticePageProps {
      * Note that free form text response survey option is only going to be enabled when this callback is provided
      * User will need to handle all free form text response on their own
      */
-    onSubmitSurvey?: (
+    onSurveySubmitted?: (
       callId: string,
-      surveyResults: CallSurvey,
+      surveyId: string,
+      /**
+       * This is the survey results containing star survey data and API tag survey data.
+       * This part of the result will always be send to calling sdk
+       * This callback provides user with the ability to gain access to survey data
+       */
+      submittedSurvey: CallSurvey,
+      /**
+       * This is the survey results containing free form text
+       * This part of the result will not be handled by composites
+       * User will need to collect and handle this information 100% on their own
+       * Free form text survey is not going to show in the UI if onSurveySubmitted is not populated
+       */
       improvementSuggestions: {
         category: 'audio' | 'video' | 'screenshare';
         suggestion: string;
@@ -66,23 +75,9 @@ export interface NoticePageProps {
  */
 export function NoticePage(props: NoticePageProps): JSX.Element {
   const adapter = useAdapter();
+
   /* @conditional-compile-remove(end-of-call-survey) */
-  const [showTagsSurvey, setShowTagsSurvey] = useState(false);
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const onSubmitStarSurvey = (ratings: number): void => {
-    if (ratings <= 3) {
-      setShowTagsSurvey(true);
-    }
-  };
-  /* @conditional-compile-remove(end-of-call-survey) */
-  const issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[] = [
-    'NoLocalAudio',
-    'NoRemoteAudio',
-    'AudioNoise',
-    'LowVolume',
-    'CallCannotJoin',
-    'CallCannotInvite'
-  ];
+  const handlers = useHandlers(SurveyPane);
 
   return (
     <Stack
@@ -93,17 +88,6 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
       data-ui-id={props.dataUiId}
       aria-atomic
     >
-      {
-        /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey && (
-          <StarSurvey onSubmitStarSurvey={onSubmitStarSurvey} />
-        )
-      }
-
-      {
-        /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey && showTagsSurvey && (
-          <TagsSurvey issues={issues} />
-        )
-      }
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
         <Text className={mergeStyles(titleStyles)} aria-live="assertive">
@@ -118,6 +102,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
           </Stack>
         )}
       </Stack>
+      {!props.surveyOptions?.hideSurvey && <SurveyPane {...handlers} />}
     </Stack>
   );
 }
