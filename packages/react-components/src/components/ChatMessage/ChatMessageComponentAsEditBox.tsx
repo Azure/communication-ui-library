@@ -14,7 +14,7 @@ import { MessageThreadStrings } from '../MessageThread';
 import { useChatMyMessageStyles } from '../styles/MessageThread.styles';
 import { ChatMessage } from '../../types';
 import { _FileUploadCards } from '../FileUploadCards';
-import { AttachmentMetadata, FileMetadata } from '../FileDownloadCards';
+import { AttachmentMetadata } from '../FileDownloadCards';
 import {
   chatMessageFailedTagStyle,
   editChatMessageFailedTagStyle,
@@ -65,7 +65,9 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
 
-  const [attachmentMetadata, setAttachedFilesMetadata] = React.useState(getMessageAttachedFilesMetadata(message));
+  const [attachmentMetadata, /* @conditional-compile-remove(file-sharing) */ setAttachedFilesMetadata] = React.useState(
+    getMessageAttachedFilesMetadata(message)
+  );
   const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(textValue, attachmentMetadata ?? []);
@@ -101,6 +103,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
+  /* @conditional-compile-remove(file-sharing) */
   const onRenderFileUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
@@ -191,7 +194,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             />
           </Stack.Item>
         </Stack>
-        {onRenderFileUploads()}
+        {/* @conditional-compile-remove(file-sharing) */ onRenderFileUploads()}
       </>
     );
   };
@@ -221,7 +224,7 @@ const getMessageState = (messageText: string, attachmentMetadata: AttachmentMeta
   isMessageEmpty(messageText, attachmentMetadata) ? 'too short' : isMessageTooLong(messageText) ? 'too long' : 'OK';
 
 // @TODO: Remove when file-sharing feature becomes stable.
-const getMessageAttachedFilesMetadata = (message: ChatMessage): FileMetadata[] | undefined => {
+const getMessageAttachedFilesMetadata = (message: ChatMessage): AttachmentMetadata[] | undefined => {
   /* @conditional-compile-remove(file-sharing) */
   return message.files;
   return [];

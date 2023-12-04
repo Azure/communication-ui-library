@@ -83,19 +83,16 @@ type ChatMessageComponentProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-
   /**
    * Optional function to fetch attachments.
    * @beta
    */
   onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
-   * @beta
+   * @public
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -159,7 +156,6 @@ export const ChatMessageComponent = (props: ChatMessageComponentProps): JSX.Elem
         strings={props.strings}
         onFetchAttachments={props.onFetchAttachments}
         onInlineImageClicked={props.onInlineImageClicked}
-        /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
         attachmentsMap={props.attachmentsMap}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}

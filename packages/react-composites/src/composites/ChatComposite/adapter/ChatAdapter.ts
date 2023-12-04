@@ -11,7 +11,7 @@ import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
 
 import { AttachmentDownloadResult } from '@internal/react-components';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
 
 /**

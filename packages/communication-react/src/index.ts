@@ -297,7 +297,6 @@ export type {
 } from '../../react-components/src';
 /* @conditional-compile-remove(raise-hand) */
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-
 export type { ImageGalleryProps, ImageGalleryImageProps, ImageGalleryStrings } from '../../react-components/src';
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from '../../react-components/src';
@@ -310,9 +309,8 @@ export type {
   FileDownloadHandler,
   FileDownloadError
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing) */ /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+/* @conditional-compile-remove(file-sharing) */
 export type { AttachmentMetadata } from '../../react-components/src';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 export type {
   ChatAttachmentType,
   AttachmentDownloadResult,

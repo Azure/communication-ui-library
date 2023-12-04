@@ -150,8 +150,8 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
-// @beta
-export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+// @public
+export type AttachmentMetadata = /* @conditional-compile-remove(file-sharing) */ FileMetadata | InlineImageMetadata;
 
 // @public
 export type AvatarPersonaData = {

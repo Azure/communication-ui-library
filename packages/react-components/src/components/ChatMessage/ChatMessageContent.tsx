@@ -18,7 +18,6 @@ import { MentionDisplayOptions, Mention } from '../MentionPopover';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { FontIcon, Stack } from '@fluentui/react';
 import { MessageThreadStrings } from '../MessageThread';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata, InlineImageMetadata } from '../FileDownloadCards';
 import LiveMessage from '../Announcer/LiveMessage';
 /* @conditional-compile-remove(mention) */
@@ -30,11 +29,8 @@ type ChatMessageContentProps = {
   strings: MessageThreadStrings;
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions;
-
   attachmentsMap?: Record<string, string>;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   onFetchAttachments?: (attachments: AttachmentMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
   onInlineImageClicked?: (attachmentId: string) => void;
 };
 
@@ -77,15 +73,11 @@ const MessageContentWithLiveAria = (props: MessageContentWithLiveAriaProps): JSX
 
 const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Element => {
   const {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     // message is used only in useEffect that is under teams-inline-images-and-file-sharing cc
     message,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     attachmentsMap,
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
     onFetchAttachments
   } = props;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   useEffect(() => {
     if (!attachmentsMap || !onFetchAttachments) {
       return;

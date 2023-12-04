@@ -56,9 +56,6 @@ export type AnnouncerProps = {
     ariaLive: 'off' | 'polite' | 'assertive' | undefined;
 };
 
-// @beta
-export type AttachmentMetadata = FileMetadata;
-
 // @public
 export interface AttachmentDownloadResult {
     // (undocumented)
@@ -66,6 +63,9 @@ export interface AttachmentDownloadResult {
     // (undocumented)
     blobUrl: string;
 }
+
+// @public
+export type AttachmentMetadata = InlineImageMetadata;
 
 // @public
 export interface BaseCustomStyles {
@@ -312,11 +312,13 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
+// @beta
+export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
+
 // @public
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -329,6 +331,7 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -979,12 +982,17 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileMetadata {
+    // (undocumented)
+    attachmentType: 'file';
     extension: string;
+    id: string;
     name: string;
+    // (undocumented)
+    payload?: Record<string, string>;
     url: string;
 }
 
@@ -1082,14 +1090,6 @@ export interface _Identifiers {
 }
 
 // @public
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
 // @public
@@ -1115,6 +1115,16 @@ export interface ImageGalleryProps {
 export interface ImageGalleryStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
+}
+
+// @public
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
@@ -1256,7 +1266,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

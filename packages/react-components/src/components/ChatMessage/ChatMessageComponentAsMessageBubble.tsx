@@ -17,7 +17,6 @@ import { useTheme } from '../../theming';
 import { ChatMessageActionFlyout } from './ChatMessageActionsFlyout';
 import { ChatMessageContent } from './ChatMessageContent';
 import { ChatMessage } from '../../types/ChatMessage';
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 import { AttachmentMetadata } from '../FileDownloadCards';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessageContent } from './ChatMessageContent';
@@ -65,6 +64,7 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * Optional callback to render uploaded files in the message component.
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
+  /* @conditional-compile-remove(file-sharing) */
   /**
    * Optional function called when someone clicks on the file download icon.
    */
@@ -92,18 +92,15 @@ type ChatMessageComponentAsMessageBubbleProps = {
    * @internal
    */
   mentionDisplayOptions?: MentionDisplayOptions;
-
   /**
    * Optional function to fetch attachments.
    */
   onFetchAttachments?: (attachment: AttachmentMetadata[], messageId: string) => Promise<void>;
-  /* @conditional-compile-remove(image-gallery) */
   /**
    * Optional callback called when an inline image is clicked.
-   * @beta
+   * @public
    */
   onInlineImageClicked?: (attachmentId: string, messageId: string) => Promise<void>;
-
   /**
    * Optional map of attachment ids to blob urls.
    */
@@ -158,7 +155,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     showMessageStatus,
     messageStatus,
     fileDownloadHandler,
-
     onInlineImageClicked,
     shouldOverlapAvatarAndMessage
   } = props;
@@ -212,22 +208,25 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  
   const defaultOnRenderFileDownloads = useCallback(() => {
+    /* @conditional-compile-remove(file-sharing) */
     return (
       <_FileDownloadCards
         userId={userId}
-        /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+        /* @conditional-compile-remove(file-sharing) */
         fileMetadata={(message as ChatMessage).files || []}
         downloadHandler={fileDownloadHandler}
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     );
+    return <></>
   }, [
     userId,
     message,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    /* @conditional-compile-remove(file-sharing) */
     strings,
-    /* @conditional-compile-remove(file-sharing) @conditional-compile-remove(teams-inline-images-and-file-sharing)*/
+    /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler
   ]);
 
@@ -265,9 +264,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         <ChatMessageContent
           message={message}
           strings={strings}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           onFetchAttachments={props.onFetchAttachments}
-          /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
           attachmentsMap={props.attachmentsMap}
           /* @conditional-compile-remove(mention) */
           mentionDisplayOptions={props.mentionDisplayOptions}

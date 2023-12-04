@@ -20,13 +20,13 @@ export type ChatAttachmentType =
   | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
   | 'unknown';
 
+/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata containing basic information about the uploaded file.
  *
  * @beta
  */
 export interface FileMetadata {
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   attachmentType: 'file';
   /**
    * Extension hint, useful for rendering a specific icon.
@@ -47,7 +47,6 @@ export interface FileMetadata {
    * Download URL for the file.
    */
   url: string;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   /*
    * Optional dictionary of meta data associated with the file.
    */
@@ -82,9 +81,7 @@ export interface InlineImageMetadata {
  * Metadata containing information about the uploaded file.
  * @beta
  */
-export type AttachmentMetadata =
-  | FileMetadata
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 /**
  * Metadata of the attachment object returned by the ACS SDK.
@@ -201,14 +198,13 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   );
 
   const isFileSharingAttachment = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file';
     return false;
   }, []);
 
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const isShowDownloadIcon = useCallback((attachment: AttachmentMetadata): boolean => {
-    /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
+    /* @conditional-compile-remove(file-sharing) */
     return attachment.attachmentType === 'file' && attachment.payload?.teamsFileAttachment !== 'true';
     return true;
   }, []);
@@ -216,7 +212,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
   const fileCardGroupDescription = useMemo(
     () => () => {
       const fileGroupLocaleString = props.strings?.fileCardGroupMessage ?? localeStrings.fileCardGroupMessage;
-
+      /* @conditional-compile-remove(file-sharing) */
       return _formatString(fileGroupLocaleString, {
         fileCount: `${fileMetadata?.filter(isFileSharingAttachment).length ?? 0}`
       });
@@ -258,6 +254,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
         {fileMetadata &&
           fileMetadata
             .filter((attachment) => {
+              /* @conditional-compile-remove(file-sharing) */
               return isFileSharingAttachment(attachment);
               return true;
             })

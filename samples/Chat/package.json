@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@azure/abort-controller": "^1.1.0",
-    "@azure/communication-chat": "/workspaces/communication-ui-library/azure-communication-chat-1.4.0.tgz",
+    "@azure/communication-chat": "1.4.0-alpha.20231124.1",
     "@azure/communication-common": "^2.3.0",
     "@azure/communication-identity": "^1.2.0",
     "@azure/communication-react": "1.11.0-beta.1",

@@ -369,7 +369,6 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(file-sharing) */
   /** @beta */
   updateFileUploadMetadata: (id: string, metadata: AttachmentMetadata) => void;
-  /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
   /* @conditional-compile-remove(PSTN-calls) */
   /**
