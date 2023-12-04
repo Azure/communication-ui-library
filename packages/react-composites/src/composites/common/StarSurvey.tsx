@@ -20,17 +20,13 @@ export const StarSurvey = (
 
   /* @conditional-compile-remove(end-of-call-survey) */
   const StarSurveyStrings: _StarSurveyStrings = {
-    starSurveyQuestion: strings.starSurveyQuestion,
-    starSurveyThankYouText: strings.starSurveyThankYouText,
     starSurveyHelperText: strings.starSurveyHelperText,
     starSurveyOneStarText: strings.starSurveyOneStarText,
     starSurveyTwoStarText: strings.starSurveyTwoStarText,
     starSurveyThreeStarText: strings.starSurveyThreeStarText,
     starSurveyFourStarText: strings.starSurveyFourStarText,
     starSurveyFiveStarText: strings.starSurveyFiveStarText,
-    // starSurveyConfirmButtonLabel: strings.starSurveyConfirmButtonLabel,
     starRatingAriaLabel: strings.starRatingAriaLabel
-    // cancelButtonAriaLabel: strings.starRatingCancelButtonAriaLabel
   };
 
   /* @conditional-compile-remove(end-of-call-survey) */

@@ -230,8 +230,7 @@
         "grantedDueToRoleChangeToPresenter": "You're a presenter. You can share content and facilitate the meeting."
       }
     },
-    "starSurveyQuestion": "How was your call today?",
-    "starSurveyThankYouText": "Thanks for letting us know.",
+    "surveyQuestion": "How was your call today?",
     "starSurveyHelperText": "How was the quality of the call?",
     "starSurveyOneStarText": "The quality was bad.",
     "starSurveyTwoStarText": "The quality was poor.",
@@ -244,9 +243,6 @@
     "tagsSurveyQuestion": "What could have been better?",
     "tagsSurveyHelperText": "Check any issues you experienced",
     "surveyTextboxDefaultText": "Other,please specify",
-    "audioCategory": "Audio",
-    "videoCategory": "Video",
-    "screenshareCategory": "Presenting",
     "surveyIssues":{
       "overallRating": {
         "callCannotJoin": "I could not join call",
@@ -286,6 +282,12 @@
         "largeDelay": "Screen share has a large delay",
         "otherIssues": "I was having other screen share issues in this call"
       }
+    },
+    "surveyCategories": {
+      "overallRating": "Overall",
+      "audioRating": "Audio",
+      "videoRating": "Video",
+      "screenshareRating": "Presenting"
     }
   },
   "chat": {

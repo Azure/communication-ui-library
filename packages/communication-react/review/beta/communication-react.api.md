@@ -635,7 +635,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    audioCategory: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -758,27 +757,26 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     roomNotValidDetails?: string;
     roomNotValidTitle: string;
-    screenshareCategory: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
     starRatingAriaLabel: string;
-    starSurveyFiveStarText?: string;
-    starSurveyFourStarText?: string;
-    starSurveyHelperText?: string;
-    starSurveyOneStarText?: string;
-    starSurveyQuestion?: string;
-    starSurveyThankYouText?: string;
-    starSurveyThreeStarText?: string;
-    starSurveyTwoStarText?: string;
+    starSurveyFiveStarText: string;
+    starSurveyFourStarText: string;
+    starSurveyHelperText: string;
+    starSurveyOneStarText: string;
+    starSurveyThreeStarText: string;
+    starSurveyTwoStarText: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
     surveyCancelButtonAriaLabel: string;
+    surveyCategories: SurveyCategories;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
+    surveyQuestion: string;
     surveyTextboxDefaultText: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
@@ -795,7 +793,6 @@ export interface CallCompositeStrings {
     unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
-    videoCategory: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }
@@ -3892,6 +3889,18 @@ export interface StreamMediaProps {
     loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
+}
+
+// @public
+export interface SurveyCategories {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
 }
 
 // @public

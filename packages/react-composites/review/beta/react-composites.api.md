@@ -60,6 +60,7 @@ import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { SurveyCategories } from '@internal/react-components';
 import { SurveyIssues } from '@internal/react-components';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
@@ -450,7 +451,6 @@ export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcon
 
 // @public
 export interface CallCompositeStrings {
-    audioCategory: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
     callRejectedMoreDetails?: string;
@@ -573,27 +573,26 @@ export interface CallCompositeStrings {
     roomNotFoundTitle: string;
     roomNotValidDetails?: string;
     roomNotValidTitle: string;
-    screenshareCategory: string;
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
     starRatingAriaLabel: string;
-    starSurveyFiveStarText?: string;
-    starSurveyFourStarText?: string;
-    starSurveyHelperText?: string;
-    starSurveyOneStarText?: string;
-    starSurveyQuestion?: string;
-    starSurveyThankYouText?: string;
-    starSurveyThreeStarText?: string;
-    starSurveyTwoStarText?: string;
+    starSurveyFiveStarText: string;
+    starSurveyFourStarText: string;
+    starSurveyHelperText: string;
+    starSurveyOneStarText: string;
+    starSurveyThreeStarText: string;
+    starSurveyTwoStarText: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
     surveyCancelButtonAriaLabel: string;
+    surveyCategories: SurveyCategories;
     surveyConfirmButtonLabel: string;
     surveyIssues: SurveyIssues;
+    surveyQuestion: string;
     surveyTextboxDefaultText: string;
     tagsSurveyHelperText: string;
     tagsSurveyQuestion: string;
@@ -610,7 +609,6 @@ export interface CallCompositeStrings {
     unableToResolveTenantTitle?: string;
     unableToStartVideoEffect?: string;
     unnamedParticipantString: string;
-    videoCategory: string;
     videoEffectsPaneBackgroundSelectionTitle: string;
     videoEffectsPaneTitle: string;
 }

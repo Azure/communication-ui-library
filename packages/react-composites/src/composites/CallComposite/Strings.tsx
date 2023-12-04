@@ -4,7 +4,7 @@
 /* @conditional-compile-remove(close-captions) */
 import { SpokenLanguageStrings, CaptionLanguageStrings } from '@internal/react-components';
 /* @conditional-compile-remove(end-of-call-survey) */
-import { SurveyIssues } from '@internal/react-components';
+import { SurveyIssues, SurveyCategories } from '@internal/react-components';
 /* @conditional-compile-remove(capabilities) */
 import { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
@@ -663,44 +663,39 @@ export interface CallCompositeStrings {
   capabilityChangedNotification?: CapabilityChangedNotificationStrings;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Survey question
+   * Question for the survey
    */
-  starSurveyQuestion?: string;
+  surveyQuestion: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
-   * Text that's displayed after user select a star response
+   * Helper text to explain what the survey is for
    */
-  starSurveyThankYouText?: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
-   * Helper text displayed below survey question before user choose a response
-   */
-  starSurveyHelperText?: string;
+  starSurveyHelperText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select one star
    */
-  starSurveyOneStarText?: string;
+  starSurveyOneStarText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select two star
    */
-  starSurveyTwoStarText?: string;
+  starSurveyTwoStarText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select three star
    */
-  starSurveyThreeStarText?: string;
+  starSurveyThreeStarText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select four star
    */
-  starSurveyFourStarText?: string;
+  starSurveyFourStarText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Helper text displayed below survey question after user select five star
    */
-  starSurveyFiveStarText?: string;
+  starSurveyFiveStarText: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Aria Label for each individual star rating
@@ -716,21 +711,6 @@ export interface CallCompositeStrings {
    * Tags Survey helper text
    */
   tagsSurveyHelperText: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
-   * Category label for tag survey
-   */
-  audioCategory: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
-   * Category label for tag survey
-   */
-  videoCategory: string;
-  /* @conditional-compile-remove(end-of-call-survey) */
-  /**
-   * Category label for tag survey
-   */
-  screenshareCategory: string;
   /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Confirm button label for survey
@@ -751,6 +731,11 @@ export interface CallCompositeStrings {
    * Corresponding texts to each call issue
    */
   surveyIssues: SurveyIssues;
+  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Corresponding texts to each call category
+   */
+  surveyCategories: SurveyCategories;
   /**
    * String for the dismiss control on the local and remote PIP on mobile
    */

@@ -26,19 +26,17 @@ export const TagsSurvey = (props: {
 }): JSX.Element => {
   /* @conditional-compile-remove(end-of-call-survey) */
   const strings = useLocale().strings.call;
-
+  /* @conditional-compile-remove(end-of-call-survey) */
   const tagsSurveyStrings: _TagsSurveyStrings = {
     tagsSurveyQuestion: strings.tagsSurveyQuestion,
     tagsSurveyHelperText: strings.tagsSurveyHelperText
   };
 
   /* @conditional-compile-remove(end-of-call-survey) */
-  const callIssuesToTag = strings.surveyIssues;
-
-  /* @conditional-compile-remove(end-of-call-survey) */
   return (
     <_TagsSurvey
-      callIssuesToTag={callIssuesToTag}
+      callIssuesToTag={strings.surveyIssues}
+      categoriesToHeader={strings.surveyCategories}
       issues={props.issues}
       onConfirm={props.onConfirm}
       strings={tagsSurveyStrings}

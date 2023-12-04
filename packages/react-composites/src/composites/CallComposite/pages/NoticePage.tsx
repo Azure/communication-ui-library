@@ -102,7 +102,11 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
           </Stack>
         )}
       </Stack>
-      {!props.surveyOptions?.hideSurvey && <SurveyPane {...handlers} />}
+      {
+        /* @conditional-compile-remove(end-of-call-survey) */ !props.surveyOptions?.hideSurvey && (
+          <SurveyPane {...handlers} />
+        )
+      }
     </Stack>
   );
 }
