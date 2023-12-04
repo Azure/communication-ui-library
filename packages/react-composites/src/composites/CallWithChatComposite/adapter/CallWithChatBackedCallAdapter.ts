@@ -222,9 +222,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
   /* @conditional-compile-remove(end-of-call-survey) */
-  public async submitSurvey(
-    survey: CallSurvey
-  ): Promise<CallSurveyResponse | undefined> {
+  public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callWithChatAdapter.submitSurvey(survey);
   }
 }

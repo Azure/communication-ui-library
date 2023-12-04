@@ -156,9 +156,7 @@ const createCompositeHandlers = memoizeOne(
       await adapter.setCaptionLanguage(language);
     },
     /* @conditional-compile-remove(end-of-call-survey) */
-    onSubmitSurvey: async (
-      survey: CallSurvey
-    ): Promise<CallSurveyResponse | undefined> => {
+    onSubmitSurvey: async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
       return await adapter.submitSurvey(survey);
     }
   })

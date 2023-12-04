@@ -201,7 +201,7 @@ export type CallWithChatCompositeOptions = {
      */
     onSurveySubmitted?: (
       callId: string,
-      surveyId:string,
+      surveyId: string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
        * This part of the result will always be send to calling sdk
@@ -219,7 +219,7 @@ export type CallWithChatCompositeOptions = {
         suggestion: string;
       }[]
     ) => Promise<void>;
-    }
+  };
   /* @conditional-compile-remove(custom-branding) */
   /**
    * Options for setting additional customizations related to personalized branding.
@@ -310,7 +310,7 @@ type CallWithChatScreenProps = {
      */
     onSurveySubmitted?: (
       callId: string,
-      surveyId:string,
+      surveyId: string,
       /**
        * This is the survey results containing star survey data and API tag survey data.
        * This part of the result will always be send to calling sdk
@@ -328,7 +328,7 @@ type CallWithChatScreenProps = {
         suggestion: string;
       }[]
     ) => Promise<void>;
-  }
+  };
   /* @conditional-compile-remove(custom-branding) */
   logo?: {
     url: string;

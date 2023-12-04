@@ -539,9 +539,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
   /* @conditional-compile-remove(end-of-call-survey) */
-  public async submitSurvey(
-    survey: CallSurvey
-  ): Promise<CallSurveyResponse | undefined> {
+  public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.callAdapter.submitSurvey(survey);
   }
 

@@ -561,9 +561,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await captionsFeature.setCaptionLanguage(language);
     };
     /* @conditional-compile-remove(end-of-call-survey) */
-    const onSubmitSurvey = async (
-      survey: CallSurvey
-    ): Promise<CallSurveyResponse | undefined> =>
+    const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey, options);
 
     return {

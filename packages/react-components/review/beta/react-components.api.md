@@ -2137,9 +2137,7 @@ export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
 
 // @internal
 export interface _StarSurveyProps {
-    onConfirmStarSurvey?: (ratings: number) => void;
-    onDismissStarSurvey?: () => void;
-    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+    onStarRatingSelected?: (ratings: number) => void;
     selectedIcon?: string;
     strings?: _StarSurveyStrings;
     unselectedIcon?: string;
@@ -2239,9 +2237,10 @@ export interface SurveyIssues {
 
 // @internal (undocumented)
 export type _SurveyTag = {
-    message: string;
-    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
-    issueCategory: _IssueCategory;
+    [issueCategory: string]: {
+        message: string;
+        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    }[];
 };
 
 // @public
@@ -2262,17 +2261,14 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 export interface _TagsSurveyProps {
     callIssuesToTag: SurveyIssues;
     issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
-    onDismissTagsSurvey?: () => void;
-    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+    onConfirm?: (selectedTags: _CallSurvey) => void;
     strings?: _TagsSurveyStrings;
 }
 
 // @internal
 export interface _TagsSurveyStrings {
-    cancelButtonAriaLabel?: string;
-    TagsSurveyCancelButtonLabel?: string;
-    TagsSurveyConfirmButtonLabel?: string;
-    TagsSurveyQuestion?: string;
+    tagsSurveyHelperText?: string;
+    tagsSurveyQuestion?: string;
 }
 
 // @internal (undocumented)
