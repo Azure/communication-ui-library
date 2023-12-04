@@ -32,7 +32,7 @@ export interface _TagsSurveyStrings {
 
 /**
  * Survey Issue categories
- * 
+ *
  * @internal
  */
 export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
