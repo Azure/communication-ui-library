@@ -118,7 +118,7 @@ import { getSelectedCameraFromAdapterState } from '../utils';
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 /* @conditional-compile-remove(end-of-call-survey) */
-import {CallSurvey, CallSurveyResponse, SubmitSurveyOptions}from '@azure/communication-calling';
+import { CallSurvey, CallSurveyResponse, SubmitSurveyOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-sounds) */
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 /* @conditional-compile-remove(calling-sounds) */
@@ -1007,9 +1007,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | BetaTea
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
   }
-/* @conditional-compile-remove(end-of-call-survey) */
-  public async submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined> {
-    return this.handlers.onSubmitSurvey(survey, options)
+  /* @conditional-compile-remove(end-of-call-survey) */
+  public async submitSurvey(
+    survey: CallSurvey,
+    options?: SubmitSurveyOptions
+  ): Promise<CallSurveyResponse | undefined> {
+    return this.handlers.onSubmitSurvey(survey, options);
   }
 
   public getState(): CallAdapterState {

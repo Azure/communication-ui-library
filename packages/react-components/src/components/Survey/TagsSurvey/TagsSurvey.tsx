@@ -1,18 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import React, { useState, useCallback } from 'react';
-import { Text, useTheme, Stack, Modal, IconButton, PrimaryButton, DefaultButton, Checkbox } from '@fluentui/react';
+import React, { useState } from 'react';
+import { Text, useTheme, Stack, Checkbox, Pivot, PivotItem } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
-import {
-  buttonsContainerClassName,
-  cancelButtonClassName,
-  checkboxClassName,
-  confirmButtonClassName,
-  modalStyles,
-  questionTextStyle,
-  titleContainerClassName
-} from './TagsSurvey.styles';
+import { checkboxClassName, questionTextStyle, helperTextStyle } from './TagsSurvey.styles';
 import {
   _AudioIssue,
   _CallSurvey,
@@ -21,7 +13,7 @@ import {
   _ScreenshareIssue,
   _VideoIssue
 } from '../SurveyTypes';
-import { CallIssuesToTags } from '../../../types';
+import { SurveyIssues } from '../../../types';
 /**
  * Strings of {@link TagsSurvey} that can be overridden.
  *
@@ -31,19 +23,11 @@ export interface _TagsSurveyStrings {
   /**
    * Survey question
    */
-  TagsSurveyQuestion?: string;
+  tagsSurveyQuestion?: string;
   /**
    * Confirm Button Label
    */
-  TagsSurveyConfirmButtonLabel?: string;
-  /**
-   * Confirm Button Label
-   */
-  TagsSurveyCancelButtonLabel?: string;
-  /**
-   * Aria Label for cancel button
-   */
-  cancelButtonAriaLabel?: string;
+  tagsSurveyHelperText?: string;
 }
 
 /**
@@ -56,9 +40,10 @@ export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | '
  * @internal
  */
 export type _SurveyTag = {
-  message: string;
-  issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
-  issueCategory: _IssueCategory;
+  [issueCategory: string]: {
+    message: string;
+    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+  }[];
 };
 
 /**
@@ -70,12 +55,9 @@ export interface _TagsSurveyProps {
   /** Issues included in the survey */
   issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
   /** Mappings from call issues to tags displayed on the survey*/
-  callIssuesToTag: CallIssuesToTags;
-
+  callIssuesToTag: SurveyIssues;
   /** Function to send TagsSurvey results*/
-  onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
-  /** Function to close star survey modal*/
-  onDismissTagsSurvey?: () => void;
+  onConfirm?: (selectedTags: _CallSurvey) => void;
   /** Tags survey strings */
   strings?: _TagsSurveyStrings;
 }
@@ -86,98 +68,100 @@ export interface _TagsSurveyProps {
  * @internal
  */
 export const _TagsSurvey = (props: _TagsSurveyProps): JSX.Element => {
-  const { issues, callIssuesToTag, onSubmitSurvey, onDismissTagsSurvey, strings } = props;
+  const { issues, callIssuesToTag, onConfirm, strings } = props;
 
   const [selectedTags, setSelectedTags] = useState({});
 
   const tags: _SurveyTag[] = [];
-
   issues.map((issue) => {
-    const issueCategory: _IssueCategory = Object.keys(callIssuesToTag).find(
-      (key) => callIssuesToTag[key][issue] !== undefined
-    ) as _IssueCategory;
-    if (issueCategory && callIssuesToTag[issueCategory][issue]) {
-      tags.push({
-        message: callIssuesToTag[issueCategory][issue],
-        issue: issue,
-        issueCategory: issueCategory
-      });
+    const issueCamelCase = issue?.charAt(0).toLowerCase() + issue?.slice(1);
+    const issueCategory = Object.keys(callIssuesToTag).find(
+      (key) => callIssuesToTag[key][issueCamelCase] !== undefined
+    );
+    if (issueCategory) {
+      if (tags[issueCategory]) {
+        tags[issueCategory].push({
+          message: callIssuesToTag[issueCategory][issueCamelCase],
+          issue: issue
+        });
+      } else {
+        tags[issueCategory] = [
+          {
+            message: callIssuesToTag[issueCategory][issueCamelCase],
+            issue: issue
+          }
+        ];
+      }
     }
   });
 
-  const onChange = React.useCallback((issue: string, issueCategory: string, checked: boolean): void => {
-    if (checked) {
-      setSelectedTags((prevState) => {
-        if (prevState[issueCategory]) {
-          prevState[issueCategory].issues.push(issue);
-        } else {
-          prevState[issueCategory] = { score: 1, issues: [issue] };
-        }
-        return prevState;
-      });
-    } else {
-      setSelectedTags((prevState) => {
-        if (prevState[issueCategory]) {
-          prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
-            return value !== issue;
-          });
-          if (prevState[issueCategory].issues.length === 0) {
-            delete prevState[issueCategory];
+  const onChange = React.useCallback(
+    (issue: string, issueCategory: string, checked: boolean): void => {
+      if (checked) {
+        setSelectedTags((prevState) => {
+          if (prevState[issueCategory]) {
+            prevState[issueCategory].issues.push(issue);
+          } else {
+            prevState[issueCategory] = { score: 1, issues: [issue] };
           }
-        }
-        return prevState;
-      });
-    }
-  }, []);
+          return prevState;
+        });
+      } else {
+        setSelectedTags((prevState) => {
+          if (prevState[issueCategory]) {
+            prevState[issueCategory].issues = prevState[issueCategory].issues.filter(function (value) {
+              return value !== issue;
+            });
+            if (prevState[issueCategory].issues.length === 0) {
+              delete prevState[issueCategory];
+            }
+          }
+          return prevState;
+        });
+      }
+
+      if (onConfirm) {
+        onConfirm(selectedTags);
+      }
+    },
+    [onConfirm, selectedTags]
+  );
 
   const theme = useTheme();
 
-  const onDismiss = useCallback((): void => {
-    if (onDismissTagsSurvey) {
-      onDismissTagsSurvey();
-    }
-  }, [onDismissTagsSurvey]);
-
-  const onConfirm = useCallback(async (): Promise<void> => {
-    if (onSubmitSurvey) {
-      await onSubmitSurvey(selectedTags)
-        .then(() => console.log('Survey Result submitted'))
-        .catch((e) => console.log(e));
-    }
-    onDismiss();
-  }, [onSubmitSurvey, onDismiss, selectedTags]);
-
   return (
-    <Modal onDismissed={onDismiss} styles={modalStyles(theme)} isOpen>
+    <>
       <Stack verticalAlign="center">
-        <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-          <Text className={questionTextStyle(theme)}>{strings?.TagsSurveyQuestion}</Text>
-          <IconButton
-            iconProps={{ iconName: 'Cancel' }}
-            onClick={onDismiss}
-            ariaLabel={strings?.cancelButtonAriaLabel}
-            style={{ color: theme.palette.black }}
-          />
-        </Stack>
-        {tags.map((t, i) => {
+        <Text className={questionTextStyle(theme)}>{strings?.tagsSurveyQuestion}</Text>
+        <Text className={helperTextStyle(theme)}>{strings?.tagsSurveyHelperText}</Text>
+      </Stack>
+
+      <Pivot>
+        {Object.keys(tags).map((key, i) => {
           return (
-            <Checkbox
-              className={checkboxClassName}
-              key={`checkBox_${i}`}
-              label={t.message}
-              onChange={(ev, checked) => onChange(t.issue, t.issueCategory, checked ?? false)}
-            />
+            <PivotItem
+              key={`key-${i}`}
+              headerText={key}
+              headerButtonProps={{
+                'data-order': i,
+                'data-title': key
+              }}
+              alwaysRender
+            >
+              {tags[key].map((t, i) => {
+                return (
+                  <Checkbox
+                    className={checkboxClassName}
+                    key={`checkBox_${i}`}
+                    label={t.message}
+                    onChange={(ev, checked) => onChange(t.issue, key, checked ?? false)}
+                  />
+                );
+              })}
+            </PivotItem>
           );
         })}
-      </Stack>
-      <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
-        <PrimaryButton className={confirmButtonClassName} onClick={() => onConfirm()}>
-          {strings?.TagsSurveyConfirmButtonLabel}
-        </PrimaryButton>
-        <DefaultButton className={cancelButtonClassName} onClick={() => onDismiss()}>
-          {strings?.TagsSurveyCancelButtonLabel}
-        </DefaultButton>
-      </Stack>
-    </Modal>
+      </Pivot>
+    </>
   );
 };

@@ -16,7 +16,7 @@ import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
 /* @conditional-compile-remove(end-of-call-survey) */
-import {CallSurvey, CallSurveyResponse, SubmitSurveyOptions}from '@azure/communication-calling';
+import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
  * Temporary copy of the packages/react-composites/tests/browser/call/app/mocks/MockCallAdapter.ts
@@ -196,8 +196,8 @@ export class _MockCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
-  /* @conditional-compile-remove(end-of-call-survey) */
-  submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined>{
+  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
   }
 }

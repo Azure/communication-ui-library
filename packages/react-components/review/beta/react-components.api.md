@@ -176,52 +176,6 @@ export interface CallingTheme {
     };
 }
 
-// @beta
-export interface CallIssuesToTags {
-    // (undocumented)
-    audioRating: {
-        NoLocalAudio: string;
-        NoRemoteAudio: string;
-        Echo: string;
-        AudioNoise: string;
-        LowVolume: string;
-        AudioStoppedUnexpectedly: string;
-        DistortedSpeech: string;
-        AudioInterruption: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    overallRating: {
-        CallCannotJoin: string;
-        CallCannotInvite: string;
-        HadToRejoin: string;
-        CallEndedUnexpectedly: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    screenshareRating: {
-        NoContentLocal: string;
-        NoContentRemote: string;
-        CannotPresent: string;
-        LowQuality: string;
-        Freezes: string;
-        StoppedUnexpectedly: string;
-        LargeDelay: string;
-        OtherIssues: string;
-    };
-    // (undocumented)
-    videoRating: {
-        NoVideoReceived: string;
-        NoVideoSent: string;
-        LowQuality: string;
-        Freezes: string;
-        StoppedUnexpectedly: string;
-        DarkVideoReceived: string;
-        AudioVideoOutOfSync: string;
-        OtherIssues: string;
-    };
-}
-
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
@@ -2183,8 +2137,7 @@ export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
 
 // @internal
 export interface _StarSurveyProps {
-    onDismissStarSurvey?: () => void;
-    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+    onStarRatingSelected?: (ratings: number) => void;
     selectedIcon?: string;
     strings?: _StarSurveyStrings;
     unselectedIcon?: string;
@@ -2236,11 +2189,58 @@ export interface StreamMediaProps {
     videoStreamElement: HTMLElement | null;
 }
 
+// @public
+export interface SurveyIssues {
+    // (undocumented)
+    audioRating: {
+        noLocalAudio: string;
+        noRemoteAudio: string;
+        echo: string;
+        audioNoise: string;
+        lowVolume: string;
+        audioStoppedUnexpectedly: string;
+        distortedSpeech: string;
+        audioInterruption: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    overallRating: {
+        callCannotJoin: string;
+        callCannotInvite: string;
+        hadToRejoin: string;
+        callEndedUnexpectedly: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    screenshareRating: {
+        noContentLocal: string;
+        noContentRemote: string;
+        cannotPresent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        largeDelay: string;
+        otherIssues: string;
+    };
+    // (undocumented)
+    videoRating: {
+        noVideoReceived: string;
+        noVideoSent: string;
+        lowQuality: string;
+        freezes: string;
+        stoppedUnexpectedly: string;
+        darkVideoReceived: string;
+        audioVideoOutOfSync: string;
+        otherIssues: string;
+    };
+}
+
 // @internal (undocumented)
 export type _SurveyTag = {
-    message: string;
-    issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
-    issueCategory: _IssueCategory;
+    [issueCategory: string]: {
+        message: string;
+        issue: _AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue;
+    }[];
 };
 
 // @public
@@ -2259,19 +2259,16 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 
 // @internal
 export interface _TagsSurveyProps {
-    callIssuesToTag: CallIssuesToTags;
+    callIssuesToTag: SurveyIssues;
     issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
-    onDismissTagsSurvey?: () => void;
-    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+    onConfirm?: (selectedTags: _CallSurvey) => void;
     strings?: _TagsSurveyStrings;
 }
 
 // @internal
 export interface _TagsSurveyStrings {
-    cancelButtonAriaLabel?: string;
-    TagsSurveyCancelButtonLabel?: string;
-    TagsSurveyConfirmButtonLabel?: string;
-    TagsSurveyQuestion?: string;
+    tagsSurveyHelperText?: string;
+    tagsSurveyQuestion?: string;
 }
 
 // @internal (undocumented)

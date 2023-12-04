@@ -1742,6 +1742,8 @@ export class _MockCallAdapter implements CallAdapter {
     // (undocumented)
     stopVideoBackgroundEffects(): Promise<void>;
     // (undocumented)
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
+    // (undocumented)
     unmute(): Promise<void>;
     // (undocumented)
     updateBackgroundPickerImages(): void;

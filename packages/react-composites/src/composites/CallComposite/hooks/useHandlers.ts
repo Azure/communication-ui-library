@@ -15,7 +15,7 @@ import { DtmfTone } from '@azure/communication-calling';
 /* @conditional-compile-remove(video-background-effects) */
 import type { BackgroundReplacementConfig, BackgroundBlurConfig } from '@azure/communication-calling';
 /* @conditional-compile-remove(end-of-call-survey) */
-import {CallSurvey,CallSurveyResponse,SubmitSurveyOptions} from '@azure/communication-calling';
+import { CallSurvey, CallSurveyResponse, SubmitSurveyOptions } from '@azure/communication-calling';
 
 /**
  * @private
@@ -156,8 +156,11 @@ const createCompositeHandlers = memoizeOne(
       await adapter.setCaptionLanguage(language);
     },
     /* @conditional-compile-remove(end-of-call-survey) */
-    onSubmitSurvey:async (survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined> => {
-      return await adapter.submitSurvey(survey, options)
+    onSubmitSurvey: async (
+      survey: CallSurvey,
+      options?: SubmitSurveyOptions
+    ): Promise<CallSurveyResponse | undefined> => {
+      return await adapter.submitSurvey(survey, options);
     }
   })
 );
