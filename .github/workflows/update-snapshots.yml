@@ -53,7 +53,7 @@ jobs:
       - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -86,7 +86,7 @@ jobs:
       - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -176,7 +176,7 @@ jobs:
       - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -266,7 +266,7 @@ jobs:
       - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -356,7 +356,7 @@ jobs:
       - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
@@ -446,7 +446,7 @@ jobs:
       - name: Use Node.js v18.x
         uses: actions/setup-node@v3
         with:
-          node-version: '18.x'
+          node-version: '20.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v3
         with:
