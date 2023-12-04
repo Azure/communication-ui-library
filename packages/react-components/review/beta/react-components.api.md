@@ -74,11 +74,11 @@ export interface AttachmentDownloadResult {
     blobUrl: string;
 }
 
-// @internal
-export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
-
 // @beta
 export type AttachmentMetadata = FileMetadata | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ InlineImageMetadata;
+
+// @internal
+export type _AudioIssue = 'NoLocalAudio' | 'NoRemoteAudio' | 'Echo' | 'AudioNoise' | 'LowVolume' | 'AudioStoppedUnexpectedly' | 'DistortedSpeech' | 'AudioInterruption' | 'OtherIssues';
 
 // @public
 export interface BaseCustomStyles {
@@ -2133,8 +2133,7 @@ export const _StarSurvey: (props: _StarSurveyProps) => JSX.Element;
 
 // @internal
 export interface _StarSurveyProps {
-    onDismissStarSurvey?: () => void;
-    onSubmitSurvey?: (survey: _CallSurvey) => Promise<_CallSurveyResponse | undefined>;
+    onStarRatingSelected?: (ratings: number) => void;
     selectedIcon?: string;
     strings?: _StarSurveyStrings;
     unselectedIcon?: string;

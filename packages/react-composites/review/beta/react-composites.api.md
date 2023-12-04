@@ -450,7 +450,6 @@ export interface CallCompositeStrings {
     cameraOffBackgroundEffectWarningText?: string;
     cameraPermissionDenied: string;
     cameraTurnedOff: string;
-    cancelButtonAriaLabel: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
     captionsBannerMoreButtonCallingLabel?: string;
@@ -568,16 +567,6 @@ export interface CallCompositeStrings {
     selectedPeopleButtonLabel: string;
     soundLabel: string;
     spokenLanguageStrings?: SpokenLanguageStrings;
-    starRatingAriaLabel: string;
-    starSurveyConfirmButtonLabel?: string;
-    starSurveyFiveStarText?: string;
-    starSurveyFourStarText?: string;
-    starSurveyHelperText?: string;
-    starSurveyOneStarText?: string;
-    starSurveyQuestion?: string;
-    starSurveyThankYouText?: string;
-    starSurveyThreeStarText?: string;
-    starSurveyTwoStarText?: string;
     startCallButtonLabel: string;
     startCaptionsButtonOffLabel?: string;
     startCaptionsButtonOnLabel?: string;
@@ -1742,6 +1731,8 @@ export class _MockCallAdapter implements CallAdapter {
     stopScreenShare(): Promise<void>;
     // (undocumented)
     stopVideoBackgroundEffects(): Promise<void>;
+    // (undocumented)
+    submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     // (undocumented)
     unmute(): Promise<void>;
     // (undocumented)

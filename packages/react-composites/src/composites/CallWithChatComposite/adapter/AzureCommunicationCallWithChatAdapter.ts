@@ -99,7 +99,7 @@ import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAda
 /* @conditional-compile-remove(video-background-effects) */
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 /* @conditional-compile-remove(end-of-call-survey) */
-import {CallSurvey, CallSurveyResponse, SubmitSurveyOptions}from '@azure/communication-calling';
+import { CallSurvey, CallSurveyResponse, SubmitSurveyOptions } from '@azure/communication-calling';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -538,9 +538,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void {
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
-/* @conditional-compile-remove(end-of-call-survey) */
-  public async submitSurvey(survey: CallSurvey, options?: SubmitSurveyOptions): Promise<CallSurveyResponse | undefined> {
-    return this.callAdapter.submitSurvey(survey, options)
+  /* @conditional-compile-remove(end-of-call-survey) */
+  public async submitSurvey(
+    survey: CallSurvey,
+    options?: SubmitSurveyOptions
+  ): Promise<CallSurveyResponse | undefined> {
+    return this.callAdapter.submitSurvey(survey, options);
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

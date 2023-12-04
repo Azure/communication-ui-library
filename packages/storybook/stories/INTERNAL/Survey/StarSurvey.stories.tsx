@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { mergeStyles } from '@fluentui/react';
 import { _StarSurvey as StarSurveyComponent, useTheme } from '@internal/react-components';
