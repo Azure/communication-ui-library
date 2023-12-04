@@ -37,7 +37,7 @@ export const configurationStackTokensDesktop: IStackTokens = {
  * @private
  */
 export const configurationStackTokensMobile: IStackTokens = {
-  childrenGap: '1.5rem'
+  childrenGap: '0.5rem'
 };
 
 /** @private */
@@ -45,7 +45,7 @@ export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl
   root: {
     height: '100%',
     width: '100%',
-    padding: '2rem 1rem 2rem 1rem',
+    padding: desktop ? '2rem 1rem 2rem 1rem' : '1rem 1rem 2rem 1rem',
     minWidth: desktop
       ? '25rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
       : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
@@ -117,8 +117,8 @@ export const selectionContainerStyle = (theme: ITheme): string =>
 export const titleContainerStyleDesktop = (theme: ITheme): string =>
   mergeStyles(
     {
-      fontSize: '1.25rem',
-      lineHeight: '1.75rem',
+      fontSize: '1.3rem',
+      lineHeight: '1rem',
       fontWeight: 600
     },
     configurationPageTextDecoration(theme)
@@ -130,7 +130,7 @@ export const titleContainerStyleDesktop = (theme: ITheme): string =>
 export const titleContainerStyleMobile = (theme: ITheme): string =>
   mergeStyles(
     {
-      fontSize: '1.0625rem',
+      fontSize: '1.3rem',
       lineHeight: '1.375rem',
       fontWeight: 600,
       textAlign: 'center'
@@ -148,7 +148,10 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
     fill: theme.semanticColors.bodyText,
     stroke: theme.palette.whiteTranslucent40,
     paintOrder: 'stroke fill',
-    strokeWidth: _pxToRem(1.5)
+    strokeWidth: _pxToRem(1.5),
+    text: {
+      letterSpacing: '-0.02rem' // cope with extra width due to stroke width
+    }
   };
 };
 
@@ -165,8 +168,7 @@ export const callDetailsContainerStyles: IStackStyles = {
 
 const callDetailsStyle: IStyle = {
   fontSize: '0.9375',
-  lineHeight: '1.25rem',
-  marginTop: '0.25rem'
+  lineHeight: '1.25rem'
 };
 
 /**
@@ -181,6 +183,7 @@ export const callDetailsStyleDesktop = mergeStyles({
  */
 export const callDetailsStyleMobile = mergeStyles({
   ...callDetailsStyle,
+  marginBottom: '0.5rem',
   textAlign: 'center'
 });
 
