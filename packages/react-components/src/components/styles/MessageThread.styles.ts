@@ -229,6 +229,27 @@ export const chatMessageDateStyle: CSSProperties = {
 /**
  * @private
  */
+export const useChatMessageImagePlaceholderStyles = (placeholderColour: string): Record<string, CSSProperties> => ({
+  '& img[src=""]': {
+    display: 'block',
+    position: 'relative'
+  },
+  '& img[src=""]:after': {
+    backgroundColor: `${placeholderColour}`,
+    content: `url("data:image/gif;base64,R0lGODlhAQABAAAAACw=")`,
+    backgroundSize: 'center',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    top: '0',
+    left: '0',
+    display: 'block'
+  }
+});
+
+/**
+ * @private
+ */
 export const useChatMessageStyles = makeStyles({
   root: {
     paddingTop: '0',

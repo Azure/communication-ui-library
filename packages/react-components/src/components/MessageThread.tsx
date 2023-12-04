@@ -690,7 +690,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   const [readCountForHoveredIndicator, setReadCountForHoveredIndicator] = useState<number | undefined>(undefined);
 
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
-  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string>>>({});
+  const [inlineAttachments, setInlineAttachments] = useState<Record<string, Record<string, string | undefined>>>({});
   /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
   const onFetchInlineAttachment = useCallback(
     async (attachments: AttachmentMetadata[], messageId: string): Promise<void> => {
@@ -706,7 +706,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
           const listOfAttachments = prev[messageId] ?? {};
           for (const result of attachmentDownloadResult) {
             const { attachmentId, blobUrl } = result;
-            listOfAttachments[attachmentId] = blobUrl;
+            listOfAttachments[attachmentId] = (!blobUrl.length) ? undefined : blobUrl;
           }
           return { ...prev, [messageId]: listOfAttachments };
         });
