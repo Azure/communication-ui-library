@@ -13,7 +13,6 @@ import {
   getIsMuted,
   getIsScreenSharingOn,
   getLocalVideoStreams,
-  getRemoteParticipants,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
 /* @conditional-compile-remove(rooms) */
@@ -32,6 +31,7 @@ import {
 } from './utils/videoGalleryUtils';
 /* @conditional-compile-remove(raise-hand) */
 import { getLocalParticipantRaisedHand } from './baseSelectors';
+import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 
 /**
  * Selector type for {@link VideoGallery} component.
@@ -57,7 +57,7 @@ export type VideoGallerySelector = (
 export const videoGallerySelector: VideoGallerySelector = createSelector(
   [
     getScreenShareRemoteParticipant,
-    getRemoteParticipants,
+    getRemoteParticipantsExcludingConsumers,
     getLocalVideoStreams,
     getIsMuted,
     getIsScreenSharingOn,
