@@ -310,11 +310,11 @@ export type {
   FileDownloadError
 } from '../../react-components/src';
 /* @conditional-compile-remove(file-sharing) */
-export type { AttachmentMetadata } from '../../react-components/src';
+export type { FileMetadata } from '../../react-components/src';
 export type {
   ChatAttachmentType,
   AttachmentDownloadResult,
-  FileMetadata,
+  AttachmentMetadata,
   InlineImageMetadata
 } from '../../react-components/src';
 /* @conditional-compile-remove(PSTN-calls) */

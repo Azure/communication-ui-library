@@ -13,14 +13,10 @@ import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Represents the type of attachment
- * @beta
+ * @public
  */
-export type ChatAttachmentType =
-  | 'file'
-  | /* @conditional-compile-remove(teams-inline-images-and-file-sharing) */ 'inlineImage'
-  | 'unknown';
+export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
 
-/* @conditional-compile-remove(teams-inline-images-and-file-sharing) */
 /**
  * Metadata containing basic information about the uploaded file.
  *
@@ -56,7 +52,7 @@ export interface FileMetadata {
 /**
  * Metadata for rendering images inline with a message.
  * This does not include images attached as files.
- * @beta
+ * @public
  */
 export interface InlineImageMetadata {
   /*
@@ -79,13 +75,13 @@ export interface InlineImageMetadata {
 
 /**
  * Metadata containing information about the uploaded file.
- * @beta
+ * @public
  */
 export type AttachmentMetadata = InlineImageMetadata | /* @conditional-compile-remove(file-sharing) */ FileMetadata;
 
 /**
  * Metadata of the attachment object returned by the ACS SDK.
- * @beta
+ * @public
  */
 export interface AttachmentDownloadResult {
   attachmentId: string;
@@ -258,7 +254,7 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
               return isFileSharingAttachment(attachment);
               return true;
             })
-            .map((file) => file as FileMetadata)
+            .map((file) => file as unknown as FileMetadata)
             .map((file) => (
               <TooltipHost content={downloadFileButtonString()} key={file.name}>
                 <_FileCard
@@ -268,13 +264,13 @@ export const _FileDownloadCards = (props: _FileDownloadCardsProps): JSX.Element 
                   actionIcon={
                     showSpinner ? (
                       <Spinner size={SpinnerSize.medium} aria-live={'polite'} role={'status'} />
-                    ) : true && isShowDownloadIcon(file) ? (
+                    ) : true && isShowDownloadIcon(file as unknown as AttachmentMetadata) ? (
                       <IconButton className={iconButtonClassName} ariaLabel={downloadFileButtonString()}>
                         <DownloadIconTrampoline />
                       </IconButton>
                     ) : undefined
                   }
-                  actionHandler={() => fileDownloadHandler(userId, file)}
+                  actionHandler={() => fileDownloadHandler(userId, file as unknown as AttachmentMetadata)}
                 />
               </TooltipHost>
             ))}

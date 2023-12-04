@@ -312,7 +312,7 @@ export interface _CaptionsSettingsModalStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
 }
 
-// @beta
+// @public
 export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
 
 // @public
@@ -982,7 +982,7 @@ export interface FileDownloadError {
 }
 
 // @beta
-export type FileDownloadHandler = (userId: string, fileMetadata: FileMetadata) => Promise<URL | FileDownloadError>;
+export type FileDownloadHandler = (userId: string, fileMetadata: AttachmentMetadata) => Promise<URL | FileDownloadError>;
 
 // @beta
 export interface FileMetadata {

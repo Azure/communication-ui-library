@@ -123,6 +123,9 @@ export interface AttachmentDownloadResult {
 }
 
 // @public
+export type AttachmentMetadata = InlineImageMetadata;
+
+// @public
 export type AvatarPersonaData = {
     text?: string;
     imageUrl?: string;
@@ -194,15 +197,6 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
 // @public
 export interface BaseCustomStyles {
     root?: IStyle;
-}
-
-// @public
-export interface BaseFileMetadata {
-    attachmentType: FileMetadataAttachmentType;
-    extension: string;
-    id: string;
-    name: string;
-    url: string;
 }
 
 // @public
@@ -1233,6 +1227,9 @@ export type ChatAdapterUiState = {
 };
 
 // @public
+export type ChatAttachmentType = 'file' | 'inlineImage' | 'unknown';
+
+// @public
 export type ChatBaseSelectorProps = {
     threadId: string;
 };
@@ -1340,7 +1337,6 @@ export type ChatHandlers = {
 export interface ChatMessage extends MessageCommon {
     // (undocumented)
     attached?: MessageAttachedStatus;
-    attachedFilesMetadata?: FileMetadata[];
     // (undocumented)
     clientMessageId?: string;
     // (undocumented)
@@ -1353,6 +1349,7 @@ export interface ChatMessage extends MessageCommon {
     editedOn?: Date;
     // (undocumented)
     failureReason?: string;
+    inlineImages?: InlineImageMetadata[];
     // (undocumented)
     messageType: 'chat';
     metadata?: Record<string, string>;
@@ -2203,20 +2200,6 @@ export interface ErrorBarStrings {
 export type ErrorType = keyof ErrorBarStrings;
 
 // @public
-export type FileMetadata = FileSharingMetadata | ImageFileMetadata;
-
-// @public (undocumented)
-export type FileMetadataAttachmentType = 'fileSharing' | 'inlineImage' | 'unknown';
-
-// @public
-export interface FileSharingMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'fileSharing';
-    // (undocumented)
-    payload?: Record<string, string>;
-}
-
-// @public
 export const FluentThemeProvider: (props: FluentThemeProviderProps) => JSX.Element;
 
 // @public
@@ -2295,14 +2278,6 @@ export interface _Identifiers {
 }
 
 // @public
-export interface ImageFileMetadata extends BaseFileMetadata {
-    // (undocumented)
-    attachmentType: 'inlineImage';
-    // (undocumented)
-    previewUrl?: string;
-}
-
-// @public
 export const ImageGallery: (props: ImageGalleryProps) => JSX.Element;
 
 // @public
@@ -2337,6 +2312,16 @@ export interface IncomingCallState {
     endTime?: Date;
     id: string;
     startTime: Date;
+}
+
+// @public
+export interface InlineImageMetadata {
+    // (undocumented)
+    attachmentType: 'inlineImage';
+    id: string;
+    // (undocumented)
+    previewUrl?: string;
+    url: string;
 }
 
 // @public
@@ -2529,7 +2514,7 @@ export type MessageThreadProps = {
     onRenderJumpToNewMessageButton?: (newMessageButtonProps: JumpToNewMessageButtonProps) => JSX.Element;
     onLoadPreviousChatMessages?: (messagesToLoad: number) => Promise<boolean>;
     onRenderMessage?: (messageProps: MessageProps, messageRenderer?: MessageRenderer) => JSX.Element;
-    onFetchAttachments?: (attachments: FileMetadata[]) => Promise<AttachmentDownloadResult[]>;
+    onFetchAttachments?: (attachments: AttachmentMetadata[]) => Promise<AttachmentDownloadResult[]>;
     onUpdateMessage?: UpdateMessageCallback;
     onCancelEditMessage?: CancelEditCallback;
     onDeleteMessage?: (messageId: string) => Promise<void>;

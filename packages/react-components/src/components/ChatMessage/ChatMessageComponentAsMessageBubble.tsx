@@ -25,7 +25,9 @@ import { BlockedMessage } from '../../types/ChatMessage';
 import { MessageThreadStrings } from '../MessageThread';
 import { chatMessageActionMenuProps } from './ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../types';
-import { _FileDownloadCards, FileDownloadHandler } from '../FileDownloadCards';
+/* @conditional-compile-remove(file-sharing) */
+import { FileDownloadHandler } from '../FileDownloadCards';
+import { _FileDownloadCards } from '../FileDownloadCards';
 import { ComponentLocale, useLocale } from '../../localization';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
@@ -154,6 +156,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     onRenderAvatar,
     showMessageStatus,
     messageStatus,
+    /* @conditional-compile-remove(file-sharing) */
     fileDownloadHandler,
     onInlineImageClicked,
     shouldOverlapAvatarAndMessage
@@ -208,7 +211,6 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
-  
   const defaultOnRenderFileDownloads = useCallback(() => {
     /* @conditional-compile-remove(file-sharing) */
     return (
@@ -216,11 +218,12 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
         userId={userId}
         /* @conditional-compile-remove(file-sharing) */
         fileMetadata={(message as ChatMessage).files || []}
+        /* @conditional-compile-remove(file-sharing) */
         downloadHandler={fileDownloadHandler}
         strings={{ downloadFile: strings.downloadFile, fileCardGroupMessage: strings.fileCardGroupMessage }}
       />
     );
-    return <></>
+    return <></>;
   }, [
     userId,
     message,
