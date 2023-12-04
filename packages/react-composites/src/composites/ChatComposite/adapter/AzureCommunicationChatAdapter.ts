@@ -35,7 +35,6 @@ import { FileUploadAdapter, convertFileUploadsUiStateToMessageMetadata } from '.
 import { AzureCommunicationFileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 import { useEffect, useRef, useState } from 'react';
 import { _isValidIdentifier } from '@internal/acs-ui-common';
-
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
@@ -183,7 +182,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.updateFileUploadErrorMessage = this.updateFileUploadErrorMessage.bind(this);
     /* @conditional-compile-remove(file-sharing) */
     this.updateFileUploadMetadata = this.updateFileUploadMetadata.bind(this);
-
     this.downloadAttachments = this.downloadAttachments.bind(this);
   }
 
@@ -680,7 +678,6 @@ export const useAzureCommunicationChatAdapter = (
 export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-
   options?: {
     credential?: CommunicationTokenCredential;
   }

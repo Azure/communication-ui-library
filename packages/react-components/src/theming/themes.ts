@@ -128,7 +128,6 @@ export const darkTheme: PartialTheme & CallingTheme & ChatTheme = {
     /* @conditional-compile-remove(raise-hand) */
     raiseHandGold: '#eaa300'
   },
-
   chatPalette: {
     modalOverlayBlack: '#000000',
     modalTitleWhite: '#ffffff',

@@ -41,7 +41,6 @@ import { FluentV9ThemeProvider } from './../theming/FluentV9ThemeProvider';
 import LiveAnnouncer from './Announcer/LiveAnnouncer';
 /* @conditional-compile-remove(mention) */
 import { MentionOptions } from './MentionPopover';
-
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { createStyleFromV8Style } from './styles/v8StyleShim';
 import {
@@ -217,7 +216,6 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-
   /** String for aria text in file attachment group*/
   fileCardGroupMessage: string;
 }
@@ -451,7 +449,6 @@ export type MessageThreadProps = {
    * @beta
    */
   onRenderFileDownloads?: (userId: string, message: ChatMessage) => JSX.Element;
-
   /**
    * Optional callback to retrieve the inline image in a message.
    * @param attachment - AttachmentMetadata object we want to render
@@ -525,7 +522,6 @@ export type MessageThreadProps = {
    * @beta
    */
   mentionOptions?: MentionOptions;
-
   /**
    * Optional callback called when an inline image is clicked.
    * @public
@@ -853,8 +849,6 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
   // we need to get previousTop before it prepend contents
   // Execute order [newMessage useEffect] => get previousTop => dom update => [messages useEffect]
   useEffect(() => {
-    console.log('newMessages', newMessages);
-
     if (!chatScrollDivRef.current) {
       return;
     }

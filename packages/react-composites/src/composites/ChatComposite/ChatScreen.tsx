@@ -126,11 +126,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const defaultNumberOfChatMessagesToReload = 5;
   /* @conditional-compile-remove(file-sharing) */
   const [downloadErrorMessage, setDownloadErrorMessage] = React.useState('');
-
   const [fullSizeAttachments, setFullSizeAttachments] = useState<Record<string, string>>({});
-
   const [galleryImages, setGalleryImages] = useState<Array<ImageGalleryImageProps>>([]);
-
   const [isImageGalleryOpen, setIsImageGalleryOpen] = useState<boolean>(false);
 
   const adapter = useAdapter();

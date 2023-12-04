@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-
 import { ImageGallery, ImageGalleryImageProps } from './ImageGallery';
-
 import { render, screen } from '@testing-library/react';
-
 import { registerIcons } from '@fluentui/react';
 
 describe('ImageGallery default layout tests', () => {
@@ -23,9 +20,7 @@ describe('ImageGallery default layout tests', () => {
   });
 
   const titleIconTestId1 = 'titleIconTestId1';
-
   const titleIconTestId2 = 'titleIconTestId2';
-
   const imageInfo = {
     imageUrl: 'images/inlineImageExample1.png',
     downloadFilename: 'downloadFilename',
@@ -33,7 +28,6 @@ describe('ImageGallery default layout tests', () => {
     title: 'title',
     titleIcon: <div data-testid={titleIconTestId1}></div>
   };
-
   const imageInfo2 = {
     imageUrl: 'images/inlineImageExample2.png',
     downloadFilename: 'downloadFilename2',

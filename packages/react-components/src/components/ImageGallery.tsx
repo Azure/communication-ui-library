@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { DefaultButton, Icon, IconButton, Modal, Stack, mergeStyles } from '@fluentui/react';
-
 import React, { SyntheticEvent, useState } from 'react';
 
 import {
@@ -23,11 +22,8 @@ import {
   titleBarContainerStyle,
   titleStyle
 } from './styles/ImageGallery.style';
-
 import { useTheme } from '../theming/FluentThemeProvider';
-
 import { useLocale } from '../localization';
-
 import { ChatTheme } from '../theming';
 /**
  * Props for {@link ImageGallery}.

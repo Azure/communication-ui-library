@@ -4,7 +4,6 @@
 import { Icon, IconButton, Spinner, SpinnerSize, TooltipHost } from '@fluentui/react';
 import React, { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-
 import { useLocale } from '../localization';
 import { _FileCard } from './FileCard';
 import { _FileCardGroup } from './FileCardGroup';
@@ -33,7 +32,6 @@ export interface FileMetadata {
   /**
    * Unique ID of the file.
    */
-
   id: string;
   /**
    * File name to be displayed.

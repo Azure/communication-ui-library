@@ -20,7 +20,6 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 /* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions, DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
@@ -57,7 +56,6 @@ import {
   _createAzureCommunicationChatAdapterInner,
   createAzureCommunicationChatAdapterFromClient
 } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
-
 import { AzureCommunicationChatAdapterOptions } from '../../ChatComposite/adapter/AzureCommunicationChatAdapter';
 import { EventEmitter } from 'events';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
@@ -459,7 +457,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public updateFileUploadMetadata = (id: string, metadata: AttachmentMetadata): void => {
     this.chatAdapter.updateFileUploadMetadata(id, metadata);
   };
-
   async downloadAttachments(options: { attachmentUrls: Record<string, string> }): Promise<AttachmentDownloadResult[]> {
     return await this.chatAdapter.downloadAttachments(options);
   }
@@ -965,7 +962,6 @@ export type AzureCommunicationCallWithChatAdapterFromClientArgs = {
   chatThreadClient: ChatThreadClient;
   /* @conditional-compile-remove(video-background-effects) */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-
   chatAdapterOptions?: AzureCommunicationChatAdapterOptions;
 };
 
@@ -986,7 +982,6 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   chatThreadClient,
   /* @conditional-compile-remove(video-background-effects) */
   callAdapterOptions,
-
   chatAdapterOptions
 }: AzureCommunicationCallWithChatAdapterFromClientArgs): Promise<CallWithChatAdapter> => {
   const createCallAdapterPromise = createAzureCommunicationCallAdapterFromClient(
@@ -999,7 +994,6 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   const createChatAdapterPromise = createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
-
     chatAdapterOptions
   );
   const [callAdapter, chatAdapter] = await Promise.all([createCallAdapterPromise, createChatAdapterPromise]);

@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import { IIconProps, IStyle } from '@fluentui/react';
-
 import { IOverlayStyles } from '@fluentui/react';
-
 import { ChatTheme } from '../../theming/themes';
 
 /**

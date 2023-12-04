@@ -9,7 +9,6 @@ import type { AdapterError, AdapterErrors, AdapterState, Disposable } from '../.
 import { FileUploadAdapter } from './AzureCommunicationFileUploadAdapter';
 /* @conditional-compile-remove(file-sharing) */
 import { FileUploadsUiState } from './AzureCommunicationFileUploadAdapter';
-
 import { AttachmentDownloadResult } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing) */
 import { AttachmentMetadata } from '@internal/react-components';
@@ -111,7 +110,6 @@ export interface ChatAdapterThreadManagement {
    *
    */
   loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
-
   downloadAttachments: (options: { attachmentUrls: Record<string, string> }) => Promise<AttachmentDownloadResult[]>;
 }
 

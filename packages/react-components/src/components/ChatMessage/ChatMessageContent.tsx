@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-
 import { useEffect } from 'react';
 import { _formatString } from '@internal/acs-ui-common';
 import { Parser, ProcessNodeDefinitions, IsValidNodeDefinitions, ProcessingInstructionType } from 'html-to-react';
@@ -214,7 +213,6 @@ const processInlineImage = (props: ChatMessageContentProps): ProcessingInstructi
     if (props.attachmentsMap && node.attribs.id in props.attachmentsMap) {
       node.attribs = { ...node.attribs, src: props.attachmentsMap[node.attribs.id] };
     }
-
     const handleOnClick = (): void => {
       props.onInlineImageClicked && props.onInlineImageClicked(node.attribs.id);
     };

@@ -15,7 +15,6 @@ export { SendBox } from './SendBox';
 export { _MentionPopover } from './MentionPopover';
 
 export { ImageGallery } from './ImageGallery';
-
 export type { ImageGalleryStrings } from './ImageGallery';
 
 export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox';

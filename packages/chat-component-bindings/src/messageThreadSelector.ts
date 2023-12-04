@@ -23,8 +23,10 @@ import {
   InlineImageMetadata, 
   ChatAttachmentType as AttachmentType
 } from '@internal/react-components';
+/* @conditional-compile-remove(data-loss-prevention) */
+import { BlockedMessage } from '@internal/react-components';
 import { createSelector } from 'reselect';
-import { ACSKnownMessageType } from './utils/constants';
+import { ACSKnownMessageType, DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { updateMessagesWithAttached } from './utils/updateMessagesWithAttached';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from '@internal/react-components';
@@ -39,6 +41,10 @@ const memoizedAllConvertChatMessage = memoizeFnAll(
     isLargeGroup: boolean
   ): Message => {
     const messageType = chatMessage.type.toLowerCase();
+    /* @conditional-compile-remove(data-loss-prevention) */
+    if (chatMessage.policyViolation) {
+      return convertToUiBlockedMessage(chatMessage, userId, isSeen, isLargeGroup);
+    }
     if (
       messageType === ACSKnownMessageType.text ||
       messageType === ACSKnownMessageType.richtextHtml ||
@@ -100,6 +106,29 @@ const extractTeamsAttachmentsMetadata = (
   return { /* @conditional-compile-remove(file-sharing) */ files, inlineImages };
 };
 
+/* @conditional-compile-remove(data-loss-prevention) */
+const convertToUiBlockedMessage = (
+  message: ChatMessageWithStatus,
+  userId: string,
+  isSeen: boolean,
+  isLargeGroup: boolean
+): BlockedMessage => {
+  const messageSenderId = message.sender !== undefined ? toFlatCommunicationIdentifier(message.sender) : userId;
+  return {
+    messageType: 'blocked',
+    createdOn: message.createdOn,
+    warningText: undefined,
+    status: !isLargeGroup && message.status === 'delivered' && isSeen ? 'seen' : message.status,
+    senderDisplayName: message.senderDisplayName,
+    senderId: messageSenderId,
+    messageId: message.id,
+    deletedOn: message.deletedOn,
+    mine: messageSenderId === userId,
+    link: DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL
+  };
+};
+
+
 const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType => {
   if (attachmentType === 'image') {
     return 'inlineImage';
@@ -112,6 +141,8 @@ const mapAttachmentType = (attachmentType: ChatAttachmentType): AttachmentType =
 };
 
 const extractAttachmentUrl = (attachment: ChatAttachment): string => {
+  /* @conditional-compile-remove(file-sharing) */ 
+  return attachment.attachmentType === 'file' && attachment.previewUrl ? attachment.previewUrl : attachment.url;
   return attachment.url || '';
 };
 const processChatMessageContent = (message: ChatMessageWithStatus): string | undefined => {
@@ -323,7 +354,11 @@ const isMessageValidToRender = (message: ChatMessageWithStatus): boolean => {
   if (message.deletedOn) {
     return false;
   }
-  if (message.metadata?.['fileSharingMetadata'] || message.content?.attachments) {
+  if ( message.metadata?.['fileSharingMetadata'] || message.content?.attachments) {
+    return true;
+  }
+  /* @conditional-compile-remove(data-loss-prevention) */
+  if (message.policyViolation) {
     return true;
   }
   return !!(message.content && message.content?.message !== '');

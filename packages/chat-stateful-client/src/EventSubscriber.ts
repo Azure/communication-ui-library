@@ -44,7 +44,6 @@ export class EventSubscriber {
       version: event.version,
       content: {
         message: event.message,
-
         attachments: event.attachments
       },
       type: this.convertEventType(event.type),

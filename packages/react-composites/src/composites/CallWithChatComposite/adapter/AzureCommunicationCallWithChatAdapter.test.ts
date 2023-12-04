@@ -25,7 +25,6 @@ describe('Adapter is created as expected', () => {
       callLocator: locator,
       chatClient: statefulChatClient,
       chatThreadClient: threadClient,
-
       options: options
     };
     const adapter = await createAzureCommunicationCallWithChatAdapterFromClients(args);

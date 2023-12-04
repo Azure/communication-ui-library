@@ -45,7 +45,6 @@ import { VerticalGalleryStrings } from '../components/VerticalGallery';
 import { ParticipantListStrings } from '../components/ParticipantList';
 /* @conditional-compile-remove(mention) */
 import { MentionPopoverStrings } from '../components/MentionPopover';
-
 import { ImageGalleryStrings } from '../components/ImageGallery';
 
 /**

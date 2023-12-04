@@ -14,7 +14,6 @@ import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 /* @conditional-compile-remove(date-time-customization) */
 import { screen } from '@testing-library/react';
-
 import { render, waitFor } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */

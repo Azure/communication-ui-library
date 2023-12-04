@@ -5,7 +5,6 @@ import React from 'react';
 /* @conditional-compile-remove(file-sharing) */
 import { FileMetadata } from './FileDownloadCards';
 import { AttachmentMetadata, _FileDownloadCards } from './FileDownloadCards';
-
 import { InlineImageMetadata } from './FileDownloadCards';
 import { render, screen } from '@testing-library/react';
 import { registerIcons } from '@fluentui/react';

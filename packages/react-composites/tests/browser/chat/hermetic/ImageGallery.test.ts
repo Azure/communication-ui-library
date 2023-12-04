@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import { TEST_PARTICIPANTS, buildUrlForChatAppUsingFakeAdapter, test } from './fixture';
-
 import { expect } from '@playwright/test';
-
 import { dataUiId, stableScreenshot } from '../../common/utils';
 
 test.describe('ImageGallery Modal tests', () => {
