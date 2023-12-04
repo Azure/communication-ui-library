@@ -1327,8 +1327,6 @@ export interface ImageGalleryStrings {
     downloadButtonLabel: string;
 }
 
-// @internal (undocumented)
-export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
 // @beta
 export interface InlineImageMetadata {
     // (undocumented)
@@ -1338,6 +1336,9 @@ export interface InlineImageMetadata {
     previewUrl?: string;
     url: string;
 }
+
+// @internal
+export type _IssueCategory = 'overallRating' | 'audioRating' | 'videoRating' | 'screenshareRating';
 
 // @public
 export interface JumpToNewMessageButtonProps {
@@ -2143,15 +2144,11 @@ export interface _StarSurveyProps {
 
 // @internal
 export interface _StarSurveyStrings {
-    cancelButtonAriaLabel?: string;
     starRatingAriaLabel?: string;
-    starSurveyConfirmButtonLabel?: string;
     starSurveyFiveStarText?: string;
     starSurveyFourStarText?: string;
     starSurveyHelperText?: string;
     starSurveyOneStarText?: string;
-    starSurveyQuestion?: string;
-    starSurveyThankYouText?: string;
     starSurveyThreeStarText?: string;
     starSurveyTwoStarText?: string;
 }
@@ -2185,6 +2182,18 @@ export interface StreamMediaProps {
     loadingState?: LoadingState;
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
+}
+
+// @public
+export interface SurveyCategories {
+    // (undocumented)
+    audioRating: string;
+    // (undocumented)
+    overallRating: string;
+    // (undocumented)
+    screenshareRating: string;
+    // (undocumented)
+    videoRating: string;
 }
 
 // @public
@@ -2233,7 +2242,7 @@ export interface SurveyIssues {
     };
 }
 
-// @internal (undocumented)
+// @internal
 export type _SurveyTag = {
     [issueCategory: string]: {
         message: string;
@@ -2258,6 +2267,7 @@ export const _TagsSurvey: (props: _TagsSurveyProps) => JSX.Element;
 // @internal
 export interface _TagsSurveyProps {
     callIssuesToTag: SurveyIssues;
+    categoriesToHeader: SurveyCategories;
     issues: (_AudioIssue | _OverallIssue | _ScreenshareIssue | _VideoIssue)[];
     onConfirm?: (selectedTags: _CallSurvey) => void;
     strings?: _TagsSurveyStrings;
