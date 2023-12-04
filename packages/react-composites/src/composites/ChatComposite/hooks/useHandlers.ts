@@ -31,7 +31,7 @@ const createCompositeHandlers = memoizeOne(
     onUpdateMessage: (messageId, content, options?) => {
       const metadata = options?.metadata;
       /* @conditional-compile-remove(file-sharing) */
-      const updatedOptions = options?.attachedFilesMetadata ? { ...options.attachedFilesMetadata } : {};
+      const updatedOptions = options?.attachmentMetadata ? { ...options.attachmentMetadata } : {};
       return adapter.updateMessage(
         messageId,
         content,
